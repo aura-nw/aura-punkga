@@ -1,0 +1,11 @@
+.page-footer {
+  height: 60px;
+
+  border-top: 1px solid $br-primary;
+
+  .container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+}

@@ -1,0 +1,20 @@
+$themes: (
+  light: (
+    color-background: #f5f7f8,
+    content-background: #f0f3f3,
+    color-text: $gray-9,
+    card-background: $white,
+    card-bolder: 1px solid $gray-1,
+    theme-toggle-background: $gray-1,
+    theme-item-active-background: $white
+  ),
+  dark: (
+    color-background: $gray-10,
+    content-background: #131419,
+    color-text: $white,
+    card-background: #1f2128,
+    card-bolder: 1px solid $gray-9,
+    theme-toggle-background: $gray-9,
+    theme-item-active-background: $gray-10
+  )
+);

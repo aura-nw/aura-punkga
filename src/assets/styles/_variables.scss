@@ -1,0 +1,42 @@
+/* colors */
+
+$white: #fff !default;
+$black: #000 !default;
+
+$br-primary: #2c365c;
+$transparent: rgba(0, 0, 0, 0);
+$gray-10: #24262e;
+$gray-9: #353740;
+$gray-1: #e5e7ea;
+
+/* font sizes */
+$unit: 1rem !default;
+$font-sizes: () !default;
+@each $size in (11, 12, 14, 16, 18, 20, 24, 32, 36, 48, 80) {
+  $font-sizes: map-merge(
+    $font-sizes,
+    (
+      $size: (
+        ($size * $unit) / 10
+      )
+    )
+  );
+}
+
+$h1-fs: 4rem !default;
+$h2-fs: 3.2rem !default;
+$h3-fs: 2.4rem !default;
+$h4-fs: 1.8rem !default;
+$h5-fs: 1.6rem !default;
+$h6-fs: 1.1rem !default;
+
+$h1-lh: 5.2rem !default;
+$h2-lh: 4rem !default;
+$h3-lh: 3.2rem !default;
+$h4-lh: 2.4rem !default;
+$h5-lh: 2.4rem !default;
+$h6-lh: 1.6rem !default;
+
+/* utils */
+$displays: none, inline, inline-block, block, table, table-row, table-cell, flex,
+  inline-flex !default;

@@ -1,0 +1,49 @@
+.page-header {
+  height: 80px;
+  border-bottom: 1px solid $br-primary;
+  padding: 0 1.6rem;
+  .container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    .theme-toggle {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 4px;
+      width: 76px;
+      height: 40px;
+      @include theme-aware('background', 'theme-toggle-background');
+
+      border-radius: 24px;
+      gap: 4px;
+      .theme-icon {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+      }
+      .active {
+        @include theme-aware('background', 'theme-item-active-background');
+        border-radius: 20px;
+      }
+    }
+  }
+  &__logo {
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+  }
+
+  &__menu {
+    display: flex;
+    // width: 100%;
+  }
+}
