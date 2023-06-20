@@ -1,0 +1,27 @@
+{
+    "apiUrl": "https://api.dev.halotrade.zone/api",
+    "mockApiUrl": "https://dev.halotrade.zone/mock",
+    "requestTimeout": 15000,
+    "appName": "HaloTrade",
+    "intervalRefreshBalance": 30000,
+    "chainInfo": {
+      "chainId": "aura-testnet-2",
+      "chainName": "aura devnet",
+      "addressPrefix": "aura",
+      "rpcUrl": "https://rpc.dev.aura.network/",
+      "httpUrl": "https://lcd.dev.aura.network/",
+      "feeToken": "utaura",
+      "stakingToken": "utaura",
+      "coinMap": {
+        "utaura": {
+          "denom": "TAURA",
+          "fractionalDigits": 6
+        }
+      },
+      "gasPrice": 0.0025
+    },
+    "auraFactory": "aura1cxn643nhtpd60jmfdur758rcj3u0lkqrunwj5fgwvpytfdjyyjasdxsysm",
+    "auraRouter": "aura13x9kx97vag744zdu075j6m395pcvwv2p4s3rd84vdzl8twjl4wasqrw0u5",
+    "auraScanUrl": "https://explorer.dev.aura.network/"
+  }
+  

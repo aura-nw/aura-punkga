@@ -1,9 +1,0 @@
-.halo {
-  .card {
-    @include theme-aware('background', 'card-background');
-  }
-  .ant-card-bordered {
-    @include theme-aware('border', 'card-bolder');
-    border-radius: 16px;
-  }
-}

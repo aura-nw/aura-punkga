@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 
 interface ErrorContextType {
   readonly error?: string;
@@ -12,14 +12,16 @@ const defaultContext: ErrorContextType = {
   },
   clearError: () => {
     return;
-  },
+  }
 };
 
 const ErrorContext = React.createContext<ErrorContextType>(defaultContext);
 
 export const useError = (): ErrorContextType => React.useContext(ErrorContext);
 
-export function ErrorProvider({ children }: React.HTMLAttributes<HTMLOrSVGElement>): JSX.Element {
+export function ErrorProvider({
+  children
+}: React.HTMLAttributes<HTMLOrSVGElement>): JSX.Element {
   const [error, setError] = React.useState<string>();
 
   const context: ErrorContextType = {
@@ -27,8 +29,10 @@ export function ErrorProvider({ children }: React.HTMLAttributes<HTMLOrSVGElemen
     setError: setError,
     clearError: () => {
       setError(undefined);
-    },
+    }
   };
 
-  return <ErrorContext.Provider value={context}>{children}</ErrorContext.Provider>;
+  return (
+    <ErrorContext.Provider value={context}>{children}</ErrorContext.Provider>
+  );
 }

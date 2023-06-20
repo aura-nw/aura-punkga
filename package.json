@@ -1,73 +1,37 @@
 {
-  "name": "client",
-  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
-    "@auranw/aurajs": "^1.0.0-alpha1",
-    "@cosmjs/cosmwasm-stargate": "^0.25.6",
-    "@cosmjs/faucet-client": "^0.25.6",
-    "@cosmjs/math": "^0.25.6",
-    "@cosmjs/proto-signing": "^0.25.6",
-    "@cosmjs/stargate": "^0.25.6",
-    "@cosmjs/tendermint-rpc": "^0.25.6",
+    "@coin98-com/connect-sdk": "^1.0.9",
+    "@cosmjs/cosmwasm-stargate": "^0.30.1",
+    "@cosmjs/faucet-client": "^0.30.1",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.13.5",
+    "localforage": "^1.10.0",
+    "match-sorter": "^6.3.1",
+    "next": "^13.4.4",
+    "ramda": "^0.29.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-router-dom": "^6.13.0",
+    "sort-by": "^1.2.0",
+    "react-device-detect": "^2.2.2",
     "@reduxjs/toolkit": "^1.6.1",
-    "antd": "^5.0.7",
-    "axios": "^0.21.4",
-    "classnames": "^2.3.1",
-    "formik": "^2.2.9",
-    "i18next": "^20.6.1",
-    "install": "^0.13.0",
-    "lodash": "^4.17.21",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-i18next": "^11.12.0",
     "react-redux": "^7.2.5",
-    "react-router-dom": "^5.3.0",
-    "uuid": "^7.0.3",
-    "web-vitals": "^1.0.1",
-    "yup": "^0.32.9"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@craco/craco": "^5.6.4",
-    "@testing-library/dom": "^8.6.0",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "@types/jest": "^26.0.15",
-    "@types/node": "^14.0.0",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "@types/react-redux": "^7.1.18",
-    "@types/react-router-dom": "^5.1.9",
-    "@types/yup": "^0.29.13",
-    "craco-antd": "^1.18.1",
-    "node-sass": "^8.0.0",
-    "prettier": "^2.3.2",
-    "react-scripts": "4.0.3",
-    "typescript": "^4.1.2"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "@types/node": "20.3.1",
+    "@types/react": "18.2.12",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.24",
+    "sass": "^1.63.4",
+    "tailwindcss": "^3.3.2",
+    "typescript": "5.1.3"
   }
 }

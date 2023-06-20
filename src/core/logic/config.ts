@@ -1,4 +1,4 @@
-import { CoinMap } from "./utils";
+import { CoinMap } from './utils';
 
 export interface KeplrCoin {
   readonly coinDenom: string;
@@ -37,7 +37,6 @@ export interface AppConfig {
   readonly addressPrefix: string;
   readonly rpcUrl: string;
   readonly httpUrl: string;
-  readonly faucetUrl: string;
   readonly feeToken: string;
   readonly stakingToken: string;
   readonly coinMap: CoinMap;
@@ -45,24 +44,23 @@ export interface AppConfig {
   readonly codeId?: number;
 }
 
-export interface NetworkConfigs {
-  readonly local: AppConfig;
-  readonly [key: string]: AppConfig;
-}
+export function configKeplr(config: AppConfig): KeplrConfig {
+  const currencies = [
+    {
+      coinDenom: config.coinMap[config.feeToken].denom,
+      coinMinimalDenom: config.feeToken,
+      coinDecimals: config.coinMap[config.feeToken].fractionalDigits
+    }
+  ];
 
-export function getAppConfig(configs: NetworkConfigs): AppConfig {
-  const network = process.env.REACT_APP_NETWORK;
-  if (!network) return configs.local;
-
-  const config = configs[network];
-  if (!config) {
-    throw new Error(`No configuration found for network ${network}`);
+  if (config.feeToken !== config.stakingToken) {
+    currencies.push({
+      coinDenom: config.coinMap[config.stakingToken].denom,
+      coinMinimalDenom: config.stakingToken,
+      coinDecimals: config.coinMap[config.stakingToken].fractionalDigits
+    });
   }
 
-  return config;
-}
-
-export function configKeplr(config: AppConfig): KeplrConfig {
   return {
     chainId: config.chainId,
     chainName: config.chainName,
@@ -74,38 +72,27 @@ export function configKeplr(config: AppConfig): KeplrConfig {
       bech32PrefixValAddr: `${config.addressPrefix}valoper`,
       bech32PrefixValPub: `${config.addressPrefix}valoperpub`,
       bech32PrefixConsAddr: `${config.addressPrefix}valcons`,
-      bech32PrefixConsPub: `${config.addressPrefix}valconspub`,
+      bech32PrefixConsPub: `${config.addressPrefix}valconspub`
     },
-    currencies: [
-      {
-        coinDenom: config.coinMap[config.feeToken].denom,
-        coinMinimalDenom: config.feeToken,
-        coinDecimals: config.coinMap[config.feeToken].fractionalDigits,
-      },
-      {
-        coinDenom: config.coinMap[config.stakingToken].denom,
-        coinMinimalDenom: config.stakingToken,
-        coinDecimals: config.coinMap[config.stakingToken].fractionalDigits,
-      },
-    ],
+    currencies,
     feeCurrencies: [
       {
         coinDenom: config.coinMap[config.feeToken].denom,
         coinMinimalDenom: config.feeToken,
-        coinDecimals: config.coinMap[config.feeToken].fractionalDigits,
-      },
+        coinDecimals: config.coinMap[config.feeToken].fractionalDigits
+      }
     ],
     stakeCurrency: {
       coinDenom: config.coinMap[config.stakingToken].denom,
       coinMinimalDenom: config.stakingToken,
-      coinDecimals: config.coinMap[config.stakingToken].fractionalDigits,
+      coinDecimals: config.coinMap[config.stakingToken].fractionalDigits
     },
     gasPriceStep: {
       low: config.gasPrice / 2,
       average: config.gasPrice,
-      high: config.gasPrice * 2,
+      high: config.gasPrice * 2
     },
     bip44: { coinType: 118 },
-    coinType: 118,
+    coinType: 118
   };
 }
