@@ -2,14 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap");
 
 :root {
   --light-gray: #f2f2f2;
-  --medium-gray: #ABABAB;
-  --primary-color: #23FF81;
-  --second-color: #1FAB5E;
+  --medium-gray: #ababab;
+  --primary-color: #23ff81;
+  --second-color: #1fab5e;
 }
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif!important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+}
+.slick-list {
+  border-radius: 30px;
+  overflow: hidden;
+  .slick-slide > div > div {
+    display: block!important;
+  }
+}
+.punkga-carousel {
+  li {
+    width: auto !important;
+    margin: 0px 4px !important;
+    height: auto !important;
+    > div {
+      transition: all 0.2s linear;
+    }
+  }
+  li.slick-active > div {
+    width: 30px !important;
+  }
+}
+::-webkit-scrollbar {
+    width: 6px;
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--medium-gray);
+    border-radius: 3px;
 }

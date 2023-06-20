@@ -1,6 +1,9 @@
-import { AppProps } from 'next/app';
+import { AppProps } from "next/app"
 
-import 'styles/globals.scss';
+import "src/styles/globals.scss"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
+import Header from "components/Header"
 // !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
 // import '@/styles/colors.css';
 
@@ -10,7 +13,12 @@ import 'styles/globals.scss';
  */
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <Header />
+      <Component {...pageProps} />;
+    </>
+  )
 }
 
-export default MyApp;
+export default MyApp
