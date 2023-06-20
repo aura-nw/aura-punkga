@@ -6,7 +6,7 @@ export const Items: React.FC = ({ data, onUpdate, styles, classes }: any) => {
     <div>
       <div style={styles.container} className={classes.container}>
         <button onClick={onUpdate}>Update: {data.a}</button>
-        <Link href={`/items/${data.a}`} className='mt-4'>
+        <Link href={`/items/${data.a}`} className='mt-10'>
           <button>Go to item detail page {data.a}</button>
         </Link>
       </div>
