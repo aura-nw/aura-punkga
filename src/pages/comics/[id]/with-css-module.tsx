@@ -1,4 +1,4 @@
-import classes from './books.module.scss'
+import classes from './comics-detail.module.scss'
 
 export const withCssModule = (Component: React.FC<any>) => (props: any) => {
   return (

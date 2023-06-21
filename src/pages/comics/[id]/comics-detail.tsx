@@ -5,11 +5,11 @@ import React from "react";
 import mockBanner from "src/assets/images/mockup3.png";
 import mockAvar from "src/assets/images/mockup4.png";
 
-const BookDetail: React.FC = ({ data, onUpdate, styles, classes }: any) => {
+const ComicsDetail: React.FC = ({ data, onUpdate, styles, classes }: any) => {
   const { tags, status } = data;
   return (
     <div className="px-24">
-      <div>
+      <div className="h-screen bg-light-gray">
         <div className="relative">
           <Image className="h-[280px]" src={mockBanner} alt="" />
           <div className="absolute top-[40%] left-[60px] transform ">
@@ -57,4 +57,4 @@ const BookDetail: React.FC = ({ data, onUpdate, styles, classes }: any) => {
     </div>
   );
 };
-export default BookDetail;
+export default ComicsDetail;
