@@ -13,8 +13,10 @@ module.exports = {
       colors: {
         "light-gray": "var(--light-gray)",
         "medium-gray": "var(--medium-gray)",
+        "gray": "var(--gray)",
         "primary-color": "var(--primary-color)",
         "second-color": "var(--second-color)",
+        "light-green": "var(--light-green)",
       },
     },
   },
