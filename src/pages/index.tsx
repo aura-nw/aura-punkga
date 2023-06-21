@@ -1,11 +1,10 @@
 import Head from 'next/head';
-import classes from 'styles/Home.module.scss';
+import classes from 'src/styles/Home.module.scss';
 import Header from 'components/Header';
 
 export default function Home() {
   return (
     <>
-      <Header />
       <div className={classes.container}>
         <Head>
           <title>Create Next App</title>
