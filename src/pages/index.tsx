@@ -12,6 +12,8 @@ import MockupImage2 from "src/assets/images/mockup5.png"
 import TrendingComic from "components/pages/homepage/trendingComic"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import { useTranslation } from "next-i18next"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 const mockupData = [
   {
     image: MockupImage,
@@ -101,6 +103,7 @@ const mockupData = [
 
 export default function Home() {
   const router = useRouter()
+  const {t} = useTranslation()
   return (
     <div className="pk-container">
       <div className="mt-[40px] grid grid-cols-2 gap-[40px]">
@@ -223,4 +226,14 @@ export default function Home() {
       </div>
     </div>
   )
+}
+
+export async function getStaticProps(context) {
+  const { locale } = context
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale)),
+    },
+  }
 }
