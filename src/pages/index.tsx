@@ -108,12 +108,10 @@ export default function Home() {
 }
 
 export async function getStaticProps(context) {
-  // extract the locale identifier from the URL
   const { locale } = context
 
   return {
     props: {
-      // pass the translation props to the page component
       ...(await serverSideTranslations(locale)),
     },
   }
