@@ -7,9 +7,149 @@ import React, { useState } from "react";
 import ic_calendar from "src/assets/images/icons/ic_calendar.svg";
 import mockBanner from "src/assets/images/mockup3.png";
 import mockAvar from "src/assets/images/mockup4.png";
+import MockupImage from "src/assets/images/mockup4.png";
+
+const mockupData = [
+  {
+    image: MockupImage,
+    name: "This is the chapter name#233",
+    status: "ongoing",
+    chapper: "Chapter 231",
+    tags: ["Hi-tech", "Low-Life"],
+    views: 1000,
+    likes: 1000,
+    description:
+      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
+    latestChap: 123,
+  },
+  {
+    image: MockupImage,
+    name: "This is the chapter name#233",
+    status: "ongoing",
+    chapper: "Chapter 231",
+    tags: ["Hi-tech", "Low-Life"],
+    views: 1000,
+    likes: 1000,
+    description:
+      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
+    latestChap: 123,
+  },
+  {
+    image: MockupImage,
+    name: "This is the chapter name#233",
+    status: "ongoing",
+    chapper: "Chapter 231",
+    tags: ["Hi-tech", "Low-Life"],
+    views: 1000,
+    likes: 1000,
+    description:
+      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
+    latestChap: 123,
+  },
+  {
+    image: MockupImage,
+    name: "This is the chapter name#233",
+    status: "ongoing",
+    chapper: "Chapter 231",
+    tags: ["Hi-tech", "Low-Life"],
+    views: 1000,
+    likes: 1000,
+    description:
+      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
+    latestChap: 123,
+  },
+  {
+    image: MockupImage,
+    name: "This is the chapter name#233",
+    status: "ongoing",
+    chapper: "Chapter 231",
+    tags: ["Hi-tech", "Low-Life"],
+    views: 1000,
+    likes: 1000,
+    description:
+      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
+    latestChap: 123,
+  },
+  {
+    image: MockupImage,
+    name: "This is the chapter name#233",
+    status: "ongoing",
+    chapper: "Chapter 231",
+    tags: ["Hi-tech", "Low-Life"],
+    views: 1000,
+    likes: 1000,
+    description:
+      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
+    latestChap: 123,
+  },
+  {
+    image: MockupImage,
+    name: "This is the chapter name#233",
+    status: "ongoing",
+    chapper: "Chapter 231",
+    tags: ["Hi-tech", "Low-Life"],
+    views: 1000,
+    likes: 1000,
+    description:
+      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
+    latestChap: 123,
+  },
+];
+
+const mockupDataNft = [
+  {
+    image: MockupImage,
+    avatar: MockupImage,
+    name: "This is the chapter name#233",
+    mangaName: "ongoing",
+    createdBy: "Chapter 231",
+  },
+  {
+    image: MockupImage,
+    avatar: MockupImage,
+    name: "This is the chapter name#233",
+    mangaName: "ongoing",
+    createdBy: "Chapter 231",
+  },
+  {
+    image: MockupImage,
+    avatar: MockupImage,
+    name: "This is the chapter name#233",
+    mangaName: "ongoing",
+    createdBy: "Chapter 231",
+  },
+  {
+    image: MockupImage,
+    avatar: MockupImage,
+    name: "This is the chapter name#233",
+    mangaName: "ongoing",
+    createdBy: "Chapter 231",
+  },
+  {
+    image: MockupImage,
+    avatar: MockupImage,
+    name: "This is the chapter name#233",
+    mangaName: "ongoing",
+    createdBy: "Chapter 231",
+  },
+  {
+    image: MockupImage,
+    avatar: MockupImage,
+    name: "This is the chapter name#233",
+    mangaName: "ongoing",
+    createdBy: "Chapter 231",
+  },
+  {
+    image: MockupImage,
+    avatar: MockupImage,
+    name: "This is the chapter name#233",
+    mangaName: "ongoing",
+    createdBy: "Chapter 231",
+  },
+];
 
 const ComicDetail: React.FC = ({ data, onUpdate, styles, classes }: any) => {
-  const [selectedChip, setSelectedChip] = useState<string>('vn');
+  const [selectedChip, setSelectedChip] = useState<string>("vn");
 
   const handleChipClick = (value: string) => {
     setSelectedChip(value);
@@ -89,10 +229,10 @@ const ComicDetail: React.FC = ({ data, onUpdate, styles, classes }: any) => {
         </div>
         <div className="mt-4 flex justify-between">
           <div className=" w-[53%]">
-            <ListChappers />
+            <ListChappers data={mockupData} />
           </div>
           <div className="w-[46%]">
-            <ListNFTs />
+            <ListNFTs data={mockupDataNft} />
           </div>
         </div>
       </div>

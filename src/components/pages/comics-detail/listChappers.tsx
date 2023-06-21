@@ -3,97 +3,13 @@ import TextField from "components/Input/TextField";
 import Select from "components/Select";
 import Image from "next/image";
 import ic_note from "src/assets/images/icons/ic_note.svg";
-import MockupImage from "src/assets/images/mockup4.png";
 import Chapper from "./chapper";
+import NoData from "./noData";
 
-const mockupData = [
-  {
-    image: MockupImage,
-    name: "This is the chapter name#233",
-    status: "ongoing",
-    chapper: "Chapter 231",   
-    tags: ["Hi-tech", "Low-Life"],
-    views: 1000,
-    likes: 1000,
-    description:
-      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
-    latestChap: 123,
-  },
-  {
-    image: MockupImage,
-    name: "This is the chapter name#233",
-    status: "ongoing",
-    chapper: "Chapter 231",
-    tags: ["Hi-tech", "Low-Life"],
-    views: 1000,
-    likes: 1000,
-    description:
-      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
-    latestChap: 123,
-  },
-  {
-    image: MockupImage,
-    name: "This is the chapter name#233",
-    status: "ongoing",
-    chapper: "Chapter 231",
-    tags: ["Hi-tech", "Low-Life"],
-    views: 1000,
-    likes: 1000,
-    description:
-      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
-    latestChap: 123,
-  },
-  {
-    image: MockupImage,
-    name: "This is the chapter name#233",
-    status: "ongoing",
-    chapper: "Chapter 231",
-    tags: ["Hi-tech", "Low-Life"],
-    views: 1000,
-    likes: 1000,
-    description:
-      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
-    latestChap: 123,
-  },
-  {
-    image: MockupImage,
-    name: "This is the chapter name#233",
-    status: "ongoing",
-    chapper: "Chapter 231",
-    tags: ["Hi-tech", "Low-Life"],
-    views: 1000,
-    likes: 1000,
-    description:
-      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
-    latestChap: 123,
-  },
-  {
-    image: MockupImage,
-    name: "This is the chapter name#233",
-    status: "ongoing",
-    chapper: "Chapter 231",
-    tags: ["Hi-tech", "Low-Life"],
-    views: 1000,
-    likes: 1000,
-    description:
-      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
-    latestChap: 123,
-  },
-  {
-    image: MockupImage,
-    name: "This is the chapter name#233",
-    status: "ongoing",
-    chapper: "Chapter 231",
-    tags: ["Hi-tech", "Low-Life"],
-    views: 1000,
-    likes: 1000,
-    description:
-      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
-    latestChap: 123,
-  },
-];
-
-function ListChappers() {
+interface IListChappers {
+  data: any;
+}
+function ListChappers({ data }: IListChappers) {
   return (
     <>
       <div className="h-[62px] items-center flex gap-2 bg-light-medium-gray p-10">
@@ -155,11 +71,17 @@ function ListChappers() {
           />
         </div>
       </div>
-      <div className="pt-10 pl-24">
-        {mockupData.map((data, index) => {
-          return <Chapper key={index} {...data} />;
-        })}
-      </div>
+      {data.length > 0 ? (
+        <div className="pt-10 pl-24">
+          {data.map((data, index) => {
+            return <Chapper key={index} {...data} />;
+          })}
+        </div>
+      ) : (
+        <div className="pt-10 mb-10">
+          <NoData />
+        </div>
+      )}
     </>
   );
 }
