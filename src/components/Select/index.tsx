@@ -26,8 +26,7 @@ export default function Select({
       }}>
       {({ open }) => (
         <>
-          <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">Assigned to</Listbox.Label>
-          <div className="relative mt-2">
+          <div className="relative">
             <Listbox.Button className="relative w-full cursor-default rounded-[12px] bg-white py-[3px] pl-[13px] pr-[57px] text-left text-gray-900 shadow-sm ring-1 ring-inset ring-medium-gray focus:outline-none focus:ring-2  sm:text-sm sm:leading-6">
               <span className="flex items-center text-[16px] leading-[24px]">
                 <span className="block truncate">{selected.value}</span>
@@ -40,8 +39,11 @@ export default function Select({
               as={Fragment}
               leave="transition ease-in duration-100"
               leaveFrom="opacity-100"
-              leaveTo="opacity-0">
-              <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full min-w-[300px] rounded-[12px] overflow-auto bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              leaveTo="opacity-0"
+              enter="transition ease-in duration-100"
+              enterFrom="opacity-0"
+              enterTo="opacity-100">
+              <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full min-w-[300px] rounded-[12px] overflow-auto bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {options.map((option) => (
                   <Listbox.Option
                     key={option.key}

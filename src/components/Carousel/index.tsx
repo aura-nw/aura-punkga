@@ -1,12 +1,11 @@
 import Slider from "react-slick"
-import Mock from "assets/images/mokup1.png"
-import Mock2 from "assets/images/mokup2.png"
-import Image from "next/image"
 export default function Carousel({children}) {
   var settings = {
     dots: true,
     infinite: true,
     speed: 500,
+    autoplaySpeed: 5000,
+    autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,

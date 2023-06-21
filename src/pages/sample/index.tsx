@@ -5,6 +5,7 @@ import Button from "components/Button"
 import FilledButton from "components/Button/FilledButton"
 import OutlineButton from "components/Button/OutlineButton"
 import Carousel from "components/Carousel"
+import Dropdown, { DropdownMenu, DropdownToggle } from "components/Dropdown"
 import TextField from "components/Input/TextField"
 import AutoGrowingTextField from "components/Input/TextField/AutoGrowing"
 import Select from "components/Select"
@@ -41,6 +42,14 @@ export default function Test() {
               },
             ]}
           />
+          <Dropdown>
+            <DropdownToggle>
+              <FilledButton>Dropdown Toggle</FilledButton>
+            </DropdownToggle>
+            <DropdownMenu>
+              <div className="p-3">Dropdown Menu</div>
+            </DropdownMenu>
+          </Dropdown>
         </div>
         <div className="flex-1 w-2/4">
           <Carousel>
