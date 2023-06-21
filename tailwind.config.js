@@ -12,8 +12,9 @@ module.exports = {
     extend: {
       colors: {
         "light-gray": "var(--light-gray)",
+        "light-medium-gray": "var(--light-medium-gray)",
         "medium-gray": "var(--medium-gray)",
-        "gray": "var(--gray)",
+        gray: "var(--gray)",
         "primary-color": "var(--primary-color)",
         "second-color": "var(--second-color)",
         "light-green": "var(--light-green)",

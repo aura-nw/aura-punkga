@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { ONE_BILLION, ONE_TRILLION } from 'constants/number';
+import { ONE_BILLION, ONE_TRILLION } from 'src/constants/number';
 import Config from './config';
 
 const MAX_DISPLAY_DECIMALS = 6;

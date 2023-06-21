@@ -8,6 +8,9 @@ import Image from "next/image"
 import TextField from "components/Input/TextField"
 import FilledButton from "components/Button/FilledButton"
 import Button from "components/Button"
+import Dropdown, { DropdownMenu, DropdownToggle } from "components/Dropdown"
+import c98 from "images/c98.png"
+import SubFilledButton from "components/Button/FilledButton/SubFilledButton"
 declare global {
   interface Window {
     // ⚠️ notice that "Window" is capitalized here
@@ -18,8 +21,8 @@ declare global {
 
 export default function Header({}) {
   return (
-    <header className="bg-white">
-      <nav className="flex items-center justify-between py-[16px] px-[140px] " aria-label="Global">
+    <header className="bg-white border-b-2 border-light-gray border-solid]">
+      <nav className="pk-container flex items-center justify-between py-[16px] " aria-label="Global">
         <div>
           <a href="#" className="flex">
             <span className="sr-only">Your Company</span>
@@ -41,13 +44,43 @@ export default function Header({}) {
               <Image className="w-[24px] h-[24px]" src={EN} alt="" />
               EN
             </div>
-            <FilledButton size="lg">
-              <div className="flex items-center whitespace-nowrap w-max gap-[10px] h-[25px]">
-                <Image src={Avatar} alt="" />
-                Sunday
-              </div>
-            </FilledButton>
-            <FilledButton size="lg">Connect Wallet</FilledButton>
+            <Dropdown>
+              <DropdownToggle>
+                <FilledButton size="lg">
+                  <div className="flex items-center whitespace-nowrap w-max gap-[10px] h-[25px]">
+                    <Image src={Avatar} alt="" />
+                    Sunday
+                  </div>
+                </FilledButton>
+              </DropdownToggle>
+              <DropdownMenu customClass="right-[50%] translate-x-[50%]">
+                <div className="p-5 flex flex-col gap-5">
+                  <div className="flex justify-center items-center">
+                    <Image src={c98} alt="c98" />
+                    <div className="ml-[10px] font-[500]">Connected with coin 98</div>
+                  </div>
+                  <div className="flex">
+                    <div className="flex-auto w-[60%]"></div>
+                    <div className="flex-auto w-[10%]"></div>
+                    <div className="flex-auto w-[30%]"></div>
+                  </div>
+                  <SubFilledButton fullWidth size="lg">
+                    Disconnect Wallet
+                  </SubFilledButton>
+                  <div className="mt-[10px]">
+                    <div>
+                      <strong>My profile</strong>
+                    </div>
+                    <span className="w-full block my-[10px] border-[1px] border-solid border-light-medium-gray "></span>
+                    <div>
+                      <strong>Log out</strong>
+                    </div>
+                  </div>
+                </div>
+              </DropdownMenu>
+            </Dropdown>
+
+            {/* <FilledButton size="lg">Connect Wallet</FilledButton> */}
           </div>
         </div>
       </nav>
