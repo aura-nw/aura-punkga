@@ -1,8 +1,10 @@
 import Head from 'next/head';
 import classes from 'src/styles/Home.module.scss';
-import Header from 'components/Header';
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export default function Home() {
+  const { t } = useTranslation()
   return (
     <>
       <div className={classes.container}>
@@ -12,7 +14,7 @@ export default function Home() {
         </Head>
         <main>
           <div className="text-2xl">
-            Welcome to <a href="https://nextjs.org">Next.js!</a>
+          {t("Login")}
           </div>
 
           <p className={classes.description}>
@@ -103,4 +105,14 @@ export default function Home() {
       </div>
     </>
   )
+}
+
+export async function getStaticProps(context) {
+  const { locale } = context
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale)),
+    },
+  }
 }
