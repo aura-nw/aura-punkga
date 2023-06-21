@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 
-const Comics: React.FC = ({ data, onUpdate, styles, classes }: any) => {
+const Comic: React.FC = ({ data, onUpdate, styles, classes }: any) => {
   return (
     <div>
       <div style={styles.container} className={classes.container}>
@@ -13,4 +13,4 @@ const Comics: React.FC = ({ data, onUpdate, styles, classes }: any) => {
     </div>
   )
 }
-export default Comics
+export default Comic

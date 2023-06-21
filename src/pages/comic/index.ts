@@ -1,12 +1,12 @@
-import  ComicsDetail from './comics-detail'
+import  Comic from './comic'
 import { compose } from 'ramda'
 import { withApi } from './with-api'
 import { withStyle } from './with-style'
 import { withCssModule } from './with-css-module'
-const Items = compose(
+ const Items = compose(
   withCssModule,
   withStyle,
   withApi
-)(ComicsDetail)
+)(Comic)
 
 export default Items

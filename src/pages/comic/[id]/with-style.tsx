@@ -1,6 +1,7 @@
 const styles = {
-    container: {
-      backgroundColor: 'red'
+    background: {
+      backgroundColor: 'var(--light-gray)',
+      height: '100%'
     }
   }
   

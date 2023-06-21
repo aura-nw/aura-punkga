@@ -6,7 +6,8 @@ export const withApi = (Component: React.FC<any>) => (props: any) => {
     "Hi-tech",
     "Shonen 18+",
   ]);
-  const [status, setStatus] = useState<string>('Finished');
+  const [status, setStatus] = useState<string>('finished');
+
 
   const onUpdate = () => {};
 

@@ -9,13 +9,17 @@ interface ISelect {
   onChange?: (selected: { key: string | number; value: string }) => void
   icon?: JSX.Element
   options: { key: string | number; value: string }[]
+  label?: string
+  placeholder?: string
 }
 export default function Select({
   onChange,
   icon = <ChevronDownIcon className="h-5 w-5 text-medium-gray" aria-hidden="true" />,
   options,
+  label,
+  placeholder
 }: ISelect) {
-  const [selected, setSelected] = useState(options[0])
+  const [selected, setSelected] = useState<{ key: string | number; value: string } | null>(null)
 
   return (
     <Listbox
@@ -26,10 +30,15 @@ export default function Select({
       }}>
       {({ open }) => (
         <>
+          <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">{label}</Listbox.Label>
           <div className="relative">
-            <Listbox.Button className="relative w-full cursor-default rounded-[12px] bg-white py-[3px] pl-[13px] pr-[57px] text-left text-gray-900 shadow-sm ring-1 ring-inset ring-medium-gray focus:outline-none focus:ring-2  sm:text-sm sm:leading-6">
+            <Listbox.Button className="relative w-full cursor-default rounded-[12px] bg-white py-[3px] pl-[13px] pr-[57px] text-left text-gray-900 shadow-sm ring-1 ring-inset ring-medium-gray focus:outline-none focus:ring-2 sm:text-sm sm:leading-6 lg:h-10">
               <span className="flex items-center text-[16px] leading-[24px]">
-                <span className="block truncate">{selected.value}</span>
+                {selected ? (
+                  <span className="block truncate">{selected.value}</span>
+                ) : (
+                  <span className="block truncate text-medium-gray">{placeholder}</span>
+                )}
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">{icon}</span>
             </Listbox.Button>
