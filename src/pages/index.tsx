@@ -18,7 +18,7 @@ const mockupData = [
   {
     image: MockupImage,
     name: "Hero Cyberpunk",
-    status: "ongoing",
+    status: "warning",
     author: "Hanz",
     tags: ["Hi-tech", "Low-Life"],
     views: 1000,
@@ -30,7 +30,7 @@ const mockupData = [
   {
     image: MockupImage,
     name: "Hero Cyberpunk",
-    status: "ongoing",
+    status: "warning",
     author: "Hanz",
     tags: ["Hi-tech", "Low-Life"],
     views: 1000,
@@ -42,7 +42,7 @@ const mockupData = [
   {
     image: MockupImage,
     name: "Hero Cyberpunk",
-    status: "ongoing",
+    status: "warning",
     author: "Hanz",
     tags: ["Hi-tech", "Low-Life"],
     views: 1000,
@@ -54,7 +54,7 @@ const mockupData = [
   {
     image: MockupImage,
     name: "Hero Cyberpunk",
-    status: "ongoing",
+    status: "warning",
     author: "Hanz",
     tags: ["Hi-tech", "Low-Life"],
     views: 1000,
@@ -66,7 +66,7 @@ const mockupData = [
   {
     image: MockupImage,
     name: "Hero Cyberpunk",
-    status: "ongoing",
+    status: "warning",
     author: "Hanz",
     tags: ["Hi-tech", "Low-Life"],
     views: 1000,
@@ -78,7 +78,7 @@ const mockupData = [
   {
     image: MockupImage,
     name: "Hero Cyberpunk",
-    status: "ongoing",
+    status: "warning",
     author: "Hanz",
     tags: ["Hi-tech", "Low-Life"],
     views: 1000,
@@ -90,7 +90,7 @@ const mockupData = [
   {
     image: MockupImage,
     name: "Hero Cyberpunk",
-    status: "ongoing",
+    status: "warning",
     author: "Hanz",
     tags: ["Hi-tech", "Low-Life"],
     views: 1000,

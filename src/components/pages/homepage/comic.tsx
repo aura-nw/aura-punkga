@@ -1,4 +1,5 @@
 import StatusLabel from "components/Label/Status"
+import Tag from "components/Label/Tag"
 import Image from "next/image"
 
 interface IComic {
@@ -27,13 +28,7 @@ export default function Comic(props: IComic) {
         </div>
         <div className="flex gap-[8px] mt-[10px]">
           {props.tags.map((tag, index) => {
-            return (
-              <div
-                className="text-medium-gray rounded-full border-solid border-[1px] border-medium-gray px-[12px] "
-                key={index}>
-                {tag}
-              </div>
-            )
+            return <Tag key={index}>{tag}</Tag>
           })}
         </div>
         <div className="mt-[10px] flex gap-[24px]">

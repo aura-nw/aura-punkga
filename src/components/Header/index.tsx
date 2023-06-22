@@ -22,7 +22,7 @@ declare global {
 export default function Header({}) {
   return (
     <header className="bg-white border-b-2 border-light-gray border-solid]">
-      <nav className="pk-container flex items-center justify-between py-[16px] " aria-label="Global">
+      <nav className="pk-container flex items-center justify-between pt-[10px] pb-[8px]" aria-label="Global">
         <div>
           <a href="#" className="flex">
             <span className="sr-only">Your Company</span>

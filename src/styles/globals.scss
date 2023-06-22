@@ -9,7 +9,7 @@
   --light-medium-gray: #DEDEDE;
   --medium-gray: #ababab;
   --light-medium-gray: #DEDEDE;
-  --gray: #61646B;
+  --subtle-dark: #61646B;
   --primary-color: #23ff81;
   --second-color: #1fab5e;
   --light-green: #C6FFDE;
@@ -18,6 +18,9 @@
 }
 body {
   font-family: "Plus Jakarta Sans", sans-serif !important;
+}
+a {
+  cursor: pointer;
 }
 .slick-list {
   border-radius: 30px;
@@ -40,12 +43,13 @@ body {
   }
 }
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: var(--medium-gray);
-  border-radius: 3px;
+  border-radius: 999px;
+  opacity: 0;
 }
 .pk-container {
   margin: auto;

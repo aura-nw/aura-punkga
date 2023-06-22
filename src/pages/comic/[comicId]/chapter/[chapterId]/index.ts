@@ -1,4 +1,4 @@
-import  ComicDetail from './chapter'
+import  Chapter from './chapter'
 import { compose } from 'ramda'
 import { withApi } from './with-api'
 import { withStyle } from './with-style'
@@ -7,6 +7,6 @@ const Items = compose(
   withCssModule,
   withStyle,
   withApi
-)(ComicDetail)
+)(Chapter)
 
 export default Items

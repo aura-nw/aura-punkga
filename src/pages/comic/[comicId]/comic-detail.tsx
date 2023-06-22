@@ -1,4 +1,4 @@
-import Chip from "components/Chip";
+import Tag from "components/Label/Tag";
 import StatusLabel from "components/Label/Status";
 import ListChappers from "components/pages/comics-detail/listChappers";
 import ListNFTs from "components/pages/comics-detail/listNFTs";
@@ -13,7 +13,7 @@ const mockupData = [
   {
     image: MockupImage,
     name: "This is the chapter name#233",
-    status: "ongoing",
+    status: "warning",
     chapper: "Chapter 231",
     tags: ["Hi-tech", "Low-Life"],
     views: 1000,
@@ -25,7 +25,7 @@ const mockupData = [
   {
     image: MockupImage,
     name: "This is the chapter name#233",
-    status: "ongoing",
+    status: "warning",
     chapper: "Chapter 231",
     tags: ["Hi-tech", "Low-Life"],
     views: 1000,
@@ -37,7 +37,7 @@ const mockupData = [
   {
     image: MockupImage,
     name: "This is the chapter name#233",
-    status: "ongoing",
+    status: "warning",
     chapper: "Chapter 231",
     tags: ["Hi-tech", "Low-Life"],
     views: 1000,
@@ -49,7 +49,7 @@ const mockupData = [
   {
     image: MockupImage,
     name: "This is the chapter name#233",
-    status: "ongoing",
+    status: "warning",
     chapper: "Chapter 231",
     tags: ["Hi-tech", "Low-Life"],
     views: 1000,
@@ -61,7 +61,7 @@ const mockupData = [
   {
     image: MockupImage,
     name: "This is the chapter name#233",
-    status: "ongoing",
+    status: "warning",
     chapper: "Chapter 231",
     tags: ["Hi-tech", "Low-Life"],
     views: 1000,
@@ -73,7 +73,7 @@ const mockupData = [
   {
     image: MockupImage,
     name: "This is the chapter name#233",
-    status: "ongoing",
+    status: "warning",
     chapper: "Chapter 231",
     tags: ["Hi-tech", "Low-Life"],
     views: 1000,
@@ -85,7 +85,7 @@ const mockupData = [
   {
     image: MockupImage,
     name: "This is the chapter name#233",
-    status: "ongoing",
+    status: "warning",
     chapper: "Chapter 231",
     tags: ["Hi-tech", "Low-Life"],
     views: 1000,
@@ -169,19 +169,19 @@ const ComicDetail: React.FC = ({ data, onUpdate, styles, classes }: any) => {
             <div className="ml-4 align-bottom flex flex-col gap-2.5">
               <div className="flex gap-4 items-center">
                 <p className="text-2xl font-extrabold">Hero Cyberpunk </p>
-                <StatusLabel status={status} />
+                <StatusLabel status={status} >{status}</StatusLabel>
               </div>
               <p className="text-xl font-semibold text-second-color">Hanz</p>
               <div className="flex gap-2.5">
                 <div className="flex">
-                  <p className="text-base font-semibold text-gray">1,234</p>
+                  <p className="text-base font-semibold text-subtle-dark">1,234</p>
                   <p className="text-base font-semibold text-medium-gray ml-1">
                     views
                   </p>
                 </div>
                 -
                 <div className="flex">
-                  <p className="text-base font-semibold text-gray">1,234</p>
+                  <p className="text-base font-semibold text-subtle-dark">1,234</p>
                   <p className="text-base font-semibold text-medium-gray ml-1">
                     likes
                   </p>
@@ -189,16 +189,16 @@ const ComicDetail: React.FC = ({ data, onUpdate, styles, classes }: any) => {
               </div>
               <div className="flex gap-2.5">
                 {tags.map((tag, i) => (
-                  <Chip disabled key={i}>
+                  <Tag key={i}>
                     {tag}
-                  </Chip>
+                  </Tag>
                 ))}
               </div>
             </div>
           </div>
           <div className="flex gap-2">
-            <p className="font-normal text-base text-gray">Release date:</p>
-            <p className="font-semibold text-base text-gray">24/11/2022</p>
+            <p className="font-normal text-base text-subtle-dark">Release date:</p>
+            <p className="font-semibold text-base text-subtle-dark">24/11/2022</p>
           </div>
           <div className="flex gap-2">
             <Image src={ic_calendar} alt="" />
@@ -219,12 +219,12 @@ const ComicDetail: React.FC = ({ data, onUpdate, styles, classes }: any) => {
             </p>
           </div>
           <div className="flex gap-4 mt-6">
-            <Chip value="en" selected={selectedChip} onClick={handleChipClick}>
+            <Tag clickable value="en" selected={selectedChip == 'en'} onClick={handleChipClick}>
               English
-            </Chip>
-            <Chip value="vn" selected={selectedChip} onClick={handleChipClick}>
+            </Tag>
+            <Tag clickable value="vn" selected={selectedChip == 'vn'} onClick={handleChipClick}>
               Vietnamese
-            </Chip>
+            </Tag>
           </div>
         </div>
         <div className="mt-4 flex justify-between">
