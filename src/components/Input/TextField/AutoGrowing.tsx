@@ -11,8 +11,9 @@ export default function AutoGrowingTextField({
   return (
     <div className="relative w-full">
       <div
+        placeholder={placeholder}
         contentEditable={true}
-        className="whitespace-pre-wrap break-words bg-white min-h-[32px] w-full focus:outline-none text-[16px] leading-[20px] px-[10px] py-[5px] rounded-[12px] border-[1px] border-solid border-medium-gray"></div>
+        className="whitespace-pre-wrap break-words min-h-[32px] w-full focus:outline-none text-[12px] leading-[20px] px-[10px] py-[7px] rounded-[12px] border-[1px] border-solid border-medium-gray"></div>
     </div>
   )
 }

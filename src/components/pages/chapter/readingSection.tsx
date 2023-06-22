@@ -3,9 +3,10 @@ import OutlineButton from "components/Button/OutlineButton"
 import FullscreenIcon from "images/icons/fullscreen.svg"
 import HeartIcon from "images/icons/heart.svg"
 import InboxIcon from "images/icons/inbox.svg"
+import ChatIcon from "images/icons/chat.svg"
 import PageMockup from "images/comicpage.png"
 import Image from "next/image"
-export default function ReadingSection() {
+export default function ReadingSection({ tab, setTab }) {
   return (
     <div className="w-full relative h-full">
       <div className="h-full overflow-auto">
@@ -38,7 +39,13 @@ export default function ReadingSection() {
           <div className="flex-1 self-center flex gap-2 justify-end">
             <Image src={FullscreenIcon} alt="" />
             <Image src={HeartIcon} alt="" />
-            <Image src={InboxIcon} alt="" />
+            {
+              (tab == "detail" ? (
+                <Image src={ChatIcon} alt="" onClick={() => setTab("comment")} />
+              ) : (
+                <Image src={InboxIcon} alt="" onClick={() => setTab("detail")} />
+              ))
+            }
           </div>
         </div>
       </div>

@@ -51,6 +51,12 @@ a {
   border-radius: 999px;
   opacity: 0;
 }
+[contenteditable=true]:empty:before{
+  content: attr(placeholder);
+  pointer-events: none;
+  display: block;
+  color: var(--medium-gray)
+}
 .pk-container {
   margin: auto;
   width: 100%;

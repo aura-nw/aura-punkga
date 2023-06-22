@@ -12,7 +12,7 @@ import { LockClosedIcon } from "@heroicons/react/20/solid"
 
 export default function ChapterDetail() {
   return (
-    <>
+    <div className="h-full overflow-auto">
       <Image src={mockBanner} className="h-[160px] object-cover" alt="" />
       <div className="px-[60px] flex flex-col gap-[10px]">
         <div className="flex gap-5 mt-[-44px]">
@@ -82,6 +82,6 @@ export default function ChapterDetail() {
           </div>
         ))}
       </div>
-    </>
+    </div>
   )
 }
