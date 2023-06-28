@@ -4,17 +4,15 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid"
 import Mock from "assets/images/mokup1.png"
 import Mock2 from "assets/images/mokup2.png"
 import SubFilledButton from "components/Button/FilledButton/SubFilledButton"
+import Header from "components/Header"
 import FilledSelect from "components/Select/FilledSelect"
-import Comic from "components/pages/homepage/comic"
+import Comic, { IComic } from "components/pages/homepage/comic"
+import TrendingComic from "components/pages/homepage/trendingComic"
 import Image from "next/image"
 import MockupImage from "src/assets/images/mockup4.png"
 import MockupImage2 from "src/assets/images/mockup5.png"
-import TrendingComic from "components/pages/homepage/trendingComic"
-import Link from "next/link"
-import { useRouter } from "next/router"
-import { useTranslation } from "next-i18next"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-const mockupData = [
+const mockupData: IComic[] = [
   {
     image: MockupImage,
     name: "Hero Cyberpunk",
@@ -102,142 +100,136 @@ const mockupData = [
 ]
 
 export default function Home() {
-  const router = useRouter()
-  const {t} = useTranslation()
   return (
-    <div className="pk-container">
-      <div className="mt-[40px] grid grid-cols-2 gap-[40px]">
-        <div>
-          <Carousel>
-            <div>
-              <Image className="w-full" src={Mock} alt="" />
-            </div>
-            <div>
-              <Image className="w-full" src={Mock2} alt="" />
-            </div>
-            <div>
-              <Image className="w-full" src={Mock2} alt="" />
-            </div>
-            <div>
-              <Image className="w-full" src={Mock2} alt="" />
-            </div>
-            <div>
-              <Image className="w-full" src={Mock2} alt="" />
-            </div>
-            <div>
-              <Image className="w-full" src={Mock2} alt="" />
-            </div>
-          </Carousel>
+    <>
+      <Header />
+      <div className="pk-container">
+        <div className="mt-[40px] grid grid-cols-2 gap-[40px]">
+          <div>
+            <Carousel>
+              <div>
+                <Image className="w-full" src={Mock} alt="" />
+              </div>
+              <div>
+                <Image className="w-full" src={Mock2} alt="" />
+              </div>
+              <div>
+                <Image className="w-full" src={Mock2} alt="" />
+              </div>
+              <div>
+                <Image className="w-full" src={Mock2} alt="" />
+              </div>
+              <div>
+                <Image className="w-full" src={Mock2} alt="" />
+              </div>
+              <div>
+                <Image className="w-full" src={Mock2} alt="" />
+              </div>
+            </Carousel>
+          </div>
+          <div>
+            <Carousel>
+              <div>
+                <Image className="w-full" src={Mock} alt="" />
+              </div>
+              <div>
+                <Image className="w-full" src={Mock2} alt="" />
+              </div>
+              <div>
+                <Image className="w-full" src={Mock2} alt="" />
+              </div>
+              <div>
+                <Image className="w-full" src={Mock2} alt="" />
+              </div>
+              <div>
+                <Image className="w-full" src={Mock2} alt="" />
+              </div>
+              <div>
+                <Image className="w-full" src={Mock2} alt="" />
+              </div>
+            </Carousel>
+          </div>
         </div>
-        <div>
-          <Carousel>
-            <div>
-              <Image className="w-full" src={Mock} alt="" />
+        <div className="mt-[50px] flex">
+          <div className="flex-auto w-[70%]">
+            <div className="flex justify-between items-center">
+              <div className="text-[24px] font-[800]">Latest Update</div>
+              <div className="flex gap-[20px] items-center">
+                <FilledSelect
+                  icon={<ChevronDownIcon className="h-5 w-5 text-medium-gray" aria-hidden="true" />}
+                  options={[
+                    {
+                      key: 1,
+                      value: "Wade Cooper",
+                    },
+                    {
+                      key: 2,
+                      value: "Arlene Mccoy",
+                    },
+                    {
+                      key: 3,
+                      value: "Devon Webb",
+                    },
+                  ]}
+                  placeholder="All gernes"
+                />
+                <FilledSelect
+                  icon={<ChevronDownIcon className="h-5 w-5 text-medium-gray" aria-hidden="true" />}
+                  options={[
+                    {
+                      key: 1,
+                      value: "Wade Cooper",
+                    },
+                    {
+                      key: 2,
+                      value: "Arlene Mccoy",
+                    },
+                    {
+                      key: 3,
+                      value: "Devon Webb",
+                    },
+                  ]}
+                  placeholder="Status"
+                />
+              </div>
             </div>
-            <div>
-              <Image className="w-full" src={Mock2} alt="" />
+            <div className="grid grid-cols-2 gap-[80px] mt-[76px]">
+              {mockupData.map((data, index) => {
+                return (
+                  <div key={index}>
+                    <Comic {...data} />
+                  </div>
+                )
+              })}
             </div>
-            <div>
-              <Image className="w-full" src={Mock2} alt="" />
+          </div>
+          <div className="flex-auto w-[10%]"></div>
+          <div className="flex-auto w-[24%]">
+            <div className="relative w-full rounded-[30px] overflow-hidden">
+              <div className="absolute inset-0">
+                <Image src={MockupImage2} alt="" fill className="object-cover" />
+              </div>
+              <div className="relative z-10 flex flex-col items-center justify-center h-full py-[50px]">
+                <div className="font-bold text-xl text-white mb-[10px]">Share your work to us</div>
+                <SubFilledButton size="lg">Publish manga to Punkga</SubFilledButton>
+              </div>
             </div>
-            <div>
-              <Image className="w-full" src={Mock2} alt="" />
+            <div className="text-[24px] font-[800] mt-5">Trending</div>
+            <div className="flex flex-col gap-10 mt-10">
+              {mockupData.map((data, index) => {
+                return <TrendingComic key={index} {...data} />
+              })}
             </div>
-            <div>
-              <Image className="w-full" src={Mock2} alt="" />
-            </div>
-            <div>
-              <Image className="w-full" src={Mock2} alt="" />
-            </div>
-          </Carousel>
+          </div>
         </div>
       </div>
-      <div className="mt-[50px] flex">
-        <div className="flex-auto w-[70%]">
-          <div className="flex justify-between items-center">
-            <div className="text-[24px] font-[800]">Latest Update</div>
-            <div className="flex gap-[20px] items-center">
-              <FilledSelect
-                icon={<ChevronDownIcon className="h-5 w-5 text-medium-gray" aria-hidden="true" />}
-                options={[
-                  {
-                    key: 1,
-                    value: "Wade Cooper",
-                  },
-                  {
-                    key: 2,
-                    value: "Arlene Mccoy",
-                  },
-                  {
-                    key: 3,
-                    value: "Devon Webb",
-                  },
-                ]}
-                placeholder="All gernes"
-              />
-              <FilledSelect
-                icon={<ChevronDownIcon className="h-5 w-5 text-medium-gray" aria-hidden="true" />}
-                options={[
-                  {
-                    key: 1,
-                    value: "Wade Cooper",
-                  },
-                  {
-                    key: 2,
-                    value: "Arlene Mccoy",
-                  },
-                  {
-                    key: 3,
-                    value: "Devon Webb",
-                  },
-                ]}
-                placeholder="Status"
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-[80px] mt-[76px]">
-            {mockupData.map((data, index) => {
-              return (
-                <div onClick={() => router.push('/')} key={index}>
-                  <Comic {...data} />
-                </div>
-              )
-            })}
-          </div>
-        </div>
-        <div className="flex-auto w-[10%]"></div>
-        <div className="flex-auto w-[24%]">
-          <div className="relative w-full rounded-[30px] overflow-hidden">
-            <div className="absolute inset-0">
-              <Image src={MockupImage2} alt="" fill className="object-cover" />
-            </div>
-            <div className="relative z-10 flex flex-col items-center justify-center h-full py-[50px]">
-              <div className="font-bold text-xl text-white mb-[10px]">Share your work to us</div>
-              <SubFilledButton size="lg">Publish manga to Punkga</SubFilledButton>
-            </div>
-          </div>
-          <div className="text-[24px] font-[800] mt-5">Trending</div>
-          <div className="flex flex-col gap-10 mt-10">
-            {mockupData.map((data, index) => {
-              return <TrendingComic key={index} {...data} />
-            })}
-          </div>
-        </div>
-      </div>
-    </div>
+    </>
   )
 }
 
-export async function getStaticProps({ locale }) {
-  locale = locale || "en";
 
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, [
-        'common',
-        'footer',
-      ])),
-      // Will be passed to the page component as props
-    },
-  }
-}
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ["common"])),
+  },
+})

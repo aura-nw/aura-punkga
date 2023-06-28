@@ -1,11 +1,12 @@
 import StatusLabel from "components/Label/Status"
 import Tag from "components/Label/Tag"
 import Image from "next/image"
+import Link from "next/link"
 
-interface IComic {
+export interface IComic {
   image: any
   name: string
-  status: string
+  status: "warning" | "success" | "error"
   author: string
   description: string
   tags: string[]
@@ -16,13 +17,13 @@ interface IComic {
 export default function Comic(props: IComic) {
   return (
     <div className="flex gap-[20px]">
-      <div className="flex-auto w-1/3">
+      <Link href="/comic/1/chapter/1" className="flex-auto w-1/3">
         <Image src={props.image} alt="" className="rounded-[15px]" />
-      </div>
+      </Link>
       <div className="flex-auto w-2/3">
-        <div className="text-second-color font-bold text-[18px]">
-          {props.name} <StatusLabel status={props.status} />
-        </div>
+        <Link href="/comic/1/chapter/1" className=" text-second-color font-bold text-[18px]">
+          {props.name} <StatusLabel status={props.status}>Ongoing</StatusLabel>
+        </Link>
         <div>
           by <span className="text-second-color font-[600]">{props.author}</span>
         </div>

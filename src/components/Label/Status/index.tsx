@@ -9,7 +9,7 @@ export default function StatusLabel({ status, children }: IStatusLabel) {
     error: "text-[#FF5C00] bg-[#FFD9DA]",
   }
   return (
-    <span className={`rounded-[6px] font-bold px-[8px] pb-[1px] text-[14px] leading-[24px] ${classes[status]} flex items-center`}>
+    <span className={`rounded-[6px] font-bold px-[8px] pb-[1px] text-[14px] leading-[24px] ${classes[status]} inline-flex items-center`}>
       {children}
     </span>
   )

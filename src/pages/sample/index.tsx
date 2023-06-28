@@ -6,14 +6,17 @@ import FilledButton from "components/Button/FilledButton"
 import OutlineButton from "components/Button/OutlineButton"
 import Carousel from "components/Carousel"
 import Dropdown, { DropdownMenu, DropdownToggle } from "components/Dropdown"
+import Header from "components/Header"
 import TextField from "components/Input/TextField"
 import AutoGrowingTextField from "components/Input/TextField/AutoGrowing"
 import Select from "components/Select"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import Image from "next/image"
 
 export default function Test() {
   return (
     <>
+      <Header />
       <div className="p-3 flex bg-light-gray h-[100vh] gap-3 ">
         <div className="flex flex-col flex-1 w-2/4 gap-3 items-baseline">
           <Button size="lg">Large Button</Button>
@@ -77,3 +80,10 @@ export default function Test() {
     </>
   )
 }
+
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ["common"])),
+  },
+})

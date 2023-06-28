@@ -1,18 +1,12 @@
-import { AppProps } from 'next/app';
+import { AppProps } from "next/app"
 
-import 'src/styles/globals.scss';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import Header from '../components/header';
-import { appWithTranslation } from 'next-i18next';
+import { appWithTranslation } from "next-i18next"
+import "slick-carousel/slick/slick-theme.css"
+import "slick-carousel/slick/slick.css"
+import "src/styles/globals.scss"
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <>
-      <Header />
-      <Component {...pageProps} />
-    </>
-  );
+  return <Component {...pageProps} />
 }
 
-export default appWithTranslation(MyApp);
+export default appWithTranslation(MyApp)
