@@ -113,7 +113,7 @@ export default function ReadingSection({
         }`}>
         <div className="flex-1 self-center">
           <div>
-            <strong>{`${data[chapterLocale].title} • Chapter ${chapterData.number} • ${chapterData.name}`}</strong>
+            <strong>{`${data[language].title} • Chapter ${chapterData.number} • ${chapterData.name}`}</strong>
             <p className="text-subtle-dark">
               {(chapterData.likes || 0).toLocaleString("en-US")} likes •{" "}
               {(chapterData.views || 0).toLocaleString("en-US")} views •{" "}

@@ -15,10 +15,18 @@ import m6 from "src/assets/images/mockup6.png"
 import { LanguageType } from "src/constants/global.types"
 import { IComicDetail } from "src/models/comic"
 
-export default function ComicDetail({ data, language }: { data: IComicDetail; language: LanguageType }) {
+export default function ComicDetail({
+  data,
+  language,
+  setLanguage,
+}: {
+  data: IComicDetail
+  language: LanguageType
+  setLanguage: any
+}) {
   const [expandDetail, setExpandDetail] = useState(false)
   const { t } = useTranslation()
-  
+
   if (typeof data == "undefined") {
     return <></>
   }
@@ -28,9 +36,7 @@ export default function ComicDetail({ data, language }: { data: IComicDetail; la
   }
 
   const selectedLanguage =
-    data.languages.find((l) => l.shortLang == language) ||
-    data.languages.find((l) => l.isMainLanguage)
-
+    data.languages.find((l) => l.shortLang == language) || data.languages.find((l) => l.isMainLanguage)
 
   return (
     <div
@@ -115,7 +121,11 @@ export default function ComicDetail({ data, language }: { data: IComicDetail; la
           <div className="flex gap-2 flex-wrap">
             {data.languages.map((language, index) => {
               return (
-                <Tag selected={selectedLanguage.id == language.id} key={index}>
+                <Tag
+                  selected={selectedLanguage.id == language.id}
+                  key={index}
+                  onClick={() => setLanguage(language.shortLang)}
+                >
                   {t(language.shortLang)}
                 </Tag>
               )

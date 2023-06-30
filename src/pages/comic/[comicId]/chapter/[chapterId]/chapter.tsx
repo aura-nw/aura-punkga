@@ -4,7 +4,7 @@ import ComicDetail from "components/pages/chapter/comicDetail"
 import CommentSection from "components/pages/chapter/commentSection"
 import ReadingSection from "components/pages/chapter/readingSection"
 import { useRouter } from "next/router"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { LanguageType } from "src/constants/global.types"
 import { IChapter } from "src/models/chapter"
 import { IComicDetail } from "src/models/comic"
@@ -23,6 +23,9 @@ const Chapter: React.FC = ({
   const [tab, setTab] = useState("detail")
   const { locale } = useRouter()
   const [language, setLanguage] = useState<LanguageType>(locale as LanguageType)
+  useEffect(() => {
+    setLanguage(locale as LanguageType)
+  }, [locale])
   return (
     <>
       <Header />
@@ -41,7 +44,7 @@ const Chapter: React.FC = ({
             loading ? (
               <DummyComicDetail />
             ) : (
-              <ComicDetail data={data} language={language} />
+                <ComicDetail data={data} language={language} setLanguage={setLanguage} />
             )
           ) : (
             <CommentSection />
