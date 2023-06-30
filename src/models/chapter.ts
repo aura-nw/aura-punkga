@@ -8,7 +8,7 @@ export interface IChapter {
   type: "Free"
   status: IStatus
   thumbnail: string
-  pages: IMultiLanguageContent<string[]>
+  pages: IMultiLanguageContent<string[] | null>
   views: number
   likes: number
   comments: number

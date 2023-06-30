@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useRouter } from "next/router"
-import { LANGUAGE, LOCALES } from "src/constants"
+import { LANGUAGE } from "src/constants"
 import useApi from "src/hooks/useApi"
 import { IChapter } from "src/models/chapter"
 import { IComicDetail } from "src/models/comic"
@@ -29,7 +29,9 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     }
 
     LANGUAGE.forEach((l) => {
-      const mangaLanguages = data.manga_languages.find((ml) => ml.language_id == l.id) || data.manga_languages.find((ml) => ml.is_main_language)
+      const mangaLanguages =
+        data.manga_languages.find((ml) => ml.language_id == l.id) ||
+        data.manga_languages.find((ml) => ml.is_main_language)
       res[l.shortLang] = {
         title: mangaLanguages?.title,
         description: mangaLanguages?.description,
@@ -57,10 +59,8 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     }
 
     LANGUAGE.forEach((l) => {
-      const chapterLanguage =
-        data.chapter_languages.find((cl) => cl.language_id == l.id) ||
-        data.chapter_languages.find((cl) => cl.is_main_language)
-      res[l.shortLang] = chapterLanguage.detail.map((page) => page.image_path)
+      const chapterLanguage = data.chapter_languages.find((cl) => cl.language_id == l.id)
+      res[l.shortLang] = chapterLanguage ? chapterLanguage.detail.map((page) => page.image_path) : null
     })
 
     return res

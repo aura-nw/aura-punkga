@@ -78,6 +78,9 @@ export default function ReadingSection({
     return <div>Không có dữ liệu</div>
   }
 
+  const mainLanguage = data.languages.find((l) => l.isMainLanguage).shortLang
+  const chapterLocale = chapterData[language] ? language : mainLanguage
+
   return (
     <div className={`w-full h-full ${mode == "minscreen" ? "relative" : "fixed bg-black z-20 top-0 bottom-0"}`}>
       <div
@@ -97,7 +100,7 @@ export default function ReadingSection({
       </div>
       <div className="h-full overflow-auto" onScroll={onScrollHandler}>
         <div ref={ref} className={`${mode == "minscreen" ? "mt-0" : "mt-[60px]"} w-[70%] mx-auto mb-[60px]`}>
-          {chapterData[language]?.map((page, index) => (
+          {chapterData[chapterLocale]?.map((page, index) => (
             <Image src={page || PageMockup} key={index} alt="" className="mx-auto" width={1000} height={1000} />
           ))}
         </div>
@@ -110,7 +113,7 @@ export default function ReadingSection({
         }`}>
         <div className="flex-1 self-center">
           <div>
-            <strong>{`${data[language].title} • Chapter ${chapterData.number} • ${chapterData.name}`}</strong>
+            <strong>{`${data[chapterLocale].title} • Chapter ${chapterData.number} • ${chapterData.name}`}</strong>
             <p className="text-subtle-dark">
               {(chapterData.likes || 0).toLocaleString("en-US")} likes •{" "}
               {(chapterData.views || 0).toLocaleString("en-US")} views •{" "}
