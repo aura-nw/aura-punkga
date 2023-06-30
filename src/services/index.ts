@@ -1,0 +1,73 @@
+import axios from "axios"
+import { LANGUAGE, STATUS } from "src/constants"
+import { IComic } from "src/models/comic"
+
+export const getLatestComic = async (): Promise<IComic[]> => {
+  return await axios.get("http://hasura.dev.punkga.me/api/rest/public/latest").then((res) =>
+    res.data?.manga?.map((m: any) => {
+      const response = {
+        id: m.id,
+        image: m.image,
+        status: {
+          type: STATUS[m.status],
+          text: m.status,
+        },
+        authors: m.manga_creators?.map((c: any) => c.creator?.name),
+        views: m.chapters_aggregate?.aggregate?.sum?.views || 0,
+        likes: m.chapters_aggregate?.aggregate?.sum?.likes || 0,
+        latestChap: {
+          number: m.chapters?.[0]?.chapter_number,
+          id: m.chapters?.[0]?.id,
+        },
+        tags: m.manga_tags.map(({ tag }: any) => {
+          const r = {}
+          tag.tag_languages.forEach((tl: any) => {
+            r[LANGUAGE.find((l) => l.id == tl.language_id).shortLang] = tl.value
+          })
+          return r
+        }),
+      }
+      LANGUAGE.forEach((language) => {
+        const l =
+          m.manga_languages.find((ml) => ml.language_id == language.id) ||
+          m.manga_languages.find((ml) => ml.is_main_language)
+        response[language.shortLang] = {
+          title: l ? l?.title : "Unknown title",
+          description: l ? l?.description : "Unknown description",
+        }
+      })
+      return response
+    })
+  )
+}
+
+export const getTrendingComic = async (): Promise<IComic[]> => {
+  return await axios.get("http://hasura.dev.punkga.me/api/rest/public/trending").then((res) =>
+    res.data?.manga?.map((m: any) => {
+      const response = {
+        id: m.id,
+        image: m.image,
+        status: {
+          type: STATUS[m.status],
+          text: m.status,
+        },
+        authors: m.manga_creators?.map((c: any) => c.creator?.name),
+        views: m.chapters_aggregate?.aggregate?.sum?.views || 0,
+        latestChap: {
+          number: m.chapters?.[0]?.chapter_number,
+          id: m.chapters?.[0]?.id,
+        },
+      }
+      LANGUAGE.forEach((language) => {
+        const l =
+          m.manga_languages.find((ml) => ml.language_id == language.id) ||
+          m.manga_languages.find((ml) => ml.is_main_language)
+        response[language.shortLang] = {
+          title: l ? l?.title : "Unknown title",
+          description: l ? l?.description : "Unknown description",
+        }
+      })
+      return response
+    })
+  )
+}

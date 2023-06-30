@@ -1,9 +1,8 @@
-import Image from "next/image"
 import Avatar from "images/avatar.png"
-import TextField from "../TextField"
 import SendIcon from "images/icons/send.svg"
-import classes from "./chatInput.module.scss"
+import Image from "next/image"
 import AutoGrowingTextField from "../TextField/AutoGrowing"
+import classes from "./chatInput.module.scss"
 export default function ChatInput() {
   return (
     <div className={`px-6 py-3 flex items-start gap-[10px] ${classes["chat-input"]}`}>

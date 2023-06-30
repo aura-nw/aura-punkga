@@ -6,18 +6,21 @@
 
 :root {
   --light-gray: #f2f2f2;
-  --light-medium-gray: #DEDEDE;
+  --light-medium-gray: #dedede;
   --medium-gray: #ababab;
-  --light-medium-gray: #DEDEDE;
-  --subtle-dark: #61646B;
+  --light-medium-gray: #dedede;
+  --subtle-dark: #61646b;
   --primary-color: #23ff81;
   --second-color: #1fab5e;
-  --light-green: #C6FFDE;
-  --light-yellow: #FFF2D1;
-  --medium-yellow: #EEB304;
+  --light-green: #c6ffde;
+  --light-yellow: #fff2d1;
+  --medium-yellow: #eeb304;
 }
 body {
   font-family: "Plus Jakarta Sans", sans-serif !important;
+}
+#__next {
+  background: #fff;
 }
 a {
   cursor: pointer;
@@ -50,11 +53,11 @@ a {
   background: var(--medium-gray);
   border-radius: 999px;
 }
-[contenteditable=true]:empty:before{
+[contenteditable="true"]:empty:before {
   content: attr(placeholder);
   pointer-events: none;
   display: block;
-  color: var(--medium-gray)
+  color: var(--medium-gray);
 }
 .pk-container {
   margin: auto;
@@ -77,35 +80,35 @@ a {
 }
 .pk-width__ml {
   @media (min-width: 576px) {
-    width: calc(100vw - (100vw - 540px)/2)
+    width: calc(100vw - (100vw - 540px) / 2);
   }
   @media (min-width: 768px) {
-    width: calc(100vw - (100vw - 720px)/2)
+    width: calc(100vw - (100vw - 720px) / 2);
   }
   @media (min-width: 992px) {
-    width: calc(100vw - (100vw - 960px)/2)
+    width: calc(100vw - (100vw - 960px) / 2);
   }
   @media (min-width: 1200px) {
-    width: calc(100vw - (100vw - 1140px)/2)
+    width: calc(100vw - (100vw - 1140px) / 2);
   }
   @media (min-width: 1700px) {
-    width: calc(100vw - (100vw - 1640px)/2)
+    width: calc(100vw - (100vw - 1640px) / 2);
   }
 }
 .pk-width__ml-opposite {
   @media (min-width: 576px) {
-    width: calc((100vw - 540px)/2)
+    width: calc((100vw - 540px) / 2);
   }
   @media (min-width: 768px) {
-    width: calc((100vw - 720px)/2)
+    width: calc((100vw - 720px) / 2);
   }
   @media (min-width: 992px) {
-    width: calc((100vw - 960px)/2)
+    width: calc((100vw - 960px) / 2);
   }
   @media (min-width: 1200px) {
-    width: calc((100vw - 1140px)/2)
+    width: calc((100vw - 1140px) / 2);
   }
   @media (min-width: 1700px) {
-    width: calc((100vw - 1640px)/2)
+    width: calc((100vw - 1640px) / 2);
   }
 }

@@ -10,8 +10,23 @@ import MinscreenIcon from "images/icons/minscreen.svg"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
+import { LanguageType } from "src/constants/global.types"
+import { IChapter } from "src/models/chapter"
+import { IComicDetail } from "src/models/comic"
 
-export default function ReadingSection({ tab, setTab }) {
+export default function ReadingSection({
+  tab,
+  setTab,
+  data,
+  chapterData,
+  language,
+}: {
+  tab: string
+  setTab: any
+  data: IComicDetail
+  chapterData: IChapter
+  language: LanguageType
+}) {
   const [mode, setMode] = useState("minscreen")
   const [hovering, setHovering] = useState(false)
   const ref = useRef()
@@ -55,6 +70,14 @@ export default function ReadingSection({ tab, setTab }) {
     }
   }, [mode])
 
+  if (typeof chapterData == "undefined" || typeof data == "undefined") {
+    return <></>
+  }
+
+  if (!data || !chapterData) {
+    return <div>Không có dữ liệu</div>
+  }
+
   return (
     <div className={`w-full h-full ${mode == "minscreen" ? "relative" : "fixed bg-black z-20 top-0 bottom-0"}`}>
       <div
@@ -74,7 +97,9 @@ export default function ReadingSection({ tab, setTab }) {
       </div>
       <div className="h-full overflow-auto" onScroll={onScrollHandler}>
         <div ref={ref} className={`${mode == "minscreen" ? "mt-0" : "mt-[60px]"} w-[70%] mx-auto mb-[60px]`}>
-          <Image src={PageMockup} alt="" className="mx-auto" />
+          {chapterData[language]?.map((page, index) => (
+            <Image src={page || PageMockup} key={index} alt="" className="mx-auto" width={1000} height={1000} />
+          ))}
         </div>
       </div>
       <div
@@ -85,8 +110,12 @@ export default function ReadingSection({ tab, setTab }) {
         }`}>
         <div className="flex-1 self-center">
           <div>
-            <strong>Anime name • Chapter 223 • Chapter name</strong>
-            <p className="text-subtle-dark">20 likes • 1k views • 12 comments</p>
+            <strong>{`${data[language].title} • Chapter ${chapterData.number} • ${chapterData.name}`}</strong>
+            <p className="text-subtle-dark">
+              {(chapterData.likes || 0).toLocaleString("en-US")} likes •{" "}
+              {(chapterData.views || 0).toLocaleString("en-US")} views •{" "}
+              {(chapterData.comments || 0).toLocaleString("en-US")} comments
+            </p>
           </div>
         </div>
         <div className="flex-1 self-center flex gap-2 justify-center">

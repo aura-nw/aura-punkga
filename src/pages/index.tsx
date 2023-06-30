@@ -4,102 +4,52 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid"
 import Mock from "assets/images/mokup1.png"
 import Mock2 from "assets/images/mokup2.png"
 import SubFilledButton from "components/Button/FilledButton/SubFilledButton"
+import DummyComic from "components/DummyComponent/comic"
 import Header from "components/Header"
 import FilledSelect from "components/Select/FilledSelect"
-import Comic, { IComic } from "components/pages/homepage/comic"
+import Comic from "components/pages/homepage/comic"
 import TrendingComic from "components/pages/homepage/trendingComic"
-import Image from "next/image"
-import MockupImage from "src/assets/images/mockup4.png"
-import MockupImage2 from "src/assets/images/mockup5.png"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-const mockupData: IComic[] = [
-  {
-    image: MockupImage,
-    name: "Hero Cyberpunk",
-    status: "warning",
-    author: "Hanz",
-    tags: ["Hi-tech", "Low-Life"],
-    views: 1000,
-    likes: 1000,
-    description:
-      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
-    latestChap: 123,
-  },
-  {
-    image: MockupImage,
-    name: "Hero Cyberpunk",
-    status: "warning",
-    author: "Hanz",
-    tags: ["Hi-tech", "Low-Life"],
-    views: 1000,
-    likes: 1000,
-    description:
-      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
-    latestChap: 123,
-  },
-  {
-    image: MockupImage,
-    name: "Hero Cyberpunk",
-    status: "warning",
-    author: "Hanz",
-    tags: ["Hi-tech", "Low-Life"],
-    views: 1000,
-    likes: 1000,
-    description:
-      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
-    latestChap: 123,
-  },
-  {
-    image: MockupImage,
-    name: "Hero Cyberpunk",
-    status: "warning",
-    author: "Hanz",
-    tags: ["Hi-tech", "Low-Life"],
-    views: 1000,
-    likes: 1000,
-    description:
-      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
-    latestChap: 123,
-  },
-  {
-    image: MockupImage,
-    name: "Hero Cyberpunk",
-    status: "warning",
-    author: "Hanz",
-    tags: ["Hi-tech", "Low-Life"],
-    views: 1000,
-    likes: 1000,
-    description:
-      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
-    latestChap: 123,
-  },
-  {
-    image: MockupImage,
-    name: "Hero Cyberpunk",
-    status: "warning",
-    author: "Hanz",
-    tags: ["Hi-tech", "Low-Life"],
-    views: 1000,
-    likes: 1000,
-    description:
-      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
-    latestChap: 123,
-  },
-  {
-    image: MockupImage,
-    name: "Hero Cyberpunk",
-    status: "warning",
-    author: "Hanz",
-    tags: ["Hi-tech", "Low-Life"],
-    views: 1000,
-    likes: 1000,
-    description:
-      "Main hack được một năng lực cực mạnh tên là Dark Force. Trong khi xem trộm giải đấu Cyber-Soccer, cậu đã đăng ký một cuộc thi ...",
-    latestChap: 123,
-  },
-]
+import Image from "next/image"
+import { useEffect, useState } from "react"
+import MockupImage2 from "src/assets/images/mockup5.png"
+import { IComic } from "src/models/comic"
+import { getLatestComic, getTrendingComic } from "src/services"
 
 export default function Home() {
+  const [latestList, setLatestList] = useState<IComic[]>([])
+  const [isLatestLoading, setIsLatestLoading] = useState(false)
+  const [trendingList, setTrendingList] = useState<IComic[]>([])
+  const [isTrendingLoading, setIsTrendingLoading] = useState(false)
+
+  const fetchLatestList = async () => {
+    try {
+      setIsLatestLoading(true)
+      const data = await getLatestComic()
+      setLatestList(data)
+      setIsLatestLoading(false)
+    } catch (error) {
+      console.error("fetchLatestList", error)
+      setIsLatestLoading(false)
+    }
+  }
+
+  const fetchTrendingList = async () => {
+    try {
+      setIsTrendingLoading(true)
+      const data = await getTrendingComic()
+      setTrendingList(data)
+      setIsTrendingLoading(false)
+    } catch (error) {
+      console.error("fetchTrendingList", error)
+      setIsTrendingLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchLatestList()
+    fetchTrendingList()
+  }, [])
   return (
     <>
       <Header />
@@ -150,7 +100,7 @@ export default function Home() {
             </Carousel>
           </div>
         </div>
-        <div className="mt-[50px] flex">
+        <div className="my-[50px] flex">
           <div className="flex-auto w-[70%]">
             <div className="flex justify-between items-center">
               <div className="text-[24px] font-[800]">Latest Update</div>
@@ -194,13 +144,13 @@ export default function Home() {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-[80px] mt-[76px]">
-              {mockupData.map((data, index) => {
-                return (
-                  <div key={index}>
-                    <Comic {...data} />
-                  </div>
-                )
-              })}
+              {isLatestLoading
+                ? Array.apply(null, Array(2)).map((d,index) => {
+                    return <DummyComic key={index} />
+                  })
+                : latestList.map((data, index) => {
+                    return <Comic key={index} {...data} />
+                  })}
             </div>
           </div>
           <div className="flex-auto w-[10%]"></div>
@@ -216,9 +166,13 @@ export default function Home() {
             </div>
             <div className="text-[24px] font-[800] mt-5">Trending</div>
             <div className="flex flex-col gap-10 mt-10">
-              {mockupData.map((data, index) => {
-                return <TrendingComic key={index} {...data} />
-              })}
+              {isTrendingLoading
+                ? Array.apply(null, Array(2)).map((d, index) => {
+                    return <DummyComic key={index} />
+                  })
+                : trendingList.map((data, index) => {
+                    return <TrendingComic key={index} {...data} />
+                  })}
             </div>
           </div>
         </div>
@@ -226,7 +180,6 @@ export default function Home() {
     </>
   )
 }
-
 
 export const getStaticProps = async ({ locale }) => ({
   props: {

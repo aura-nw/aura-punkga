@@ -1,0 +1,43 @@
+import { LANGUAGE } from "src/constants"
+import { IMultiLanguageContent } from "./multiLanguageContent"
+import { IStatus } from "./status"
+import { IChapter } from "./chapter"
+
+interface Basic {
+  id: string
+  image: string
+  status: IStatus
+  authors: string[]
+  tags: IMultiLanguageContent<string>[]
+  views: number
+  likes: number
+  latestChap: {
+    number: number
+    id: string
+  }
+}
+
+export interface IComic
+  extends Basic,
+    IMultiLanguageContent<{
+      title: string
+      description: string
+    }> {}
+
+interface Detail {
+  cover: string
+  languages: Array<
+    (typeof LANGUAGE)[number] & {
+      isMainLanguage: boolean
+    }
+  >
+  chapters: IChapter[]
+}
+
+export interface IComicDetail
+  extends Basic,
+    Detail,
+    IMultiLanguageContent<{
+      title: string
+      description: string
+    }> {}

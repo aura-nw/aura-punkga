@@ -1,35 +1,41 @@
 import StatusLabel from "components/Label/Status"
 import Tag from "components/Label/Tag"
+import NoImage from "images/no_img.png"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/router"
+import { Fragment } from "react"
+import { IComic } from "src/models/comic"
 
-export interface IComic {
-  image: any
-  name: string
-  status: "warning" | "success" | "error"
-  author: string
-  description: string
-  tags: string[]
-  views: number
-  likes: number
-  latestChap: number
-}
 export default function Comic(props: IComic) {
+  const { locale } = useRouter()
   return (
     <div className="flex gap-[20px]">
-      <Link href="/comic/1/chapter/1" className="flex-auto w-1/3">
-        <Image src={props.image} alt="" className="rounded-[15px]" />
+      <Link href={`/comic/${props.id}/chapter/1`} className="flex-auto w-1/3">
+        <Image
+          src={props.image || NoImage}
+          alt=""
+          className={`${
+            props.image ? "object-cover" : "object-contain bg-light-gray"
+          } rounded-[15px] w-[180px] h-[240px]`}
+        />
       </Link>
       <div className="flex-auto w-2/3">
-        <Link href="/comic/1/chapter/1" className=" text-second-color font-bold text-[18px]">
-          {props.name} <StatusLabel status={props.status}>Ongoing</StatusLabel>
+        <Link href={`/comic/${props.id}/chapter/1`} className=" text-second-color font-bold text-[18px]">
+          {props[locale].title} <StatusLabel status={props.status.type}>{props.status.text}</StatusLabel>
         </Link>
         <div>
-          by <span className="text-second-color font-[600]">{props.author}</span>
+          by{" "}
+          {props.authors.map((author, index) => (
+            <Fragment key={index}>
+              <span className="text-second-color font-[600] first:hidden">, </span>
+              <span className="text-second-color font-[600]">{author}</span>
+            </Fragment>
+          ))}
         </div>
         <div className="flex gap-[8px] mt-[10px]">
           {props.tags.map((tag, index) => {
-            return <Tag key={index}>{tag}</Tag>
+            return <Tag key={index}>{tag[locale]}</Tag>
           })}
         </div>
         <div className="mt-[10px] flex gap-[24px]">
@@ -40,12 +46,12 @@ export default function Comic(props: IComic) {
             <strong>{props.likes.toLocaleString("en-US")}</strong> likes
           </div>
         </div>
-        <div className="mt-[10px] text-[16px] leading-[20px] line-clamp-3">{props.description}</div>
+        <div className="mt-[10px] text-[16px] leading-[20px] line-clamp-3">{props[locale].description}</div>
         <div className="mt-[10px] [20px]">
           Latest:{" "}
-          <a href="" className="text-second-color font-[600]">
-            Chap #{props.latestChap}
-          </a>
+          <Link href={`/comic/${props.id}/chapter/${props.latestChap.id}`} className="text-second-color font-[600]">
+            Chap #{props.latestChap.number}
+          </Link>
         </div>
       </div>
     </div>
