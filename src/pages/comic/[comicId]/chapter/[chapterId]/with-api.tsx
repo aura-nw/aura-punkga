@@ -10,7 +10,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   const getComicDetail = async () => {
     const {
       data: { manga_by_pk: data },
-    } = await api.get(`http://hasura.dev.punkga.me/api/rest/public/manga/${query.comicId}`)
+    } = await api.get(`api/rest/public/manga/${query.comicId}`)
 
     const res = {
       id: data.id,
@@ -44,7 +44,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     const {
       data: { chapters: cdata },
     } = await api.get(
-      `http://hasura.dev.punkga.me/api/rest/public/manga/${query.comicId}/chapters/${query.chapterId}`
+      `api/rest/public/manga/${query.comicId}/chapters/${query.chapterId}`
     )
     const data = cdata[0]
 

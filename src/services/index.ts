@@ -3,7 +3,7 @@ import { IComic } from "src/models/comic"
 import api from "./axiosInterceptor"
 
 export const getLatestComic = async (): Promise<IComic[]> => {
-  return await api.get("http://hasura.dev.punkga.me/api/rest/public/latest").then((res) =>
+  return await api.get("api/rest/public/latest").then((res) =>
     res.data?.manga?.map((m: any) => {
       const response = {
         id: m.id,
@@ -42,7 +42,7 @@ export const getLatestComic = async (): Promise<IComic[]> => {
 }
 
 export const getTrendingComic = async (): Promise<IComic[]> => {
-  return await api.get("http://hasura.dev.punkga.me/api/rest/public/trending").then((res) =>
+  return await api.get("api/rest/public/trending").then((res) =>
     res.data?.manga?.map((m: any) => {
       const response = {
         id: m.id,
