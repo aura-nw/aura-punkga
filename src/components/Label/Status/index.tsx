@@ -4,9 +4,9 @@ interface IStatusLabel {
 }
 export default function StatusLabel({ status, children }: IStatusLabel) {
   const classes = {
-    warning: "text-[#EEB304] bg-[#FFF2D1]",
-    success: "text-[#1FAB5E] bg-[#C6FFDE]",
-    error: "text-[#FF5C00] bg-[#FFD9DA]",
+    warning: "text-medium-yellow bg-light-yellow",
+    success: "text-medium-green bg-light-green",
+    error: "text-medium-red bg-light-red",
   }
   return (
     <span className={`rounded-[6px] font-bold px-[8px] pb-[1px] text-[14px] leading-[24px] ${classes[status]} inline-flex items-center`}>

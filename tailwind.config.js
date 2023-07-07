@@ -18,9 +18,22 @@ module.exports = {
         "primary-color": "var(--primary-color)",
         "second-color": "var(--second-color)",
         "light-green": "var(--light-green)",
+        "medium-green": "var(--medium-green)",
         "light-yellow": "var(--light-yellow)",
         "medium-yellow": "var(--medium-yellow)",
-        "light-medium-gray": "var(--light-medium-gray)",
+        "light-red": "var(--light-red)",
+        "medium-red": "var(--medium-red)",
+      },
+      animation: {
+        flash: "flash 1s cubic-bezier(0, 0, 0.2, 1)",
+      },
+      keyframes: {
+        flash: {
+          "75%, 100%": {
+            transform: 'scale(1.8)',
+            opacity: 0,
+          },
+        },
       },
     },
   },

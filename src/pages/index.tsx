@@ -16,6 +16,15 @@ import MockupImage2 from "src/assets/images/mockup5.png"
 import { IComic } from "src/models/comic"
 import { getLatestComic, getTrendingComic } from "src/services"
 
+declare global {
+  interface Window {
+    // ⚠️ notice that "Window" is capitalized here
+    keplr: any
+    getOfflineSigner: any
+    coin98: any
+  }
+}
+
 export default function Home() {
   const [latestList, setLatestList] = useState<IComic[]>([])
   const [isLatestLoading, setIsLatestLoading] = useState(false)
@@ -50,6 +59,7 @@ export default function Home() {
     fetchLatestList()
     fetchTrendingList()
   }, [])
+
   return (
     <>
       <Header />

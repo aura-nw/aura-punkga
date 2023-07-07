@@ -5,8 +5,9 @@ interface ISubFilledButton {
   size?: "sm" | "md" | "lg"
   onClick?: () => void
   fullWidth?: boolean
+  className?: string
 }
-export default function SubFilledButton({ children, size = "md", onClick, fullWidth }: ISubFilledButton) {
+export default function SubFilledButton({ children, size = "md", onClick, fullWidth, className }: ISubFilledButton) {
   const classes = {
     md: `${buttonClasses} text-[16px] leading-[20px] font-bold px-[16px] pt-[5px] pb-[9px] bg-light-gray text-second-color rounded-[12px] ${
       fullWidth ? "w-full" : "w-max"
@@ -16,7 +17,7 @@ export default function SubFilledButton({ children, size = "md", onClick, fullWi
     }  whitespace-nowrap`,
   }
   return (
-    <button onClick={onClick} className={classes[size]}>
+    <button onClick={onClick} className={`${classes[size]} ${className}`}>
       {children}
     </button>
   )

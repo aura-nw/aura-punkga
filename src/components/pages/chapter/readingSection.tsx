@@ -2,9 +2,13 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline"
 import Logo from "assets/images/header-logo.svg"
 import OutlineButton from "components/Button/OutlineButton"
 import PageMockup from "images/comicpage.png"
-import ChatIcon from "images/icons/chat.svg"
+import ChatOutlineIcon from "images/icons/chat_outline.svg"
+import ChatFillIcon from "images/icons/chat_fill.svg"
 import FullscreenIcon from "images/icons/fullscreen.svg"
-import HeartIcon from "images/icons/heart.svg"
+import BookOutlineIcon from "images/icons/book_outline.svg"
+import BookFillIcon from "images/icons/book_fill.svg"
+import HeartOutlineIcon from "images/icons/heart_outline.svg"
+import HeartFillIcon from "images/icons/heart_fill.svg"
 import InboxIcon from "images/icons/inbox.svg"
 import MinscreenIcon from "images/icons/minscreen.svg"
 import Image from "next/image"
@@ -13,6 +17,8 @@ import { useEffect, useRef, useState } from "react"
 import { LanguageType } from "src/constants/global.types"
 import { IChapter } from "src/models/chapter"
 import { IComicDetail } from "src/models/comic"
+import FlashAnimation from "components/AnimationIconHOC/Flash"
+import withFlashAnimation from "components/AnimationIconHOC/Flash"
 
 export default function ReadingSection({
   tab,
@@ -28,6 +34,8 @@ export default function ReadingSection({
   language: LanguageType
 }) {
   const [mode, setMode] = useState("minscreen")
+  const [readingMode, setReadingMode] = useState("onePage")
+  const [isLiked, setIsLiked] = useState(false)
   const [hovering, setHovering] = useState(false)
   const ref = useRef()
 
@@ -82,7 +90,10 @@ export default function ReadingSection({
   const chapterLocale = chapterData[language] ? language : mainLanguage
 
   return (
-    <div className={`w-full h-full ${mode == "minscreen" ? "relative" : "fixed bg-black z-20 top-0 bottom-0"}`}>
+    <div
+      className={`w-full h-full overflow-hidden ${
+        mode == "minscreen" ? "relative" : "fixed bg-black z-20 top-0 bottom-0"
+      }`}>
       <div
         onMouseEnter={onMouseEnterHandler}
         onMouseLeave={onMouseLeaveHandler}
@@ -138,15 +149,41 @@ export default function ReadingSection({
         <div className={`flex-1 self-center flex gap-2 justify-end`}>
           <Image
             className="cursor-pointer"
+            onClick={() => setReadingMode(readingMode == "onePage" ? "twoPage" : "onePage")}
+            src={readingMode == "onePage" ? BookOutlineIcon : BookFillIcon}
+            alt=""
+          />
+          <Image
+            className="cursor-pointer"
             onClick={() => setMode(mode == "minscreen" ? "fullscreen" : "minscreen")}
             src={mode == "minscreen" ? FullscreenIcon : MinscreenIcon}
             alt=""
           />
-          <Image src={HeartIcon} alt="" />
+          <FlashAnimation
+            InactiveComponent={(props: any) => (
+              <Image
+                className="cursor-pointer"
+                onClick={() => setIsLiked(true)}
+                src={HeartOutlineIcon}
+                alt=""
+                {...props}
+              />
+            )}
+            ActiveComponent={(props: any) => (
+              <Image
+                className="cursor-pointer"
+                onClick={() => setIsLiked(false)}
+                src={HeartFillIcon}
+                alt=""
+                {...props}
+              />
+            )}
+            active={isLiked}
+          />
           {mode == "fullscreen" ? (
             <></>
           ) : tab == "detail" ? (
-            <Image src={ChatIcon} alt="" onClick={() => setTab("comment")} />
+            <Image src={ChatOutlineIcon} alt="" onClick={() => setTab("comment")} />
           ) : (
             <Image src={InboxIcon} alt="" onClick={() => setTab("detail")} />
           )}

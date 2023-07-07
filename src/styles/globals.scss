@@ -13,8 +13,11 @@
   --primary-color: #23ff81;
   --second-color: #1fab5e;
   --light-green: #c6ffde;
+  --medium-green: #1fab5e;
   --light-yellow: #fff2d1;
   --medium-yellow: #eeb304;
+  --light-red: #f0caca;
+  --medium-red: #E50000;
 }
 body {
   font-family: "Plus Jakarta Sans", sans-serif !important;
@@ -46,12 +49,17 @@ a {
   }
 }
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: var(--medium-gray);
   border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--second-color);
+  border-radius: 999px;
+
 }
 [contenteditable="true"]:empty:before {
   content: attr(placeholder);

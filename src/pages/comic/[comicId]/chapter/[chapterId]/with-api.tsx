@@ -1,16 +1,16 @@
-import axios from "axios"
 import { useRouter } from "next/router"
 import { LANGUAGE } from "src/constants"
 import useApi from "src/hooks/useApi"
 import { IChapter } from "src/models/chapter"
 import { IComicDetail } from "src/models/comic"
+import api from "src/services/axiosInterceptor"
 const withApi = (Component: React.FC<any>) => (props: any) => {
   const { query } = useRouter()
 
   const getComicDetail = async () => {
     const {
       data: { manga_by_pk: data },
-    } = await axios.get(`http://hasura.dev.punkga.me/api/rest/public/manga/${query.comicId}`)
+    } = await api.get(`http://hasura.dev.punkga.me/api/rest/public/manga/${query.comicId}`)
 
     const res = {
       id: data.id,
@@ -43,7 +43,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   const getChapterDetail = async () => {
     const {
       data: { chapters: cdata },
-    } = await axios.get(
+    } = await api.get(
       `http://hasura.dev.punkga.me/api/rest/public/manga/${query.comicId}/chapters/${query.chapterId}`
     )
     const data = cdata[0]

@@ -1,15 +1,15 @@
-import axios from "axios"
-import { LANGUAGE, STATUS } from "src/constants"
+import { LANGUAGE, COMIC_STATUS } from "src/constants"
 import { IComic } from "src/models/comic"
+import api from "./axiosInterceptor"
 
 export const getLatestComic = async (): Promise<IComic[]> => {
-  return await axios.get("http://hasura.dev.punkga.me/api/rest/public/latest").then((res) =>
+  return await api.get("http://hasura.dev.punkga.me/api/rest/public/latest").then((res) =>
     res.data?.manga?.map((m: any) => {
       const response = {
         id: m.id,
         image: m.image,
         status: {
-          type: STATUS[m.status],
+          type: COMIC_STATUS[m.status],
           text: m.status,
         },
         authors: m.manga_creators?.map((c: any) => c.creator?.name),
@@ -42,13 +42,13 @@ export const getLatestComic = async (): Promise<IComic[]> => {
 }
 
 export const getTrendingComic = async (): Promise<IComic[]> => {
-  return await axios.get("http://hasura.dev.punkga.me/api/rest/public/trending").then((res) =>
+  return await api.get("http://hasura.dev.punkga.me/api/rest/public/trending").then((res) =>
     res.data?.manga?.map((m: any) => {
       const response = {
         id: m.id,
         image: m.image,
         status: {
-          type: STATUS[m.status],
+          type: COMIC_STATUS[m.status],
           text: m.status,
         },
         authors: m.manga_creators?.map((c: any) => c.creator?.name),

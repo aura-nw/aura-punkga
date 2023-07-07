@@ -6,6 +6,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@authorizerdev/authorizer-js": "^1.2.3",
+    "@authorizerdev/authorizer-react": "^1.1.11",
     "@coin98-com/connect-sdk": "^1.0.9",
     "@cosmjs/cosmwasm-stargate": "^0.30.1",
     "@cosmjs/faucet-client": "^0.30.1",
@@ -21,6 +23,7 @@
     "lodash": "^4.17.21",
     "match-sorter": "^6.3.1",
     "next": "^13.4.4",
+    "next-auth": "^4.22.1",
     "next-i18next": "^14.0.0",
     "ramda": "^0.29.0",
     "react": "18.2.0",
@@ -35,6 +38,7 @@
     "sort-by": "^1.2.0"
   },
   "devDependencies": {
+    "@keplr-wallet/types": "^0.12.14",
     "@types/node": "20.3.1",
     "@types/react": "18.2.12",
     "autoprefixer": "^10.4.14",

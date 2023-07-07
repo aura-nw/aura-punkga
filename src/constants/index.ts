@@ -1,5 +1,8 @@
-export const STATUS = {
+export const COMIC_STATUS = {
   "On-Going": "warning",
+  "Upcoming": "warning",
+  "Published": "success",
+  "Removed": "error",
 }
 
 export const LANGUAGE = [
