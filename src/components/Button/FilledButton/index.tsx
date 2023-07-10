@@ -9,6 +9,7 @@ interface IFilledButton {
   disabled?: boolean
   loading?: boolean
   className?: string
+  id?: string
 }
 export default function FilledButton({
   children,
@@ -18,6 +19,7 @@ export default function FilledButton({
   disabled,
   className,
   loading,
+  id,
 }: IFilledButton) {
   const classes = {
     md: `${buttonClasses} text-[16px] leading-[20px] font-bold px-[16px] pt-[5px] pb-[9px] bg-primary-color rounded-[12px] ${
@@ -30,6 +32,7 @@ export default function FilledButton({
   return (
     <button
       disabled={disabled}
+      id={id}
       onClick={onClick}
       className={`${classes[size]} ${
         (disabled || loading) && "!bg-light-green text-[#84CCA3] cursor-no-drop"

@@ -1,6 +1,10 @@
 import axios from "axios"
+import config from 'public/config.json'
+const api = axios.create({
+  baseURL: config.API_URL,
+})
 
-axios.interceptors.request.use(
+api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token")
     if (token) {
@@ -13,8 +17,6 @@ axios.interceptors.request.use(
   }
 )
 
-const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
-})
+
 
 export default api

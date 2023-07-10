@@ -5,7 +5,7 @@ import { IUser } from "src/models/user"
 import { handleConnectWallet } from "src/utils/signer"
 import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/router"
-
+import config from "public/config.json"
 export const Context = createContext(null)
 
 function ContextProvider({ children }) {
@@ -79,9 +79,9 @@ function ContextProvider({ children }) {
     }
     setProvider(p)
     const keplr = p == "Coin98" ? window.coin98?.keplr : window.keplr
-    await keplr.experimentalSuggestChain(JSON.parse(process.env.NEXT_PUBLIC_CHAIN_INFO))
-    await keplr.enable(process.env.NEXT_PUBLIC_CHAIN_ID)
-    key.current = await keplr.getKey(process.env.NEXT_PUBLIC_CHAIN_ID)
+    await keplr.experimentalSuggestChain(JSON.parse(config.CHAIN_INFO))
+    await keplr.enable(config.CHAIN_ID)
+    key.current = await keplr.getKey(config.CHAIN_ID)
     return key.current.bech32Address
   }
 
@@ -138,7 +138,7 @@ function ContextProvider({ children }) {
     setAccount(null)
     setUser(null)
     unlinkWallet()
-    router.push(location.origin+location.pathname)
+    router.push(location.origin + location.pathname)
   }
 
   const signUp = async (username: string, email: string, password: string, callback?: (status: string) => void) => {

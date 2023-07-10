@@ -3,6 +3,7 @@ import { LANGUAGE } from "src/constants"
 import useApi from "src/hooks/useApi"
 import { IChapter } from "src/models/chapter"
 import { IComicDetail } from "src/models/comic"
+import { IComment } from "src/models/comment"
 import api from "src/services/axiosInterceptor"
 const withApi = (Component: React.FC<any>) => (props: any) => {
   const { query } = useRouter()
@@ -40,12 +41,10 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     return res
   }
 
-  const getChapterDetail = async () => {
+  const getChapterDetails = async () => {
     const {
       data: { chapters: cdata },
-    } = await api.get(
-      `api/rest/public/manga/${query.comicId}/chapters/${query.chapterId}`
-    )
+    } = await api.get(`api/rest/public/manga/${query.comicId}/chapters/${query.chapterId}`)
     const data = cdata[0]
 
     const res = {
@@ -66,15 +65,52 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     return res
   }
 
-  const { loading, data, runAction } = useApi<IComicDetail>(getComicDetail, !!query.comicId, [query.comicId])
-  const {
-    loading: chapterLoading,
-    data: chapterData,
-    runAction: chapterRunAction,
-  } = useApi<IChapter>(getChapterDetail, !!query.comicId && !!query.chapterId, [(query.comicId, query.chapterId)])
+  const getChapterComments = async () => {
+    const { data } = await api.get(`/api/rest/public/chapters/${query.chapterId}/comments`)
+    if (data.social_activities) {
+      return data.social_activities.map((socialActivity) => ({
+        id: socialActivity.id,
+        content: socialActivity.content,
+        replies: socialActivity.replies.map((reply) => ({
+          content: reply.content,
+          createAt: reply.created_at,
+          author: {
+            id: reply.social_activities_authorizer_user.id,
+            nickname: reply.social_activities_authorizer_user.nickname,
+          },
+        })),
+        createAt: socialActivity.created_at,
+        author: {
+          id: socialActivity.social_activities_authorizer_user.id,
+          nickname: socialActivity.social_activities_authorizer_user.nickname,
+        },
+      }))
+    }
+    return []
+  }
+  
+  const comicDetails = useApi<IComicDetail>(getComicDetail, !!query.comicId, [query.comicId])
+  const chapterComments = useApi<IComment[]>(getChapterComments, !!query.chapterId, [query.chapterId])
+  const chapterDetails = useApi<IChapter>(getChapterDetails, !!query.comicId && !!query.chapterId, [(query.comicId, query.chapterId)])
+
+  const postComment = async (content: string) => {
+    const { data } = await api.post(`/api/rest/user/chapters/${query.chapterId}/comments`, {
+      content: content,
+      ref_activity: null,
+    })
+    if (data) {
+      chapterComments.callApi(true)
+    }
+  }
 
   return (
-    <Component {...props} loading={loading} chapterLoading={chapterLoading} chapterData={chapterData} data={data} />
+    <Component
+      {...props}
+      comicDetails={comicDetails}
+      chapterDetails={chapterDetails}
+      chapterComments={chapterComments}
+      postComment={postComment}
+    />
   )
 }
 

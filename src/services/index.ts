@@ -71,3 +71,11 @@ export const getTrendingComic = async (): Promise<IComic[]> => {
     })
   )
 }
+
+export const replyComment = async (content: string, ref: string, chapterId: string) => {
+  const { data } = await api.post(`/api/rest/user/chapters/${chapterId}/comments`, {
+    content: content,
+    ref_activity: ref,
+  })
+  return data
+}

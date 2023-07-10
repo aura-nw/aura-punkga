@@ -1,14 +1,14 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline"
 import Logo from "assets/images/header-logo.svg"
+import FlashAnimation from "components/AnimationIconHOC/Flash"
 import OutlineButton from "components/Button/OutlineButton"
 import PageMockup from "images/comicpage.png"
-import ChatOutlineIcon from "images/icons/chat_outline.svg"
-import ChatFillIcon from "images/icons/chat_fill.svg"
-import FullscreenIcon from "images/icons/fullscreen.svg"
-import BookOutlineIcon from "images/icons/book_outline.svg"
 import BookFillIcon from "images/icons/book_fill.svg"
-import HeartOutlineIcon from "images/icons/heart_outline.svg"
+import BookOutlineIcon from "images/icons/book_outline.svg"
+import ChatOutlineIcon from "images/icons/chat_outline.svg"
+import FullscreenIcon from "images/icons/fullscreen.svg"
 import HeartFillIcon from "images/icons/heart_fill.svg"
+import HeartOutlineIcon from "images/icons/heart_outline.svg"
 import InboxIcon from "images/icons/inbox.svg"
 import MinscreenIcon from "images/icons/minscreen.svg"
 import Image from "next/image"
@@ -17,8 +17,6 @@ import { useEffect, useRef, useState } from "react"
 import { LanguageType } from "src/constants/global.types"
 import { IChapter } from "src/models/chapter"
 import { IComicDetail } from "src/models/comic"
-import FlashAnimation from "components/AnimationIconHOC/Flash"
-import withFlashAnimation from "components/AnimationIconHOC/Flash"
 
 export default function ReadingSection({
   tab,
@@ -38,10 +36,10 @@ export default function ReadingSection({
   const [currentPage, setCurrentPage] = useState(0)
   const [isLiked, setIsLiked] = useState(false)
   const [hovering, setHovering] = useState(false)
-  const ref = useRef()
-  const mainLanguage = data.languages.find((l) => l.isMainLanguage).shortLang
+  const mainLanguage = data?.languages?.find((l) => l.isMainLanguage).shortLang
   const chapterLocale = chapterData[language] ? language : mainLanguage
-
+  const ref = useRef()
+  
   const onMouseEnterHandler = () => {
     if ((window as any).timeoutId) {
       clearTimeout((window as any).timeoutId)

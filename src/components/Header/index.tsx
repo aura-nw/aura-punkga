@@ -35,7 +35,7 @@ export default function Header({}) {
   const [connectWalletOpen, setConnectWalletOpen] = useState(false)
 
   const { account, wallet, logout, unlinkWallet } = useContext(Context)
-  
+
   return (
     <>
       <div
@@ -130,7 +130,7 @@ export default function Header({}) {
                   )}
                 </Dropdown>
               ) : (
-                <FilledButton size="lg" onClick={() => setSignInOpen(true)}>
+                <FilledButton id="open-sign-in-btn" size="lg" onClick={() => setSignInOpen(true)}>
                   Sign in
                 </FilledButton>
               )}

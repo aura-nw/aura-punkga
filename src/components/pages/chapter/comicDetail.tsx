@@ -124,8 +124,7 @@ export default function ComicDetail({
                 <Tag
                   selected={selectedLanguage.id == language.id}
                   key={index}
-                  onClick={() => setLanguage(language.shortLang)}
-                >
+                  onClick={() => setLanguage(language.shortLang)}>
                   {t(language.shortLang)}
                 </Tag>
               )
@@ -152,7 +151,7 @@ export default function ComicDetail({
             <div className="px-[60px] py-[20px] flex flex-col gap-5">
               {data.chapters.map((chapter, index) => (
                 <Link href={`/comic/${data.id}/chapter/${chapter.id}`} key={index} className="flex gap-4 items-center">
-                  <Image src={chapter.thumbnail || m6} alt="" className="w-[60px] h-[60px]" />
+                  <Image src={chapter.thumbnail || m6} alt="" className="w-[60px] h-[60px] object-cover rounded-xl" width={60} height={60} />
                   <div>
                     <div className="flex items-center gap-5">
                       <p>{`Chapter ${chapter.number}`}</p>
