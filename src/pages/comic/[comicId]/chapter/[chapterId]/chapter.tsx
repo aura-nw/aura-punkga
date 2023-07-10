@@ -54,7 +54,7 @@ const Chapter: React.FC = ({
       <Header />
       <div className="flex h-[calc(100vh-80px)] relative">
         <div className="flex-auto w-2/3 h-full z-[5]">
-          {chapterDetails.loading ? (
+          {!chapterDetails || chapterDetails.loading ? (
             <div className="w-full h-full pt-5">
               <div className="w-[70%] mx-auto mb-[60px] h-full bg-light-medium-gray animate-pulse"></div>
             </div>
@@ -70,11 +70,13 @@ const Chapter: React.FC = ({
         </div>
         <div className="flex-auto w-1/3 h-full">
           {tab == "detail" ? (
-            comicDetails.loading ? (
+            !comicDetails || comicDetails.loading ? (
               <DummyComicDetail />
             ) : (
               <ComicDetail data={comicDetails.data} language={language} setLanguage={setLanguage} />
             )
+          ) : !chapterDetails ? (
+            <></>
           ) : (
             <CommentSection
               reload={() => chapterComments.callApi(true)}
