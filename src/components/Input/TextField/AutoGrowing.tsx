@@ -1,26 +1,28 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 interface IAutoGrowingTextField {
-  defaultValue?: string
+  value?: string
   onChange?: (value: string) => void
   placeholder?: string
   leadingComponent?: JSX.Element
   trailingComponent?: JSX.Element
+  r?: any
 }
 export default function AutoGrowingTextField({
-  defaultValue,
+  value,
   onChange,
   placeholder,
   leadingComponent,
   trailingComponent,
+  r
 }: IAutoGrowingTextField) {
-  const ref = useRef()
+  const eRef = useRef()
+  const ref = r || eRef
   useEffect(() => {
     const element = ref.current as Element
     element.addEventListener("input", function (event) {
       onChange((event.target as any).innerText)
     })
-    element.innerHTML = defaultValue || ""
   }, [])
   return (
     <div className="relative w-full">

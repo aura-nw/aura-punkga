@@ -19,6 +19,7 @@ function ContextProvider({ children }) {
 
   const searchParams = useSearchParams()
   const accessTokenParam = searchParams.get("access_token")
+  const expiresInParam = searchParams.get("expires_in")
 
   useEffect(() => {
     if (user?.id)
@@ -47,7 +48,7 @@ function ContextProvider({ children }) {
 
   useEffect(() => {
     if (accessTokenParam) {
-      setItem("token", accessTokenParam, new Date(Date.now() + 10800))
+      setItem("token", accessTokenParam, new Date(Date.now() + expiresInParam ? +expiresInParam * 1000 : 10800000))
       getProfile(accessTokenParam)
     }
   }, [accessTokenParam])
@@ -115,7 +116,7 @@ function ContextProvider({ children }) {
       })
       if (res) {
         callback && callback("success")
-        setItem("token", res.access_token, new Date(Date.now() + res.expires_in))
+        setItem("token", res.access_token, new Date(Date.now() + res.expires_in * 1000))
         setUser(res.user)
       }
     } catch (error) {
