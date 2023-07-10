@@ -6,6 +6,7 @@ import { handleConnectWallet } from "src/utils/signer"
 import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/router"
 import config from "public/config.json"
+import { getItem, removeItem, setItem } from "src/utils/localStorage"
 export const Context = createContext(null)
 
 function ContextProvider({ children }) {
@@ -33,20 +34,20 @@ function ContextProvider({ children }) {
   }, [])
 
   const setUp = async () => {
-    const token = localStorage.getItem("token")
+    const token = getItem("token")
     if (token) {
       await getProfile(token)
-    }
-    const connectedProvider = localStorage.getItem("connected_provider") as "Coin98" | "Keplr"
-    if (connectedProvider) {
-      await getWallet(connectedProvider)
-      await connectWallet()
+      const connectedProvider = getItem("connected_provider") as "Coin98" | "Keplr"
+      if (connectedProvider) {
+        await getWallet(connectedProvider)
+        await connectWallet()
+      }
     }
   }
 
   useEffect(() => {
     if (accessTokenParam) {
-      localStorage.setItem("token", accessTokenParam)
+      setItem("token", accessTokenParam, new Date(Date.now() + 10800))
       getProfile(accessTokenParam)
     }
   }, [accessTokenParam])
@@ -89,7 +90,7 @@ function ContextProvider({ children }) {
     try {
       const keplr = provider == "Coin98" ? window.coin98?.keplr : window.keplr
       const res = await handleConnectWallet(keplr, key.current)
-      localStorage.setItem("connected_provider", provider)
+      setItem("connected_provider", provider)
       if (res) {
         setWallet(key.current.bech32Address)
         callback && callback()
@@ -100,7 +101,7 @@ function ContextProvider({ children }) {
   }
 
   const unlinkWallet = async (callback?: () => void) => {
-    localStorage.removeItem("connected_provider")
+    removeItem("connected_provider")
     key.current = null
     setWallet(null)
     setProvider(null)
@@ -114,7 +115,7 @@ function ContextProvider({ children }) {
       })
       if (res) {
         callback && callback("success")
-        localStorage.setItem("token", res.access_token)
+        setItem("token", res.access_token, new Date(Date.now() + res.expires_in))
         setUser(res.user)
       }
     } catch (error) {
@@ -134,7 +135,7 @@ function ContextProvider({ children }) {
   }
 
   const logout = async (callback?: () => void) => {
-    localStorage.removeItem("token")
+    removeItem("token")
     setAccount(null)
     setUser(null)
     unlinkWallet()
