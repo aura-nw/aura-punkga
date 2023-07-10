@@ -35,9 +35,12 @@ export default function ReadingSection({
 }) {
   const [mode, setMode] = useState("minscreen")
   const [readingMode, setReadingMode] = useState("onePage")
+  const [currentPage, setCurrentPage] = useState(0)
   const [isLiked, setIsLiked] = useState(false)
   const [hovering, setHovering] = useState(false)
   const ref = useRef()
+  const mainLanguage = data.languages.find((l) => l.isMainLanguage).shortLang
+  const chapterLocale = chapterData[language] ? language : mainLanguage
 
   const onMouseEnterHandler = () => {
     if ((window as any).timeoutId) {
@@ -55,7 +58,7 @@ export default function ReadingSection({
 
   const onScrollHandler = () => {
     const position = (ref as any).current.getBoundingClientRect()
-    if (position.bottom < window.innerHeight) {
+    if (position.bottom < window.innerHeight && readingMode == "onePage") {
       if ((window as any).timeoutId) {
         clearTimeout((window as any).timeoutId)
       }
@@ -78,6 +81,22 @@ export default function ReadingSection({
     }
   }, [mode])
 
+  useEffect(() => {
+    const pageHandler = (event: any) => {
+      if (event.deltaY < 0 || event.which == 37 || event.which == 38) {
+        setCurrentPage((prevState) => (prevState - 2 < 0 ? 0 : prevState - 2))
+      } else if (event.deltaY > 0 || event.which == 39 || event.which == 40) {
+        setCurrentPage((prevState) => (prevState + 2 > chapterData[chapterLocale].length ? prevState : prevState + 2))
+      }
+    }
+    window.addEventListener("wheel", pageHandler)
+    window.addEventListener("keydown", pageHandler)
+  }, [])
+
+  useEffect(() => {
+    setCurrentPage(0)
+  }, [readingMode])
+
   if (typeof chapterData == "undefined" || typeof data == "undefined") {
     return <></>
   }
@@ -85,10 +104,6 @@ export default function ReadingSection({
   if (!data || !chapterData) {
     return <div>Không có dữ liệu</div>
   }
-
-  const mainLanguage = data.languages.find((l) => l.isMainLanguage).shortLang
-  const chapterLocale = chapterData[language] ? language : mainLanguage
-
   return (
     <div
       className={`w-full h-full overflow-hidden ${
@@ -110,10 +125,28 @@ export default function ReadingSection({
         </div>
       </div>
       <div className="h-full overflow-auto" onScroll={onScrollHandler}>
-        <div ref={ref} className={`${mode == "minscreen" ? "mt-0" : "mt-[60px]"} w-[70%] mx-auto mb-[60px]`}>
-          {chapterData[chapterLocale]?.map((page, index) => (
-            <Image src={page || PageMockup} key={index} alt="" className="mx-auto" width={1000} height={1000} />
-          ))}
+        <div
+          ref={ref}
+          className={`${mode == "minscreen" ? "" : ""} ${
+            readingMode == "onePage" ? "w-[70%]" : "flex h-full"
+          } mx-auto `}>
+          {chapterData[chapterLocale]
+            ?.slice(
+              readingMode == "onePage" ? 0 : currentPage,
+              readingMode == "onePage" ? chapterData[chapterLocale].length : currentPage + 2
+            )
+            ?.map((page, index) => (
+              <Image
+                src={page || PageMockup}
+                key={index}
+                alt=""
+                className={`${
+                  readingMode == "onePage" ? "mx-auto" : "h-full w-auto max-w-[50%] first:ml-auto last:mr-auto"
+                } `}
+                width={1000}
+                height={1000}
+              />
+            ))}
         </div>
       </div>
       <div
