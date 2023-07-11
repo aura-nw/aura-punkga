@@ -36,7 +36,7 @@ export default function CommentSection({
             <span
               className="text-second-color underline font-bold cursor-pointer"
               onClick={() => {
-                ;(document.querySelector("#open-sign-in-btn") as any).click()
+                ;(document.querySelector("#open-sign-in-btn") as any)?.click()
               }}>
               sign in
             </span>{" "}

@@ -103,6 +103,13 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     }
   }
 
+  const like = async () => {
+    await api.post(`/api/rest/user/chapters/${query.chapterId}/likes`)
+  }
+  const unlike = async () => {
+    await api.delete(`/api/rest/user/chapters/${query.chapterId}/likes`)
+  }
+
   return (
     <Component
       {...props}
@@ -110,6 +117,8 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       chapterDetails={chapterDetails}
       chapterComments={chapterComments}
       postComment={postComment}
+      like={like}
+      unlike={unlike}
     />
   )
 }

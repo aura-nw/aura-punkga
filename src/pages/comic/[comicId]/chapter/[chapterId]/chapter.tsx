@@ -15,6 +15,8 @@ const Chapter: React.FC = ({
   chapterDetails,
   chapterComments,
   postComment,
+  like,
+  unlike,
 }: {
   comicDetails: {
     data: IComicDetail
@@ -30,8 +32,10 @@ const Chapter: React.FC = ({
     callApi: (skipLoading: boolean) => void
   }
   postComment: (content: string) => void
+  like: () => void
+  unlike: () => void
 }) => {
-  const [tab, setTab] = useState("detail")
+  const [openComments, setOpenComments] = useState(false)
   const { locale } = useRouter()
   const [language, setLanguage] = useState<LanguageType>(locale as LanguageType)
   const commentIntervalId = useRef<any>()
@@ -41,13 +45,13 @@ const Chapter: React.FC = ({
   }, [locale])
 
   useEffect(() => {
-    if (tab == "comment") {
+    if (openComments) {
       commentIntervalId.current = setInterval(() => chapterComments.callApi(true), 5000)
     } else {
       if (commentIntervalId.current) clearInterval(commentIntervalId.current)
     }
     return () => clearInterval(commentIntervalId.current)
-  }, [tab])
+  }, [openComments])
 
   return (
     <>
@@ -62,14 +66,16 @@ const Chapter: React.FC = ({
             <ReadingSection
               data={comicDetails.data}
               chapterData={chapterDetails.data}
-              setTab={setTab}
-              tab={tab}
+              setOpenComments={setOpenComments}
+              openComments={openComments}
               language={language}
+              like={like}
+              unlike={unlike}
             />
           )}
         </div>
         <div className="flex-auto w-1/3 h-full">
-          {tab == "detail" ? (
+          {!openComments ? (
             !comicDetails || comicDetails.loading ? (
               <DummyComicDetail />
             ) : (
