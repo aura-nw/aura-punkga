@@ -1,7 +1,11 @@
-import { useState, useEffect, DependencyList } from "react"
+import { useState, useEffect, DependencyList, useContext } from "react"
+import { Context } from "src/context"
 export default function useApi<T>(action, actionCondition: boolean, deps?: DependencyList) {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<T | null | undefined>(undefined)
+
+  const { isSettingUp } = useContext(Context)
+
   const callApi = async (skipLoading?: boolean) => {
     try {
       if (actionCondition) {
@@ -22,7 +26,9 @@ export default function useApi<T>(action, actionCondition: boolean, deps?: Depen
   }
 
   useEffect(() => {
-    callApi()
-  }, deps || [])
+    if (!isSettingUp) {
+      callApi()
+    }
+  }, [...deps, isSettingUp] || [isSettingUp])
   return { loading, data, callApi }
 }

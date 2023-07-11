@@ -17,6 +17,8 @@ const Chapter: React.FC = ({
   postComment,
   like,
   unlike,
+  subscribe,
+  unsubscribe,
 }: {
   comicDetails: {
     data: IComicDetail
@@ -34,8 +36,12 @@ const Chapter: React.FC = ({
   postComment: (content: string) => void
   like: () => void
   unlike: () => void
+  subscribe: () => void
+  unsubscribe: () => void
 }) => {
   const [openComments, setOpenComments] = useState(false)
+  const [mode, setMode] = useState<"minscreen" | "fullscreen">("minscreen")
+  const [isSubscribe, setIsSubscribe] = useState(false)
   const { locale } = useRouter()
   const [language, setLanguage] = useState<LanguageType>(locale as LanguageType)
   const commentIntervalId = useRef<any>()
@@ -71,6 +77,12 @@ const Chapter: React.FC = ({
               language={language}
               like={like}
               unlike={unlike}
+              subscribe={subscribe}
+              unsubscribe={unsubscribe}
+              mode={mode}
+              setMode={setMode}
+              isSubscribe={isSubscribe}
+              setIsSubscribe={setIsSubscribe}
             />
           )}
         </div>
@@ -79,7 +91,15 @@ const Chapter: React.FC = ({
             !comicDetails || comicDetails.loading ? (
               <DummyComicDetail />
             ) : (
-              <ComicDetail data={comicDetails.data} language={language} setLanguage={setLanguage} />
+              <ComicDetail
+                data={comicDetails.data}
+                language={language}
+                setLanguage={setLanguage}
+                isSubscribe={isSubscribe}
+                setIsSubscribe={setIsSubscribe}
+                subscribe={subscribe}
+                unsubscribe={unsubscribe}
+              />
             )
           ) : !chapterDetails ? (
             <></>
@@ -88,6 +108,9 @@ const Chapter: React.FC = ({
               reload={() => chapterComments.callApi(true)}
               postComment={postComment}
               comments={chapterComments.data}
+              mode={mode}
+              setOpenComments={setOpenComments}
+              openComments={openComments}
             />
           )}
         </div>

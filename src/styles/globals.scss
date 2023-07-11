@@ -17,7 +17,7 @@
   --light-yellow: #fff2d1;
   --medium-yellow: #eeb304;
   --light-red: #f0caca;
-  --medium-red: #E50000;
+  --medium-red: #e50000;
 }
 body {
   font-family: "Plus Jakarta Sans", sans-serif !important;
@@ -59,7 +59,6 @@ a {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--second-color);
   border-radius: 999px;
-
 }
 [contenteditable="true"]:empty:before {
   content: attr(placeholder);
@@ -118,5 +117,28 @@ a {
   }
   @media (min-width: 1700px) {
     width: calc((100vw - 1640px) / 2);
+  }
+}
+
+@keyframes bell-ring {
+  0% {
+  }
+
+  5%,
+  15% {
+    transform: rotate(10deg);
+  }
+
+  10%,
+  20% {
+    transform: rotate(-10deg);
+  }
+
+  25% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
   }
 }

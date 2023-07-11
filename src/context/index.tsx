@@ -12,6 +12,7 @@ export const Context = createContext(null)
 function ContextProvider({ children }) {
   const [account, setAccount] = useState<IUser>()
   const [wallet, setWallet] = useState<string>()
+  const [isSettingUp, setIsSettingUp] = useState(true)
   const key = useRef<Key>()
   const [provider, setProvider] = useState<"Coin98" | "Keplr">()
   const { authorizerRef, user, setUser } = useAuthorizer()
@@ -27,6 +28,7 @@ function ContextProvider({ children }) {
         email: user.email,
         name: user.nickname,
         image: user.picture,
+        id: user.id,
       } as IUser)
   }, [user])
 
@@ -47,6 +49,7 @@ function ContextProvider({ children }) {
   }
 
   const setUp = async () => {
+    setIsSettingUp(true)
     const token = getItem("token")
     if (token) {
       const t = localStorage.getItem("token")
@@ -58,6 +61,7 @@ function ContextProvider({ children }) {
         await connectWallet()
       }
     }
+    setIsSettingUp(false)
   }
 
   useEffect(() => {
@@ -78,6 +82,7 @@ function ContextProvider({ children }) {
           email: res.email,
           name: res.nickname,
           image: res.picture,
+          id: res.id
         } as IUser)
       }
     } catch (error) {
@@ -177,7 +182,8 @@ function ContextProvider({ children }) {
   }
 
   return (
-    <Context.Provider value={{ account, wallet, getWallet, connectWallet, unlinkWallet, login, oauth, logout, signUp }}>
+    <Context.Provider
+      value={{ account, wallet, getWallet, connectWallet, unlinkWallet, login, oauth, logout, signUp, isSettingUp }}>
       {children}
     </Context.Provider>
   )

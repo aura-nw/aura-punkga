@@ -1,5 +1,6 @@
-import { ArrowRightIcon } from "@heroicons/react/20/solid"
-import { ArrowsUpDownIcon, BellAlertIcon, DocumentTextIcon } from "@heroicons/react/24/outline"
+import { ArrowRightIcon, BellAlertIcon } from "@heroicons/react/20/solid"
+import { ArrowsUpDownIcon, BellAlertIcon as BellAlertIconOutline, DocumentTextIcon } from "@heroicons/react/24/outline"
+import FilledButton from "components/Button/FilledButton"
 import OutlineButton from "components/Button/OutlineButton"
 import TextField from "components/Input/TextField"
 import StatusLabel from "components/Label/Status"
@@ -8,24 +9,47 @@ import { useTranslation } from "next-i18next"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import mockBanner from "src/assets/images/mockup3.png"
 import mockAvar from "src/assets/images/mockup4.png"
 import m6 from "src/assets/images/mockup6.png"
 import { LanguageType } from "src/constants/global.types"
+import { Context } from "src/context"
 import { IComicDetail } from "src/models/comic"
 
 export default function ComicDetail({
   data,
   language,
   setLanguage,
+  isSubscribe,
+  setIsSubscribe,
+  subscribe,
+  unsubscribe,
 }: {
   data: IComicDetail
   language: LanguageType
   setLanguage: any
+  isSubscribe: boolean
+  setIsSubscribe: any
+  subscribe: () => void
+  unsubscribe: () => void
 }) {
   const [expandDetail, setExpandDetail] = useState(false)
   const { t } = useTranslation()
+  const { account } = useContext(Context)
+
+  const subscribeHandler = (isSub: boolean) => {
+    if (account) {
+      if (isSub) {
+        subscribe()
+      } else {
+        unsubscribe()
+      }
+      setIsSubscribe(isSub)
+    } else {
+      ;(document.querySelector("#open-sign-in-btn") as any)?.click()
+    }
+  }
 
   if (typeof data == "undefined") {
     return <></>
@@ -37,7 +61,6 @@ export default function ComicDetail({
 
   const selectedLanguage =
     data.languages.find((l) => l.shortLang == language) || data.languages.find((l) => l.isMainLanguage)
-
   return (
     <div
       className={`${
@@ -82,18 +105,28 @@ export default function ComicDetail({
                 Hanz
               </p>
               <p className="">
-                <strong>1,234</strong> views • <strong>1,000</strong> likes
+                {" "}
+                <strong>{data.views}</strong> views • <strong>{data.likes}</strong> likes
               </p>
               <div
                 className={`${
                   !expandDetail ? "opacity-100 h-[34px]" : "opacity-0 h-0  mt-[-10px]"
                 } duration-500 transition-all flex gap-[10px]`}>
-                <OutlineButton>
-                  <Link href="/sample" className="h-5 flex items-center">
-                    <BellAlertIcon className="w-6 h-6 mr-2 inline-block" />
-                    Subscribe
-                  </Link>
-                </OutlineButton>
+                {isSubscribe ? (
+                  <FilledButton>
+                    <div onClick={() => subscribeHandler(false)} className="h-5 flex items-center">
+                      <BellAlertIcon className="w-6 h-6 mr-2 inline-block animate-[bell-ring_1s_ease-in-out]" />
+                      Subscribed
+                    </div>
+                  </FilledButton>
+                ) : (
+                  <OutlineButton>
+                    <div onClick={() => subscribeHandler(true)} className="h-5 flex items-center">
+                      <BellAlertIconOutline className="w-6 h-6 mr-2 inline-block " />
+                      Subscribe
+                    </div>
+                  </OutlineButton>
+                )}
                 <OutlineButton onClick={() => setExpandDetail(true)}>See Detail</OutlineButton>
               </div>
               <div
@@ -106,9 +139,11 @@ export default function ComicDetail({
               </div>
             </div>
           </div>
-          <p className="italic text-subtle-dark ">
-            <a className="text-second-color underline font-semibold">Sign in</a> to unlock special chapters!
-          </p>
+          {!account && (
+            <p className="italic text-subtle-dark ">
+              <a className="text-second-color underline font-semibold">Sign in</a> to unlock special chapters!
+            </p>
+          )}
           <div
             className={`${
               !expandDetail ? "opacity-100 h-6" : "opacity-0 h-0  mt-[-10px]"
@@ -151,7 +186,13 @@ export default function ComicDetail({
             <div className="px-[60px] py-[20px] flex flex-col gap-5">
               {data.chapters.map((chapter, index) => (
                 <Link href={`/comic/${data.id}/chapter/${chapter.id}`} key={index} className="flex gap-4 items-center">
-                  <Image src={chapter.thumbnail || m6} alt="" className="w-[60px] h-[60px] object-cover rounded-xl" width={60} height={60} />
+                  <Image
+                    src={chapter.thumbnail || m6}
+                    alt=""
+                    className="w-[60px] h-[60px] object-cover rounded-xl"
+                    width={60}
+                    height={60}
+                  />
                   <div>
                     <div className="flex items-center gap-5">
                       <p>{`Chapter ${chapter.number}`}</p>
