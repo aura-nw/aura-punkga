@@ -34,9 +34,23 @@ function ContextProvider({ children }) {
     setUp()
   }, [])
 
+  const setLogoutTimeout = (timeout: any) => {
+    if (window.logoutTimeoutId) {
+      clearTimeout(window.logoutTimeoutId)
+    }
+    window.logoutTimeoutId = setTimeout(
+      () => {
+        setAccount(null)
+      },
+      timeout > 86400000 ? 86400000 : timeout
+    )
+  }
+
   const setUp = async () => {
     const token = getItem("token")
     if (token) {
+      const t = localStorage.getItem("token")
+      setLogoutTimeout(new Date(JSON.parse(t).exprire).getTime() - Date.now())
       await getProfile(token)
       const connectedProvider = getItem("connected_provider") as "Coin98" | "Keplr"
       if (connectedProvider) {
@@ -49,6 +63,7 @@ function ContextProvider({ children }) {
   useEffect(() => {
     if (accessTokenParam) {
       setItem("token", accessTokenParam, new Date(Date.now() + expiresInParam ? +expiresInParam * 1000 : 10800000))
+      setLogoutTimeout(expiresInParam ? +expiresInParam * 1000 : 10800000)
       getProfile(accessTokenParam)
     }
   }, [accessTokenParam])
@@ -117,6 +132,7 @@ function ContextProvider({ children }) {
       if (res) {
         callback && callback("success")
         setItem("token", res.access_token, new Date(Date.now() + res.expires_in * 1000))
+        setLogoutTimeout(res.expires_in * 1000)
         setUser(res.user)
       }
     } catch (error) {
@@ -127,8 +143,7 @@ function ContextProvider({ children }) {
 
   const oauth = async (provider: string, callback?: (status: string) => void) => {
     try {
-      const res = await authorizerRef.oauthLogin(provider)
-      console.log("oauth", res)
+      await authorizerRef.oauthLogin(provider)
     } catch (error) {
       callback && callback("failed")
       console.log("oauth error: " + error)

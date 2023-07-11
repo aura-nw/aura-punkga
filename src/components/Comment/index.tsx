@@ -45,7 +45,7 @@ export default function Comment({ data, reload }: { data: IComment; reload: () =
           <ChatInput onSubmit={reply} />
         </div>
       )}
-      <div className="flex flex-col-reverse gap-[10px]">
+      <div className="flex flex-col gap-[10px]">
         {data.replies?.map((d, i) => (
           <Reply key={i} data={d} />
         ))}
