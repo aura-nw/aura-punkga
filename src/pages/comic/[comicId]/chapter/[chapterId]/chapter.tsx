@@ -38,7 +38,7 @@ const Chapter: React.FC = ({
   unlike: () => void
   subscribe: () => void
   unsubscribe: () => void
-}) => {
+  }) => {
   const [openComments, setOpenComments] = useState(false)
   const [mode, setMode] = useState<"minscreen" | "fullscreen">("minscreen")
   const [isSubscribe, setIsSubscribe] = useState(false)
@@ -49,6 +49,9 @@ const Chapter: React.FC = ({
   useEffect(() => {
     setLanguage(locale as LanguageType)
   }, [locale])
+  useEffect(() => {
+    setIsSubscribe(comicDetails?.data?.isSubscribe)
+  }, [comicDetails?.data])
 
   useEffect(() => {
     if (openComments) {

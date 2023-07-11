@@ -32,6 +32,7 @@ interface Detail {
     }
   >
   chapters: IChapter[]
+  isSubscribe?: boolean
 }
 
 export interface IComicDetail

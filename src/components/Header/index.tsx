@@ -99,7 +99,7 @@ export default function Header({}) {
                           Disconnect Wallet
                         </SubFilledButton>
                         <div className="mt-[10px]">
-                          <div onClick={() => setConnectWalletOpen(!connectWalletOpen)}>
+                          <div onClick={() => router.push("/profile")}>
                             <strong>My profile</strong>
                           </div>
                           <span className="w-full block my-[10px] border-[1px] border-solid border-light-medium-gray "></span>
@@ -113,7 +113,7 @@ export default function Header({}) {
                     <DropdownMenu customClass="right-[50%] translate-x-[50%]">
                       <div className="p-5 flex flex-col gap-5">
                         <div className="mt-[10px]">
-                          <div onClick={() => setConnectWalletOpen(!connectWalletOpen)}>
+                          <div onClick={() => router.push("/profile")}>
                             <strong>My profile</strong>
                           </div>
                           <span className="w-full block my-[10px] border-[1px] border-solid border-light-medium-gray "></span>

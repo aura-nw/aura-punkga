@@ -14,7 +14,11 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   const getComicDetail = async () => {
     const {
       data: { manga_by_pk: data },
-    } = await api.get(`api/rest/public/manga/${query.comicId}`)
+    } = await api.get(`api/rest/public/manga/${query.comicId}`, {
+      params: {
+        user_id: account?.id,
+      },
+    })
 
     const res = {
       id: data.id,
@@ -32,6 +36,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       })),
       views: data.chapters_aggregate?.aggregate?.sum?.views,
       likes: data.chapters_aggregate?.aggregate?.sum?.likes,
+      isSubscribe: !!data.manga_subscribers.length,
     }
 
     LANGUAGE.forEach((l) => {
@@ -64,7 +69,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       type: data.chapter_type,
       name: data.chapter_name,
       number: data.chapter_number,
-      isLiked: !!data.chapters_likes.length
+      isLiked: !!data.chapters_likes.length,
     }
 
     LANGUAGE.forEach((l) => {
@@ -99,7 +104,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     return []
   }
 
-  const comicDetails = useApi<IComicDetail>(getComicDetail, !!query.comicId, [query.comicId])
+  const comicDetails = useApi<IComicDetail>(getComicDetail, !!query.comicId, [query.comicId, account?.id])
   const chapterComments = useApi<IComment[]>(getChapterComments, !!query.chapterId, [query.chapterId])
   const chapterDetails = useApi<IChapter>(getChapterDetails, !!query.comicId && !!query.chapterId, [
     query.comicId,
