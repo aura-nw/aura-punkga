@@ -14,6 +14,7 @@ interface Basic {
   latestChap: {
     number: number
     id: string
+    pushlishDate?: string | number | Date
   }
 }
 

@@ -9,6 +9,7 @@ import { LanguageType } from "src/constants/global.types"
 import { IChapter } from "src/models/chapter"
 import { IComicDetail } from "src/models/comic"
 import { IComment } from "src/models/comment"
+import { getItem, setItem } from "src/utils/localStorage"
 
 const Chapter: React.FC = ({
   comicDetails,
@@ -38,7 +39,7 @@ const Chapter: React.FC = ({
   unlike: () => void
   subscribe: () => void
   unsubscribe: () => void
-  }) => {
+}) => {
   const [openComments, setOpenComments] = useState(false)
   const [mode, setMode] = useState<"minscreen" | "fullscreen">("minscreen")
   const [isSubscribe, setIsSubscribe] = useState(false)
@@ -61,6 +62,19 @@ const Chapter: React.FC = ({
     }
     return () => clearInterval(commentIntervalId.current)
   }, [openComments])
+
+  useEffect(() => {
+    if (comicDetails?.data?.id) {
+      const currentReading = getItem("current_reading_manga")
+      if (currentReading) {
+        const currentReadingManga = JSON.parse(currentReading)
+        const newData = [comicDetails.data.id, ...currentReadingManga.filter((id) => id != comicDetails.data.id)]
+        setItem("current_reading_manga", JSON.stringify(newData))
+      } else {
+        setItem("current_reading_manga", JSON.stringify([comicDetails.data.id]))
+      }
+    }
+  }, [comicDetails?.data?.id])
 
   return (
     <>

@@ -229,7 +229,7 @@ export default function ReadingSection({
         }`}>
         <div className="flex-1 self-center">
           <div>
-            <strong>{`${data[language].title} • Chapter ${chapterData.number} • ${chapterData.name}`}</strong>
+            <div className="font-bold text-ellipsis max-w-[20vw] overflow-hidden whitespace-nowrap">{`${data[language].title} • Chapter ${chapterData.number} • ${chapterData.name}`}</div>
             <p className="text-subtle-dark">
               {(chapterData.likes || 0).toLocaleString("en-US")} likes •{" "}
               {(chapterData.views || 0).toLocaleString("en-US")} views •{" "}
@@ -380,15 +380,15 @@ export default function ReadingSection({
             <Image src={ChatFillIcon} alt="" onClick={() => setOpenComments(false)} />
           )}
           {isSubscribe ? (
-            <FilledButton>
-              <div onClick={() => subscribeHandler(false)} className="h-5 flex items-center">
+            <FilledButton onClick={() => subscribeHandler(false)}>
+              <div className="h-5 flex items-center">
                 <BellAlertIcon className="w-6 h-6 mr-2 inline-block animate-[bell-ring_1s_ease-in-out]" />
                 Subscribed
               </div>
             </FilledButton>
           ) : (
-            <OutlineButton>
-              <div onClick={() => subscribeHandler(true)} className="h-5 flex items-center">
+            <OutlineButton onClick={() => subscribeHandler(true)}>
+              <div className="h-5 flex items-center">
                 <BellAlertIconOutline className="w-6 h-6 mr-2 inline-block " />
                 Subscribe
               </div>

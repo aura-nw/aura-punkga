@@ -157,6 +157,7 @@ function ContextProvider({ children }) {
 
   const logout = async (callback?: () => void) => {
     removeItem("token")
+    removeItem("current_reading_manga")
     setAccount(null)
     setUser(null)
     unlinkWallet()
