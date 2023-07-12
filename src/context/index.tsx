@@ -6,11 +6,13 @@ import { handleConnectWallet } from "src/utils/signer"
 import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/router"
 import config from "public/config.json"
+import { getItem, removeItem, setItem } from "src/utils/localStorage"
 export const Context = createContext(null)
 
 function ContextProvider({ children }) {
   const [account, setAccount] = useState<IUser>()
   const [wallet, setWallet] = useState<string>()
+  const [isSettingUp, setIsSettingUp] = useState(true)
   const key = useRef<Key>()
   const [provider, setProvider] = useState<"Coin98" | "Keplr">()
   const { authorizerRef, user, setUser } = useAuthorizer()
@@ -18,6 +20,7 @@ function ContextProvider({ children }) {
 
   const searchParams = useSearchParams()
   const accessTokenParam = searchParams.get("access_token")
+  const expiresInParam = searchParams.get("expires_in")
 
   useEffect(() => {
     if (user?.id)
@@ -25,6 +28,7 @@ function ContextProvider({ children }) {
         email: user.email,
         name: user.nickname,
         image: user.picture,
+        id: user.id,
       } as IUser)
   }, [user])
 
@@ -32,21 +36,38 @@ function ContextProvider({ children }) {
     setUp()
   }, [])
 
+  const setLogoutTimeout = (timeout: any) => {
+    if (window.logoutTimeoutId) {
+      clearTimeout(window.logoutTimeoutId)
+    }
+    window.logoutTimeoutId = setTimeout(
+      () => {
+        setAccount(null)
+      },
+      timeout > 86400000 ? 86400000 : timeout
+    )
+  }
+
   const setUp = async () => {
-    const token = localStorage.getItem("token")
+    setIsSettingUp(true)
+    const token = getItem("token")
     if (token) {
+      const t = localStorage.getItem("token")
+      setLogoutTimeout(new Date(JSON.parse(t).exprire).getTime() - Date.now())
       await getProfile(token)
+      const connectedProvider = getItem("connected_provider") as "Coin98" | "Keplr"
+      if (connectedProvider) {
+        await getWallet(connectedProvider)
+        await connectWallet()
+      }
     }
-    const connectedProvider = localStorage.getItem("connected_provider") as "Coin98" | "Keplr"
-    if (connectedProvider) {
-      await getWallet(connectedProvider)
-      await connectWallet()
-    }
+    setIsSettingUp(false)
   }
 
   useEffect(() => {
     if (accessTokenParam) {
-      localStorage.setItem("token", accessTokenParam)
+      setItem("token", accessTokenParam, new Date(Date.now() + expiresInParam ? +expiresInParam * 1000 : 10800000))
+      setLogoutTimeout(expiresInParam ? +expiresInParam * 1000 : 10800000)
       getProfile(accessTokenParam)
     }
   }, [accessTokenParam])
@@ -61,6 +82,7 @@ function ContextProvider({ children }) {
           email: res.email,
           name: res.nickname,
           image: res.picture,
+          id: res.id
         } as IUser)
       }
     } catch (error) {
@@ -89,7 +111,7 @@ function ContextProvider({ children }) {
     try {
       const keplr = provider == "Coin98" ? window.coin98?.keplr : window.keplr
       const res = await handleConnectWallet(keplr, key.current)
-      localStorage.setItem("connected_provider", provider)
+      setItem("connected_provider", provider)
       if (res) {
         setWallet(key.current.bech32Address)
         callback && callback()
@@ -100,7 +122,7 @@ function ContextProvider({ children }) {
   }
 
   const unlinkWallet = async (callback?: () => void) => {
-    localStorage.removeItem("connected_provider")
+    removeItem("connected_provider")
     key.current = null
     setWallet(null)
     setProvider(null)
@@ -114,7 +136,8 @@ function ContextProvider({ children }) {
       })
       if (res) {
         callback && callback("success")
-        localStorage.setItem("token", res.access_token)
+        setItem("token", res.access_token, new Date(Date.now() + res.expires_in * 1000))
+        setLogoutTimeout(res.expires_in * 1000)
         setUser(res.user)
       }
     } catch (error) {
@@ -125,8 +148,7 @@ function ContextProvider({ children }) {
 
   const oauth = async (provider: string, callback?: (status: string) => void) => {
     try {
-      const res = await authorizerRef.oauthLogin(provider)
-      console.log("oauth", res)
+      await authorizerRef.oauthLogin(provider)
     } catch (error) {
       callback && callback("failed")
       console.log("oauth error: " + error)
@@ -134,7 +156,8 @@ function ContextProvider({ children }) {
   }
 
   const logout = async (callback?: () => void) => {
-    localStorage.removeItem("token")
+    removeItem("token")
+    removeItem("current_reading_manga")
     setAccount(null)
     setUser(null)
     unlinkWallet()
@@ -160,7 +183,8 @@ function ContextProvider({ children }) {
   }
 
   return (
-    <Context.Provider value={{ account, wallet, getWallet, connectWallet, unlinkWallet, login, oauth, logout, signUp }}>
+    <Context.Provider
+      value={{ account, wallet, getWallet, connectWallet, unlinkWallet, login, oauth, logout, signUp, isSettingUp }}>
       {children}
     </Context.Provider>
   )

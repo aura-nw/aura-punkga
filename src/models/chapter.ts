@@ -12,4 +12,5 @@ export interface IChapter {
   views: number
   likes: number
   comments: number
+  isLiked: boolean
 }

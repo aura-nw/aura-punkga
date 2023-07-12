@@ -41,7 +41,7 @@ export function DropdownMenu({
       enterFrom="opacity-0"
       enterTo="opacity-100">
       <div
-        className={`${customClass} absolute z-10 mt-1 w-full min-w-[100px] rounded-[12px] overflow-auto bg-white shadow-[0px_10px_50px_rgba(0,0,0,0.15)]`}>
+        className={`${customClass} absolute z-50 mt-1 w-full min-w-[100px] rounded-[12px] overflow-auto bg-white shadow-[0px_10px_50px_rgba(0,0,0,0.15)]`}>
         {children}
       </div>
     </Transition>

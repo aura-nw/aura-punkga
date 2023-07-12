@@ -22,6 +22,7 @@ declare global {
     keplr: any
     getOfflineSigner: any
     coin98: any
+    logoutTimeoutId: any
   }
 }
 

@@ -9,12 +9,17 @@ import { LanguageType } from "src/constants/global.types"
 import { IChapter } from "src/models/chapter"
 import { IComicDetail } from "src/models/comic"
 import { IComment } from "src/models/comment"
+import { getItem, setItem } from "src/utils/localStorage"
 
 const Chapter: React.FC = ({
   comicDetails,
   chapterDetails,
   chapterComments,
   postComment,
+  like,
+  unlike,
+  subscribe,
+  unsubscribe,
 }: {
   comicDetails: {
     data: IComicDetail
@@ -30,8 +35,14 @@ const Chapter: React.FC = ({
     callApi: (skipLoading: boolean) => void
   }
   postComment: (content: string) => void
+  like: () => void
+  unlike: () => void
+  subscribe: () => void
+  unsubscribe: () => void
 }) => {
-  const [tab, setTab] = useState("detail")
+  const [openComments, setOpenComments] = useState(false)
+  const [mode, setMode] = useState<"minscreen" | "fullscreen">("minscreen")
+  const [isSubscribe, setIsSubscribe] = useState(false)
   const { locale } = useRouter()
   const [language, setLanguage] = useState<LanguageType>(locale as LanguageType)
   const commentIntervalId = useRef<any>()
@@ -39,15 +50,31 @@ const Chapter: React.FC = ({
   useEffect(() => {
     setLanguage(locale as LanguageType)
   }, [locale])
+  useEffect(() => {
+    setIsSubscribe(comicDetails?.data?.isSubscribe)
+  }, [comicDetails?.data])
 
   useEffect(() => {
-    if (tab == "comment") {
+    if (openComments) {
       commentIntervalId.current = setInterval(() => chapterComments.callApi(true), 5000)
     } else {
       if (commentIntervalId.current) clearInterval(commentIntervalId.current)
     }
     return () => clearInterval(commentIntervalId.current)
-  }, [tab])
+  }, [openComments])
+
+  useEffect(() => {
+    if (comicDetails?.data?.id) {
+      const currentReading = getItem("current_reading_manga")
+      if (currentReading) {
+        const currentReadingManga = JSON.parse(currentReading)
+        const newData = [comicDetails.data.id, ...currentReadingManga.filter((id) => id != comicDetails.data.id)]
+        setItem("current_reading_manga", JSON.stringify(newData))
+      } else {
+        setItem("current_reading_manga", JSON.stringify([comicDetails.data.id]))
+      }
+    }
+  }, [comicDetails?.data?.id])
 
   return (
     <>
@@ -62,18 +89,34 @@ const Chapter: React.FC = ({
             <ReadingSection
               data={comicDetails.data}
               chapterData={chapterDetails.data}
-              setTab={setTab}
-              tab={tab}
+              setOpenComments={setOpenComments}
+              openComments={openComments}
               language={language}
+              like={like}
+              unlike={unlike}
+              subscribe={subscribe}
+              unsubscribe={unsubscribe}
+              mode={mode}
+              setMode={setMode}
+              isSubscribe={isSubscribe}
+              setIsSubscribe={setIsSubscribe}
             />
           )}
         </div>
         <div className="flex-auto w-1/3 h-full">
-          {tab == "detail" ? (
+          {!openComments ? (
             !comicDetails || comicDetails.loading ? (
               <DummyComicDetail />
             ) : (
-              <ComicDetail data={comicDetails.data} language={language} setLanguage={setLanguage} />
+              <ComicDetail
+                data={comicDetails.data}
+                language={language}
+                setLanguage={setLanguage}
+                isSubscribe={isSubscribe}
+                setIsSubscribe={setIsSubscribe}
+                subscribe={subscribe}
+                unsubscribe={unsubscribe}
+              />
             )
           ) : !chapterDetails ? (
             <></>
@@ -82,6 +125,9 @@ const Chapter: React.FC = ({
               reload={() => chapterComments.callApi(true)}
               postComment={postComment}
               comments={chapterComments.data}
+              mode={mode}
+              setOpenComments={setOpenComments}
+              openComments={openComments}
             />
           )}
         </div>
