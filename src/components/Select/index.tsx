@@ -6,6 +6,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 interface ISelect {
+  selected?: { key: string | number; value: string }
   onChange?: (selected: { key: string | number; value: string }) => void
   icon?: JSX.Element
   options: { key: string | number; value: string }[]
@@ -14,19 +15,20 @@ interface ISelect {
 }
 export default function Select({
   onChange,
+  selected,
   icon = <ChevronDownIcon className="h-5 w-5 text-medium-gray" aria-hidden="true" />,
   options,
   label,
-  placeholder
+  placeholder,
 }: ISelect) {
-  const [selected, setSelected] = useState<{ key: string | number; value: string } | null>(null)
+  const [selectedOption, setSelectedOption] = useState<{ key: string | number; value: string } | null>(selected)
 
   return (
     <Listbox
-      value={selected}
+      value={selectedOption}
       onChange={(value) => {
         onChange(value)
-        setSelected(value)
+        setSelectedOption(value)
       }}>
       {({ open }) => (
         <>

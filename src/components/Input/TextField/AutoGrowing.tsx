@@ -7,6 +7,7 @@ interface IAutoGrowingTextField {
   leadingComponent?: JSX.Element
   trailingComponent?: JSX.Element
   r?: any
+  className?: string
 }
 export default function AutoGrowingTextField({
   value,
@@ -14,7 +15,8 @@ export default function AutoGrowingTextField({
   placeholder,
   leadingComponent,
   trailingComponent,
-  r
+  className,
+  r,
 }: IAutoGrowingTextField) {
   const eRef = useRef()
   const ref = r || eRef
@@ -25,12 +27,10 @@ export default function AutoGrowingTextField({
     })
   }, [])
   return (
-    <div className="relative w-full">
-      <div
-        ref={ref}
-        placeholder={placeholder}
-        contentEditable={true}
-        className="whitespace-pre-wrap break-words min-h-[32px] w-full focus:outline-none text-[12px] leading-[20px] px-[10px] py-[7px] rounded-[12px] border-[1px] border-solid border-medium-gray"></div>
-    </div>
+    <div
+      ref={ref}
+      placeholder={placeholder}
+      contentEditable={true}
+      className={`whitespace-pre-wrap break-words min-h-[32px] w-full focus:outline-none text-[12px] leading-[20px] px-[10px] py-[7px] rounded-[12px] border-[1.5px] border-solid border-medium-gray ${className}`}></div>
   )
 }
