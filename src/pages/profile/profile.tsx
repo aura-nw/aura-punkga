@@ -8,15 +8,19 @@ import OutlineButton from "components/Button/OutlineButton"
 import DummyComic from "components/DummyComponent/comic"
 import Comic from "components/pages/profile/comic"
 import Select from "components/Select"
-import { ChevronDownIcon } from "@heroicons/react/24/outline"
+import { ChevronDownIcon, CloudArrowUpIcon } from "@heroicons/react/24/outline"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import AutoGrowingTextField from "components/Input/TextField/AutoGrowing"
+import moment from "moment"
 export default function Profile({ profile, subscribeList, unsubscribe, subscribe }) {
   const { account, isSettingUp } = useContext(Context)
-  const [startDate, setStartDate] = useState(new Date("01/18/1999"))
+  const [birthdate, setBirthdate] = useState(new Date("01/18/1999"))
+  const [gender, setGender] = useState<{ key: string | number; value: string }>(null)
   const [open, setOpen] = useState(false)
+  const [bio, setBio] = useState(null)
   const router = useRouter()
+  const { updateProfile } = useContext(Context)
 
   useEffect(() => {
     if (!isSettingUp) {
@@ -25,17 +29,45 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
       }
     }
   }, [isSettingUp, account])
-  const CustomInput = forwardRef(({ value, onClick }: any, ref: any) => (
-    <button
-      className="relative w-full cursor-default rounded-[12px] bg-white py-[3px] pl-[13px] pr-[57px] text-left text-gray-900 shadow-sm ring-1 ring-inset ring-medium-gray focus:outline-none focus:ring-2 sm:text-sm sm:leading-6 lg:h-10 text-medium-gray font-bold"
-      onClick={onClick}
-      ref={ref}>
-      {value}
-      <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-        <ChevronDownIcon className="h-5 w-5 text-medium-gray" aria-hidden="true" />
-      </span>
-    </button>
-  ))
+
+  useEffect(() => {
+    if (profile.data) {
+      setGender({ key: profile.data.gender, value: profile.data.gender })
+      setBirthdate(profile.data.birthdate ? new Date(profile.data.birthdate) : undefined)
+      setBio(profile.data.given_name)
+    }
+  }, [profile.data])
+
+  const updateProfileHandler = async () => {
+    if (
+      gender.key != profile.data.gender ||
+      new Date(profile.data.birthdate).getTime() != new Date(birthdate).getTime() ||
+      profile.data.given_name != bio
+    ) {
+      const res = await updateProfile({
+        gender: gender.key,
+        birthdate: moment(birthdate).format("yyyy-MM-DD"),
+        given_name: bio,
+      })
+      await profile.callApi(true)
+    }
+    setOpen(false)
+  }
+
+  const CustomInput = forwardRef(({ value, onClick }: any, ref: any) => {
+    return (
+      <button
+        className="relative w-full cursor-default rounded-[12px] bg-white py-[3px] pl-[13px] pr-[57px] text-left text-gray-900 shadow-sm ring-1 ring-inset ring-medium-gray focus:outline-none focus:ring-2 sm:text-sm sm:leading-6 lg:h-10 font-bold"
+        onClick={onClick}
+        ref={ref}>
+        {value ? moment(value).format("DD/MM/yyyy") : <span className="text-medium-gray">Click to change</span>}
+        <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+          <ChevronDownIcon className="h-5 w-5 text-medium-gray" aria-hidden="true" />
+        </span>
+      </button>
+    )
+  })
+
   return (
     <>
       <Header />
@@ -57,10 +89,18 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
           </div>
         ) : (
           <div className="flex gap-[60px]">
-            <div className="w-[320px] h-[320px] rounded-xl object-cover bg-light-gray">
-              <Image src={NoImg} height={360} width={360} alt="" />
+            <div className="w-[320px] h-[320px] rounded-xl object-cover bg-light-gray relative overflow-hidden">
+              <div
+                className={`transition-all bg-medium-gray duration-300 absolute inset-0 opacity-0 flex flex-col justify-center items-center cursor-pointer ${
+                  open ? "hover:opacity-40" : "hidden"
+                }`}>
+                <CloudArrowUpIcon className="w-10 h-10" />
+                <div className="text-xl font-semibold">Upload profile picture</div>
+                <input type="file" className="bg-black absolute inset-0 opacity-0" />
+              </div>
+              <Image src={profile.data.picture || NoImg} height={360} width={360} alt="" />
             </div>
-            <div className="flex flex-col justify-between flex-auto">
+            <div className="flex flex-col justify-between w-1/2">
               <div>
                 <div className="flex">
                   <div
@@ -90,84 +130,83 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                     {profile.data.email}
                   </p>
                 </div>
-
-                {(!!profile.data.birthdate || true) && (
-                  <>
-                    <div
-                      className={`flex flex-col gap-4 font-medium transition-all ${
-                        !open ? "opacity-0 h-0 overflow-hidden mb-0" : "opacity-100 h-24 mb-2 mt-2"
-                      }`}>
-                      {true && (
-                        <div className="flex items-center">
-                          <div
-                            className={`inline-block text-medium-gray transition-all  ${
-                              open ? "w-[100px] opacity-100 font-bold" : "w-[0px] opacity-0"
-                            }`}>
-                            DOB:
-                          </div>
-                          <div>
-                            <DatePicker
-                              selected={startDate}
-                              onChange={(date) => setStartDate(date)}
-                              customInput={<CustomInput />}
-                              dateFormat="dd/MM/yyyy"
-                            />
-                          </div>
-                        </div>
-                      )}
-                      {true && (
-                        <div className="flex items-center">
-                          <div
-                            className={`inline-block text-medium-gray transition-all  ${
-                              open ? "w-[100px] opacity-100 font-bold" : "w-[0px] opacity-0"
-                            }`}>
-                            Gender:
-                          </div>
-                          <div>
-                            <Select
-                              placeholder="Select a gender"
-                              icon={<ChevronDownIcon className="h-5 w-5 text-medium-gray" aria-hidden="true" />}
-                              options={[
-                                {
-                                  key: 1,
-                                  value: "Male",
-                                },
-                                {
-                                  key: 2,
-                                  value: "Female",
-                                },
-                                {
-                                  key: 3,
-                                  value: "Other",
-                                },
-                              ]}
-                            />
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                    <div
-                      className={`flex gap-[30px] font-medium  transition-all ${
-                        open ? "opacity-0 h-0 overflow-hidden mb-0" : "opacity-100 h-6 mb-2"
-                      }`}>
-                      {true && <div>{profile.data.birthdate || "18/01/1999"}</div>}
-                      {true && <div>{profile.data.gender || "Male"}</div>}
-                    </div>
-                  </>
-                )}
                 <div
-                  className={`font-medium transition-all overflow-hidden ${
-                    open ? "opacity-0 h-0" : "opacity-100 h-[80px]"
+                  className={`flex flex-col gap-4 font-medium transition-all ${
+                    !open ? "opacity-0 h-0 overflow-hidden mb-0" : "opacity-100 h-24 mb-2 mt-2"
                   }`}>
-                  <label className="text-medium-gray">Bio:</label>
-                  <p>A pink monster comes from a green bubble planet</p>
+                  <div className="flex items-center">
+                    <div
+                      className={`inline-block text-medium-gray transition-all  ${
+                        open ? "w-[100px] opacity-100 font-bold" : "w-[0px] opacity-0"
+                      }`}>
+                      DOB:
+                    </div>
+                    <div>
+                      <DatePicker
+                        selected={birthdate}
+                        onChange={(date) => setBirthdate(date)}
+                        customInput={<CustomInput />}
+                      />
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <div
+                      className={`inline-block text-medium-gray transition-all  ${
+                        open ? "w-[100px] opacity-100 font-bold" : "w-[0px] opacity-0"
+                      }`}>
+                      Gender:
+                    </div>
+                    <div>
+                      <Select
+                        selected={gender}
+                        onChange={setGender}
+                        className="font-bold capitalize"
+                        placeholder="Select a gender"
+                        icon={<ChevronDownIcon className="h-5 w-5 text-medium-gray" aria-hidden="true" />}
+                        options={[
+                          {
+                            key: "Male",
+                            value: "Male",
+                          },
+                          {
+                            key: "Female",
+                            value: "Female",
+                          },
+                          {
+                            key: "Undisclosed",
+                            value: "Undisclosed",
+                          },
+                        ]}
+                      />
+                    </div>
+                  </div>
                 </div>
+                {(!!profile.data.birthdate || profile.data.gender) && (
+                  <div
+                    className={`flex gap-[30px] font-medium  transition-all ${
+                      open ? "opacity-0 h-0 overflow-hidden mb-0" : "opacity-100 h-6 mb-2"
+                    }`}>
+                    {profile.data.birthdate && <div>{moment(profile.data.birthdate).format("DD/MM/yyyy")}</div>}
+                    {profile.data.gender && <div className="capitalize">{profile.data.gender}</div>}
+                  </div>
+                )}
+                {profile.data.given_name && (
+                  <div
+                    className={`font-medium transition-all overflow-hidden ${
+                      open ? "opacity-0 h-0" : "opacity-100 h-[80px]"
+                    }`}>
+                    <label className="text-medium-gray">Bio:</label>
+                    <p>{profile.data.given_name}</p>
+                  </div>
+                )}
                 <div
                   className={`flex transition-all mt-2 overflow-hidden ${
                     !open ? "opacity-0 h-0 " : "opacity-100 h-[80px]"
                   }`}>
                   <label className="text-medium-gray font-bold min-w-[100px] flex-auto pt-[7px]">Bio:</label>
                   <AutoGrowingTextField
+                    value={bio}
+                    onChange={setBio}
                     placeholder="Write something about yourself "
                     className="text-sm font-bold leading-6"
                   />
@@ -181,13 +220,17 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                   <OutlineButton size="lg" onClick={() => setOpen(!open)}>
                     Edit profile
                   </OutlineButton>
-                  <OutlineButton size="lg">Change password</OutlineButton>
+                  {profile.data?.signup_methods.includes("basic_auth") ? (
+                    <OutlineButton size="lg">Change password</OutlineButton>
+                  ) : (
+                    <OutlineButton size="lg">Set password</OutlineButton>
+                  )}
                 </div>
                 <div
                   className={`flex gap-6 absolute bottom-0 transition-all ${
                     open ? "right-[0%]  opacity-100" : "right-1/2 opacity-0 translate-x-1/2"
                   }`}>
-                  <OutlineButton size="lg" onClick={() => setOpen(!open)}>
+                  <OutlineButton size="lg" onClick={updateProfileHandler}>
                     Save
                   </OutlineButton>
                 </div>

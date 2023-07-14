@@ -23,9 +23,15 @@ export default function AutoGrowingTextField({
   useEffect(() => {
     const element = ref.current as Element
     element.addEventListener("input", function (event) {
-      onChange((event.target as any).innerText)
+      onChange && onChange((event.target as any).innerText)
     })
   }, [])
+  useEffect(() => {
+    const element = ref.current as Element
+    if (value) {
+      element.innerHTML = value.toString()
+    }
+  }, [value == null])
   return (
     <div
       ref={ref}

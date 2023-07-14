@@ -82,7 +82,7 @@ function ContextProvider({ children }) {
           email: res.email,
           name: res.nickname,
           image: res.picture,
-          id: res.id
+          id: res.id,
         } as IUser)
       }
     } catch (error) {
@@ -182,9 +182,32 @@ function ContextProvider({ children }) {
     }
   }
 
+  const updateProfile = async (data: any) => {
+    const token = getItem("token")
+    const res = authorizerRef.updateProfile(
+      data,
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    )
+    return res
+  }
+
   return (
     <Context.Provider
-      value={{ account, wallet, getWallet, connectWallet, unlinkWallet, login, oauth, logout, signUp, isSettingUp }}>
+      value={{
+        account,
+        wallet,
+        getWallet,
+        connectWallet,
+        unlinkWallet,
+        login,
+        oauth,
+        logout,
+        signUp,
+        isSettingUp,
+        updateProfile,
+      }}>
       {children}
     </Context.Provider>
   )
