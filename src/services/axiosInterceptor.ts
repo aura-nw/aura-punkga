@@ -1,11 +1,6 @@
 import axios from "axios"
-import config from 'public/config.json'
 import { getItem } from "src/utils/localStorage"
-const api = axios.create({
-  baseURL: config.API_URL,
-})
-
-api.interceptors.request.use(
+axios.interceptors.request.use(
   (config) => {
     const token = getItem("token")
     if (token) {
@@ -18,6 +13,3 @@ api.interceptors.request.use(
   }
 )
 
-
-
-export default api

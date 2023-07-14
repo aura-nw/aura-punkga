@@ -1,3 +1,5 @@
+import axios from "axios"
+import getConfig from "next/config"
 import { useRouter } from "next/router"
 import { useContext } from "react"
 import { LANGUAGE } from "src/constants"
@@ -6,15 +8,14 @@ import useApi from "src/hooks/useApi"
 import { IChapter } from "src/models/chapter"
 import { IComicDetail } from "src/models/comic"
 import { IComment } from "src/models/comment"
-import api from "src/services/axiosInterceptor"
 const withApi = (Component: React.FC<any>) => (props: any) => {
   const { query } = useRouter()
   const { account } = useContext(Context)
-
+  const config = getConfig()
   const getComicDetail = async () => {
     const {
       data: { manga_by_pk: data },
-    } = await api.get(`api/rest/public/manga/${query.comicId}`, {
+    } = await axios.get(`${config.API_URL}/api/rest/public/manga/${query.comicId}`, {
       params: {
         user_id: account?.id,
       },
@@ -54,7 +55,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   const getChapterDetails = async () => {
     const {
       data: { chapters: cdata },
-    } = await api.get(`api/rest/public/manga/${query.comicId}/chapters/${query.chapterId}`, {
+    } = await axios.get(`${config.API_URL}/api/rest/public/manga/${query.comicId}/chapters/${query.chapterId}`, {
       params: {
         user_id: account?.id,
       },
@@ -81,7 +82,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   }
 
   const getChapterComments = async () => {
-    const { data } = await api.get(`/api/rest/public/chapters/${query.chapterId}/comments`)
+    const { data } = await axios.get(`${config.API_URL}/api/rest/public/chapters/${query.chapterId}/comments`)
     if (data.social_activities) {
       return data.social_activities.map((socialActivity) => ({
         id: socialActivity.id,
@@ -113,7 +114,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   ])
 
   const postComment = async (content: string) => {
-    const { data } = await api.post(`/api/rest/user/chapters/${query.chapterId}/comments`, {
+    const { data } = await axios.post(`${config.API_URL}/api/rest/user/chapters/${query.chapterId}/comments`, {
       content: content,
       ref_activity: null,
     })
@@ -123,16 +124,16 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   }
 
   const like = async () => {
-    await api.post(`/api/rest/user/chapters/${query.chapterId}/likes`)
+    await axios.post(`${config.API_URL}/api/rest/user/chapters/${query.chapterId}/likes`)
   }
   const unlike = async () => {
-    await api.delete(`/api/rest/user/chapters/${query.chapterId}/likes`)
+    await axios.delete(`${config.API_URL}/api/rest/user/chapters/${query.chapterId}/likes`)
   }
   const subscribe = async () => {
-    await api.post(`/api/rest/user/manga/${query.comicId}/subscribe`)
+    await axios.post(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
   }
   const unsubscribe = async () => {
-    await api.delete(`/api/rest/user/manga/${query.comicId}/subscribe`)
+    await axios.delete(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
   }
 
   return (

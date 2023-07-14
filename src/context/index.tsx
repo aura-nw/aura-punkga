@@ -5,8 +5,9 @@ import { IUser } from "src/models/user"
 import { handleConnectWallet } from "src/utils/signer"
 import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/router"
-import config from "public/config.json"
 import { getItem, removeItem, setItem } from "src/utils/localStorage"
+import axios from "axios"
+import getConfig, { setConfig } from "next/config"
 export const Context = createContext(null)
 
 function ContextProvider({ children }) {
@@ -82,14 +83,13 @@ function ContextProvider({ children }) {
           email: res.email,
           name: res.nickname,
           image: res.picture,
-          id: res.id
+          id: res.id,
         } as IUser)
       }
     } catch (error) {
       console.log("getProfile", error)
     }
   }
-
   const getWallet = async (p: "Coin98" | "Keplr") => {
     if (p == "Coin98" && !window.coin98?.keplr) {
       alert("Please install Coin98 wallet extension.")
@@ -101,9 +101,9 @@ function ContextProvider({ children }) {
     }
     setProvider(p)
     const keplr = p == "Coin98" ? window.coin98?.keplr : window.keplr
-    await keplr.experimentalSuggestChain(JSON.parse(config.CHAIN_INFO))
-    await keplr.enable(config.CHAIN_ID)
-    key.current = await keplr.getKey(config.CHAIN_ID)
+    await keplr.experimentalSuggestChain(JSON.parse(getConfig().CHAIN_INFO))
+    await keplr.enable(getConfig().CHAIN_ID)
+    key.current = await keplr.getKey(getConfig().CHAIN_ID)
     return key.current.bech32Address
   }
 
@@ -182,9 +182,29 @@ function ContextProvider({ children }) {
     }
   }
 
+  const updateProfile = async (data: any) => {
+    const token = getItem("token")
+    const res = authorizerRef.updateProfile(data, {
+      Authorization: `Bearer ${token}`,
+    })
+    return res
+  }
+
   return (
     <Context.Provider
-      value={{ account, wallet, getWallet, connectWallet, unlinkWallet, login, oauth, logout, signUp, isSettingUp }}>
+      value={{
+        account,
+        wallet,
+        getWallet,
+        connectWallet,
+        unlinkWallet,
+        login,
+        oauth,
+        logout,
+        signUp,
+        isSettingUp,
+        updateProfile,
+      }}>
       {children}
     </Context.Provider>
   )
