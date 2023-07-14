@@ -185,7 +185,7 @@ export default function ComicDetail({
             </div>
             <div className="px-[60px] py-[20px] flex flex-col gap-5">
               {data.chapters.map((chapter, index) => (
-                <Link href={`/comic/${data.id}/chapter/${chapter.id}`} key={index} className="flex gap-4 items-center">
+                <Link href={`/comic/${data.id}/chapter/${chapter.number}`} key={index} className="flex gap-4 items-center">
                   <Image
                     src={chapter.thumbnail || m6}
                     alt=""

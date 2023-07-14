@@ -9,7 +9,7 @@ export const getLatestComic = async (): Promise<IComic[]> => {
     res.data?.manga?.map((m: any) => {
       const response = {
         id: m.id,
-        image: m.image,
+        image: m.poster,
         status: {
           type: COMIC_STATUS[m.status],
           text: m.status,
@@ -48,7 +48,7 @@ export const getTrendingComic = async (): Promise<IComic[]> => {
     res.data?.manga?.map((m: any) => {
       const response = {
         id: m.id,
-        image: m.image,
+        image: m.poster,
         status: {
           type: COMIC_STATUS[m.status],
           text: m.status,

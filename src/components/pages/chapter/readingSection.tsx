@@ -165,10 +165,10 @@ export default function ReadingSection({
   const goToChap = (direction: "Prev" | "Next") => {
     if (direction == "Prev") {
       const prevChap = data.chapters[currentChapIndex + 1]
-      router.push(`/comic/${data.id}/chapter/${prevChap?.id}`)
+      router.push(`/comic/${data.id}/chapter/${prevChap?.number}`)
     } else {
       const nextChap = data.chapters[currentChapIndex - 1]
-      router.push(`/comic/${data.id}/chapter/${nextChap?.id}`)
+      router.push(`/comic/${data.id}/chapter/${nextChap?.number}`)
     }
   }
 
@@ -336,7 +336,7 @@ export default function ReadingSection({
               {data?.chapters?.map((chapter, index) => {
                 return (
                   <div
-                    onClick={() => router.push(`/comic/${data.id}/chapter/${chapter?.id}`)}
+                    onClick={() => router.push(`/comic/${data.id}/chapter/${chapter?.number}`)}
                     key={index}
                     className={`cursor-pointer text-xs hover:bg-light-medium-gray ${
                       currentChapIndex == index ? "text-second-color" : ""
