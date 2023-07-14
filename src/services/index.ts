@@ -1,9 +1,11 @@
 import { LANGUAGE, COMIC_STATUS } from "src/constants"
 import { IComic } from "src/models/comic"
-import api from "./axiosInterceptor"
+import "./axiosInterceptor"
+import axios from "axios"
+import getConfig from "next/config"
 
 export const getLatestComic = async (): Promise<IComic[]> => {
-  return await api.get("api/rest/public/latest").then((res) =>
+  return await axios.get(`${getConfig().API_URL}/api/rest/public/latest`).then((res) =>
     res.data?.manga?.map((m: any) => {
       const response = {
         id: m.id,
@@ -42,7 +44,7 @@ export const getLatestComic = async (): Promise<IComic[]> => {
 }
 
 export const getTrendingComic = async (): Promise<IComic[]> => {
-  return await api.get("api/rest/public/trending").then((res) =>
+  return await axios.get(`${getConfig().API_URL}/api/rest/public/trending`).then((res) =>
     res.data?.manga?.map((m: any) => {
       const response = {
         id: m.id,
@@ -73,7 +75,7 @@ export const getTrendingComic = async (): Promise<IComic[]> => {
 }
 
 export const replyComment = async (content: string, ref: string, chapterId: string) => {
-  const { data } = await api.post(`/api/rest/user/chapters/${chapterId}/comments`, {
+  const { data } = await axios.post(`${getConfig().API_URL}/api/rest/user/chapters/${chapterId}/comments`, {
     content: content,
     ref_activity: ref,
   })

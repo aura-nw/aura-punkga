@@ -1,16 +1,16 @@
 import { useAuthorizer } from "@authorizerdev/authorizer-react"
-import { useRouter } from "next/router"
+import axios from "axios"
+import getConfig from "next/config"
 import { useContext } from "react"
 import { COMIC_STATUS, LANGUAGE } from "src/constants"
 import { Context } from "src/context"
 import useApi from "src/hooks/useApi"
 import { IComic } from "src/models/comic"
-import api from "src/services/axiosInterceptor"
 import { getItem } from "src/utils/localStorage"
 const withApi = (Component: React.FC<any>) => (props: any) => {
-  const { query } = useRouter()
   const { account } = useContext(Context)
   const { authorizerRef } = useAuthorizer()
+  const config = getConfig()
   const getProfile = async () => {
     const token = getItem("token")
     const res = await authorizerRef.getProfile({
@@ -21,7 +21,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     }
   }
   const getSubscribeList = async () => {
-    const res: any = await api.get(`api/rest/public/profiles/${account?.id}/subscribe`)
+    const res: any = await axios.get(`${config.API_URL}/api/rest/public/profiles/${account?.id}/subscribe`)
     return res.data?.subscribers?.map(({ subscribers_manga: m }: any) => {
       const response = {
         id: m.id,
@@ -60,10 +60,10 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   }
 
   const subscribe = async (comicId) => {
-    await api.post(`/api/rest/user/manga/${comicId}/subscribe`)
+    await axios.post(`${config.API_URL}/api/rest/user/manga/${comicId}/subscribe`)
   }
   const unsubscribe = async (comicId) => {
-    await api.delete(`/api/rest/user/manga/${comicId}/subscribe`)
+    await axios.delete(`${config.API_URL}/api/rest/user/manga/${comicId}/subscribe`)
   }
 
   const profile = useApi<any>(getProfile, !!account, [account])

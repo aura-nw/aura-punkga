@@ -1,5 +1,5 @@
 import { Keplr, Key } from "@keplr-wallet/types"
-import config from 'public/config.json'
+import getConfig from "next/config"
 export async function handleConnectWallet(keplr: Keplr, key: Key) {
   const timeStamp = new Date().getTime()
   const msg = `
@@ -14,5 +14,5 @@ export async function handleConnectWallet(keplr: Keplr, key: Key) {
 
     Timestamp:
     ${timeStamp}`
-  return await keplr.signArbitrary(config.CHAIN_ID, key.bech32Address, msg)
+  return await keplr.signArbitrary(getConfig().CHAIN_ID, key.bech32Address, msg)
 }

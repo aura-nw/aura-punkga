@@ -68,6 +68,8 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
     )
   })
 
+  if (!profile.data) return <></>
+
   return (
     <>
       <Header />

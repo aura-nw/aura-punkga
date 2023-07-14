@@ -11,10 +11,11 @@ import Comic from "components/pages/homepage/comic"
 import TrendingComic from "components/pages/homepage/trendingComic"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import MockupImage2 from "src/assets/images/mockup5.png"
 import { IComic } from "src/models/comic"
 import { getLatestComic, getTrendingComic } from "src/services"
+import { Context } from "src/context"
 
 declare global {
   interface Window {
@@ -23,14 +24,16 @@ declare global {
     getOfflineSigner: any
     coin98: any
     logoutTimeoutId: any
+    config: any
   }
 }
 
 export default function Home() {
   const [latestList, setLatestList] = useState<IComic[]>([])
-  const [isLatestLoading, setIsLatestLoading] = useState(false)
+  const [isLatestLoading, setIsLatestLoading] = useState(true)
   const [trendingList, setTrendingList] = useState<IComic[]>([])
-  const [isTrendingLoading, setIsTrendingLoading] = useState(false)
+  const [isTrendingLoading, setIsTrendingLoading] = useState(true)
+  const { isSettingUp } = useContext(Context)
 
   const fetchLatestList = async () => {
     try {
@@ -57,9 +60,11 @@ export default function Home() {
   }
 
   useEffect(() => {
-    fetchLatestList()
-    fetchTrendingList()
-  }, [])
+    if (!isSettingUp) {
+      fetchLatestList()
+      fetchTrendingList()
+    }
+  }, [isSettingUp])
 
   return (
     <>
@@ -156,7 +161,7 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-2 gap-[80px] mt-[76px]">
               {isLatestLoading
-                ? Array.apply(null, Array(2)).map((d,index) => {
+                ? Array.apply(null, Array(2)).map((d, index) => {
                     return <DummyComic key={index} />
                   })
                 : latestList.map((data, index) => {
