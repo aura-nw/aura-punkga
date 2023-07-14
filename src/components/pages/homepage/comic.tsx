@@ -15,6 +15,8 @@ export default function Comic(props: IComic) {
         <Image
           src={props.image || NoImage}
           alt=""
+          width={180}
+          height={240}
           className={`${
             props.image ? "object-cover" : "object-contain bg-light-gray"
           } rounded-[15px] w-[180px] h-[240px]`}
@@ -51,7 +53,7 @@ export default function Comic(props: IComic) {
         </div>
         <div className="leading-[20px]">
           Latest:{" "}
-          <Link href={`/comic/${props.id}/chapter/${props.latestChap.id}`} className="text-second-color font-[600]">
+          <Link href={`/comic/${props.id}/chapter/${props.latestChap.number}`} className="text-second-color font-[600]">
             Chap #{props.latestChap.number}
           </Link>
         </div>

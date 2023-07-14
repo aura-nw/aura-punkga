@@ -8,7 +8,7 @@ import { useContext, useEffect, useState } from "react"
 import { Context } from "src/context"
 import { validateEmail } from "src/utils"
 
-export default function SignInModal({ show, openSignUpModal, setSignInOpen }) {
+export default function SignInModal({ show, openSignUpModal, setSignInOpen, setForgotPasswordOpen }) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
@@ -28,12 +28,12 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen }) {
 
   useEffect(() => {
     if (!show) {
-      setLoginErrorMsg('')
+      setLoginErrorMsg("")
       setEmailValidateErrorMsg("")
       setLoginLoading(false)
     }
   }, [show])
-  
+
   const loginHandler = () => {
     if (validateEmail(email)) {
       setLoginLoading(true)
@@ -83,15 +83,16 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen }) {
             onChange={setPassword}
           />
         </div>
-        <div className="text-second-color italic text-xs leading-6 font-medium text-right cursor-pointer">
+        <div
+          className="text-second-color italic text-xs leading-6 font-medium text-right cursor-pointer"
+          onClick={() => {
+            setSignInOpen(false)
+            setForgotPasswordOpen(true)
+          }}>
           Forgot password?
         </div>
         <div className="mt-4 flex flex-col items-center w-full max-w-[300px] mx-auto">
-          <FilledButton
-            size="lg"
-            disabled={!(email && password)}
-            onClick={loginHandler}
-            loading={loginLoading}>
+          <FilledButton size="lg" disabled={!(email && password)} onClick={loginHandler} loading={loginLoading}>
             Sign in
           </FilledButton>
           <div className="text-xs font-medium leading-6 text-medium-red min-h-[24px]">{loginErrorMsg}</div>
