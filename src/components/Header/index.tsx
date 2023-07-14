@@ -19,6 +19,7 @@ import { Context } from "src/context"
 import SignInModal from "./SignInModal"
 import ConnectWalletModal from "./ConnectWalletModal"
 import SignUpModal from "./SignUpModal"
+import ForgotPasswordModal from "./ForgotPasswordModal"
 
 export default function Header({}) {
   const { t } = useTranslation()
@@ -33,6 +34,7 @@ export default function Header({}) {
   const [signInOpen, setSignInOpen] = useState(false)
   const [signUpOpen, setSignUpOpen] = useState(false)
   const [connectWalletOpen, setConnectWalletOpen] = useState(false)
+  const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false)
 
   const { account, wallet, logout, unlinkWallet } = useContext(Context)
 
@@ -152,6 +154,7 @@ export default function Header({}) {
               setSignInOpen(false)
             }}
             setSignInOpen={setSignInOpen}
+            setForgotPasswordOpen={setForgotPasswordOpen}
           />
           <SignUpModal
             show={signUpOpen}
@@ -166,6 +169,9 @@ export default function Header({}) {
       </Modal>
       <Modal open={connectWalletOpen} setOpen={setConnectWalletOpen}>
         <ConnectWalletModal onClose={() => setConnectWalletOpen(false)} />
+      </Modal>
+      <Modal open={forgotPasswordOpen} setOpen={setForgotPasswordOpen}>
+        <ForgotPasswordModal onClose={() => setForgotPasswordOpen(false)} />
       </Modal>
     </>
   )
