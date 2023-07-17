@@ -75,7 +75,7 @@ export default function Header({}) {
                 )}
                 <button onClick={switchLanguage}>{t("switchLanguage")}</button>
               </div>
-              {account ? (
+              {account?.name ? (
                 <Dropdown>
                   <DropdownToggle>
                     <FilledButton size="lg">

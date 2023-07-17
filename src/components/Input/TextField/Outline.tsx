@@ -9,6 +9,7 @@ interface IOutlineTextField {
   label?: string
   type?: string
   errorMsg?: string
+  disabled?: boolean
 }
 export default function OutlineTextField({
   value,
@@ -21,6 +22,7 @@ export default function OutlineTextField({
   label,
   type = "text",
   errorMsg,
+  disabled,
 }: IOutlineTextField) {
   return (
     <div>
@@ -34,11 +36,12 @@ export default function OutlineTextField({
         <input
           type={type}
           value={value}
+          disabled={disabled}
           onChange={(event) => onChange && onChange(event.target.value)}
           id="input-group-1"
-          className={`bg-white rounded-[12px] w-full px-[10px] py-[8px] placeholder-medium-gray focus:outline-none border border-solid border-medium-gray ${
+          className={` rounded-[12px] w-full px-[10px] py-[8px] placeholder-medium-gray focus:outline-none border border-solid border-medium-gray ${
             leadingComponent ? "pl-[45px]" : ""
-          } ${className}`}
+          } ${disabled ? "bg-light-medium-gray cursor-not-allowed" : "bg-white"} ${className}`}
           placeholder={placeholder}></input>
       </div>
       {typeof errorMsg == "undefined" ? (

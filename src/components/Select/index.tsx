@@ -23,6 +23,7 @@ export default function Select({
   placeholder,
   className,
 }: ISelect) {
+  console.log(selected)
   return (
     <Listbox
       value={selected}
@@ -35,7 +36,7 @@ export default function Select({
           <div className="relative">
             <Listbox.Button className="relative w-full cursor-default rounded-[12px] bg-white py-[3px] pl-[13px] pr-[57px] text-left text-gray-900 shadow-sm ring-1 ring-inset ring-medium-gray focus:outline-none focus:ring-2 sm:text-sm sm:leading-6 lg:h-10">
               <span className={`flex items-center text-[14px] leading-[24px] ${className}`}>
-                {selected ? (
+                {selected?.key ? (
                   <span className="block truncate">{selected.value}</span>
                 ) : (
                   <span className="block truncate text-medium-gray">{placeholder}</span>
@@ -59,7 +60,7 @@ export default function Select({
                     key={option.key}
                     className={({ active }) =>
                       classNames(
-                        option.key == selected.key ? "bg-primary-color" : "text-gray-900",
+                        option.key == selected?.key ? "bg-primary-color" : "text-gray-900",
                         "relative cursor-default select-none py-2 pl-3 pr-9"
                       )
                     }
@@ -69,14 +70,14 @@ export default function Select({
                         <div className="flex items-center">
                           <span
                             className={classNames(
-                              option.key == selected.key ? "font-semibold" : "font-normal",
+                              option.key == selected?.key ? "font-semibold" : "font-normal",
                               "ml-3 block truncate"
                             )}>
                             {option.value}
                           </span>
                         </div>
 
-                        {option.key == selected.key ? (
+                        {option.key == selected?.key ? (
                           <span className={"text-black absolute inset-y-0 right-0 flex items-center pr-4"}>
                             <CheckIcon className="h-5 w-5" aria-hidden="true" />
                           </span>

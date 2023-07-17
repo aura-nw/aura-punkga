@@ -67,16 +67,21 @@ function ContextProvider({ children }) {
 
   useEffect(() => {
     if (accessTokenParam) {
-      setItem("token", accessTokenParam, new Date(Date.now() + expiresInParam ? +expiresInParam * 1000 : 10800000))
+      setItem("token", accessTokenParam, new Date(Date.now() + (expiresInParam ? +expiresInParam * 1000 : 10800000)))
       setLogoutTimeout(expiresInParam ? +expiresInParam * 1000 : 10800000)
       getProfile(accessTokenParam)
+      router.push("/")
     }
   }, [accessTokenParam])
 
-  const getProfile = async (token: string) => {
+  const getProfile = async (token?: string) => {
     try {
+      const t = token || getItem("token")
+      if (!t) {
+        throw new Error("Unauthorized access token")
+      }
       const res = await authorizerRef.getProfile({
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${t}`,
       })
       if (res) {
         setAccount({
@@ -87,6 +92,7 @@ function ContextProvider({ children }) {
         } as IUser)
       }
     } catch (error) {
+      removeItem("token")
       console.log("getProfile", error)
     }
   }
@@ -184,9 +190,12 @@ function ContextProvider({ children }) {
 
   const updateProfile = async (data: any) => {
     const token = getItem("token")
-    const res = authorizerRef.updateProfile(data, {
+    const res = await authorizerRef.updateProfile(data, {
       Authorization: `Bearer ${token}`,
     })
+    if (res) {
+      await getProfile()
+    }
     return res
   }
 

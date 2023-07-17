@@ -162,7 +162,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                       <Select
                         selected={gender}
                         onChange={setGender}
-                        className="font-bold capitalize"
+                        className="font-bold"
                         placeholder="Select a gender"
                         icon={<ChevronDownIcon className="h-5 w-5 text-medium-gray" aria-hidden="true" />}
                         options={[
