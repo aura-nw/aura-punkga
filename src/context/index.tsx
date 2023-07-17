@@ -1,13 +1,13 @@
 import { useAuthorizer } from "@authorizerdev/authorizer-react"
 import { Key } from "@keplr-wallet/types"
-import { createContext, useEffect, useRef, useState } from "react"
-import { IUser } from "src/models/user"
-import { handleConnectWallet } from "src/utils/signer"
+import axios from "axios"
+import getConfig from "next/config"
 import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/router"
+import { createContext, useEffect, useRef, useState } from "react"
+import { IUser } from "src/models/user"
 import { getItem, removeItem, setItem } from "src/utils/localStorage"
-import axios from "axios"
-import getConfig, { setConfig } from "next/config"
+import { handleConnectWallet } from "src/utils/signer"
 export const Context = createContext(null)
 
 function ContextProvider({ children }) {
@@ -18,6 +18,7 @@ function ContextProvider({ children }) {
   const [provider, setProvider] = useState<"Coin98" | "Keplr">()
   const { authorizerRef, user, setUser } = useAuthorizer()
   const router = useRouter()
+  const config = getConfig()
 
   const searchParams = useSearchParams()
   const accessTokenParam = searchParams.get("access_token")
@@ -30,8 +31,30 @@ function ContextProvider({ children }) {
         name: user.nickname,
         image: user.picture,
         id: user.id,
+        verified: user.email_verified,
       } as IUser)
   }, [user])
+
+  useEffect(() => {
+    if (account?.verified) {
+      (window as any).interceptor  = axios.interceptors.request.use(
+        (config) => {
+          const token = getItem("token")
+          if (token) {
+            config.headers["Authorization"] = `Bearer ${token}`
+          }
+          return config
+        },
+        (error) => {
+          Promise.reject(error)
+        }
+      )
+    } else {
+      if ((window as any).interceptor) {
+        axios.interceptors.request.eject((window as any).interceptor)
+      }
+    }
+  }, [account?.verified])
 
   useEffect(() => {
     setUp()
@@ -67,16 +90,21 @@ function ContextProvider({ children }) {
 
   useEffect(() => {
     if (accessTokenParam) {
-      setItem("token", accessTokenParam, new Date(Date.now() + expiresInParam ? +expiresInParam * 1000 : 10800000))
+      setItem("token", accessTokenParam, new Date(Date.now() + (expiresInParam ? +expiresInParam * 1000 : 10800000)))
       setLogoutTimeout(expiresInParam ? +expiresInParam * 1000 : 10800000)
       getProfile(accessTokenParam)
+      router.push(location.pathname)
     }
   }, [accessTokenParam])
 
-  const getProfile = async (token: string) => {
+  const getProfile = async (token?: string) => {
     try {
+      const t = token || getItem("token")
+      if (!t) {
+        throw new Error("Unauthorized access token")
+      }
       const res = await authorizerRef.getProfile({
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${t}`,
       })
       if (res) {
         setAccount({
@@ -84,9 +112,11 @@ function ContextProvider({ children }) {
           name: res.nickname,
           image: res.picture,
           id: res.id,
+          verified: res.email_verified,
         } as IUser)
       }
     } catch (error) {
+      removeItem("token")
       console.log("getProfile", error)
     }
   }
@@ -171,6 +201,7 @@ function ContextProvider({ children }) {
         email: email,
         password: password,
         confirm_password: password,
+        redirect_uri: config.REDIRECT_URL + "/verified",
       })
       if (res) {
         callback && callback("success")
@@ -184,9 +215,12 @@ function ContextProvider({ children }) {
 
   const updateProfile = async (data: any) => {
     const token = getItem("token")
-    const res = authorizerRef.updateProfile(data, {
+    const res = await authorizerRef.updateProfile(data, {
       Authorization: `Bearer ${token}`,
     })
+    if (res) {
+      await getProfile()
+    }
     return res
   }
 

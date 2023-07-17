@@ -20,6 +20,7 @@ import SignInModal from "./SignInModal"
 import ConnectWalletModal from "./ConnectWalletModal"
 import SignUpModal from "./SignUpModal"
 import ForgotPasswordModal from "./ForgotPasswordModal"
+import SignUpSuccessModal from "./SignUpSuccessModal"
 
 export default function Header({}) {
   const { t } = useTranslation()
@@ -33,6 +34,7 @@ export default function Header({}) {
 
   const [signInOpen, setSignInOpen] = useState(false)
   const [signUpOpen, setSignUpOpen] = useState(false)
+  const [signUpSuccessOpen, setSignUpSuccessOpen] = useState(false)
   const [connectWalletOpen, setConnectWalletOpen] = useState(false)
   const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false)
 
@@ -75,12 +77,18 @@ export default function Header({}) {
                 )}
                 <button onClick={switchLanguage}>{t("switchLanguage")}</button>
               </div>
-              {account ? (
+              {account?.verified && account?.name ? (
                 <Dropdown>
                   <DropdownToggle>
                     <FilledButton size="lg">
                       <div className="flex items-center whitespace-nowrap w-max gap-[10px] h-[25px]">
-                        <Image src={account.image || Avatar} alt="" width={36} height={36} className="rounded-full" />
+                        <Image
+                          src={account.image || Avatar}
+                          alt=""
+                          width={36}
+                          height={36}
+                          className="rounded-full object-cover h-full w-[25px]"
+                        />
                         <span className="max-w-[150px] text-ellipsis overflow-hidden">{account.name}</span>
                       </div>
                     </FilledButton>
@@ -163,7 +171,7 @@ export default function Header({}) {
               setSignUpOpen(false)
             }}
             setSignUpOpen={setSignUpOpen}
-            setSignInOpen={setSignInOpen}
+            setSignUpSuccessOpen={setSignUpSuccessOpen}
           />
         </div>
       </Modal>
@@ -172,6 +180,9 @@ export default function Header({}) {
       </Modal>
       <Modal open={forgotPasswordOpen} setOpen={setForgotPasswordOpen}>
         <ForgotPasswordModal onClose={() => setForgotPasswordOpen(false)} />
+      </Modal>
+      <Modal open={signUpSuccessOpen} setOpen={setSignUpSuccessOpen}>
+        <SignUpSuccessModal />
       </Modal>
     </>
   )

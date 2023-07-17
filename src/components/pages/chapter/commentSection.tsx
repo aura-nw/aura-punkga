@@ -34,7 +34,7 @@ export default function CommentSection({
               <Comment reload={reload} key={index} data={comment} />
             ))}
           </div>
-          {account ? (
+          {account?.verified && account?.name ? (
             <div className="bg-light-gray absolute bottom-0 right-0 left-0 w-full">
               <ChatInput onSubmit={postComment} />
             </div>
@@ -68,7 +68,7 @@ export default function CommentSection({
           <Comment reload={reload} key={index} data={comment} />
         ))}
       </div>
-      {account ? (
+      {account?.verified && account?.name ? (
         <div className="bg-light-gray absolute bottom-0 right-0 left-0 w-full">
           <ChatInput onSubmit={postComment} />
         </div>

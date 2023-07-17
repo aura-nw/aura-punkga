@@ -2,7 +2,8 @@
   "REDIRECT_URL": "http://localhost:3000",
   "CHAIN_ID": "aura-testnet-2",
   "CHAIN_INFO": "{'chainId':'aura-testnet-2','chainName':'aura testnet','rpc':'https://rpc.dev.aura.network','rest':'https://lcd.dev.aura.network','bip44':{'coinType':118},'bech32Config':{'bech32PrefixAccAddr':'aura','bech32PrefixAccPub':'aurapub','bech32PrefixValAddr':'auravaloper','bech32PrefixValPub':'auravaloperpub','bech32PrefixConsAddr':'auravalcons','bech32PrefixConsPub':'auravalconspub'},'currencies':[{'coinDenom':'TAURA','coinMinimalDenom':'utaura','coinDecimals':6}],'feeCurrencies':[{'coinDenom':'TAURA','coinMinimalDenom':'utaura','coinDecimals':6}],'stakeCurrency':{'coinDenom':'TAURA','coinMinimalDenom':'utaura','coinDecimals':6}}",
-  "API_URL": "http://hasura.dev.punkga.me/",
-  "AUTHORIZER_URL": "http://auth.dev.punkga.me/",
+  "API_URL": "http://hasura.dev.punkga.me",
+  "REST_API_URL": "http://api.dev.punkga.me",
+  "AUTHORIZER_URL": "http://auth.dev.punkga.me",
   "AUTHORIZER_CLIENT_ID": "abd40c73-3390-4613-bc44-b5bde4796d03"
 }

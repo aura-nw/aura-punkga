@@ -34,6 +34,14 @@ export default function Home() {
   const [trendingList, setTrendingList] = useState<IComic[]>([])
   const [isTrendingLoading, setIsTrendingLoading] = useState(true)
   const { isSettingUp } = useContext(Context)
+  const [statusFilter, setStatusFilter] = useState({
+    key: "All status",
+    value: "All status",
+  })
+  const [gerneFilter, setGerneFilter] = useState({
+    key: "All gerne",
+    value: "All gerne",
+  })
 
   const fetchLatestList = async () => {
     try {
@@ -123,6 +131,8 @@ export default function Home() {
               <div className="flex gap-[20px] items-center">
                 <FilledSelect
                   icon={<ChevronDownIcon className="h-5 w-5 text-medium-gray" aria-hidden="true" />}
+                  selected={gerneFilter}
+                  onChange={setGerneFilter}
                   options={[
                     {
                       key: 1,
@@ -141,18 +151,20 @@ export default function Home() {
                 />
                 <FilledSelect
                   icon={<ChevronDownIcon className="h-5 w-5 text-medium-gray" aria-hidden="true" />}
+                  selected={statusFilter}
+                  onChange={setStatusFilter}
                   options={[
                     {
-                      key: 1,
-                      value: "Wade Cooper",
+                      key: "All status",
+                      value: "All status",
                     },
                     {
-                      key: 2,
-                      value: "Arlene Mccoy",
+                      key: "On-Going",
+                      value: "On going",
                     },
                     {
-                      key: 3,
-                      value: "Devon Webb",
+                      key: "Finished",
+                      value: "Finished",
                     },
                   ]}
                   placeholder="Status"
@@ -164,9 +176,16 @@ export default function Home() {
                 ? Array.apply(null, Array(2)).map((d, index) => {
                     return <DummyComic key={index} />
                   })
-                : latestList.map((data, index) => {
-                    return <Comic key={index} {...data} />
-                  })}
+                : latestList
+                    .filter((data) =>
+                      statusFilter?.key == "All status" ? true : data.status.text == statusFilter?.key
+                    )
+                    .filter((data) => {
+                      return true
+                    })
+                    .map((data, index) => {
+                      return <Comic key={index} {...data} />
+                    })}
             </div>
           </div>
           <div className="flex-auto w-[10%]"></div>
