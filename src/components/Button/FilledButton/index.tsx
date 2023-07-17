@@ -35,7 +35,7 @@ export default function FilledButton({
       id={id}
       onClick={onClick}
       className={`${classes[size]} ${
-        (disabled || loading) && "!bg-light-green text-[#84CCA3] cursor-no-drop"
+        (disabled || loading) && "!bg-light-green text-[#84CCA3] cursor-no-drop pointer-events-none"
       } ${className}`}>
       <span
         className={`transition-all duration-300 pointer-events-none ${

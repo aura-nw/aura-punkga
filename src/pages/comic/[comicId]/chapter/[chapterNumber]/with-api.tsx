@@ -1,7 +1,7 @@
 import axios from "axios"
 import getConfig from "next/config"
 import { useRouter } from "next/router"
-import { useContext } from "react"
+import { useContext, useRef } from "react"
 import { LANGUAGE } from "src/constants"
 import { Context } from "src/context"
 import useApi from "src/hooks/useApi"
@@ -12,7 +12,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   const { query } = useRouter()
   const { account } = useContext(Context)
   const config = getConfig()
-  let chapterId = null
+  const chapterId = useRef()
   const getComicDetail = async () => {
     const {
       data: { manga_by_pk: data },
@@ -79,7 +79,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       res[l.shortLang] = chapterLanguage ? chapterLanguage.detail.map((page) => page.image_path) : null
     })
 
-    chapterId = data.id
+    chapterId.current = data.id
 
     return res
   }
@@ -117,7 +117,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   ])
 
   const postComment = async (content: string) => {
-    const { data } = await axios.post(`${config.API_URL}/api/rest/user/chapters/${chapterId}/comments`, {
+    const { data } = await axios.post(`${config.API_URL}/api/rest/user/chapters/${chapterId.current}/comments`, {
       content: content,
       ref_activity: null,
     })
@@ -127,10 +127,10 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   }
 
   const like = async () => {
-    await axios.post(`${config.API_URL}/api/rest/user/chapters/${chapterId}/likes`)
+    await axios.post(`${config.API_URL}/api/rest/user/chapters/${chapterId.current}/likes`)
   }
   const unlike = async () => {
-    await axios.delete(`${config.API_URL}/api/rest/user/chapters/${chapterId}/likes`)
+    await axios.delete(`${config.API_URL}/api/rest/user/chapters/${chapterId.current}/likes`)
   }
   const subscribe = async () => {
     await axios.post(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)

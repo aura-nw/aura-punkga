@@ -39,7 +39,7 @@ export default function ComicDetail({
   const { account } = useContext(Context)
 
   const subscribeHandler = (isSub: boolean) => {
-    if (account) {
+    if (account?.verified && account?.name) {
       if (isSub) {
         subscribe()
       } else {

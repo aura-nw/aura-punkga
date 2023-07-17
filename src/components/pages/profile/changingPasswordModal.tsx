@@ -7,9 +7,11 @@ import { Context } from "src/context"
 import SuccessImg from "images/ninja.svg"
 import { validatePassword } from "src/utils"
 import CheckSquare from "images/icons/check_square_fill.svg"
-export default function SettingPasswordModal({ open, setOpen, profile }) {
+export default function ChangingPasswordModal({ open, setOpen }) {
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [currentPassword, setCurrentPassword] = useState("")
+  const [currentPasswordError, setCurrentPasswordError] = useState("")
   const [newPassword, setNewPassword] = useState("")
   const [rePassword, setRePassword] = useState("")
   const [rePasswordError, setRePasswordError] = useState("")
@@ -25,7 +27,11 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
     }
   }, [rePassword, newPassword])
 
-  const setPasswordHandler = async () => {
+  useEffect(() => {
+    setCurrentPasswordError("")
+  }, [currentPassword])
+
+  const changePasswordHandler = async () => {
     try {
       if (newPassword != rePassword) {
         setRePasswordError("Password doesn’t match")
@@ -39,15 +45,19 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
       }
       setLoading(true)
       const res = await updateProfile({
+        old_password: currentPassword,
         new_password: newPassword,
         confirm_new_password: rePassword,
       })
       if (res) {
-        await profile.callApi(true)
         setLoading(false)
         setOpen(false)
       }
     } catch (error) {
+      console.log(error.message)
+      if (error.message.includes("incorrect old")) {
+        setCurrentPasswordError("Incorrect password")
+      }
       setLoading(false)
     }
   }
@@ -56,7 +66,16 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
     <Modal open={open} setOpen={setOpen}>
       <div className={`p-6 w-[322px] relative transition-all duration-300 ${success ? "h-[400px]" : ""}`}>
         <div className={` flex flex-col gap-3 transition-all duration-300 ${success ? "opacity-0" : "opacity-100"}`}>
-          <p className="text-center text-xl leading-6 font-semibold">Set password</p>
+          <p className="text-center text-xl leading-6 font-semibold">Change password</p>
+          <OutlineTextField
+            label="Old password"
+            value={currentPassword}
+            onChange={setCurrentPassword}
+            type="password"
+            placeholder="Enter current password"
+            errorMsg={currentPasswordError}
+          />
+          <br className="h-5" />
           <OutlineTextField
             label="New password"
             value={newPassword}
@@ -74,11 +93,11 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
             trailingComponent={repasswordValidateSuccess ? <Image src={CheckSquare} alt="" /> : null}
           />
           <FilledButton
-            disabled={!newPassword || !rePassword}
+            disabled={!newPassword || !rePassword || !repasswordValidateSuccess || !currentPassword}
             className="mt-2 mx-auto"
             size="lg"
             loading={loading}
-            onClick={setPasswordHandler}>
+            onClick={changePasswordHandler}>
             Confirm
           </FilledButton>
         </div>

@@ -96,7 +96,7 @@ export default function ReadingSection({
   }
 
   const likeHandler = (isLike: boolean) => {
-    if (account) {
+    if (account?.verified && account?.name) {
       if (isLike) {
         like()
       } else {
@@ -108,7 +108,7 @@ export default function ReadingSection({
     }
   }
   const subscribeHandler = (isSub: boolean) => {
-    if (account) {
+    if (account?.verified && account?.name) {
       if (isSub) {
         subscribe()
       } else {
@@ -135,6 +135,7 @@ export default function ReadingSection({
 
   useEffect(() => {
     const pageHandler = (event: any) => {
+      if (!chapterData[chapterLocale]) return
       if (event.deltaY < 0 || event.which == 37 || event.which == 38) {
         setCurrentPage((prevState) => (prevState - 2 < 0 ? 0 : prevState - 2))
       } else if (event.deltaY > 0 || event.which == 39 || event.which == 40) {
@@ -336,7 +337,7 @@ export default function ReadingSection({
               {data?.chapters?.map((chapter, index) => {
                 return (
                   <div
-                    onClick={() => router.push(`/comic/${data.id}/chapter/${chapter?.number}`)}
+                    onClick={() => router.push(`/comic/${data.id}/chapter/${chapter?.id}`)}
                     key={index}
                     className={`cursor-pointer text-xs hover:bg-light-medium-gray ${
                       currentChapIndex == index ? "text-second-color" : ""

@@ -1,6 +1,6 @@
 import Header from "components/Header"
 import { useRouter } from "next/router"
-import { forwardRef, useContext, useEffect, useState } from "react"
+import { forwardRef, useContext, useEffect, useRef, useState } from "react"
 import { Context } from "src/context"
 import NoImg from "images/no_img.png"
 import Image from "next/image"
@@ -14,23 +14,26 @@ import "react-datepicker/dist/react-datepicker.css"
 import AutoGrowingTextField from "components/Input/TextField/AutoGrowing"
 import moment from "moment"
 import SettingPasswordModal from "components/pages/profile/settingPasswordModal"
-export default function Profile({ profile, subscribeList, unsubscribe, subscribe, curentlyReading }) {
-  const { account, isSettingUp, updateProfile } = useContext(Context)
+import ChangingPasswordModal from "components/pages/profile/changingPasswordModal"
+export default function Profile({ profile, subscribeList, unsubscribe, subscribe, curentlyReading, updateProfile }) {
+  const { account, isSettingUp } = useContext(Context)
   const [birthdate, setBirthdate] = useState(null)
+  const profilePicture = useRef()
   const [gender, setGender] = useState<{ key: string | number; value: string }>(null)
   const [open, setOpen] = useState(false)
   const [bio, setBio] = useState(null)
   const router = useRouter()
   const [settingPasswordModalOpen, setSettingPasswordModalOpen] = useState(false)
   const [changingPasswordModalOpen, setChangingPasswordModalOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (!isSettingUp) {
-      if (!account.verified) {
+      if (!account?.verified) {
         router.push("/")
       }
     }
-  }, [isSettingUp, account.verified])
+  }, [isSettingUp, account?.verified])
 
   useEffect(() => {
     if (profile.data) {
@@ -41,18 +44,23 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
   }, [profile.data])
 
   const updateProfileHandler = async () => {
-    if (
-      gender.key != profile.data.gender ||
-      (birthdate && new Date(profile.data.birthdate).getTime() != new Date(birthdate).getTime()) ||
-      profile.data.given_name != bio
-    ) {
-      const res = await updateProfile({
-        gender: gender.key,
-        birthdate: moment(birthdate).format("yyyy-MM-DD"),
-        given_name: bio,
-      })
-      await profile.callApi(true)
+    const form = new FormData()
+    if (gender.key && gender.key != profile.data.gender) {
+      form.append("gender", gender.key as string)
     }
+    if (birthdate && new Date(profile.data.birthdate).getTime() != new Date(birthdate).getTime()) {
+      form.append("birthdate", moment(birthdate).format("yyyy-MM-DD") as string)
+    }
+    if (bio && profile.data.given_name != bio) {
+      form.append("bio", bio)
+    }
+    if ((profilePicture.current as any).files[0]) {
+      form.append("picture", (profilePicture.current as any).files[0])
+    }
+    setLoading(true)
+    const res = await updateProfile(form)
+    await profile.callApi(true)
+    setLoading(false)
     setOpen(false)
   }
 
@@ -93,16 +101,16 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
           </div>
         ) : (
           <div className="flex gap-[60px]">
-            <div className="w-[320px] h-[320px] rounded-xl object-cover bg-light-gray relative overflow-hidden">
+            <div className="w-[320px] h-[320px] rounded-xl object-contain bg-light-gray relative overflow-hidden">
               <div
                 className={`transition-all bg-medium-gray duration-300 absolute inset-0 opacity-0 flex flex-col justify-center items-center cursor-pointer ${
                   open ? "hover:opacity-40" : "hidden"
                 }`}>
                 <CloudArrowUpIcon className="w-10 h-10" />
                 <div className="text-xl font-semibold">Upload profile picture</div>
-                <input type="file" className="bg-black absolute inset-0 opacity-0" />
+                <input ref={profilePicture} type="file" className="bg-black absolute inset-0 opacity-0" />
               </div>
-              <Image src={profile.data.picture || NoImg} height={360} width={360} alt="" />
+              <Image src={profile.data.picture || NoImg} height={360} width={360} alt="" className="h-full w-full object-cover"/>
             </div>
             <div className="flex flex-col justify-between w-1/2">
               <div>
@@ -225,16 +233,20 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                     Edit profile
                   </OutlineButton>
                   {profile.data?.signup_methods.includes("basic_auth") ? (
-                    <OutlineButton size="lg">Change password</OutlineButton>
+                    <OutlineButton onClick={() => setChangingPasswordModalOpen(true)} size="lg">
+                      Change password
+                    </OutlineButton>
                   ) : (
-                    <OutlineButton onClick={() => setSettingPasswordModalOpen(true)} size="lg">Set password</OutlineButton>
+                    <OutlineButton onClick={() => setSettingPasswordModalOpen(true)} size="lg">
+                      Set password
+                    </OutlineButton>
                   )}
                 </div>
                 <div
                   className={`flex gap-6 absolute bottom-0 transition-all ${
                     open ? "right-[0%]  opacity-100" : "right-1/2 opacity-0 translate-x-1/2"
                   }`}>
-                  <OutlineButton size="lg" onClick={updateProfileHandler}>
+                  <OutlineButton loading={loading} size="lg" onClick={updateProfileHandler}>
                     Save
                   </OutlineButton>
                 </div>
@@ -284,7 +296,8 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
           </div>
         </div>
       </div>
-      <SettingPasswordModal open={settingPasswordModalOpen} setOpen={setSettingPasswordModalOpen}/>
+      <SettingPasswordModal open={settingPasswordModalOpen} setOpen={setSettingPasswordModalOpen} profile={profile} />
+      <ChangingPasswordModal open={changingPasswordModalOpen} setOpen={setChangingPasswordModalOpen} />
     </>
   )
 }

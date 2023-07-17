@@ -41,6 +41,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   const [errorMsg, setErrorMsg] = useState("")
   const [name, setName] = useState("")
   const [loading, setLoading] = useState(false)
+  const [open, setOpen] = useState(true)
 
   useEffect(() => {
     setErrorMsg("")
@@ -71,7 +72,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             <></>
           ) : (
             <>
-              <Modal open={true} setOpen={() => {}}>
+              <Modal open={open} setOpen={setOpen}>
                 <div className="p-6 flex flex-col w-[322px]">
                   <div className="gap-2 flex flex-col">
                     <div className="text-xl font-semibold leading-6 text-center">Set a username</div>
@@ -88,7 +89,16 @@ const App = ({ Component, pageProps }: AppProps) => {
                     </FilledButton>
                   </div>
                   <p className="text-xs mt-2 font-medium text-center">
-                    Or <a className="text-second-color font-bold">sign in</a> with another account
+                    Or{" "}
+                    <a
+                      className="text-second-color font-bold"
+                        onClick={() => {
+                          setOpen(false)
+                          document.getElementById("open-sign-in-btn")?.click()
+                        }}>
+                      sign in
+                    </a>{" "}
+                    with another account
                   </p>
                 </div>
               </Modal>

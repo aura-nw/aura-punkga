@@ -125,7 +125,7 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
           loading={signUpLoading}
           className="mx-auto mt-4"
           size="lg"
-          disabled={!(username && email && password && repassword)}
+          disabled={!(username && email && password && repassword && repasswordValidateSuccess)}
           onClick={signUpHandler}>
           Sign up
         </FilledButton>

@@ -77,12 +77,18 @@ export default function Header({}) {
                 )}
                 <button onClick={switchLanguage}>{t("switchLanguage")}</button>
               </div>
-              {account?.verified ? (
+              {account?.verified && account?.name ? (
                 <Dropdown>
                   <DropdownToggle>
                     <FilledButton size="lg">
                       <div className="flex items-center whitespace-nowrap w-max gap-[10px] h-[25px]">
-                        <Image src={account.image || Avatar} alt="" width={36} height={36} className="rounded-full" />
+                        <Image
+                          src={account.image || Avatar}
+                          alt=""
+                          width={36}
+                          height={36}
+                          className="rounded-full object-cover h-full w-[25px]"
+                        />
                         <span className="max-w-[150px] text-ellipsis overflow-hidden">{account.name}</span>
                       </div>
                     </FilledButton>

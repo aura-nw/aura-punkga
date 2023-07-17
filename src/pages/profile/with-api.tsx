@@ -60,11 +60,13 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   }
   const getCurentlyReading = async () => {
     const ids = getItem("current_reading_manga")
-    if (ids.length > 0) {
-      const res: any = await axios.post(`${config.API_URL}/api/rest/public/list_manga`, {
-        id: JSON.parse(ids),
+    if (ids?.length) {
+      const res: any = await axios.post(`${config.API_URL}/v1/graphql`, {
+        query: `query GetListMangaById ($id: [Int!]=${ids}) {\n  manga(where: {id:{_in:$id}}) {\n    id\n    banner\n    status\n    manga_languages {\n      is_main_language\n      language_id\n      title\n    }\n    manga_creators {\n      creator {\n        id\n        name\n        isActive\n      }\n    }\n    chapters(order_by: {pushlish_date:desc_nulls_last}, limit: 1) {\n      chapter_number\n      id\n      pushlish_date\n    }\n    chapters_aggregate {\n      aggregate {\n        sum {\n          likes\n          views\n        }\n      }\n    }\n    manga_tags {\n      tag {\n        id\n        tag_languages {\n          language_id\n          value\n        }\n      }\n    }\n  }\n}`,
+        variables: null,
+        operationName: "GetListMangaById",
       })
-      return res.data?.manga?.map((m) => {
+      return res.data.data?.manga?.map((m) => {
         const response = {
           id: m.id,
           image: m.poster,
@@ -110,14 +112,18 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     await axios.delete(`${config.API_URL}/api/rest/user/manga/${comicId}/subscribe`)
   }
 
-  const profile = useApi<any>(getProfile, !!account.verified, [account.verified])
-  const subscribeList = useApi<IComic[]>(getSubscribeList, !!account?.id && !!account.verified, [
+  const updateProfile = async (data) => {
+    await axios.put(`${config.REST_API_URL}/user/update-profile`, data)
+  }
+
+  const profile = useApi<any>(getProfile, !!account?.verified, [account?.verified])
+  const subscribeList = useApi<IComic[]>(getSubscribeList, !!account?.id && !!account?.verified, [
     account?.id,
-    account.verified,
+    account?.verified,
   ])
-  const curentlyReading = useApi<IComic[]>(getCurentlyReading, !!account?.id && !!account.verified, [
+  const curentlyReading = useApi<IComic[]>(getCurentlyReading, !!account?.id && !!account?.verified, [
     account?.id,
-    account.verified,
+    account?.verified,
   ])
   return (
     <Component
@@ -127,6 +133,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       curentlyReading={curentlyReading}
       unsubscribe={unsubscribe}
       subscribe={subscribe}
+      updateProfile={updateProfile}
     />
   )
 }

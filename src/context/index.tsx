@@ -1,5 +1,6 @@
 import { useAuthorizer } from "@authorizerdev/authorizer-react"
 import { Key } from "@keplr-wallet/types"
+import axios from "axios"
 import getConfig from "next/config"
 import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/router"
@@ -17,7 +18,7 @@ function ContextProvider({ children }) {
   const [provider, setProvider] = useState<"Coin98" | "Keplr">()
   const { authorizerRef, user, setUser } = useAuthorizer()
   const router = useRouter()
-  const config  = getConfig()
+  const config = getConfig()
 
   const searchParams = useSearchParams()
   const accessTokenParam = searchParams.get("access_token")
@@ -33,6 +34,27 @@ function ContextProvider({ children }) {
         verified: user.email_verified,
       } as IUser)
   }, [user])
+
+  useEffect(() => {
+    if (account?.verified) {
+      (window as any).interceptor  = axios.interceptors.request.use(
+        (config) => {
+          const token = getItem("token")
+          if (token) {
+            config.headers["Authorization"] = `Bearer ${token}`
+          }
+          return config
+        },
+        (error) => {
+          Promise.reject(error)
+        }
+      )
+    } else {
+      if ((window as any).interceptor) {
+        axios.interceptors.request.eject((window as any).interceptor)
+      }
+    }
+  }, [account?.verified])
 
   useEffect(() => {
     setUp()
@@ -179,7 +201,7 @@ function ContextProvider({ children }) {
         email: email,
         password: password,
         confirm_password: password,
-        redirect_uri: config.REDIRECT_URL+'/verified',
+        redirect_uri: config.REDIRECT_URL + "/verified",
       })
       if (res) {
         callback && callback("success")
