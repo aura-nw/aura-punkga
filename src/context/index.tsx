@@ -1,13 +1,12 @@
 import { useAuthorizer } from "@authorizerdev/authorizer-react"
 import { Key } from "@keplr-wallet/types"
-import { createContext, useEffect, useRef, useState } from "react"
-import { IUser } from "src/models/user"
-import { handleConnectWallet } from "src/utils/signer"
+import getConfig from "next/config"
 import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/router"
+import { createContext, useEffect, useRef, useState } from "react"
+import { IUser } from "src/models/user"
 import { getItem, removeItem, setItem } from "src/utils/localStorage"
-import axios from "axios"
-import getConfig, { setConfig } from "next/config"
+import { handleConnectWallet } from "src/utils/signer"
 export const Context = createContext(null)
 
 function ContextProvider({ children }) {
@@ -18,6 +17,7 @@ function ContextProvider({ children }) {
   const [provider, setProvider] = useState<"Coin98" | "Keplr">()
   const { authorizerRef, user, setUser } = useAuthorizer()
   const router = useRouter()
+  const config  = getConfig()
 
   const searchParams = useSearchParams()
   const accessTokenParam = searchParams.get("access_token")
@@ -71,7 +71,7 @@ function ContextProvider({ children }) {
       setItem("token", accessTokenParam, new Date(Date.now() + (expiresInParam ? +expiresInParam * 1000 : 10800000)))
       setLogoutTimeout(expiresInParam ? +expiresInParam * 1000 : 10800000)
       getProfile(accessTokenParam)
-      router.push("/")
+      router.push(location.pathname)
     }
   }, [accessTokenParam])
 
@@ -179,6 +179,7 @@ function ContextProvider({ children }) {
         email: email,
         password: password,
         confirm_password: password,
+        redirect_uri: config.REDIRECT_URL+'/verified',
       })
       if (res) {
         callback && callback("success")
