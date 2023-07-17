@@ -23,7 +23,6 @@ export default function Select({
   placeholder,
   className,
 }: ISelect) {
-  console.log(selected)
   return (
     <Listbox
       value={selected}

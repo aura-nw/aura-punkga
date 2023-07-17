@@ -41,8 +41,15 @@ export default function OutlineTextField({
           id="input-group-1"
           className={` rounded-[12px] w-full px-[10px] py-[8px] placeholder-medium-gray focus:outline-none border border-solid border-medium-gray ${
             leadingComponent ? "pl-[45px]" : ""
-          } ${disabled ? "bg-light-medium-gray cursor-not-allowed" : "bg-white"} ${className}`}
+          } ${trailingComponent ? "pr-[45px]" : ""} ${
+            disabled ? "bg-light-medium-gray cursor-not-allowed" : "bg-white"
+          } ${className}`}
           placeholder={placeholder}></input>
+        {trailingComponent && (
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center justify-center p-[13px] max-w-[50px]">
+            {trailingComponent}
+          </div>
+        )}
       </div>
       {typeof errorMsg == "undefined" ? (
         <></>

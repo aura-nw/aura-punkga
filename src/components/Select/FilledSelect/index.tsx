@@ -6,25 +6,24 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 interface IFilledSelect {
-  onChange?: (selected: { key: string | number; value: string }) => void
+  onChange?: any
   icon?: JSX.Element
-  options: { key: string | number; value: string }[]
+  options: ({ key: string; value: string } | { key: number; value: string })[]
   placeholder: string
+  selected?: { key: string; value: string } | { key: number; value: string }
 }
 export default function FilledSelect({
   onChange,
   icon = <ChevronDownIcon className="h-5 w-5 text-medium-gray" aria-hidden="true" />,
   options,
   placeholder,
+  selected,
 }: IFilledSelect) {
-  const [selected, setSelected] = useState<{ key: string | number; value: string } | null>(null)
-
   return (
     <Listbox
       value={selected}
       onChange={(value) => {
-        onChange(value)
-        setSelected(value)
+        onChange && onChange(value)
       }}>
       {({ open }) => (
         <>

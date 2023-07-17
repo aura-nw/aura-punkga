@@ -20,6 +20,7 @@ import SignInModal from "./SignInModal"
 import ConnectWalletModal from "./ConnectWalletModal"
 import SignUpModal from "./SignUpModal"
 import ForgotPasswordModal from "./ForgotPasswordModal"
+import SignUpSuccessModal from "./SignUpSuccessModal"
 
 export default function Header({}) {
   const { t } = useTranslation()
@@ -33,6 +34,7 @@ export default function Header({}) {
 
   const [signInOpen, setSignInOpen] = useState(false)
   const [signUpOpen, setSignUpOpen] = useState(false)
+  const [signUpSuccessOpen, setSignUpSuccessOpen] = useState(false)
   const [connectWalletOpen, setConnectWalletOpen] = useState(false)
   const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false)
 
@@ -75,7 +77,7 @@ export default function Header({}) {
                 )}
                 <button onClick={switchLanguage}>{t("switchLanguage")}</button>
               </div>
-              {account?.name ? (
+              {account?.verified ? (
                 <Dropdown>
                   <DropdownToggle>
                     <FilledButton size="lg">
@@ -163,7 +165,7 @@ export default function Header({}) {
               setSignUpOpen(false)
             }}
             setSignUpOpen={setSignUpOpen}
-            setSignInOpen={setSignInOpen}
+            setSignUpSuccessOpen={setSignUpSuccessOpen}
           />
         </div>
       </Modal>
@@ -172,6 +174,9 @@ export default function Header({}) {
       </Modal>
       <Modal open={forgotPasswordOpen} setOpen={setForgotPasswordOpen}>
         <ForgotPasswordModal onClose={() => setForgotPasswordOpen(false)} />
+      </Modal>
+      <Modal open={signUpSuccessOpen} setOpen={setSignUpSuccessOpen}>
+        <SignUpSuccessModal />
       </Modal>
     </>
   )

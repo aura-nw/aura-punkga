@@ -25,7 +25,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     return res.data?.subscribers?.map(({ subscribers_manga: m }: any) => {
       const response = {
         id: m.id,
-        image: m.banner,
+        image: m.poster,
         status: {
           type: COMIC_STATUS[m.status],
           text: m.status,
@@ -58,6 +58,50 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       return response
     })
   }
+  const getCurentlyReading = async () => {
+    const ids = getItem("current_reading_manga")
+    if (ids.length > 0) {
+      const res: any = await axios.post(`${config.API_URL}/api/rest/public/list_manga`, {
+        id: JSON.parse(ids),
+      })
+      return res.data?.manga?.map((m) => {
+        const response = {
+          id: m.id,
+          image: m.poster,
+          status: {
+            type: COMIC_STATUS[m.status],
+            text: m.status,
+          },
+          authors: m.manga_creators?.map((c: any) => c.creator?.name),
+          views: m.chapters_aggregate?.aggregate?.sum?.views || 0,
+          likes: m.chapters_aggregate?.aggregate?.sum?.likes || 0,
+          latestChap: {
+            number: m.chapters?.[0]?.chapter_number,
+            id: m.chapters?.[0]?.id,
+            pushlishDate: m.chapters?.[0]?.pushlish_date,
+          },
+          tags: m.manga_tags.map(({ tag }: any) => {
+            const r = {}
+            tag.tag_languages.forEach((tl: any) => {
+              r[LANGUAGE.find((l) => l.id == tl.language_id).shortLang] = tl.value
+            })
+            return r
+          }),
+        }
+        LANGUAGE.forEach((language) => {
+          const l =
+            m.manga_languages.find((ml) => ml.language_id == language.id) ||
+            m.manga_languages.find((ml) => ml.is_main_language)
+          response[language.shortLang] = {
+            title: l ? l?.title : "Unknown title",
+            description: l ? l?.description : "Unknown description",
+          }
+        })
+        return response
+      })
+    }
+    return null
+  }
 
   const subscribe = async (comicId) => {
     await axios.post(`${config.API_URL}/api/rest/user/manga/${comicId}/subscribe`)
@@ -66,13 +110,21 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     await axios.delete(`${config.API_URL}/api/rest/user/manga/${comicId}/subscribe`)
   }
 
-  const profile = useApi<any>(getProfile, !!account, [account])
-  const subscribeList = useApi<IComic[]>(getSubscribeList, !!account?.id, [account?.id])
+  const profile = useApi<any>(getProfile, !!account.verified, [account.verified])
+  const subscribeList = useApi<IComic[]>(getSubscribeList, !!account?.id && !!account.verified, [
+    account?.id,
+    account.verified,
+  ])
+  const curentlyReading = useApi<IComic[]>(getCurentlyReading, !!account?.id && !!account.verified, [
+    account?.id,
+    account.verified,
+  ])
   return (
     <Component
       {...props}
       profile={profile}
       subscribeList={subscribeList}
+      curentlyReading={curentlyReading}
       unsubscribe={unsubscribe}
       subscribe={subscribe}
     />

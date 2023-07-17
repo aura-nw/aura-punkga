@@ -30,6 +30,7 @@ function ContextProvider({ children }) {
         name: user.nickname,
         image: user.picture,
         id: user.id,
+        verified: user.email_verified,
       } as IUser)
   }, [user])
 
@@ -89,6 +90,7 @@ function ContextProvider({ children }) {
           name: res.nickname,
           image: res.picture,
           id: res.id,
+          verified: res.email_verified,
         } as IUser)
       }
     } catch (error) {

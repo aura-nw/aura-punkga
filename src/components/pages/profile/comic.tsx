@@ -12,7 +12,7 @@ import { useRouter } from "next/router"
 import { Fragment, useState } from "react"
 import { IComic } from "src/models/comic"
 
-export default function Comic(props: IComic & { unsubscribe: () => void; subscribe: () => void }) {
+export default function Comic(props: IComic & { unsubscribe?: () => void; subscribe?: () => void }) {
   const { locale } = useRouter()
   const [isSub, setIsSub] = useState(true)
   return (
@@ -21,6 +21,8 @@ export default function Comic(props: IComic & { unsubscribe: () => void; subscri
         <Image
           src={props.image || NoImage}
           alt=""
+          width={180}
+          height={240}
           className={`${
             props.image ? "object-cover" : "object-contain bg-light-gray"
           } rounded-[15px] w-[180px] h-[240px]`}
@@ -58,7 +60,7 @@ export default function Comic(props: IComic & { unsubscribe: () => void; subscri
         <div className="flex flex-col gap-[10px]">
           <div className=" leading-[20px]">
             Latest:{" "}
-            <Link href={`/comic/${props.id}/chapter/${props.latestChap.id}`} className="text-second-color font-[600]">
+            <Link href={`/comic/${props.id}/chapter/${props.latestChap.number}`} className="text-second-color font-[600]">
               Chap #{props.latestChap.number}
             </Link>
           </div>
@@ -68,31 +70,33 @@ export default function Comic(props: IComic & { unsubscribe: () => void; subscri
               <span className="font-semibold">{moment(props.latestChap?.pushlishDate).format("DD/MM/YYYY")}</span>
             </div>
           )}
-          <div>
-            {isSub ? (
-              <OutlineButton
-                onClick={() => {
-                  setIsSub(false)
-                  props.unsubscribe()
-                }}>
-                <div className="h-5 flex items-center">
-                  <BellIcon className="w-6 h-6 mr-2 inline-block" />
-                  Unsubscribe
-                </div>
-              </OutlineButton>
-            ) : (
-              <FilledButton
-                onClick={() => {
-                  setIsSub(true)
-                  props.subscribe()
-                }}>
-                <div className="h-5 flex items-center">
-                  <BellAlertIcon className="w-6 h-6 mr-2 inline-block animate-[bell-ring_1s_ease-in-out]" />
-                  Subscribe
-                </div>
-              </FilledButton>
-            )}
-          </div>
+          {!!props.subscribe && (
+            <div>
+              {isSub ? (
+                <OutlineButton
+                  onClick={() => {
+                    setIsSub(false)
+                    props.unsubscribe()
+                  }}>
+                  <div className="h-5 flex items-center">
+                    <BellIcon className="w-6 h-6 mr-2 inline-block" />
+                    Unsubscribe
+                  </div>
+                </OutlineButton>
+              ) : (
+                <FilledButton
+                  onClick={() => {
+                    setIsSub(true)
+                    props.subscribe()
+                  }}>
+                  <div className="h-5 flex items-center">
+                    <BellAlertIcon className="w-6 h-6 mr-2 inline-block animate-[bell-ring_1s_ease-in-out]" />
+                    Subscribe
+                  </div>
+                </FilledButton>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

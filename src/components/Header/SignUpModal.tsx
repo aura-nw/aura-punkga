@@ -1,11 +1,12 @@
 import { Transition } from "@headlessui/react"
 import FilledButton from "components/Button/FilledButton"
 import OutlineTextField from "components/Input/TextField/Outline"
+import Image from "next/image"
 import { useContext, useEffect, useState } from "react"
 import { Context } from "src/context"
 import { validateEmail, validatePassword } from "src/utils"
-
-export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setSignInOpen }) {
+import CheckSquare from "images/icons/check_square_fill.svg"
+export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setSignUpSuccessOpen }) {
   const [email, setEmail] = useState("")
   const [emailValidateErrorMsg, setEmailValidateErrorMsg] = useState("")
   const [username, setUsername] = useState("")
@@ -13,6 +14,7 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
   const [passwordValidateErrorMsg, setPasswordValidateErrorMsg] = useState("")
   const [repassword, setRepassword] = useState("")
   const [repasswordValidateErrorMsg, setRepasswordValidateErrorMsg] = useState("")
+  const [repasswordValidateSuccess, setRepasswordValidateSuccess] = useState(false)
 
   const [signUpLoading, setSignUpLoading] = useState(false)
   const [signUpErrorMsg, setSignUpErrorMsg] = useState("")
@@ -32,6 +34,11 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
 
   useEffect(() => {
     setRepasswordValidateErrorMsg("")
+    if (password == repassword && password) {
+      setRepasswordValidateSuccess(true)
+    } else {
+      setRepasswordValidateSuccess(false)
+    }
   }, [password, repassword])
 
   const signUpHandler = () => {
@@ -59,6 +66,7 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
   const signUpCallBack = (status) => {
     if (status === "success") {
       setSignUpOpen(false)
+      setSignUpSuccessOpen(true)
     } else {
       setSignUpErrorMsg("Something went wrong")
     }
@@ -110,6 +118,7 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
             errorMsg={repasswordValidateErrorMsg}
             value={repassword}
             onChange={setRepassword}
+            trailingComponent={repasswordValidateSuccess ? <Image src={CheckSquare} alt="" /> : null}
           />
         </div>
         <FilledButton

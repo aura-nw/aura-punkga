@@ -13,27 +13,29 @@ import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import AutoGrowingTextField from "components/Input/TextField/AutoGrowing"
 import moment from "moment"
-export default function Profile({ profile, subscribeList, unsubscribe, subscribe }) {
-  const { account, isSettingUp } = useContext(Context)
-  const [birthdate, setBirthdate] = useState(new Date("01/18/1999"))
+import SettingPasswordModal from "components/pages/profile/settingPasswordModal"
+export default function Profile({ profile, subscribeList, unsubscribe, subscribe, curentlyReading }) {
+  const { account, isSettingUp, updateProfile } = useContext(Context)
+  const [birthdate, setBirthdate] = useState(null)
   const [gender, setGender] = useState<{ key: string | number; value: string }>(null)
   const [open, setOpen] = useState(false)
   const [bio, setBio] = useState(null)
   const router = useRouter()
-  const { updateProfile } = useContext(Context)
+  const [settingPasswordModalOpen, setSettingPasswordModalOpen] = useState(false)
+  const [changingPasswordModalOpen, setChangingPasswordModalOpen] = useState(false)
 
   useEffect(() => {
     if (!isSettingUp) {
-      if (!account) {
+      if (!account.verified) {
         router.push("/")
       }
     }
-  }, [isSettingUp, account])
+  }, [isSettingUp, account.verified])
 
   useEffect(() => {
     if (profile.data) {
       setGender({ key: profile.data.gender, value: profile.data.gender })
-      setBirthdate(profile.data.birthdate ? new Date(profile.data.birthdate) : undefined)
+      setBirthdate(profile.data.birthdate ? new Date(profile.data.birthdate).getTime() : undefined)
       setBio(profile.data.given_name)
     }
   }, [profile.data])
@@ -41,7 +43,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
   const updateProfileHandler = async () => {
     if (
       gender.key != profile.data.gender ||
-      new Date(profile.data.birthdate).getTime() != new Date(birthdate).getTime() ||
+      (birthdate && new Date(profile.data.birthdate).getTime() != new Date(birthdate).getTime()) ||
       profile.data.given_name != bio
     ) {
       const res = await updateProfile({
@@ -225,7 +227,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                   {profile.data?.signup_methods.includes("basic_auth") ? (
                     <OutlineButton size="lg">Change password</OutlineButton>
                   ) : (
-                    <OutlineButton size="lg">Set password</OutlineButton>
+                    <OutlineButton onClick={() => setSettingPasswordModalOpen(true)} size="lg">Set password</OutlineButton>
                   )}
                 </div>
                 <div
@@ -243,14 +245,18 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
         <div className="mt-[100px]">
           <p className="text-2xl leading-6 font-extrabold mb-10">Currently reading</p>
           <div className="grid gap-x-24 gap-y-10 grid-cols-3">
-            {isSettingUp ? (
+            {isSettingUp || curentlyReading.loading ? (
               <>
                 <DummyComic />
                 <DummyComic />
                 <DummyComic />
               </>
             ) : (
-              <></>
+              <>
+                {curentlyReading.data?.map((data, index) => (
+                  <Comic key={index} {...data} />
+                ))}
+              </>
             )}
           </div>
         </div>
@@ -278,6 +284,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
           </div>
         </div>
       </div>
+      <SettingPasswordModal open={settingPasswordModalOpen} setOpen={setSettingPasswordModalOpen}/>
     </>
   )
 }
