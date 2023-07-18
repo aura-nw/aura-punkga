@@ -24,17 +24,19 @@ export default function Comic(props: IComic) {
       </Link>
       <div className="flex-auto w-2/3 flex flex-col justify-between gap-[10px]">
         <div className="flex flex-col gap-[10px]">
-          <Link href={`/comic/${props.id}/chapter/1`} className=" text-second-color font-bold text-[18px]">
-            {props[locale].title} <StatusLabel status={props.status.type}>{props.status.text}</StatusLabel>
-          </Link>
           <div>
-            by{" "}
-            {props.authors.map((author, index) => (
-              <Fragment key={index}>
-                <span className="text-second-color font-[600] first:hidden">, </span>
-                <span className="text-second-color font-[600]">{author}</span>
-              </Fragment>
-            ))}
+            <Link href={`/comic/${props.id}/chapter/1`} className=" text-second-color font-bold text-[18px]">
+              {props[locale].title} <StatusLabel status={props.status.type}>{props.status.text}</StatusLabel>
+            </Link>
+            <div>
+              by{" "}
+              {props.authors.map((author, index) => (
+                <Fragment key={index}>
+                  <span className="text-second-color font-[600] first:hidden">, </span>
+                  <span className="text-second-color font-[600]">{author}</span>
+                </Fragment>
+              ))}
+            </div>
           </div>
           <div className="flex gap-[8px] ">
             {props.tags.map((tag, index) => {

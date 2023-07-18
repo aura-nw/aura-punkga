@@ -8,6 +8,7 @@ interface ITextField {
   onBlur?: (e: any) => void
   onChange?: (value: string) => void
   value?: string
+  inputref?: any
 }
 export default function TextField({
   placeholder,
@@ -19,6 +20,7 @@ export default function TextField({
   onBlur,
   onChange,
   value,
+  inputref,
 }: ITextField) {
   if (size == "lg") {
     return (
@@ -29,6 +31,7 @@ export default function TextField({
           </div>
         )}
         <input
+          ref={inputref}
           onFocus={onFocus}
           onBlur={onBlur}
           value={value}

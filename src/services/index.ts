@@ -84,8 +84,8 @@ export const replyComment = async (content: string, ref: string, chapterId: stri
 export const search = async (content: string) => {
   const { data } = await axios.get(`${getConfig().API_URL}/api/rest/public/search_manga`, {
     params: {
-      text: `%${content}%`
-    }
+      text: `%${content}%`,
+    },
   })
   return data?.manga?.map((m: any) => {
     const response = {
@@ -97,10 +97,18 @@ export const search = async (content: string) => {
       },
       authors: m.manga_creators?.map((c: any) => c.creator?.name),
       views: m.chapters_aggregate?.aggregate?.sum?.views || 0,
+      likes: m.chapters_aggregate?.aggregate?.sum?.likes || 0,
       latestChap: {
         number: m.chapters?.[0]?.chapter_number,
         id: m.chapters?.[0]?.id,
       },
+      tags: m.manga_tags.map(({ tag }: any) => {
+        const r = {}
+        tag.tag_languages.forEach((tl: any) => {
+          r[LANGUAGE.find((l) => l.id == tl.language_id).shortLang] = tl.value
+        })
+        return r
+      }),
     }
     LANGUAGE.forEach((language) => {
       const l =
