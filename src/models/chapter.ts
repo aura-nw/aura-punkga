@@ -13,4 +13,5 @@ export interface IChapter {
   likes: number
   comments: number
   isLiked: boolean
+  date: Date
 }

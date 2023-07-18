@@ -61,6 +61,8 @@ export default function TextField({
         <input
           onFocus={onFocus}
           onBlur={onBlur}
+          value={value}
+          onChange={(event) => onChange && onChange(event.target.value)}
           type="text"
           id="input-group-1"
           className={` rounded-[12px] w-full px-[13px] py-[3px] placeholder-medium-gray focus:outline-none ${

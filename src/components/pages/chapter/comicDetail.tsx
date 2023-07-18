@@ -1,14 +1,22 @@
 import { ArrowRightIcon, BellAlertIcon } from "@heroicons/react/20/solid"
-import { ArrowsUpDownIcon, BellAlertIcon as BellAlertIconOutline, DocumentTextIcon } from "@heroicons/react/24/outline"
+import {
+  ArrowsUpDownIcon,
+  BellAlertIcon as BellAlertIconOutline,
+  DocumentTextIcon,
+  EyeIcon,
+} from "@heroicons/react/24/outline"
+import FlashAnimation from "components/AnimationIconHOC/Flash"
 import FilledButton from "components/Button/FilledButton"
 import OutlineButton from "components/Button/OutlineButton"
 import TextField from "components/Input/TextField"
 import StatusLabel from "components/Label/Status"
 import Tag from "components/Label/Tag"
+import HeartFillIcon from "images/icons/heart_fill.svg"
+import HeartOutlineIcon from "images/icons/heart_outline.svg"
+import moment from "moment"
 import { useTranslation } from "next-i18next"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/router"
 import { useContext, useState } from "react"
 import mockBanner from "src/assets/images/mockup3.png"
 import mockAvar from "src/assets/images/mockup4.png"
@@ -25,6 +33,8 @@ export default function ComicDetail({
   setIsSubscribe,
   subscribe,
   unsubscribe,
+  like,
+  unlike,
 }: {
   data: IComicDetail
   language: LanguageType
@@ -33,10 +43,14 @@ export default function ComicDetail({
   setIsSubscribe: any
   subscribe: () => void
   unsubscribe: () => void
+  like: () => void
+  unlike: () => void
 }) {
   const [expandDetail, setExpandDetail] = useState(false)
+  const [isDesc, setIsDesc] = useState(true)
   const { t } = useTranslation()
   const { account } = useContext(Context)
+  const [searchChapter, setSearchChapter] = useState("")
 
   const subscribeHandler = (isSub: boolean) => {
     if (account?.verified && account?.name) {
@@ -174,45 +188,34 @@ export default function ComicDetail({
                   data.chapters.length > 1 ? "s" : ""
                 }`}</strong>
                 <TextField
+                  onChange={setSearchChapter}
+                  value={searchChapter}
                   size="sm"
                   placeholder="Enter chapter number"
                   leadingComponent={<DocumentTextIcon className="w-[18px] h-[18px] text-medium-gray" />}
                 />
               </div>
               <div>
-                <ArrowsUpDownIcon className="w-[14px] h-[14px] text-light-gray" />
+                <ArrowsUpDownIcon onClick={() => setIsDesc(!isDesc)} className="cursor-pointer w-5 h-w-5 text-light-gray" />
               </div>
             </div>
             <div className="px-[60px] py-[20px] flex flex-col gap-5">
-              {data.chapters.map((chapter, index) => (
-                <Link href={`/comic/${data.id}/chapter/${chapter.number}`} key={index} className="flex gap-4 items-center">
-                  <Image
-                    src={chapter.thumbnail || m6}
-                    alt=""
-                    className="w-[60px] h-[60px] object-cover rounded-xl"
-                    width={60}
-                    height={60}
+              {data.chapters
+                .filter((chapter) => {
+                  return searchChapter ? chapter?.number?.toString()?.includes(searchChapter) : true
+                })
+                .sort(() => (isDesc ? 1 : -1))
+                .map((chapter, index) => (
+                  <Chapter
+                    expandDetail={expandDetail}
+                    data={data}
+                    chapter={chapter}
+                    key={index}
+                    account={account}
+                    like={like}
+                    unlike={unlike}
                   />
-                  <div>
-                    <div className="flex items-center gap-5">
-                      <p>{`Chapter ${chapter.number}`}</p>
-                      {(function () {
-                        switch (chapter.type) {
-                          case "Free":
-                            return (
-                              <StatusLabel status="success">
-                                <>Free</>
-                              </StatusLabel>
-                            )
-                          default:
-                            return <div></div>
-                        }
-                      })()}
-                    </div>
-                    <div className="font-[600]">{chapter.name}</div>
-                  </div>
-                </Link>
-              ))}
+                ))}
             </div>
           </div>
           <div
@@ -229,5 +232,99 @@ export default function ComicDetail({
         </div>
       </div>
     </div>
+  )
+}
+
+const Chapter = ({ expandDetail, data, chapter, account, like, unlike }) => {
+  const [isLiked, setIsLiked] = useState(chapter.isLiked || false)
+  const [likes, setLikes] = useState(chapter.likes || 0)
+  const likeHandler = (isLike: boolean) => {
+    if (account?.verified && account?.name) {
+      if (isLike) {
+        setLikes((like) => like + 1)
+        like(chapter.id)
+      } else {
+        setLikes((like) => like - 1)
+        unlike(chapter.id)
+      }
+      setIsLiked(isLike)
+    } else {
+      ;(document.querySelector("#open-sign-in-btn") as any)?.click()
+    }
+  }
+  return (
+    <>
+      <div
+        className={`w-full h-[1px] bg-light-medium-gray first:hidden transition-all duration-500 ${
+          expandDetail ? "my-[0px] opacity-100" : "-my-[10px] opacity-0"
+        }`}></div>
+      <Link href={`/comic/${data.id}/chapter/${chapter.number}`} className="flex gap-4">
+        <Image
+          src={chapter.thumbnail || m6}
+          alt=""
+          className={`transition-all duration-500 object-cover rounded-xl ${
+            expandDetail ? "w-[120px] h-[120px]" : "w-[60px] h-[60px]"
+          }`}
+          width={60}
+          height={60}
+        />
+        <div className="flex flex-col justify-center flex-1">
+          <div>
+            <div className="flex items-center gap-5">
+              <p>{`Chapter ${chapter.number}`}</p>
+              {(function () {
+                switch (chapter.type) {
+                  case "Free":
+                    return (
+                      <StatusLabel status="success">
+                        <>Free</>
+                      </StatusLabel>
+                    )
+                  default:
+                    return <div></div>
+                }
+              })()}
+            </div>
+            <div className="font-[600]">{chapter.name}</div>
+          </div>
+          <div
+            className={`flex justify-between items-end transition-all w-full duration-500 ${
+              expandDetail ? "h-full opacity-100  max-h-[100px]" : "h-[0%] max-h-0 opacity-0"
+            }`}>
+            <div className="text-sm flex gap-10">
+              <div className="mr-3">{moment(chapter.date).format("DD/MM/yyyy")}</div>
+              <div className="flex gap-2">
+                <EyeIcon className="w-5 h-5 text-gray-600" />
+                <span>{chapter.views}</span>
+              </div>
+            </div>
+            <div className="flex items-center">
+              <FlashAnimation
+                InactiveComponent={(props: any) => (
+                  <Image
+                    className="cursor-pointer w-5 h-5"
+                    onClick={() => likeHandler(true)}
+                    src={HeartOutlineIcon}
+                    alt=""
+                    {...props}
+                  />
+                )}
+                ActiveComponent={(props: any) => (
+                  <Image
+                    className="cursor-pointer w-5 h-5"
+                    onClick={() => likeHandler(false)}
+                    src={HeartFillIcon}
+                    alt=""
+                    {...props}
+                  />
+                )}
+                active={isLiked}
+              />
+              <span className="ml-2">{likes}</span>
+            </div>
+          </div>
+        </div>
+      </Link>
+    </>
   )
 }
