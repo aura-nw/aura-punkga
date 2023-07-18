@@ -39,7 +39,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
     if (profile.data) {
       setGender({ key: profile.data.gender, value: profile.data.gender })
       setBirthdate(profile.data.birthdate ? new Date(profile.data.birthdate).getTime() : undefined)
-      setBio(profile.data.given_name)
+      setBio(profile.data.bio)
     }
   }, [profile.data])
 
@@ -51,15 +51,17 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
     if (birthdate && new Date(profile.data.birthdate).getTime() != new Date(birthdate).getTime()) {
       form.append("birthdate", moment(birthdate).format("yyyy-MM-DD") as string)
     }
-    if (bio && profile.data.given_name != bio) {
+    if (bio && profile.data.bio != bio) {
       form.append("bio", bio)
     }
     if ((profilePicture.current as any).files[0]) {
       form.append("picture", (profilePicture.current as any).files[0])
     }
-    setLoading(true)
-    const res = await updateProfile(form)
-    await profile.callApi(true)
+    if (form.keys.length) {
+      setLoading(true)
+      const res = await updateProfile(form)
+      await profile.callApi(true)
+    }
     setLoading(false)
     setOpen(false)
   }
@@ -110,7 +112,13 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                 <div className="text-xl font-semibold">Upload profile picture</div>
                 <input ref={profilePicture} type="file" className="bg-black absolute inset-0 opacity-0" />
               </div>
-              <Image src={profile.data.picture || NoImg} height={360} width={360} alt="" className="h-full w-full object-cover"/>
+              <Image
+                src={profile.data.picture || NoImg}
+                height={360}
+                width={360}
+                alt=""
+                className="h-full w-full object-cover"
+              />
             </div>
             <div className="flex flex-col justify-between w-1/2">
               <div>
@@ -202,13 +210,13 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                     {profile.data.gender && <div className="capitalize">{profile.data.gender}</div>}
                   </div>
                 )}
-                {profile.data.given_name && (
+                {profile.data.bio && (
                   <div
                     className={`font-medium transition-all overflow-hidden ${
                       open ? "opacity-0 h-0" : "opacity-100 h-[80px]"
                     }`}>
                     <label className="text-medium-gray">Bio:</label>
-                    <p>{profile.data.given_name}</p>
+                    <p>{profile.data.bio}</p>
                   </div>
                 )}
                 <div
@@ -232,7 +240,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                   <OutlineButton size="lg" onClick={() => setOpen(!open)}>
                     Edit profile
                   </OutlineButton>
-                  {profile.data?.signup_methods.includes("basic_auth") ? (
+                  {profile.data?.signup_methods?.includes("basic_auth") ? (
                     <OutlineButton onClick={() => setChangingPasswordModalOpen(true)} size="lg">
                       Change password
                     </OutlineButton>
@@ -255,7 +263,9 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
           </div>
         )}
         <div className="mt-[100px]">
-          <p className="text-2xl leading-6 font-extrabold mb-10">Currently reading</p>
+          {!!(isSettingUp || curentlyReading.loading || curentlyReading.data?.length) && (
+            <p className="text-2xl leading-6 font-extrabold mb-10">Currently reading</p>
+          )}
           <div className="grid gap-x-24 gap-y-10 grid-cols-3">
             {isSettingUp || curentlyReading.loading ? (
               <>
@@ -273,7 +283,9 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
           </div>
         </div>
         <div className="mt-[100px]">
-          <p className="text-2xl leading-6 font-extrabold mb-10">Subscribe list</p>
+          {!!(isSettingUp || subscribeList.loading || subscribeList.data?.length) && (
+            <p className="text-2xl leading-6 font-extrabold mb-10">Subscribe list</p>
+          )}
           <div className="grid gap-x-24 gap-y-10 grid-cols-3">
             {isSettingUp || subscribeList.loading ? (
               <>

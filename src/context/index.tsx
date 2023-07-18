@@ -23,7 +23,6 @@ function ContextProvider({ children }) {
   const searchParams = useSearchParams()
   const accessTokenParam = searchParams.get("access_token")
   const expiresInParam = searchParams.get("expires_in")
-
   useEffect(() => {
     if (user?.id)
       setAccount({
@@ -36,29 +35,31 @@ function ContextProvider({ children }) {
   }, [user])
 
   useEffect(() => {
-    if (account?.verified) {
-      (window as any).interceptor  = axios.interceptors.request.use(
-        (config) => {
-          const token = getItem("token")
-          if (token) {
-            config.headers["Authorization"] = `Bearer ${token}`
-          }
-          return config
-        },
-        (error) => {
-          Promise.reject(error)
+    axios.interceptors.request.use(
+      (config) => {
+        const token = getItem("token")
+        if (token) {
+          config.headers["Authorization"] = `Bearer ${token}`
         }
-      )
-    } else {
-      if ((window as any).interceptor) {
-        axios.interceptors.request.eject((window as any).interceptor)
+        return config
+      },
+      (error) => {
+        Promise.reject(error)
       }
-    }
-  }, [account?.verified])
+    )
+  }, [])
 
   useEffect(() => {
-    setUp()
-  }, [])
+    if (location.search.includes("access_token")) {
+      if (accessTokenParam) {
+        console.log("Setting up punkga with access token")
+        setUp()
+      }
+    } else {
+      console.log("Setting up punkga")
+      setUp()
+    }
+  }, [accessTokenParam])
 
   const setLogoutTimeout = (timeout: any) => {
     if (window.logoutTimeoutId) {
@@ -74,28 +75,25 @@ function ContextProvider({ children }) {
 
   const setUp = async () => {
     setIsSettingUp(true)
-    const token = getItem("token")
-    if (token) {
-      const t = localStorage.getItem("token")
-      setLogoutTimeout(new Date(JSON.parse(t).exprire).getTime() - Date.now())
-      await getProfile(token)
-      const connectedProvider = getItem("connected_provider") as "Coin98" | "Keplr"
-      if (connectedProvider) {
-        await getWallet(connectedProvider)
-        await connectWallet()
+    if (accessTokenParam) {
+      setItem("token", accessTokenParam, new Date(Date.now() + (expiresInParam ? +expiresInParam * 1000 : 10800000)))
+      setLogoutTimeout(expiresInParam ? +expiresInParam * 1000 : 10800000)
+      router.push(location.pathname)
+    } else {
+      const token = getItem("token")
+      if (token) {
+        const t = localStorage.getItem("token")
+        setLogoutTimeout(new Date(JSON.parse(t).exprire).getTime() - Date.now())
+        await getProfile(token)
+        const connectedProvider = getItem("connected_provider") as "Coin98" | "Keplr"
+        if (connectedProvider) {
+          await getWallet(connectedProvider)
+          await connectWallet()
+        }
       }
     }
     setIsSettingUp(false)
   }
-
-  useEffect(() => {
-    if (accessTokenParam) {
-      setItem("token", accessTokenParam, new Date(Date.now() + (expiresInParam ? +expiresInParam * 1000 : 10800000)))
-      setLogoutTimeout(expiresInParam ? +expiresInParam * 1000 : 10800000)
-      getProfile(accessTokenParam)
-      router.push(location.pathname)
-    }
-  }, [accessTokenParam])
 
   const getProfile = async (token?: string) => {
     try {
@@ -115,6 +113,7 @@ function ContextProvider({ children }) {
           verified: res.email_verified,
         } as IUser)
       }
+      return res
     } catch (error) {
       removeItem("token")
       console.log("getProfile", error)

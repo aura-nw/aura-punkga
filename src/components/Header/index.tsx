@@ -14,18 +14,24 @@ import { useTranslation } from "next-i18next"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { useContext, useState } from "react"
+import { Fragment, useCallback, useContext, useEffect, useRef, useState } from "react"
 import { Context } from "src/context"
 import SignInModal from "./SignInModal"
 import ConnectWalletModal from "./ConnectWalletModal"
 import SignUpModal from "./SignUpModal"
 import ForgotPasswordModal from "./ForgotPasswordModal"
 import SignUpSuccessModal from "./SignUpSuccessModal"
+import { search } from "src/services"
+import _ from "lodash"
+import useApi from "src/hooks/useApi"
+import Spinner from "components/Spinner"
+import NoImage from "images/no_img.png"
 
 export default function Header({}) {
   const { t } = useTranslation()
   const router = useRouter()
   const [isSearchFocused, setIsSearchFocused] = useState(false)
+  const ref = useRef<any>()
   const { pathname, asPath, query, locale } = router
   const switchLanguage = () => {
     const newLanguage = locale === "en" ? "vn" : "en"
@@ -37,9 +43,25 @@ export default function Header({}) {
   const [signUpSuccessOpen, setSignUpSuccessOpen] = useState(false)
   const [connectWalletOpen, setConnectWalletOpen] = useState(false)
   const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false)
-
+  const [searchValue, setSearchValue] = useState("")
   const { account, wallet, logout, unlinkWallet } = useContext(Context)
 
+  const searchComic = useApi<any[]>(async () => await search(searchValue), !!searchValue, [searchValue])
+  useEffect(() => {
+    ref.current?.addEventListener(
+      "keypress",
+      _.debounce(
+        (e: KeyboardEvent) => {
+          if (e.which == 13) {
+            setIsSearchFocused(false)
+            router.push(`/search?keyword=${ref.current.value}`)
+          }
+        },
+        1000,
+        { leading: true, trailing: false }
+      )
+    )
+  }, [])
   return (
     <>
       <div
@@ -54,15 +76,63 @@ export default function Header({}) {
               <Image src={Logo} alt="header logo" />
             </Link>
           </div>
-          <div className={`${isSearchFocused ? "z-30" : ""} w-full max-w-[500px]`}>
+          <div className={`${isSearchFocused ? "z-30" : ""} w-full max-w-[500px] relative`}>
             <TextField
+              inputref={ref}
+              onChange={_.debounce(setSearchValue, 500)}
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setIsSearchFocused(false)}
-              className={`bg-light-gray transition-[width] duration-500 ${isSearchFocused ? "!w-[160%]" : ""}`}
+              className={`transition-[width] bg-light-gray duration-500 ${isSearchFocused ? "!w-[160%]" : ""}`}
               size="lg"
               placeholder="Search by title"
               leadingComponent={<Image src={SearchIcon} alt="" />}
+              trailingComponent={searchComic.loading ? <Spinner className="w-6 h-6" /> : null}
             />
+            {!!searchComic.data?.length && (
+              <div
+                className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 p-5 rounded-[20px] flex flex-col gap-7 max-h-[40vh] overflow-auto ${
+                  isSearchFocused ? "z-20 opacity-100 w-[160%]" : "-z-20 opacity-0 w-full"
+                }`}>
+                {searchComic.data?.map((manga, index) => (
+                  <div key={index} className="flex gap-2">
+                    <Image
+                      src={manga.image || NoImage}
+                      width={48}
+                      height={64}
+                      className="w-12 h-16 bg-medium-gray rounded-xl object-cover"
+                      alt=""
+                    />
+                    <div className="flex flex-col justify-between">
+                      <div>
+                        <p
+                          className="text-second-color text-base font-bold cursor-pointer"
+                          onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}>
+                          {manga[locale].title}
+                        </p>
+                        <div className="text-xs">
+                          {manga.authors.map((author, index) => (
+                            <Fragment key={index}>
+                              <span className="text-second-color font-[600] first:hidden">, </span>
+                              <span className="text-second-color font-[600]">{author}</span>
+                            </Fragment>
+                          ))}
+                        </div>
+                      </div>
+                      {!!manga.latestChap.number && (
+                        <p className="text-xs">
+                          Latest chap:{" "}
+                          <span
+                            className="text-second-color font-semibold cursor-pointer"
+                            onClick={() => router.push(`/comic/${manga.id}/chapter/${manga.latestChap.number}`)}>
+                            {manga.latestChap.number}
+                          </span>
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           <div className="flex gap-[40px] lg:justify-end min-w-[430px]">
             <Button size="lg" onClick={() => router.push("/sample")}>
