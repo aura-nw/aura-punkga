@@ -116,6 +116,8 @@ const Chapter: React.FC = ({
                 setIsSubscribe={setIsSubscribe}
                 subscribe={subscribe}
                 unsubscribe={unsubscribe}
+                like={like}
+                unlike={unlike}
               />
             )
           ) : !chapterDetails ? (

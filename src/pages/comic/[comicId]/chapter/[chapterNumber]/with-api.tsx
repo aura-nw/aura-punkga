@@ -35,6 +35,10 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
         type: chapter.chapter_type,
         status: chapter.stauts,
         thumbnail: chapter.thumbnail_url,
+        date: chapter.pushlish_date,
+        likes: chapter.chapter_total_likes?.likes || 0,
+        views: chapter.views || 0,
+        isLiked: !!chapter.chapters_likes?.length,
       })),
       views: data.chapters_aggregate?.aggregate?.sum?.views,
       likes: data.chapters_aggregate?.aggregate?.sum?.likes,
@@ -126,11 +130,11 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     }
   }
 
-  const like = async () => {
-    await axios.post(`${config.API_URL}/api/rest/user/chapters/${chapterId.current}/likes`)
+  const like = async (id?: string) => {
+    await axios.post(`${config.API_URL}/api/rest/user/chapters/${id || chapterId.current}/likes`)
   }
-  const unlike = async () => {
-    await axios.delete(`${config.API_URL}/api/rest/user/chapters/${chapterId.current}/likes`)
+  const unlike = async (id?: string) => {
+    await axios.delete(`${config.API_URL}/api/rest/user/chapters/${id || chapterId.current}/likes`)
   }
   const subscribe = async () => {
     await axios.post(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)

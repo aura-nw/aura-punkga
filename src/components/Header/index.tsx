@@ -91,7 +91,7 @@ export default function Header({}) {
             {!!searchComic.data?.length && (
               <div
                 className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 p-5 rounded-[20px] flex flex-col gap-7 max-h-[40vh] overflow-auto ${
-                  isSearchFocused ? "z-20 opacity-100 w-[160%]" : "-z-20 opacity-0 w-full"
+                  isSearchFocused ? "opacity-100 w-[160%]" : "pointer-events-none opacity-0 w-full"
                 }`}>
                 {searchComic.data?.map((manga, index) => (
                   <div key={index} className="flex gap-2">
