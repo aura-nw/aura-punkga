@@ -1,4 +1,3 @@
-import { useAuthorizer } from "@authorizerdev/authorizer-react"
 import axios from "axios"
 import getConfig from "next/config"
 import { useContext } from "react"
@@ -9,15 +8,20 @@ import { IComic } from "src/models/comic"
 import { getItem } from "src/utils/localStorage"
 const withApi = (Component: React.FC<any>) => (props: any) => {
   const { account } = useContext(Context)
-  const { authorizerRef } = useAuthorizer()
   const config = getConfig()
   const getProfile = async () => {
-    const token = getItem("token")
-    const res = await authorizerRef.getProfile({
-      Authorization: `Bearer ${token}`,
-    })
+    const res: any = await axios.get(`${config.API_URL}/api/rest/user/profile`)
     if (res) {
-      return res
+      return {
+        id: res.data.authorizer_users[0].id,
+        email: res.data.authorizer_users[0].email,
+        gender: res.data.authorizer_users[0].gender,
+        nickname: res.data.authorizer_users[0].nickname,
+        picture: res.data.authorizer_users[0].picture,
+        birthdate: res.data.authorizer_users[0].birthdate,
+        bio: res.data.authorizer_users[0].bio,
+        signup_methods: res.data.authorizer_users[0].signup_methods,
+      }
     }
   }
   const getSubscribeList = async () => {

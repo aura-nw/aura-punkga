@@ -1,6 +1,6 @@
 import { useState, useEffect, DependencyList, useContext } from "react"
 import { Context } from "src/context"
-export default function useApi<T>(action, actionCondition: boolean, deps?: DependencyList) {
+export default function useApi<T>(action: Function, actionCondition: boolean, deps?: DependencyList) {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<T | null | undefined>(undefined)
 
@@ -16,11 +16,11 @@ export default function useApi<T>(action, actionCondition: boolean, deps?: Depen
         } else {
           setData(null)
         }
-        !skipLoading && setLoading(false)
       }
+      setLoading(false)
     } catch (error) {
       setData(null)
-      !skipLoading && setLoading(false)
+      setLoading(false)
       console.log("useApi", error)
     }
   }

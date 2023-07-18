@@ -6,6 +6,8 @@ interface ITextField {
   className?: string
   onFocus?: (e: any) => void
   onBlur?: (e: any) => void
+  onChange?: (value: string) => void
+  value?: string
 }
 export default function TextField({
   placeholder,
@@ -15,10 +17,12 @@ export default function TextField({
   className = "bg-white",
   onFocus,
   onBlur,
+  onChange,
+  value,
 }: ITextField) {
   if (size == "lg") {
     return (
-      <div className="relative w-full">
+      <div className={`relative w-full  rounded-[20px] ${className}`}>
         {leadingComponent && (
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center p-[13px] max-w-[50px]">
             {leadingComponent}
@@ -27,12 +31,19 @@ export default function TextField({
         <input
           onFocus={onFocus}
           onBlur={onBlur}
+          value={value}
+          onChange={(event) => onChange && onChange(event.target.value)}
           type="text"
           id="input-group-1"
-          className={` rounded-[20px] w-full p-[13px] placeholder-medium-gray focus:outline-none ${
+          className={`bg-transparent rounded-[20px] w-full p-[13px] placeholder-medium-gray focus:outline-none ${
             leadingComponent ? "pl-[50px]" : ""
-          } ${className}`}
+          } ${trailingComponent ? "pr-[45px]" : ""} `}
           placeholder={placeholder}></input>
+        {trailingComponent && (
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center justify-center p-[13px] max-w-[50px]">
+            {trailingComponent}
+          </div>
+        )}
       </div>
     )
   }
