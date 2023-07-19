@@ -40,8 +40,8 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
         views: chapter.views || 0,
         isLiked: !!chapter.chapters_likes?.length,
       })),
-      views: data.chapters_aggregate?.aggregate?.sum?.views,
-      likes: data.chapters_aggregate?.aggregate?.sum?.likes,
+      views: data.manga_total_views?.views,
+      likes: data.manga_total_likes?.likes,
       isSubscribe: !!data.manga_subscribers.length,
     }
 

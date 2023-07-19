@@ -34,7 +34,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
           type: COMIC_STATUS[m.status],
           text: m.status,
         },
-        authors: m.manga_creators?.map((c: any) => c.creator?.name),
+        authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : "Unknown creator")),
         views: m.chapters_aggregate?.aggregate?.sum?.views || 0,
         likes: m.chapters_aggregate?.aggregate?.sum?.likes || 0,
         latestChap: {
@@ -78,7 +78,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
             type: COMIC_STATUS[m.status],
             text: m.status,
           },
-          authors: m.manga_creators?.map((c: any) => c.creator?.name),
+          authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : "Unknown creator")),
           views: m.chapters_aggregate?.aggregate?.sum?.views || 0,
           likes: m.chapters_aggregate?.aggregate?.sum?.likes || 0,
           latestChap: {
