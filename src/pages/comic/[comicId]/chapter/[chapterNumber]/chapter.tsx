@@ -1,15 +1,15 @@
-import DummyComicDetail from "components/DummyComponent/comicDetail"
-import Header from "components/Header"
-import ComicDetail from "components/pages/chapter/comicDetail"
-import CommentSection from "components/pages/chapter/commentSection"
-import ReadingSection from "components/pages/chapter/readingSection"
-import { useRouter } from "next/router"
-import React, { useEffect, useRef, useState } from "react"
-import { LanguageType } from "src/constants/global.types"
-import { IChapter } from "src/models/chapter"
-import { IComicDetail } from "src/models/comic"
-import { IComment } from "src/models/comment"
-import { getItem, setItem } from "src/utils/localStorage"
+import DummyComicDetail from 'components/DummyComponent/comicDetail'
+import Header from 'components/Header'
+import ComicDetail from 'components/pages/chapter/comicDetail'
+import CommentSection from 'components/pages/chapter/commentSection'
+import ReadingSection from 'components/pages/chapter/readingSection'
+import { useRouter } from 'next/router'
+import React, { useEffect, useRef, useState } from 'react'
+import { LanguageType } from 'src/constants/global.types'
+import { IChapter } from 'src/models/chapter'
+import { IComicDetail } from 'src/models/comic'
+import { IComment } from 'src/models/comment'
+import { getItem, setItem } from 'src/utils/localStorage'
 
 const Chapter: React.FC = ({
   comicDetails,
@@ -20,6 +20,7 @@ const Chapter: React.FC = ({
   unlike,
   subscribe,
   unsubscribe,
+  addView,
 }: {
   comicDetails: {
     data: IComicDetail
@@ -39,17 +40,22 @@ const Chapter: React.FC = ({
   unlike: () => void
   subscribe: () => void
   unsubscribe: () => void
+  addView: (id: string) => void
 }) => {
   const [openComments, setOpenComments] = useState(false)
-  const [mode, setMode] = useState<"minscreen" | "fullscreen">("minscreen")
+  const [mode, setMode] = useState<'minscreen' | 'fullscreen'>('minscreen')
   const [isSubscribe, setIsSubscribe] = useState(false)
   const { locale } = useRouter()
   const [language, setLanguage] = useState<LanguageType>(locale as LanguageType)
   const commentIntervalId = useRef<any>()
 
   useEffect(() => {
+    if (chapterDetails.data?.id) addView(chapterDetails.data.id)
+  }, [chapterDetails?.data?.id])
+  useEffect(() => {
     setLanguage(locale as LanguageType)
   }, [locale])
+
   useEffect(() => {
     setIsSubscribe(comicDetails?.data?.isSubscribe)
   }, [comicDetails?.data])
@@ -65,13 +71,13 @@ const Chapter: React.FC = ({
 
   useEffect(() => {
     if (comicDetails?.data?.id) {
-      const currentReading = getItem("current_reading_manga")
+      const currentReading = getItem('current_reading_manga')
       if (currentReading) {
         const currentReadingManga = JSON.parse(currentReading)
         const newData = [comicDetails.data.id, ...currentReadingManga.filter((id) => id != comicDetails.data.id)]
-        setItem("current_reading_manga", JSON.stringify(newData))
+        setItem('current_reading_manga', JSON.stringify(newData))
       } else {
-        setItem("current_reading_manga", JSON.stringify([comicDetails.data.id]))
+        setItem('current_reading_manga', JSON.stringify([comicDetails.data.id]))
       }
     }
   }, [comicDetails?.data?.id])
@@ -79,11 +85,11 @@ const Chapter: React.FC = ({
   return (
     <>
       <Header />
-      <div className="flex h-[calc(100vh-80px)] relative">
-        <div className="flex-auto w-2/3 h-full z-[5]">
+      <div className='flex h-[calc(100vh-80px)] relative'>
+        <div className='flex-auto w-2/3 h-full z-[5]'>
           {!chapterDetails || chapterDetails.loading ? (
-            <div className="w-full h-full pt-5">
-              <div className="w-[70%] mx-auto mb-[60px] h-full bg-light-medium-gray animate-pulse"></div>
+            <div className='w-full h-full pt-5'>
+              <div className='w-[70%] mx-auto mb-[60px] h-full bg-light-medium-gray animate-pulse'></div>
             </div>
           ) : (
             <ReadingSection
@@ -103,7 +109,7 @@ const Chapter: React.FC = ({
             />
           )}
         </div>
-        <div className="flex-auto w-1/3 h-full">
+        <div className='flex-auto w-1/3 h-full'>
           {!openComments ? (
             !comicDetails || comicDetails.loading ? (
               <DummyComicDetail />

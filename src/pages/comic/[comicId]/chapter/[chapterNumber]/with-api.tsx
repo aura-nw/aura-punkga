@@ -152,6 +152,9 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   const unsubscribe = async () => {
     await axios.delete(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
   }
+  const addView = async (id: string) => {
+    await axios.patch(`${config.REST_API_URL}/chapter/${id || chapterId.current}/increase`)
+  }
 
   return (
     <Component
@@ -164,6 +167,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       unlike={unlike}
       subscribe={subscribe}
       unsubscribe={unsubscribe}
+      addView={addView}
     />
   )
 }
