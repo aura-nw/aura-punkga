@@ -66,63 +66,63 @@ export default function Header({}) {
     <>
       <div
         className={` fixed inset-0 transition-opacity duration-500 bg-[#000] ${
-          isSearchFocused ? "z-20 opacity-25" : "-z-20 opacity-0"
+          isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
         }`}></div>
-      <header className="bg-white border-b-2 border-light-gray border-solid">
-        <nav className="pk-container flex items-center justify-between pt-[10px] pb-[8px]" aria-label="Global">
+      <header className='bg-white border-b-2 border-light-gray border-solid'>
+        <nav className='pk-container flex items-center justify-between pt-[10px] pb-[8px]' aria-label='Global'>
           <div>
-            <Link href="/" className="flex">
-              <span className="sr-only">Your Company</span>
-              <Image src={Logo} alt="header logo" />
+            <Link href='/' className='flex'>
+              <span className='sr-only'>Your Company</span>
+              <Image src={Logo} alt='header logo' />
             </Link>
           </div>
-          <div className={`${isSearchFocused ? "z-30" : ""} w-full max-w-[500px] relative`}>
+          <div className={`${isSearchFocused ? 'z-30' : ''} w-full max-w-[500px] relative`}>
             <TextField
               inputref={ref}
               onChange={_.debounce(setSearchValue, 500)}
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setIsSearchFocused(false)}
-              className={`transition-[width] bg-light-gray duration-500 ${isSearchFocused ? "!w-[160%]" : ""}`}
-              size="lg"
-              placeholder="Search by title"
-              leadingComponent={<Image src={SearchIcon} alt="" />}
-              trailingComponent={searchComic.loading ? <Spinner className="w-6 h-6" /> : null}
+              className={`transition-[width] bg-light-gray duration-500 ${isSearchFocused ? '!w-[160%]' : ''}`}
+              size='lg'
+              placeholder='Search by title'
+              leadingComponent={<Image src={SearchIcon} alt='' />}
+              trailingComponent={searchComic.loading ? <Spinner className='w-6 h-6' /> : null}
             />
             {!!searchComic.data?.length && (
               <div
                 className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 p-5 rounded-[20px] flex flex-col gap-7 max-h-[40vh] overflow-auto ${
-                  isSearchFocused ? "opacity-100 w-[160%]" : "pointer-events-none opacity-0 w-full"
+                  isSearchFocused ? 'opacity-100 w-[160%]' : 'pointer-events-none opacity-0 w-full'
                 }`}>
                 {searchComic.data?.map((manga, index) => (
-                  <div key={index} className="flex gap-2">
+                  <div key={index} className='flex gap-2'>
                     <Image
                       src={manga.image || NoImage}
                       width={48}
                       height={64}
-                      className="w-12 h-16 bg-medium-gray rounded-xl object-cover"
-                      alt=""
+                      className='w-12 h-16 bg-medium-gray rounded-xl object-cover'
+                      alt=''
                     />
-                    <div className="flex flex-col justify-between">
+                    <div className='flex flex-col justify-between'>
                       <div>
                         <p
-                          className="text-second-color text-base font-bold cursor-pointer"
+                          className='text-second-color text-base font-bold cursor-pointer'
                           onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}>
                           {manga[locale].title}
                         </p>
-                        <div className="text-xs">
+                        <div className='text-xs'>
                           {manga.authors.map((author, index) => (
                             <Fragment key={index}>
-                              <span className="text-second-color font-[600] first:hidden">, </span>
-                              <span className="text-second-color font-[600]">{author}</span>
+                              <span className='text-second-color font-[600] first:hidden'>, </span>
+                              <span className='text-second-color font-[600]'>{author}</span>
                             </Fragment>
                           ))}
                         </div>
                       </div>
                       {!!manga.latestChap.number && (
-                        <p className="text-xs">
-                          Latest chap:{" "}
+                        <p className='text-xs'>
+                          Latest chap:{' '}
                           <span
-                            className="text-second-color font-semibold cursor-pointer"
+                            className='text-second-color font-semibold cursor-pointer'
                             onClick={() => router.push(`/comic/${manga.id}/chapter/${manga.latestChap.number}`)}>
                             {manga.latestChap.number}
                           </span>
@@ -134,55 +134,55 @@ export default function Header({}) {
               </div>
             )}
           </div>
-          <div className="flex gap-[40px] lg:justify-end min-w-[430px]">
-            <Button size="lg" onClick={() => router.push("/sample")}>
-              {t("aboutUs")}
+          <div className='flex gap-[40px] lg:justify-end min-w-[430px]'>
+            <Button size='lg' onClick={() => router.push('/sample')}>
+              {t('aboutUs')}
             </Button>
-            <div className="flex gap-[20px] items-center cursor-pointer">
-              <div className="flex gap-[4px] font-bold">
-                {locale == "en" ? (
-                  <Image className="w-[24px] h-[24px]" src={EN} alt="" />
+            <div className='flex gap-[20px] items-center cursor-pointer'>
+              <div className='flex gap-[4px] font-bold'>
+                {locale == 'en' ? (
+                  <Image className='w-[24px] h-[24px]' src={EN} alt='' />
                 ) : (
-                  <Image className="w-[24px] h-[24px]" src={VN} alt="" />
+                  <Image className='w-[24px] h-[24px]' src={VN} alt='' />
                 )}
-                <button onClick={switchLanguage}>{t("switchLanguage")}</button>
+                <button onClick={switchLanguage}>{t('switchLanguage')}</button>
               </div>
               {account?.verified && account?.name ? (
                 <Dropdown>
                   <DropdownToggle>
-                    <FilledButton size="lg">
-                      <div className="flex items-center whitespace-nowrap w-max gap-[10px] h-[25px]">
+                    <FilledButton size='lg'>
+                      <div className='flex items-center whitespace-nowrap w-max gap-[10px] h-[25px]'>
                         <Image
                           src={account.image || Avatar}
-                          alt=""
+                          alt=''
                           width={36}
                           height={36}
-                          className="rounded-full object-cover h-full w-[25px]"
+                          className='rounded-full object-cover h-full w-[25px]'
                         />
-                        <span className="max-w-[150px] text-ellipsis overflow-hidden">{account.name}</span>
+                        <span className='max-w-[150px] text-ellipsis overflow-hidden'>{account.name}</span>
                       </div>
                     </FilledButton>
                   </DropdownToggle>
                   {wallet ? (
-                    <DropdownMenu customClass="right-[50%] translate-x-[50%] min-w-[400px]">
-                      <div className="p-5 flex flex-col gap-5">
-                        <div className="flex justify-center items-center">
-                          <Image src={c98} alt="c98" />
-                          <div className="ml-[10px] font-[500]">Connected with coin 98</div>
+                    <DropdownMenu customClass='right-[50%] translate-x-[50%] min-w-[400px]'>
+                      <div className='p-5 flex flex-col gap-5'>
+                        <div className='flex justify-center items-center'>
+                          <Image src={c98} alt='c98' />
+                          <div className='ml-[10px] font-[500]'>Connected with coin 98</div>
                         </div>
-                        <div className="flex">
-                          <div className="flex-auto w-[60%]"></div>
-                          <div className="flex-auto w-[10%]"></div>
-                          <div className="flex-auto w-[30%]"></div>
+                        <div className='flex'>
+                          <div className='flex-auto w-[60%]'></div>
+                          <div className='flex-auto w-[10%]'></div>
+                          <div className='flex-auto w-[30%]'></div>
                         </div>
-                        <SubFilledButton fullWidth size="lg" onClick={unlinkWallet}>
+                        <SubFilledButton fullWidth size='lg' onClick={unlinkWallet}>
                           Disconnect Wallet
                         </SubFilledButton>
-                        <div className="mt-[10px]">
-                          <div onClick={() => router.push("/profile")}>
+                        <div className='mt-[10px]'>
+                          <div onClick={() => router.push('/profile')}>
                             <strong>My profile</strong>
                           </div>
-                          <span className="w-full block my-[10px] border-[1px] border-solid border-light-medium-gray "></span>
+                          <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={logout}>
                             <strong>Log out</strong>
                           </div>
@@ -190,17 +190,17 @@ export default function Header({}) {
                       </div>
                     </DropdownMenu>
                   ) : (
-                    <DropdownMenu customClass="right-[50%] translate-x-[50%]">
-                      <div className="p-5 flex flex-col gap-5">
-                        <div className="mt-[10px]">
-                          <div onClick={() => router.push("/profile")}>
+                    <DropdownMenu customClass='right-[50%] translate-x-[50%]'>
+                      <div className='p-5 flex flex-col gap-5'>
+                        <div className='mt-[10px]'>
+                          <div onClick={() => router.push('/profile')}>
                             <strong>My profile</strong>
                           </div>
-                          <span className="w-full block my-[10px] border-[1px] border-solid border-light-medium-gray "></span>
+                          <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={() => setConnectWalletOpen(true)}>
                             <strong>Link Wallet</strong>
                           </div>
-                          <span className="w-full block my-[10px] border-[1px] border-solid border-light-medium-gray "></span>
+                          <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={logout}>
                             <strong>Log out</strong>
                           </div>
@@ -210,7 +210,7 @@ export default function Header({}) {
                   )}
                 </Dropdown>
               ) : (
-                <FilledButton id="open-sign-in-btn" size="lg" onClick={() => setSignInOpen(true)}>
+                <FilledButton id='open-sign-in-btn' size='lg' onClick={() => setSignInOpen(true)}>
                   Sign in
                 </FilledButton>
               )}
@@ -224,7 +224,7 @@ export default function Header({}) {
           setSignInOpen(false)
           setSignUpOpen(false)
         }}>
-        <div className="relative min-h-[40vh]">
+        <div className='relative min-h-[40vh]'>
           <SignInModal
             show={signInOpen}
             openSignUpModal={() => {
@@ -252,7 +252,7 @@ export default function Header({}) {
         <ForgotPasswordModal onClose={() => setForgotPasswordOpen(false)} />
       </Modal>
       <Modal open={signUpSuccessOpen} setOpen={setSignUpSuccessOpen}>
-        <SignUpSuccessModal />
+        <SignUpSuccessModal setSignUpOpen={setSignUpOpen} onClose={() => setSignUpSuccessOpen(false)} />
       </Modal>
     </>
   )
