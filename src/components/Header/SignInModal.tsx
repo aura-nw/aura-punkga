@@ -43,11 +43,11 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
     }
   }
 
-  const loginCallBack = (status) => {
-    if (status === "success") {
+  const loginCallBack = (status, msg) => {
+    if (status === 'success') {
       setSignInOpen(false)
     } else {
-      setLoginErrorMsg("Wrong email or password")
+      setLoginErrorMsg(msg || 'Wrong email or password')
     }
     setLoginLoading(false)
   }
