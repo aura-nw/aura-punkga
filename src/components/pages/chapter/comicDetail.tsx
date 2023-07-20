@@ -164,7 +164,12 @@ export default function ComicDetail({
           </div>
           {!account && (
             <p className='italic text-subtle-dark '>
-              <a className='text-second-color underline font-semibold'>Sign in</a> to unlock special chapters!
+              <a
+                className='text-second-color underline font-semibold cursor-pointer'
+                onClick={() => (document.querySelector('#open-sign-in-btn') as any)?.click()}>
+                Sign in
+              </a>{' '}
+              to unlock special chapters!
             </p>
           )}
           <div
