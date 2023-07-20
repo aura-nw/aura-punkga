@@ -82,7 +82,7 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
       leave='transition-all duration-500'
       leaveFrom='max-h-screen opacity-100'
       leaveTo='max-h-[0vh] opacity-0'>
-      <div className='p-6 w-[400px]'>
+      <div className='p-6 md:w-[400px]'>
         <p className='text-center text-xl font-semibold leading-6'>Sign up to Punkga.me</p>
         <p className='text-center font-medium mt-2 text-gray-600'>
           Subscribe, receive notifications and unlock special chapters

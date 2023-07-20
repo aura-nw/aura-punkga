@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap');
 
 :root {
   --light-gray: #f2f2f2;
@@ -20,7 +20,7 @@
   --medium-red: #e50000;
 }
 body {
-  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 #__next {
   background: #fff;
@@ -60,7 +60,7 @@ a {
   background: var(--second-color);
   border-radius: 999px;
 }
-[contenteditable="true"]:empty:before {
+[contenteditable='true']:empty:before {
   content: attr(placeholder);
   pointer-events: none;
   display: block;
@@ -68,7 +68,7 @@ a {
 }
 .pk-container {
   margin: auto;
-  width: 100%;
+  width: 100vw;
   @media (min-width: 576px) {
     max-width: 540px;
   }

@@ -50,7 +50,7 @@ export default function Home() {
     <>
       <Header />
       <div className='pk-container'>
-        <div className='mt-[40px] grid grid-cols-2 gap-[40px]'>
+        <div className='mt-[40px] grid md:grid-cols-2 grid-cols-1 px-2 md:px-0 gap-[40px]'>
           <div>
             <Carousel>
               <div>
@@ -96,8 +96,8 @@ export default function Home() {
             </Carousel>
           </div>
         </div>
-        <div className='my-[50px] flex'>
-          <div className='flex-auto w-[70%]'>
+        <div className='my-[50px] md:flex gap-[10%]'>
+          <div className='md:flex-auto md:w-[70%]'>
             <div className='flex justify-between items-center'>
               <div className='text-[24px] font-[800]'>Latest Update</div>
               <div className='flex gap-[20px] items-center'>
@@ -152,7 +152,7 @@ export default function Home() {
                 />
               </div>
             </div>
-            <div className='grid grid-cols-2 gap-[80px] mt-[76px]'>
+            <div className='grid grid-cols-1 xl:grid-cols-2 gap-[80px] mt-[76px]'>
               {latestComic.loading
                 ? Array.apply(null, Array(2)).map((d, index) => {
                     return <DummyComic key={index} />
@@ -169,8 +169,7 @@ export default function Home() {
                     })}
             </div>
           </div>
-          <div className='flex-auto w-[10%]'></div>
-          <div className='flex-auto w-[24%]'>
+          <div className='md:flex-auto md:w-[24%] mt-10 md:mt-0'>
             <div className='relative w-full rounded-[30px] overflow-hidden'>
               <div className='absolute inset-0'>
                 <Image src={MockupImage2} alt='' fill className='object-cover' />

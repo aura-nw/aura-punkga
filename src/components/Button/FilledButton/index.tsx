@@ -22,11 +22,14 @@ export default function FilledButton({
   id,
 }: IFilledButton) {
   const classes = {
+    sm: `${buttonClasses} text-[14px] leading-[17.5px] font-bold px-[18px] pt-[4px] pb-[4px] bg-primary-color rounded-[12px] ${
+      fullWidth ? 'w-full' : 'w-max'
+    } whitespace-nowrap`,
     md: `${buttonClasses} text-[16px] leading-[20px] font-bold px-[16px] pt-[5px] pb-[9px] bg-primary-color rounded-[12px] ${
-      fullWidth ? "w-full" : "w-max"
+      fullWidth ? 'w-full' : 'w-max'
     } whitespace-nowrap`,
     lg: `${buttonClasses} text-[20px] leading-[25px] font-bold px-[32px] pt-[10px] pb-[13px] bg-primary-color rounded-[20px] ${
-      fullWidth ? "w-full" : "w-max"
+      fullWidth ? 'w-full' : 'w-max'
     } whitespace-nowrap`,
   }
   return (
