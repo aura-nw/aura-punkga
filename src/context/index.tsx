@@ -170,7 +170,8 @@ function ContextProvider({ children }) {
         setUser(res.user)
       }
     } catch (error) {
-      callback && callback('failed', error.message)
+      callback &&
+        callback('failed', error.message.includes('credentials') ? 'Wrong username or password' : error.message)
       console.log('login error: ' + error)
     }
   }
@@ -227,7 +228,18 @@ function ContextProvider({ children }) {
     }
     return res
   }
-
+  async function resendVerifyEmail(email: string) {
+    await authorizerRef.graphqlQuery({
+      query: `mutation ResendVerifyEmail($email: String!) {
+      resend_verify_email(params: {identifier: "basic_auth_signup", email: $email}) {
+          message
+      }
+  }`,
+      variables: {
+        email,
+      },
+    })
+  }
   return (
     <Context.Provider
       value={{
@@ -242,6 +254,7 @@ function ContextProvider({ children }) {
         signUp,
         isSettingUp,
         updateProfile,
+        resendVerifyEmail,
       }}>
       {children}
     </Context.Provider>
