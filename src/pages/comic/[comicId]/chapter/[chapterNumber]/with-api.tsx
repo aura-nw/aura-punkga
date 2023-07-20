@@ -43,6 +43,15 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       views: data.manga_total_views?.views,
       likes: data.manga_total_likes?.likes,
       isSubscribe: !!data.manga_subscribers.length,
+      image: data.poster,
+      cover: data.banner,
+      tags: data.manga_tags.map(({ tag }: any) => {
+        const r = {}
+        tag.tag_languages.forEach((tl: any) => {
+          r[LANGUAGE.find((l) => l.id == tl.language_id).shortLang] = tl.value
+        })
+        return r
+      }),
     }
 
     LANGUAGE.forEach((l) => {
