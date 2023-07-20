@@ -17,7 +17,7 @@ import moment from 'moment'
 import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useContext, useState } from 'react'
+import { Fragment, useContext, useState } from 'react'
 import mockBanner from 'src/assets/images/mockup3.png'
 import mockAvar from 'src/assets/images/mockup4.png'
 import m6 from 'src/assets/images/mockup6.png'
@@ -120,7 +120,12 @@ export default function ComicDetail({
                 className={`${
                   expandDetail ? 'opacity-100 h-6' : 'opacity-0 h-0 mt-[-10px]'
                 } font-semibold text-xl duration-500 transition-all text-second-color`}>
-                Hanz
+                {data.authors.map((author, index) => (
+                  <Fragment key={index}>
+                    <span className='text-second-color font-[600] first:hidden'>, </span>
+                    <span className='text-second-color font-[600]'>{author}</span>
+                  </Fragment>
+                ))}
               </p>
               <p className=''>
                 {' '}
