@@ -5,5 +5,6 @@
   "API_URL": "http://hasura.dev.punkga.me",
   "REST_API_URL": "http://api.dev.punkga.me",
   "AUTHORIZER_URL": "http://auth.dev.punkga.me",
-  "AUTHORIZER_CLIENT_ID": "abd40c73-3390-4613-bc44-b5bde4796d03"
+  "AUTHORIZER_CLIENT_ID": "abd40c73-3390-4613-bc44-b5bde4796d03",
+  "ADMIN_URL": "http://admin.dev.punkga.me"
 }

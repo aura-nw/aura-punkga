@@ -1,8 +1,8 @@
-import axios from "axios"
-import getConfig from "next/config"
-import { COMIC_STATUS, LANGUAGE } from "src/constants"
-import { IComic } from "src/models/comic"
-import "./axiosInterceptor"
+import axios from 'axios'
+import getConfig from 'next/config'
+import { COMIC_STATUS, LANGUAGE } from 'src/constants'
+import { IComic } from 'src/models/comic'
+import './axiosInterceptor'
 
 export const getLatestComic = async (): Promise<IComic[]> => {
   return await axios.get(`${getConfig().API_URL}/api/rest/public/latest`).then((res) =>
@@ -14,7 +14,7 @@ export const getLatestComic = async (): Promise<IComic[]> => {
           type: COMIC_STATUS[m.status],
           text: m.status,
         },
-        authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : "Unknown creator")),
+        authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : 'Unknown creator')),
         views: m.manga_total_views?.views || 0,
         likes: m.manga_total_likes?.likes || 0,
         latestChap: {
@@ -34,8 +34,8 @@ export const getLatestComic = async (): Promise<IComic[]> => {
           m.manga_languages.find((ml) => ml.language_id == language.id) ||
           m.manga_languages.find((ml) => ml.is_main_language)
         response[language.shortLang] = {
-          title: l ? l?.title : "Unknown title",
-          description: l ? l?.description : "Unknown description",
+          title: l ? l?.title : 'Unknown title',
+          description: l ? l?.description : 'Unknown description',
         }
       })
       return response
@@ -53,7 +53,7 @@ export const getTrendingComic = async (): Promise<IComic[]> => {
           type: COMIC_STATUS[m.status],
           text: m.status,
         },
-        authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : "Unknown creator")),
+        authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : 'Unknown creator')),
         views: m.manga_total_views?.views || 0,
         latestChap: {
           number: m.chapters?.[0]?.chapter_number,
@@ -65,8 +65,8 @@ export const getTrendingComic = async (): Promise<IComic[]> => {
           m.manga_languages.find((ml) => ml.language_id == language.id) ||
           m.manga_languages.find((ml) => ml.is_main_language)
         response[language.shortLang] = {
-          title: l ? l?.title : "Unknown title",
-          description: l ? l?.description : "Unknown description",
+          title: l ? l?.title : 'Unknown title',
+          description: l ? l?.description : 'Unknown description',
         }
       })
       return response
@@ -81,6 +81,18 @@ export const replyComment = async (content: string, ref: string, chapterId: stri
   })
   return data
 }
+
+export const getAllTags = async () => {
+  const { data } = await axios.get(`${getConfig().API_URL}/api/rest/public/tags`)
+  return data?.tags?.map((tag: any) => {
+    const r = {}
+    tag?.tag_languages?.forEach((tl: any) => {
+      r[LANGUAGE.find((l) => l.id == tl.language_id).shortLang] = tl.value
+    })
+    return r
+  })
+}
+
 export const search = async (content: string) => {
   const { data } = await axios.get(`${getConfig().API_URL}/api/rest/public/search_manga`, {
     params: {
@@ -95,7 +107,7 @@ export const search = async (content: string) => {
         type: COMIC_STATUS[m.status],
         text: m.status,
       },
-      authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : "Unknown creator")),
+      authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : 'Unknown creator')),
       views: m.manga_total_views?.views || 0,
       likes: m.manga_total_likes?.likes || 0,
       latestChap: {
@@ -115,8 +127,8 @@ export const search = async (content: string) => {
         m.manga_languages.find((ml) => ml.language_id == language.id) ||
         m.manga_languages.find((ml) => ml.is_main_language)
       response[language.shortLang] = {
-        title: l ? l?.title : "Unknown title",
-        description: l ? l?.description : "Unknown description",
+        title: l ? l?.title : 'Unknown title',
+        description: l ? l?.description : 'Unknown description',
       }
     })
     return response
