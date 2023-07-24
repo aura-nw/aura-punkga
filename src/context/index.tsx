@@ -1,4 +1,4 @@
-import { useAuthorizer } from '@authorizerdev/authorizer-react'
+import { Authorizer } from '@authorizerdev/authorizer-js'
 import { Key } from '@keplr-wallet/types'
 import axios from 'axios'
 import getConfig from 'next/config'
@@ -16,24 +16,18 @@ function ContextProvider({ children }) {
   const [isSettingUp, setIsSettingUp] = useState(true)
   const key = useRef<Key>()
   const [provider, setProvider] = useState<'Coin98' | 'Keplr'>()
-  const { authorizerRef, user, setUser } = useAuthorizer()
   const router = useRouter()
-  const config = getConfig()
 
   const searchParams = useSearchParams()
   const accessTokenParam = searchParams.get('access_token')
   const expiresInParam = searchParams.get('expires_in')
-  useEffect(() => {
-    if (user?.id)
-      setAccount({
-        email: user.email,
-        name: user.nickname,
-        image: user.picture,
-        id: user.id,
-        verified: user.email_verified,
-      } as IUser)
-  }, [user])
+  const config = getConfig()
 
+  const authorizerRef = new Authorizer({
+    authorizerURL: config.AUTHORIZER_URL,
+    redirectURL: config.REDIRECT_URL,
+    clientID: config.AUTHORIZER_CLIENT_ID,
+  })
   useEffect(() => {
     axios.interceptors.request.use(
       (config) => {
@@ -167,7 +161,13 @@ function ContextProvider({ children }) {
         callback && callback('success')
         setItem('token', res.access_token, new Date(Date.now() + res.expires_in * 1000))
         setLogoutTimeout(res.expires_in * 1000)
-        setUser(res.user)
+        setAccount({
+          email: res.user.email,
+          name: res.user.nickname,
+          image: res.user.picture,
+          id: res.user.id,
+          verified: res.user.email_verified,
+        } as IUser)
       }
     } catch (error) {
       callback &&
@@ -189,7 +189,6 @@ function ContextProvider({ children }) {
     removeItem('token')
     removeItem('current_reading_manga')
     setAccount(null)
-    setUser(null)
     unlinkWallet()
     router.push(location.origin + location.pathname)
   }
@@ -210,7 +209,13 @@ function ContextProvider({ children }) {
       })
       if (res) {
         callback && callback('success')
-        setUser(res.user)
+        setAccount({
+          email: res.user.email,
+          name: res.user.nickname,
+          image: res.user.picture,
+          id: res.user.id,
+          verified: res.user.email_verified,
+        } as IUser)
       }
     } catch (error) {
       callback && callback('failed', error.message)
