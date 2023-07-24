@@ -1,50 +1,42 @@
-import { AuthorizerProvider } from "@authorizerdev/authorizer-react"
-import axios from "axios"
-import FilledButton from "components/Button/FilledButton"
-import OutlineTextField from "components/Input/TextField/Outline"
-import Modal from "components/Modal"
-import { appWithTranslation } from "next-i18next"
-import { AppProps } from "next/app"
-import getConfig, { setConfig } from "next/config"
-import { useContext, useEffect, useState } from "react"
-import "slick-carousel/slick/slick-theme.css"
-import "slick-carousel/slick/slick.css"
-import ContextProvider, { Context } from "src/context"
-import "src/styles/globals.scss"
+import axios from 'axios'
+import FilledButton from 'components/Button/FilledButton'
+import OutlineTextField from 'components/Input/TextField/Outline'
+import Modal from 'components/Modal'
+import { appWithTranslation } from 'next-i18next'
+import { AppProps } from 'next/app'
+import getConfig, { setConfig } from 'next/config'
+import { useContext, useEffect, useState } from 'react'
+import 'slick-carousel/slick/slick-theme.css'
+import 'slick-carousel/slick/slick.css'
+import ContextProvider, { Context } from 'src/context'
+import 'src/styles/globals.scss'
 function MyApp(props: AppProps) {
   const [isSetting, setIsSetting] = useState(true)
   useEffect(() => {
     init()
   }, [])
   const init = async () => {
-    const { data: config } = await axios.get("/config.json")
+    const { data: config } = await axios.get('/config.json')
     setConfig(config)
     setIsSetting(false)
   }
   const config = getConfig()
   if (isSetting) return <></>
   return (
-    <AuthorizerProvider
-      config={{
-        authorizerURL: config.AUTHORIZER_URL,
-        redirectURL: config.REDIRECT_URL,
-        clientID: config.AUTHORIZER_CLIENT_ID,
-      }}>
-      <ContextProvider>
-        <App {...props} />
-      </ContextProvider>
-    </AuthorizerProvider>
+    <ContextProvider>
+      <App {...props} />
+    </ContextProvider>
   )
 }
 const App = ({ Component, pageProps }: AppProps) => {
   const { isSettingUp, account, updateProfile } = useContext(Context)
-  const [errorMsg, setErrorMsg] = useState("")
-  const [name, setName] = useState("")
+  const [errorMsg, setErrorMsg] = useState('')
+  const [name, setName] = useState('')
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(true)
 
   useEffect(() => {
-    setErrorMsg("")
+    setErrorMsg('')
   }, [name])
 
   if (isSettingUp) {
@@ -59,7 +51,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       })
       setLoading(false)
     } catch (error) {
-      setErrorMsg("Name already taken")
+      setErrorMsg('Name already taken')
       setLoading(false)
     }
   }
@@ -73,31 +65,31 @@ const App = ({ Component, pageProps }: AppProps) => {
           ) : (
             <>
               <Modal open={open} setOpen={setOpen}>
-                <div className="p-6 flex flex-col w-[322px]">
-                  <div className="gap-2 flex flex-col">
-                    <div className="text-xl font-semibold leading-6 text-center">Set a username</div>
+                <div className='p-6 flex flex-col w-[322px]'>
+                  <div className='gap-2 flex flex-col'>
+                    <div className='text-xl font-semibold leading-6 text-center'>Set a username</div>
 
-                    <OutlineTextField label="Username" errorMsg={errorMsg} value={name} onChange={setName} />
-                    <OutlineTextField label="Email" value={account.email} disabled={true} />
+                    <OutlineTextField label='Username' errorMsg={errorMsg} value={name} onChange={setName} />
+                    <OutlineTextField label='Email' value={account.email} disabled={true} />
                   </div>
-                  <p className="text-xs mt-[6px]">
+                  <p className='text-xs mt-[6px]'>
                     This email will also be used to receive updates of new chapter when you subscribe a manga.
                   </p>
-                  <div className="mt-3 mx-auto">
-                    <FilledButton size="lg" disabled={!name} loading={loading} onClick={setUName}>
+                  <div className='mt-3 mx-auto'>
+                    <FilledButton size='lg' disabled={!name} loading={loading} onClick={setUName}>
                       Continue
                     </FilledButton>
                   </div>
-                  <p className="text-xs mt-2 font-medium text-center">
-                    Or{" "}
+                  <p className='text-xs mt-2 font-medium text-center'>
+                    Or{' '}
                     <a
-                      className="text-second-color font-bold"
-                        onClick={() => {
-                          setOpen(false)
-                          document.getElementById("open-sign-in-btn")?.click()
-                        }}>
+                      className='text-second-color font-bold'
+                      onClick={() => {
+                        setOpen(false)
+                        document.getElementById('open-sign-in-btn')?.click()
+                      }}>
                       sign in
-                    </a>{" "}
+                    </a>{' '}
                     with another account
                   </p>
                 </div>

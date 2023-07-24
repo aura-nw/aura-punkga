@@ -35,8 +35,8 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
         views: chapter.views || 0,
         isLiked: !!chapter.chapters_likes?.length,
       })),
-      views: data.manga_total_views?.views,
-      likes: data.manga_total_likes?.likes,
+      views: data.manga_total_views?.views || 0,
+      likes: data.manga_total_likes?.likes || 0,
       isSubscribe: !!data.manga_subscribers.length,
       image: data.poster,
       cover: data.banner,
@@ -61,9 +61,14 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     })
     return res
   }
-
+  const subscribe = async () => {
+    await axios.post(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
+  }
+  const unsubscribe = async () => {
+    await axios.delete(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
+  }
   const comicDetails = useApi<IComicDetail>(getComicDetail, !!query.comicId, [query.comicId, account?.id])
-  return <Component {...props} comicDetails={comicDetails} />
+  return <Component {...props} comicDetails={comicDetails} subscribe={subscribe} unsubscribe={unsubscribe} />
 }
 
 export default withApi

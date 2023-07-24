@@ -14,20 +14,6 @@
   dependencies:
     cross-fetch "^3.1.5"
 
-"@authorizerdev/authorizer-js@^1.2.6":
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/@authorizerdev/authorizer-js/-/authorizer-js-1.2.6.tgz#58c79ef6ef62e92b2363093ca70958f7f22ec1eb"
-  integrity sha512-9+9phHUMF+AeDM0y+XQvIRDoerOXnQ1vfTfYN6KxWN1apdrkAd9nzS1zUsA2uJSnX3fFZOErn83GjbYYCYF1BA==
-  dependencies:
-    cross-fetch "^3.1.5"
-
-"@authorizerdev/authorizer-react@^1.1.11":
-  version "1.1.11"
-  resolved "https://registry.yarnpkg.com/@authorizerdev/authorizer-react/-/authorizer-react-1.1.11.tgz#10cd32acc13bd178d089a5fe77e5e7c4aee79601"
-  integrity sha512-tSI/yjsoeK/RvCOMiHSf1QGOeSpaLYQZEM864LFLndKoJwk7UWCJ86qg1w6ge7B00PmZSNWqST/w5JTcQaVNpw==
-  dependencies:
-    "@authorizerdev/authorizer-js" "^1.2.3"
-
 "@babel/code-frame@^7.0.0":
   version "7.22.5"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.22.5.tgz#234d98e1551960604f1246e6475891a570ad5658"
@@ -350,6 +336,11 @@
   integrity sha512-OTO0XtoRQ6JPB1cKNFYBZv2Q0JMqMGNhYP1CjPvcJvjz8YGokz8oAj89HIYZGN0gZzn/4kk9iUpmMF4Q21Gsqw==
   dependencies:
     client-only "^0.0.1"
+
+"@headlessui/tailwindcss@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@headlessui/tailwindcss/-/tailwindcss-0.1.3.tgz#a9b8b4c2677a7ef37889708d4401c7871b2e6105"
+  integrity sha512-3aMdDyYZx9A15euRehpppSyQnb2gIw2s/Uccn2ELIoLQ9oDy0+9oRygNWNjXCD5Dt+w1pxo7C+XoiYvGcqA4Kg==
 
 "@heroicons/react@^2.0.18":
   version "2.0.18"

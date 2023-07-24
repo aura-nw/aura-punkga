@@ -129,7 +129,8 @@ export default function ComicDetail({
               </p>
               <p className=''>
                 {' '}
-                <strong>{data.views}</strong> views • <strong>{data.likes}</strong> likes
+                <strong>{data.views?.toLocaleString('en-US')}</strong> views •{' '}
+                <strong>{data.likes?.toLocaleString('en-US')}</strong> likes
               </p>
               <div
                 className={`${
