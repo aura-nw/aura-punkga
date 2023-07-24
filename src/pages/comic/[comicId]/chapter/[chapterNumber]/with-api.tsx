@@ -1,13 +1,13 @@
-import axios from "axios"
-import getConfig from "next/config"
-import { useRouter } from "next/router"
-import { useContext, useRef } from "react"
-import { LANGUAGE } from "src/constants"
-import { Context } from "src/context"
-import useApi from "src/hooks/useApi"
-import { IChapter } from "src/models/chapter"
-import { IComicDetail } from "src/models/comic"
-import { IComment } from "src/models/comment"
+import axios from 'axios'
+import getConfig from 'next/config'
+import { useRouter } from 'next/router'
+import { useContext, useRef } from 'react'
+import { LANGUAGE } from 'src/constants'
+import { Context } from 'src/context'
+import useApi from 'src/hooks/useApi'
+import { IChapter } from 'src/models/chapter'
+import { IComicDetail } from 'src/models/comic'
+import { IComment } from 'src/models/comment'
 const withApi = (Component: React.FC<any>) => (props: any) => {
   const { query } = useRouter()
   const { account } = useContext(Context)
@@ -99,7 +99,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   }
 
   const getChapterComments = async () => {
-    const { data } = await axios.get(`${config.API_URL}/api/rest/public/chapters/${query.chapterNumber}/comments`)
+    const { data } = await axios.get(`${config.API_URL}/api/rest/public/chapters/${chapterId.current}/comments`)
     if (data.social_activities) {
       return data.social_activities.map((socialActivity) => ({
         id: socialActivity.id,
@@ -123,7 +123,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   }
 
   const comicDetails = useApi<IComicDetail>(getComicDetail, !!query.comicId, [query.comicId, account?.id])
-  const chapterComments = useApi<IComment[]>(getChapterComments, !!query.chapterNumber, [query.chapterNumber])
+  const chapterComments = useApi<IComment[]>(getChapterComments, !!chapterId.current, [chapterId.current])
   const chapterDetails = useApi<IChapter>(getChapterDetails, !!query.comicId && !!query.chapterNumber, [
     query.comicId,
     query.chapterNumber,
@@ -152,8 +152,8 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   const unsubscribe = async () => {
     await axios.delete(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
   }
-  const addView = async (id: string) => {
-    await axios.patch(`${config.REST_API_URL}/chapter/${id || chapterId.current}/increase`)
+  const addView = async () => {
+    await axios.patch(`${config.REST_API_URL}/chapter/${chapterId.current}/increase`)
   }
 
   return (

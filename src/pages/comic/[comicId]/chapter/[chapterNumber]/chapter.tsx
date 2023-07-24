@@ -40,7 +40,7 @@ const Chapter: React.FC = ({
   unlike: () => void
   subscribe: () => void
   unsubscribe: () => void
-  addView: (id: string) => void
+  addView: () => void
 }) => {
   const [openComments, setOpenComments] = useState(false)
   const [mode, setMode] = useState<'minscreen' | 'fullscreen'>('minscreen')
@@ -50,7 +50,7 @@ const Chapter: React.FC = ({
   const commentIntervalId = useRef<any>()
 
   useEffect(() => {
-    if (chapterDetails.data?.id) addView(chapterDetails.data.id)
+    if (chapterDetails.data?.id) addView()
   }, [chapterDetails?.data?.id])
   useEffect(() => {
     setLanguage(locale as LanguageType)
