@@ -6,7 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@authorizerdev/authorizer-js": "^1.2.3",
+    "@authorizerdev/authorizer-js": "^1.2.6",
     "@authorizerdev/authorizer-react": "^1.1.11",
     "@coin98-com/connect-sdk": "^1.0.9",
     "@cosmjs/cosmwasm-stargate": "^0.30.1",

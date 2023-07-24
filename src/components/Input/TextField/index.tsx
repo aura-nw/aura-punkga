@@ -26,7 +26,7 @@ export default function TextField({
     return (
       <div className={`relative w-full  rounded-[20px] ${className}`}>
         {leadingComponent && (
-          <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center p-[13px] max-w-[50px]'>
+          <div className=' absolute inset-y-0 left-0 flex items-center justify-center p-[13px] max-w-[50px]'>
             {leadingComponent}
           </div>
         )}
@@ -43,7 +43,7 @@ export default function TextField({
           } ${trailingComponent ? 'pr-[45px]' : ''} `}
           placeholder={placeholder}></input>
         {trailingComponent && (
-          <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center justify-center p-[13px] max-w-[50px]'>
+          <div className=' absolute inset-y-0 right-0 flex items-center justify-center p-[13px] max-w-[50px]'>
             {trailingComponent}
           </div>
         )}
@@ -54,7 +54,7 @@ export default function TextField({
     return (
       <div className='relative w-full h-fit'>
         {leadingComponent && (
-          <div className='pointer-events-none absolute top-[3px] left-[13px] flex items-center justify-center w-6 h-6'>
+          <div className=' absolute top-[3px] left-[13px] flex items-center justify-center w-6 h-6'>
             {leadingComponent}
           </div>
         )}
@@ -74,23 +74,26 @@ export default function TextField({
   }
 
   return (
-    <div className='relative w-full'>
+    <div className={`relative w-full  rounded-[20px] ${className}`}>
       {leadingComponent && (
-        <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center p-[13px] max-w-[50px]'>
+        <div className=' absolute inset-y-0 left-0 flex items-center justify-center p-[13px] max-w-[50px]'>
           {leadingComponent}
         </div>
       )}
       <input
+        ref={inputref}
         onFocus={onFocus}
         onBlur={onBlur}
+        value={value}
+        onChange={(event) => onChange && onChange(event.target.value)}
         type='text'
         id='input-group-1'
-        className={` rounded-[12px] w-full px-[10px] py-[8px] placeholder-medium-gray focus:outline-none ${
+        className={`bg-transparent rounded-[12px] w-full px-[10px] py-[8px] placeholder-medium-gray focus:outline-none ${
           leadingComponent ? 'pl-[45px]' : ''
-        }  ${trailingComponent ? 'pr-[45px]' : ''}  ${className}`}
+        } ${trailingComponent ? 'pr-[45px]' : ''} `}
         placeholder={placeholder}></input>
       {trailingComponent && (
-        <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center justify-center p-[13px] max-w-[50px]'>
+        <div className=' absolute inset-y-0 right-0 flex items-center justify-center p-[13px] max-w-[50px]'>
           {trailingComponent}
         </div>
       )}

@@ -84,60 +84,68 @@ const Chapter: React.FC = ({
 
   return (
     <>
-      <Header />
-      <div className='flex h-[calc(100vh-80px)] relative'>
-        <div className='flex-auto w-2/3 h-full z-[5]'>
-          {!chapterDetails || chapterDetails.loading ? (
-            <div className='w-full h-full pt-5'>
-              <div className='w-[70%] mx-auto mb-[60px] h-full bg-light-medium-gray animate-pulse'></div>
-            </div>
-          ) : (
-            <ReadingSection
-              data={comicDetails.data}
-              chapterData={chapterDetails.data}
-              setOpenComments={setOpenComments}
-              openComments={openComments}
-              language={language}
-              like={like}
-              unlike={unlike}
-              subscribe={subscribe}
-              unsubscribe={unsubscribe}
-              mode={mode}
-              setMode={setMode}
-              isSubscribe={isSubscribe}
-              setIsSubscribe={setIsSubscribe}
-            />
-          )}
+      <div className='md:hidden'>
+        <Header />
+        <div className='relative'>
+          <div></div>
         </div>
-        <div className='flex-auto w-1/3 h-full'>
-          {!openComments ? (
-            !comicDetails || comicDetails.loading ? (
-              <DummyComicDetail />
+      </div>
+      <div className='hidden md:block'>
+        <Header />
+        <div className='flex h-[calc(100vh-80px)] relative'>
+          <div className='flex-auto w-2/3 h-full z-[5]'>
+            {!chapterDetails || chapterDetails.loading ? (
+              <div className='w-full h-full pt-5'>
+                <div className='w-[70%] mx-auto mb-[60px] h-full bg-light-medium-gray animate-pulse'></div>
+              </div>
             ) : (
-              <ComicDetail
+              <ReadingSection
                 data={comicDetails.data}
+                chapterData={chapterDetails.data}
+                setOpenComments={setOpenComments}
+                openComments={openComments}
                 language={language}
-                setLanguage={setLanguage}
-                isSubscribe={isSubscribe}
-                setIsSubscribe={setIsSubscribe}
-                subscribe={subscribe}
-                unsubscribe={unsubscribe}
                 like={like}
                 unlike={unlike}
+                subscribe={subscribe}
+                unsubscribe={unsubscribe}
+                mode={mode}
+                setMode={setMode}
+                isSubscribe={isSubscribe}
+                setIsSubscribe={setIsSubscribe}
               />
-            )
-          ) : !chapterDetails ? (
-            <></>
-          ) : (
-            <CommentSection
-              reload={() => chapterComments.callApi(true)}
-              postComment={postComment}
-              comments={chapterComments.data}
-              mode={mode}
-              setOpenComments={setOpenComments}
-              openComments={openComments}
-            />
-          )}
+            )}
+          </div>
+          <div className='flex-auto w-1/3 h-full'>
+            {!openComments ? (
+              !comicDetails || comicDetails.loading ? (
+                <DummyComicDetail />
+              ) : (
+                <ComicDetail
+                  data={comicDetails.data}
+                  language={language}
+                  setLanguage={setLanguage}
+                  isSubscribe={isSubscribe}
+                  setIsSubscribe={setIsSubscribe}
+                  subscribe={subscribe}
+                  unsubscribe={unsubscribe}
+                  like={like}
+                  unlike={unlike}
+                />
+              )
+            ) : !chapterDetails ? (
+              <></>
+            ) : (
+              <CommentSection
+                reload={() => chapterComments.callApi(true)}
+                postComment={postComment}
+                comments={chapterComments.data}
+                mode={mode}
+                setOpenComments={setOpenComments}
+                openComments={openComments}
+              />
+            )}
+          </div>
         </div>
       </div>
     </>

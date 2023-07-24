@@ -14,13 +14,12 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   const config = getConfig()
   const chapterId = useRef()
   const getComicDetail = async () => {
-    const {
-      data: { manga_by_pk: data },
-    } = await axios.get(`${config.API_URL}/api/rest/public/manga/${query.comicId}`, {
+    const d: any = await axios.get(`${config.API_URL}/api/rest/public/manga/${query.comicId}`, {
       params: {
         user_id: account?.id,
       },
     })
+    const data = d?.data?.manga[0]
 
     const res = {
       id: data.id,

@@ -32,6 +32,7 @@ export default function Header({}) {
   const router = useRouter()
   const [isSearchFocused, setIsSearchFocused] = useState(false)
   const ref = useRef<any>()
+  const mref = useRef<any>()
   const { pathname, asPath, query, locale } = router
   const switchLanguage = () => {
     const newLanguage = locale === 'en' ? 'vn' : 'en'
@@ -45,7 +46,6 @@ export default function Header({}) {
   const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false)
   const [searchValue, setSearchValue] = useState('')
   const { account, wallet, logout, unlinkWallet } = useContext(Context)
-
   const searchComic = useApi<any[]>(async () => await search(searchValue), !!searchValue, [searchValue])
   useEffect(() => {
     ref.current?.addEventListener(
@@ -55,6 +55,19 @@ export default function Header({}) {
           if (e.which == 13) {
             setIsSearchFocused(false)
             router.push(`/search?keyword=${ref.current.value}`)
+          }
+        },
+        1000,
+        { leading: true, trailing: false }
+      )
+    )
+    mref.current?.addEventListener(
+      'keypress',
+      _.debounce(
+        (e: KeyboardEvent) => {
+          if (e.which == 13) {
+            setIsSearchFocused(false)
+            router.push(`/search?keyword=${mref.current.value}`)
           }
         },
         1000,
@@ -76,14 +89,27 @@ export default function Header({}) {
             </div>
             <div className={`${isSearchFocused ? 'z-30' : ''} relative`}>
               <TextField
-                inputref={ref}
+                inputref={mref}
                 onChange={_.debounce(setSearchValue, 500)}
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => setIsSearchFocused(false)}
                 className={`transition-[width] bg-light-gray duration-500`}
                 placeholder='Search by title'
                 trailingComponent={
-                  searchComic.loading ? <Spinner className='w-6 h-6' /> : <Image src={SearchIcon} alt='' />
+                  searchComic.loading ? (
+                    <Spinner className='w-6 h-6' />
+                  ) : (
+                    <Image
+                      src={SearchIcon}
+                      alt=''
+                      onClick={() => {
+                        if (mref.current.value) {
+                          setIsSearchFocused(false)
+                          router.push(`/search?keyword=${mref.current.value}`)
+                        }
+                      }}
+                    />
+                  )
                 }
               />
               {!!searchComic.data?.length && (
@@ -149,7 +175,7 @@ export default function Header({}) {
               {account?.verified && account?.name ? (
                 <Dropdown>
                   <DropdownToggle>
-                    <FilledButton size='lg'>
+                    <FilledButton size='sm'>
                       <div className='flex items-center whitespace-nowrap w-max gap-[10px] h-[25px]'>
                         <Image
                           src={account.image || Avatar}
@@ -234,7 +260,18 @@ export default function Header({}) {
               className={`transition-[width] bg-light-gray duration-500 ${isSearchFocused ? '!w-[160%]' : ''}`}
               size='lg'
               placeholder='Search by title'
-              leadingComponent={<Image src={SearchIcon} alt='' />}
+              leadingComponent={
+                <Image
+                  src={SearchIcon}
+                  alt=''
+                  onClick={() => {
+                    if (ref.current.value) {
+                      setIsSearchFocused(false)
+                      router.push(`/search?keyword=${ref.current.value}`)
+                    }
+                  }}
+                />
+              }
               trailingComponent={searchComic.loading ? <Spinner className='w-6 h-6' /> : null}
             />
             {!!searchComic.data?.length && (

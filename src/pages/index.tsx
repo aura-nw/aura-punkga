@@ -96,11 +96,11 @@ export default function Home() {
             </Carousel>
           </div>
         </div>
-        <div className='my-[50px] md:flex gap-[10%]'>
-          <div className='md:flex-auto md:w-[70%]'>
+        <div className='my-[50px] lg:flex gap-[10%]'>
+          <div className='lg:flex-auto lg:w-[70%] px-2 md:px-0'>
             <div className='flex justify-between items-center'>
-              <div className='text-[24px] font-[800]'>Latest Update</div>
-              <div className='flex gap-[20px] items-center'>
+              <div className='md:text-[24px] text-sm leading-6 font-[800]'>Latest Update</div>
+              <div className='md:flex hidden gap-[20px] items-center'>
                 <FilledSelect
                   icon={<ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />}
                   selected={gerneFilter}
@@ -152,7 +152,7 @@ export default function Home() {
                 />
               </div>
             </div>
-            <div className='grid grid-cols-1 xl:grid-cols-2 gap-[80px] mt-[76px]'>
+            <div className='grid grid-cols-3 md:grid-cols-2 gap-10 md:gap-[80px] mt-3 md:mt-[76px]'>
               {latestComic.loading
                 ? Array.apply(null, Array(2)).map((d, index) => {
                     return <DummyComic key={index} />
@@ -169,7 +169,7 @@ export default function Home() {
                     })}
             </div>
           </div>
-          <div className='md:flex-auto md:w-[24%] mt-10 md:mt-0'>
+          <div className='lg:flex-auto lg:w-[24%] mt-10 lg:mt-0 px-2 md:px-0'>
             <div className='relative w-full rounded-[30px] overflow-hidden'>
               <div className='absolute inset-0'>
                 <Image src={MockupImage2} alt='' fill className='object-cover' />

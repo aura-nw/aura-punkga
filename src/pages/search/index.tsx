@@ -17,20 +17,18 @@ export default function Search() {
   const params = useSearchParams()
   const keyword = params.get("keyword")
   const router = useRouter()
-  const { pathname, asPath, query, locale } = router
   const searchComic = useApi<any[]>(async () => await search(keyword), !!keyword, [keyword])
   return (
     <>
       <Header />
-      <div className="pk-container">
-        <p className="text-2xl font-extrabold leading-6 mt-10">{`${searchComic.data?.length} results for "${keyword}"`}</p>
-        <div className=" mt-10 grid grid-cols-3 gap-10">
+      <div className='pk-container px-2 md:px-0'>
+        <p className='md:text-2xl font-extrabold leading-6 mt-2 md:mt-10'>{`${searchComic.data?.length} results for "${keyword}"`}</p>
+        <div className='mt-2 md:mt-10 grid grid-cols-3 gap-10'>
           {searchComic.loading
             ? Array.apply(null, Array(6)).map((d, index) => {
                 return <DummyComic key={index} />
               })
             : searchComic.data?.map((data, index) => {
-              console.log(data)
                 return <Comic key={index} {...data} />
               })}
         </div>
