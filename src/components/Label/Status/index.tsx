@@ -1,5 +1,5 @@
 interface IStatusLabel {
-  status: "warning" | "success" | "error"
+  status: string
   children: JSX.Element | string
 }
 export default function StatusLabel({ status, children }: IStatusLabel) {

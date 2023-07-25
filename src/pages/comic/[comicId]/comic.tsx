@@ -1,9 +1,11 @@
+import { Tab } from '@headlessui/react'
 import { BellAlertIcon, EyeIcon, HeartIcon } from '@heroicons/react/20/solid'
 import { BellAlertIcon as BellAlertIconOutline } from '@heroicons/react/24/outline'
 import FilledButton from 'components/Button/FilledButton'
 import OutlineButton from 'components/Button/OutlineButton'
 import Header from 'components/Header'
 import Tag from 'components/Label/Tag'
+import ChapterList from 'components/pages/comic/ChapterList'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Fragment, useContext, useState } from 'react'
@@ -11,7 +13,6 @@ import { useTranslation } from 'react-i18next'
 import mockAvar from 'src/assets/images/mockup4.png'
 import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
-import { Tab } from '@headlessui/react'
 export default function Comic({ comicDetails, subscribe, unsubscribe }) {
   const { t } = useTranslation()
   const { locale } = useRouter()
@@ -45,8 +46,8 @@ export default function Comic({ comicDetails, subscribe, unsubscribe }) {
   return (
     <>
       <Header />
-      <div className=''>
-        <div className='h-[350px] w-full relative'>
+      <div className='flex flex-col min-h-[100vh] bg-black'>
+        <div className='max-h-[350px] min-h-[220px] h-[40vh] w-full relative'>
           <div className='absolute inset-0 '>
             <Image
               src={data.image || mockAvar}
@@ -79,7 +80,7 @@ export default function Comic({ comicDetails, subscribe, unsubscribe }) {
                   </Fragment>
                 ))}
               </div>
-              <div className='text-xs mt-2'>{data[selectedLanguage.shortLang]?.description}</div>
+              <div className='text-xs mt-2 line-clamp-5'>{data[selectedLanguage.shortLang]?.description}</div>
               <div className='flex gap-1 mt-2 '>
                 {data.tags.map((tag, index) => {
                   return <Tag key={index}>{tag[selectedLanguage.shortLang]}</Tag>
@@ -115,23 +116,21 @@ export default function Comic({ comicDetails, subscribe, unsubscribe }) {
             </div>
           </div>
         </div>
-        <div>
+        <div className='h-full flex-auto'>
           <Tab.Group>
             <Tab.List className='w-full flex justify-between bg-black text-white text-sm'>
-              <Tab className='w-1/3 flex-auto py-3 ui-selected:text-second-color ui-selected:font-bold ui-selected:underline'>
-                Chapter
+              <Tab className='w-1/3 flex-auto ui-selected:text-second-color ui-selected:font-bold ui-selected:underline'>
+                <div className='my-3'>Chapter</div>
               </Tab>
-              <Tab className='w-1/3 flex-auto py-3 ui-selected:text-second-color ui-selected:font-bold ui-selected:underline'>
-                NFTs
-              </Tab>
-              <Tab className='w-1/3 flex-auto py-3 ui-selected:text-second-color ui-selected:font-bold ui-selected:underline'>
-                Comment
+              <Tab className='w-1/3 flex-auto ui-selected:text-second-color ui-selected:font-bold ui-selected:underline'>
+                <div className='my-3'>NFTs</div>
               </Tab>
             </Tab.List>
-            <Tab.Panels>
-              <Tab.Panel>Content 1</Tab.Panel>
+            <Tab.Panels className='bg-black h-full'>
+              <Tab.Panel>
+                <ChapterList list={data.chapters} />
+              </Tab.Panel>
               <Tab.Panel>NFTs</Tab.Panel>
-              <Tab.Panel>Content 3</Tab.Panel>
             </Tab.Panels>
           </Tab.Group>
         </div>

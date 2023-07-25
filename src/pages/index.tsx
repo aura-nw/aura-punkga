@@ -136,7 +136,7 @@ export default function Home() {
                       value: 'All status',
                     },
                     {
-                      key: 'On-Going',
+                      key: 'Ongoing',
                       value: 'On going',
                     },
                     {

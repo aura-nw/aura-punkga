@@ -54,6 +54,7 @@ export default function Header({}) {
         (e: KeyboardEvent) => {
           if (e.which == 13) {
             setIsSearchFocused(false)
+            ref.current.blur()
             router.push(`/search?keyword=${ref.current.value}`)
           }
         },
@@ -66,6 +67,7 @@ export default function Header({}) {
       _.debounce(
         (e: KeyboardEvent) => {
           if (e.which == 13) {
+            mref.current.blur()
             setIsSearchFocused(false)
             router.push(`/search?keyword=${mref.current.value}`)
           }

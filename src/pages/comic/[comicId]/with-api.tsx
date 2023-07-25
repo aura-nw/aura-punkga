@@ -3,9 +3,10 @@ import getConfig from 'next/config'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { LANGUAGE } from 'src/constants'
-import { Context } from 'src/context'
+import { Context, privateAxios } from 'src/context'
 import useApi from 'src/hooks/useApi'
 import { IComicDetail } from 'src/models/comic'
+import { formatStatus } from 'src/utils'
 const withApi = (Component: React.FC<any>) => (props: any) => {
   const { account } = useContext(Context)
   const { query } = useRouter()
@@ -28,7 +29,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
         name: chapter.chapter_name,
         number: chapter.chapter_number,
         type: chapter.chapter_type,
-        status: chapter.stauts,
+        status: formatStatus(chapter.status),
         thumbnail: chapter.thumbnail_url,
         date: chapter.pushlish_date,
         likes: chapter.chapter_total_likes?.likes || 0,
@@ -62,11 +63,12 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     return res
   }
   const subscribe = async () => {
-    await axios.post(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
+    await privateAxios.post(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
   }
   const unsubscribe = async () => {
-    await axios.delete(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
+    await privateAxios.delete(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
   }
+
   const comicDetails = useApi<IComicDetail>(getComicDetail, !!query.comicId, [query.comicId, account?.id])
   return <Component {...props} comicDetails={comicDetails} subscribe={subscribe} unsubscribe={unsubscribe} />
 }

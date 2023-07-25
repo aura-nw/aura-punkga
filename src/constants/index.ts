@@ -1,8 +1,9 @@
 export const COMIC_STATUS = {
-  "On-Going": "warning",
-  "Upcoming": "warning",
-  "Published": "success",
-  "Removed": "error",
+  Ongoing: 'warning',
+  Upcoming: 'warning',
+  Published: 'success',
+  Finished: 'success',
+  Removed: 'error',
 }
 
 export const LANGUAGE = [

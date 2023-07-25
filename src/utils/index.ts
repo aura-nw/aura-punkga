@@ -1,3 +1,5 @@
+import { capitalize } from 'lodash'
+
 export const validateEmail = (email: string) => {
   return String(email)
     .toLowerCase()
@@ -6,6 +8,8 @@ export const validateEmail = (email: string) => {
     )
 }
 export const validatePassword = (password: string) => {
-  return String(password)
-    .match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{6,30}$/)
+  return String(password).match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{6,30}$/)
+}
+export function formatStatus(word: string) {
+  return capitalize(word.replaceAll('-', '').toLowerCase())
 }

@@ -2,7 +2,7 @@ import { Transition } from '@headlessui/react'
 import FilledButton from 'components/Button/FilledButton'
 import OutlineTextField from 'components/Input/TextField/Outline'
 import Image from 'next/image'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { Context } from 'src/context'
 import { validateEmail, validatePassword } from 'src/utils'
 import CheckSquare from 'images/icons/check_square_fill.svg'
@@ -10,6 +10,7 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
   const [email, setEmail] = useState('')
   const [emailValidateErrorMsg, setEmailValidateErrorMsg] = useState('')
   const [username, setUsername] = useState('')
+  const [usernameValidateErrorMsg, setUsernameValidateErrorMsg] = useState('')
   const [password, setPassword] = useState('')
   const [passwordValidateErrorMsg, setPasswordValidateErrorMsg] = useState('')
   const [repassword, setRepassword] = useState('')
@@ -18,6 +19,12 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
 
   const [signUpLoading, setSignUpLoading] = useState(false)
   const [signUpErrorMsg, setSignUpErrorMsg] = useState('')
+
+  const usernameRef = useRef<any>()
+  const emailRef = useRef<any>()
+  const passwordRef = useRef<any>()
+  const rpasswordRef = useRef<any>()
+  const buttonRef = useRef<any>()
 
   const { signUp } = useContext(Context)
 
@@ -28,6 +35,9 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
   useEffect(() => {
     setEmailValidateErrorMsg('')
   }, [email])
+  useEffect(() => {
+    setUsernameValidateErrorMsg('')
+  }, [username])
   useEffect(() => {
     setPasswordValidateErrorMsg('')
   }, [password])
@@ -63,12 +73,14 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
     }
   }
 
-  const signUpCallBack = (status, msg) => {
+  const signUpCallBack = (status, msg: string) => {
     if (status === 'success') {
       setSignUpOpen(false)
       setSignUpSuccessOpen(true)
     } else {
-      setSignUpErrorMsg(msg || 'Something went wrong')
+      if (msg.includes('has already signed up')) setEmailValidateErrorMsg('Email has been registered')
+      else if (msg.includes('authorizer_users_nickname_key')) setUsernameValidateErrorMsg('Name already taken')
+      else setSignUpErrorMsg(msg)
     }
     setSignUpLoading(false)
   }
@@ -91,9 +103,15 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
           <OutlineTextField
             placeholder='Choose a username'
             label='Username'
-            errorMsg=''
+            errorMsg={usernameValidateErrorMsg}
             value={username}
             onChange={setUsername}
+            inputRef={usernameRef}
+            onKeyDown={(e) => {
+              if (e.which == 13) {
+                emailRef.current?.focus()
+              }
+            }}
           />
           <OutlineTextField
             placeholder='Enter your email'
@@ -102,6 +120,12 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
             errorMsg={emailValidateErrorMsg}
             value={email}
             onChange={setEmail}
+            inputRef={emailRef}
+            onKeyDown={(e) => {
+              if (e.which == 13) {
+                passwordRef.current?.focus()
+              }
+            }}
           />
           <OutlineTextField
             placeholder='Enter your password'
@@ -110,6 +134,12 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
             value={password}
             errorMsg={passwordValidateErrorMsg}
             onChange={setPassword}
+            inputRef={passwordRef}
+            onKeyDown={(e) => {
+              if (e.which == 13) {
+                rpasswordRef.current?.focus()
+              }
+            }}
           />
           <OutlineTextField
             placeholder='Re-enter your password'
@@ -119,6 +149,12 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
             value={repassword}
             onChange={setRepassword}
             trailingComponent={repasswordValidateSuccess ? <Image src={CheckSquare} alt='' /> : null}
+            inputRef={rpasswordRef}
+            onKeyDown={(e) => {
+              if (e.which == 13) {
+                buttonRef.current?.click()
+              }
+            }}
           />
         </div>
         <FilledButton

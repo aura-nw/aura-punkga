@@ -2,7 +2,8 @@ import axios from 'axios'
 import getConfig from 'next/config'
 import { COMIC_STATUS, LANGUAGE } from 'src/constants'
 import { IComic } from 'src/models/comic'
-import './axiosInterceptor'
+import { privateAxios } from 'src/context'
+import { formatStatus } from 'src/utils'
 
 export const getLatestComic = async (): Promise<IComic[]> => {
   return await axios.get(`${getConfig().API_URL}/api/rest/public/latest`).then((res) =>
@@ -11,8 +12,8 @@ export const getLatestComic = async (): Promise<IComic[]> => {
         id: m.id,
         image: m.poster,
         status: {
-          type: COMIC_STATUS[m.status],
-          text: m.status,
+          type: COMIC_STATUS[formatStatus(m.status)],
+          text: formatStatus(m.status),
         },
         authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : 'Unknown creator')),
         views: m.manga_total_views?.views || 0,
@@ -75,7 +76,7 @@ export const getTrendingComic = async (): Promise<IComic[]> => {
 }
 
 export const replyComment = async (content: string, ref: string, chapterId: string) => {
-  const { data } = await axios.post(`${getConfig().API_URL}/api/rest/user/chapters/${chapterId}/comments`, {
+  const { data } = await privateAxios.post(`${getConfig().API_URL}/api/rest/user/chapters/${chapterId}/comments`, {
     content: content,
     ref_activity: ref,
   })
@@ -104,8 +105,8 @@ export const search = async (content: string) => {
       id: m.id,
       image: m.poster,
       status: {
-        type: COMIC_STATUS[m.status],
-        text: m.status,
+        type: COMIC_STATUS[formatStatus(m.status)],
+        text: formatStatus(m.status),
       },
       authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : 'Unknown creator')),
       views: m.manga_total_views?.views || 0,

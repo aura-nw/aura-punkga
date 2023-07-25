@@ -102,20 +102,28 @@ export default function ComicDetail({
           alt=''
         />
         <div className='px-[60px] flex flex-col gap-[10px]'>
-          <div className={`${expandDetail ? ' mt-[-180px]' : ' mt-[-44px]'} duration-500 transition-all flex gap-5`}>
+          <div className={`${expandDetail ? ' mt-[-180px]' : ' mt-[-50px]'} duration-500 transition-all flex gap-5`}>
             <Image
               src={data.image || mockAvar}
               height={320}
               width={240}
               className={`${
                 expandDetail ? ' w-[240px] h-[320px]' : ' w-[120px] h-[160px]'
-              } duration-500 transition-all object-cover rounded-[15px] overflow-hidden `}
+              } duration-500 transition-all object-cover rounded-[15px] overflow-hidden bg-medium-gray`}
               alt=''
             />
             <div className='flex-1 flex flex-col justify-end gap-[10px]'>
-              <p className='font-bold text-second-color text-2xl leading-6'>
-                {data[selectedLanguage.shortLang]?.title}
-              </p>
+              <div
+                className={`font-bold ${
+                  expandDetail ? 'text-black' : 'text-second-color'
+                } transition-all text-2xl h-6`}>
+                <span>{data[selectedLanguage.shortLang]?.title}</span>
+                {expandDetail && (
+                  <span className='ml-3'>
+                    <StatusLabel status={data.status?.type}>{data.status?.text}</StatusLabel>
+                  </span>
+                )}
+              </div>
               <p
                 className={`${
                   expandDetail ? 'opacity-100 h-6' : 'opacity-0 h-0 mt-[-10px]'
@@ -132,10 +140,7 @@ export default function ComicDetail({
                 <strong>{data.views?.toLocaleString('en-US')}</strong> views •{' '}
                 <strong>{data.likes?.toLocaleString('en-US')}</strong> likes
               </p>
-              <div
-                className={`${
-                  !expandDetail ? 'opacity-100 h-[34px]' : 'opacity-0 h-0  mt-[-10px]'
-                } duration-500 transition-all flex gap-[10px]`}>
+              <div className={` flex gap-[10px]`}>
                 {isSubscribe ? (
                   <FilledButton>
                     <div onClick={() => subscribeHandler(false)} className='h-5 flex items-center'>
@@ -151,15 +156,11 @@ export default function ComicDetail({
                     </div>
                   </OutlineButton>
                 )}
-                <OutlineButton onClick={() => setExpandDetail(true)}>See Detail</OutlineButton>
-              </div>
-              <div
-                className={`${
-                  expandDetail ? 'opacity-100 h-6' : 'opacity-0 h-0  mt-[-10px]'
-                } duration-500 transition-all flex gap-2 flex-wrap`}>
-                {data.tags.map((tag, index) => {
-                  return <Tag key={index}>{tag[selectedLanguage.shortLang]}</Tag>
-                })}
+                <OutlineButton
+                  className={`${!expandDetail ? 'opacity-100' : 'opacity-0'} duration-500 transition-all`}
+                  onClick={() => setExpandDetail(true)}>
+                  See Detail
+                </OutlineButton>
               </div>
             </div>
           </div>
@@ -173,10 +174,7 @@ export default function ComicDetail({
               to unlock special chapters!
             </p>
           )}
-          <div
-            className={`${
-              !expandDetail ? 'opacity-100 h-6' : 'opacity-0 h-0  mt-[-10px]'
-            } duration-500 transition-all flex-wrap gap-2 flex`}>
+          <div className={`flex-wrap gap-2 flex`}>
             {data.tags.map((tag, index) => {
               return <Tag key={index}>{tag[selectedLanguage.shortLang]}</Tag>
             })}

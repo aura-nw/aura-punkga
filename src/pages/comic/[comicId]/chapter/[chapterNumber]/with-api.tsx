@@ -1,13 +1,15 @@
 import axios from 'axios'
+import { capitalize } from 'lodash'
 import getConfig from 'next/config'
 import { useRouter } from 'next/router'
 import { useContext, useRef } from 'react'
-import { LANGUAGE } from 'src/constants'
-import { Context } from 'src/context'
+import { COMIC_STATUS, LANGUAGE } from 'src/constants'
+import { Context, privateAxios } from 'src/context'
 import useApi from 'src/hooks/useApi'
 import { IChapter } from 'src/models/chapter'
 import { IComicDetail } from 'src/models/comic'
 import { IComment } from 'src/models/comment'
+import { formatStatus } from 'src/utils'
 const withApi = (Component: React.FC<any>) => (props: any) => {
   const { query } = useRouter()
   const { account } = useContext(Context)
@@ -32,13 +34,17 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
         name: chapter.chapter_name,
         number: chapter.chapter_number,
         type: chapter.chapter_type,
-        status: chapter.stauts,
+        status: capitalize(chapter.status.replaceAll('-', '')),
         thumbnail: chapter.thumbnail_url,
         date: chapter.pushlish_date,
         likes: chapter.chapter_total_likes?.likes || 0,
         views: chapter.views || 0,
         isLiked: !!chapter.chapters_likes?.length,
       })),
+      status: {
+        type: COMIC_STATUS[formatStatus(data.status)],
+        text: formatStatus(data.status),
+      },
       views: data.manga_total_views?.views || 0,
       likes: data.manga_total_likes?.likes || 0,
       isSubscribe: !!data.manga_subscribers.length,
@@ -69,11 +75,14 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   const getChapterDetails = async () => {
     const {
       data: { chapters: cdata },
-    } = await axios.get(`${config.API_URL}/api/rest/public/manga/${query.comicId}/chapters/${query.chapterNumber}`, {
-      params: {
-        user_id: account?.id,
-      },
-    })
+    } = await privateAxios.get(
+      `${config.API_URL}/api/rest/public/manga/${query.comicId}/chapters/${query.chapterNumber}`,
+      {
+        params: {
+          user_id: account?.id,
+        },
+      }
+    )
     const data = cdata[0]
 
     const res = {
@@ -89,7 +98,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
 
     LANGUAGE.forEach((l) => {
       const chapterLanguage = data.chapter_languages.find((cl) => cl.language_id == l.id)
-      res[l.shortLang] = chapterLanguage ? chapterLanguage.detail.map((page) => page.image_path) : null
+      res[l.shortLang] = chapterLanguage?.detail ? chapterLanguage.detail.map((page) => page.image_path) : null
     })
 
     chapterId.current = data.id
@@ -130,7 +139,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   ])
 
   const postComment = async (content: string) => {
-    const { data } = await axios.post(`${config.API_URL}/api/rest/user/chapters/${chapterId.current}/comments`, {
+    const { data } = await privateAxios.post(`${config.API_URL}/api/rest/user/chapters/${chapterId.current}/comments`, {
       content: content,
       ref_activity: null,
     })
@@ -140,16 +149,16 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   }
 
   const like = async (id?: string) => {
-    await axios.post(`${config.API_URL}/api/rest/user/chapters/${id || chapterId.current}/likes`)
+    await privateAxios.post(`${config.API_URL}/api/rest/user/chapters/${id || chapterId.current}/likes`)
   }
   const unlike = async (id?: string) => {
-    await axios.delete(`${config.API_URL}/api/rest/user/chapters/${id || chapterId.current}/likes`)
+    await privateAxios.delete(`${config.API_URL}/api/rest/user/chapters/${id || chapterId.current}/likes`)
   }
   const subscribe = async () => {
-    await axios.post(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
+    await privateAxios.post(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
   }
   const unsubscribe = async () => {
-    await axios.delete(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
+    await privateAxios.delete(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
   }
   const addView = async () => {
     await axios.patch(`${config.REST_API_URL}/chapter/${chapterId.current}/increase`)

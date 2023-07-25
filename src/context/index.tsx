@@ -9,7 +9,7 @@ import { IUser } from 'src/models/user'
 import { getItem, removeItem, setItem } from 'src/utils/localStorage'
 import { handleConnectWallet } from 'src/utils/signer'
 export const Context = createContext(null)
-
+export const privateAxios = axios.create()
 function ContextProvider({ children }) {
   const [account, setAccount] = useState<IUser>()
   const [wallet, setWallet] = useState<string>()
@@ -29,7 +29,7 @@ function ContextProvider({ children }) {
     clientID: config.AUTHORIZER_CLIENT_ID,
   })
   useEffect(() => {
-    axios.interceptors.request.use(
+    privateAxios.interceptors.request.use(
       (config) => {
         const token = getItem('token')
         if (token) {
@@ -170,8 +170,7 @@ function ContextProvider({ children }) {
         } as IUser)
       }
     } catch (error) {
-      callback &&
-        callback('failed', error.message.includes('credentials') ? 'Wrong username or password' : error.message)
+      callback && callback('failed', error.message.includes('credentials') ? 'Wrong email or password' : error.message)
       console.log('login error: ' + error)
     }
   }

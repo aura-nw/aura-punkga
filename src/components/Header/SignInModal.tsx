@@ -1,35 +1,38 @@
-import { Transition } from "@headlessui/react"
-import FilledButton from "components/Button/FilledButton"
-import OutlineTextField from "components/Input/TextField/Outline"
-import Facebook from "images/Facebook.png"
-import Google from "images/Google.png"
-import Image from "next/image"
-import { useContext, useEffect, useState } from "react"
-import { Context } from "src/context"
-import { validateEmail } from "src/utils"
+import { Transition } from '@headlessui/react'
+import FilledButton from 'components/Button/FilledButton'
+import OutlineTextField from 'components/Input/TextField/Outline'
+import Facebook from 'images/Facebook.png'
+import Google from 'images/Google.png'
+import Image from 'next/image'
+import { useContext, useEffect, useRef, useState } from 'react'
+import { Context } from 'src/context'
+import { validateEmail } from 'src/utils'
 
 export default function SignInModal({ show, openSignUpModal, setSignInOpen, setForgotPasswordOpen }) {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const emailRef = useRef<any>()
+  const passwordRef = useRef<any>()
+  const buttonRef = useRef<any>()
 
-  const [emailValidateErrorMsg, setEmailValidateErrorMsg] = useState("")
-  const [loginErrorMsg, setLoginErrorMsg] = useState("")
+  const [emailValidateErrorMsg, setEmailValidateErrorMsg] = useState('')
+  const [loginErrorMsg, setLoginErrorMsg] = useState('')
   const [loginLoading, setLoginLoading] = useState(false)
 
   const { login, oauth } = useContext(Context)
 
   useEffect(() => {
-    setEmailValidateErrorMsg("")
+    setEmailValidateErrorMsg('')
   }, [email])
 
   useEffect(() => {
-    setLoginErrorMsg("")
+    setLoginErrorMsg('')
   }, [email, password])
 
   useEffect(() => {
     if (!show) {
-      setLoginErrorMsg("")
-      setEmailValidateErrorMsg("")
+      setLoginErrorMsg('')
+      setEmailValidateErrorMsg('')
       setLoginLoading(false)
     }
   }, [show])
@@ -39,7 +42,7 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
       setLoginLoading(true)
       login(email, password, loginCallBack)
     } else {
-      setEmailValidateErrorMsg("Invalid email format")
+      setEmailValidateErrorMsg('Invalid email format')
     }
   }
 
@@ -47,7 +50,7 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
     if (status === 'success') {
       setSignInOpen(false)
     } else {
-      setLoginErrorMsg(msg || 'Wrong email or password')
+      setLoginErrorMsg(msg || 'Something went wrong')
     }
     setLoginLoading(false)
   }
@@ -74,6 +77,12 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
             errorMsg={emailValidateErrorMsg}
             value={email}
             onChange={setEmail}
+            inputRef={emailRef}
+            onKeyDown={(e) => {
+              if (e.which == 13) {
+                passwordRef.current?.focus()
+              }
+            }}
           />
           <OutlineTextField
             placeholder='Enter your password'
@@ -81,6 +90,13 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
             type='password'
             value={password}
             onChange={setPassword}
+            inputRef={passwordRef}
+            onKeyDown={(e) => {
+              if (e.which == 13) {
+                emailRef.current?.focus()
+                buttonRef.current?.click()
+              }
+            }}
           />
         </div>
         <div
@@ -92,7 +108,12 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
           Forgot password?
         </div>
         <div className='mt-4 flex flex-col items-center w-full max-w-[300px] mx-auto'>
-          <FilledButton size='lg' disabled={!(email && password)} onClick={loginHandler} loading={loginLoading}>
+          <FilledButton
+            inputRef={buttonRef}
+            size='lg'
+            disabled={!(email && password)}
+            onClick={loginHandler}
+            loading={loginLoading}>
             Sign in
           </FilledButton>
           <div className='text-xs font-medium leading-6 text-medium-red min-h-[24px]'>{loginErrorMsg}</div>

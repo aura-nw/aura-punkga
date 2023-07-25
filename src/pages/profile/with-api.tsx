@@ -2,15 +2,16 @@ import axios from "axios"
 import getConfig from "next/config"
 import { useContext } from "react"
 import { COMIC_STATUS, LANGUAGE } from "src/constants"
-import { Context } from "src/context"
-import useApi from "src/hooks/useApi"
-import { IComic } from "src/models/comic"
-import { getItem } from "src/utils/localStorage"
+import { Context, privateAxios } from 'src/context'
+import useApi from 'src/hooks/useApi'
+import { IComic } from 'src/models/comic'
+import { formatStatus } from 'src/utils'
+import { getItem } from 'src/utils/localStorage'
 const withApi = (Component: React.FC<any>) => (props: any) => {
   const { account } = useContext(Context)
   const config = getConfig()
   const getProfile = async () => {
-    const res: any = await axios.get(`${config.API_URL}/api/rest/user/profile`)
+    const res: any = await privateAxios.get(`${config.API_URL}/api/rest/user/profile`)
     if (res) {
       return {
         id: res.data.authorizer_users[0].id,
@@ -31,10 +32,10 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
         id: m.id,
         image: m.poster,
         status: {
-          type: COMIC_STATUS[m.status],
-          text: m.status,
+          type: COMIC_STATUS[formatStatus(m.status)],
+          text: formatStatus(m.status),
         },
-        authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : "Unknown creator")),
+        authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : 'Unknown creator')),
         views: m.chapters_aggregate?.aggregate?.sum?.views || 0,
         likes: m.chapters_aggregate?.aggregate?.sum?.likes || 0,
         latestChap: {
@@ -55,30 +56,30 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
           m.manga_languages.find((ml) => ml.language_id == language.id) ||
           m.manga_languages.find((ml) => ml.is_main_language)
         response[language.shortLang] = {
-          title: l ? l?.title : "Unknown title",
-          description: l ? l?.description : "Unknown description",
+          title: l ? l?.title : 'Unknown title',
+          description: l ? l?.description : 'Unknown description',
         }
       })
       return response
     })
   }
   const getCurentlyReading = async () => {
-    const ids = getItem("current_reading_manga")
+    const ids = getItem('current_reading_manga')
     if (ids?.length) {
       const res: any = await axios.post(`${config.API_URL}/v1/graphql`, {
         query: `query GetListMangaById ($id: [Int!]=${ids}) {\n  manga(where: {id:{_in:$id}}) {\n    id\n    banner\n    status\n    manga_languages {\n      is_main_language\n      language_id\n      title\n    }\n    manga_creators {\n      creator {\n        id\n        name\n        isActive\n      }\n    }\n    chapters(order_by: {pushlish_date:desc_nulls_last}, limit: 1) {\n      chapter_number\n      id\n      pushlish_date\n    }\n    chapters_aggregate {\n      aggregate {\n        sum {\n          likes\n          views\n        }\n      }\n    }\n    manga_tags {\n      tag {\n        id\n        tag_languages {\n          language_id\n          value\n        }\n      }\n    }\n  }\n}`,
         variables: null,
-        operationName: "GetListMangaById",
+        operationName: 'GetListMangaById',
       })
       return res.data.data?.manga?.map((m) => {
         const response = {
           id: m.id,
           image: m.poster,
           status: {
-            type: COMIC_STATUS[m.status],
-            text: m.status,
+            type: COMIC_STATUS[formatStatus(m.status)],
+            text: formatStatus(m.status),
           },
-          authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : "Unknown creator")),
+          authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : 'Unknown creator')),
           views: m.chapters_aggregate?.aggregate?.sum?.views || 0,
           likes: m.chapters_aggregate?.aggregate?.sum?.likes || 0,
           latestChap: {
@@ -99,8 +100,8 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
             m.manga_languages.find((ml) => ml.language_id == language.id) ||
             m.manga_languages.find((ml) => ml.is_main_language)
           response[language.shortLang] = {
-            title: l ? l?.title : "Unknown title",
-            description: l ? l?.description : "Unknown description",
+            title: l ? l?.title : 'Unknown title',
+            description: l ? l?.description : 'Unknown description',
           }
         })
         return response
@@ -110,14 +111,14 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   }
 
   const subscribe = async (comicId) => {
-    await axios.post(`${config.API_URL}/api/rest/user/manga/${comicId}/subscribe`)
+    await privateAxios.post(`${config.API_URL}/api/rest/user/manga/${comicId}/subscribe`)
   }
   const unsubscribe = async (comicId) => {
-    await axios.delete(`${config.API_URL}/api/rest/user/manga/${comicId}/subscribe`)
+    await privateAxios.delete(`${config.API_URL}/api/rest/user/manga/${comicId}/subscribe`)
   }
 
   const updateProfile = async (data) => {
-    await axios.put(`${config.REST_API_URL}/user/update-profile`, data)
+    await privateAxios.put(`${config.REST_API_URL}/user/update-profile`, data)
   }
 
   const profile = useApi<any>(getProfile, !!account?.verified, [account?.verified])
