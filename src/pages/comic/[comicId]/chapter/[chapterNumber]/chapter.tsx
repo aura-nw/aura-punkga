@@ -124,10 +124,6 @@ const Chapter: React.FC = ({
       ;(document.querySelector('#open-sign-in-btn') as any)?.click()
     }
   }
-  const onScrollHandler = function (e) {
-    console.log(this.oldScroll > this.scrollY)
-    this.oldScroll = this.scrollY
-  }
   return (
     <>
       <div className='xl:hidden'>
@@ -207,7 +203,7 @@ const Chapter: React.FC = ({
               />
             </div>
           </div>
-          <div className='pt-[48px]' onScroll={onScrollHandler}>
+          <div className='pt-[48px]'>
             {chapterDetails.data[chapterLocale]?.map((page, index) => (
               <Image src={page} key={index} alt='' width={700} height={1000} className='mx-auto' />
             ))}
@@ -265,6 +261,7 @@ const Chapter: React.FC = ({
                 reload={() => chapterComments.callApi(true)}
                 postComment={postComment}
                 comments={chapterComments.data}
+                chapterId={chapterDetails.data.id}
                 mode={mode}
                 setOpenComments={setOpenComments}
                 openComments={openComments}
