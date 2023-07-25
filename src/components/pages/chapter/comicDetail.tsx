@@ -102,21 +102,18 @@ export default function ComicDetail({
           alt=''
         />
         <div className='px-[60px] flex flex-col gap-[10px]'>
-          <div className={`${expandDetail ? ' mt-[-180px]' : ' mt-[-50px]'} duration-500 transition-all flex gap-5`}>
+          <div className={` duration-500 transition-all flex gap-5`}>
             <Image
               src={data.image || mockAvar}
               height={320}
               width={240}
-              className={`${
-                expandDetail ? ' w-[240px] h-[320px]' : ' w-[120px] h-[160px]'
+              className={`${expandDetail ? ' w-[240px] h-[320px]' : ' w-[120px] h-[160px]'} ${
+                expandDetail ? ' mt-[-180px]' : ' mt-[-50px]'
               } duration-500 transition-all object-cover rounded-[15px] overflow-hidden bg-medium-gray`}
               alt=''
             />
-            <div className='flex-1 flex flex-col justify-end gap-[10px]'>
-              <div
-                className={`font-bold ${
-                  expandDetail ? 'text-black' : 'text-second-color'
-                } transition-all text-2xl h-6`}>
+            <div className='flex-1 flex flex-col gap-[10px]'>
+              <div className={`font-bold ${expandDetail ? 'text-black' : 'text-second-color'} transition-all text-2xl`}>
                 <span>{data[selectedLanguage.shortLang]?.title}</span>
                 {expandDetail && (
                   <span className='ml-3'>
@@ -126,8 +123,8 @@ export default function ComicDetail({
               </div>
               <p
                 className={`${
-                  expandDetail ? 'opacity-100 h-6' : 'opacity-0 h-0 mt-[-10px]'
-                } font-semibold text-xl duration-500 transition-all text-second-color`}>
+                  expandDetail ? 'opacity-100 max-h-[100px]' : 'opacity-0 max-h-0 mt-[-10px]'
+                } font-semibold text-xl duration-500 transition-all text-second-color overflow-auto`}>
                 {data.authors.map((author, index) => (
                   <Fragment key={index}>
                     <span className='text-second-color font-[600] first:hidden'>, </span>
