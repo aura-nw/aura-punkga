@@ -101,7 +101,7 @@ export default function ComicDetail({
           className={`${expandDetail ? 'h-[280px]' : 'h-[160px]'} duration-500 transition-all object-cover w-full`}
           alt=''
         />
-        <div className='px-[60px] flex flex-col gap-[10px]'>
+        <div className='px-[60px] flex flex-col gap-[10px] mt-2'>
           <div className={` duration-500 transition-all flex gap-5`}>
             <Image
               src={data.image || mockAvar}
@@ -114,7 +114,9 @@ export default function ComicDetail({
             />
             <div className='flex-1 flex flex-col gap-[10px]'>
               <div className={`font-bold ${expandDetail ? 'text-black' : 'text-second-color'} transition-all text-2xl`}>
-                <span>{data[selectedLanguage.shortLang]?.title}</span>
+                <span className={`${!expandDetail ? 'line-clamp-1' : ''}`}>
+                  {data[selectedLanguage.shortLang]?.title}
+                </span>
                 {expandDetail && (
                   <span className='ml-3'>
                     <StatusLabel status={data.status?.type}>{data.status?.text}</StatusLabel>
