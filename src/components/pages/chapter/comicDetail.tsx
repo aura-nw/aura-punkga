@@ -141,21 +141,22 @@ export default function ComicDetail({
                 <strong>{data.likes?.toLocaleString('en-US')}</strong> likes
               </p>
               <div className={` flex gap-[10px]`}>
-                {isSubscribe ? (
-                  <FilledButton>
-                    <div onClick={() => subscribeHandler(false)} className='h-5 flex items-center'>
-                      <BellAlertIcon className='w-6 h-6 mr-2 inline-block animate-[bell-ring_1s_ease-in-out]' />
-                      Subscribed
-                    </div>
-                  </FilledButton>
-                ) : (
-                  <OutlineButton>
-                    <div onClick={() => subscribeHandler(true)} className='h-5 flex items-center'>
-                      <BellAlertIconOutline className='w-6 h-6 mr-2 inline-block ' />
-                      Subscribe
-                    </div>
-                  </OutlineButton>
-                )}
+                {account &&
+                  (isSubscribe ? (
+                    <FilledButton>
+                      <div onClick={() => subscribeHandler(false)} className='h-5 flex items-center'>
+                        <BellAlertIcon className='w-6 h-6 mr-2 inline-block animate-[bell-ring_1s_ease-in-out]' />
+                        Subscribed
+                      </div>
+                    </FilledButton>
+                  ) : (
+                    <OutlineButton>
+                      <div onClick={() => subscribeHandler(true)} className='h-5 flex items-center'>
+                        <BellAlertIconOutline className='w-6 h-6 mr-2 inline-block ' />
+                        Subscribe
+                      </div>
+                    </OutlineButton>
+                  ))}
                 <OutlineButton
                   className={`${!expandDetail ? 'opacity-100' : 'opacity-0'} duration-500 transition-all`}
                   onClick={() => setExpandDetail(true)}>

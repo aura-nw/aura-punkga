@@ -157,7 +157,7 @@ function ContextProvider({ children }) {
         email: email,
         password: password,
       })
-      if (res) {
+      if (res && !res?.user?.roles?.includes('admin')) {
         callback && callback('success')
         setItem('token', res.access_token, new Date(Date.now() + res.expires_in * 1000))
         setLogoutTimeout(res.expires_in * 1000)
@@ -168,6 +168,8 @@ function ContextProvider({ children }) {
           id: res.user.id,
           verified: res.user.email_verified,
         } as IUser)
+      } else {
+        callback && callback('failed', 'Admin account cannot be used for user purposes')
       }
     } catch (error) {
       callback && callback('failed', error.message.includes('credentials') ? 'Wrong email or password' : error.message)
