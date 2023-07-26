@@ -183,7 +183,11 @@ export default function ReadingSection({
           {chapterData[chapterLocale]
             ?.slice(
               readingMode == 'onePage' ? 0 : currentPage,
-              readingMode == 'onePage' ? chapterData[chapterLocale].length : currentPage + 2
+              readingMode == 'onePage'
+                ? chapterData[chapterLocale].length
+                : currentPage + 2 > chapterData[chapterLocale].length
+                ? chapterData[chapterLocale].length
+                : currentPage + 2
             )
             ?.map((page, index) => (
               <Image
