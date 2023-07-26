@@ -109,7 +109,7 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
         </div>
         <div className='mt-4 flex flex-col items-center w-full max-w-[300px] mx-auto'>
           <FilledButton
-            inputRef={buttonRef}
+            buttonRef={buttonRef}
             size='lg'
             disabled={!(email && password)}
             onClick={loginHandler}

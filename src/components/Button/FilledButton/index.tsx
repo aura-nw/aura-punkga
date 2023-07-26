@@ -10,7 +10,7 @@ interface IFilledButton {
   loading?: boolean
   className?: string
   id?: string
-  inputRef?: any
+  buttonRef?: any
 }
 export default function FilledButton({
   children,
@@ -21,7 +21,7 @@ export default function FilledButton({
   className,
   loading,
   id,
-  inputRef,
+  buttonRef,
 }: IFilledButton) {
   const classes = {
     sm: `${buttonClasses} text-[14px] leading-[17.5px] font-bold px-[18px] pt-[4px] pb-[4px] bg-primary-color rounded-[12px] ${
@@ -36,7 +36,7 @@ export default function FilledButton({
   }
   return (
     <button
-      ref={inputRef}
+      ref={buttonRef}
       disabled={disabled}
       id={id}
       onClick={onClick}

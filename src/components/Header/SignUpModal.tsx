@@ -158,6 +158,7 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
           />
         </div>
         <FilledButton
+          buttonRef={buttonRef}
           loading={signUpLoading}
           className='mx-auto mt-4'
           size='lg'
