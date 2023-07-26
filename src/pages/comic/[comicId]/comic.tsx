@@ -81,7 +81,7 @@ export default function Comic({ comicDetails, subscribe, unsubscribe }) {
                 ))}
               </div>
               <div className='text-xs mt-2 line-clamp-5'>{data[selectedLanguage.shortLang]?.description}</div>
-              <div className='flex gap-1 mt-2 '>
+              <div className='flex gap-1 mt-2 flex-wrap'>
                 {data.tags.map((tag, index) => {
                   return <Tag key={index}>{tag[selectedLanguage.shortLang]}</Tag>
                 })}

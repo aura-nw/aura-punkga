@@ -47,6 +47,10 @@ export default function Header({}) {
   const [searchValue, setSearchValue] = useState('')
   const { account, wallet, logout, unlinkWallet } = useContext(Context)
   const searchComic = useApi<any[]>(async () => await search(searchValue), !!searchValue, [searchValue])
+
+  useEffect(() => {
+    ;(window as any).isSearchFocused = isSearchFocused
+  }, [isSearchFocused])
   useEffect(() => {
     ref.current?.addEventListener(
       'keypress',
@@ -116,47 +120,49 @@ export default function Header({}) {
               />
               {!!searchComic.data?.length && (
                 <div
-                  className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full w-full duration-500 p-5 rounded-[20px] flex flex-col gap-7 max-h-[40vh] overflow-auto ${
-                    isSearchFocused ? 'opacity-100' : 'pointer-events-none opacity-0 '
+                  className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[20px] max-h-[40vh] overflow-hidden ${
+                    isSearchFocused ? 'opacity-100 w-[160%]' : 'pointer-events-none opacity-0 w-full'
                   }`}>
-                  {searchComic.data?.map((manga, index) => (
-                    <div key={index} className='flex gap-2'>
-                      <Image
-                        src={manga.image || NoImage}
-                        width={48}
-                        height={64}
-                        className='w-12 h-16 bg-medium-gray rounded-xl object-cover'
-                        alt=''
-                      />
-                      <div className='flex flex-col justify-between'>
-                        <div>
-                          <p
-                            className='text-second-color text-base font-bold cursor-pointer'
-                            onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}>
-                            {manga[locale].title}
-                          </p>
-                          <div className='text-xs'>
-                            {manga.authors.map((author, index) => (
-                              <Fragment key={index}>
-                                <span className='text-second-color font-[600] first:hidden'>, </span>
-                                <span className='text-second-color font-[600]'>{author}</span>
-                              </Fragment>
-                            ))}
+                  <div className={`max-h-[40vh] overflow-auto  flex flex-col gap-7  p-5`}>
+                    {searchComic.data?.map((manga, index) => (
+                      <div key={index} className='flex gap-2'>
+                        <Image
+                          src={manga.image || NoImage}
+                          width={48}
+                          height={64}
+                          className='w-12 h-16 bg-medium-gray rounded-xl object-cover'
+                          alt=''
+                        />
+                        <div className='flex flex-col justify-between'>
+                          <div>
+                            <p
+                              className='text-second-color text-base font-bold cursor-pointer'
+                              onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}>
+                              {manga[locale].title}
+                            </p>
+                            <div className='text-xs'>
+                              {manga.authors.map((author, index) => (
+                                <Fragment key={index}>
+                                  <span className='text-second-color font-[600] first:hidden'>, </span>
+                                  <span className='text-second-color font-[600]'>{author}</span>
+                                </Fragment>
+                              ))}
+                            </div>
                           </div>
+                          {!!manga.latestChap.number && (
+                            <p className='text-xs'>
+                              Latest chap:{' '}
+                              <span
+                                className='text-second-color font-semibold cursor-pointer'
+                                onClick={() => router.push(`/comic/${manga.id}/chapter/${manga.latestChap.number}`)}>
+                                {manga.latestChap.number}
+                              </span>
+                            </p>
+                          )}
                         </div>
-                        {!!manga.latestChap.number && (
-                          <p className='text-xs'>
-                            Latest chap:{' '}
-                            <span
-                              className='text-second-color font-semibold cursor-pointer'
-                              onClick={() => router.push(`/comic/${manga.id}/chapter/${manga.latestChap.number}`)}>
-                              {manga.latestChap.number}
-                            </span>
-                          </p>
-                        )}
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
@@ -278,47 +284,49 @@ export default function Header({}) {
             />
             {!!searchComic.data?.length && (
               <div
-                className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 p-5 rounded-[20px] flex flex-col gap-7 max-h-[40vh] overflow-auto ${
+                className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[20px] max-h-[40vh] overflow-hidden ${
                   isSearchFocused ? 'opacity-100 w-[160%]' : 'pointer-events-none opacity-0 w-full'
                 }`}>
-                {searchComic.data?.map((manga, index) => (
-                  <div key={index} className='flex gap-2'>
-                    <Image
-                      src={manga.image || NoImage}
-                      width={48}
-                      height={64}
-                      className='w-12 h-16 bg-medium-gray rounded-xl object-cover'
-                      alt=''
-                    />
-                    <div className='flex flex-col justify-between'>
-                      <div>
-                        <p
-                          className='text-second-color text-base font-bold cursor-pointer'
-                          onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}>
-                          {manga[locale].title}
-                        </p>
-                        <div className='text-xs'>
-                          {manga.authors.map((author, index) => (
-                            <Fragment key={index}>
-                              <span className='text-second-color font-[600] first:hidden'>, </span>
-                              <span className='text-second-color font-[600]'>{author}</span>
-                            </Fragment>
-                          ))}
+                <div className={`max-h-[40vh] overflow-auto  flex flex-col gap-7  p-5`}>
+                  {searchComic.data?.map((manga, index) => (
+                    <div key={index} className='flex gap-2'>
+                      <Image
+                        src={manga.image || NoImage}
+                        width={48}
+                        height={64}
+                        className='w-12 h-16 bg-medium-gray rounded-xl object-cover'
+                        alt=''
+                      />
+                      <div className='flex flex-col justify-between'>
+                        <div>
+                          <p
+                            className='text-second-color text-base font-bold cursor-pointer'
+                            onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}>
+                            {manga[locale].title}
+                          </p>
+                          <div className='text-xs'>
+                            {manga.authors.map((author, index) => (
+                              <Fragment key={index}>
+                                <span className='text-second-color font-[600] first:hidden'>, </span>
+                                <span className='text-second-color font-[600]'>{author}</span>
+                              </Fragment>
+                            ))}
+                          </div>
                         </div>
+                        {!!manga.latestChap.number && (
+                          <p className='text-xs'>
+                            Latest chap:{' '}
+                            <span
+                              className='text-second-color font-semibold cursor-pointer'
+                              onClick={() => router.push(`/comic/${manga.id}/chapter/${manga.latestChap.number}`)}>
+                              {manga.latestChap.number}
+                            </span>
+                          </p>
+                        )}
                       </div>
-                      {!!manga.latestChap.number && (
-                        <p className='text-xs'>
-                          Latest chap:{' '}
-                          <span
-                            className='text-second-color font-semibold cursor-pointer'
-                            onClick={() => router.push(`/comic/${manga.id}/chapter/${manga.latestChap.number}`)}>
-                            {manga.latestChap.number}
-                          </span>
-                        </p>
-                      )}
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             )}
           </div>

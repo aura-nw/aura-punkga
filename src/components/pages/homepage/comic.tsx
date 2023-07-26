@@ -10,10 +10,22 @@ import { IComic } from 'src/models/comic'
 
 export default function Comic(props: IComic) {
   const { locale } = useRouter()
+  const router = useRouter()
   return (
     <>
       <div className='hidden md:flex gap-[20px]'>
-        <Link href={`/comic/${props.id}/chapter/1`} className='flex-auto w-1/3'>
+        <Link href={`/comic/${props.id}`} className='flex-auto w-1/3 xl:hidden'>
+          <Image
+            src={props.image || NoImage}
+            alt=''
+            width={180}
+            height={240}
+            className={`${
+              props.image ? 'object-cover' : 'object-contain bg-light-gray'
+            } rounded-[15px] w-[180px] aspect-[180/240]`}
+          />
+        </Link>
+        <Link href={`/comic/${props.id}/chapter/1`} className='flex-auto w-1/3 hidden xl:block'>
           <Image
             src={props.image || NoImage}
             alt=''
@@ -27,7 +39,12 @@ export default function Comic(props: IComic) {
         <div className='flex-auto w-2/3 flex flex-col justify-between gap-[10px]'>
           <div className='flex flex-col gap-[10px]'>
             <div>
-              <Link href={`/comic/${props.id}/chapter/1`} className=' text-second-color font-bold text-[18px]'>
+              <Link href={`/comic/${props.id}`} className=' text-second-color font-bold text-[18px] xl:hidden'>
+                {props[locale].title} <StatusLabel status={props.status.type}>{props.status.text}</StatusLabel>
+              </Link>
+              <Link
+                href={`/comic/${props.id}/chapter/1`}
+                className=' text-second-color font-bold text-[18px] hidden xl:block'>
                 {props[locale].title} <StatusLabel status={props.status.type}>{props.status.text}</StatusLabel>
               </Link>
               <div>
@@ -40,7 +57,7 @@ export default function Comic(props: IComic) {
                 ))}
               </div>
             </div>
-            <div className='flex gap-[8px] '>
+            <div className='flex gap-[8px] flex-wrap'>
               {props.tags.map((tag, index) => {
                 return <Tag key={index}>{tag[locale]}</Tag>
               })}
@@ -55,14 +72,16 @@ export default function Comic(props: IComic) {
             </div>
             <div className=' text-[16px] leading-[20px] line-clamp-3'>{props[locale].description}</div>
           </div>
-          <div className='leading-[20px]'>
-            Latest:{' '}
-            <Link
-              href={`/comic/${props.id}/chapter/${props.latestChap.number}`}
-              className='text-second-color font-[600]'>
-              Chap #{props.latestChap.number}
-            </Link>
-          </div>
+          {!!props.latestChap.number && (
+            <div className='leading-[20px]'>
+              Latest:{' '}
+              <Link
+                href={`/comic/${props.id}/chapter/${props.latestChap.number}`}
+                className='text-second-color font-[600]'>
+                Chap #{props.latestChap.number}
+              </Link>
+            </div>
+          )}
         </div>
       </div>
       <div className='md:hidden'>

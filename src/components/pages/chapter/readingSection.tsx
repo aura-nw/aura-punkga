@@ -125,7 +125,7 @@ export default function ReadingSection({
 
   useEffect(() => {
     const pageHandler = (event: any) => {
-      if (!chapterData || !chapterData?.[chapterLocale]) return
+      if (!chapterData || !chapterData?.[chapterLocale] || (window as any).isSearchFocused) return
       if (event.deltaY < 0 || event.which == 37 || event.which == 38) {
         setCurrentPage((prevState) => (prevState - 2 < 0 ? 0 : prevState - 2))
       } else if (event.deltaY > 0 || event.which == 39 || event.which == 40) {
