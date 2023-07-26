@@ -187,6 +187,7 @@ function ContextProvider({ children }) {
   }
 
   const logout = async (callback?: () => void) => {
+    await authorizerRef.logout()
     removeItem('token')
     removeItem('current_reading_manga')
     setAccount(null)

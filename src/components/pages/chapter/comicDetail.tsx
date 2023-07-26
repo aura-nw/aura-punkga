@@ -13,6 +13,8 @@ import StatusLabel from 'components/Label/Status'
 import Tag from 'components/Label/Tag'
 import HeartFillIcon from 'images/icons/heart_fill.svg'
 import HeartOutlineIcon from 'images/icons/heart_outline.svg'
+import NoteIcon from 'images/icons/ic_note.svg'
+import ArrowSwapIcon from 'images/icons/arrow-swap.svg'
 import moment from 'moment'
 import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
@@ -47,6 +49,7 @@ export default function ComicDetail({
   unlike: () => void
 }) {
   const [expandDetail, setExpandDetail] = useState(false)
+  const [expandDescription, setExpandDescription] = useState(false)
   const [isDesc, setIsDesc] = useState(true)
   const { t } = useTranslation()
   const { account } = useContext(Context)
@@ -101,13 +104,13 @@ export default function ComicDetail({
           className={`${expandDetail ? 'h-[280px]' : 'h-[160px]'} duration-500 transition-all object-cover w-full`}
           alt=''
         />
-        <div className='px-[60px] flex flex-col gap-[10px] mt-2'>
+        <div className='px-[16px] flex flex-col gap-[10px] mt-2 2xl:px-[60px]'>
           <div className={` duration-500 transition-all flex gap-5`}>
             <Image
               src={data.image || mockAvar}
               height={320}
               width={240}
-              className={`${expandDetail ? ' w-[240px] h-[320px]' : ' w-[120px] h-[160px]'} ${
+              className={`${expandDetail ? ' w-[240px] aspect-[24/32]' : ' w-[120px] aspect-[12/16]'} ${
                 expandDetail ? ' mt-[-180px]' : ' mt-[-50px]'
               } duration-500 transition-all object-cover rounded-[15px] overflow-hidden bg-medium-gray`}
               alt=''
@@ -139,7 +142,7 @@ export default function ComicDetail({
                 <strong>{data.views?.toLocaleString('en-US')}</strong> views •{' '}
                 <strong>{data.likes?.toLocaleString('en-US')}</strong> likes
               </p>
-              <div className={` flex gap-[10px]`}>
+              <div className={`2xl:flex-row flex-col flex gap-[10px]`}>
                 {account &&
                   (isSubscribe ? (
                     <FilledButton>
@@ -156,11 +159,13 @@ export default function ComicDetail({
                       </div>
                     </OutlineButton>
                   ))}
-                <OutlineButton
-                  className={`${!expandDetail ? 'opacity-100' : 'opacity-0'} duration-500 transition-all`}
-                  onClick={() => setExpandDetail(true)}>
-                  See Detail
-                </OutlineButton>
+                <div>
+                  <OutlineButton
+                    className={`${!expandDetail ? 'opacity-100' : 'opacity-0'} duration-500 transition-all`}
+                    onClick={() => setExpandDetail(true)}>
+                    See Detail
+                  </OutlineButton>
+                </div>
               </div>
             </div>
           </div>
@@ -179,7 +184,14 @@ export default function ComicDetail({
               return <Tag key={index}>{tag[selectedLanguage.shortLang]}</Tag>
             })}
           </div>
-          <p className={`line-clamp-3 min-h-[72px]`}>{data[selectedLanguage.shortLang]?.description}</p>
+          <p
+            className={`${expandDescription ? '' : 'line-clamp-3'} min-h-[72px]`}
+            onClick={() => setExpandDescription(!expandDescription)}>
+            {data[selectedLanguage.shortLang]?.description}{' '}
+            {!expandDescription && data[selectedLanguage.shortLang]?.description?.length >= 210 && (
+              <span className='text-second-color cursor-pointer'>see more...</span>
+            )}
+          </p>
           <div className='flex gap-2 flex-wrap'>
             {data.languages.map((language, index) => {
               return (
@@ -195,27 +207,32 @@ export default function ComicDetail({
         </div>
         <div className='flex gap-1'>
           <div className={`flex-auto ${expandDetail ? ' w-1/2' : ' w-full -mr-1'} duration-500 transition-all`}>
-            <div className='w-full bg-medium-gray px-[60px] py-[16px] flex items-center justify-between mt-[13px]'>
+            <div className='w-full bg-medium-gray px-[16px] 2xl:px-[60px] py-[16px] flex items-center justify-between mt-[13px]'>
               <div className='flex gap-5 items-center whitespace-nowrap'>
                 <strong className='text-[16px]'>{`${data.chapters.length} chapter${
                   data.chapters.length > 1 ? 's' : ''
                 }`}</strong>
-                <TextField
-                  onChange={setSearchChapter}
-                  value={searchChapter}
-                  size='sm'
-                  placeholder='Enter chapter number'
-                  leadingComponent={<DocumentTextIcon className='w-[18px] h-[18px] text-medium-gray' />}
-                />
+                <span title='Only digits'>
+                  <TextField
+                    onChange={setSearchChapter}
+                    value={searchChapter}
+                    size='sm'
+                    type='number'
+                    placeholder='Enter chapter number'
+                    leadingComponent={<Image alt='' src={NoteIcon} className='w-6 h-6 text-medium-gray' />}
+                  />
+                </span>
               </div>
               <div>
-                <ArrowsUpDownIcon
+                <Image
+                  alt=''
+                  src={ArrowSwapIcon}
                   onClick={() => setIsDesc(!isDesc)}
                   className='cursor-pointer w-5 h-w-5 text-light-gray'
                 />
               </div>
             </div>
-            <div className='px-[60px] py-[20px] flex flex-col gap-5'>
+            <div className='px-[16px] 2xl:px-[60px] py-[20px] flex flex-col gap-5'>
               {data.chapters
                 .filter((chapter) => {
                   return searchChapter ? chapter?.number?.toString()?.includes(searchChapter) : true

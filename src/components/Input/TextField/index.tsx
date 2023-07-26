@@ -8,6 +8,7 @@ interface ITextField {
   onBlur?: (e: any) => void
   onChange?: (value: string) => void
   value?: string
+  type?: string
   inputref?: any
 }
 export default function TextField({
@@ -19,6 +20,7 @@ export default function TextField({
   onFocus,
   onBlur,
   onChange,
+  type = 'text',
   value,
   inputref,
 }: ITextField) {
@@ -35,8 +37,8 @@ export default function TextField({
           onFocus={onFocus}
           onBlur={onBlur}
           value={value}
+          type={type}
           onChange={(event) => onChange && onChange(event.target.value)}
-          type='text'
           id='input-group-1'
           className={`bg-transparent rounded-[20px] w-full p-[13px] placeholder-medium-gray focus:outline-none ${
             leadingComponent ? 'pl-[50px]' : ''
@@ -54,7 +56,7 @@ export default function TextField({
     return (
       <div className='relative w-full h-fit'>
         {leadingComponent && (
-          <div className=' absolute top-[3px] left-[13px] flex items-center justify-center w-6 h-6'>
+          <div className=' absolute top-[3px] left-[10px] flex items-center justify-center w-6 h-6'>
             {leadingComponent}
           </div>
         )}
@@ -62,8 +64,8 @@ export default function TextField({
           onFocus={onFocus}
           onBlur={onBlur}
           value={value}
+          type={type}
           onChange={(event) => onChange && onChange(event.target.value)}
-          type='text'
           id='input-group-1'
           className={` rounded-[12px] w-full px-[13px] py-[3px] placeholder-medium-gray focus:outline-none ${
             leadingComponent ? 'pl-10' : ''
@@ -85,8 +87,8 @@ export default function TextField({
         onFocus={onFocus}
         onBlur={onBlur}
         value={value}
+        type={type}
         onChange={(event) => onChange && onChange(event.target.value)}
-        type='text'
         id='input-group-1'
         className={`bg-transparent rounded-[12px] w-full px-[10px] py-[8px] placeholder-medium-gray focus:outline-none ${
           leadingComponent ? 'pl-[45px]' : ''

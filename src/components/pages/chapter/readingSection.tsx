@@ -179,7 +179,7 @@ export default function ReadingSection({
           ref={ref}
           className={`${mode == 'minscreen' ? '' : ''} ${
             readingMode == 'onePage' ? 'w-[70%]' : 'flex h-full'
-          } mx-auto `}>
+          } mx-auto pb-[60px]`}>
           {chapterData[chapterLocale]
             ?.slice(
               readingMode == 'onePage' ? 0 : currentPage,
@@ -314,7 +314,7 @@ export default function ReadingSection({
               {data?.chapters?.map((chapter, index) => {
                 return (
                   <div
-                    onClick={() => router.push(`/comic/${data.id}/chapter/${chapter?.id}`)}
+                    onClick={() => router.push(`/comic/${data.id}/chapter/${chapter?.number}`)}
                     key={index}
                     className={`cursor-pointer text-xs hover:bg-light-medium-gray ${
                       currentChapIndex == index ? 'text-second-color' : ''

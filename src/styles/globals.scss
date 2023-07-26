@@ -145,3 +145,41 @@ a {
     transform: rotate(0deg);
   }
 }
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+@keyframes slide {
+  to {
+    transform: translateX(-105%);
+  }
+}
+
+.animation-tag {
+  width: 10ch;
+  overflow: hidden;
+  text-overflow: hidden;
+  white-space: nowrap;
+}
+
+.animation-tag > div {
+  width: max-content;
+  transform: translateX(11ch);
+  animation-name: slide;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  -webkit-animation-name: slide;
+  -webkit-animation-duration: 6s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  white-space: nowrap;
+}
