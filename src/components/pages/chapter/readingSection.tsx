@@ -128,7 +128,9 @@ export default function ReadingSection({
       if (event.deltaY < 0 || event.which == 37 || event.which == 38) {
         setCurrentPage((prevState) => (prevState - 2 < 0 ? 0 : prevState - 2))
       } else if (event.deltaY > 0 || event.which == 39 || event.which == 40) {
-        setCurrentPage((prevState) => (prevState + 2 > chapterData[chapterLocale].length ? prevState : prevState + 2))
+        setCurrentPage((prevState) =>
+          prevState + 2 > chapterData[chapterLocale].length ? chapterData[chapterLocale].length : prevState + 2
+        )
       }
     }
     window.addEventListener('wheel', _.throttle(pageHandler, 500, { trailing: false, leading: true }))
