@@ -5,7 +5,7 @@ export interface IChapter {
   id: string
   number: number
   name: string
-  type: 'Free'
+  type: string
   status: string
   thumbnail: string
   pages: IMultiLanguageContent<string[] | null>

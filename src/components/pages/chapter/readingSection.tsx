@@ -68,7 +68,7 @@ export default function ReadingSection({
   const mainLanguage = data?.languages?.find((l) => l.isMainLanguage).shortLang
   const chapterLocale = chapterData?.[language] ? language : mainLanguage
   const ref = useRef()
-  const chapterLengthRef = useRef(chapterData[chapterLocale].length)
+  const chapterLengthRef = useRef(chapterData?.[chapterLocale]?.length)
   const { account } = useContext(Context)
   const router = useRouter()
   const onMouseEnterHandler = () => {
@@ -138,7 +138,6 @@ export default function ReadingSection({
 
   useEffect(() => {
     setCurrentPage(0)
-    chapterLengthRef.current = chapterData[chapterLocale].length
   }, [readingMode, chapterLocale])
 
   if (typeof chapterData == 'undefined' || typeof data == 'undefined') {
@@ -149,14 +148,7 @@ export default function ReadingSection({
     return <div>Không có dữ liệu</div>
   }
   const currentChapIndex = data.chapters.findIndex((chap) => chap.id == chapterData.id)
-  console.log(
-    readingMode == 'onePage' ? 0 : currentPage,
-    readingMode == 'onePage'
-      ? chapterLengthRef.current
-      : currentPage + 2 > chapterLengthRef.current
-      ? chapterLengthRef.current
-      : currentPage + 2
-  )
+  chapterLengthRef.current = chapterData[chapterLocale]?.length
   return (
     <div
       className={`w-full h-full overflow-hidden ${
@@ -183,35 +175,54 @@ export default function ReadingSection({
           </div>
         </div>
       </div>
-      <div className='h-full overflow-auto' onScroll={onScrollHandler}>
-        <div
-          ref={ref}
-          className={`${mode == 'minscreen' ? '' : ''} ${
-            readingMode == 'onePage' ? 'w-[70%]' : 'flex h-full'
-          } mx-auto pb-[60px]`}>
-          {chapterData[chapterLocale]
-            ?.slice(
-              readingMode == 'onePage' ? 0 : currentPage,
-              readingMode == 'onePage'
-                ? chapterLengthRef.current
-                : currentPage + 2 > chapterLengthRef.current
-                ? chapterLengthRef.current
-                : currentPage + 2
-            )
-            ?.map((page, index) => (
-              <Image
-                src={page || PageMockup}
-                key={index}
-                alt=''
-                className={`${
-                  readingMode == 'onePage' ? 'mx-auto' : 'h-full w-auto max-w-[50%] first:ml-auto last:mr-auto'
-                } `}
-                width={1000}
-                height={1000}
-              />
-            ))}
+      {chapterData[chapterLocale] ? (
+        <div className='h-full overflow-auto' onScroll={onScrollHandler}>
+          <div
+            ref={ref}
+            className={`${mode == 'minscreen' ? '' : ''} ${
+              readingMode == 'onePage' ? 'w-[70%]' : 'flex h-full'
+            } mx-auto pb-[60px]`}>
+            {chapterData[chapterLocale]
+              ?.slice(
+                readingMode == 'onePage' ? 0 : currentPage,
+                readingMode == 'onePage'
+                  ? chapterLengthRef.current
+                  : currentPage + 2 > chapterLengthRef.current
+                  ? chapterLengthRef.current
+                  : currentPage + 2
+              )
+              ?.map((page, index) => (
+                <Image
+                  src={page || PageMockup}
+                  key={index}
+                  alt=''
+                  className={`${
+                    readingMode == 'onePage' ? 'mx-auto' : 'h-full w-auto max-w-[50%] first:ml-auto last:mr-auto'
+                  } `}
+                  width={1000}
+                  height={1000}
+                />
+              ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className='h-full w-full flex justify-center items-center'>
+          {!account && chapterData.type == 'Account only' ? (
+            <div>
+              <p className='italic text-subtle-dark '>
+                <a
+                  className='text-second-color underline font-semibold cursor-pointer'
+                  onClick={() => (document.querySelector('#open-sign-in-btn') as any)?.click()}>
+                  Sign in
+                </a>{' '}
+                to unlock special chapters!
+              </p>
+            </div>
+          ) : (
+            <div>No data to show</div>
+          )}
+        </div>
+      )}
       <div
         className={`peer bg-light-gray absolute bottom-0 right-0 left-0 w-full flex items-center px-[40px] py-[6px] ${
           mode == 'minscreen' ? 'visible' : 'invisible -z-10'

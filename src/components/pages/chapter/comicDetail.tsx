@@ -27,6 +27,7 @@ import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
 import { IComicDetail } from 'src/models/comic'
 import CalendarIcon from 'images/icons/solar_calendar-linear.svg'
+import { useRouter } from 'next/router'
 export default function ComicDetail({
   data,
   language,
@@ -297,6 +298,7 @@ export default function ComicDetail({
 const Chapter = ({ expandDetail, data, chapter, account, like, unlike }) => {
   const [isLiked, setIsLiked] = useState(chapter.isLiked || false)
   const [likes, setLikes] = useState(chapter.likes || 0)
+  const router = useRouter()
   const likeHandler = (isLike: boolean) => {
     if (account?.verified && account?.name) {
       if (isLike) {
@@ -317,7 +319,12 @@ const Chapter = ({ expandDetail, data, chapter, account, like, unlike }) => {
         className={`w-full h-[1px] bg-light-medium-gray first:hidden transition-all duration-500 ${
           expandDetail ? 'my-[0px] opacity-100' : '-my-[10px] opacity-0'
         }`}></div>
-      <Link href={`/comic/${data.id}/chapter/${chapter.number}`} className='flex gap-4'>
+      <div
+        onClick={() => {
+          if (chapter.status == 'Upcoming' || (!account && chapter.type == 'Account only')) return
+          router.push(`/comic/${data.id}/chapter/${chapter.number}`)
+        }}
+        className='flex gap-4'>
         <Image
           src={chapter.thumbnail || m6}
           alt=''
@@ -350,7 +357,7 @@ const Chapter = ({ expandDetail, data, chapter, account, like, unlike }) => {
                 }
               })()}
               {(function () {
-                switch (chapter.status.text) {
+                switch (chapter.status) {
                   case 'Upcoming':
                     return (
                       <StatusLabel status='warning'>
@@ -401,7 +408,7 @@ const Chapter = ({ expandDetail, data, chapter, account, like, unlike }) => {
             </div>
           </div>
         </div>
-      </Link>
+      </div>
     </>
   )
 }

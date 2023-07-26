@@ -34,7 +34,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
         name: chapter.chapter_name,
         number: chapter.chapter_number,
         type: chapter.chapter_type,
-        status: capitalize(chapter.status.replaceAll('-', '')),
+        status: formatStatus(chapter.status),
         thumbnail: chapter.thumbnail_url,
         date: chapter.pushlish_date,
         likes: chapter.chapter_total_likes?.likes || 0,
