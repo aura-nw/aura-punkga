@@ -22,7 +22,6 @@ function ContextProvider({ children }) {
   const accessTokenParam = searchParams.get('access_token')
   const expiresInParam = searchParams.get('expires_in')
   const config = getConfig()
-
   const authorizerRef = new Authorizer({
     authorizerURL: config.AUTHORIZER_URL,
     redirectURL: config.REDIRECT_URL,

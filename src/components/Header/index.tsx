@@ -125,8 +125,12 @@ export default function Header({}) {
                   }`}>
                   <div className={`max-h-[40vh] overflow-auto  flex flex-col gap-7  p-5`}>
                     {searchComic.data?.map((manga, index) => (
-                      <div key={index} className='flex gap-2'>
+                      <div
+                        key={index}
+                        className='flex gap-2'
+                        onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}>
                         <Image
+                          onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}
                           src={manga.image || NoImage}
                           width={48}
                           height={64}
@@ -135,9 +139,7 @@ export default function Header({}) {
                         />
                         <div className='flex flex-col justify-between'>
                           <div>
-                            <p
-                              className='text-second-color text-base font-bold cursor-pointer'
-                              onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}>
+                            <p className='text-second-color text-base font-bold cursor-pointer'>
                               {manga[locale].title}
                             </p>
                             <div className='text-xs'>
@@ -154,7 +156,10 @@ export default function Header({}) {
                               Latest chap:{' '}
                               <span
                                 className='text-second-color font-semibold cursor-pointer'
-                                onClick={() => router.push(`/comic/${manga.id}/chapter/${manga.latestChap.number}`)}>
+                                onClick={(e) => {
+                                  router.push(`/comic/${manga.id}/chapter/${manga.latestChap.number}`)
+                                  e.preventDefault()
+                                }}>
                                 {manga.latestChap.number}
                               </span>
                             </p>
@@ -264,7 +269,7 @@ export default function Header({}) {
               inputref={ref}
               onChange={_.debounce(setSearchValue, 500)}
               onFocus={() => setIsSearchFocused(true)}
-              onBlur={() => setIsSearchFocused(false)}
+              onBlur={() => setIsSearchFocused(true)}
               className={`transition-[width] bg-light-gray duration-500 ${isSearchFocused ? '!w-[160%]' : ''}`}
               size='lg'
               placeholder='Search by title'
@@ -289,7 +294,7 @@ export default function Header({}) {
                 }`}>
                 <div className={`max-h-[40vh] overflow-auto  flex flex-col gap-7  p-5`}>
                   {searchComic.data?.map((manga, index) => (
-                    <div key={index} className='flex gap-2'>
+                    <div key={index} className='flex gap-2' onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}>
                       <Image
                         src={manga.image || NoImage}
                         width={48}
@@ -299,11 +304,7 @@ export default function Header({}) {
                       />
                       <div className='flex flex-col justify-between'>
                         <div>
-                          <p
-                            className='text-second-color text-base font-bold cursor-pointer'
-                            onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}>
-                            {manga[locale].title}
-                          </p>
+                          <p className='text-second-color text-base font-bold cursor-pointer'>{manga[locale].title}</p>
                           <div className='text-xs'>
                             {manga.authors.map((author, index) => (
                               <Fragment key={index}>
@@ -318,7 +319,10 @@ export default function Header({}) {
                             Latest chap:{' '}
                             <span
                               className='text-second-color font-semibold cursor-pointer'
-                              onClick={() => router.push(`/comic/${manga.id}/chapter/${manga.latestChap.number}`)}>
+                              onClick={(e) => {
+                                router.push(`/comic/${manga.id}/chapter/${manga.latestChap.number}`)
+                                e.preventDefault()
+                              }}>
                               {manga.latestChap.number}
                             </span>
                           </p>
