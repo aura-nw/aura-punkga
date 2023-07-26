@@ -235,7 +235,7 @@ export default function ReadingSection({
           </OutlineButton>
           <OutlineButton
             onClick={() => goToChap('Next')}
-            disabled={currentChapIndex == 0 || data.chapters?.[currentChapIndex - 1]?.status.text == 'Upcoming'}>
+            disabled={currentChapIndex == 0 || data.chapters?.[currentChapIndex - 1]?.status == 'Upcoming'}>
             <div className='flex items-center w-[130px] justify-between py-[3px] mx-[-6px]'>
               Next chap
               <ChevronRightIcon className='w-5 h-5' />

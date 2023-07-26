@@ -10,30 +10,28 @@ export default function TrendingComic(props: IComic) {
   const { locale } = useRouter()
   return (
     <div className='flex gap-[20px]'>
-      <div className='flex-auto w-1/3'>
-        <Link href={`/comic/${props.id}`} className='flex-auto w-1/3 xl:hidden'>
-          <Image
-            src={props.image || NoImage}
-            alt=''
-            width={140}
-            height={180}
-            className={`rounded-[15px] w-[140px] aspect-[14/18] ${
-              props.image ? 'object-cover' : 'object-contain bg-light-gray'
-            }`}
-          />
-        </Link>
-        <Link href={`/comic/${props.id}/chapter/1`} className='flex-auto w-1/3 hidden xl:block'>
-          <Image
-            src={props.image || NoImage}
-            alt=''
-            width={140}
-            height={180}
-            className={`rounded-[15px] w-[140px] aspect-[14/18] ${
-              props.image ? 'object-cover' : 'object-contain bg-light-gray'
-            }`}
-          />
-        </Link>
-      </div>
+      <Link href={`/comic/${props.id}`} className='flex-auto w-1/3 xl:hidden'>
+        <Image
+          src={props.image || NoImage}
+          alt=''
+          width={140}
+          height={180}
+          className={`rounded-[15px] w-[140px] aspect-[14/18] ${
+            props.image ? 'object-cover' : 'object-contain bg-light-gray'
+          }`}
+        />
+      </Link>
+      <Link href={`/comic/${props.id}/chapter/1`} className='flex-auto w-1/3 hidden xl:block'>
+        <Image
+          src={props.image || NoImage}
+          alt=''
+          width={140}
+          height={180}
+          className={`rounded-[15px] w-[140px] aspect-[14/18] ${
+            props.image ? 'object-cover' : 'object-contain bg-light-gray'
+          }`}
+        />
+      </Link>
       <div className='flex-auto w-2/3 flex flex-col'>
         <Link href={`/comic/${props.id}`} className=' font-bold text-[18px] xl:hidden'>
           {props[locale].title}

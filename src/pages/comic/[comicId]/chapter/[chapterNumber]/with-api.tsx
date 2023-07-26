@@ -58,6 +58,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
         return r
       }),
       authors: data.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : 'Unknown creator')),
+      releaseDate: data.release_date,
     }
 
     LANGUAGE.forEach((l) => {

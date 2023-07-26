@@ -26,7 +26,7 @@ import m6 from 'src/assets/images/mockup6.png'
 import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
 import { IComicDetail } from 'src/models/comic'
-
+import CalendarIcon from 'images/icons/solar_calendar-linear.svg'
 export default function ComicDetail({
   data,
   language,
@@ -169,15 +169,41 @@ export default function ComicDetail({
               </div>
             </div>
           </div>
-          {!account && (
-            <p className='italic text-subtle-dark '>
-              <a
-                className='text-second-color underline font-semibold cursor-pointer'
-                onClick={() => (document.querySelector('#open-sign-in-btn') as any)?.click()}>
-                Sign in
-              </a>{' '}
-              to unlock special chapters!
-            </p>
+          <div className='flex'>
+            {data.releaseDate && (
+              <div
+                className={` text-subtle-dark transition-all whitespace-nowrap overflow-hidden ${
+                  expandDetail ? 'max-w-[300px] mr-[70px]' : 'max-w-[0px] mr-0'
+                } `}>
+                Release date:{' '}
+                <span className='text-gray-600 font-semibold'>{moment(data.releaseDate).format('DD/MM/yyyy')}</span>
+              </div>
+            )}
+            {!account && (
+              <p className='italic text-subtle-dark '>
+                <a
+                  className='text-second-color underline font-semibold cursor-pointer'
+                  onClick={() => (document.querySelector('#open-sign-in-btn') as any)?.click()}>
+                  Sign in
+                </a>{' '}
+                to unlock special chapters!
+              </p>
+            )}
+          </div>
+          {data.chapters.find((chapter) => chapter.status === 'Upcoming')?.date && (
+            <div
+              className={`flex gap-2 items-center text-second-color text-sm font-semibold italic ${
+                expandDetail ? ' h-6 opacity-100' : 'opacity-0 h-0'
+              } duration-500 transition-all overflow-hidden`}>
+              <Image src={CalendarIcon} alt='' className='w-5 h-5' />{' '}
+              <div>
+                {`New chapter arrives on 
+                ${moment(data.chapters.find((chapter) => chapter.status === 'Upcoming')?.date).format(
+                  'dddd, DD/MM/yyyy'
+                )}.
+                Don’t miss latest update, subscribe now!`}
+              </div>
+            </div>
           )}
           <div className={`flex-wrap gap-2 flex`}>
             {data.tags.map((tag, index) => {
@@ -307,10 +333,28 @@ const Chapter = ({ expandDetail, data, chapter, account, like, unlike }) => {
               <p>{`Chapter ${chapter.number}`}</p>
               {(function () {
                 switch (chapter.type) {
-                  case 'Free':
+                  case 'Account only':
                     return (
-                      <StatusLabel status='success'>
-                        <>Free</>
+                      <StatusLabel status='warning'>
+                        <>Account only</>
+                      </StatusLabel>
+                    )
+                  case 'Upcoming':
+                    return (
+                      <StatusLabel status='warning'>
+                        <>Upcoming</>
+                      </StatusLabel>
+                    )
+                  default:
+                    return <div></div>
+                }
+              })()}
+              {(function () {
+                switch (chapter.status.text) {
+                  case 'Upcoming':
+                    return (
+                      <StatusLabel status='warning'>
+                        <>Upcoming</>
                       </StatusLabel>
                     )
                   default:

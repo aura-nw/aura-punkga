@@ -11,6 +11,7 @@ interface Basic {
   tags: IMultiLanguageContent<string>[]
   views: number
   likes: number
+  releaseDate?: string
   latestChap: {
     number: number
     id: string
