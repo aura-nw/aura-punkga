@@ -68,6 +68,7 @@ export default function ReadingSection({
   const mainLanguage = data?.languages?.find((l) => l.isMainLanguage).shortLang
   const chapterLocale = chapterData?.[language] ? language : mainLanguage
   const ref = useRef()
+  const chapterLengthRef = useRef(chapterData[chapterLocale].length)
   const { account } = useContext(Context)
   const router = useRouter()
   const onMouseEnterHandler = () => {
@@ -128,7 +129,7 @@ export default function ReadingSection({
       if (event.deltaY < 0 || event.which == 37 || event.which == 38) {
         setCurrentPage((prevState) => (prevState - 2 < 0 ? 0 : prevState - 2))
       } else if (event.deltaY > 0 || event.which == 39 || event.which == 40) {
-        setCurrentPage((prevState) => (prevState + 2 > chapterData[chapterLocale].length ? prevState : prevState + 2))
+        setCurrentPage((prevState) => (prevState + 2 > chapterLengthRef.current ? prevState : prevState + 2))
       }
     }
     window.addEventListener('wheel', _.throttle(pageHandler, 500, { trailing: false, leading: true }))
@@ -137,7 +138,8 @@ export default function ReadingSection({
 
   useEffect(() => {
     setCurrentPage(0)
-  }, [readingMode])
+    chapterLengthRef.current = chapterData[chapterLocale].length
+  }, [readingMode, chapterLocale])
 
   if (typeof chapterData == 'undefined' || typeof data == 'undefined') {
     return <></>
@@ -147,6 +149,14 @@ export default function ReadingSection({
     return <div>Không có dữ liệu</div>
   }
   const currentChapIndex = data.chapters.findIndex((chap) => chap.id == chapterData.id)
+  console.log(
+    readingMode == 'onePage' ? 0 : currentPage,
+    readingMode == 'onePage'
+      ? chapterLengthRef.current
+      : currentPage + 2 > chapterLengthRef.current
+      ? chapterLengthRef.current
+      : currentPage + 2
+  )
   return (
     <div
       className={`w-full h-full overflow-hidden ${
@@ -183,9 +193,9 @@ export default function ReadingSection({
             ?.slice(
               readingMode == 'onePage' ? 0 : currentPage,
               readingMode == 'onePage'
-                ? chapterData[chapterLocale].length
-                : currentPage + 2 > chapterData[chapterLocale].length
-                ? chapterData[chapterLocale].length
+                ? chapterLengthRef.current
+                : currentPage + 2 > chapterLengthRef.current
+                ? chapterLengthRef.current
                 : currentPage + 2
             )
             ?.map((page, index) => (
