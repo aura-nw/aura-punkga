@@ -17,7 +17,8 @@ import SettingPasswordModal from 'components/pages/profile/settingPasswordModal'
 import ChangingPasswordModal from 'components/pages/profile/changingPasswordModal'
 import MComic from 'components/pages/homepage/comic'
 import FilledButton from 'components/Button/FilledButton'
-
+import MaleIcon from 'images/icons/male.svg'
+import FemaleIcon from 'images/icons/female.svg'
 export default function Profile({ profile, subscribeList, unsubscribe, subscribe, curentlyReading, updateProfile }) {
   const { account, isSettingUp } = useContext(Context)
   const [birthdate, setBirthdate] = useState(null)
@@ -228,7 +229,12 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                       <div className='text-xs md:text-base'>{moment(profile.data.birthdate).format('DD/MM/yyyy')}</div>
                     )}
                     {profile.data.gender && (
-                      <div className='text-xs md:text-base capitalize'>{profile.data.gender}</div>
+                      <div className='text-xs md:text-base capitalize flex gap-1'>
+                        {profile.data.gender}{' '}
+                        <span>
+                          <Image src={profile.data.gender.toLowerCase() == 'male' ? MaleIcon : FemaleIcon} alt='' />
+                        </span>
+                      </div>
                     )}
                   </div>
                 )}

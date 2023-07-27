@@ -127,6 +127,13 @@ const Chapter: React.FC = ({
       ;(document.querySelector('#open-sign-in-btn') as any)?.click()
     }
   }
+
+  const commentLength = chapterComments.data
+    ? chapterComments.data.reduce((total, current) => {
+        return total + 1 + current.replies.length
+      }, 0)
+    : 0
+
   return (
     <>
       <div className='xl:hidden'>
@@ -262,6 +269,7 @@ const Chapter: React.FC = ({
               </div>
             ) : (
               <ReadingSection
+                commentNumber={commentLength}
                 data={comicDetails.data}
                 chapterData={chapterDetails.data}
                 setOpenComments={setOpenComments}

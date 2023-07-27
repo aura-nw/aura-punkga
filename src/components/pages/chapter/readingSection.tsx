@@ -45,6 +45,7 @@ export default function ReadingSection({
   likeHandler,
   goToChap,
   isLiked,
+  commentNumber,
 }: {
   mode: 'minscreen' | 'fullscreen'
   setMode: (mode: 'minscreen' | 'fullscreen') => void
@@ -60,6 +61,7 @@ export default function ReadingSection({
   goToChap: (d: 'Prev' | 'Next') => void
   likeHandler: (isLiked: boolean) => void
   isLiked: boolean
+  commentNumber: number
 }) {
   const [readingMode, setReadingMode] = useState('onePage')
   const [currentPage, setCurrentPage] = useState(0)
@@ -232,8 +234,8 @@ export default function ReadingSection({
             <div className='font-bold text-ellipsis max-w-[20vw] overflow-hidden whitespace-nowrap'>{`${data[language].title} • Chapter ${chapterData.number} • ${chapterData.name}`}</div>
             <p className='text-subtle-dark'>
               {(chapterData.likes || 0).toLocaleString('en-US')} likes •{' '}
-              {(chapterData.views || 0).toLocaleString('en-US')} views •{' '}
-              {(chapterData.comments || 0).toLocaleString('en-US')} comments
+              {(chapterData.views || 0).toLocaleString('en-US')} views • {(commentNumber || 0).toLocaleString('en-US')}{' '}
+              comments
             </p>
           </div>
         </div>
@@ -300,8 +302,8 @@ export default function ReadingSection({
             <strong>{`${data[language].title} • Chapter ${chapterData.number} • ${chapterData.name}`}</strong>
             <p className='text-subtle-dark'>
               {(chapterData.likes || 0).toLocaleString('en-US')} likes •{' '}
-              {(chapterData.views || 0).toLocaleString('en-US')} views •{' '}
-              {(chapterData.comments || 0).toLocaleString('en-US')} comments
+              {(chapterData.views || 0).toLocaleString('en-US')} views • {(commentNumber || 0).toLocaleString('en-US')}{' '}
+              comments
             </p>
           </div>
         </div>
