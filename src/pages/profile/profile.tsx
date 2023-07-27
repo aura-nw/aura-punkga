@@ -158,10 +158,8 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                     Email:
                   </div>
                   <p
-                    className={` text-second-color transition-all ${
-                      open
-                        ? 'text-sm md:text-base font-bold mb-0'
-                        : 'text-sm md:text-[32px] md:leading-10 font-extrabold  mb-1 md:mb-4 '
+                    className={`transition-all text-sm md:text-base ${
+                      open ? 'mb-0 text-black' : 'mb-1 text-second-color'
                     }`}>
                     {profile.data.email}
                   </p>
