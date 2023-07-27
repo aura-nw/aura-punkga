@@ -10,9 +10,8 @@ import { IComic } from 'src/models/comic'
 
 export default function Comic(props: IComic) {
   const { locale } = useRouter()
-  const router = useRouter()
   return (
-    <>
+    <div className={`${props.status.text == 'Upcoming' ? 'pointer-events-none' : ''}`}>
       <div className='hidden md:flex gap-[20px]'>
         <Link href={`/comic/${props.id}`} className='flex-auto w-1/3 xl:hidden'>
           <Image
@@ -120,6 +119,6 @@ export default function Comic(props: IComic) {
           </div>
         </Link>
       </div>
-    </>
+    </div>
   )
 }

@@ -220,38 +220,15 @@ const Chapter: React.FC = ({
               openComments ? 'h-[calc(100vh-48px)]' : 'h-0'
             } transition-all w-full overflow-auto fixed bottom-0 pb-[52px] bg-[#000000b2]`}>
             <div className='flex flex-col gap-6 overflow-auto p-5'>
-              {chapterComments.data.map((comment, index) => (
-                <Comment
-                  reload={() => chapterComments.callApi(true)}
-                  key={index}
-                  data={comment}
-                  chapterId={chapterDetails.data.id}
-                />
-              ))}
-              {chapterComments.data.map((comment, index) => (
-                <Comment
-                  reload={() => chapterComments.callApi(true)}
-                  key={index}
-                  data={comment}
-                  chapterId={chapterDetails.data.id}
-                />
-              ))}
-              {chapterComments.data.map((comment, index) => (
-                <Comment
-                  reload={() => chapterComments.callApi(true)}
-                  key={index}
-                  data={comment}
-                  chapterId={chapterDetails.data.id}
-                />
-              ))}
-              {chapterComments.data.map((comment, index) => (
-                <Comment
-                  reload={() => chapterComments.callApi(true)}
-                  key={index}
-                  data={comment}
-                  chapterId={chapterDetails.data.id}
-                />
-              ))}
+              {chapterComments.data?.length &&
+                chapterComments.data.map((comment, index) => (
+                  <Comment
+                    reload={() => chapterComments.callApi(true)}
+                    key={index}
+                    data={comment}
+                    chapterId={chapterDetails.data.id}
+                  />
+                ))}
             </div>
             {account?.verified && account?.name ? (
               <div className='bg-light-gray fixed bottom-0 right-0 left-0 w-full'>
