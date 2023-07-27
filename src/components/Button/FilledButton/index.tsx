@@ -38,7 +38,7 @@ export default function FilledButton({
       } ${className}`}>
       <span
         className={`transition-all duration-300 pointer-events-none ${
-          loading ? `${size == 'lg' ? 'w-[25px]' : 'w-5'} opacity-100 mr-2` : 'w-0 opacity-0'
+          loading ? `${size == 'lg' ? 'w-[25px]' : 'w-5'} opacity-100 mr-2` : 'w-0 h-0 opacity-0'
         }`}>
         <Spinner className={`border-[#84CCA3] ${size == 'lg' ? 'h-[25px] w-[25px]' : 'h-4 w-4'}`} />
       </span>
