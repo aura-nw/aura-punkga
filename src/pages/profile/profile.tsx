@@ -180,8 +180,12 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                     <div>
                       <DatePicker
                         selected={birthdate}
+                        showMonthDropdown
+                        showYearDropdown
+                        dropdownMode='select'
                         onChange={(date) => setBirthdate(date)}
                         customInput={<CustomInput />}
+                        maxDate={new Date()}
                       />
                     </div>
                   </div>
@@ -243,7 +247,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                   className={`flex transition-all md:mt-2 overflow-hidden ${
                     !open ? 'opacity-0 h-0 ' : 'opacity-100 h-[80px]'
                   }`}>
-                  <label className='text-medium-gray font-bold min-w-[88px] flex-auto pt-[7px] text-sm md:text-base'>
+                  <label className='text-medium-gray font-bold min-w-[88px] md:min-w-[100px] flex-auto pt-[7px] text-sm md:text-base'>
                     Bio:
                   </label>
                   <AutoGrowingTextField
