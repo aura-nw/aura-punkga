@@ -25,7 +25,7 @@ export default function Comic(props: IComic & { unsubscribe?: () => void; subscr
           height={240}
           className={`${
             props.image ? 'object-cover' : 'object-contain bg-light-gray'
-          } rounded-[15px] w-[180px] h-[240px]`}
+          } rounded-[15px] w-[180px] aspect-[18/24]`}
         />
       </Link>
       <div className='flex-auto w-2/3 flex flex-col justify-between gap-[10px]'>

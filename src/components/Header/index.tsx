@@ -213,7 +213,7 @@ export default function Header({}) {
                           <div className='flex-auto w-[10%]'></div>
                           <div className='flex-auto w-[30%]'></div>
                         </div>
-                        <SubFilledButton fullWidth size='lg' onClick={unlinkWallet}>
+                        <SubFilledButton className='w-full' size='lg' onClick={unlinkWallet}>
                           Disconnect Wallet
                         </SubFilledButton>
                         <div className='mt-[10px]'>
@@ -375,7 +375,7 @@ export default function Header({}) {
                           <div className='flex-auto w-[10%]'></div>
                           <div className='flex-auto w-[30%]'></div>
                         </div>
-                        <SubFilledButton fullWidth size='lg' onClick={unlinkWallet}>
+                        <SubFilledButton className='w-full' size='lg' onClick={unlinkWallet}>
                           Disconnect Wallet
                         </SubFilledButton>
                         <div className='mt-[10px]'>

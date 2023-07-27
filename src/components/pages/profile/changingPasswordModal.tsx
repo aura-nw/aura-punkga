@@ -37,6 +37,10 @@ export default function ChangingPasswordModal({ open, setOpen }) {
         setRePasswordError("Password doesn’t match")
         return
       }
+      if (newPassword == currentPassword) {
+        setRePasswordError('New password and old password is same')
+        return
+      }
       if (!validatePassword(newPassword)) {
         setRePasswordError(
           "Password needs to be at least 6 characters long and contain at least one number, one uppercase letter, one lowercase letter and one special character"

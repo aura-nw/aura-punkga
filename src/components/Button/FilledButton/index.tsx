@@ -1,11 +1,10 @@
-import Spinner from "components/Spinner"
-import { buttonClasses } from ".."
+import Spinner from 'components/Spinner'
+import { buttonClasses } from '..'
 
 interface IFilledButton {
   children: JSX.Element | string
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'sm' | 'md' | 'lg' | 'xs'
   onClick?: () => void
-  fullWidth?: boolean
   disabled?: boolean
   loading?: boolean
   className?: string
@@ -16,7 +15,6 @@ export default function FilledButton({
   children,
   size = 'md',
   onClick,
-  fullWidth,
   disabled,
   className,
   loading,
@@ -24,15 +22,10 @@ export default function FilledButton({
   buttonRef,
 }: IFilledButton) {
   const classes = {
-    sm: `${buttonClasses} text-[14px] leading-[17.5px] font-bold px-[18px] pt-[4px] pb-[4px] bg-primary-color rounded-[12px] ${
-      fullWidth ? 'w-full' : 'w-max'
-    } whitespace-nowrap`,
-    md: `${buttonClasses} text-[16px] leading-[20px] font-bold px-[16px] pt-[5px] pb-[9px] bg-primary-color rounded-[12px] ${
-      fullWidth ? 'w-full' : 'w-max'
-    } whitespace-nowrap`,
-    lg: `${buttonClasses} text-[20px] leading-[25px] font-bold px-[32px] pt-[10px] pb-[13px] bg-primary-color rounded-[20px] ${
-      fullWidth ? 'w-full' : 'w-max'
-    } whitespace-nowrap`,
+    xs: `${buttonClasses} text-[12px] leading-[15px] font-bold px-[8px] pt-[2px] pb-[2px] bg-primary-color rounded-[5px]  whitespace-nowrap`,
+    sm: `${buttonClasses} text-[14px] leading-[17.5px] font-bold px-[18px] pt-[4px] pb-[4px] bg-primary-color rounded-[12px]  whitespace-nowrap`,
+    md: `${buttonClasses} text-[16px] leading-[20px] font-bold px-[16px] pt-[5px] pb-[9px] bg-primary-color rounded-[12px]  whitespace-nowrap`,
+    lg: `${buttonClasses} text-[20px] leading-[25px] font-bold px-[32px] pt-[10px] pb-[13px] bg-primary-color rounded-[20px]  whitespace-nowrap`,
   }
   return (
     <button
