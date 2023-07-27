@@ -29,6 +29,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
   const [settingPasswordModalOpen, setSettingPasswordModalOpen] = useState(false)
   const [changingPasswordModalOpen, setChangingPasswordModalOpen] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [showMore, setShowMore] = useState(false)
 
   useEffect(() => {
     if (!isSettingUp) {
@@ -48,7 +49,6 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
 
   const updateProfileHandler = async () => {
     const form = new FormData()
-    form.append('zc', 'ác')
     if (gender.key && gender.key != profile.data.gender) {
       form.append('gender', gender.key as string)
     }
@@ -235,15 +235,19 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                 {profile.data.bio && (
                   <div
                     className={`font-medium transition-all overflow-hidden ${
-                      open ? 'opacity-0 h-0' : 'opacity-100 h-[80px] text-sm md:text-base'
+                      open ? 'opacity-0 h-0' : 'opacity-100 min-h-[80px] text-sm md:text-base'
                     }`}>
                     <label className='text-medium-gray text-sm md:text-base'>Bio:</label>
-                    <p>{profile.data.bio}</p>
+                    <p
+                      className={`${showMore ? '' : 'line-clamp-3 cursor-pointer'}`}
+                      onClick={() => setShowMore(!showMore)}>
+                      {profile.data.bio}
+                    </p>
                   </div>
                 )}
                 <div
                   className={`flex transition-all md:mt-2 overflow-hidden ${
-                    !open ? 'opacity-0 h-0 ' : 'opacity-100 h-[80px]'
+                    !open ? 'opacity-0 min-h-0 max-h-0' : 'opacity-100 min-h-[80px]'
                   }`}>
                   <label className='text-medium-gray font-bold min-w-[88px] md:min-w-[100px] flex-auto pt-[7px] text-sm md:text-base'>
                     Bio:
@@ -256,9 +260,9 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                   />
                 </div>
               </div>
-              <div className='relative mt-5 md:mt-0'>
+              <div className='relative mt-5 md:mt-2 h-[19px] md:h-[48px]'>
                 <div
-                  className={`flex gap-2 md:gap-6 absolute bottom-0 transition-all ${
+                  className={`flex gap-2 md:gap-6 absolute top-0 transition-all ${
                     open ? 'left-1/2 -translate-x-1/2 opacity-0 pointer-events-none' : 'left-[0%] opacity-100 '
                   }`}>
                   <>
@@ -296,7 +300,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                   )}
                 </div>
                 <div
-                  className={`gap-6 absolute bottom-0 transition-all hidden md:flex ${
+                  className={`gap-6 absolute top-0 transition-all hidden md:flex ${
                     open ? 'right-[0%]  opacity-100' : 'right-1/2 opacity-0 translate-x-1/2 pointer-events-none'
                   }`}>
                   <OutlineButton loading={loading} size='lg' onClick={updateProfileHandler}>
