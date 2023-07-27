@@ -268,6 +268,7 @@ export default function ComicDetail({
                     account={account}
                     like={like}
                     unlike={unlike}
+                    setExpandDetail={setExpandDetail}
                   />
                 ))}
             </div>
@@ -289,7 +290,7 @@ export default function ComicDetail({
   )
 }
 
-const Chapter = ({ expandDetail, data, chapter, account, like, unlike }) => {
+const Chapter = ({ expandDetail, data, chapter, account, like, unlike, setExpandDetail }) => {
   const [isLiked, setIsLiked] = useState(chapter.isLiked || false)
   const [likes, setLikes] = useState(chapter.likes || 0)
   const router = useRouter()
@@ -316,6 +317,7 @@ const Chapter = ({ expandDetail, data, chapter, account, like, unlike }) => {
       <div
         onClick={() => {
           if (chapter.status == 'Upcoming' || (!account && chapter.type == 'Account only')) return
+          setExpandDetail(false)
           router.push(`/comic/${data.id}/chapter/${chapter.number}`)
         }}
         className='flex gap-4 cursor-pointer'>

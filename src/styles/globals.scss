@@ -16,8 +16,8 @@
   --medium-green: #1fab5e;
   --light-yellow: #fff2d1;
   --medium-yellow: #eeb304;
-  --light-red: #f0caca;
-  --medium-red: #e50000;
+  --light-red: #FFD9DA;
+  --medium-red: #FF5C00;
 }
 body {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
@@ -174,13 +174,5 @@ input[type=number] {
   width: max-content;
   margin: 0px 4px;
   transform: translateX(16ch);
-  animation-name: slide;
-  animation-duration: 5s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  -webkit-animation-name: slide;
-  -webkit-animation-duration: 6s;
-  -webkit-animation-timing-function: linear;
-  -webkit-animation-iteration-count: infinite;
   white-space: nowrap;
 }

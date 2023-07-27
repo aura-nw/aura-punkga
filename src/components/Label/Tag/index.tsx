@@ -18,7 +18,20 @@ const Tag = ({ children, selected, onClick, value }: ITag) => {
       onClick={() => onClick && onClick(value)}
       disabled={!onClick}>
       <div className='overflow-hidden'>
-        <div className='tag-content'>{children}</div>
+        <div
+          className={`tag-content ${
+            JSON.stringify(children).length > 15
+              ? JSON.stringify(children).length < 30
+                ? `animate-[slide_4s_linear_infinite]`
+                : JSON.stringify(children).length < 45
+                ? `animate-[slide_10s_linear_infinite]`
+                : JSON.stringify(children).length < 70
+                ? `animate-[slide_20s_linear_infinite]`
+                : `animate-[slide_30s_linear_infinite]`
+              : ''
+          }`}>
+          {children}
+        </div>
       </div>
     </button>
   )
