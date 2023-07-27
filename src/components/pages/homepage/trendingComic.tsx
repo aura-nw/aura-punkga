@@ -9,7 +9,7 @@ import { IComic } from 'src/models/comic'
 export default function TrendingComic(props: IComic) {
   const { locale } = useRouter()
   return (
-    <div className='flex gap-[20px]'>
+    <div className={`flex gap-[20px] ${props.status.text == 'Upcoming' ? 'pointer-events-none' : ''}`}>
       <Link href={`/comic/${props.id}`} className='flex-auto w-1/3 xl:hidden'>
         <Image
           src={props.image || NoImage}

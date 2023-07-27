@@ -16,7 +16,9 @@ const Tag = ({ children, selected, onClick, value }: ITag) => {
       }`}
       onClick={() => onClick && onClick(value)}
       disabled={!onClick}>
-      <div>{children}</div>
+      <div className='overflow-hidden'>
+        <div className='tag-content'>{children}</div>
+      </div>
     </button>
   )
 }

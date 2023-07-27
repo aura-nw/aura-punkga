@@ -45,19 +45,20 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
 
   const updateProfileHandler = async () => {
     const form = new FormData()
+    form.append('zc', 'ác')
     if (gender.key && gender.key != profile.data.gender) {
-      form.append("gender", gender.key as string)
+      form.append('gender', gender.key as string)
     }
     if (birthdate && new Date(profile.data.birthdate).getTime() != new Date(birthdate).getTime()) {
-      form.append("birthdate", moment(birthdate).format("yyyy-MM-DD") as string)
+      form.append('birthdate', moment(birthdate).format('yyyy-MM-DD') as string)
     }
     if (bio && profile.data.bio != bio) {
-      form.append("bio", bio)
+      form.append('bio', bio)
     }
     if ((profilePicture.current as any).files[0]) {
-      form.append("picture", (profilePicture.current as any).files[0])
+      form.append('picture', (profilePicture.current as any).files[0])
     }
-    if (form.keys.length) {
+    if (Object.keys(Object.fromEntries(form)).length) {
       setLoading(true)
       const res = await updateProfile(form)
       await profile.callApi(true)
@@ -69,12 +70,12 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
   const CustomInput = forwardRef(({ value, onClick }: any, ref: any) => {
     return (
       <button
-        className="relative w-full cursor-default rounded-[12px] bg-white py-[3px] pl-[13px] pr-[57px] text-left text-gray-900 shadow-sm ring-1 ring-inset ring-medium-gray focus:outline-none focus:ring-2 sm:text-sm sm:leading-6 lg:h-10 font-bold"
+        className='relative w-full cursor-default rounded-[12px] bg-white py-[3px] pl-[13px] pr-[57px] text-left text-gray-900 shadow-sm ring-1 ring-inset ring-medium-gray focus:outline-none focus:ring-2 sm:text-sm sm:leading-6 lg:h-10 font-bold'
         onClick={onClick}
         ref={ref}>
-        {value ? moment(value).format("DD/MM/yyyy") : <span className="text-medium-gray">Click to change</span>}
-        <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-          <ChevronDownIcon className="h-5 w-5 text-medium-gray" aria-hidden="true" />
+        {value ? moment(value).format('DD/MM/yyyy') : <span className='text-medium-gray'>Click to change</span>}
+        <span className='pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2'>
+          <ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />
         </span>
       </button>
     )
@@ -85,79 +86,79 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
   return (
     <>
       <Header />
-      <div className="pk-container py-5">
+      <div className='pk-container py-5'>
         {isSettingUp || profile.loading ? (
-          <div className="flex gap-[60px]">
-            <div className="w-[320px] h-[320px] rounded-xl object-cover bg-light-gray animate-pulse"></div>
-            <div className="flex flex-col justify-between">
+          <div className='flex gap-[60px]'>
+            <div className='w-[320px] h-[320px] rounded-xl object-cover bg-light-gray animate-pulse'></div>
+            <div className='flex flex-col justify-between'>
               <div>
-                <p className="h-10 animate-pulse bg-light-gray text-second-color mb-4 w-2/3"></p>
-                <p className="h-4 animate-pulse bg-light-gray text-second-color mb-4 w-3/4"></p>
-                <div className="flex gap-[30px] font-medium mb-5">
-                  <p className="h-4 animate-pulse bg-light-gray text-second-color mb-4 w-1/2"></p>
-                  <p className="h-4 animate-pulse bg-light-gray text-second-color mb-4 w-1/2"></p>
+                <p className='h-10 animate-pulse bg-light-gray text-second-color mb-4 w-2/3'></p>
+                <p className='h-4 animate-pulse bg-light-gray text-second-color mb-4 w-3/4'></p>
+                <div className='flex gap-[30px] font-medium mb-5'>
+                  <p className='h-4 animate-pulse bg-light-gray text-second-color mb-4 w-1/2'></p>
+                  <p className='h-4 animate-pulse bg-light-gray text-second-color mb-4 w-1/2'></p>
                 </div>
-                <div className="w-[20vw] animate-pulse h-24 bg-light-gray"></div>
+                <div className='w-[20vw] animate-pulse h-24 bg-light-gray'></div>
               </div>
             </div>
           </div>
         ) : (
-          <div className="flex gap-[60px]">
-            <div className="w-[320px] h-[320px] rounded-xl object-contain bg-light-gray relative overflow-hidden">
+          <div className='flex gap-[60px]'>
+            <div className='w-[320px] h-[320px] rounded-xl object-contain bg-light-gray relative overflow-hidden'>
               <div
                 className={`transition-all bg-medium-gray duration-300 absolute inset-0 opacity-0 flex flex-col justify-center items-center cursor-pointer ${
-                  open ? "hover:opacity-40" : "hidden"
+                  open ? 'hover:opacity-40' : 'hidden'
                 }`}>
-                <CloudArrowUpIcon className="w-10 h-10" />
-                <div className="text-xl font-semibold">Upload profile picture</div>
-                <input ref={profilePicture} type="file" className="bg-black absolute inset-0 opacity-0" />
+                <CloudArrowUpIcon className='w-10 h-10' />
+                <div className='text-xl font-semibold'>Upload profile picture</div>
+                <input ref={profilePicture} type='file' className='bg-black absolute inset-0 opacity-0' />
               </div>
               <Image
                 src={profile.data.picture || NoImg}
                 height={360}
                 width={360}
-                alt=""
-                className="h-full w-full object-cover"
+                alt=''
+                className='h-full w-full object-cover'
               />
             </div>
-            <div className="flex flex-col justify-between w-1/2">
+            <div className='flex flex-col justify-between w-1/2'>
               <div>
-                <div className="flex">
+                <div className='flex'>
                   <div
                     className={`inline-block text-medium-gray transition-all  ${
-                      open ? "w-[100px] opacity-100 font-bold" : "w-[0px] opacity-0"
+                      open ? 'w-[100px] opacity-100 font-bold' : 'w-[0px] opacity-0'
                     }`}>
                     Username:
                   </div>
                   <p
                     className={` text-second-color transition-all ${
-                      open ? "text-base font-bold mb-0" : "text-[32px] leading-10 font-extrabold  mb-4 "
+                      open ? 'text-base font-bold mb-0' : 'text-[32px] leading-10 font-extrabold  mb-4 '
                     }`}>
                     {profile.data.nickname}
                   </p>
                 </div>
-                <div className="flex">
+                <div className='flex'>
                   <div
                     className={`inline-block text-medium-gray transition-all  ${
-                      open ? "w-[100px] opacity-100 font-bold" : "w-[0px] opacity-0"
+                      open ? 'w-[100px] opacity-100 font-bold' : 'w-[0px] opacity-0'
                     }`}>
                     Email:
                   </div>
                   <p
                     className={` text-second-color transition-all ${
-                      open ? "text-base font-bold mb-0" : "font-medium  mb-2"
+                      open ? 'text-base font-bold mb-0' : 'font-medium  mb-2'
                     }`}>
                     {profile.data.email}
                   </p>
                 </div>
                 <div
                   className={`flex flex-col gap-4 font-medium transition-all ${
-                    !open ? "opacity-0 h-0 overflow-hidden mb-0" : "opacity-100 h-24 mb-2 mt-2"
+                    !open ? 'opacity-0 h-0 overflow-hidden mb-0' : 'opacity-100 h-24 mb-2 mt-2'
                   }`}>
-                  <div className="flex items-center">
+                  <div className='flex items-center'>
                     <div
                       className={`inline-block text-medium-gray transition-all  ${
-                        open ? "w-[100px] opacity-100 font-bold" : "w-[0px] opacity-0"
+                        open ? 'w-[100px] opacity-100 font-bold' : 'w-[0px] opacity-0'
                       }`}>
                       DOB:
                     </div>
@@ -169,10 +170,10 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                       />
                     </div>
                   </div>
-                  <div className="flex items-center">
+                  <div className='flex items-center'>
                     <div
                       className={`inline-block text-medium-gray transition-all  ${
-                        open ? "w-[100px] opacity-100 font-bold" : "w-[0px] opacity-0"
+                        open ? 'w-[100px] opacity-100 font-bold' : 'w-[0px] opacity-0'
                       }`}>
                       Gender:
                     </div>
@@ -180,21 +181,21 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                       <Select
                         selected={gender}
                         onChange={setGender}
-                        className="font-bold"
-                        placeholder="Select a gender"
-                        icon={<ChevronDownIcon className="h-5 w-5 text-medium-gray" aria-hidden="true" />}
+                        className='font-bold'
+                        placeholder='Select a gender'
+                        icon={<ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />}
                         options={[
                           {
-                            key: "Male",
-                            value: "Male",
+                            key: 'Male',
+                            value: 'Male',
                           },
                           {
-                            key: "Female",
-                            value: "Female",
+                            key: 'Female',
+                            value: 'Female',
                           },
                           {
-                            key: "Undisclosed",
-                            value: "Undisclosed",
+                            key: 'Undisclosed',
+                            value: 'Undisclosed',
                           },
                         ]}
                       />
@@ -204,57 +205,57 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                 {(!!profile.data.birthdate || profile.data.gender) && (
                   <div
                     className={`flex gap-[30px] font-medium  transition-all ${
-                      open ? "opacity-0 h-0 overflow-hidden mb-0" : "opacity-100 h-6 mb-2"
+                      open ? 'opacity-0 h-0 overflow-hidden mb-0' : 'opacity-100 h-6 mb-2'
                     }`}>
-                    {profile.data.birthdate && <div>{moment(profile.data.birthdate).format("DD/MM/yyyy")}</div>}
-                    {profile.data.gender && <div className="capitalize">{profile.data.gender}</div>}
+                    {profile.data.birthdate && <div>{moment(profile.data.birthdate).format('DD/MM/yyyy')}</div>}
+                    {profile.data.gender && <div className='capitalize'>{profile.data.gender}</div>}
                   </div>
                 )}
                 {profile.data.bio && (
                   <div
                     className={`font-medium transition-all overflow-hidden ${
-                      open ? "opacity-0 h-0" : "opacity-100 h-[80px]"
+                      open ? 'opacity-0 h-0' : 'opacity-100 h-[80px]'
                     }`}>
-                    <label className="text-medium-gray">Bio:</label>
+                    <label className='text-medium-gray'>Bio:</label>
                     <p>{profile.data.bio}</p>
                   </div>
                 )}
                 <div
                   className={`flex transition-all mt-2 overflow-hidden ${
-                    !open ? "opacity-0 h-0 " : "opacity-100 h-[80px]"
+                    !open ? 'opacity-0 h-0 ' : 'opacity-100 h-[80px]'
                   }`}>
-                  <label className="text-medium-gray font-bold min-w-[100px] flex-auto pt-[7px]">Bio:</label>
+                  <label className='text-medium-gray font-bold min-w-[100px] flex-auto pt-[7px]'>Bio:</label>
                   <AutoGrowingTextField
                     value={bio}
                     onChange={setBio}
-                    placeholder="Write something about yourself "
-                    className="text-sm font-bold leading-6"
+                    placeholder='Write something about yourself '
+                    className='text-sm font-bold leading-6'
                   />
                 </div>
               </div>
-              <div className="relative">
+              <div className='relative'>
                 <div
                   className={`flex gap-6 absolute bottom-0 transition-all ${
-                    open ? "left-1/2 -translate-x-1/2 opacity-0" : "left-[0%] opacity-100"
+                    open ? 'left-1/2 -translate-x-1/2 opacity-0' : 'left-[0%] opacity-100'
                   }`}>
-                  <OutlineButton size="lg" onClick={() => setOpen(!open)}>
+                  <OutlineButton size='lg' onClick={() => setOpen(!open)}>
                     Edit profile
                   </OutlineButton>
-                  {profile.data?.signup_methods?.includes("basic_auth") ? (
-                    <OutlineButton onClick={() => setChangingPasswordModalOpen(true)} size="lg">
+                  {profile.data?.signup_methods?.includes('basic_auth') ? (
+                    <OutlineButton onClick={() => setChangingPasswordModalOpen(true)} size='lg'>
                       Change password
                     </OutlineButton>
                   ) : (
-                    <OutlineButton onClick={() => setSettingPasswordModalOpen(true)} size="lg">
+                    <OutlineButton onClick={() => setSettingPasswordModalOpen(true)} size='lg'>
                       Set password
                     </OutlineButton>
                   )}
                 </div>
                 <div
                   className={`flex gap-6 absolute bottom-0 transition-all ${
-                    open ? "right-[0%]  opacity-100" : "right-1/2 opacity-0 translate-x-1/2"
+                    open ? 'right-[0%]  opacity-100' : 'right-1/2 opacity-0 translate-x-1/2 pointer-events-none'
                   }`}>
-                  <OutlineButton loading={loading} size="lg" onClick={updateProfileHandler}>
+                  <OutlineButton loading={loading} size='lg' onClick={updateProfileHandler}>
                     Save
                   </OutlineButton>
                 </div>
@@ -262,11 +263,11 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
             </div>
           </div>
         )}
-        <div className="mt-[100px]">
+        <div className='mt-[100px]'>
           {!!(isSettingUp || curentlyReading.loading || curentlyReading.data?.length) && (
-            <p className="text-2xl leading-6 font-extrabold mb-10">Currently reading</p>
+            <p className='text-2xl leading-6 font-extrabold mb-10'>Currently reading</p>
           )}
-          <div className="grid gap-x-24 gap-y-10 grid-cols-3">
+          <div className='grid gap-x-24 gap-y-10 grid-cols-3'>
             {isSettingUp || curentlyReading.loading ? (
               <>
                 <DummyComic />
@@ -282,11 +283,11 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
             )}
           </div>
         </div>
-        <div className="mt-[100px]">
+        <div className='mt-[100px]'>
           {!!(isSettingUp || subscribeList.loading || subscribeList.data?.length) && (
-            <p className="text-2xl leading-6 font-extrabold mb-10">Subscribe list</p>
+            <p className='text-2xl leading-6 font-extrabold mb-10'>Subscribe list</p>
           )}
-          <div className="grid gap-x-24 gap-y-10 grid-cols-3">
+          <div className='grid gap-x-24 gap-y-10 grid-cols-3'>
             {isSettingUp || subscribeList.loading ? (
               <>
                 <DummyComic />

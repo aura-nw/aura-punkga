@@ -164,15 +164,16 @@ input[type=number] {
 }
 
 .animation-tag {
-  width: 10ch;
+  width: 15ch;
   overflow: hidden;
   text-overflow: hidden;
   white-space: nowrap;
 }
 
-.animation-tag > div {
+.animation-tag div.tag-content {
   width: max-content;
-  transform: translateX(11ch);
+  margin: 0px 4px;
+  transform: translateX(16ch);
   animation-name: slide;
   animation-duration: 5s;
   animation-timing-function: linear;
