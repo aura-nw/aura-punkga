@@ -19,7 +19,7 @@ export default function OutlineButton({
 }: IOutlineButton) {
   const classes = {
     sm: `${buttonClasses} text-[12px] leading-[15px] font-bold px-[8px] border-[1.5px] border-second-color text-second-color border-solid rounded-[6px]`,
-    md: `${buttonClasses} text-[16px] leading-[20px] font-bold px-[14.5px] pt-[4.5px] pb-[7.5px] border-[1.5px] border-second-color text-second-color border-solid rounded-[12px]`,
+    md: `${buttonClasses} text-[16px] [&>span]:min-h-[24px] leading-[20px] font-bold px-[14.5px] pt-[3.5px] pb-[3.5px] border-[1.5px] border-second-color text-second-color border-solid rounded-[12px]`,
     lg: `${buttonClasses} text-[20px] leading-[25px] font-bold px-[30px] pt-[7.5px] pb-[9.5px] border-[3px] border-second-color text-second-color border-solid rounded-[20px]`,
   }
   return (

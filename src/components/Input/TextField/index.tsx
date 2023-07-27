@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 interface ITextField {
   placeholder?: string
   leadingComponent?: JSX.Element
@@ -24,6 +26,7 @@ export default function TextField({
   value,
   inputref,
 }: ITextField) {
+  const ex = ['e', '-', '=', '*', '(', ')', '+']
   if (size == 'lg') {
     return (
       <div className={`relative w-full  rounded-[20px] ${className}`}>
@@ -38,7 +41,16 @@ export default function TextField({
           onBlur={onBlur}
           value={value}
           type={type}
-          onChange={(event) => onChange && onChange(event.target.value)}
+          onKeyDown={(event) => {
+            if (type == 'number' && ex.includes(event.key)) {
+              event.preventDefault()
+              event.stopPropagation()
+              return false
+            }
+          }}
+          onChange={(event) => {
+            onChange && onChange(event.target.value)
+          }}
           id='input-group-1'
           className={`bg-transparent rounded-[20px] w-full p-[13px] placeholder-medium-gray focus:outline-none ${
             leadingComponent ? 'pl-[50px]' : ''
@@ -61,6 +73,14 @@ export default function TextField({
           </div>
         )}
         <input
+          onKeyDown={(event) => {
+            if (type == 'number' && ex.includes(event.key)) {
+              event.preventDefault()
+              event.stopPropagation()
+              return false
+            }
+          }}
+          ref={inputref}
           onFocus={onFocus}
           onBlur={onBlur}
           value={value}
@@ -83,6 +103,13 @@ export default function TextField({
         </div>
       )}
       <input
+        onKeyDown={(event) => {
+          if (type == 'number' && ex.includes(event.key)) {
+            event.preventDefault()
+            event.stopPropagation()
+            return false
+          }
+        }}
         ref={inputref}
         onFocus={onFocus}
         onBlur={onBlur}

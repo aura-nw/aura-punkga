@@ -1,21 +1,21 @@
 import { ArrowsUpDownIcon, DocumentTextIcon, EyeIcon } from '@heroicons/react/20/solid'
 import StatusLabel from 'components/Label/Status'
+import LockIcon from 'images/icons/Lock.svg'
 import moment from 'moment'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import m6 from 'src/assets/images/mockup6.png'
-
+import TextField from 'components/Input/TextField'
 import HeartFillIcon from 'images/icons/heart_fill.svg'
 import HeartOutlineIcon from 'images/icons/heart_outline.svg'
-import TextField from 'components/Input/TextField'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { Context } from 'src/context'
 export default function ChapterList({ list }) {
-  console.log(list)
   const { query } = useRouter()
   const router = useRouter()
   const [isDesc, setIsDesc] = useState(true)
   const [searchChapter, setSearchChapter] = useState('')
+  const { account } = useContext(Context)
   return (
     <div>
       <div className='w-full bg-[#414141] text-medium-gray py-2 px-5 flex items-center justify-between'>
@@ -60,11 +60,22 @@ export default function ChapterList({ list }) {
                     {(function () {
                       switch (chapter.type) {
                         case 'Account only':
-                          return (
-                            <StatusLabel status='warning'>
-                              <>Account only</>
-                            </StatusLabel>
-                          )
+                          if (account) {
+                            return (
+                              <StatusLabel status='success'>
+                                <>Account only</>
+                              </StatusLabel>
+                            )
+                          } else {
+                            return (
+                              <StatusLabel status='error'>
+                                <div className='flex gap-1'>
+                                  <Image src={LockIcon} alt='' />
+                                  Account only
+                                </div>
+                              </StatusLabel>
+                            )
+                          }
                         default:
                           return <div></div>
                       }

@@ -135,16 +135,16 @@ export default function Home() {
                       value: 'All status',
                     },
                     {
-                      key: 'Ongoing',
-                      value: 'On going',
-                    },
-                    {
                       key: 'Finished',
                       value: 'Finished',
                     },
                     {
-                      key: 'Removed',
-                      value: 'Removed',
+                      key: 'Ongoing',
+                      value: 'On going',
+                    },
+                    {
+                      key: 'Upcoming',
+                      value: 'Upcoming',
                     },
                   ]}
                   placeholder='Status'
@@ -163,6 +163,7 @@ export default function Home() {
                     .filter((data) => {
                       return gerneFilter.key == 'All gernes' || data.tags?.some((tag) => tag[locale] == gerneFilter.key)
                     })
+                    .slice(0, 6)
                     .map((data, index) => {
                       return <Comic key={index} {...data} />
                     })}

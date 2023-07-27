@@ -1,33 +1,28 @@
 import { ArrowRightIcon, BellAlertIcon } from '@heroicons/react/20/solid'
-import {
-  ArrowsUpDownIcon,
-  BellAlertIcon as BellAlertIconOutline,
-  DocumentTextIcon,
-  EyeIcon,
-} from '@heroicons/react/24/outline'
+import { BellAlertIcon as BellAlertIconOutline, EyeIcon } from '@heroicons/react/24/outline'
 import FlashAnimation from 'components/AnimationIconHOC/Flash'
 import FilledButton from 'components/Button/FilledButton'
 import OutlineButton from 'components/Button/OutlineButton'
 import TextField from 'components/Input/TextField'
 import StatusLabel from 'components/Label/Status'
 import Tag from 'components/Label/Tag'
+import ArrowSwapIcon from 'images/icons/arrow-swap.svg'
 import HeartFillIcon from 'images/icons/heart_fill.svg'
 import HeartOutlineIcon from 'images/icons/heart_outline.svg'
 import NoteIcon from 'images/icons/ic_note.svg'
-import ArrowSwapIcon from 'images/icons/arrow-swap.svg'
+import CalendarIcon from 'images/icons/solar_calendar-linear.svg'
 import moment from 'moment'
 import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
-import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Fragment, useContext, useState } from 'react'
 import mockBanner from 'src/assets/images/mockup3.png'
 import mockAvar from 'src/assets/images/mockup4.png'
+import LockIcon from 'images/icons/Lock.svg'
 import m6 from 'src/assets/images/mockup6.png'
 import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
 import { IComicDetail } from 'src/models/comic'
-import CalendarIcon from 'images/icons/solar_calendar-linear.svg'
-import { useRouter } from 'next/router'
 export default function ComicDetail({
   data,
   language,
@@ -340,11 +335,22 @@ const Chapter = ({ expandDetail, data, chapter, account, like, unlike }) => {
               {(function () {
                 switch (chapter.type) {
                   case 'Account only':
-                    return (
-                      <StatusLabel status='warning'>
-                        <>Account only</>
-                      </StatusLabel>
-                    )
+                    if (account) {
+                      return (
+                        <StatusLabel status='success'>
+                          <>Account only</>
+                        </StatusLabel>
+                      )
+                    } else {
+                      return (
+                        <StatusLabel status='error'>
+                          <div className='flex gap-1'>
+                            <Image src={LockIcon} alt='' />
+                            Account only
+                          </div>
+                        </StatusLabel>
+                      )
+                    }
                   case 'Upcoming':
                     return (
                       <StatusLabel status='warning'>
