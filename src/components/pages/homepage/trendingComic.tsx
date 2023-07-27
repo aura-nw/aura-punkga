@@ -33,27 +33,31 @@ export default function TrendingComic(props: IComic) {
         />
       </Link>
       <div className='flex-auto w-2/3 flex flex-col'>
-        <Link href={`/comic/${props.id}`} className=' font-bold text-[18px] xl:hidden'>
+        <Link
+          href={`/comic/${props.id}`}
+          className=' font-bold text-xs text-second-color md:text-black md:text-[18px] xl:hidden'>
           {props[locale].title}
         </Link>
         <Link href={`/comic/${props.id}/chapter/1`} className=' font-bold text-[18px] hidden xl:block'>
           {props[locale].title}
         </Link>
-        <div>
+        <div className='text-xs md:text-base'>
+          by{' '}
           {props.authors.map((author, index) => (
             <Fragment key={index}>
-              <span className='font-[500] first:hidden'>, </span>
-              <span className='font-[500]'>{author}</span>
+              <span className='font-[500] first:hidden text-second-color md:text-black'>, </span>
+              <span className='font-[500] text-second-color md:text-black'>{author}</span>
             </Fragment>
           ))}
         </div>
-        <div className='text-medium-gray flex-1'>
-          <div className='flex items-center '>
-            <EyeIcon className='w-5 inline mr-1' /> {props.views.toLocaleString('en-US')}
+        <div className='md:hidden text-xs line-clamp-4 my-2'>{props[locale].description}</div>
+        <div className='text-second-color md:text-medium-gray flex-1'>
+          <div className='flex items-center text-xs md:text-base'>
+            <EyeIcon className='w-4 md:w-5 inline mr-1' /> {props.views.toLocaleString('en-US')}
           </div>
         </div>
         {!!props.latestChap.number && (
-          <div className='mt-[10px] [20px]'>
+          <div className='mt-[10px] text-xs md:text-base'>
             Latest:{' '}
             <Link
               href={`/comic/${props.id}/chapter/${props.latestChap.number}`}

@@ -43,51 +43,27 @@ export default function Home() {
     <>
       <Header />
       <div className='pk-container'>
-        <div className='mt-[40px] grid md:grid-cols-2 grid-cols-1 px-2 md:px-0 gap-[40px]'>
-          <div>
-            <Carousel>
-              <div>
-                <Image className='w-full' src={Mock} alt='' />
-              </div>
-              <div>
-                <Image className='w-full' src={Mock2} alt='' />
-              </div>
-              <div>
-                <Image className='w-full' src={Mock2} alt='' />
-              </div>
-              <div>
-                <Image className='w-full' src={Mock2} alt='' />
-              </div>
-              <div>
-                <Image className='w-full' src={Mock2} alt='' />
-              </div>
-              <div>
-                <Image className='w-full' src={Mock2} alt='' />
-              </div>
-            </Carousel>
-          </div>
-          <div>
-            <Carousel>
-              <div>
-                <Image className='w-full' src={Mock} alt='' />
-              </div>
-              <div>
-                <Image className='w-full' src={Mock2} alt='' />
-              </div>
-              <div>
-                <Image className='w-full' src={Mock2} alt='' />
-              </div>
-              <div>
-                <Image className='w-full' src={Mock2} alt='' />
-              </div>
-              <div>
-                <Image className='w-full' src={Mock2} alt='' />
-              </div>
-              <div>
-                <Image className='w-full' src={Mock2} alt='' />
-              </div>
-            </Carousel>
-          </div>
+        <div className='mt-[40px] grid grid-cols-1 px-2 md:px-0 gap-[40px]'>
+          <Carousel>
+            <div className='pr-5'>
+              <Image className='w-full' src={Mock} alt='' />
+            </div>
+            <div className='pl-5'>
+              <Image className='w-full' src={Mock2} alt='' />
+            </div>
+            <div className='pr-5'>
+              <Image className='w-full' src={Mock2} alt='' />
+            </div>
+            <div className='pl-5'>
+              <Image className='w-full' src={Mock2} alt='' />
+            </div>
+            <div className='pr-5'>
+              <Image className='w-full' src={Mock2} alt='' />
+            </div>
+            <div className='pl-5'>
+              <Image className='w-full' src={Mock2} alt='' />
+            </div>
+          </Carousel>
         </div>
         <div className='my-[50px] lg:flex gap-[10%]'>
           <div className='lg:flex-auto lg:w-[70%] px-2 md:px-0'>
@@ -154,19 +130,8 @@ export default function Home() {
                     })}
             </div>
           </div>
-          <div className='lg:flex-auto lg:w-[24%] mt-10 lg:mt-0 px-2 md:px-0'>
-            <div className='relative w-full rounded-[30px] overflow-hidden'>
-              <div className='absolute inset-0'>
-                <Image src={MockupImage2} alt='' fill className='object-cover' />
-              </div>
-              <div className='relative z-10 flex flex-col items-center justify-center h-full py-[50px]'>
-                <div className='font-bold text-xl text-white mb-[10px]'>Share your work to us</div>
-                <SubFilledButton size='lg' onClick={() => window.open(config.ADMIN_URL)}>
-                  Publish manga to Punkga
-                </SubFilledButton>
-              </div>
-            </div>
-            <div className='text-[24px] font-[800] mt-5'>Trending</div>
+          <div className='lg:flex-auto lg:w-[24%] mt-6 lg:mt-0 px-2 md:px-0'>
+            <div className='md:text-[24px] text-sm leading-6 font-[800]'>Trending</div>
             <div className='flex flex-col gap-10 mt-10'>
               {trendingComic.loading
                 ? Array.apply(null, Array(2)).map((d, index) => {
