@@ -269,7 +269,7 @@ export default function Header({}) {
               inputref={ref}
               onChange={_.debounce(setSearchValue, 500)}
               onFocus={() => setIsSearchFocused(true)}
-              onBlur={() => setIsSearchFocused(true)}
+              onBlur={() => setIsSearchFocused(false)}
               className={`transition-[width] bg-light-gray duration-500 ${isSearchFocused ? '!w-[160%]' : ''}`}
               size='lg'
               placeholder='Search by title'
