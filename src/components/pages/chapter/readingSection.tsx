@@ -72,6 +72,7 @@ export default function ReadingSection({
   const ref = useRef()
   const chapterLengthRef = useRef(chapterData?.[chapterLocale]?.length)
   const { account } = useContext(Context)
+  const [chapterLike, setChapterLike] = useState(chapterData.likes)
   const router = useRouter()
   const onMouseEnterHandler = () => {
     if ((window as any).timeoutId) {
@@ -124,6 +125,10 @@ export default function ReadingSection({
       }
     }
   }, [mode])
+
+  useEffect(() => {
+    setChapterLike(chapterData.likes)
+  }, [chapterData.likes])
 
   useEffect(() => {
     const pageHandler = (event: any) => {
@@ -233,9 +238,8 @@ export default function ReadingSection({
           <div>
             <div className='font-bold text-ellipsis max-w-[20vw] overflow-hidden whitespace-nowrap'>{`${data[language].title} • Chapter ${chapterData.number} • ${chapterData.name}`}</div>
             <p className='text-subtle-dark'>
-              {(chapterData.likes || 0).toLocaleString('en-US')} likes •{' '}
-              {(chapterData.views || 0).toLocaleString('en-US')} views • {(commentNumber || 0).toLocaleString('en-US')}{' '}
-              comments
+              {(chapterLike || 0).toLocaleString('en-US')} likes • {(chapterData.views || 0).toLocaleString('en-US')}{' '}
+              views • {(commentNumber || 0).toLocaleString('en-US')} comments
             </p>
           </div>
         </div>
@@ -267,7 +271,10 @@ export default function ReadingSection({
             InactiveComponent={(props: any) => (
               <Image
                 className='cursor-pointer'
-                onClick={() => likeHandler(true)}
+                onClick={() => {
+                  setChapterLike((prevState) => prevState + 1)
+                  likeHandler(true)
+                }}
                 src={HeartOutlineIcon}
                 alt=''
                 {...props}
@@ -276,7 +283,10 @@ export default function ReadingSection({
             ActiveComponent={(props: any) => (
               <Image
                 className='cursor-pointer'
-                onClick={() => likeHandler(false)}
+                onClick={() => {
+                  setChapterLike((prevState) => prevState - 1)
+                  likeHandler(false)
+                }}
                 src={HeartFillIcon}
                 alt=''
                 {...props}
@@ -301,9 +311,8 @@ export default function ReadingSection({
           <div>
             <strong>{`${data[language].title} • Chapter ${chapterData.number} • ${chapterData.name}`}</strong>
             <p className='text-subtle-dark'>
-              {(chapterData.likes || 0).toLocaleString('en-US')} likes •{' '}
-              {(chapterData.views || 0).toLocaleString('en-US')} views • {(commentNumber || 0).toLocaleString('en-US')}{' '}
-              comments
+              {(chapterLike || 0).toLocaleString('en-US')} likes • {(chapterData.views || 0).toLocaleString('en-US')}{' '}
+              views • {(commentNumber || 0).toLocaleString('en-US')} comments
             </p>
           </div>
         </div>
