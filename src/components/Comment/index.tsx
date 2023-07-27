@@ -33,19 +33,19 @@ export default function Comment({
         <div className='flex items-center justify-between'>
           <div className='flex items-center'>
             <Image src={Avatar} alt='' className='w-8 h-8' />
-            <strong className='ml-[10px]'>{data.author.nickname}</strong>
-            <p className='ml-4'>{moment(data.createAt).fromNow()}</p>
+            <strong className='ml-[10px] text-xs md:text-base'>{data.author.nickname}</strong>
+            <p className='ml-4  text-xs md:text-base'>{moment(data.createAt).fromNow()}</p>
           </div>
           {account && (
             <strong
-              className='flex items-center text-second-color cursor-pointer'
+              className='flex items-center text-second-color cursor-pointer  text-xs md:text-base'
               onClick={() => setShowInput(!showInput)}>
-              <Image src={RepIcon} alt='' className='mr-2' />
+              <Image src={RepIcon} alt='' className='mr-2 ' />
               Reply
             </strong>
           )}
         </div>
-        <div className='mt-3 text-sm font-[500]'>{data.content}</div>
+        <div className='mt-3 font-[500] text-xs md:text-sm'>{data.content}</div>
       </div>
       {showInput && account && (
         <div className='bg-white rounded-xl ml-16'>

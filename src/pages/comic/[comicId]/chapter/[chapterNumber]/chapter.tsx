@@ -19,7 +19,10 @@ import FlashAnimation from 'components/AnimationIconHOC/Flash'
 import { Context } from 'src/context'
 import HeartFillIcon from 'images/icons/heart_fill.svg'
 import HeartOutlineIcon from 'images/icons/heart_outline.svg'
+import XIcon from 'images/icons/x-icon.svg'
 import { useScrollDirection } from 'react-use-scroll-direction'
+import ChatInput from 'components/Input/ChatInput'
+import Comment from 'components/Comment'
 const Chapter: React.FC = ({
   comicDetails,
   chapterDetails,
@@ -130,10 +133,14 @@ const Chapter: React.FC = ({
         <div className='relative w-[100vw] h-full bg-black'>
           <div
             className={`${
-              !isScrollingDown ? 'opacity-100' : 'opacity-0 pointer-events-none'
+              !isScrollingDown || openComments ? 'opacity-100' : 'opacity-0 pointer-events-none'
             } transition-all fixed z-10 flex justify-between items-center px-5 py-3 bg-black w-full`}>
             <div>
-              <Image src={ChatOutlineIcon} alt='' className='w-6 h-6' />
+              {openComments ? (
+                <Image src={XIcon} alt='' className='w-5 h-5' onClick={() => setOpenComments(false)} />
+              ) : (
+                <Image src={ChatOutlineIcon} alt='' className='w-6 h-6' onClick={() => setOpenComments(true)} />
+              )}
             </div>
             <div className='flex justify-center items-center'>
               <Image
@@ -208,6 +215,64 @@ const Chapter: React.FC = ({
               <Image src={page} key={index} alt='' width={700} height={1000} className='mx-auto' />
             ))}
           </div>
+          <div
+            className={`${
+              openComments ? 'h-[calc(100vh-48px)]' : 'h-0'
+            } transition-all w-full overflow-auto fixed bottom-0 pb-[52px] bg-[#000000b2]`}>
+            <div className='flex flex-col gap-6 overflow-auto p-5'>
+              {chapterComments.data.map((comment, index) => (
+                <Comment
+                  reload={() => chapterComments.callApi(true)}
+                  key={index}
+                  data={comment}
+                  chapterId={chapterDetails.data.id}
+                />
+              ))}
+              {chapterComments.data.map((comment, index) => (
+                <Comment
+                  reload={() => chapterComments.callApi(true)}
+                  key={index}
+                  data={comment}
+                  chapterId={chapterDetails.data.id}
+                />
+              ))}
+              {chapterComments.data.map((comment, index) => (
+                <Comment
+                  reload={() => chapterComments.callApi(true)}
+                  key={index}
+                  data={comment}
+                  chapterId={chapterDetails.data.id}
+                />
+              ))}
+              {chapterComments.data.map((comment, index) => (
+                <Comment
+                  reload={() => chapterComments.callApi(true)}
+                  key={index}
+                  data={comment}
+                  chapterId={chapterDetails.data.id}
+                />
+              ))}
+            </div>
+            {account?.verified && account?.name ? (
+              <div className='bg-light-gray fixed bottom-0 right-0 left-0 w-full'>
+                <ChatInput onSubmit={postComment} />
+              </div>
+            ) : (
+              <div className='bg-light-gray fixed bottom-0 right-0 left-0 w-full py-[14px]'>
+                <div className=' text-sm font-medium text-center leading-6'>
+                  You must{' '}
+                  <span
+                    className='text-second-color underline font-bold cursor-pointer'
+                    onClick={() => {
+                      ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+                    }}>
+                    sign in
+                  </span>{' '}
+                  to comment
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <div className='hidden xl:block'>
@@ -256,7 +321,7 @@ const Chapter: React.FC = ({
               )
             ) : !chapterDetails ? (
               <></>
-            ) : (
+            ) : window.innerWidth >= 1280 ? (
               <CommentSection
                 reload={() => chapterComments.callApi(true)}
                 postComment={postComment}
@@ -266,6 +331,8 @@ const Chapter: React.FC = ({
                 setOpenComments={setOpenComments}
                 openComments={openComments}
               />
+            ) : (
+              <></>
             )}
           </div>
         </div>

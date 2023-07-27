@@ -324,7 +324,7 @@ const Chapter = ({ expandDetail, data, chapter, account, like, unlike }) => {
           if (chapter.status == 'Upcoming' || (!account && chapter.type == 'Account only')) return
           router.push(`/comic/${data.id}/chapter/${chapter.number}`)
         }}
-        className='flex gap-4'>
+        className='flex gap-4 cursor-pointer'>
         <Image
           src={chapter.thumbnail || m6}
           alt=''

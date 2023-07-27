@@ -59,18 +59,14 @@ export default function ChapterList({ list }) {
                     <p className='text-[10px]'>{`Chapter ${chapter.number}`}</p>
                     {(function () {
                       switch (chapter.type) {
-                        case 'Free':
+                        case 'Account only':
                           return (
-                            <StatusLabel status='success'>
-                              <>Free</>
+                            <StatusLabel status='warning'>
+                              <>Account only</>
                             </StatusLabel>
                           )
                         default:
-                          return (
-                            <div>
-                              <>{chapter.type}</>
-                            </div>
-                          )
+                          return <div></div>
                       }
                     })()}
                     {(function () {
