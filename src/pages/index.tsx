@@ -36,14 +36,8 @@ export default function Home() {
   const allTags = useApi<any[]>(getAllTags, true, [])
   const { locale } = useRouter()
   const config = getConfig()
-  const [statusFilter, setStatusFilter] = useState({
-    key: 'All status',
-    value: 'All status',
-  })
-  const [gerneFilter, setGerneFilter] = useState({
-    key: 'All gernes',
-    value: 'All gernes',
-  })
+  const [statusFilter, setStatusFilter] = useState([])
+  const [gerneFilter, setGerneFilter] = useState([])
 
   return (
     <>
@@ -103,37 +97,26 @@ export default function Home() {
                 <FilledSelect
                   icon={<ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />}
                   selected={gerneFilter}
+                  multiple={true}
                   onChange={setGerneFilter}
                   options={
                     allTags?.data
                       ? [
-                          {
-                            key: 'All gernes',
-                            value: 'All gernes',
-                          },
                           ...allTags?.data?.map((tag) => ({
                             key: tag[locale],
                             value: tag[locale],
                           })),
                         ]
-                      : [
-                          {
-                            key: 'All gernes',
-                            value: 'All gernes',
-                          },
-                        ]
+                      : []
                   }
                   placeholder='All gernes'
                 />
                 <FilledSelect
+                  multiple={true}
                   icon={<ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />}
                   selected={statusFilter}
                   onChange={setStatusFilter}
                   options={[
-                    {
-                      key: 'All status',
-                      value: 'All status',
-                    },
                     {
                       key: 'Finished',
                       value: 'Finished',
@@ -147,7 +130,7 @@ export default function Home() {
                       value: 'Upcoming',
                     },
                   ]}
-                  placeholder='Status'
+                  placeholder='All status'
                 />
               </div>
             </div>
@@ -158,11 +141,13 @@ export default function Home() {
                   })
                 : latestComic.data
                     .filter((data) =>
-                      statusFilter?.key == 'All status' ? true : data.status.text == statusFilter?.key
+                      statusFilter.length ? statusFilter.some((filter) => data.status.text == filter?.key) : true
                     )
-                    .filter((data) => {
-                      return gerneFilter.key == 'All gernes' || data.tags?.some((tag) => tag[locale] == gerneFilter.key)
-                    })
+                    .filter((data) =>
+                      gerneFilter.length
+                        ? gerneFilter.some((filter) => data.tags?.some((tag) => tag[locale] == filter.key))
+                        : true
+                    )
                     .slice(0, 6)
                     .map((data, index) => {
                       return <Comic key={index} {...data} />
