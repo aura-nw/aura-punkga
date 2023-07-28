@@ -347,18 +347,20 @@ export default function ReadingSection({
                   ? 'max-h-[135px] overflow-auto opacity-100'
                   : 'max-h-[0px] overflow-hidden opacity-0 pointer-events-none'
               }`}>
-              {data?.chapters?.map((chapter, index) => {
-                return (
-                  <div
-                    onClick={() => router.push(`/comic/${data.id}/chapter/${chapter?.number}`)}
-                    key={index}
-                    className={`cursor-pointer text-xs hover:bg-light-medium-gray ${
-                      currentChapIndex == index ? 'text-second-color' : ''
-                    }`}>
-                    Chapter {chapter.number}
-                  </div>
-                )
-              })}
+              {data?.chapters
+                ?.filter((chapter) => chapter.status == 'Published')
+                ?.map((chapter, index) => {
+                  return (
+                    <div
+                      onClick={() => router.push(`/comic/${data.id}/chapter/${chapter?.number}`)}
+                      key={index}
+                      className={`cursor-pointer text-xs hover:bg-light-medium-gray ${
+                        currentChapIndex == index ? 'text-second-color' : ''
+                      }`}>
+                      Chapter {chapter.number}
+                    </div>
+                  )
+                })}
             </div>
           </div>
           <Image

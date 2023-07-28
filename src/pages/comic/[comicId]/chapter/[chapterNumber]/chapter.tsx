@@ -181,18 +181,20 @@ const Chapter: React.FC = ({
                       ? 'max-h-[135px] overflow-auto opacity-100'
                       : 'max-h-[0px] overflow-hidden opacity-0 pointer-events-none'
                   }`}>
-                  {comicDetails.data?.chapters?.map((chapter, index) => {
-                    return (
-                      <div
-                        onClick={() => router.push(`/comic/${comicDetails.data.id}/chapter/${chapter?.id}`)}
-                        key={index}
-                        className={`cursor-pointer text-xs hover:bg-light-medium-gray ${
-                          currentChapIndex == index ? 'text-second-color' : ''
-                        }`}>
-                        Chapter {chapter.number}
-                      </div>
-                    )
-                  })}
+                  {comicDetails.data?.chapters
+                    ?.filter((chapter) => chapter.status == 'Published')
+                    ?.map((chapter, index) => {
+                      return (
+                        <div
+                          onClick={() => router.push(`/comic/${comicDetails.data.id}/chapter/${chapter?.id}`)}
+                          key={index}
+                          className={`cursor-pointer text-xs hover:bg-light-medium-gray ${
+                            currentChapIndex == index ? 'text-second-color' : ''
+                          }`}>
+                          Chapter {chapter.number}
+                        </div>
+                      )
+                    })}
                 </div>
               </div>
               <Image
