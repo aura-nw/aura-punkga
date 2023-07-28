@@ -25,6 +25,7 @@ export default function ChapterList({ list }) {
             onChange={setSearchChapter}
             value={searchChapter}
             size='sm'
+            type='number'
             placeholder='Enter chapter number'
             leadingComponent={<DocumentTextIcon className='w-[18px] h-[18px] text-medium-gray' />}
           />

@@ -26,7 +26,7 @@ export default function TextField({
   value,
   inputref,
 }: ITextField) {
-  const ex = ['e', '-', '=', '*', '(', ')', '+']
+  const ex = ['e', '-', '=', '*', '(', ')', '+', '.']
   if (size == 'lg') {
     return (
       <div className={`relative w-full  rounded-[20px] ${className}`}>
