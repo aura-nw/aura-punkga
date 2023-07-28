@@ -233,7 +233,7 @@ const Chapter: React.FC = ({
           </div>
           <div
             className={`${
-              openComments ? 'h-[calc(100vh-48px)] pb-[52px]' : 'pb-0 h-0'
+              openComments ? 'h-[calc(100dvh-48px)] pb-[52px]' : 'pb-0 h-0'
             } transition-all w-full  fixed bottom-0  bg-[#000000b2]`}>
             <div className='flex flex-col gap-6 overflow-auto p-5'>
               {chapterComments.data?.length &&
