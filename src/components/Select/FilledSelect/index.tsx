@@ -54,7 +54,7 @@ export default function FilledSelect({
                   {!!selected.length ? (
                     isTooLong ? (
                       <span className='block truncate text-medium-gray'>
-                        {selected.map((s) => s.value).length} gernes selected
+                        {selected.map((s) => s.value).length} genres selected
                       </span>
                     ) : (
                       <span className='block truncate text-medium-gray'>{selected.map((s) => s.value).join(', ')}</span>

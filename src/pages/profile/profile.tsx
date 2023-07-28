@@ -211,10 +211,6 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                             key: 'Female',
                             value: 'Female',
                           },
-                          {
-                            key: 'Undisclosed',
-                            value: 'Undisclosed',
-                          },
                         ]}
                       />
                     </div>

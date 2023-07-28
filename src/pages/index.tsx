@@ -38,10 +38,10 @@ export default function Home() {
       value: 'All status',
     },
   ])
-  const [gerneFilter, setgerneFilter] = useState([
+  const [genreFilter, setgenreFilter] = useState([
     {
-      key: 'All gernes',
-      value: 'All gernes',
+      key: 'All genres',
+      value: 'All genres',
     },
   ])
 
@@ -78,16 +78,16 @@ export default function Home() {
               <div className='md:flex hidden gap-[20px] items-center'>
                 <FilledSelect
                   icon={<ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />}
-                  selected={gerneFilter}
+                  selected={genreFilter}
                   multiple={true}
-                  onChange={setgerneFilter}
-                  allKey='All gernes'
+                  onChange={setgenreFilter}
+                  allKey='All genres'
                   options={
                     allTags?.data
                       ? [
                           {
-                            key: 'All gernes',
-                            value: 'All gernes',
+                            key: 'All genres',
+                            value: 'All genres',
                           },
                           ...allTags?.data?.map((tag) => ({
                             key: tag[locale],
@@ -96,12 +96,12 @@ export default function Home() {
                         ]
                       : [
                           {
-                            key: 'All gernes',
-                            value: 'All gernes',
+                            key: 'All genres',
+                            value: 'All genres',
                           },
                         ]
                   }
-                  placeholder='All gernes'
+                  placeholder='All genres'
                 />
                 <FilledSelect
                   multiple={true}
@@ -143,8 +143,8 @@ export default function Home() {
                         : true
                     )
                     .filter((data) =>
-                      gerneFilter.length && !gerneFilter.some((s) => s.key == 'All gernes')
-                        ? gerneFilter.some((filter) => data.tags?.some((tag) => tag[locale] == filter.key))
+                      genreFilter.length && !genreFilter.some((s) => s.key == 'All genres')
+                        ? genreFilter.some((filter) => data.tags?.some((tag) => tag[locale] == filter.key))
                         : true
                     )
                     .slice(0, 6)

@@ -156,7 +156,7 @@ export default function ComicDetail({
                 <strong>{data.views?.toLocaleString('en-US')}</strong> views •{' '}
                 <strong>{comicLikes?.toLocaleString('en-US')}</strong> likes
               </p>
-              <div className={`2xl:flex-row flex-col flex gap-[10px]`}>
+              <div className={`2xl:flex-row 2xl:items-start flex-col flex gap-[10px]`}>
                 {isSubscribe ? (
                   <FilledButton>
                     <div onClick={() => subscribeHandler(false)} className='h-5 flex items-center'>
@@ -251,7 +251,7 @@ export default function ComicDetail({
                 <strong className='text-[16px]'>{`${data.chapters.length} chapter${
                   data.chapters.length > 1 ? 's' : ''
                 }`}</strong>
-                <div className='flex gap-7'>
+                <div className='flex gap-3 2xl:gap-5'>
                   <span title='Only digits'>
                     <TextField
                       onChange={setSearchChapter}
@@ -264,7 +264,7 @@ export default function ComicDetail({
                   </span>
                   <div
                     className={`${
-                      expandDetail ? 'max-w-[200px] opacity-100' : 'max-w-0 overflow-hidden opacity-0'
+                      expandDetail ? 'max-w-[180px] opacity-100' : 'max-w-0 overflow-hidden opacity-0'
                     } transition-all`}>
                     <FilledSelect
                       icon={<ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />}
@@ -294,10 +294,10 @@ export default function ComicDetail({
                   </div>
                   <div
                     className={`${
-                      expandDetail ? 'max-w-[200px] opacity-100' : 'max-w-0 overflow-hidden opacity-0'
-                    } transition-all`}>
-                    <button className='flex gap-6 items-center bg-[#f2f2f2] rounded-full py-[3px] px-[13px]'>
-                      <div className='text-base leading-6 text-medium-gray' onClick={() => setIsDesc(!isDesc)}>
+                      expandDetail ? 'max-w-[180px] opacity-100' : 'max-w-0 overflow-hidden opacity-0'
+                    } transition-all flex items-center`}>
+                    <button className='hidden 2xl:flex gap-3 items-center bg-[#f2f2f2] rounded-full py-[3px] px-[13px]'>
+                      <div className='text-base leading-6 text-medium-gray truncate' onClick={() => setIsDesc(!isDesc)}>
                         {isDesc ? 'Sort by newest' : 'Sort by oldest'}
                       </div>
                       <Image
@@ -307,6 +307,12 @@ export default function ComicDetail({
                         className='cursor-pointer w-6 h-w-6'
                       />
                     </button>
+                    <Image
+                      alt=''
+                      src={ArrowSwapIcon}
+                      onClick={() => setIsDesc(!isDesc)}
+                      className='cursor-pointer w-6 h-w-6 text-light-gray 2xl:hidden'
+                    />
                   </div>
                 </div>
               </div>
