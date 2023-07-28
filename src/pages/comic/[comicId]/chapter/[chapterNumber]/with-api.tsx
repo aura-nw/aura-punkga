@@ -52,8 +52,12 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       cover: data.banner,
       tags: data.manga_tags.map(({ tag }: any) => {
         const r = {}
-        tag.tag_languages.forEach((tl: any) => {
-          r[LANGUAGE.find((l) => l.id == tl.language_id).shortLang] = tl.value
+        LANGUAGE.forEach((l) => {
+          const mainLanguagesId = data.manga_languages.find((ml) => ml.is_main_language).language_id
+          const tagLanguage =
+            tag.tag_languages.find((tl) => tl.language_id == l.id) ||
+            tag.tag_languages.find((tl) => tl.language_id == mainLanguagesId)
+          r[l.shortLang] = tagLanguage.value
         })
         return r
       }),

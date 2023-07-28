@@ -24,8 +24,12 @@ export const getLatestComic = async (): Promise<IComic[]> => {
         },
         tags: m.manga_tags.map(({ tag }: any) => {
           const r = {}
-          tag.tag_languages.forEach((tl: any) => {
-            r[LANGUAGE.find((l) => l.id == tl.language_id).shortLang] = tl.value
+          LANGUAGE.forEach((l) => {
+            const mainLanguagesId = m.manga_languages.find((ml) => ml.is_main_language).language_id
+            const tagLanguage =
+              tag.tag_languages.find((tl) => tl.language_id == l.id) ||
+              tag.tag_languages.find((tl) => tl.language_id == mainLanguagesId)
+            r[l.shortLang] = tagLanguage.value
           })
           return r
         }),
@@ -117,8 +121,12 @@ export const search = async (content: string) => {
       },
       tags: m.manga_tags.map(({ tag }: any) => {
         const r = {}
-        tag.tag_languages.forEach((tl: any) => {
-          r[LANGUAGE.find((l) => l.id == tl.language_id).shortLang] = tl.value
+        LANGUAGE.forEach((l) => {
+          const mainLanguagesId = m.manga_languages.find((ml) => ml.is_main_language).language_id
+          const tagLanguage =
+            tag.tag_languages.find((tl) => tl.language_id == l.id) ||
+            tag.tag_languages.find((tl) => tl.language_id == mainLanguagesId)
+          r[l.shortLang] = tagLanguage.value
         })
         return r
       }),
