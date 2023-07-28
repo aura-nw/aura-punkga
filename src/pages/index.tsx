@@ -110,7 +110,7 @@ export default function Home() {
                 />
               </div>
             </div>
-            <div className='grid grid-cols-3 md:grid-cols-2 gap-10 md:gap-[80px] mt-3 md:mt-[76px]'>
+            <div className='grid grid-cols-3 md:grid-cols-2 gap-10 md:gap-[80px] mt-2 md:mt-[76px]'>
               {latestComic.loading
                 ? Array.apply(null, Array(2)).map((d, index) => {
                     return <DummyComic key={index} />
@@ -132,7 +132,7 @@ export default function Home() {
           </div>
           <div className='lg:flex-auto lg:w-[24%] mt-6 lg:mt-0 px-2 md:px-0'>
             <div className='md:text-[24px] text-sm leading-6 font-[800]'>Trending</div>
-            <div className='flex flex-col gap-10 mt-10'>
+            <div className='flex flex-col gap-10 mt-2 md:mt-10'>
               {trendingComic.loading
                 ? Array.apply(null, Array(2)).map((d, index) => {
                     return <DummyComic key={index} />

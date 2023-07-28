@@ -86,6 +86,10 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     )
     const data = cdata[0]
 
+    if (!data) {
+      return null
+    }
+
     const res = {
       id: data.id,
       views: data.views || 0,

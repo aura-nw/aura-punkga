@@ -102,7 +102,16 @@ const Chapter: React.FC = ({
     }
   }, [comicDetails?.data?.id])
 
-  if (!comicDetails.data || !chapterDetails.data) return null
+  if (comicDetails.loading || chapterDetails.loading) return null
+
+  if ((!comicDetails.data && !comicDetails.loading) || (!chapterDetails.data && !chapterDetails.loading))
+    return (
+      <div className='h-[100vh]'>
+        <Header />
+        <div className='flex justify-center items-center'>Error while fetching data!</div>
+      </div>
+    )
+
   const currentChapIndex = comicDetails?.data?.chapters.findIndex((chap) => chap.id == chapterDetails.data.id)
   const mainLanguage = comicDetails.data?.languages?.find((l) => l.isMainLanguage).shortLang
   const chapterLocale = chapterDetails.data?.[language] ? language : mainLanguage
@@ -224,8 +233,8 @@ const Chapter: React.FC = ({
           </div>
           <div
             className={`${
-              openComments ? 'h-[calc(100vh-48px)]' : 'h-0'
-            } transition-all w-full overflow-auto fixed bottom-0 pb-[52px] bg-[#000000b2]`}>
+              openComments ? 'h-[calc(100vh-48px)] pb-[52px]' : 'pb-0 h-0'
+            } transition-all w-full  fixed bottom-0  bg-[#000000b2]`}>
             <div className='flex flex-col gap-6 overflow-auto p-5'>
               {chapterComments.data?.length &&
                 chapterComments.data.map((comment, index) => (
@@ -237,24 +246,28 @@ const Chapter: React.FC = ({
                   />
                 ))}
             </div>
-            {account?.verified && account?.name ? (
-              <div className='bg-light-gray fixed bottom-0 right-0 left-0 w-full'>
-                <ChatInput onSubmit={postComment} />
-              </div>
-            ) : (
-              <div className='bg-light-gray fixed bottom-0 right-0 left-0 w-full py-[14px]'>
-                <div className=' text-sm font-medium text-center leading-6'>
-                  You must{' '}
-                  <span
-                    className='text-second-color underline font-bold cursor-pointer'
-                    onClick={() => {
-                      ;(document.querySelector('#open-sign-in-btn') as any)?.click()
-                    }}>
-                    sign in
-                  </span>{' '}
-                  to comment
+            {openComments ? (
+              account?.verified && account?.name ? (
+                <div className='bg-light-gray fixed bottom-0 right-0 left-0 w-full'>
+                  <ChatInput onSubmit={postComment} />
                 </div>
-              </div>
+              ) : (
+                <div className='bg-light-gray fixed bottom-0 right-0 left-0 w-full py-[14px]'>
+                  <div className=' text-sm font-medium text-center leading-6'>
+                    You must{' '}
+                    <span
+                      className='text-second-color underline font-bold cursor-pointer'
+                      onClick={() => {
+                        ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+                      }}>
+                      sign in
+                    </span>{' '}
+                    to comment
+                  </div>
+                </div>
+              )
+            ) : (
+              <></>
             )}
           </div>
         </div>
