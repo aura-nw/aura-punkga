@@ -85,7 +85,7 @@ export default function Home() {
                         ]
                       : []
                   }
-                  placeholder='All gernes'
+                  placeholder='All genres'
                 />
                 <FilledSelect
                   multiple={true}

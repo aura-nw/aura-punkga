@@ -91,8 +91,10 @@ export const getAllTags = async () => {
   const { data } = await axios.get(`${getConfig().API_URL}/api/rest/public/tags`)
   return data?.tags?.map((tag: any) => {
     const r = {}
-    tag?.tag_languages?.forEach((tl: any) => {
-      r[LANGUAGE.find((l) => l.id == tl.language_id).shortLang] = tl.value
+    LANGUAGE.forEach((l) => {
+      const tagLanguage =
+        tag.tag_languages.find((tl) => tl.language_id == l.id) || tag.tag_languages.find((tl) => tl.language_id == 1)
+      r[l.shortLang] = tagLanguage.value
     })
     return r
   })

@@ -44,7 +44,7 @@ export default function FilledSelect({
                 <span className='flex items-center text-[16px] leading-[24px]'>
                   {!!selected.length ? (
                     isTooLong ? (
-                      <span className='block truncate'>{selected.map((s) => s.value).length} gernes selected</span>
+                      <span className='block truncate'>{selected.map((s) => s.value).length} genres selected</span>
                     ) : (
                       <span className='block truncate'>{selected.map((s) => s.value).join(', ')}</span>
                     )
