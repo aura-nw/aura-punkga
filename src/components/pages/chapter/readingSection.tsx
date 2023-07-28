@@ -182,7 +182,21 @@ export default function ReadingSection({
           </div>
         </div>
       </div>
-      {chapterData[chapterLocale] ? (
+      {!account && chapterData.type == 'Account only' ? (
+        <div className='h-full w-full flex justify-center items-center'>
+          <div>
+            <p className='italic text-subtle-dark '>
+              This is account only chapter. Please{' '}
+              <a
+                className='text-second-color underline font-semibold cursor-pointer'
+                onClick={() => (document.querySelector('#open-sign-in-btn') as any)?.click()}>
+                sign in
+              </a>{' '}
+              to countinue reading!
+            </p>
+          </div>
+        </div>
+      ) : chapterData[chapterLocale] ? (
         <div className='h-full overflow-auto' onScroll={onScrollHandler}>
           <div
             ref={ref}
@@ -214,20 +228,7 @@ export default function ReadingSection({
         </div>
       ) : (
         <div className='h-full w-full flex justify-center items-center'>
-          {!account && chapterData.type == 'Account only' ? (
-            <div>
-              <p className='italic text-subtle-dark '>
-                <a
-                  className='text-second-color underline font-semibold cursor-pointer'
-                  onClick={() => (document.querySelector('#open-sign-in-btn') as any)?.click()}>
-                  Sign in
-                </a>{' '}
-                to unlock special chapters!
-              </p>
-            </div>
-          ) : (
-            <div>No data to show</div>
-          )}
+          <div>No data to show</div>
         </div>
       )}
       <div
