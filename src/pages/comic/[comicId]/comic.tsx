@@ -8,7 +8,7 @@ import Tag from 'components/Label/Tag'
 import ChapterList from 'components/pages/comic/ChapterList'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { Fragment, useContext, useState } from 'react'
+import { Fragment, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import mockAvar from 'src/assets/images/mockup4.png'
 import { LanguageType } from 'src/constants/global.types'
@@ -17,15 +17,16 @@ export default function Comic({ comicDetails, subscribe, unsubscribe }) {
   const { t } = useTranslation()
   const { locale } = useRouter()
   const [language, setLanguage] = useState<LanguageType>(locale as LanguageType)
-  const [isSubscribe, setIsSubscribe] = useState(false)
+  const [isSubscribe, setIsSubscribe] = useState(comicDetails.data.isSubscribe)
   const { account } = useContext(Context)
-
+  useEffect(() => {
+    setIsSubscribe(comicDetails.data.isSubscribe)
+  }, [comicDetails.data.isSubscribe])
   if (comicDetails.loading) {
     return null
   }
   const data = comicDetails.data
   if (!data) return null
-  console.log(data)
 
   const selectedLanguage =
     data.languages.find((l) => l.shortLang == language) || data.languages.find((l) => l.isMainLanguage)
@@ -99,16 +100,16 @@ export default function Comic({ comicDetails, subscribe, unsubscribe }) {
             </div>
             <div className='mb-4'>
               {isSubscribe ? (
-                <FilledButton size='sm'>
-                  <div onClick={() => subscribeHandler(false)} className='h-5 flex items-center'>
-                    <BellAlertIcon className='w-5 h-5 mr-2 inline-block animate-[bell-ring_1s_ease-in-out]' />
+                <FilledButton size='xs'>
+                  <div onClick={() => subscribeHandler(false)} className='flex items-center'>
+                    <BellAlertIcon className='w-[14px] h-[14px] mr-2 inline-block animate-[bell-ring_1s_ease-in-out]' />
                     Subscribed
                   </div>
                 </FilledButton>
               ) : (
-                <OutlineButton size='sm'>
-                  <div onClick={() => subscribeHandler(true)} className='h-5 flex items-center'>
-                    <BellAlertIconOutline className='w-5 h-5 mr-2 inline-block ' />
+                <OutlineButton size='xs'>
+                  <div onClick={() => subscribeHandler(true)} className='flex items-center'>
+                    <BellAlertIconOutline className='w-[14px] h-[14px] mr-2 inline-block ' />
                     Subscribe
                   </div>
                 </OutlineButton>
