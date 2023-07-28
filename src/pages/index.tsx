@@ -12,6 +12,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import useApi from 'src/hooks/useApi'
 import { IComic } from 'src/models/comic'
 import { getAllTags, getLatestComic, getTrendingComic } from 'src/services'
@@ -32,16 +33,17 @@ export default function Home() {
   const trendingComic = useApi<IComic[]>(getTrendingComic, true, [])
   const allTags = useApi<any[]>(getAllTags, true, [])
   const { locale } = useRouter()
+  const { t } = useTranslation()
   const [statusFilter, setStatusFilter] = useState([
     {
       key: 'All status',
-      value: 'All status',
+      value: t('all_status'),
     },
   ])
   const [genreFilter, setgenreFilter] = useState([
     {
       key: 'All genres',
-      value: 'All genres',
+      value: t('all_genres'),
     },
   ])
 
@@ -74,7 +76,7 @@ export default function Home() {
         <div className='my-[50px] lg:flex gap-[10%]'>
           <div className='lg:flex-auto lg:w-[70%] px-2 md:px-0'>
             <div className='flex justify-between items-center'>
-              <div className='md:text-[24px] text-sm leading-6 font-[800]'>Latest Update</div>
+              <div className='md:text-[24px] text-sm leading-6 font-[800]'>{t('latest_update')}</div>
               <div className='md:flex hidden gap-[20px] items-center'>
                 <FilledSelect
                   icon={<ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />}
@@ -87,7 +89,7 @@ export default function Home() {
                       ? [
                           {
                             key: 'All genres',
-                            value: 'All genres',
+                            value: t('all_genres'),
                           },
                           ...allTags?.data?.map((tag) => ({
                             key: tag[locale],
@@ -97,11 +99,11 @@ export default function Home() {
                       : [
                           {
                             key: 'All genres',
-                            value: 'All genres',
+                            value: t('all_genres'),
                           },
                         ]
                   }
-                  placeholder='All genres'
+                  placeholder={t('all_genres')}
                 />
                 <FilledSelect
                   multiple={true}
@@ -112,19 +114,19 @@ export default function Home() {
                   options={[
                     {
                       key: 'All status',
-                      value: 'All status',
+                      value: t('all_status'),
                     },
                     {
                       key: 'Finished',
-                      value: 'Finished',
+                      value: t('finished'),
                     },
                     {
                       key: 'Ongoing',
-                      value: 'On going',
+                      value: t('on_going'),
                     },
                     {
                       key: 'Upcoming',
-                      value: 'Upcoming',
+                      value: t('upcoming'),
                     },
                   ]}
                   placeholder='All status'
@@ -154,7 +156,7 @@ export default function Home() {
             </div>
           </div>
           <div className='lg:flex-auto lg:w-[24%] mt-6 lg:mt-0 px-2 md:px-0'>
-            <div className='md:text-[24px] text-sm leading-6 font-[800]'>Trending</div>
+            <div className='md:text-[24px] text-sm leading-6 font-[800]'>{t('trending')}</div>
             <div className='flex flex-col gap-10 mt-2 md:mt-10'>
               {trendingComic.loading
                 ? Array.apply(null, Array(2)).map((d, index) => {
