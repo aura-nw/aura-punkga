@@ -17,11 +17,11 @@ export default function Comic({ comicDetails, subscribe, unsubscribe }) {
   const { t } = useTranslation()
   const { locale } = useRouter()
   const [language, setLanguage] = useState<LanguageType>(locale as LanguageType)
-  const [isSubscribe, setIsSubscribe] = useState(comicDetails.data.isSubscribe)
+  const [isSubscribe, setIsSubscribe] = useState(comicDetails.data?.isSubscribe)
   const { account } = useContext(Context)
   useEffect(() => {
-    setIsSubscribe(comicDetails.data.isSubscribe)
-  }, [comicDetails.data.isSubscribe])
+    setIsSubscribe(comicDetails.data?.isSubscribe)
+  }, [comicDetails.data?.isSubscribe])
   if (comicDetails.loading) {
     return null
   }
