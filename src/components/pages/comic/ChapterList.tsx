@@ -25,7 +25,7 @@ export default function ChapterList({ list, like, unlike, setComicLikes }) {
           <TextField
             onChange={setSearchChapter}
             value={searchChapter}
-            size='sm'
+            size='xs'
             type='number'
             placeholder='Enter chapter number'
             className='bg-subtle-dark'

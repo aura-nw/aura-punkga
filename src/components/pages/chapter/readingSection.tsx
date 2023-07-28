@@ -29,6 +29,7 @@ import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
 import { IChapter } from 'src/models/chapter'
 import { IComicDetail } from 'src/models/comic'
+import { getItem, setItem } from 'src/utils/localStorage'
 
 export default function ReadingSection({
   openComments,
@@ -114,6 +115,11 @@ export default function ReadingSection({
     }
   }
 
+  const setReadingModeHandler = (mode: string) => {
+    setReadingMode(mode)
+    setItem('reading_mode', mode)
+  }
+
   useEffect(() => {
     window.onresize = function (event) {
       var maxHeight = window.screen.height,
@@ -138,6 +144,10 @@ export default function ReadingSection({
     }
     window.addEventListener('wheel', _.throttle(pageHandler, 500, { trailing: false, leading: true }))
     window.addEventListener('keydown', pageHandler)
+    const lsReadingMode = getItem('reading_mode')
+    if (lsReadingMode) {
+      setReadingMode(lsReadingMode)
+    }
   }, [])
 
   useEffect(() => {
@@ -260,7 +270,7 @@ export default function ReadingSection({
         <div className={`flex-1 self-center flex gap-2 justify-end`}>
           <Image
             className='cursor-pointer'
-            onClick={() => setReadingMode(readingMode == 'onePage' ? 'twoPage' : 'onePage')}
+            onClick={() => setReadingModeHandler(readingMode == 'onePage' ? 'twoPage' : 'onePage')}
             src={readingMode == 'onePage' ? BookOutlineIcon : BookFillIcon}
             alt=''
           />
@@ -315,7 +325,7 @@ export default function ReadingSection({
         <div className='flex-1 self-center flex gap-2 items-center'>
           <Image
             className='cursor-pointer'
-            onClick={() => setReadingMode(readingMode == 'onePage' ? 'twoPage' : 'onePage')}
+            onClick={() => setReadingModeHandler(readingMode == 'onePage' ? 'twoPage' : 'onePage')}
             src={readingMode == 'onePage' ? BookOutlineIcon : BookFillIcon}
             alt=''
           />

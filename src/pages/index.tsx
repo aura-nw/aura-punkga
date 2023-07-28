@@ -3,18 +3,15 @@ import Carousel from 'components/Carousel'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import Mock from 'assets/images/mokup1.png'
 import Mock2 from 'assets/images/mokup2.png'
-import SubFilledButton from 'components/Button/FilledButton/SubFilledButton'
 import DummyComic from 'components/DummyComponent/comic'
 import Header from 'components/Header'
 import FilledSelect from 'components/Select/FilledSelect'
 import Comic from 'components/pages/homepage/comic'
 import TrendingComic from 'components/pages/homepage/trendingComic'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import getConfig from 'next/config'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import MockupImage2 from 'src/assets/images/mockup5.png'
 import useApi from 'src/hooks/useApi'
 import { IComic } from 'src/models/comic'
 import { getAllTags, getLatestComic, getTrendingComic } from 'src/services'
@@ -35,9 +32,18 @@ export default function Home() {
   const trendingComic = useApi<IComic[]>(getTrendingComic, true, [])
   const allTags = useApi<any[]>(getAllTags, true, [])
   const { locale } = useRouter()
-  const config = getConfig()
-  const [statusFilter, setStatusFilter] = useState([])
-  const [gerneFilter, setGerneFilter] = useState([])
+  const [statusFilter, setStatusFilter] = useState([
+    {
+      key: 'All status',
+      value: 'All status',
+    },
+  ])
+  const [gerneFilter, setgerneFilter] = useState([
+    {
+      key: 'All gernes',
+      value: 'All gernes',
+    },
+  ])
 
   return (
     <>
@@ -74,25 +80,40 @@ export default function Home() {
                   icon={<ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />}
                   selected={gerneFilter}
                   multiple={true}
-                  onChange={setGerneFilter}
+                  onChange={setgerneFilter}
+                  allKey='All gernes'
                   options={
                     allTags?.data
                       ? [
+                          {
+                            key: 'All gernes',
+                            value: 'All gernes',
+                          },
                           ...allTags?.data?.map((tag) => ({
                             key: tag[locale],
                             value: tag[locale],
                           })),
                         ]
-                      : []
+                      : [
+                          {
+                            key: 'All gernes',
+                            value: 'All gernes',
+                          },
+                        ]
                   }
-                  placeholder='All genres'
+                  placeholder='All gernes'
                 />
                 <FilledSelect
                   multiple={true}
                   icon={<ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />}
                   selected={statusFilter}
                   onChange={setStatusFilter}
+                  allKey='All status'
                   options={[
+                    {
+                      key: 'All status',
+                      value: 'All status',
+                    },
                     {
                       key: 'Finished',
                       value: 'Finished',
@@ -117,10 +138,12 @@ export default function Home() {
                   })
                 : latestComic.data
                     .filter((data) =>
-                      statusFilter.length ? statusFilter.some((filter) => data.status.text == filter?.key) : true
+                      statusFilter.length && !statusFilter.some((s) => s.key == 'All status')
+                        ? statusFilter.some((filter) => data.status.text == filter?.key)
+                        : true
                     )
                     .filter((data) =>
-                      gerneFilter.length
+                      gerneFilter.length && !gerneFilter.some((s) => s.key == 'All gernes')
                         ? gerneFilter.some((filter) => data.tags?.some((tag) => tag[locale] == filter.key))
                         : true
                     )

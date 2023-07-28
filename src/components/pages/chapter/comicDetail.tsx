@@ -1,4 +1,4 @@
-import { ArrowRightIcon, BellAlertIcon } from '@heroicons/react/20/solid'
+import { ArrowRightIcon, BellAlertIcon, ChevronDownIcon } from '@heroicons/react/20/solid'
 import { BellAlertIcon as BellAlertIconOutline, EyeIcon } from '@heroicons/react/24/outline'
 import FlashAnimation from 'components/AnimationIconHOC/Flash'
 import FilledButton from 'components/Button/FilledButton'
@@ -7,6 +7,7 @@ import TextField from 'components/Input/TextField'
 import StatusLabel from 'components/Label/Status'
 import Tag from 'components/Label/Tag'
 import ArrowSwapIcon from 'images/icons/arrow-swap.svg'
+import ArrowSwapLightIcon from 'images/icons/arrow-swap-light.svg'
 import HeartFillIcon from 'images/icons/heart_fill.svg'
 import HeartOutlineIcon from 'images/icons/heart_outline.svg'
 import NoteIcon from 'images/icons/ic_note.svg'
@@ -23,6 +24,7 @@ import m6 from 'src/assets/images/mockup6.png'
 import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
 import { IComicDetail } from 'src/models/comic'
+import FilledSelect from 'components/Select/FilledSelect'
 export default function ComicDetail({
   data,
   language,
@@ -62,6 +64,10 @@ export default function ComicDetail({
   const { t } = useTranslation()
   const { account } = useContext(Context)
   const [searchChapter, setSearchChapter] = useState('')
+  const [chapterType, setChapterType] = useState({
+    key: 'All types',
+    value: 'All types',
+  })
 
   const subscribeHandler = (isSub: boolean) => {
     if (account?.verified && account?.name) {
@@ -245,30 +251,83 @@ export default function ComicDetail({
                 <strong className='text-[16px]'>{`${data.chapters.length} chapter${
                   data.chapters.length > 1 ? 's' : ''
                 }`}</strong>
-                <span title='Only digits'>
-                  <TextField
-                    onChange={setSearchChapter}
-                    value={searchChapter}
-                    size='sm'
-                    type='number'
-                    placeholder='Enter chapter number'
-                    leadingComponent={<Image alt='' src={NoteIcon} className='w-6 h-6 text-medium-gray' />}
-                  />
-                </span>
+                <div className='flex gap-7'>
+                  <span title='Only digits'>
+                    <TextField
+                      onChange={setSearchChapter}
+                      value={searchChapter}
+                      size='sm'
+                      type='number'
+                      placeholder='Enter chapter number'
+                      leadingComponent={<Image alt='' src={NoteIcon} className='w-6 h-6 text-medium-gray' />}
+                    />
+                  </span>
+                  <div
+                    className={`${
+                      expandDetail ? 'max-w-[200px] opacity-100' : 'max-w-0 overflow-hidden opacity-0'
+                    } transition-all`}>
+                    <FilledSelect
+                      icon={<ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />}
+                      selected={chapterType}
+                      onChange={setChapterType}
+                      options={[
+                        {
+                          key: 'All types',
+                          value: 'All types',
+                        },
+
+                        {
+                          key: 'Free',
+                          value: 'Free',
+                        },
+                        {
+                          key: 'NFTs only',
+                          value: 'NFTs only',
+                        },
+                        {
+                          key: 'Account only',
+                          value: 'Account only',
+                        },
+                      ]}
+                      placeholder='All types'
+                    />
+                  </div>
+                  <div
+                    className={`${
+                      expandDetail ? 'max-w-[200px] opacity-100' : 'max-w-0 overflow-hidden opacity-0'
+                    } transition-all`}>
+                    <button className='flex gap-6 items-center bg-[#f2f2f2] rounded-full py-[3px] px-[13px]'>
+                      <div className='text-base leading-6 text-medium-gray' onClick={() => setIsDesc(!isDesc)}>
+                        {isDesc ? 'Sort by newest' : 'Sort by oldest'}
+                      </div>
+                      <Image
+                        alt=''
+                        src={ArrowSwapLightIcon}
+                        onClick={() => setIsDesc(!isDesc)}
+                        className='cursor-pointer w-6 h-w-6'
+                      />
+                    </button>
+                  </div>
+                </div>
               </div>
               <div>
-                <Image
-                  alt=''
-                  src={ArrowSwapIcon}
-                  onClick={() => setIsDesc(!isDesc)}
-                  className='cursor-pointer w-5 h-w-5 text-light-gray'
-                />
+                {!expandDetail && (
+                  <Image
+                    alt=''
+                    src={ArrowSwapIcon}
+                    onClick={() => setIsDesc(!isDesc)}
+                    className='cursor-pointer w-6 h-w-6 text-light-gray'
+                  />
+                )}
               </div>
             </div>
             <div className='px-[16px] 2xl:px-[60px] py-[20px] flex flex-col gap-5'>
               {data.chapters
                 .filter((chapter) => {
                   return searchChapter ? chapter?.number?.toString()?.includes(searchChapter) : true
+                })
+                .filter((chapter) => {
+                  return chapterType.key == 'All types' || chapterType.key.toLowerCase() == chapter.type.toLowerCase()
                 })
                 .sort(() => (isDesc ? 1 : -1))
                 .map((chapter, index) => (

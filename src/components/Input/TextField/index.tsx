@@ -4,7 +4,7 @@ interface ITextField {
   placeholder?: string
   leadingComponent?: JSX.Element
   trailingComponent?: JSX.Element
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'xs' | 'sm' | 'md' | 'lg'
   className?: string
   onFocus?: (e: any) => void
   onBlur?: (e: any) => void
@@ -65,6 +65,34 @@ export default function TextField({
     )
   }
   if (size == 'sm') {
+    return (
+      <div className='relative w-full'>
+        {leadingComponent && (
+          <div className=' absolute top-1 left-[10px] flex items-center justify-center w-5 h-5'>{leadingComponent}</div>
+        )}
+        <input
+          onKeyDown={(event) => {
+            if (type == 'number' && ex.includes(event.key)) {
+              event.preventDefault()
+              event.stopPropagation()
+              return false
+            }
+          }}
+          ref={inputref}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          value={value}
+          type={type}
+          onChange={(event) => onChange && onChange(event.target.value)}
+          id='input-group-1'
+          className={` rounded-[12px] text-base leading-6 w-full px-[13px] py-[2px] placeholder-medium-gray focus:outline-none ${
+            leadingComponent ? 'pl-10' : ''
+          } ${className}`}
+          placeholder={placeholder}></input>
+      </div>
+    )
+  }
+  if (size == 'xs') {
     return (
       <div className='relative w-full'>
         {leadingComponent && (

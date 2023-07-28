@@ -11,6 +11,8 @@ interface IFilledSelect {
   icon?: JSX.Element
   options: ({ key: string; value: string } | { key: number; value: string })[]
   placeholder: string
+  className?: string
+  allKey?: string
   selected?: any
 }
 export default function FilledSelect({
@@ -20,6 +22,8 @@ export default function FilledSelect({
   placeholder,
   selected,
   multiple,
+  allKey,
+  className,
 }: IFilledSelect) {
   if (multiple) {
     const selectedKey = selected.map((s) => s.key)
@@ -30,11 +34,16 @@ export default function FilledSelect({
         value={selected}
         onChange={(value: any[]) => {
           if (onChange) {
-            onChange(
-              value
-                .filter((value, index, self) => self.filter((t) => t.key === value.key).length % 2)
-                .filter((value, index, self) => index === self.findIndex((t) => t.key === value.key))
-            )
+            if (value.at(-1).key == allKey) {
+              onChange([value.find((s) => s.key == allKey)])
+            } else {
+              onChange(
+                value
+                  .filter((s) => s.key != allKey)
+                  .filter((value, index, self) => self.filter((t) => t.key === value.key).length % 2)
+                  .filter((value, index, self) => index === self.findIndex((t) => t.key === value.key))
+              )
+            }
           }
         }}>
         {({ open }) => (
@@ -44,9 +53,11 @@ export default function FilledSelect({
                 <span className='flex items-center text-[16px] leading-[24px]'>
                   {!!selected.length ? (
                     isTooLong ? (
-                      <span className='block truncate'>{selected.map((s) => s.value).length} genres selected</span>
+                      <span className='block truncate text-medium-gray'>
+                        {selected.map((s) => s.value).length} gernes selected
+                      </span>
                     ) : (
-                      <span className='block truncate'>{selected.map((s) => s.value).join(', ')}</span>
+                      <span className='block truncate text-medium-gray'>{selected.map((s) => s.value).join(', ')}</span>
                     )
                   ) : (
                     <span className='block truncate text-medium-gray'>{placeholder}</span>
@@ -122,7 +133,7 @@ export default function FilledSelect({
             <Listbox.Button className='relative w-full cursor-default rounded-[12px] bg-light-gray py-[3px] pl-[13px] pr-[57px] text-left text-gray-900 focus:outline-none'>
               <span className='flex items-center text-[16px] leading-[24px]'>
                 {selected ? (
-                  <span className='block truncate'>{selected.value}</span>
+                  <span className='block truncate text-medium-gray'>{selected.value}</span>
                 ) : (
                   <span className='block truncate text-medium-gray'>{placeholder}</span>
                 )}
