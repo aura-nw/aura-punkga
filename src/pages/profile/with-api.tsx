@@ -71,7 +71,48 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     const ids = getItem('current_reading_manga')
     if (ids?.length) {
       const res: any = await axios.post(`${config.API_URL}/v1/graphql`, {
-        query: `query GetListMangaById ($id: [Int!]=${ids}) {\n  manga(where: {id:{_in:$id}}) {\n    id\n    banner\n    status\n    manga_languages {\n      is_main_language\n      language_id\n      title\n    }\n    manga_creators {\n      creator {\n        id\n        name\n        isActive\n      }\n    }\n    chapters(order_by: {pushlish_date:desc_nulls_last}, limit: 1) {\n      chapter_number\n      id\n      pushlish_date\n    }\n    chapters_aggregate {\n      aggregate {\n        sum {\n          likes\n          views\n        }\n      }\n    }\n    manga_tags {\n      tag {\n        id\n        tag_languages {\n          language_id\n          value\n        }\n      }\n    }\n  }\n}`,
+        query: `query GetListMangaById ($id: [Int!]=${ids}) {
+  manga(where: {_and:{id:{_in:$id},status:{_neq:"Removed"}}}) {
+    id
+    banner
+    poster
+    status
+    manga_languages {
+      is_main_language
+      language_id
+      title
+    }
+    manga_creators {
+      creator {
+        id
+        name
+        isActive
+      }
+    }
+    chapters(order_by: {pushlish_date:desc_nulls_last}, limit: 1, where: {status:{_eq:"Published"}}) {
+      chapter_number
+      id
+      pushlish_date
+    }
+    chapters_aggregate {
+      aggregate {
+        sum {
+          likes
+          views
+        }
+      }
+    }
+    manga_tags(limit: 5) {
+      tag {
+        id
+        tag_languages {
+          language_id
+          value
+        }
+      }
+    }
+  }
+}`,
         variables: null,
         operationName: 'GetListMangaById',
       })
