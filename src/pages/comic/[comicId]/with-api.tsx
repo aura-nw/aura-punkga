@@ -73,8 +73,24 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     await privateAxios.delete(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
   }
 
+  const like = async (id) => {
+    await privateAxios.post(`${config.API_URL}/api/rest/user/chapters/${id}/likes`)
+  }
+  const unlike = async (id) => {
+    await privateAxios.delete(`${config.API_URL}/api/rest/user/chapters/${id}/likes`)
+  }
+
   const comicDetails = useApi<IComicDetail>(getComicDetail, !!query.comicId, [query.comicId, account?.id])
-  return <Component {...props} comicDetails={comicDetails} subscribe={subscribe} unsubscribe={unsubscribe} />
+  return (
+    <Component
+      {...props}
+      comicDetails={comicDetails}
+      subscribe={subscribe}
+      unsubscribe={unsubscribe}
+      like={like}
+      unlike={unlike}
+    />
+  )
 }
 
 export default withApi

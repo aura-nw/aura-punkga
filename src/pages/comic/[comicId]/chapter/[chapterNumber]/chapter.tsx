@@ -64,16 +64,29 @@ const Chapter: React.FC = ({
   const [showChapterList, setShowChapterList] = useState(false)
   const [isLiked, setIsLiked] = useState(false)
   const { account } = useContext(Context)
-  const { isScrollingDown } = useScrollDirection()
+  const { scrollDirection } = useScrollDirection()
+  const [lastDirection, setLastDirection] = useState('')
+  const [comicLikes, setComicLikes] = useState(0)
+  const [chapterLikes, setChapterLikes] = useState(0)
+
   useEffect(() => {
-    if (chapterDetails.data?.id) addView()
+    if (scrollDirection) setLastDirection(scrollDirection)
+  }, [scrollDirection])
+  useEffect(() => {
+    if (chapterDetails.data?.id) {
+      addView()
+      setChapterLikes(chapterDetails.data?.likes)
+    }
   }, [chapterDetails?.data?.id])
   useEffect(() => {
     setLanguage(locale as LanguageType)
   }, [locale])
 
   useEffect(() => {
-    setIsSubscribe(comicDetails?.data?.isSubscribe)
+    if (comicDetails?.data) {
+      setIsSubscribe(comicDetails?.data?.isSubscribe)
+      setComicLikes(comicDetails?.data?.likes)
+    }
   }, [comicDetails?.data])
 
   useEffect(() => {
@@ -128,8 +141,12 @@ const Chapter: React.FC = ({
     if (account?.verified && account?.name) {
       if (isLike) {
         like()
+        setChapterLikes((prev) => prev + 1)
+        setComicLikes((prev) => prev + 1)
       } else {
         unlike()
+        setChapterLikes((prev) => prev - 1)
+        setComicLikes((prev) => prev - 1)
       }
       setIsLiked(isLike)
     } else {
@@ -149,7 +166,7 @@ const Chapter: React.FC = ({
         <div className='relative w-[100vw] h-full bg-black'>
           <div
             className={`${
-              !isScrollingDown || openComments ? 'opacity-100' : 'opacity-0 pointer-events-none'
+              lastDirection == 'UP' || openComments ? 'opacity-100' : 'opacity-0 pointer-events-none'
             } transition-all fixed z-10 flex justify-between items-center px-5 py-3 bg-black w-full`}>
             <div>
               {openComments ? (
@@ -236,7 +253,7 @@ const Chapter: React.FC = ({
           <div
             className={`${
               openComments ? 'h-[calc(100dvh-48px)] pb-[52px]' : 'pb-0 h-0'
-            } transition-all w-full  fixed bottom-0  bg-[#000000b2]`}>
+            } transition-all w-full overflow-auto fixed bottom-0  bg-[#000000b2]`}>
             <div className='flex flex-col gap-6 overflow-auto p-5'>
               {chapterComments.data?.length &&
                 chapterComments.data.map((comment, index) => (
@@ -299,6 +316,7 @@ const Chapter: React.FC = ({
                 likeHandler={likeHandler}
                 goToChap={goToChap}
                 isLiked={isLiked}
+                chapterLikes={chapterLikes}
               />
             )}
           </div>
@@ -317,6 +335,12 @@ const Chapter: React.FC = ({
                   unsubscribe={unsubscribe}
                   like={like}
                   unlike={unlike}
+                  chapterId={chapterDetails.data.id}
+                  comicLikes={comicLikes}
+                  likeHandler={likeHandler}
+                  chapterLikes={chapterLikes}
+                  chapterIsLiked={isLiked}
+                  setComicLikes={setComicLikes}
                 />
               )
             ) : !chapterDetails ? (

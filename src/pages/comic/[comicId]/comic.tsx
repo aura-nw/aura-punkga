@@ -13,15 +13,21 @@ import { useTranslation } from 'react-i18next'
 import mockAvar from 'src/assets/images/mockup4.png'
 import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
-export default function Comic({ comicDetails, subscribe, unsubscribe }) {
+export default function Comic({ comicDetails, subscribe, unsubscribe, like, unlike }) {
   const { t } = useTranslation()
   const { locale } = useRouter()
   const [language, setLanguage] = useState<LanguageType>(locale as LanguageType)
   const [isSubscribe, setIsSubscribe] = useState(comicDetails.data?.isSubscribe)
+  const [comicLikes, setComicLikes] = useState(0)
   const { account } = useContext(Context)
   useEffect(() => {
     setIsSubscribe(comicDetails.data?.isSubscribe)
   }, [comicDetails.data?.isSubscribe])
+  useEffect(() => {
+    if (comicDetails.data) {
+      setComicLikes(comicDetails.data.likes)
+    }
+  }, [comicDetails.data])
   if (comicDetails.loading) {
     return null
   }
@@ -94,7 +100,7 @@ export default function Comic({ comicDetails, subscribe, unsubscribe }) {
                 </div>
                 <div className='flex items-center gap-1'>
                   <HeartIcon className='w-4 h-4' />
-                  <strong>{data.likes.toLocaleString('en-US')}</strong>
+                  <strong>{comicLikes.toLocaleString('en-US')}</strong>
                 </div>
               </div>
             </div>
@@ -129,7 +135,7 @@ export default function Comic({ comicDetails, subscribe, unsubscribe }) {
             </Tab.List>
             <Tab.Panels className='bg-black h-full'>
               <Tab.Panel>
-                <ChapterList list={data.chapters} />
+                <ChapterList list={data.chapters} like={like} unlike={unlike} setComicLikes={setComicLikes} />
               </Tab.Panel>
               <Tab.Panel>NFTs</Tab.Panel>
             </Tab.Panels>

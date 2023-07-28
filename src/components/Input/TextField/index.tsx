@@ -66,11 +66,9 @@ export default function TextField({
   }
   if (size == 'sm') {
     return (
-      <div className='relative w-full h-fit'>
+      <div className='relative w-full'>
         {leadingComponent && (
-          <div className=' absolute top-[3px] left-[10px] flex items-center justify-center w-6 h-6'>
-            {leadingComponent}
-          </div>
+          <div className=' absolute top-1 left-[10px] flex items-center justify-center w-5 h-5'>{leadingComponent}</div>
         )}
         <input
           onKeyDown={(event) => {
@@ -87,7 +85,7 @@ export default function TextField({
           type={type}
           onChange={(event) => onChange && onChange(event.target.value)}
           id='input-group-1'
-          className={` rounded-[12px] w-full px-[13px] py-[3px] placeholder-medium-gray focus:outline-none ${
+          className={` rounded-[12px] text-xs leading-6 w-full px-[13px] placeholder-medium-gray focus:outline-none ${
             leadingComponent ? 'pl-10' : ''
           } ${className}`}
           placeholder={placeholder}></input>

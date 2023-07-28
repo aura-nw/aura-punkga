@@ -15,7 +15,7 @@ import moment from 'moment'
 import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { Fragment, useContext, useState } from 'react'
+import { Fragment, useContext, useEffect, useState } from 'react'
 import mockBanner from 'src/assets/images/mockup3.png'
 import mockAvar from 'src/assets/images/mockup4.png'
 import LockIcon from 'images/icons/Lock.svg'
@@ -33,16 +33,28 @@ export default function ComicDetail({
   unsubscribe,
   like,
   unlike,
+  chapterId,
+  comicLikes,
+  likeHandler,
+  chapterLikes,
+  chapterIsLiked,
+  setComicLikes,
 }: {
   data: IComicDetail
   language: LanguageType
   setLanguage: any
   isSubscribe: boolean
+  chapterIsLiked: boolean
   setIsSubscribe: any
   subscribe: () => void
   unsubscribe: () => void
   like: () => void
   unlike: () => void
+  likeHandler: any
+  setComicLikes: any
+  chapterId: string
+  comicLikes: number
+  chapterLikes: number
 }) {
   const [expandDetail, setExpandDetail] = useState(false)
   const [expandDescription, setExpandDescription] = useState(false)
@@ -136,7 +148,7 @@ export default function ComicDetail({
               <p className=''>
                 {' '}
                 <strong>{data.views?.toLocaleString('en-US')}</strong> views •{' '}
-                <strong>{data.likes?.toLocaleString('en-US')}</strong> likes
+                <strong>{comicLikes?.toLocaleString('en-US')}</strong> likes
               </p>
               <div className={`2xl:flex-row flex-col flex gap-[10px]`}>
                 {isSubscribe ? (
@@ -269,6 +281,10 @@ export default function ComicDetail({
                     like={like}
                     unlike={unlike}
                     setExpandDetail={setExpandDetail}
+                    likeHandlerCallback={chapterId == chapter.id ? likeHandler : null}
+                    defaultLike={chapterId == chapter.id ? chapterLikes : null}
+                    defaultIsLiked={chapterId == chapter.id ? chapterIsLiked : null}
+                    setComicLikes={chapterId != chapter.id ? setComicLikes : null}
                   />
                 ))}
             </div>
@@ -290,18 +306,39 @@ export default function ComicDetail({
   )
 }
 
-const Chapter = ({ expandDetail, data, chapter, account, like, unlike, setExpandDetail }) => {
-  const [isLiked, setIsLiked] = useState(chapter.isLiked || false)
-  const [likes, setLikes] = useState(chapter.likes || 0)
+const Chapter = ({
+  expandDetail,
+  data,
+  chapter,
+  account,
+  like,
+  unlike,
+  setExpandDetail,
+  likeHandlerCallback,
+  defaultLike,
+  defaultIsLiked,
+  setComicLikes,
+}) => {
+  const [isLiked, setIsLiked] = useState(defaultIsLiked || chapter.isLiked || false)
+  const [likes, setLikes] = useState(defaultLike || chapter.likes || 0)
   const router = useRouter()
+  useEffect(() => {
+    setLikes(defaultLike)
+  }, [defaultLike])
+  useEffect(() => {
+    setIsLiked(defaultIsLiked)
+  }, [defaultIsLiked])
   const likeHandler = (isLike: boolean) => {
     if (account?.verified && account?.name) {
+      likeHandlerCallback && likeHandlerCallback(isLike)
       if (isLike) {
         setLikes((like) => like + 1)
-        like(chapter.id)
+        setComicLikes && setComicLikes((like) => like + 1)
+        !likeHandlerCallback && like(chapter.id)
       } else {
         setLikes((like) => like - 1)
-        unlike(chapter.id)
+        setComicLikes && setComicLikes((like) => like - 1)
+        !likeHandlerCallback && unlike(chapter.id)
       }
       setIsLiked(isLike)
     } else {
@@ -394,7 +431,11 @@ const Chapter = ({ expandDetail, data, chapter, account, like, unlike, setExpand
                 InactiveComponent={(props: any) => (
                   <Image
                     className='cursor-pointer w-5 h-5'
-                    onClick={() => likeHandler(true)}
+                    onClick={(e) => {
+                      likeHandler(true)
+                      e.stopPropagation()
+                      e.preventDefault()
+                    }}
                     src={HeartOutlineIcon}
                     alt=''
                     {...props}
@@ -403,7 +444,11 @@ const Chapter = ({ expandDetail, data, chapter, account, like, unlike, setExpand
                 ActiveComponent={(props: any) => (
                   <Image
                     className='cursor-pointer w-5 h-5'
-                    onClick={() => likeHandler(false)}
+                    onClick={(e) => {
+                      likeHandler(false)
+                      e.stopPropagation()
+                      e.preventDefault()
+                    }}
                     src={HeartFillIcon}
                     alt=''
                     {...props}
