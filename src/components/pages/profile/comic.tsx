@@ -66,10 +66,10 @@ export default function Comic(props: IComic & { unsubscribe?: () => void; subscr
               Chap #{props.latestChap.number}
             </Link>
           </div>
-          {props.latestChap?.pushlishDate && (
+          {props.nearestUpcoming && (
             <div className='leading-5'>
               New chapter arrives:{' '}
-              <span className='font-semibold'>{moment(props.latestChap?.pushlishDate).format('DD/MM/YYYY')}</span>
+              <span className='font-semibold'>{moment(props.nearestUpcoming).format('DD/MM/YYYY')}</span>
             </div>
           )}
           {!!props.subscribe && (

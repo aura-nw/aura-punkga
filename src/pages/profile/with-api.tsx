@@ -1,7 +1,7 @@
-import axios from "axios"
-import getConfig from "next/config"
-import { useContext } from "react"
-import { COMIC_STATUS, LANGUAGE } from "src/constants"
+import axios from 'axios'
+import getConfig from 'next/config'
+import { useContext } from 'react'
+import { COMIC_STATUS, LANGUAGE } from 'src/constants'
 import { Context, privateAxios } from 'src/context'
 import useApi from 'src/hooks/useApi'
 import { IComic } from 'src/models/comic'
@@ -36,8 +36,9 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
           text: formatStatus(m.status),
         },
         authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : 'Unknown creator')),
-        views: m.chapters_aggregate?.aggregate?.sum?.views || 0,
-        likes: m.chapters_aggregate?.aggregate?.sum?.likes || 0,
+        views: m.manga_total_views?.views || 0,
+        likes: m.manga_total_likes?.likes || 0,
+        nearestUpcoming: m.nearest_upcoming,
         latestChap: {
           number: m.chapters?.[0]?.chapter_number,
           id: m.chapters?.[0]?.id,
@@ -71,12 +72,13 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     const ids = getItem('current_reading_manga')
     if (ids?.length) {
       const res: any = await axios.post(`${config.API_URL}/v1/graphql`, {
-        query: `query GetListMangaById ($id: [Int!]=${ids}) {
-  manga(where: {_and:{id:{_in:$id},status:{_neq:"Removed"}}}) {
+        query: `query GetListMangaById($id: [Int!]=${ids}) {
+  manga(where: {_and: {id: {_in: $id}, status: {_neq: "Removed"}}}) {
     id
     banner
     poster
     status
+    nearest_upcoming
     manga_languages {
       is_main_language
       language_id
@@ -89,18 +91,16 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
         isActive
       }
     }
-    chapters(order_by: {pushlish_date:desc_nulls_last}, limit: 1, where: {status:{_eq:"Published"}}) {
+    chapters(order_by: {chapter_number: desc_nulls_last}, limit: 1, where: {status: {_eq: "Published"}}) {
       chapter_number
       id
       pushlish_date
     }
-    chapters_aggregate {
-      aggregate {
-        sum {
-          likes
-          views
-        }
-      }
+    manga_total_views {
+      views
+    }
+    manga_total_likes {
+      likes
     }
     manga_tags(limit: 5) {
       tag {
@@ -125,8 +125,9 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
             text: formatStatus(m.status),
           },
           authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : 'Unknown creator')),
-          views: m.chapters_aggregate?.aggregate?.sum?.views || 0,
-          likes: m.chapters_aggregate?.aggregate?.sum?.likes || 0,
+          views: m.manga_total_views?.views || 0,
+          likes: m.manga_total_likes?.likes || 0,
+          nearestUpcoming: m.nearest_upcoming,
           latestChap: {
             number: m.chapters?.[0]?.chapter_number,
             id: m.chapters?.[0]?.id,

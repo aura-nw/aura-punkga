@@ -12,6 +12,7 @@ interface Basic {
   views: number
   likes: number
   releaseDate?: string
+  nearestUpcoming?: string
   latestChap: {
     number: number
     id: string

@@ -26,13 +26,26 @@ import ForgotPasswordModal from './ForgotPasswordModal'
 import SignInModal from './SignInModal'
 import SignUpModal from './SignUpModal'
 import SignUpSuccessModal from './SignUpSuccessModal'
+import { useClickOutside } from 'src/hooks/useClickOutside'
 
 export default function Header({}) {
   const { t } = useTranslation()
   const router = useRouter()
   const [isSearchFocused, setIsSearchFocused] = useState(false)
   const ref = useRef<any>()
+  const divRef = useRef<any>()
   const mref = useRef<any>()
+  const mdivRef = useRef<any>()
+  useClickOutside(divRef, () => {
+    if (window.innerWidth > 768) {
+      setIsSearchFocused(false)
+    }
+  })
+  useClickOutside(mdivRef, () => {
+    if (window.innerWidth <= 768) {
+      setIsSearchFocused(false)
+    }
+  })
   const { pathname, asPath, query, locale } = router
   const switchLanguage = () => {
     const newLanguage = locale === 'en' ? 'vn' : 'en'
@@ -93,12 +106,11 @@ export default function Header({}) {
             <div onClick={() => router.push('/')}>
               <Image src={Logo} alt='header logo' className='h-[40px] w-auto' />
             </div>
-            <div className={`${isSearchFocused ? 'z-30' : ''} relative`}>
+            <div ref={mdivRef} className={`${isSearchFocused ? 'z-30' : ''} relative`}>
               <TextField
                 inputref={mref}
                 onChange={_.debounce(setSearchValue, 500)}
                 onFocus={() => setIsSearchFocused(true)}
-                onBlur={() => setIsSearchFocused(false)}
                 className={`transition-[width] bg-light-gray duration-500`}
                 placeholder='Search by title'
                 trailingComponent={
@@ -127,7 +139,7 @@ export default function Header({}) {
                     {searchComic.data?.map((manga, index) => (
                       <div
                         key={index}
-                        className='flex gap-2'
+                        className='flex gap-2 cursor-pointer'
                         onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}>
                         <Image
                           onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}
@@ -264,12 +276,11 @@ export default function Header({}) {
               <Image src={Logo} alt='header logo' className='h-[60px] min-w-[107px]' />
             </Link>
           </div>
-          <div className={`${isSearchFocused ? 'z-30' : ''} w-full max-w-[500px] relative`}>
+          <div ref={divRef} className={`${isSearchFocused ? 'z-30' : ''} w-full max-w-[500px] relative`}>
             <TextField
               inputref={ref}
               onChange={_.debounce(setSearchValue, 500)}
               onFocus={() => setIsSearchFocused(true)}
-              onBlur={() => setIsSearchFocused(false)}
               className={`transition-[width] bg-light-gray duration-500 ${isSearchFocused ? '!w-[160%]' : ''}`}
               size='lg'
               placeholder='Search by title'
