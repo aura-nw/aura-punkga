@@ -83,7 +83,7 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
                 {data.authors.map((author, index) => (
                   <Fragment key={index}>
                     <span className='text-second-color font-[600] first:hidden'>, </span>
-                    <span className='text-second-color font-[600]'>{author}</span>
+                    <span className='text-second-color font-[600]'>{t(author)}</span>
                   </Fragment>
                 ))}
               </div>
@@ -109,14 +109,14 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
                 <FilledButton size='xs'>
                   <div onClick={() => subscribeHandler(false)} className='flex items-center'>
                     <BellAlertIcon className='w-[14px] h-[14px] mr-2 inline-block animate-[bell-ring_1s_ease-in-out]' />
-                    Subscribed
+                    {t('Subscribed')}
                   </div>
                 </FilledButton>
               ) : (
                 <OutlineButton size='xs'>
                   <div onClick={() => subscribeHandler(true)} className='flex items-center'>
                     <BellAlertIconOutline className='w-[14px] h-[14px] mr-2 inline-block ' />
-                    Subscribe
+                    {t('Subscribe')}
                   </div>
                 </OutlineButton>
               )}
@@ -127,7 +127,7 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
           <Tab.Group>
             <Tab.List className='w-full flex justify-between bg-black text-white text-sm'>
               <Tab className='w-1/3 flex-auto ui-selected:text-second-color ui-selected:font-bold ui-selected:underline'>
-                <div className='my-3'>Chapter</div>
+                <div className='my-3'>{t('Chapter')}</div>
               </Tab>
               <Tab className='w-1/3 flex-auto ui-selected:text-second-color ui-selected:font-bold ui-selected:underline'>
                 <div className='my-3'>NFTs</div>

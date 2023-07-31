@@ -6,10 +6,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 import { IComic } from 'src/models/comic'
 
 export default function Comic(props: IComic) {
   const { locale } = useRouter()
+  const { t } = useTranslation()
   return (
     <div className={`${props.status.text == 'Upcoming' ? 'pointer-events-none' : ''}`}>
       <div className='hidden md:flex gap-[20px]'>
@@ -39,19 +41,19 @@ export default function Comic(props: IComic) {
           <div className='flex flex-col gap-[10px]'>
             <div>
               <Link href={`/comic/${props.id}`} className=' text-second-color font-bold text-[18px] xl:hidden'>
-                {props[locale].title} <StatusLabel status={props.status.type}>{props.status.text}</StatusLabel>
+                {props[locale].title} <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
               </Link>
               <Link
                 href={`/comic/${props.id}/chapter/1`}
                 className=' text-second-color font-bold text-[18px] hidden xl:block'>
-                {props[locale].title} <StatusLabel status={props.status.type}>{props.status.text}</StatusLabel>
+                {props[locale].title} <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
               </Link>
               <div>
-                by{' '}
+                {t('by')}{' '}
                 {props.authors.map((author, index) => (
                   <Fragment key={index}>
                     <span className='text-second-color font-[600] first:hidden'>, </span>
-                    <span className='text-second-color font-[600]'>{author}</span>
+                    <span className='text-second-color font-[600]'>{t(author)}</span>
                   </Fragment>
                 ))}
               </div>
@@ -63,27 +65,27 @@ export default function Comic(props: IComic) {
             </div>
             <div className=' flex gap-[24px]'>
               <div>
-                <strong>{props.views.toLocaleString('en-US')}</strong> views
+                <strong>{props.views.toLocaleString('en-US')}</strong> {t('views')}
               </div>
               <div>
-                <strong>{props.likes.toLocaleString('en-US')}</strong> likes
+                <strong>{props.likes.toLocaleString('en-US')}</strong> {t('likes')}
               </div>
             </div>
             <div className=' text-[16px] leading-[20px] line-clamp-3'>{props[locale].description}</div>
           </div>
           {!!props.latestChap.number && (
             <div className='leading-[20px]'>
-              Latest:{' '}
+              {t('Latest')}:{' '}
               <Link
                 href={`/comic/${props.id}/chapter/${props.latestChap.number}`}
                 className='text-second-color font-[600]'>
-                Chap #{props.latestChap.number}
+                {t('Chap')} #{props.latestChap.number}
               </Link>
             </div>
           )}
         </div>
       </div>
-      <div className='md:hidden'>
+      <div className='md:hidden h-full'>
         <Link href={`/comic/${props.id}`} className='relative flex flex-col h-full'>
           <Image
             src={props.image || NoImage}
@@ -95,15 +97,15 @@ export default function Comic(props: IComic) {
             } rounded-md w-[180px] aspect-[123/164]`}
           />
           <div className='absolute top-0 left-1'>
-            <StatusLabel status={props.status.type}>{props.status.text}</StatusLabel>
+            <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
           </div>
           <div className='text-xs font-extrabold text-second-color mt-2'>{props[locale].title}</div>
-          <div className='text-[10px] text-medium-gray flex-1'>
-            by{' '}
+          <div className='text-[10px] text-medium-gray flex-1 h-full'>
+            {t('by')}{' '}
             {props.authors.map((author, index) => (
               <Fragment key={index}>
                 <span className='text-second-color font-[600] first:hidden'>, </span>
-                <span className='text-second-color font-[600]'>{author}</span>
+                <span className='text-second-color font-[600]'>{t(author)}</span>
               </Fragment>
             ))}
           </div>

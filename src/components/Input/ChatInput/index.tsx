@@ -16,7 +16,13 @@ export default function ChatInput({ onSubmit }) {
   return (
     <div className={`px-4 md:px-6 py-2 md:py-3 flex items-center gap-[10px] ${classes['chat-input']}`}>
       <div className='w-9 h-9 flex-none flex items-center justify-center'>
-        <Image src={account?.image || Avatar} alt='' width={32} height={32} className='rounded-full' />
+        <Image
+          src={account?.image || Avatar}
+          alt=''
+          width={32}
+          height={32}
+          className='rounded-full w-8 h-8 object-cover'
+        />
       </div>
       <AutoGrowingTextField
         r={ref}

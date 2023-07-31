@@ -1,5 +1,5 @@
-import Spinner from "components/Spinner"
-import { buttonClasses } from ".."
+import Spinner from 'components/Spinner'
+import { buttonClasses } from '..'
 
 interface IOutlineButton {
   children: JSX.Element | string
@@ -29,12 +29,14 @@ export default function OutlineButton({
       className={`${classes[size]} ${
         (disabled || loading) && 'opacity-60 cursor-no-drop pointer-events-none'
       } ${className}`}>
-      <span
-        className={`transition-all duration-300 pointer-events-none overflow-hidden ${
-          loading ? `${size == 'lg' ? 'h-[25px] w-[25px]' : 'w-5'} opacity-100 mr-2` : 'w-0 h-0 opacity-0'
-        }`}>
-        <Spinner className={`border-[#84CCA3] ${size == 'lg' ? 'h-[25px] w-[25px]' : 'h-4 w-4'}`} />
-      </span>
+      {typeof loading != 'undefined' && (
+        <span
+          className={`transition-all duration-300 pointer-events-none overflow-hidden ${
+            loading ? `${size == 'lg' ? 'h-[25px] w-[25px]' : 'w-5'} opacity-100 mr-2` : 'w-0 h-0 opacity-0'
+          }`}>
+          <Spinner className={`border-[#84CCA3] ${size == 'lg' ? 'h-[25px] w-[25px]' : 'h-4 w-4'}`} />
+        </span>
+      )}
       <span>{children}</span>
     </button>
   )

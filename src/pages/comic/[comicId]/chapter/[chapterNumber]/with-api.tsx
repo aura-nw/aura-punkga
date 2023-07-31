@@ -127,12 +127,14 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
           author: {
             id: reply.social_activities_authorizer_user.id,
             nickname: reply.social_activities_authorizer_user.nickname,
+            image: reply.social_activities_authorizer_user.picture,
           },
         })),
         createAt: socialActivity.created_at,
         author: {
           id: socialActivity.social_activities_authorizer_user.id,
           nickname: socialActivity.social_activities_authorizer_user.nickname,
+          image: socialActivity.social_activities_authorizer_user.picture,
         },
       }))
     }

@@ -6,6 +6,7 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import { Context } from 'src/context'
 import { validateEmail, validatePassword } from 'src/utils'
 import CheckSquare from 'images/icons/check_square_fill.svg'
+import { useTranslation } from 'react-i18next'
 export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setSignUpSuccessOpen }) {
   const [email, setEmail] = useState('')
   const [emailValidateErrorMsg, setEmailValidateErrorMsg] = useState('')
@@ -25,7 +26,7 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
   const passwordRef = useRef<any>()
   const rpasswordRef = useRef<any>()
   const buttonRef = useRef<any>()
-
+  const { t } = useTranslation()
   const { signUp } = useContext(Context)
 
   useEffect(() => {
@@ -54,17 +55,19 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
   const signUpHandler = () => {
     let isError = false
     if (!validateEmail(email)) {
-      setEmailValidateErrorMsg('Invalid email format')
+      setEmailValidateErrorMsg(t('Invalid email format'))
       isError = true
     }
     if (!validatePassword(password)) {
       setPasswordValidateErrorMsg(
-        'Password needs to be at least 6 characters long and contain at least one number, one uppercase letter, one lowercase letter and one special character'
+        t(
+          'Password needs to be at least 6 characters long and contain at least one number, one uppercase letter, one lowercase letter and one special character'
+        )
       )
       isError = true
     }
     if (password != repassword) {
-      setRepasswordValidateErrorMsg('Password doesn’t match')
+      setRepasswordValidateErrorMsg(t('Password doesn’t match'))
       isError = true
     }
     if (!isError) {
@@ -78,8 +81,8 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
       setSignUpOpen(false)
       setSignUpSuccessOpen(true)
     } else {
-      if (msg.includes('has already signed up')) setEmailValidateErrorMsg('Email has been registered')
-      else if (msg.includes('authorizer_users_nickname_key')) setUsernameValidateErrorMsg('Name already taken')
+      if (msg.includes('has already signed up')) setEmailValidateErrorMsg(t('Email has been registered'))
+      else if (msg.includes('authorizer_users_nickname_key')) setUsernameValidateErrorMsg(t('Name already taken'))
       else setSignUpErrorMsg(msg)
     }
     setSignUpLoading(false)
@@ -95,14 +98,14 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
       leaveFrom='max-h-screen opacity-100'
       leaveTo='max-h-[0vh] opacity-0'>
       <div className='p-6 md:w-[400px]'>
-        <p className='text-center text-xl font-semibold leading-6'>Sign up to Punkga.me</p>
+        <p className='text-center text-xl font-semibold leading-6'>{t('Sign up to Punkga.me')}</p>
         <p className='text-center font-medium mt-2 text-gray-600'>
-          Subscribe, receive notifications and unlock special chapters
+          {t('Subscribe, receive notifications and unlock special chapters')}
         </p>
         <div className='mt-[10px]'>
           <OutlineTextField
-            placeholder='Choose a username'
-            label='Username'
+            placeholder={t('Choose a username')}
+            label={t('Username')}
             errorMsg={usernameValidateErrorMsg}
             value={username}
             onChange={setUsername}
@@ -114,8 +117,8 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
             }}
           />
           <OutlineTextField
-            placeholder='Enter your email'
-            label='Email'
+            placeholder={t('Enter your email')}
+            label={t('Email')}
             type='email'
             errorMsg={emailValidateErrorMsg}
             value={email}
@@ -128,8 +131,8 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
             }}
           />
           <OutlineTextField
-            placeholder='Enter your password'
-            label='Password'
+            placeholder={t('Enter your password')}
+            label={t('Password')}
             type='password'
             value={password}
             errorMsg={passwordValidateErrorMsg}
@@ -142,8 +145,8 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
             }}
           />
           <OutlineTextField
-            placeholder='Re-enter your password'
-            label='Confirm Password'
+            placeholder={t('Re-enter your password')}
+            label={t('Confirm Password')}
             type='password'
             errorMsg={repasswordValidateErrorMsg}
             value={repassword}
@@ -164,15 +167,15 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
           size='lg'
           disabled={!(username && email && password && repassword && repasswordValidateSuccess)}
           onClick={signUpHandler}>
-          Sign up
+          {t('Sign up')}
         </FilledButton>
         <div className='text-xs font-medium leading-6 text-medium-red min-h-[24px] text-center'>{signUpErrorMsg}</div>
         <div className=' text-xs font-medium text-center leading-6'>
-          Or{' '}
+          {t('Or')}{' '}
           <a className='text-second-color font-semibold' onClick={openSignInModal}>
-            sign in
+            {t('sign in')}
           </a>{' '}
-          with another account
+          {t('with another account')}
         </div>
       </div>
     </Transition>

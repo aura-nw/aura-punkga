@@ -13,21 +13,26 @@ import { Context } from 'src/context'
 import NoteIcon from 'images/icons/ic_note.svg'
 import ArrowSwapIcon from 'images/icons/arrow-swap.svg'
 import { IChapter } from 'src/models/chapter'
+import { useTranslation } from 'react-i18next'
 
 export default function ChapterList({ list, like, unlike, setComicLikes }) {
+  const { t } = useTranslation()
   const [isDesc, setIsDesc] = useState(true)
   const [searchChapter, setSearchChapter] = useState('')
+  const { locale } = useRouter()
   return (
     <div>
       <div className='w-full bg-[#414141] text-medium-gray py-2 px-5 flex items-center justify-between'>
         <div className='flex gap-5 items-center whitespace-nowrap'>
-          <div className='text-[14px]'>{`${list.length} chapter${list.length > 1 ? 's' : ''}`}</div>
+          <div className='text-[14px]'>
+            {locale == 'en' ? `${list.length} chapter${list.length > 1 ? 's' : ''}` : `${list.length} chương`}
+          </div>
           <TextField
             onChange={setSearchChapter}
             value={searchChapter}
             size='xs'
             type='number'
-            placeholder='Enter chapter number'
+            placeholder={t('Enter chapter number')}
             className='bg-subtle-dark'
             leadingComponent={<Image alt='' src={NoteIcon} className='w-5 h-5 text-medium-gray' />}
           />
@@ -68,6 +73,7 @@ const Chapter = ({
   const router = useRouter()
   const { query } = useRouter()
   const { account } = useContext(Context)
+  const { t } = useTranslation()
   const [isLiked, setIsLiked] = useState(chapter.isLiked)
   const [likes, setLikes] = useState(chapter.likes)
   const likeHandler = (isLike: boolean) => {
@@ -102,14 +108,14 @@ const Chapter = ({
       <div className='flex flex-col justify-between flex-1 p-4'>
         <div>
           <div className='flex items-center gap-5'>
-            <p className='text-[10px]'>{`Chapter ${chapter.number}`}</p>
+            <p className='text-[10px]'>{`${t('Chapter')} ${chapter.number}`}</p>
             {(function () {
               switch (chapter.type) {
                 case 'Account only':
                   if (account) {
                     return (
                       <StatusLabel status='success'>
-                        <>Account only</>
+                        <>{t('Account only')}</>
                       </StatusLabel>
                     )
                   } else {
@@ -117,7 +123,7 @@ const Chapter = ({
                       <StatusLabel status='error'>
                         <div className='flex gap-1'>
                           <Image src={LockIcon} alt='' />
-                          Account only
+                          {t('Account only')}
                         </div>
                       </StatusLabel>
                     )
@@ -133,13 +139,13 @@ const Chapter = ({
                 case 'Upcoming':
                   return (
                     <StatusLabel status='warning'>
-                      <>Upcoming</>
+                      <>{t('Upcoming')}</>
                     </StatusLabel>
                   )
                 default:
                   return (
                     <div>
-                      <>{chapter.status}</>
+                      <>{t(chapter.status)}</>
                     </div>
                   )
               }

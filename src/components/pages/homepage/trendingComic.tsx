@@ -4,10 +4,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 import { IComic } from 'src/models/comic'
 
 export default function TrendingComic(props: IComic) {
   const { locale } = useRouter()
+  const { t } = useTranslation()
   return (
     <div className={`flex gap-[20px] ${props.status.text == 'Upcoming' ? 'pointer-events-none' : ''}`}>
       <Link href={`/comic/${props.id}`} className='flex-auto w-1/3 xl:hidden'>
@@ -42,11 +44,11 @@ export default function TrendingComic(props: IComic) {
           {props[locale].title}
         </Link>
         <div className='text-xs md:text-base'>
-          by{' '}
+          {t('by')}{' '}
           {props.authors.map((author, index) => (
             <Fragment key={index}>
               <span className='font-[500] first:hidden text-second-color md:text-black'>, </span>
-              <span className='font-[500] text-second-color md:text-black'>{author}</span>
+              <span className='font-[500] text-second-color md:text-black'>{t(author)}</span>
             </Fragment>
           ))}
         </div>
@@ -58,11 +60,11 @@ export default function TrendingComic(props: IComic) {
         </div>
         {!!props.latestChap.number && (
           <div className='mt-[10px] text-xs md:text-base'>
-            Latest:{' '}
+            {t('Latest')}:{' '}
             <Link
               href={`/comic/${props.id}/chapter/${props.latestChap.number}`}
               className='text-second-color font-[600]'>
-              Chap #{props.latestChap.number}
+              {t('Chap')} #{props.latestChap.number}
             </Link>
           </div>
         )}

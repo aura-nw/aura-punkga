@@ -6,6 +6,7 @@ export interface IComment {
   author: {
     id: string
     nickname: string
+    image?: string
   }
 }
 export interface IReply {
@@ -14,5 +15,6 @@ export interface IReply {
   author: {
     id: string
     nickname: string
+    image?: string
   }
 }

@@ -4,7 +4,9 @@ import OutlineTextField from 'components/Input/TextField/Outline'
 import Facebook from 'images/Facebook.png'
 import Google from 'images/Google.png'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { useContext, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { validateEmail } from 'src/utils'
 
@@ -14,7 +16,8 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
   const emailRef = useRef<any>()
   const passwordRef = useRef<any>()
   const buttonRef = useRef<any>()
-
+  const { t } = useTranslation()
+  const { locale } = useRouter()
   const [emailValidateErrorMsg, setEmailValidateErrorMsg] = useState('')
   const [loginErrorMsg, setLoginErrorMsg] = useState('')
   const [loginLoading, setLoginLoading] = useState(false)
@@ -42,7 +45,7 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
       setLoginLoading(true)
       login(email, password, loginCallBack)
     } else {
-      setEmailValidateErrorMsg('Invalid email format')
+      setEmailValidateErrorMsg(t('Invalid email format'))
     }
   }
 
@@ -50,7 +53,7 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
     if (status === 'success') {
       setSignInOpen(false)
     } else {
-      setLoginErrorMsg(msg || 'Something went wrong')
+      setLoginErrorMsg(msg || t('Something went wrong'))
     }
     setLoginLoading(false)
   }
@@ -65,14 +68,14 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
       leaveFrom='max-h-screen opacity-100'
       leaveTo='max-h-[0vh] opacity-0'>
       <div className='p-6 md:w-[400px]'>
-        <p className='text-center text-xl font-semibold leading-6'>Sign in to Punkga.me</p>
+        <p className='text-center text-xl font-semibold leading-6'>{t('Sign in to Punkga.me')}</p>
         <p className='text-center font-medium mt-2 text-gray-600'>
-          Subscribe, receive notifications and unlock special chapters
+          {t('Subscribe, receive notifications and unlock special chapters')}
         </p>
         <div className='mt-[10px]'>
           <OutlineTextField
-            placeholder='Enter your email'
-            label='Email'
+            placeholder={t('Enter your email')}
+            label={t('Email')}
             type='email'
             errorMsg={emailValidateErrorMsg}
             value={email}
@@ -85,8 +88,8 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
             }}
           />
           <OutlineTextField
-            placeholder='Enter your password'
-            label='Password'
+            placeholder={t('Enter your password')}
+            label={t('Password')}
             type='password'
             value={password}
             onChange={setPassword}
@@ -105,7 +108,7 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
             setSignInOpen(false)
             setForgotPasswordOpen(true)
           }}>
-          Forgot password?
+          {t('Forgot password')}?
         </div>
         <div className='mt-4 flex flex-col items-center w-full max-w-[300px] mx-auto'>
           <FilledButton
@@ -114,30 +117,31 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
             disabled={!(email && password)}
             onClick={loginHandler}
             loading={loginLoading}>
-            Sign in
+            {t('Sign in')}
           </FilledButton>
           <div className='text-xs font-medium leading-6 text-medium-red min-h-[24px]'>{loginErrorMsg}</div>
           <div className='text-xs font-medium leading-6 min-h-[24px] mt-2 text-gray-600'>
-            Don’t have an account?{' '}
+            {t('Don’t have an account')}?{' '}
             <a className='text-[#3A00E5] cursor-pointer' onClick={openSignUpModal}>
-              Sign up
+              {t('Sign up')}
             </a>
           </div>
-          <div className='text-xs font-medium leading-6 min-h-[24px] text-gray-600'>or</div>
+          <div className='text-xs font-medium leading-6 min-h-[24px] text-gray-600'>{t('or')}</div>
           <button
             className='mt-2 flex gap-[10px] items-center rounded-full bg-light-gray px-4 py-2 leading-5 font-medium w-full'
             onClick={() => oauth('facebook')}>
             <Image src={Facebook} alt='' />
-            Continue with Facebook
+            {t('Continue with Facebook')}
           </button>
           <button
             className='mt-2 flex gap-[10px] items-center rounded-full bg-light-gray px-4 py-2 leading-5 font-medium w-full'
             onClick={() => oauth('google')}>
             <Image src={Google} alt='' />
-            Continue with Google
+            {t('Continue with Google')}
           </button>
-          <div className='mt-[10px ] text-xs font-medium text-center leading-6'>
-            By continuing, you agree to our <a className='text-second-color font-semibold'>Terms of Use</a>
+          <div className='mt-[10px] text-xs font-medium text-center'>
+            {t('By continuing, you agree to our')}{' '}
+            <a className='text-second-color font-semibold'>{t('Terms of Use')}</a> {locale == 'vn' && 'của chúng tôi'}
           </div>
         </div>
       </div>

@@ -261,6 +261,7 @@ function ContextProvider({ children }) {
         isSettingUp,
         updateProfile,
         resendVerifyEmail,
+        getProfile,
       }}>
       {children}
     </Context.Provider>

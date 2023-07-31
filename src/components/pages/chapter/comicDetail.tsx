@@ -6,12 +6,15 @@ import OutlineButton from 'components/Button/OutlineButton'
 import TextField from 'components/Input/TextField'
 import StatusLabel from 'components/Label/Status'
 import Tag from 'components/Label/Tag'
-import ArrowSwapIcon from 'images/icons/arrow-swap.svg'
+import FilledSelect from 'components/Select/FilledSelect'
+import LockIcon from 'images/icons/Lock.svg'
 import ArrowSwapLightIcon from 'images/icons/arrow-swap-light.svg'
+import ArrowSwapIcon from 'images/icons/arrow-swap.svg'
 import HeartFillIcon from 'images/icons/heart_fill.svg'
 import HeartOutlineIcon from 'images/icons/heart_outline.svg'
 import NoteIcon from 'images/icons/ic_note.svg'
 import CalendarIcon from 'images/icons/solar_calendar-linear.svg'
+import _ from 'lodash'
 import moment from 'moment'
 import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
@@ -19,12 +22,10 @@ import { useRouter } from 'next/router'
 import { Fragment, useContext, useEffect, useState } from 'react'
 import mockBanner from 'src/assets/images/mockup3.png'
 import mockAvar from 'src/assets/images/mockup4.png'
-import LockIcon from 'images/icons/Lock.svg'
 import m6 from 'src/assets/images/mockup6.png'
 import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
 import { IComicDetail } from 'src/models/comic'
-import FilledSelect from 'components/Select/FilledSelect'
 export default function ComicDetail({
   data,
   language,
@@ -62,12 +63,22 @@ export default function ComicDetail({
   const [expandDescription, setExpandDescription] = useState(false)
   const [isDesc, setIsDesc] = useState(true)
   const { t } = useTranslation()
+  const { locale } = useRouter()
   const { account } = useContext(Context)
   const [searchChapter, setSearchChapter] = useState('')
   const [chapterType, setChapterType] = useState({
     key: 'All types',
-    value: 'All types',
+    value: t('All types'),
   })
+
+  useEffect(() => {
+    setChapterType((prev) => {
+      return _.cloneDeep({
+        key: prev.key,
+        value: t(prev.key),
+      })
+    })
+  }, [t('All status')])
 
   const subscribeHandler = (isSub: boolean) => {
     if (account?.verified && account?.name) {
@@ -87,7 +98,7 @@ export default function ComicDetail({
   }
 
   if (!data) {
-    return <div>Không có dữ liệu</div>
+    return <div>{t('No data to show')}</div>
   }
 
   const selectedLanguage =
@@ -136,7 +147,7 @@ export default function ComicDetail({
                 </span>
                 {expandDetail && (
                   <span className='ml-3'>
-                    <StatusLabel status={data.status?.type}>{data.status?.text}</StatusLabel>
+                    <StatusLabel status={data.status?.type}>{t(data.status?.text)}</StatusLabel>
                   </span>
                 )}
               </div>
@@ -147,28 +158,28 @@ export default function ComicDetail({
                 {data.authors.map((author, index) => (
                   <Fragment key={index}>
                     <span className='text-second-color font-[600] first:hidden'>, </span>
-                    <span className='text-second-color font-[600]'>{author}</span>
+                    <span className='text-second-color font-[600]'>{t(author)}</span>
                   </Fragment>
                 ))}
               </p>
               <p className=''>
                 {' '}
-                <strong>{data.views?.toLocaleString('en-US')}</strong> views •{' '}
-                <strong>{comicLikes?.toLocaleString('en-US')}</strong> likes
+                <strong>{data.views?.toLocaleString('en-US')}</strong> {t('views')} •{' '}
+                <strong>{comicLikes?.toLocaleString('en-US')}</strong> {t('likes')}
               </p>
               <div className={`2xl:flex-row 2xl:items-start flex-col flex gap-[10px]`}>
                 {isSubscribe ? (
                   <FilledButton>
-                    <div onClick={() => subscribeHandler(false)} className='h-5 flex items-center'>
+                    <div onClick={() => subscribeHandler(false)} className='h-5 flex items-start'>
                       <BellAlertIcon className='w-6 h-6 mr-2 inline-block animate-[bell-ring_1s_ease-in-out]' />
-                      Subscribed
+                      {t('Subscribed')}
                     </div>
                   </FilledButton>
                 ) : (
                   <OutlineButton>
-                    <div onClick={() => subscribeHandler(true)} className='h-5 flex items-center'>
+                    <div onClick={() => subscribeHandler(true)} className='h-5 flex items-start'>
                       <BellAlertIconOutline className='w-6 h-6 mr-2 inline-block ' />
-                      Subscribe
+                      {t('Subscribe')}
                     </div>
                   </OutlineButton>
                 )}
@@ -176,7 +187,7 @@ export default function ComicDetail({
                   <OutlineButton
                     className={`${!expandDetail ? 'opacity-100' : 'opacity-0'} duration-500 transition-all`}
                     onClick={() => setExpandDetail(true)}>
-                    See Detail
+                    {t('See Detail')}
                   </OutlineButton>
                 </div>
               </div>
@@ -186,9 +197,9 @@ export default function ComicDetail({
             {data.releaseDate && (
               <div
                 className={` text-subtle-dark transition-all whitespace-nowrap overflow-hidden ${
-                  expandDetail ? 'max-w-[300px] mr-[70px]' : 'max-w-[0px] mr-0'
+                  expandDetail ? 'max-w-[300px] min-w-[260px]' : 'max-w-[0px] min-w-[0px]'
                 } `}>
-                Release date:{' '}
+                {t('Release date')}:{' '}
                 <span className='text-gray-600 font-semibold'>{moment(data.releaseDate).format('DD/MM/yyyy')}</span>
               </div>
             )}
@@ -197,9 +208,9 @@ export default function ComicDetail({
                 <a
                   className='text-second-color underline font-semibold cursor-pointer'
                   onClick={() => (document.querySelector('#open-sign-in-btn') as any)?.click()}>
-                  Sign in
+                  {t('Sign in')}
                 </a>{' '}
-                to unlock special chapters!
+                {t('to unlock special chapters')}!
               </p>
             )}
           </div>
@@ -210,11 +221,11 @@ export default function ComicDetail({
               } duration-500 transition-all overflow-hidden`}>
               <Image src={CalendarIcon} alt='' className='w-5 h-5' />{' '}
               <div>
-                {`New chapter arrives on 
+                {`${t('New chapter arrives on')} 
                 ${moment(data.chapters.find((chapter) => chapter.status === 'Upcoming')?.date).format(
                   'dddd, DD/MM/yyyy'
                 )}.
-                Don’t miss latest update, subscribe now!`}
+                ${t('Don’t miss latest update, subscribe now')}!`}
               </div>
             </div>
           )}
@@ -228,7 +239,7 @@ export default function ComicDetail({
             onClick={() => setExpandDescription(!expandDescription)}>
             {data[selectedLanguage.shortLang]?.description}{' '}
             {!expandDescription && data[selectedLanguage.shortLang]?.description?.length >= 210 && (
-              <span className='text-second-color cursor-pointer'>see more...</span>
+              <span className='text-second-color cursor-pointer'>{t('see more')}...</span>
             )}
           </p>
           <div className='flex gap-2 flex-wrap'>
@@ -248,17 +259,19 @@ export default function ComicDetail({
           <div className={`flex-auto ${expandDetail ? ' w-1/2' : ' w-full -mr-1'} duration-500 transition-all`}>
             <div className='w-full bg-medium-gray px-[16px] 2xl:px-[60px] py-[16px] flex items-center justify-between mt-[13px]'>
               <div className='flex gap-5 items-center whitespace-nowrap'>
-                <strong className='text-[16px]'>{`${data.chapters.length} chapter${
-                  data.chapters.length > 1 ? 's' : ''
-                }`}</strong>
+                <strong className='text-[16px]'>
+                  {locale == 'en'
+                    ? `${data.chapters.length} chapter${data.chapters.length > 1 ? 's' : ''}`
+                    : `${data.chapters.length} chương`}
+                </strong>
                 <div className='flex gap-3 2xl:gap-5'>
-                  <span title='Only digits'>
+                  <span title={t('Only digits')}>
                     <TextField
                       onChange={setSearchChapter}
                       value={searchChapter}
                       size='sm'
                       type='number'
-                      placeholder='Enter chapter number'
+                      placeholder={t('Enter chapter number')}
                       leadingComponent={<Image alt='' src={NoteIcon} className='w-6 h-6 text-medium-gray' />}
                     />
                   </span>
@@ -273,23 +286,23 @@ export default function ComicDetail({
                       options={[
                         {
                           key: 'All types',
-                          value: 'All types',
+                          value: t('All types'),
                         },
 
                         {
                           key: 'Free',
-                          value: 'Free',
+                          value: t('Free'),
                         },
                         {
                           key: 'NFTs only',
-                          value: 'NFTs only',
+                          value: t('NFTs only'),
                         },
                         {
                           key: 'Account only',
-                          value: 'Account only',
+                          value: t('Account only'),
                         },
                       ]}
-                      placeholder='All types'
+                      placeholder={t('All types')}
                     />
                   </div>
                   <div
@@ -298,7 +311,7 @@ export default function ComicDetail({
                     } transition-all flex items-center`}>
                     <button className='hidden 2xl:flex gap-3 items-center bg-[#f2f2f2] rounded-full py-[3px] px-[13px]'>
                       <div className='text-base leading-6 text-medium-gray truncate' onClick={() => setIsDesc(!isDesc)}>
-                        {isDesc ? 'Sort by newest' : 'Sort by oldest'}
+                        {isDesc ? t('Sort by newest') : t('Sort by oldest')}
                       </div>
                       <Image
                         alt=''
@@ -386,9 +399,10 @@ const Chapter = ({
 }) => {
   const [isLiked, setIsLiked] = useState(defaultIsLiked || chapter.isLiked || false)
   const [likes, setLikes] = useState(defaultLike || chapter.likes || 0)
+  const { t } = useTranslation()
   const router = useRouter()
   useEffect(() => {
-    setLikes(defaultLike)
+    setLikes(defaultLike || 0)
   }, [defaultLike])
   useEffect(() => {
     setIsLiked(defaultIsLiked)
@@ -435,14 +449,14 @@ const Chapter = ({
         <div className='flex flex-col justify-center flex-1'>
           <div>
             <div className='flex items-center gap-5'>
-              <p>{`Chapter ${chapter.number}`}</p>
+              <p>{`${t('Chapter')} ${chapter.number}`}</p>
               {(function () {
                 switch (chapter.type) {
                   case 'Account only':
                     if (account) {
                       return (
                         <StatusLabel status='success'>
-                          <>Account only</>
+                          <>{t('Account only')}</>
                         </StatusLabel>
                       )
                     } else {
@@ -450,7 +464,7 @@ const Chapter = ({
                         <StatusLabel status='error'>
                           <div className='flex gap-1'>
                             <Image src={LockIcon} alt='' />
-                            Account only
+                            {t('Account only')}
                           </div>
                         </StatusLabel>
                       )
@@ -458,7 +472,7 @@ const Chapter = ({
                   case 'Upcoming':
                     return (
                       <StatusLabel status='warning'>
-                        <>Upcoming</>
+                        <>{t('Upcoming')}</>
                       </StatusLabel>
                     )
                   default:
@@ -470,7 +484,7 @@ const Chapter = ({
                   case 'Upcoming':
                     return (
                       <StatusLabel status='warning'>
-                        <>Upcoming</>
+                        <>{t('Upcoming')}</>
                       </StatusLabel>
                     )
                   default:

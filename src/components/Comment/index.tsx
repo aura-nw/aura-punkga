@@ -1,14 +1,14 @@
-import Image from 'next/image'
+import ChatInput from 'components/Input/ChatInput'
 import Avatar from 'images/avatar.png'
 import RepIcon from 'images/icons/reply.svg'
-import Reply from './Reply'
-import ChatInput from 'components/Input/ChatInput'
-import { IComment } from 'src/models/comment'
 import moment from 'moment'
+import Image from 'next/image'
 import { useContext, useState } from 'react'
-import { replyComment } from 'src/services'
-import { useRouter } from 'next/router'
+import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
+import { IComment } from 'src/models/comment'
+import { replyComment } from 'src/services'
+import Reply from './Reply'
 export default function Comment({
   data,
   reload,
@@ -19,6 +19,7 @@ export default function Comment({
   chapterId: string
 }) {
   const [showInput, setShowInput] = useState(false)
+  const { t } = useTranslation()
   const { account } = useContext(Context)
 
   const reply = async (content) => {
@@ -32,7 +33,13 @@ export default function Comment({
       <div className='bg-white px-6 py-4 rounded-xl'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center'>
-            <Image src={Avatar} alt='' className='w-8 h-8' />
+            <Image
+              src={data.author.image || Avatar}
+              alt=''
+              width={32}
+              height={32}
+              className='w-8 h-8 object-cover rounded-full'
+            />
             <strong className='ml-[10px] text-xs md:text-base'>{data.author.nickname}</strong>
             <p className='ml-4  text-xs md:text-base'>{moment(data.createAt).fromNow()}</p>
           </div>
@@ -41,7 +48,7 @@ export default function Comment({
               className='flex items-center text-second-color cursor-pointer  text-xs md:text-base'
               onClick={() => setShowInput(!showInput)}>
               <Image src={RepIcon} alt='' className='mr-2 ' />
-              Reply
+              {t('Reply')}
             </strong>
           )}
         </div>

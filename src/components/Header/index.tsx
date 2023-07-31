@@ -27,9 +27,11 @@ import SignInModal from './SignInModal'
 import SignUpModal from './SignUpModal'
 import SignUpSuccessModal from './SignUpSuccessModal'
 import { useClickOutside } from 'src/hooks/useClickOutside'
+import useScrollPosition from 'src/hooks/useScrollPosition'
 
 export default function Header({}) {
   const { t } = useTranslation()
+  const pos = useScrollPosition()
   const router = useRouter()
   const [isSearchFocused, setIsSearchFocused] = useState(false)
   const ref = useRef<any>()
@@ -100,7 +102,10 @@ export default function Header({}) {
         className={` fixed inset-0 transition-opacity duration-500 bg-[#000] ${
           isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
         }`}></div>
-      <header className='bg-white border-b-2 border-light-gray border-solid'>
+      <header
+        className={`bg-white border-b-2 border-light-gray border-solid ${
+          pos > 250 ? 'fixed w-[100vw] top-0 z-50 transition-all duration-300' : '-top-14'
+        }`}>
         <nav className='md:hidden pk-container p-3'>
           <div className='flex justify-between items-center gap-2'>
             <div onClick={() => router.push('/')}>
@@ -112,7 +117,7 @@ export default function Header({}) {
                 onChange={_.debounce(setSearchValue, 500)}
                 onFocus={() => setIsSearchFocused(true)}
                 className={`transition-[width] bg-light-gray duration-500`}
-                placeholder='Search by title'
+                placeholder={t('Search by title')}
                 trailingComponent={
                   searchComic.loading ? (
                     <Spinner className='w-6 h-6' />
@@ -158,14 +163,14 @@ export default function Header({}) {
                               {manga.authors.map((author, index) => (
                                 <Fragment key={index}>
                                   <span className='text-second-color font-[600] first:hidden'>, </span>
-                                  <span className='text-second-color font-[600]'>{author}</span>
+                                  <span className='text-second-color font-[600]'>{t(author)}</span>
                                 </Fragment>
                               ))}
                             </div>
                           </div>
                           {!!manga.latestChap.number && (
                             <p className='text-xs'>
-                              Latest chap:{' '}
+                              {t('Latest chap')}:{' '}
                               <span
                                 className='text-second-color font-semibold cursor-pointer'
                                 onClick={(e) => {
@@ -218,7 +223,7 @@ export default function Header({}) {
                       <div className='p-5 flex flex-col gap-5'>
                         <div className='flex justify-center items-center'>
                           <Image src={c98} alt='c98' />
-                          <div className='ml-[10px] font-[500]'>Connected with coin 98</div>
+                          <div className='ml-[10px] font-[500]'>{t('Connected with coin 98')}</div>
                         </div>
                         <div className='flex'>
                           <div className='flex-auto w-[60%]'></div>
@@ -226,15 +231,15 @@ export default function Header({}) {
                           <div className='flex-auto w-[30%]'></div>
                         </div>
                         <SubFilledButton className='w-full' size='lg' onClick={unlinkWallet}>
-                          Disconnect Wallet
+                          {t('Disconnect Wallet')}
                         </SubFilledButton>
                         <div className='mt-[10px]'>
                           <div onClick={() => router.push('/profile')}>
-                            <strong>My profile</strong>
+                            <strong>{t('My profile')}</strong>
                           </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={logout}>
-                            <strong>Log out</strong>
+                            <strong>{t('Log out')}</strong>
                           </div>
                         </div>
                       </div>
@@ -244,15 +249,15 @@ export default function Header({}) {
                       <div className='p-5 flex flex-col gap-5'>
                         <div className='mt-[10px]'>
                           <div onClick={() => router.push('/profile')}>
-                            <strong>My profile</strong>
+                            <strong>{t('My profile')}</strong>
                           </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={() => setConnectWalletOpen(true)}>
-                            <strong>Link Wallet</strong>
+                            <strong>{t('Link Wallet')}</strong>
                           </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={logout}>
-                            <strong>Log out</strong>
+                            <strong>{t('Log out')}</strong>
                           </div>
                         </div>
                       </div>
@@ -261,14 +266,14 @@ export default function Header({}) {
                 </Dropdown>
               ) : (
                 <FilledButton id='open-sign-in-btn' size='sm' onClick={() => setSignInOpen(true)}>
-                  Sign in
+                  {t('Sign in')}
                 </FilledButton>
               )}
             </div>
           </div>
         </nav>
         <nav
-          className='pk-container gap-3 md:flex items-center justify-between pt-[10px] pb-[8px] hidden'
+          className={`pk-container gap-3 md:flex items-center justify-between pt-[10px] pb-[8px] hidden`}
           aria-label='Global'>
           <div className=''>
             <Link href='/' className='flex'>
@@ -283,7 +288,7 @@ export default function Header({}) {
               onFocus={() => setIsSearchFocused(true)}
               className={`transition-[width] bg-light-gray duration-500 ${isSearchFocused ? '!w-[160%]' : ''}`}
               size='lg'
-              placeholder='Search by title'
+              placeholder={t('Search by title')}
               leadingComponent={
                 <Image
                   src={SearchIcon}
@@ -320,14 +325,14 @@ export default function Header({}) {
                             {manga.authors.map((author, index) => (
                               <Fragment key={index}>
                                 <span className='text-second-color font-[600] first:hidden'>, </span>
-                                <span className='text-second-color font-[600]'>{author}</span>
+                                <span className='text-second-color font-[600]'>{t(author)}</span>
                               </Fragment>
                             ))}
                           </div>
                         </div>
                         {!!manga.latestChap.number && (
                           <p className='text-xs'>
-                            Latest chap:{' '}
+                            {t('Latest chap')}:{' '}
                             <span
                               className='text-second-color font-semibold cursor-pointer'
                               onClick={(e) => {
@@ -379,7 +384,7 @@ export default function Header({}) {
                       <div className='p-5 flex flex-col gap-5'>
                         <div className='flex justify-center items-center'>
                           <Image src={c98} alt='c98' />
-                          <div className='ml-[10px] font-[500]'>Connected with coin 98</div>
+                          <div className='ml-[10px] font-[500]'>{t('Connected with coin 98')}</div>
                         </div>
                         <div className='flex'>
                           <div className='flex-auto w-[60%]'></div>
@@ -387,15 +392,15 @@ export default function Header({}) {
                           <div className='flex-auto w-[30%]'></div>
                         </div>
                         <SubFilledButton className='w-full' size='lg' onClick={unlinkWallet}>
-                          Disconnect Wallet
+                          {t('Disconnect Wallet')}
                         </SubFilledButton>
                         <div className='mt-[10px]'>
                           <div onClick={() => router.push('/profile')}>
-                            <strong>My profile</strong>
+                            <strong>{t('My profile')}</strong>
                           </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={logout}>
-                            <strong>Log out</strong>
+                            <strong>{t('Log out')}</strong>
                           </div>
                         </div>
                       </div>
@@ -405,15 +410,15 @@ export default function Header({}) {
                       <div className='p-5 flex flex-col gap-5'>
                         <div className='mt-[10px]'>
                           <div onClick={() => router.push('/profile')}>
-                            <strong>My profile</strong>
+                            <strong>{t('My profile')}</strong>
                           </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={() => setConnectWalletOpen(true)}>
-                            <strong>Link Wallet</strong>
+                            <strong>{t('Link Wallet')}</strong>
                           </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={logout}>
-                            <strong>Log out</strong>
+                            <strong>{t('Log out')}</strong>
                           </div>
                         </div>
                       </div>
@@ -422,7 +427,7 @@ export default function Header({}) {
                 </Dropdown>
               ) : (
                 <FilledButton id='open-sign-in-btn' size='lg' onClick={() => setSignInOpen(true)}>
-                  Sign in
+                  {t('Sign in')}
                 </FilledButton>
               )}
             </div>

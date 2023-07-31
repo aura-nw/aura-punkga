@@ -19,8 +19,10 @@ import MComic from 'components/pages/homepage/comic'
 import FilledButton from 'components/Button/FilledButton'
 import MaleIcon from 'images/icons/male.svg'
 import FemaleIcon from 'images/icons/female.svg'
+import { useTranslation } from 'react-i18next'
 export default function Profile({ profile, subscribeList, unsubscribe, subscribe, curentlyReading, updateProfile }) {
-  const { account, isSettingUp } = useContext(Context)
+  const { account, isSettingUp, getProfile } = useContext(Context)
+  const { t } = useTranslation()
   const [birthdate, setBirthdate] = useState(null)
   const profilePicture = useRef()
   const [gender, setGender] = useState<{ key: string | number; value: string }>(null)
@@ -31,6 +33,28 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
   const [changingPasswordModalOpen, setChangingPasswordModalOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [showMore, setShowMore] = useState(false)
+  const [selectedFile, setSelectedFile] = useState()
+  const [preview, setPreview] = useState()
+  useEffect(() => {
+    if (!selectedFile) {
+      setPreview(undefined)
+      return
+    }
+
+    const objectUrl = URL.createObjectURL(selectedFile) as any
+    setPreview(objectUrl)
+
+    return () => URL.revokeObjectURL(objectUrl)
+  }, [selectedFile])
+
+  const onSelectFile = (e) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedFile(undefined)
+      return
+    }
+
+    setSelectedFile(e.target.files[0])
+  }
 
   useEffect(() => {
     if (!isSettingUp) {
@@ -66,7 +90,9 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
       setLoading(true)
       const res = await updateProfile(form)
       await profile.callApi(true)
+      await getProfile()
     }
+    setSelectedFile(undefined)
     setLoading(false)
     setOpen(false)
   }
@@ -77,7 +103,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
         className='relative w-full cursor-default rounded-[12px] bg-white py-[3px] pl-[13px] pr-[57px] text-left text-gray-900 shadow-sm ring-1 ring-inset ring-medium-gray focus:outline-none focus:ring-2 sm:text-sm sm:leading-6 lg:h-10 font-bold'
         onClick={onClick}
         ref={ref}>
-        {value ? moment(value).format('DD/MM/yyyy') : <span className='text-medium-gray'>Click to change</span>}
+        {value ? moment(value).format('DD/MM/yyyy') : <span className='text-medium-gray'>{t('Click to change')}</span>}
         <span className='pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2'>
           <ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />
         </span>
@@ -109,17 +135,22 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
         ) : (
           <div className='flex gap-5 md:gap-[60px]'>
             <div className='w-2/5 md:w-[320px] relative self-baseline'>
-              <div className=' aspect-square rounded-full md:rounded-xl object-contain bg-light-gray  overflow-hidden '>
+              <div className=' aspect-square rounded-full md:rounded-xl object-contain bg-light-gray overflow-hidden '>
                 <div
-                  className={`aspect-square transition-all bg-medium-gray duration-300 absolute inset-0 opacity-0 flex flex-col justify-center items-center cursor-pointer ${
+                  className={`aspect-square w-full transition-all bg-medium-gray duration-300 absolute top-0 opacity-0 flex flex-col justify-center items-center cursor-pointer ${
                     open ? 'hover:opacity-40' : 'hidden'
                   }`}>
                   <CloudArrowUpIcon className='w-10 h-10' />
-                  <div className='text-xl font-semibold'>Upload profile picture</div>
-                  <input ref={profilePicture} type='file' className='bg-black absolute inset-0 opacity-0' />
+                  <div className='hidden md:block text-xl font-semibold'>{t('Upload profile picture')}</div>
+                  <input
+                    ref={profilePicture}
+                    onChange={onSelectFile}
+                    type='file'
+                    className='bg-black absolute inset-0 opacity-0'
+                  />
                 </div>
                 <Image
-                  src={profile.data.picture || NoImg}
+                  src={preview || profile.data.picture || NoImg}
                   height={360}
                   width={360}
                   alt=''
@@ -129,8 +160,9 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
               <FilledButton
                 className={`md:hidden mt-3 w-full ${open ? 'opacity-100' : 'opacity-0'}`}
                 size='xs'
+                loading={loading}
                 onClick={updateProfileHandler}>
-                Save
+                {t('Save')}
               </FilledButton>
             </div>
             <div className='flex flex-col md:justify-between w-full md:w-1/2'>
@@ -138,9 +170,9 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                 <div className='flex'>
                   <div
                     className={`inline-block text-medium-gray transition-all  ${
-                      open ? 'w-[88px] md:w-[100px] opacity-100 font-bold text-sm md:text-base' : 'w-[0px] opacity-0'
+                      open ? 'w-[88px] md:w-[130px] opacity-100 font-bold text-sm md:text-base' : 'w-0 h-0 opacity-0'
                     }`}>
-                    Username:
+                    {t('Username')}:
                   </div>
                   <p
                     className={` text-second-color transition-all ${
@@ -154,9 +186,9 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                 <div className='flex'>
                   <div
                     className={`inline-block text-medium-gray transition-all  ${
-                      open ? 'w-[88px] md:w-[100px] opacity-100 font-bold text-sm md:text-base' : 'w-[0px] opacity-0'
+                      open ? 'w-[88px] md:w-[130px] opacity-100 font-bold text-sm md:text-base' : 'w-[0px] opacity-0'
                     }`}>
-                    Email:
+                    {t('Email')}:
                   </div>
                   <p
                     className={`transition-all text-sm md:text-base ${
@@ -172,9 +204,9 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                   <div className='flex items-center'>
                     <div
                       className={`inline-block text-medium-gray transition-all  ${
-                        open ? 'w-[88px] md:w-[100px] opacity-100 font-bold text-sm md:text-base' : 'w-[0px] opacity-0'
+                        open ? 'w-[88px] md:w-[130px] opacity-100 font-bold text-sm md:text-base' : 'w-[0px] opacity-0'
                       }`}>
-                      DOB:
+                      {t('DOB')}:
                     </div>
                     <div>
                       <DatePicker
@@ -191,9 +223,9 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                   <div className='flex items-center'>
                     <div
                       className={`inline-block text-medium-gray transition-all  ${
-                        open ? 'w-[88px] md:w-[100px] opacity-100 font-bold text-sm md:text-base' : 'w-[0px] opacity-0'
+                        open ? 'w-[88px] md:w-[130px] opacity-100 font-bold text-sm md:text-base' : 'w-[0px] opacity-0'
                       }`}>
-                      Gender:
+                      {t('Gender')}:
                     </div>
                     <div>
                       <Select
@@ -205,11 +237,11 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                         options={[
                           {
                             key: 'Male',
-                            value: 'Male',
+                            value: t('Male'),
                           },
                           {
                             key: 'Female',
-                            value: 'Female',
+                            value: t('Female'),
                           },
                         ]}
                       />
@@ -219,14 +251,14 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                 {(!!profile.data.birthdate || profile.data.gender) && (
                   <div
                     className={`flex gap-[30px] font-medium  transition-all ${
-                      open ? 'opacity-0 h-0 overflow-hidden mb-0' : 'opacity-100 h-6 md:mb-2'
+                      open ? 'opacity-0 h-0 overflow-hidden mb-0' : 'opacity-100 h-6 md:mb-6'
                     }`}>
                     {profile.data.birthdate && (
                       <div className='text-xs md:text-base'>{moment(profile.data.birthdate).format('DD/MM/yyyy')}</div>
                     )}
                     {profile.data.gender && (
                       <div className='text-xs md:text-base capitalize flex gap-1'>
-                        {profile.data.gender}{' '}
+                        {t(profile.data.gender)}{' '}
                         <span>
                           <Image src={profile.data.gender.toLowerCase() == 'male' ? MaleIcon : FemaleIcon} alt='' />
                         </span>
@@ -239,7 +271,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                     className={`font-medium transition-all overflow-hidden ${
                       open ? 'opacity-0 h-0' : 'opacity-100 min-h-[80px] text-sm md:text-base'
                     }`}>
-                    <label className='text-medium-gray text-sm md:text-base'>Bio:</label>
+                    <label className='text-medium-gray text-sm md:text-base'>{t('Bio')}:</label>
                     <p
                       className={`${showMore ? '' : 'line-clamp-3 cursor-pointer'}`}
                       onClick={() => setShowMore(!showMore)}>
@@ -251,8 +283,8 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                   className={`flex transition-all md:mt-2 overflow-hidden ${
                     !open ? 'opacity-0 min-h-0 max-h-0' : 'opacity-100 min-h-[80px]'
                   }`}>
-                  <label className='text-medium-gray font-bold min-w-[88px] md:min-w-[100px] flex-auto pt-[7px] text-sm md:text-base'>
-                    Bio:
+                  <label className='text-medium-gray font-bold min-w-[88px] md:min-w-[130px] flex-auto pt-[7px] text-sm md:text-base'>
+                    {t('Bio')}:
                   </label>
                   <AutoGrowingTextField
                     value={bio}
@@ -269,34 +301,34 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                   }`}>
                   <>
                     <OutlineButton className='md:hidden' size='sm' onClick={() => setOpen(!open)}>
-                      Edit profile
+                      {t('Edit profile')}
                     </OutlineButton>
                     <OutlineButton className='hidden md:flex' size='lg' onClick={() => setOpen(!open)}>
-                      Edit profile
+                      {t('Edit profile')}
                     </OutlineButton>
                   </>
                   {profile.data?.signup_methods?.includes('basic_auth') ? (
                     <>
                       <OutlineButton className='md:hidden' onClick={() => setChangingPasswordModalOpen(true)} size='sm'>
-                        Change password
+                        {t('Change password')}
                       </OutlineButton>
                       <OutlineButton
                         className='hidden md:flex'
                         onClick={() => setChangingPasswordModalOpen(true)}
                         size='lg'>
-                        Change password
+                        {t('Change password')}
                       </OutlineButton>
                     </>
                   ) : (
                     <>
                       <OutlineButton className='md:hidden' onClick={() => setSettingPasswordModalOpen(true)} size='sm'>
-                        Set password
+                        {t('Set password')}
                       </OutlineButton>
                       <OutlineButton
                         className='hidden md:flex'
                         onClick={() => setSettingPasswordModalOpen(true)}
                         size='lg'>
-                        Set password
+                        {t('Set password')}
                       </OutlineButton>
                     </>
                   )}
@@ -306,7 +338,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                     open ? 'right-[0%]  opacity-100' : 'right-1/2 opacity-0 translate-x-1/2 pointer-events-none'
                   }`}>
                   <OutlineButton loading={loading} size='lg' onClick={updateProfileHandler}>
-                    Save
+                    {t('Save')}
                   </OutlineButton>
                 </div>
               </div>
@@ -315,7 +347,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
         )}
         <div className='mt-5 md:mt-[100px]'>
           {!!(isSettingUp || curentlyReading.loading || curentlyReading.data?.length) && (
-            <p className='text-sm md:text-2xl leading-6 font-extrabold mb-2 md:mb-10'>Currently reading</p>
+            <p className='text-sm md:text-2xl leading-6 font-extrabold mb-2 md:mb-10'>{t('Currently reading')}</p>
           )}
           <div className='grid gap-x-3 md:gap-x-24 gap-y-5 md:gap-y-10 grid-cols-3 md:grid-cols-2 xl:grid-cols-3'>
             {isSettingUp || curentlyReading.loading ? (
@@ -340,7 +372,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
         </div>
         <div className='mt-5 md:mt-[100px]'>
           {!!(isSettingUp || subscribeList.loading || subscribeList.data?.length) && (
-            <p className='text-sm md:text-2xl leading-6 font-extrabold mb-2 md:mb-10'>Subscribe list</p>
+            <p className='text-sm md:text-2xl leading-6 font-extrabold mb-2 md:mb-10'>{t('Subscribe list')}</p>
           )}
           <div className='grid gap-x-3 md:gap-x-24 gap-y-5 md:gap-y-10 grid-cols-3 md:grid-cols-2 xl:grid-cols-3'>
             {isSettingUp || subscribeList.loading ? (

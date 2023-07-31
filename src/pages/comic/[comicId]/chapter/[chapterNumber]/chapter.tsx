@@ -1,28 +1,29 @@
+import { ChevronUpIcon } from '@heroicons/react/24/outline'
+import FlashAnimation from 'components/AnimationIconHOC/Flash'
+import Comment from 'components/Comment'
 import DummyComicDetail from 'components/DummyComponent/comicDetail'
 import Header from 'components/Header'
+import ChatInput from 'components/Input/ChatInput'
 import ComicDetail from 'components/pages/chapter/comicDetail'
 import CommentSection from 'components/pages/chapter/commentSection'
 import ReadingSection from 'components/pages/chapter/readingSection'
+import ChatOutlineIcon from 'images/icons/chat_outline.svg'
+import HeartFillIcon from 'images/icons/heart_fill.svg'
+import HeartOutlineIcon from 'images/icons/heart_outline.svg'
+import SquareArrowLeftIcon from 'images/icons/square_arrow_left_outline.svg'
+import SquareArrowRightIcon from 'images/icons/square_arrow_right_outline.svg'
+import XIcon from 'images/icons/x-icon.svg'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useScrollDirection } from 'react-use-scroll-direction'
 import { LanguageType } from 'src/constants/global.types'
+import { Context } from 'src/context'
 import { IChapter } from 'src/models/chapter'
 import { IComicDetail } from 'src/models/comic'
 import { IComment } from 'src/models/comment'
 import { getItem, setItem } from 'src/utils/localStorage'
-import ChatOutlineIcon from 'images/icons/chat_outline.svg'
-import SquareArrowLeftIcon from 'images/icons/square_arrow_left_outline.svg'
-import SquareArrowRightIcon from 'images/icons/square_arrow_right_outline.svg'
-import { ChevronUpIcon } from '@heroicons/react/24/outline'
-import FlashAnimation from 'components/AnimationIconHOC/Flash'
-import { Context } from 'src/context'
-import HeartFillIcon from 'images/icons/heart_fill.svg'
-import HeartOutlineIcon from 'images/icons/heart_outline.svg'
-import XIcon from 'images/icons/x-icon.svg'
-import { useScrollDirection } from 'react-use-scroll-direction'
-import ChatInput from 'components/Input/ChatInput'
-import Comment from 'components/Comment'
 const Chapter: React.FC = ({
   comicDetails,
   chapterDetails,
@@ -65,9 +66,10 @@ const Chapter: React.FC = ({
   const [isLiked, setIsLiked] = useState(false)
   const { account } = useContext(Context)
   const { scrollDirection } = useScrollDirection()
-  const [lastDirection, setLastDirection] = useState('')
+  const [lastDirection, setLastDirection] = useState('UP')
   const [comicLikes, setComicLikes] = useState(0)
   const [chapterLikes, setChapterLikes] = useState(0)
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (scrollDirection) setLastDirection(scrollDirection)
@@ -103,7 +105,7 @@ const Chapter: React.FC = ({
   }, [openComments])
 
   useEffect(() => {
-    if (comicDetails?.data?.id) {
+    if (comicDetails?.data?.id && account) {
       const currentReading = getItem('current_reading_manga')
       if (currentReading) {
         const currentReadingManga = JSON.parse(currentReading)
@@ -113,17 +115,18 @@ const Chapter: React.FC = ({
         setItem('current_reading_manga', JSON.stringify([comicDetails.data.id]))
       }
     }
-  }, [comicDetails?.data?.id])
+  }, [comicDetails?.data?.id, account])
 
   if (comicDetails.loading || chapterDetails.loading) return null
 
-  if ((!comicDetails.data && !comicDetails.loading) || (!chapterDetails.data && !chapterDetails.loading))
+  if ((!comicDetails.data && !comicDetails.loading) || (!chapterDetails.data && !chapterDetails.loading)) {
     return (
       <div className='h-[100vh]'>
         <Header />
-        <div className='flex justify-center items-center'>Error while fetching data!</div>
+        <div className='flex justify-center items-center'>{t('Error while fetching data')}!</div>
       </div>
     )
+  }
 
   const currentChapIndex = comicDetails?.data?.chapters.findIndex((chap) => chap.id == chapterDetails.data.id)
   const mainLanguage = comicDetails.data?.languages?.find((l) => l.isMainLanguage).shortLang
@@ -187,7 +190,9 @@ const Chapter: React.FC = ({
               <div className='relative px-[10px] mx-2 rounded-lg border-second-color border-[1.5px] flex gap-[10px] items-center justify-between cursor-pointer '>
                 <span
                   onClick={() => setShowChapterList(!showChapterList)}
-                  className='text-second-color w-full text-xs leading-5'>{`Chapter ${chapterDetails.data.number}`}</span>
+                  className='text-second-color w-full text-xs leading-5'>{`${t('Chapter')} ${
+                  chapterDetails.data.number
+                }`}</span>
                 <ChevronUpIcon
                   onClick={() => setShowChapterList(!showChapterList)}
                   className={`h-6 w-6 text-second-color transition-all ${showChapterList ? 'rotate-0' : 'rotate-180'}`}
@@ -208,7 +213,7 @@ const Chapter: React.FC = ({
                           className={`cursor-pointer text-xs hover:bg-light-medium-gray ${
                             currentChapIndex == index ? 'text-second-color' : ''
                           }`}>
-                          Chapter {chapter.number}
+                          {t('Chapter')} {chapter.number}
                         </div>
                       )
                     })}
@@ -273,15 +278,15 @@ const Chapter: React.FC = ({
               ) : (
                 <div className='bg-light-gray fixed bottom-0 right-0 left-0 w-full py-[14px]'>
                   <div className=' text-sm font-medium text-center leading-6'>
-                    You must{' '}
+                    {t('You must')}{' '}
                     <span
                       className='text-second-color underline font-bold cursor-pointer'
                       onClick={() => {
                         ;(document.querySelector('#open-sign-in-btn') as any)?.click()
                       }}>
-                      sign in
+                      {t('sign in')}
                     </span>{' '}
-                    to comment
+                    {t('to comment')}
                   </div>
                 </div>
               )

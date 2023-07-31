@@ -25,6 +25,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
 import { IChapter } from 'src/models/chapter'
@@ -75,6 +76,7 @@ export default function ReadingSection({
   const ref = useRef()
   const chapterLengthRef = useRef(chapterData?.[chapterLocale]?.length)
   const { account } = useContext(Context)
+  const { t } = useTranslation()
   const router = useRouter()
   const onMouseEnterHandler = () => {
     if ((window as any).timeoutId) {
@@ -159,7 +161,7 @@ export default function ReadingSection({
   }
 
   if (!data || !chapterData) {
-    return <div>Không có dữ liệu</div>
+    return <div>{t('No data to show')}</div>
   }
   const currentChapIndex = data.chapters.findIndex((chap) => chap.id == chapterData.id)
   chapterLengthRef.current = chapterData[chapterLocale]?.length
@@ -185,7 +187,7 @@ export default function ReadingSection({
             className='px-4 py-1 rounded-xl border-second-color border flex gap-[10px] items-center cursor-pointer'
             onClick={() => setMode('minscreen')}>
             <Image className='cursor-pointer h-6 w-6' src={MinscreenIcon} alt='' />
-            <span className='text-second-color font-bold'>Exit Fullscreen</span>
+            <span className='text-second-color font-bold'>{t('Exit Fullscreen')}</span>
           </div>
         </div>
       </div>
@@ -193,13 +195,13 @@ export default function ReadingSection({
         <div className='h-full w-full flex justify-center items-center'>
           <div>
             <p className='italic text-subtle-dark '>
-              This is account only chapter. Please{' '}
+              {t('This is account only chapter')}. {t('Please')}{' '}
               <a
                 className='text-second-color underline font-semibold cursor-pointer'
                 onClick={() => (document.querySelector('#open-sign-in-btn') as any)?.click()}>
-                sign in
+                {t('sign in')}
               </a>{' '}
-              to countinue reading!
+              {t('to countinue reading')}!
             </p>
           </div>
         </div>
@@ -235,7 +237,7 @@ export default function ReadingSection({
         </div>
       ) : (
         <div className='h-full w-full flex justify-center items-center'>
-          <div>No data to show</div>
+          <div>{t('No data to show')}</div>
         </div>
       )}
       <div
@@ -246,8 +248,9 @@ export default function ReadingSection({
           <div>
             <div className='font-bold text-ellipsis max-w-[20vw] overflow-hidden whitespace-nowrap'>{`${data[language].title} • Chapter ${chapterData.number} • ${chapterData.name}`}</div>
             <p className='text-subtle-dark'>
-              {(chapterLikes || 0).toLocaleString('en-US')} likes • {(chapterData.views || 0).toLocaleString('en-US')}{' '}
-              views • {(commentNumber || 0).toLocaleString('en-US')} comments
+              {(chapterLikes || 0).toLocaleString('en-US')} {t('likes')} •{' '}
+              {(chapterData.views || 0).toLocaleString('en-US')} {t('views')} •{' '}
+              {(commentNumber || 0).toLocaleString('en-US')} {t('comments')}
             </p>
           </div>
         </div>
@@ -255,14 +258,14 @@ export default function ReadingSection({
           <OutlineButton onClick={() => goToChap('Prev')} disabled={currentChapIndex == data.chapters.length - 1}>
             <div className='flex items-center w-[130px] justify-between py-[3px] mx-[-6px]'>
               <ChevronLeftIcon className='w-5 h-5' />
-              Previous chap
+              {t('Previous chap')}
             </div>
           </OutlineButton>
           <OutlineButton
             onClick={() => goToChap('Next')}
             disabled={currentChapIndex == 0 || data.chapters?.[currentChapIndex - 1]?.status == 'Upcoming'}>
             <div className='flex items-center w-[130px] justify-between py-[3px] mx-[-6px]'>
-              Next chap
+              {t('Next chap')}
               <ChevronRightIcon className='w-5 h-5' />
             </div>
           </OutlineButton>
@@ -312,13 +315,14 @@ export default function ReadingSection({
         onMouseLeave={onMouseLeaveHandler}
         className={`peer bg-light-gray absolute bottom-0 right-0 left-0 w-full flex items-center px-[40px] py-[6px] duration-300 transition-opacity ${
           mode != 'minscreen' ? 'visible' : 'invisible -z-10'
-        } ${hovering ? 'opacity-100' : 'opacity-0'}`}>
+        } ${true ? 'opacity-100' : 'opacity-0'}`}>
         <div className='flex-1 self-center'>
           <div>
-            <strong>{`${data[language].title} • Chapter ${chapterData.number} • ${chapterData.name}`}</strong>
+            <strong>{`${data[language].title} • ${t('Chapter')} ${chapterData.number} • ${chapterData.name}`}</strong>
             <p className='text-subtle-dark'>
-              {(chapterLikes || 0).toLocaleString('en-US')} likes • {(chapterData.views || 0).toLocaleString('en-US')}{' '}
-              views • {(commentNumber || 0).toLocaleString('en-US')} comments
+              {(chapterLikes || 0).toLocaleString('en-US')} {t('likes')} •{' '}
+              {(chapterData.views || 0).toLocaleString('en-US')} {t('views')} •{' '}
+              {(commentNumber || 0).toLocaleString('en-US')} {t('comments')}
             </p>
           </div>
         </div>
@@ -341,7 +345,7 @@ export default function ReadingSection({
           <div className='relative px-[10px] py-[4px] rounded-xl border-second-color border-[1.5px] flex gap-[10px] items-center justify-between cursor-pointer w-[200px]'>
             <span
               onClick={() => setShowChapterList(!showChapterList)}
-              className='text-second-color w-full text-xs leading-5'>{`Chapter ${chapterData.number}`}</span>
+              className='text-second-color w-full text-xs leading-5'>{`${t('Chapter')} ${chapterData.number}`}</span>
             <ChevronUpIcon
               onClick={() => setShowChapterList(!showChapterList)}
               className={`h-6 w-6 text-second-color transition-all ${showChapterList ? 'rotate-180' : 'rotate-0'}`}
@@ -362,7 +366,7 @@ export default function ReadingSection({
                       className={`cursor-pointer text-xs hover:bg-light-medium-gray ${
                         currentChapIndex == index ? 'text-second-color' : ''
                       }`}>
-                      Chapter {chapter.number}
+                      {t('Chapter')} {chapter.number}
                     </div>
                   )
                 })}
@@ -402,16 +406,16 @@ export default function ReadingSection({
           )}
           {isSubscribe ? (
             <FilledButton onClick={() => subscribeHandler(false)}>
-              <div className='h-5 flex items-center'>
+              <div className='h-6 flex items-center'>
                 <BellAlertIcon className='w-6 h-6 mr-2 inline-block animate-[bell-ring_1s_ease-in-out]' />
-                Subscribed
+                {t('Subscribed')}
               </div>
             </FilledButton>
           ) : (
             <OutlineButton onClick={() => subscribeHandler(true)}>
-              <div className='h-5 flex items-center'>
+              <div className='h-6 flex items-center'>
                 <BellAlertIconOutline className='w-6 h-6 mr-2 inline-block ' />
-                Subscribe
+                {t('Subscribe')}
               </div>
             </OutlineButton>
           )}
