@@ -17,7 +17,6 @@ function ContextProvider({ children }) {
   const key = useRef<Key>()
   const [provider, setProvider] = useState<'Coin98' | 'Keplr'>()
   const router = useRouter()
-
   const searchParams = useSearchParams()
   const accessTokenParam = searchParams.get('access_token')
   const expiresInParam = searchParams.get('expires_in')
@@ -67,25 +66,30 @@ function ContextProvider({ children }) {
   }
 
   const setUp = async () => {
-    setIsSettingUp(true)
-    if (accessTokenParam) {
-      setItem('token', accessTokenParam, new Date(Date.now() + (expiresInParam ? +expiresInParam * 1000 : 10800000)))
-      setLogoutTimeout(expiresInParam ? +expiresInParam * 1000 : 10800000)
-      router.push(location.pathname)
-    } else {
-      const token = getItem('token')
-      if (token) {
-        const t = localStorage.getItem('token')
-        setLogoutTimeout(new Date(JSON.parse(t).exprire).getTime() - Date.now())
-        await getProfile(token)
-        const connectedProvider = getItem('connected_provider') as 'Coin98' | 'Keplr'
-        if (connectedProvider) {
-          await getWallet(connectedProvider)
-          await connectWallet()
+    try {
+      setIsSettingUp(true)
+      if (accessTokenParam) {
+        setItem('token', accessTokenParam, new Date(Date.now() + (expiresInParam ? +expiresInParam * 1000 : 10800000)))
+        setLogoutTimeout(expiresInParam ? +expiresInParam * 1000 : 10800000)
+        router.push(location.pathname)
+      } else {
+        const token = getItem('token')
+        if (token) {
+          const t = localStorage.getItem('token')
+          setLogoutTimeout(new Date(JSON.parse(t).exprire).getTime() - Date.now())
+          await getProfile(token)
+          const connectedProvider = getItem('connected_provider') as 'Coin98' | 'Keplr'
+          if (connectedProvider) {
+            await getWallet(connectedProvider)
+            await connectWallet()
+          }
         }
       }
+      setIsSettingUp(false)
+    } catch (error) {
+      console.log('setUp', error)
+      return null
     }
-    setIsSettingUp(false)
   }
 
   const getProfile = async (token?: string) => {
@@ -186,12 +190,17 @@ function ContextProvider({ children }) {
   }
 
   const logout = async (callback?: () => void) => {
-    await authorizerRef.logout()
-    removeItem('token')
-    removeItem('current_reading_manga')
-    setAccount(null)
-    unlinkWallet()
-    router.push(location.origin + location.pathname)
+    try {
+      await authorizerRef.logout()
+      removeItem('token')
+      removeItem('current_reading_manga')
+      setAccount(null)
+      unlinkWallet()
+      router.push(location.origin + location.pathname)
+    } catch (error) {
+      console.log('logout', error)
+      return null
+    }
   }
 
   const signUp = async (
@@ -225,32 +234,61 @@ function ContextProvider({ children }) {
   }
 
   const updateProfile = async (data: any) => {
-    const token = getItem('token')
-    const res = await authorizerRef.updateProfile(data, {
-      Authorization: `Bearer ${token}`,
-    })
-    if (res) {
-      await getProfile()
+    try {
+      const token = getItem('token')
+      const res = await authorizerRef.updateProfile(data, {
+        Authorization: `Bearer ${token}`,
+      })
+      if (res) {
+        await getProfile()
+      }
+      return res
+    } catch (error) {
+      console.log('update profile error: ' + error)
+      return null
     }
-    return res
   }
   const forgotPassword = async (email: string) => {
-    const res = await authorizerRef.forgotPassword({
-      email,
-    })
-    return res
+    try {
+      const res = await authorizerRef.forgotPassword({
+        email,
+        redirect_uri: config.REDIRECT_URL + '/reset_password',
+      })
+      return res
+    } catch (error) {
+      console.log('forgotPassword', error)
+      return null
+    }
+  }
+  const resetPassword = async (token: string, newPassword: string) => {
+    try {
+      const res = await authorizerRef.resetPassword({
+        token,
+        password: newPassword,
+        confirm_password: newPassword,
+      })
+      return res
+    } catch (error) {
+      console.log('resetPassword', error)
+      return null
+    }
   }
   async function resendVerifyEmail(email: string) {
-    await authorizerRef.graphqlQuery({
-      query: `mutation ResendVerifyEmail($email: String!) {
-      resend_verify_email(params: {identifier: "basic_auth_signup", email: $email}) {
-          message
-      }
-  }`,
-      variables: {
-        email,
-      },
-    })
+    try {
+      await authorizerRef.graphqlQuery({
+        query: `mutation ResendVerifyEmail($email: String!) {
+        resend_verify_email(params: {identifier: "basic_auth_signup", email: $email}) {
+            message
+        }
+    }`,
+        variables: {
+          email,
+        },
+      })
+    } catch (error) {
+      console.log('resendVerifyEmail', error)
+      return null
+    }
   }
   return (
     <Context.Provider
@@ -269,6 +307,7 @@ function ContextProvider({ children }) {
         resendVerifyEmail,
         getProfile,
         forgotPassword,
+        resetPassword,
       }}>
       {children}
     </Context.Provider>
