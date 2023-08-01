@@ -169,7 +169,7 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
           onClick={signUpHandler}>
           {t('Sign up')}
         </FilledButton>
-        <div className='text-xs font-medium leading-6 text-medium-red min-h-[24px] text-center'>{signUpErrorMsg}</div>
+        <div className='text-xs font-medium leading-6 text-red-600 min-h-[24px] text-center'>{signUpErrorMsg}</div>
         <div className=' text-xs font-medium text-center leading-6'>
           {t('Or')}{' '}
           <a className='text-second-color font-semibold' onClick={openSignInModal}>

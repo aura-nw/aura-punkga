@@ -4,6 +4,7 @@ import OutlineTextField from 'components/Input/TextField/Outline'
 import Facebook from 'images/Facebook.png'
 import Google from 'images/Google.png'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -119,7 +120,7 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
             loading={loginLoading}>
             {t('Sign in')}
           </FilledButton>
-          <div className='text-xs font-medium leading-6 text-medium-red min-h-[24px]'>{loginErrorMsg}</div>
+          <div className='text-xs font-medium leading-6 text-red-600 min-h-[24px]'>{loginErrorMsg}</div>
           <div className='text-xs font-medium leading-6 min-h-[24px] mt-2 text-gray-600'>
             {t('Don’t have an account')}?{' '}
             <a className='text-[#3A00E5] cursor-pointer' onClick={openSignUpModal}>
@@ -141,7 +142,10 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
           </button>
           <div className='mt-[10px] text-xs font-medium text-center'>
             {t('By continuing, you agree to our')}{' '}
-            <a className='text-second-color font-semibold'>{t('Terms of Use')}</a> {locale == 'vn' && 'của chúng tôi'}
+            <Link href='/policy' className='text-second-color font-semibold'>
+              {t('Terms of Use')}
+            </Link>{' '}
+            {locale == 'vn' && 'của chúng tôi'}
           </div>
         </div>
       </div>

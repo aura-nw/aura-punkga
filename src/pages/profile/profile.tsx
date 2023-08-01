@@ -247,7 +247,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                         selected={gender}
                         onChange={setGender}
                         className='font-bold'
-                        placeholder='Select a gender'
+                        placeholder={t('Select a gender')}
                         icon={<ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />}
                         options={[
                           {
@@ -304,7 +304,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                   <AutoGrowingTextField
                     value={bio}
                     onChange={setBio}
-                    placeholder='Write something about yourself '
+                    placeholder={t('Write something about yourself')}
                     className='text-sm font-bold leading-6'
                   />
                 </div>
