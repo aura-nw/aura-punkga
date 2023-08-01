@@ -234,6 +234,12 @@ function ContextProvider({ children }) {
     }
     return res
   }
+  const forgotPassword = async (email: string) => {
+    const res = await authorizerRef.forgotPassword({
+      email,
+    })
+    return res
+  }
   async function resendVerifyEmail(email: string) {
     await authorizerRef.graphqlQuery({
       query: `mutation ResendVerifyEmail($email: String!) {
@@ -262,6 +268,7 @@ function ContextProvider({ children }) {
         updateProfile,
         resendVerifyEmail,
         getProfile,
+        forgotPassword,
       }}>
       {children}
     </Context.Provider>

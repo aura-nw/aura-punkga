@@ -1,26 +1,36 @@
 import FilledButton from 'components/Button/FilledButton'
 import OutlineTextField from 'components/Input/TextField/Outline'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useContext, useEffect, useState } from 'react'
 import { validateEmail } from 'src/utils'
 import Mail from 'images/Mail.svg'
 import { Transition } from '@headlessui/react'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
+import { Context } from 'src/context'
 export default function ForgotPasswordModal({ onClose }) {
   const [email, setEmail] = useState('')
+  const [emailErrorMsg, setEmailErrorMsg] = useState('')
   const [loading, setLoading] = useState(false)
   const [isFirstStep, setIsFirstStep] = useState(true)
   const { t } = useTranslation()
+  const { forgotPassword } = useContext(Context)
   const submit = async () => {
     if (validateEmail(email)) {
       setLoading(true)
-      setIsFirstStep(false)
+      const r = await forgotPassword(email)
+      setLoading(false)
+      if (r.message.includes('We have sent a password reset')) {
+        setIsFirstStep(false)
+      } else {
+        setEmailErrorMsg(t('Something went wrong'))
+      }
     } else {
+      setEmailErrorMsg(t('Invalid email format'))
     }
   }
   return (
     <div
-      className={`flex flex-col p-6 gap-3 transition-all duration-300 h-[250px] ${
+      className={`flex flex-col p-6 gap-3 transition-all duration-300 h-[280px] ${
         isFirstStep ? ' w-[400px] ' : ' w-[670px]'
       }`}>
       <p className='text-2xl leading-6 font-semibold text-center '>{t('Forgot password')}?</p>
@@ -39,6 +49,7 @@ export default function ForgotPasswordModal({ onClose }) {
           <OutlineTextField
             label={t('Email')}
             placeholder={t('Enter email address')}
+            errorMsg={emailErrorMsg}
             value={email}
             onChange={setEmail}
           />
@@ -47,7 +58,7 @@ export default function ForgotPasswordModal({ onClose }) {
             loading={loading}
             size='lg'
             className='mx-auto'
-            onClick={() => setIsFirstStep(!isFirstStep)}>
+            onClick={submit}>
             {t('Continue')}
           </FilledButton>
         </Transition>
