@@ -380,7 +380,7 @@ export default function Header({}) {
                     </FilledButton>
                   </DropdownToggle>
                   {wallet ? (
-                    <DropdownMenu customClass='right-[50%] translate-x-[50%] min-w-[400px]'>
+                    <DropdownMenu customClass='right-[50%] translate-x-[50%] min-w-[200px]'>
                       <div className='p-5 flex flex-col gap-5'>
                         <div className='flex justify-center items-center'>
                           <Image src={c98} alt='c98' />
@@ -406,7 +406,7 @@ export default function Header({}) {
                       </div>
                     </DropdownMenu>
                   ) : (
-                    <DropdownMenu customClass='right-[50%] translate-x-[50%]'>
+                    <DropdownMenu customClass='right-[50%] translate-x-[50%] min-w-[200px]'>
                       <div className='p-5 flex flex-col gap-5'>
                         <div className='mt-[10px]'>
                           <div onClick={() => router.push('/profile')}>
