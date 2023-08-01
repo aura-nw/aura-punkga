@@ -3,6 +3,7 @@ import { i18n, useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import MonoLogo from 'images/mono-logo.svg'
 import Img1 from 'images/about-us-img.png'
+import Img2 from 'images/about-us-img-2.png'
 import ImgNFT from 'images/about-us-nft.png'
 import Image from 'next/image'
 import Carousel from 'components/Carousel'
@@ -139,7 +140,7 @@ export default function AboutUs() {
       <Header />
       <div className='pk-container py-3'>
         <div className='w-full'>
-          <div className='flex justify-center gap-3 w-[90vw] overflow-hidden mx-auto'>
+          <div className='flex justify-center gap-3 w-[90%] overflow-hidden ml-auto'>
             <Image src={MonoLogo} alt='' className='w-full max-w-[115px] md:max-w-[235px] lg:max-w-[305px]' />
             <Image src={Img1} alt='' className='w-full max-w-[234px] md:max-w-[405px] lg:max-w-[605px]' />
           </div>
@@ -208,10 +209,17 @@ export default function AboutUs() {
               Meet the skilled and experienced team behind our successful artwork strategies
             </p>
           </div>
-          <div className='mt-5 flex flex-col gap-5 lg:flex-row lg:flex-wrap'>
-            {authorData.map((d, i) => (
-              <Author key={i} data={d} />
-            ))}
+          <div className='mt-5 flex flex-col gap-5 lg:flex-row'>
+            <div className='lg:w-[calc(50%-10px)] lg:flex-auto flex flex-col gap-5'>
+              {authorData.slice(0, Math.ceil(authorData.length / 2)).map((d, i) => (
+                <Author key={i} data={d} />
+              ))}
+            </div>
+            <div className='lg:w-[calc(50%-10px)] lg:flex-auto flex flex-col gap-5'>
+              {authorData.slice(Math.ceil(authorData.length / 2), authorData.length).map((d, i) => (
+                <Author key={i} data={d} />
+              ))}
+            </div>
           </div>
         </div>
         <div className='lg:flex justify-start items-center lg:mb-10 mt-16'>
@@ -222,45 +230,50 @@ export default function AboutUs() {
             Connect with Us: Let's Discuss Your Digital Marketing Needs
           </p>
         </div>
-        <div className='m-2 p-5 bg-[#f3f3f3] rounded-2xl'>
-          <div className='flex gap-4'>
-            <div className='flex gap-2 items-center' onClick={() => setIsSayHi(true)}>
-              <div className='border border-black bg-white w-7 h-7 flex justify-center items-center rounded-full'>
-                <span
-                  className={` rounded-full h-4 w-4 ${
-                    isSayHi ? 'bg-second-color' : 'bg-slate-300'
-                  } transition-all`}></span>
+        <div className='m-2 p-5 bg-[#f3f3f3] rounded-2xl lg:flex lg:gap-10 lg:py-[80px] lg:justify-center lg:px-[100px] xl:px-[160px]'>
+          <div className='lg:w-1/2 lg:h-full'>
+            <div className='flex gap-4'>
+              <div className='flex gap-2 items-center' onClick={() => setIsSayHi(true)}>
+                <div className='border border-black bg-white w-7 h-7 flex justify-center items-center rounded-full'>
+                  <span
+                    className={` rounded-full h-4 w-4 ${
+                      isSayHi ? 'bg-second-color' : 'bg-slate-300'
+                    } transition-all`}></span>
+                </div>
+                <div className='text-lg'>Say Hi</div>
               </div>
-              <div className='text-lg'>Say Hi</div>
-            </div>
-            <div className='flex gap-2 items-center' onClick={() => setIsSayHi(false)}>
-              <div className='border border-black bg-white w-7 h-7 flex justify-center items-center rounded-full'>
-                <span
-                  className={` rounded-full h-4 w-4 ${
-                    !isSayHi ? 'bg-second-color' : 'bg-slate-300'
-                  } transition-all`}></span>
+              <div className='flex gap-2 items-center' onClick={() => setIsSayHi(false)}>
+                <div className='border border-black bg-white w-7 h-7 flex justify-center items-center rounded-full'>
+                  <span
+                    className={` rounded-full h-4 w-4 ${
+                      !isSayHi ? 'bg-second-color' : 'bg-slate-300'
+                    } transition-all`}></span>
+                </div>
+                <div className='text-lg'>Get a Quote</div>
               </div>
-              <div className='text-lg'>Get a Quote</div>
             </div>
+            <div className='mt-5'>
+              <OutlineTextField label={t('Name')} value={name} onChange={setName} placeholder={t('Name')} />
+            </div>
+            <div className='mt-3'>
+              <OutlineTextField label={t('Email')} value={email} onChange={setEmail} placeholder={t('Email')} />
+            </div>
+            <div className='mt-3'>
+              <p>{t('Message')}</p>
+              <AutoGrowingTextField
+                value={msg}
+                onChange={setMsg}
+                className='!min-h-[150px] bg-white text-base'
+                placeholder={t('Message')}
+              />
+            </div>
+            <FilledButton className='w-full mt-7' size='lg' onClick={sendMsgHandler}>
+              {t('Send Message')}
+            </FilledButton>
           </div>
-          <div className='mt-5'>
-            <OutlineTextField label={t('Name')} value={name} onChange={setName} placeholder={t('Name')} />
+          <div className='hidden lg:block max-w-[650px] w-1/2'>
+            <Image src={Img2} alt='' />
           </div>
-          <div className='mt-3'>
-            <OutlineTextField label={t('Email')} value={email} onChange={setEmail} placeholder={t('Email')} />
-          </div>
-          <div className='mt-3'>
-            <p>{t('Message')}</p>
-            <AutoGrowingTextField
-              value={msg}
-              onChange={setMsg}
-              className='min-h-[150px] bg-white text-base'
-              placeholder={t('Message')}
-            />
-          </div>
-          <FilledButton className='w-full mt-7' size='lg' onClick={sendMsgHandler}>
-            {t('Send Message')}
-          </FilledButton>
         </div>
       </div>
     </>
@@ -270,7 +283,7 @@ export default function AboutUs() {
 const Author = ({ data }) => {
   const [open, setOpen] = useState(false)
   return (
-    <div className='rounded-[45px] border-solid border border-[#191A23] py-5 px-9 shadow-[0px_5px_0px_0px_#191A23] lg:w-[calc(50%-10px)] lg:flex-auto'>
+    <div className='rounded-[45px] border-solid border border-[#191A23] py-5 px-9 shadow-[0px_5px_0px_0px_#191A23] '>
       <div className='flex gap-5'>
         <div className='w-1/3 max-w-[120px]'>
           <Image src={XVector} alt='' />
