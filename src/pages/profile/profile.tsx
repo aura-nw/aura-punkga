@@ -20,6 +20,8 @@ import FilledButton from 'components/Button/FilledButton'
 import MaleIcon from 'images/icons/male.svg'
 import FemaleIcon from 'images/icons/female.svg'
 import { useTranslation } from 'react-i18next'
+import _ from 'lodash'
+import vi from 'date-fns/locale/vi'
 export default function Profile({ profile, subscribeList, unsubscribe, subscribe, curentlyReading, updateProfile }) {
   const { account, isSettingUp, getProfile } = useContext(Context)
   const { t } = useTranslation()
@@ -35,6 +37,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
   const [showMore, setShowMore] = useState(false)
   const [selectedFile, setSelectedFile] = useState()
   const [preview, setPreview] = useState()
+  const { locale } = useRouter()
   useEffect(() => {
     if (!selectedFile) {
       setPreview(undefined)
@@ -71,6 +74,17 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
       setBio(profile.data.bio)
     }
   }, [profile.data])
+
+  useEffect(() => {
+    setGender((prev) => {
+      console.log(prev)
+      if (prev)
+        return _.cloneDeep({
+          key: prev.key,
+          value: t(prev.key.toString()),
+        })
+    })
+  }, [t('Male')])
 
   const updateProfileHandler = async () => {
     const form = new FormData()
@@ -213,6 +227,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                         selected={birthdate}
                         showMonthDropdown
                         showYearDropdown
+                        locale={locale == 'vn' ? vi : ''}
                         dropdownMode='select'
                         onChange={(date) => setBirthdate(date)}
                         customInput={<CustomInput />}

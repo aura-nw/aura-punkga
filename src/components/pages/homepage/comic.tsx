@@ -40,14 +40,18 @@ export default function Comic(props: IComic) {
         <div className='flex-auto w-2/3 flex flex-col justify-between gap-[10px]'>
           <div className='flex flex-col gap-[10px]'>
             <div>
-              <Link href={`/comic/${props.id}`} className=' text-second-color font-bold text-[18px] xl:hidden'>
-                {props[locale].title} <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
-              </Link>
-              <Link
-                href={`/comic/${props.id}/chapter/1`}
-                className=' text-second-color font-bold text-[18px] hidden xl:block'>
-                {props[locale].title} <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
-              </Link>
+              <div className='flex justify-between xl:hidden items-start flex-nowrap'>
+                <Link href={`/comic/${props.id}`} className=' text-second-color font-bold text-[18px] '>
+                  {props[locale].title}
+                </Link>
+                <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
+              </div>
+              <div className='justify-between items-start flex-nowrap  hidden xl:flex'>
+                <Link href={`/comic/${props.id}/chapter/1`} className=' text-second-color font-bold text-[18px]'>
+                  {props[locale].title}
+                </Link>
+                <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
+              </div>
               <div>
                 {t('by')}{' '}
                 {props.authors.map((author, index) => (

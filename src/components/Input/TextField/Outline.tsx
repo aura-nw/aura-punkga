@@ -62,7 +62,7 @@ export default function OutlineTextField({
       {typeof errorMsg == 'undefined' ? (
         <></>
       ) : (
-        <p className='leading-6 font-medium text-medium-red text-xs min-h-[24px]'>{errorMsg || ''}</p>
+        <p className='leading-6 font-medium text-red-600 text-xs min-h-[24px]'>{errorMsg || ''}</p>
       )}
     </div>
   )

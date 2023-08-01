@@ -21,7 +21,7 @@ export default function ForgotPasswordModal({ onClose }) {
   return (
     <div
       className={`flex flex-col p-6 gap-3 transition-all duration-300 h-[250px] ${
-        isFirstStep ? ' w-[322px] ' : ' w-[670px]'
+        isFirstStep ? ' w-[400px] ' : ' w-[670px]'
       }`}>
       <p className='text-2xl leading-6 font-semibold text-center '>{t('Forgot password')}?</p>
       <div className='h-full relative'>

@@ -372,10 +372,10 @@ export default function ComicDetail({
               expandDetail ? ' w-1/2 opacity-100' : 'opacity-0 w-0'
             } duration-500 transition-all overflow-hidden whitespace-nowrap`}>
             <div className={`px-[60px] py-[16px] bg-medium-gray font-bold mt-[13px] leading-[30px] text-center `}>
-              Hero Cyberpunk’s NFTs
+              NFTs
             </div>
             <div className='flex justify-center p-10 opacity-10'>
-              <strong>Artist Composing</strong>
+              <strong>{t('Artist Composing')}</strong>
             </div>
           </div>
         </div>

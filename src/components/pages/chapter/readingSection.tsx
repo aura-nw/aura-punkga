@@ -256,7 +256,7 @@ export default function ReadingSection({
         </div>
         <div className='flex-1 self-center flex gap-2 justify-center'>
           <OutlineButton onClick={() => goToChap('Prev')} disabled={currentChapIndex == data.chapters.length - 1}>
-            <div className='flex items-center w-[130px] justify-between py-[3px] mx-[-6px]'>
+            <div className='flex items-center w-[130px] justify-between py-[3px] mx-[-6px] whitespace-nowrap'>
               <ChevronLeftIcon className='w-5 h-5' />
               {t('Previous chap')}
             </div>
@@ -264,7 +264,7 @@ export default function ReadingSection({
           <OutlineButton
             onClick={() => goToChap('Next')}
             disabled={currentChapIndex == 0 || data.chapters?.[currentChapIndex - 1]?.status == 'Upcoming'}>
-            <div className='flex items-center w-[130px] justify-between py-[3px] mx-[-6px]'>
+            <div className='flex items-center w-[130px] justify-between py-[3px] mx-[-6px] whitespace-nowrap'>
               {t('Next chap')}
               <ChevronRightIcon className='w-5 h-5' />
             </div>
