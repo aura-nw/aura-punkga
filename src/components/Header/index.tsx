@@ -198,7 +198,7 @@ export default function Header({}) {
             </div>
           </div>
           <div className='flex justify-between items-center mt-2'>
-            <Button size='sm' onClick={() => router.push('/sample')}>
+            <Button size='sm' onClick={() => router.push('/about-us')}>
               {t('aboutUs')}
             </Button>
             <div>
@@ -351,7 +351,7 @@ export default function Header({}) {
             )}
           </div>
           <div className='flex gap-[40px] lg:justify-end min-w-[430px]'>
-            <Button size='lg' onClick={() => router.push('/sample')}>
+            <Button size='lg' onClick={() => router.push('/about-us')}>
               {t('aboutUs')}
             </Button>
             <div className='flex gap-[20px] items-center cursor-pointer'>
