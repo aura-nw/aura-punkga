@@ -30,8 +30,8 @@ export default function ForgotPasswordModal({ onClose }) {
   }
   return (
     <div
-      className={`flex flex-col p-6 gap-3 transition-all duration-300 h-[230px] ${
-        isFirstStep ? ' w-[400px] ' : ' w-[670px]'
+      className={`flex flex-col p-6 gap-3 transition-all duration-300 ${
+        isFirstStep ? ' w-[400px] h-[280px]' : ' w-[670px] h-[230px]'
       }`}>
       <p className='text-2xl leading-6 font-semibold text-center '>{t('Forgot password')}?</p>
       <div className='h-full relative'>
@@ -76,7 +76,7 @@ export default function ForgotPasswordModal({ onClose }) {
               <span className='text-second-color font-semibold cursor-pointer'>{email}</span>.
             </p>
             <p className='text-base leading-5 text-center line-clamp-1'>
-              {'Please click on the link to change your password.'}
+              {t('Please click on the link to change your password.')}
             </p>
           </div>
           <div className='flex flex-col text-center'>
