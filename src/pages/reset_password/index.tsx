@@ -1,24 +1,21 @@
+import FilledButton from 'components/Button/FilledButton'
 import Header from 'components/Header'
+import OutlineTextField from 'components/Input/TextField/Outline'
+import CheckSquare from 'images/icons/check_square_fill.svg'
+import SuccessImg from 'images/ninja.svg'
+import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Image from 'next/image'
-import Ninja from 'images/ninja.svg'
-import FilledButton from 'components/Button/FilledButton'
-import { useRouter } from 'next/router'
 import { useSearchParams } from 'next/navigation'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { i18n } from 'next-i18next'
-import OutlineTextField from 'components/Input/TextField/Outline'
-import Modal from 'components/Modal'
-import { useState, useContext, useEffect, useRef } from 'react'
 import { Context } from 'src/context'
 import { validatePassword } from 'src/utils'
-import SuccessImg from 'images/ninja.svg'
-import CheckSquare from 'images/icons/check_square_fill.svg'
 export default function ResetPassword() {
   const searchParams = useSearchParams()
   const token = searchParams.get('token')
   const { t } = useTranslation()
-  const [success, setSuccess] = useState(false)
+  const [success, setSuccess] = useState(true)
   const [loading, setLoading] = useState(false)
   const [newPassword, setNewPassword] = useState('')
   const [rePassword, setRePassword] = useState('')
@@ -113,7 +110,7 @@ export default function ResetPassword() {
             className={`absolute inset-0 py-6 px-4 flex flex-col gap-3 transition-all duration-300 ${
               success ? 'opacity-100' : 'opacity-0 pointer-events-none'
             }`}>
-            <p className='text-center text-xl leading-6 font-semibold'>{t('Successful password set up')}!</p>
+            <p className='text-center text-xl leading-6 font-semibold'>{t('Successful password reset')}!</p>
             <Image src={SuccessImg} alt='' className='mx-auto' />
             <p className='text-sm leading-6 font-medium text-center w-[246px] mx-auto'>
               {t('You can now use the new password to sign in to your account')}
