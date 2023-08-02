@@ -2,7 +2,7 @@ import FilledButton from 'components/Button/FilledButton'
 import OutlineTextField from 'components/Input/TextField/Outline'
 import Modal from 'components/Modal'
 import Image from 'next/image'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { Context } from 'src/context'
 import SuccessImg from 'images/ninja.svg'
 import { validatePassword } from 'src/utils'
@@ -18,6 +18,8 @@ export default function ChangingPasswordModal({ open, setOpen }) {
   const [rePasswordError, setRePasswordError] = useState('')
   const { updateProfile, account } = useContext(Context)
   const [repasswordValidateSuccess, setRepasswordValidateSuccess] = useState(false)
+  const r1 = useRef<any>()
+  const r2 = useRef<any>()
   const { t } = useTranslation()
   useEffect(() => {
     if (open) {
@@ -70,7 +72,7 @@ export default function ChangingPasswordModal({ open, setOpen }) {
       })
       if (res) {
         setLoading(false)
-        setOpen(false)
+        setSuccess(true)
       } else {
         setLoading(false)
         setCurrentPasswordError(t('Incorrect password'))
@@ -96,6 +98,11 @@ export default function ChangingPasswordModal({ open, setOpen }) {
             type='password'
             placeholder={t('Enter current password')}
             errorMsg={currentPasswordError}
+            onKeyDown={(e) => {
+              if (e.which == 13) {
+                r1.current?.focus()
+              }
+            }}
           />
           <OutlineTextField
             label={t('New password')}
@@ -103,6 +110,12 @@ export default function ChangingPasswordModal({ open, setOpen }) {
             onChange={setNewPassword}
             type='password'
             placeholder={t('Enter new password')}
+            inputRef={r1}
+            onKeyDown={(e) => {
+              if (e.which == 13) {
+                r2.current?.focus()
+              }
+            }}
           />
           <OutlineTextField
             label={t('Confirm new password')}
@@ -110,6 +123,7 @@ export default function ChangingPasswordModal({ open, setOpen }) {
             onChange={setRePassword}
             type='password'
             errorMsg={rePasswordError}
+            inputRef={r2}
             placeholder={t('Re-Enter new password')}
             trailingComponent={repasswordValidateSuccess ? <Image src={CheckSquare} alt='' /> : null}
           />
@@ -126,7 +140,7 @@ export default function ChangingPasswordModal({ open, setOpen }) {
           className={`absolute inset-0 py-6 px-4 flex flex-col gap-3 transition-all duration-300 ${
             success ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}>
-          <p className='text-center text-xl leading-6 font-semibold'>{t('Successful password set up')}!</p>
+          <p className='text-center text-xl leading-6 font-semibold'>{t('Successful password change')}!</p>
           <Image src={SuccessImg} alt='' className='mx-auto' />
           <p className='text-sm leading-6 font-medium text-center w-[246px] mx-auto'>
             {t('You can now use the new password to sign in to your account')}

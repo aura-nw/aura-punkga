@@ -2,7 +2,7 @@ import FilledButton from 'components/Button/FilledButton'
 import OutlineTextField from 'components/Input/TextField/Outline'
 import Modal from 'components/Modal'
 import Image from 'next/image'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { Context } from 'src/context'
 import SuccessImg from 'images/ninja.svg'
 import { validatePassword } from 'src/utils'
@@ -17,6 +17,7 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
   const { updateProfile, account } = useContext(Context)
   const [repasswordValidateSuccess, setRepasswordValidateSuccess] = useState(false)
   const { t } = useTranslation()
+  const r1 = useRef<any>()
   useEffect(() => {
     if (open) {
       setSuccess(false)
@@ -58,7 +59,7 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
       if (res) {
         await profile.callApi(true)
         setLoading(false)
-        setOpen(false)
+        setSuccess(true)
       }
     } catch (error) {
       setLoading(false)
@@ -76,6 +77,11 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
             onChange={setNewPassword}
             type='password'
             placeholder={t('Enter new password')}
+            onKeyDown={(e) => {
+              if (e.which == 13) {
+                r1.current?.focus()
+              }
+            }}
           />
           <OutlineTextField
             label={t('Confirm new password')}
@@ -84,6 +90,7 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
             type='password'
             errorMsg={rePasswordError}
             placeholder={t('Re-Enter new password')}
+            inputRef={r1}
             trailingComponent={repasswordValidateSuccess ? <Image src={CheckSquare} alt='' /> : null}
           />
           <FilledButton
