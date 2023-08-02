@@ -16,7 +16,7 @@ import { i18n, useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Image from 'next/image'
 import { useState } from 'react'
-import { authorData } from './authorData'
+import { authorData } from '../../utils/authorData'
 import { useRouter } from 'next/router'
 
 export default function AboutUs() {
