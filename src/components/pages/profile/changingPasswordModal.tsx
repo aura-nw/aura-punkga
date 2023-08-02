@@ -152,7 +152,7 @@ export default function ChangingPasswordModal({ open, setOpen }) {
               setOpen(false)
               setSuccess(false)
             }}>
-            {t('Explore')}
+            {t('Continue')}
           </FilledButton>
         </div>
       </div>

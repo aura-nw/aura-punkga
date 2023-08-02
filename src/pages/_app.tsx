@@ -35,11 +35,16 @@ function MyApp(props: AppProps) {
   }, [locale])
   if (isSetting) return <></>
   return (
-    <ContextProvider>
-      <main className={pjs.className}>
+    <>
+      <style jsx global>{`
+        html {
+          font-family: ${pjs.style.fontFamily};
+        }
+      `}</style>
+      <ContextProvider>
         <App {...props} />
-      </main>
-    </ContextProvider>
+      </ContextProvider>
+    </>
   )
 }
 const App = ({ Component, pageProps }: AppProps) => {

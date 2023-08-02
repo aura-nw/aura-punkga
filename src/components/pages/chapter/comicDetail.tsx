@@ -431,13 +431,7 @@ const Chapter = ({
         className={`w-full h-[1px] bg-light-medium-gray first:hidden transition-all duration-500 ${
           expandDetail ? 'my-[0px] opacity-100' : '-my-[10px] opacity-0'
         }`}></div>
-      <div
-        onClick={() => {
-          if (chapter.status == 'Upcoming' || (!account && chapter.type == 'Account only')) return
-          setExpandDetail(false)
-          router.push(`/comic/${data.id}/chapter/${chapter.number}`)
-        }}
-        className='flex gap-4 cursor-pointer'>
+      <div className='flex gap-4 cursor-pointer'>
         <Image
           src={chapter.thumbnail || m6}
           alt=''
@@ -446,6 +440,11 @@ const Chapter = ({
           }`}
           width={60}
           height={60}
+          onClick={() => {
+            if (chapter.status == 'Upcoming' || (!account && chapter.type == 'Account only')) return
+            setExpandDetail(false)
+            router.push(`/comic/${data.id}/chapter/${chapter.number}`)
+          }}
         />
         <div className='flex flex-col justify-center flex-1'>
           <div>
@@ -493,7 +492,15 @@ const Chapter = ({
                 }
               })()}
             </div>
-            <div className='font-[600]'>{chapter.name}</div>
+            <div
+              className='font-[600]'
+              onClick={() => {
+                if (chapter.status == 'Upcoming' || (!account && chapter.type == 'Account only')) return
+                setExpandDetail(false)
+                router.push(`/comic/${data.id}/chapter/${chapter.number}`)
+              }}>
+              {chapter.name}
+            </div>
           </div>
           <div
             className={`flex justify-between items-end transition-all w-full duration-500 ${
