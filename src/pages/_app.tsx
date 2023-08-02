@@ -3,16 +3,18 @@ import FilledButton from 'components/Button/FilledButton'
 import OutlineTextField from 'components/Input/TextField/Outline'
 import Modal from 'components/Modal'
 import moment from 'moment'
+import 'moment/locale/vi'
 import { appWithTranslation, useTranslation } from 'next-i18next'
 import { AppProps } from 'next/app'
-import getConfig, { setConfig } from 'next/config'
+import { setConfig } from 'next/config'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 import ContextProvider, { Context } from 'src/context'
 import 'src/styles/globals.scss'
-import 'moment/locale/vi'
+import { Plus_Jakarta_Sans } from 'next/font/google'
+const pjs = Plus_Jakarta_Sans({ subsets: ['latin', 'vietnamese'] })
 function MyApp(props: AppProps) {
   const [isSetting, setIsSetting] = useState(true)
   const { locale } = useRouter()
@@ -34,7 +36,9 @@ function MyApp(props: AppProps) {
   if (isSetting) return <></>
   return (
     <ContextProvider>
-      <App {...props} />
+      <main className={pjs.className}>
+        <App {...props} />
+      </main>
     </ContextProvider>
   )
 }
