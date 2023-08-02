@@ -1,12 +1,12 @@
+import { Transition } from '@headlessui/react'
 import FilledButton from 'components/Button/FilledButton'
 import OutlineTextField from 'components/Input/TextField/Outline'
-import { Fragment, useContext, useEffect, useState } from 'react'
-import { validateEmail } from 'src/utils'
 import Mail from 'images/Mail.svg'
-import { Transition } from '@headlessui/react'
 import Image from 'next/image'
+import { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
+import { validateEmail } from 'src/utils'
 export default function ForgotPasswordModal({ onClose }) {
   const [email, setEmail] = useState('')
   const [emailErrorMsg, setEmailErrorMsg] = useState('')
@@ -30,7 +30,7 @@ export default function ForgotPasswordModal({ onClose }) {
   }
   return (
     <div
-      className={`flex flex-col p-6 gap-3 transition-all duration-300 h-[280px] ${
+      className={`flex flex-col p-6 gap-3 transition-all duration-300 h-[230px] ${
         isFirstStep ? ' w-[400px] ' : ' w-[670px]'
       }`}>
       <p className='text-2xl leading-6 font-semibold text-center '>{t('Forgot password')}?</p>
@@ -84,12 +84,7 @@ export default function ForgotPasswordModal({ onClose }) {
               {t('Have not received any email')}?{' '}
               <span className='text-second-color font-semibold cursor-pointer' onClick={() => setIsFirstStep(true)}>
                 {t('Click here')}
-              </span>{' '}
-              {t('to resend verification link')}
-            </p>
-            <p className='line-clamp-1'>
-              {t('Or')} <span className='text-second-color font-semibold cursor-pointer'>{t('sign up')}</span>{' '}
-              {t('with another email')}
+              </span>
             </p>
           </div>
         </Transition>

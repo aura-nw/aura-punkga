@@ -68,20 +68,31 @@ function ContextProvider({ children }) {
   const setUp = async () => {
     try {
       setIsSettingUp(true)
-      if (accessTokenParam) {
-        setItem('token', accessTokenParam, new Date(Date.now() + (expiresInParam ? +expiresInParam * 1000 : 10800000)))
-        setLogoutTimeout(expiresInParam ? +expiresInParam * 1000 : 10800000)
-        router.push(location.pathname)
+      if (location.pathname.includes('reset_password') || location.pathname.includes('verified')) {
+        await authorizerRef.logout()
+        removeItem('token')
+        removeItem('current_reading_manga')
+        setAccount(null)
       } else {
-        const token = getItem('token')
-        if (token) {
-          const t = localStorage.getItem('token')
-          setLogoutTimeout(new Date(JSON.parse(t).exprire).getTime() - Date.now())
-          await getProfile(token)
-          const connectedProvider = getItem('connected_provider') as 'Coin98' | 'Keplr'
-          if (connectedProvider) {
-            await getWallet(connectedProvider)
-            await connectWallet()
+        if (accessTokenParam) {
+          setItem(
+            'token',
+            accessTokenParam,
+            new Date(Date.now() + (expiresInParam ? +expiresInParam * 1000 : 10800000))
+          )
+          setLogoutTimeout(expiresInParam ? +expiresInParam * 1000 : 10800000)
+          router.push(location.pathname)
+        } else {
+          const token = getItem('token')
+          if (token) {
+            const t = localStorage.getItem('token')
+            setLogoutTimeout(new Date(JSON.parse(t).exprire).getTime() - Date.now())
+            await getProfile(token)
+            const connectedProvider = getItem('connected_provider') as 'Coin98' | 'Keplr'
+            if (connectedProvider) {
+              await getWallet(connectedProvider)
+              await connectWallet()
+            }
           }
         }
       }
