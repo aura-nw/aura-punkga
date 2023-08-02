@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { i18n } from 'next-i18next'
 import OutlineTextField from 'components/Input/TextField/Outline'
 import Modal from 'components/Modal'
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext, useEffect, useRef } from 'react'
 import { Context } from 'src/context'
 import { validatePassword } from 'src/utils'
 import SuccessImg from 'images/ninja.svg'
@@ -18,14 +18,13 @@ export default function ResetPassword() {
   const searchParams = useSearchParams()
   const token = searchParams.get('token')
   const { t } = useTranslation()
-  const [open, setOpen] = useState(true)
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
   const [newPassword, setNewPassword] = useState('')
   const [rePassword, setRePassword] = useState('')
   const [rePasswordError, setRePasswordError] = useState('')
   const { resetPassword } = useContext(Context)
-  const router = useRouter()
+  const r = useRef<any>()
   const [repasswordValidateSuccess, setRepasswordValidateSuccess] = useState(false)
   useEffect(() => {
     setRePasswordError('')
@@ -85,6 +84,11 @@ export default function ResetPassword() {
               onChange={setNewPassword}
               type='password'
               placeholder={t('Enter new password')}
+              onKeyDown={(e) => {
+                if (e.which == 13) {
+                  r.current?.focus()
+                }
+              }}
             />
             <OutlineTextField
               label={t('Confirm new password')}
@@ -93,6 +97,7 @@ export default function ResetPassword() {
               type='password'
               errorMsg={rePasswordError}
               placeholder={t('Re-Enter new password')}
+              inputRef={r}
               trailingComponent={repasswordValidateSuccess ? <Image src={CheckSquare} alt='' /> : null}
             />
             <FilledButton
