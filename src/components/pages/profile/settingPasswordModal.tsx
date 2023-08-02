@@ -18,6 +18,16 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
   const [repasswordValidateSuccess, setRepasswordValidateSuccess] = useState(false)
   const { t } = useTranslation()
   useEffect(() => {
+    if (open) {
+      setSuccess(false)
+      setLoading(false)
+      setRepasswordValidateSuccess(false)
+      setNewPassword('')
+      setRePassword('')
+      setRePasswordError('')
+    }
+  }, [open])
+  useEffect(() => {
     setRePasswordError('')
     if (rePassword == newPassword && newPassword) {
       setRepasswordValidateSuccess(true)
