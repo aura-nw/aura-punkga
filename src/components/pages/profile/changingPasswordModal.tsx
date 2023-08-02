@@ -59,6 +59,9 @@ export default function ChangingPasswordModal({ open, setOpen }) {
       if (res) {
         setLoading(false)
         setOpen(false)
+      } else {
+        setLoading(false)
+        setCurrentPasswordError(t('Incorrect password'))
       }
     } catch (error) {
       console.log(error.message)
@@ -82,7 +85,6 @@ export default function ChangingPasswordModal({ open, setOpen }) {
             placeholder={t('Enter current password')}
             errorMsg={currentPasswordError}
           />
-          <br className='h-4' />
           <OutlineTextField
             label={t('New password')}
             value={newPassword}
