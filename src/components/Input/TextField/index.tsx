@@ -78,6 +78,7 @@ export default function TextField({
               return false
             }
           }}
+          autoComplete='one-time-code'
           ref={inputref}
           onFocus={onFocus}
           onBlur={onBlur}
@@ -106,6 +107,7 @@ export default function TextField({
               return false
             }
           }}
+          autoComplete='one-time-code'
           ref={inputref}
           onFocus={onFocus}
           onBlur={onBlur}
@@ -136,6 +138,7 @@ export default function TextField({
             return false
           }
         }}
+        autoComplete='one-time-code'
         ref={inputref}
         onFocus={onFocus}
         onBlur={onBlur}

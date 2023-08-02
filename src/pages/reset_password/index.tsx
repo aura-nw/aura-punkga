@@ -75,14 +75,10 @@ export default function ResetPassword() {
   return (
     <>
       <Header />
-      <Modal
-        open={open}
-        setOpen={() => {
-          setOpen(false)
-        }}>
+      <div className='flex justify-center md:items-center min-h-[80vh]'>
         <div className={`p-6 w-[322px] relative transition-all duration-300 ${success ? 'h-[400px]' : ''}`}>
           <div className={` flex flex-col gap-3 transition-all duration-300 ${success ? 'opacity-0' : 'opacity-100'}`}>
-            <p className='text-center text-xl leading-6 font-semibold'>{t('Set password')}</p>
+            <p className='text-center text-xl leading-6 font-semibold'>{t('Reset password')}</p>
             <OutlineTextField
               label={t('New password')}
               value={newPassword}
@@ -105,7 +101,7 @@ export default function ResetPassword() {
               size='lg'
               loading={loading}
               onClick={setPasswordHandler}>
-              {t('Confirm')}
+              {t('Reset my password')}
             </FilledButton>
           </div>
           <div
@@ -121,13 +117,13 @@ export default function ResetPassword() {
               className='mt-2 mx-auto'
               size='lg'
               onClick={() => {
-                router.push('/')
+                ;(document.querySelector('#open-sign-in-btn') as any)?.click()
               }}>
-              {t('Explore')}
+              {t('Sign in')}
             </FilledButton>
           </div>
         </div>
-      </Modal>
+      </div>
     </>
   )
 }

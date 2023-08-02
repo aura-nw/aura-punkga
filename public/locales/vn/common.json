@@ -142,5 +142,8 @@
   "Age": "Tuổi",
   "Show info": "Xem thông tin",
   "Hide info": "Ẩn thông tin",
-  "Successful password change": "Đổi mật khẩu thành công"
+  "Successful password change": "Đổi mật khẩu thành công",
+  "Reset password": "Thiết lập lại mật khẩu",
+  "Reset my password": "Đặt lại mật khẩu",
+  "Successful password reset": "Đặt lại mật khẩu thành công"
 }

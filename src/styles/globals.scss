@@ -16,8 +16,8 @@
   --medium-green: #1fab5e;
   --light-yellow: #fff2d1;
   --medium-yellow: #eeb304;
-  --light-red: #FFD9DA;
-  --medium-red: #FF5C00;
+  --light-red: #ffd9da;
+  --medium-red: #ff5c00;
 }
 body {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
@@ -152,7 +152,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 
@@ -181,5 +181,8 @@ input[type=number] {
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;    
+  mask-repeat: no-repeat;
+}
+body > div {
+  min-height: 100vh;
 }

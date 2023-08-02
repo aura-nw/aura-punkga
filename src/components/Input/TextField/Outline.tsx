@@ -40,6 +40,7 @@ export default function OutlineTextField({
           </div>
         )}
         <input
+          autoComplete='one-time-code'
           ref={inputRef}
           type={type}
           value={value}
