@@ -244,17 +244,17 @@ export default function ReadingSection({
         className={`peer bg-light-gray absolute bottom-0 right-0 left-0 w-full flex items-center px-[40px] py-[6px] ${
           mode == 'minscreen' ? 'visible' : 'invisible -z-10'
         }`}>
-        <div className='flex-1 self-center'>
-          <div>
-            <div className='font-bold text-ellipsis max-w-[20vw] overflow-hidden whitespace-nowrap'>{`${data[language].title} • Chapter ${chapterData.number} • ${chapterData.name}`}</div>
-            <p className='text-subtle-dark'>
+        <div className='flex-auto w-1/3 self-center'>
+          <div className='text-ellipsis max-w-[90%] overflow-hidden whitespace-nowrap'>
+            <div className='font-bold truncate'>{`Chapter ${chapterData.number} • ${chapterData.name}`}</div>
+            <p className='text-subtle-dark truncate'>
               {(chapterLikes || 0).toLocaleString('en-US')} {t('likes')} •{' '}
               {(chapterData.views || 0).toLocaleString('en-US')} {t('views')} •{' '}
               {(commentNumber || 0).toLocaleString('en-US')} {t('comments')}
             </p>
           </div>
         </div>
-        <div className='flex-1 self-center flex gap-2 justify-center'>
+        <div className='flex-auto w-1/3 self-center flex gap-2 justify-center'>
           <OutlineButton onClick={() => goToChap('Prev')} disabled={currentChapIndex == data.chapters.length - 1}>
             <div className='flex items-center w-[130px] justify-between py-[3px] mx-[-6px] whitespace-nowrap'>
               <ChevronLeftIcon className='w-5 h-5' />
@@ -270,7 +270,7 @@ export default function ReadingSection({
             </div>
           </OutlineButton>
         </div>
-        <div className={`flex-1 self-center flex gap-2 justify-end`}>
+        <div className={`flex-auto w-1/3 self-center flex gap-2 justify-end`}>
           <Image
             className='cursor-pointer'
             onClick={() => setReadingModeHandler(readingMode == 'onePage' ? 'twoPage' : 'onePage')}
@@ -316,17 +316,17 @@ export default function ReadingSection({
         className={`peer bg-light-gray absolute bottom-0 right-0 left-0 w-full flex items-center px-[40px] py-[6px] duration-300 transition-opacity ${
           mode != 'minscreen' ? 'visible' : 'invisible -z-10'
         } ${true ? 'opacity-100' : 'opacity-0'}`}>
-        <div className='flex-1 self-center'>
-          <div>
-            <strong>{`${data[language].title} • ${t('Chapter')} ${chapterData.number} • ${chapterData.name}`}</strong>
-            <p className='text-subtle-dark'>
+        <div className='flex-auto w-1/3 self-center'>
+          <div className='text-ellipsis max-w-[90%] overflow-hidden whitespace-nowrap'>
+            <strong className='font-bold'>{`${t('Chapter')} ${chapterData.number} • ${chapterData.name}`}</strong>
+            <p className='text-subtle-dark truncate'>
               {(chapterLikes || 0).toLocaleString('en-US')} {t('likes')} •{' '}
               {(chapterData.views || 0).toLocaleString('en-US')} {t('views')} •{' '}
               {(commentNumber || 0).toLocaleString('en-US')} {t('comments')}
             </p>
           </div>
         </div>
-        <div className='flex-1 self-center flex gap-2 items-center'>
+        <div className='flex-auto w-1/3 self-center flex gap-2 items-center'>
           <Image
             className='cursor-pointer'
             onClick={() => setReadingModeHandler(readingMode == 'onePage' ? 'twoPage' : 'onePage')}
@@ -420,7 +420,7 @@ export default function ReadingSection({
             </OutlineButton>
           )}
         </div>
-        <div className={`flex-1 self-center flex gap-2 justify-end`}></div>
+        <div className={`flex-auto w-1/3 self-center flex gap-2 justify-end`}></div>
       </div>
     </div>
   )

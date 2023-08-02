@@ -26,7 +26,7 @@ export default function OutlineButton({
   return (
     <button
       onClick={disabled ? () => {} : onClick}
-      className={`${classes[size]} ${
+      className={`whitespace-nowrap ${classes[size]} ${
         (disabled || loading) && 'opacity-60 cursor-no-drop pointer-events-none'
       } ${className}`}>
       {typeof loading != 'undefined' && (

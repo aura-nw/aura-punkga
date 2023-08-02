@@ -168,21 +168,23 @@ export default function ComicDetail({
                 <strong>{comicLikes?.toLocaleString('en-US')}</strong> {t('likes')}
               </p>
               <div className={`2xl:flex-row 2xl:items-start flex-col flex gap-[10px]`}>
-                {isSubscribe ? (
-                  <FilledButton>
-                    <div onClick={() => subscribeHandler(false)} className='h-5 flex items-start'>
-                      <BellAlertIcon className='w-6 h-6 mr-2 inline-block animate-[bell-ring_1s_ease-in-out]' />
-                      {t('Subscribed')}
-                    </div>
-                  </FilledButton>
-                ) : (
-                  <OutlineButton>
-                    <div onClick={() => subscribeHandler(true)} className='h-5 flex items-start'>
-                      <BellAlertIconOutline className='w-6 h-6 mr-2 inline-block ' />
-                      {t('Subscribe')}
-                    </div>
-                  </OutlineButton>
-                )}
+                <div>
+                  {isSubscribe ? (
+                    <FilledButton>
+                      <div onClick={() => subscribeHandler(false)} className='h-5 flex items-start'>
+                        <BellAlertIcon className='w-6 h-6 mr-2 inline-block animate-[bell-ring_1s_ease-in-out]' />
+                        {t('Subscribed')}
+                      </div>
+                    </FilledButton>
+                  ) : (
+                    <OutlineButton>
+                      <div onClick={() => subscribeHandler(true)} className='h-5 flex items-start '>
+                        <BellAlertIconOutline className='w-6 h-6 mr-2 inline-block ' />
+                        {t('Subscribe')}
+                      </div>
+                    </OutlineButton>
+                  )}
+                </div>
                 <div>
                   <OutlineButton
                     className={`${!expandDetail ? 'opacity-100' : 'opacity-0'} duration-500 transition-all`}

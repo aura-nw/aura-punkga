@@ -188,13 +188,13 @@ export default function Header({}) {
                 </div>
               )}
             </div>
-            <div className='flex gap-[4px] font-bold'>
+            <div className='flex gap-[4px] font-bold' onClick={switchLanguage}>
               {locale == 'en' ? (
                 <Image className='w-[24px] h-[24px]' src={EN} alt='' />
               ) : (
                 <Image className='w-[24px] h-[24px]' src={VN} alt='' />
               )}
-              <button onClick={switchLanguage}>{t('switchLanguage')}</button>
+              <button>{t('switchLanguage')}</button>
             </div>
           </div>
           <div className='flex justify-between items-center mt-2'>
@@ -355,13 +355,13 @@ export default function Header({}) {
               {t('aboutUs')}
             </Button>
             <div className='flex gap-[20px] items-center cursor-pointer'>
-              <div className='flex gap-[4px] font-bold'>
+              <div className='flex gap-[4px] font-bold' onClick={switchLanguage}>
                 {locale == 'en' ? (
                   <Image className='w-[24px] h-[24px]' src={EN} alt='' />
                 ) : (
                   <Image className='w-[24px] h-[24px]' src={VN} alt='' />
                 )}
-                <button onClick={switchLanguage}>{t('switchLanguage')}</button>
+                <button>{t('switchLanguage')}</button>
               </div>
               {account?.verified && account?.name ? (
                 <Dropdown>
