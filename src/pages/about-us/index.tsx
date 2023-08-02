@@ -16,7 +16,7 @@ import { i18n, useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Image from 'next/image'
 import { useState } from 'react'
-import authorData from './authorData.json'
+import { authorData } from './authorData'
 import { useRouter } from 'next/router'
 
 export default function AboutUs() {
@@ -108,8 +108,15 @@ const Author = ({ data }) => {
   return (
     <div className='rounded-[45px] border-solid border border-[#191A23] py-5 px-9 shadow-[0px_5px_0px_0px_#191A23] '>
       <div className='flex gap-5'>
-        <div className='w-1/3 max-w-[120px]'>
-          <Image src={XVector} alt='' />
+        <div className='w-1/3 max-w-[120px] aspect-square relative '>
+          <Image src={XVector} alt='' className='absolute top-2 -right-2 w-full aspect-square' />
+          <div className={`x-mask w-full aspect-square`}>
+            {data.avatar ? (
+              <Image src={data.avatar} alt='' className='w-full h-full object-cover' />
+            ) : (
+              <div className='w-full h-full bg-second-color'></div>
+            )}
+          </div>
         </div>
         <div className='w-2/3 flex-auto'>
           <div className='font-medium'>{data.name}</div>

@@ -175,3 +175,11 @@ input[type=number] {
   transform: translateX(16ch);
   white-space: nowrap;
 }
+.x-mask {
+  -webkit-mask-image: url(../assets/images/XVector.svg);
+  mask-image: url(../assets/images/XVector.svg);
+  -webkit-mask-size: 100%;
+  mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;    
+}

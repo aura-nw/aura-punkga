@@ -69,7 +69,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
 
   useEffect(() => {
     if (profile.data) {
-      setGender({ key: profile.data.gender, value: profile.data.gender })
+      setGender({ key: profile.data.gender, value: t(profile.data.gender) })
       setBirthdate(profile.data.birthdate ? new Date(profile.data.birthdate).getTime() : undefined)
       setBio(profile.data.bio)
     }
@@ -77,7 +77,6 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
 
   useEffect(() => {
     setGender((prev) => {
-      console.log(prev)
       if (prev)
         return _.cloneDeep({
           key: prev.key,

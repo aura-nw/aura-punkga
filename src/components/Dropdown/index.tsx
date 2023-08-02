@@ -34,14 +34,14 @@ export function DropdownMenu({
     <Transition
       show={open}
       as={Fragment}
-      leave="transition ease-in duration-100"
-      leaveFrom="opacity-100"
-      leaveTo="opacity-0"
-      enter="transition ease-in duration-100"
-      enterFrom="opacity-0"
-      enterTo="opacity-100">
+      leave='transition ease-in duration-100'
+      leaveFrom='opacity-100'
+      leaveTo='opacity-0'
+      enter='transition ease-in duration-100'
+      enterFrom='opacity-0'
+      enterTo='opacity-100'>
       <div
-        className={`${customClass} absolute z-50 mt-1 w-full min-w-[100px] rounded-[12px] overflow-auto bg-white shadow-[0px_10px_50px_rgba(0,0,0,0.15)]`}>
+        className={`${customClass} absolute z-50 mt-1 w-full min-w-fit whitespace-nowrap max-w-[200px] truncate rounded-[12px] overflow-auto bg-white shadow-[0px_10px_50px_rgba(0,0,0,0.15)]`}>
         {children}
       </div>
     </Transition>
