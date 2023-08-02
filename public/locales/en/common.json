@@ -1,1 +1,11 @@
-{ "login": "Login", "aboutUs": "About Us", "switchLanguage": "EN", "en": "English", "vn": "Vietnamese " }
+{
+  "login": "Login",
+  "aboutUs": "About Us",
+  "switchLanguage": "EN",
+  "en": "English",
+  "vn": "Vietnamese ",
+  "about-us-general": "PUNKGA is a project aimed at building a professional comic platform for comic artists with a Cyberpunk theme. The project aims at commercialization through the trading of NFTs created by Manga Artists. Users not only own NFTs but can also contribute to becoming part of the story in many ways.",
+  "about-us-des-1": "A professional comic creation platform for comic artists both within and outside the country, centered around a common theme, which is Cyberpunk.",
+  "about-us-des-2": "Trading limited quantities of NFTs created directly by Manga Creators themselves.",
+  "about-us-des-3": "Manga series with a large fanbase and a thriving community have higher chances of being adapted into anime productions."
+}

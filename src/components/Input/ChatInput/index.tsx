@@ -5,11 +5,13 @@ import AutoGrowingTextField from '../TextField/AutoGrowing'
 import classes from './chatInput.module.scss'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { Context } from 'src/context'
+import { useTranslation } from 'react-i18next'
 export default function ChatInput({ onSubmit }) {
   const { account } = useContext(Context)
   const [content, setContent] = useState('')
   const ref = useRef<any>()
   const buttonRef = useRef<any>()
+  const { t } = useTranslation()
   useEffect(() => {
     ref.current?.focus()
   }, [])
@@ -26,7 +28,7 @@ export default function ChatInput({ onSubmit }) {
       </div>
       <AutoGrowingTextField
         r={ref}
-        placeholder='Write a comment'
+        placeholder={t('Write a comment')}
         value={content}
         onChange={setContent}
         onKeyDown={(e) => {
