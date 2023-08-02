@@ -100,7 +100,6 @@ export default function ComicDetail({
   if (!data) {
     return <div>{t('No data to show')}</div>
   }
-
   const selectedLanguage =
     data.languages.find((l) => l.shortLang == language) || data.languages.find((l) => l.isMainLanguage)
   return (
@@ -362,8 +361,8 @@ export default function ComicDetail({
                     unlike={unlike}
                     setExpandDetail={setExpandDetail}
                     likeHandlerCallback={chapterId == chapter.id ? likeHandler : null}
-                    defaultLike={chapterId == chapter.id ? chapterLikes : null}
-                    defaultIsLiked={chapterId == chapter.id ? chapterIsLiked : null}
+                    defaultLike={chapterId == chapter.id ? chapterLikes : chapter.likes}
+                    defaultIsLiked={chapterId == chapter.id ? chapterIsLiked : chapter.isLiked}
                     setComicLikes={chapterId != chapter.id ? setComicLikes : null}
                   />
                 ))}
