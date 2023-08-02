@@ -7,6 +7,7 @@ import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
@@ -23,6 +24,7 @@ export default function ResetPassword() {
   const { resetPassword } = useContext(Context)
   const r = useRef<any>()
   const [repasswordValidateSuccess, setRepasswordValidateSuccess] = useState(false)
+  const router = useRouter()
   useEffect(() => {
     setRePasswordError('')
     if (rePassword == newPassword && newPassword) {

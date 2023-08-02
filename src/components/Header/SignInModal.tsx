@@ -22,7 +22,7 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
   const [emailValidateErrorMsg, setEmailValidateErrorMsg] = useState('')
   const [loginErrorMsg, setLoginErrorMsg] = useState('')
   const [loginLoading, setLoginLoading] = useState(false)
-
+  const router = useRouter()
   const { login, oauth } = useContext(Context)
 
   useEffect(() => {
@@ -53,6 +53,9 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
   const loginCallBack = (status, msg) => {
     if (status === 'success') {
       setSignInOpen(false)
+      if (location.pathname.includes('reset_password') || location.pathname.includes('verified')) {
+        router.push('/')
+      }
     } else {
       setLoginErrorMsg(msg || t('Something went wrong'))
     }
