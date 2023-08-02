@@ -190,7 +190,7 @@ export default function Header({}) {
             </div>
             <div className='flex gap-[4px] font-bold' onClick={switchLanguage}>
               {locale == 'en' ? (
-                <Image className='w-[24px] h-[24px]' src={EN} alt='' />
+                <Image className='w-[24px] h-[24px] border-black border rounded-full' src={EN} alt='' />
               ) : (
                 <Image className='w-[24px] h-[24px]' src={VN} alt='' />
               )}
@@ -251,10 +251,10 @@ export default function Header({}) {
                           <div onClick={() => router.push('/profile')}>
                             <strong>{t('My profile')}</strong>
                           </div>
-                          <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
+                          {/* <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={() => setConnectWalletOpen(true)}>
                             <strong>{t('Link Wallet')}</strong>
-                          </div>
+                          </div> */}
                           <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={logout}>
                             <strong>{t('Log out')}</strong>
@@ -357,9 +357,9 @@ export default function Header({}) {
             <div className='flex gap-[20px] items-center cursor-pointer'>
               <div className='flex gap-[4px] font-bold' onClick={switchLanguage}>
                 {locale == 'en' ? (
-                  <Image className='w-[24px] h-[24px]' src={EN} alt='' />
+                  <Image className='w-[24px] h-[24px] border-black border rounded-full' src={EN} alt='' />
                 ) : (
-                  <Image className='w-[24px] h-[24px]' src={VN} alt='' />
+                  <Image className='w-[24px] h-[24px] ' src={VN} alt='' />
                 )}
                 <button>{t('switchLanguage')}</button>
               </div>
@@ -412,10 +412,10 @@ export default function Header({}) {
                           <div onClick={() => router.push('/profile')}>
                             <strong>{t('My profile')}</strong>
                           </div>
-                          <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
+                          {/* <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={() => setConnectWalletOpen(true)}>
                             <strong>{t('Link Wallet')}</strong>
-                          </div>
+                          </div> */}
                           <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={logout}>
                             <strong>{t('Log out')}</strong>
