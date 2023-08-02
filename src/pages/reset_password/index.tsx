@@ -15,7 +15,7 @@ export default function ResetPassword() {
   const searchParams = useSearchParams()
   const token = searchParams.get('token')
   const { t } = useTranslation()
-  const [success, setSuccess] = useState(true)
+  const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
   const [newPassword, setNewPassword] = useState('')
   const [rePassword, setRePassword] = useState('')
