@@ -60,7 +60,7 @@ export default function Select({
                     className={({ active }) =>
                       classNames(
                         option.key == selected?.key ? 'bg-primary-color' : 'text-gray-900',
-                        'relative cursor-default select-none py-2 pl-3 pr-9'
+                        'relative cursor-default select-none py-2 pl-3 pr-16'
                       )
                     }
                     value={option}>
