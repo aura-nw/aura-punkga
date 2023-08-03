@@ -93,8 +93,8 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
     if (birthdate && new Date(profile.data.birthdate).getTime() != new Date(birthdate).getTime()) {
       form.append('birthdate', moment(birthdate).format('yyyy-MM-DD') as string)
     }
-    if (bio && profile.data.bio != bio) {
-      form.append('bio', bio)
+    if (profile.data.bio != bio) {
+      form.append('bio', bio || '')
     }
     if ((profilePicture.current as any).files[0]) {
       form.append('picture', (profilePicture.current as any).files[0])

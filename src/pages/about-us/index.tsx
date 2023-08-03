@@ -129,9 +129,6 @@ const Author = ({ data }) => {
               </span>
             </div>
           </div>
-          <div>
-            {t('Age')}: {data.age}
-          </div>
           <div className='flex gap-5 justify-end items-center mt-1'>
             {data.socialLink.fb && <Image src={FbIcon} alt='' onClick={() => window.open(data.socialLink.fb)} />}
             {data.socialLink.be && <Image src={BeIcon} alt='' onClick={() => window.open(data.socialLink.be)} />}

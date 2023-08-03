@@ -20,8 +20,8 @@ export const authorData = {
         'Interests: Watching movies, soccer, traveling, cuisine',
         'Comic drawing experience: Over 10 years',
         "Prominent created works/one-shots: The Stag and the Huntsman (3rd prize SMA 4), I'm always here (Honourable mention SMA Extra 1), Time Travel (2 chapters, monthly winner of Dream's World contest)",
-        'Favorite comic genres: Shonen, Seinen, Sci-fi, Fantasy, Zombie',
-        'Comic creation philosophy: Manga is Freedom.',
+        'Favorite comic genres: Shounen, Seinen, Sci-fi, Fantasy, Zombie',
+        'Comic creation philosophy: Manga is Freedom',
       ],
     },
     {
@@ -39,7 +39,7 @@ export const authorData = {
         'Interests: Pretending to be old?',
         'Comic drawing experience: Progressing through the years, started as early as 7 years old.',
         "Created works/chapters: 3 stories, but they're all unfinished and stored away.",
-        'Favorite comic genres: Slice of life, shounen, adventure, philosophy, psychology, comedy, etc.',
+        'Favorite comic genres: Sennen, shounen, adventure, philosophy, psychology, comedy, etc',
         "Comic creation philosophy: Haven't really thought of anything serious, just a feeling that the story needs a perspective.",
       ],
     },
@@ -55,8 +55,7 @@ export const authorData = {
       },
       bio: [
         'Interests: Watching movies, reading books, sports.',
-        'Comic drawing experience: 1 year (7th grade).',
-        'Favorite comic genres: Adventure, shonen, horror, detective.',
+        'Favorite comic genres: Adventure, shounen, horror, detective.',
         "Comic creation philosophy: If drawing for money, won't make it beautiful.",
       ],
     },
@@ -153,8 +152,8 @@ export const authorData = {
         'Sở thích: Làm người già?',
         'Kinh nghiệm vẽ truyện tranh: chấp vá qua từng năm, sớm nhất là 7 tuổi',
         'Các đầu truyện/ chap truyện từng sáng tác: 3 truyện nhưng dang dở và bị xếp vô kho',
-        'Thể loại truyện tranh yêu thích: Sennen, shounen, adventure,philosophy,psychology, comedy.',
-        'Phương châm sáng tác truyện tranh: Chưa nghĩ ra gì nghiêm túc lắm, chỉ là có cảm giác câu chuyện đó cần được ',
+        'Thể loại truyện tranh yêu thích: Sennen, shounen, adventure,philosophy,psychology, comedy..vv',
+        'Phương châm sáng tác truyện tranh: Chưa nghĩ ra gì nghiêm túc lắm, chỉ là có cảm giác câu chuyện đó cần được điểm nhìn)',
       ],
     },
     {
@@ -169,9 +168,8 @@ export const authorData = {
       },
       bio: [
         'Sở thích : xem phim, đọc sách, thể thao',
-        'Kinh nghiệm vẽ truyện tranh: 1 năm ( lớp 7)',
-        'Thể loại truyện tranh yêu thích: adventure, shonen, horror, detect',
-        'Phương châm sáng tác truyện tranh: vẽ vì tiền thì không vẽ đẹp ',
+        'Thể loại truyện tranh yêu thích: adventure, shounen, horror, detect',
+        'Phương châm sáng tác truyện tranh: vẽ vì tiền thì không vẽ đẹp được',
       ],
     },
     {
