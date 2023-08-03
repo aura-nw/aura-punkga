@@ -78,7 +78,7 @@ export default function AboutUs() {
             <div className='px-2 bg-[#23FF81] rounded-md w-fit mx-auto mt-8 lg:mt-0 lg:mx-0'>
               <h1 className='text-[40px] font-medium'>{t('Authors')}</h1>
             </div>
-            <p className='text-xs max-w-[270px] text-center mx-auto mt-3 lg:mt-0 lg:mx-10 lg:text-left'>
+            <p className='text-xs max-w-[270px] text-center mx-auto mt-3 md:text-lg md:max-w-[470px] lg:mt-0 lg:mx-10 lg:text-left'>
               {t('Meet the skilled and experienced team behind our successful artwork strategies')}
             </p>
           </div>
