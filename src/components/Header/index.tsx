@@ -38,6 +38,7 @@ export default function Header({}) {
   const divRef = useRef<any>()
   const mref = useRef<any>()
   const mdivRef = useRef<any>()
+  const [showFixedHeader, setShowFixedHeader] = useState(false)
   useClickOutside(divRef, () => {
     if (window.innerWidth > 768) {
       setIsSearchFocused(false)
@@ -66,6 +67,11 @@ export default function Header({}) {
   useEffect(() => {
     ;(window as any).isSearchFocused = isSearchFocused
   }, [isSearchFocused])
+
+  useEffect(() => {
+    if (pos > 250) setShowFixedHeader(true)
+    if (pos < 150) setShowFixedHeader(false)
+  }, [pos])
   useEffect(() => {
     ref.current?.addEventListener(
       'keypress',
@@ -104,7 +110,7 @@ export default function Header({}) {
         }`}></div>
       <header
         className={`bg-white border-b-2 border-light-gray border-solid ${
-          pos > 250 ? 'fixed w-[100vw] top-0 z-50 transition-all duration-300' : '-top-14'
+          showFixedHeader ? 'fixed w-[100vw] top-0 z-50 transition-all duration-300' : '-top-14'
         }`}>
         <nav className='md:hidden pk-container p-3'>
           <div className='flex justify-between items-center gap-2'>

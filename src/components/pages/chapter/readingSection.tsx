@@ -210,7 +210,7 @@ export default function ReadingSection({
           <div
             ref={ref}
             className={`${mode == 'minscreen' ? '' : ''} ${
-              readingMode == 'onePage' ? 'w-[70%]' : 'flex h-full'
+              readingMode == 'onePage' ? 'w-[70%]' : 'flex h-full items-center'
             } mx-auto pb-[60px]`}>
             {chapterData[chapterLocale]
               ?.slice(
@@ -227,7 +227,9 @@ export default function ReadingSection({
                   key={index}
                   alt=''
                   className={`${
-                    readingMode == 'onePage' ? 'mx-auto' : 'h-full w-auto max-w-[50%] first:ml-auto last:mr-auto'
+                    readingMode == 'onePage'
+                      ? 'mx-auto'
+                      : 'h-fit max-h-full max-w-[50%] w-auto first:ml-auto last:mr-auto'
                   } `}
                   width={1000}
                   height={1000}

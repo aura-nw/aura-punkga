@@ -504,7 +504,7 @@ const Chapter = ({
           </div>
           <div
             className={`flex justify-between items-end transition-all w-full duration-500 ${
-              expandDetail ? 'h-full opacity-100  max-h-[100px]' : 'h-[0%] max-h-0 opacity-0'
+              expandDetail ? 'h-full opacity-100  max-h-[100px]' : 'h-[0%] max-h-0 opacity-0 pointer-events-none'
             }`}>
             <div className='text-sm flex gap-10'>
               <div className='mr-3'>{moment(chapter.date).format('DD/MM/yyyy')}</div>
