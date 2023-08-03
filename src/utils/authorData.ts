@@ -233,3 +233,8 @@ export const authorData = {
     },
   ],
 }
+// // [(16, 17, 25, 26, 34, 35, 43, 44, 52, 53, 61, 62)].forEach((i) => {
+// //   const ele = document.querySelectorAll('.notion-table-cell-text.notranslate')[i]
+// //   const text = `${ele.innerText}`
+// //   console.log(text.split('\n'))
+// })

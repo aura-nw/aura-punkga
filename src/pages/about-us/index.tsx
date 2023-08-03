@@ -119,7 +119,7 @@ const Author = ({ data }) => {
           </div>
         </div>
         <div className='w-2/3 flex-auto'>
-          <div className='font-medium'>{data.name}</div>
+          <div className='font-medium text-xl'>{data.name}</div>
           <div className='flex items-center flex-wrap'>
             <div className='text-second-color text-lg mr-4 font-bold'>{data.nickname}</div>
             <div className='flex items-center gap-1'>
@@ -145,7 +145,10 @@ const Author = ({ data }) => {
           <p className='text-sm leading-[125%] font-semibold'>{open ? t('Hide info') : t('Show info')}</p>
         </div>
       </div>
-      <ul className={`list-disc list-inside transition-all overflow-hidden ${open ? 'max-h-[500px]' : 'max-h-[0px]'}`}>
+      <ul
+        className={`list-disc text-xs md:text-lg pl-2 list-inside transition-all overflow-hidden ${
+          open ? 'max-h-[500px]' : 'max-h-[0px]'
+        }`}>
         {data.bio.map((b, i) => (
           <li key={i}>{b}</li>
         ))}
