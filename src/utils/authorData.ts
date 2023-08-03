@@ -57,7 +57,6 @@ export const authorData = {
       },
       bio: [
         'Interests: Watching movies, reading books, sports',
-        'Created works/chapters: None so far',
         'Favorite comic genres: Adventure, shounen, horror, detective',
         "Comic creation philosophy: If drawing for money, won't make it beautiful",
       ],
@@ -77,7 +76,7 @@ export const authorData = {
         'Interests: Listening to music, sleeping',
         'Comic drawing experience: 1 year',
         'Created works/chapters: ultraV',
-        'Favorite comic genres: Western comics.',
+        'Favorite comic genres: Western comics',
         'Comic creation philosophy: Satisfy the liberation of trapped images',
       ],
     },
@@ -95,8 +94,8 @@ export const authorData = {
       bio: [
         'Interests: Oil painting, comic creation, film directing, screenwriting',
         'Comic drawing experience: 8 years since the first comic',
-        'Created works/chapters: "The Informant."',
-        'Favorite comic genres: Dark fantasy, horror.',
+        'Created works/chapters: "The Informant"',
+        'Favorite comic genres: Dark fantasy, horror',
         'Comic creation philosophy: A good script is the core, good imagery is essential, and consistency is key',
       ],
     },
@@ -113,7 +112,7 @@ export const authorData = {
       },
       bio: [
         'Interests: Drawing, dancing, volleyball, listening to music, traveling',
-        'Comic drawing experience: Over 10 years.',
+        'Comic drawing experience: Over 10 years',
         'Created works/chapters: "Ghi nhớ" (Remember)',
         'Favorite comic genres: Psychological, shoujo, adventure, one shot',
         'Comic creation philosophy: Creating out of passion, for the sake of art',
@@ -153,7 +152,7 @@ export const authorData = {
       },
       bio: [
         'Sở thích: Làm người già?',
-        'Kinh nghiệm vẽ truyện tranh: Chấp vá qua từng năm, sớm nhất là 7 tuổi.',
+        'Kinh nghiệm vẽ truyện tranh: Chấp vá qua từng năm, sớm nhất là 7 tuổi',
         'Các đầu truyện/chap truyện từng sáng tác: 3 truyện nhưng dang dở và bị xếp vô kho',
         'Thể loại truyện tranh yêu thích: Sennen, shounen, adventure, philosophy, psychology, comedy...vv',
         'Phương châm sáng tác truyện tranh: Chưa nghĩ ra gì nghiêm túc lắm, chỉ là có cảm giác câu chuyện đó cần được điểm nhìn)',
@@ -172,7 +171,6 @@ export const authorData = {
       },
       bio: [
         'Sở thích : xem phim, đọc sách, thể thao',
-        'Các đầu truyện/ chap truyện từng sáng tác:',
         'Thể loại truyện tranh yêu thích: adventure, shounen, horror, detective',
         'Phương châm sáng tác truyện tranh: vẽ vì tiền thì không vẽ đẹp được',
       ],
@@ -191,7 +189,7 @@ export const authorData = {
       bio: [
         'Sở thích: nghe nhạc, ngủ',
         'Kinh nghiệm vẽ truyện tranh: 1 năm',
-        'Các đầu truyện/ chap truyện từng sáng tác UltraV',
+        'Các đầu truyện/ chap truyện từng sáng tác: UltraV',
         'Thể loại truyện tranh yêu thích: comic phương tây',
         'Phương châm sáng tác truyện tranh: Thỏa mãn việc giải phóng hình ảnh bị mắc kẹt trong đầu',
       ],
@@ -227,10 +225,10 @@ export const authorData = {
         ig: '',
       },
       bio: [
-        'Sở thích: vẽ, nhảy, bóng chuyền, nghe nhạc, đi phượt.',
-        'Kinh nghiệm vẽ truyện tranh:hHơn 10 năm',
-        'Các đầu truyện/ chap truyện từng sáng tác: Ghi nhớ.',
-        'Thể loại truyện tranh yêu thích: Psychological, shoujo, adventure, one shot.',
+        'Sở thích: vẽ, nhảy, bóng chuyền, nghe nhạc, đi phượt',
+        'Kinh nghiệm vẽ truyện tranh: Hơn 10 năm',
+        'Các đầu truyện/ chap truyện từng sáng tác: Ghi nhớ',
+        'Thể loại truyện tranh yêu thích: Psychological, shoujo, adventure, one shot',
         'Phương châm sáng tác truyện tranh: Làm vì đam mê, vì nghệ thuật',
       ],
     },
