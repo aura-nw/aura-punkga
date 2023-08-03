@@ -1,8 +1,10 @@
 import Carousel from 'components/Carousel'
 
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import Mock from 'assets/images/mokup1.png'
-import Mock2 from 'assets/images/mokup2.png'
+import Mock1 from 'assets/images/comic-banner/1.png'
+import Mock2 from 'assets/images/comic-banner/2.png'
+import Mock3 from 'assets/images/comic-banner/3.png'
+import Mock4 from 'assets/images/comic-banner/4.png'
 import DummyComic from 'components/DummyComponent/comic'
 import Header from 'components/Header'
 import FilledSelect from 'components/Select/FilledSelect'
@@ -74,45 +76,54 @@ export default function Home() {
   return (
     <>
       <Header />
+
       <div className='pk-container'>
         <div className='mt-[40px] md:grid grid-cols-1 px-2 md:px-0 gap-[40px] hidden'>
           <Carousel>
-            <div className='pr-5'>
-              <Image className='w-full' src={Mock} alt='' />
+            <div className='pr-5 '>
+              <Image
+                className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-cover'
+                src={Mock1}
+                alt=''
+              />
             </div>
-            <div className='pl-5'>
-              <Image className='w-full' src={Mock2} alt='' />
+            <div className='pl-5 '>
+              <Image
+                className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-cover'
+                src={Mock2}
+                alt=''
+              />
             </div>
-            <div className='pr-5'>
-              <Image className='w-full' src={Mock2} alt='' />
+            <div className='pr-5 '>
+              <Image
+                className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-cover'
+                src={Mock3}
+                alt=''
+              />
             </div>
-            <div className='pl-5'>
-              <Image className='w-full' src={Mock2} alt='' />
-            </div>
-            <div className='pr-5'>
-              <Image className='w-full' src={Mock2} alt='' />
-            </div>
-            <div className='pl-5'>
-              <Image className='w-full' src={Mock2} alt='' />
-            </div>
-          </Carousel>
-        </div>
-        <div className='mt-[40px] md:hidden px-2 md:px-0 gap-[40px]'>
-          <Carousel setting={{ slidesToShow: 1, slidesToScroll: 1 }}>
-            <div>
-              <Image className='w-full' src={Mock} alt='' />
-              <Image className='w-full' src={Mock2} alt='' />
-            </div>
-            <div>
-              <Image className='w-full' src={Mock} alt='' />
-              <Image className='w-full' src={Mock2} alt='' />
-            </div>
-            <div>
-              <Image className='w-full' src={Mock} alt='' />
-              <Image className='w-full' src={Mock2} alt='' />
+            <div className='pl-5 '>
+              <Image
+                className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-cover'
+                src={Mock4}
+                alt=''
+              />
             </div>
           </Carousel>
         </div>
+      </div>
+      <div className='md:hidden md:px-0 gap-[40px]'>
+        <Carousel setting={{ slidesToShow: 1, slidesToScroll: 1 }}>
+          <div>
+            <Image className='w-full h-[125px] object-cover' src={Mock1} alt='' />
+            <Image className='w-full h-[125px] object-cover' src={Mock2} alt='' />
+          </div>
+          <div>
+            <Image className='w-full h-[125px] object-cover' src={Mock3} alt='' />
+            <Image className='w-full h-[125px] object-cover' src={Mock4} alt='' />
+          </div>
+        </Carousel>
+      </div>
+      <div className='pk-container'>
         <div className='my-[50px] lg:flex gap-[10%]'>
           <div className='lg:flex-auto lg:w-[70%] px-2 md:px-0'>
             <div className='flex justify-between items-center'>

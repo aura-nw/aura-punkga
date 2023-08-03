@@ -3,6 +3,7 @@ import Howater from 'images/authors/howater.png'
 import Moffi from 'images/authors/moffi.jpg'
 import PhatBear from 'images/authors/phat_bear.jpg'
 import TienTranRB from 'images/authors/tien_tran_rb.jpg'
+import Uma from 'images/authors/uma.jpg'
 export const authorData = {
   en: [
     {
@@ -46,6 +47,7 @@ export const authorData = {
     {
       name: 'Thanh Huong Bui',
       nickname: 'UMA',
+      avatar: Uma,
       gender: 'Female',
       age: 33,
       socialLink: {
@@ -161,6 +163,7 @@ export const authorData = {
       name: 'Bùi Thanh Hương',
       nickname: 'UMA',
       gender: 'Female',
+      avatar: Uma,
       age: 33,
       socialLink: {
         fb: 'https://www.facebook.com/profile.php?id=100034749499116',
