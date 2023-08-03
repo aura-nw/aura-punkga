@@ -88,7 +88,7 @@ export default function ChangingPasswordModal({ open, setOpen }) {
 
   return (
     <Modal open={open} setOpen={setOpen}>
-      <div className={`p-6 w-[322px] relative transition-all duration-300 ${success ? 'h-[400px]' : ''}`}>
+      <div className={`p-6 w-[322px] relative transition-all duration-300 ${success ? 'h-[430px]' : ''}`}>
         <div className={` flex flex-col gap-3 transition-all duration-300 ${success ? 'opacity-0' : 'opacity-100'}`}>
           <p className='text-center text-xl leading-6 font-semibold'>{t('Change password')}</p>
           <OutlineTextField
