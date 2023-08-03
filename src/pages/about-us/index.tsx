@@ -47,30 +47,30 @@ export default function AboutUs() {
             }}>
             <div className='px-3'>
               <Image src={Img1} alt='' className='mx-auto h-[120px] w-[120px]' />
-              <p className='text-center max-w-[400px] mx-auto mt-2'>{t('about-us-des-1')}</p>
+              <p className='text-center text-subtle-dark max-w-[400px] mx-auto mt-2'>{t('about-us-des-1')}</p>
             </div>
             <div className='px-3'>
               <Image src={Img2} alt='' className='mx-auto h-[120px] w-[120px]' />
-              <p className='text-center max-w-[400px] mx-auto mt-2'>{t('about-us-des-2')}</p>
+              <p className='text-center text-subtle-dark max-w-[400px] mx-auto mt-2'>{t('about-us-des-2')}</p>
             </div>
             <div className='px-3'>
               <Image src={Img3} alt='' className='mx-auto h-[120px] w-[120px]' />
-              <p className='text-center max-w-[400px] mx-auto mt-2'>{t('about-us-des-3')}</p>
+              <p className='text-center text-subtle-dark max-w-[400px] mx-auto mt-2'>{t('about-us-des-3')}</p>
             </div>
           </Carousel>
         </div>
         <div className='hidden lg:flex justify-between mt-28'>
           <div className='px-3'>
             <Image src={Img1} alt='' className='mx-auto h-[120px] w-[120px]' />
-            <p className='text-center max-w-[400px] mx-auto mt-2'>{t('about-us-des-1')}</p>
+            <p className='text-center text-subtle-dark max-w-[400px] mx-auto mt-2'>{t('about-us-des-1')}</p>
           </div>
           <div className='px-3'>
             <Image src={Img2} alt='' className='mx-auto h-[120px] w-[120px]' />
-            <p className='text-center max-w-[400px] mx-auto mt-2'>{t('about-us-des-2')}</p>
+            <p className='text-center text-subtle-dark max-w-[400px] mx-auto mt-2'>{t('about-us-des-2')}</p>
           </div>
           <div className='px-3'>
             <Image src={Img3} alt='' className='mx-auto h-[120px] w-[120px]' />
-            <p className='text-center max-w-[400px] mx-auto mt-2'>{t('about-us-des-3')}</p>
+            <p className='text-center text-subtle-dark max-w-[400px] mx-auto mt-2'>{t('about-us-des-3')}</p>
           </div>
         </div>
         <div className='px-3 md:mt-14 lg:mt-28'>
