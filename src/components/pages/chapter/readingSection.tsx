@@ -404,9 +404,9 @@ export default function ReadingSection({
             active={isLiked}
           />
           {!openComments ? (
-            <Image src={ChatOutlineIcon} alt='' onClick={() => setOpenComments(true)} />
+            <Image src={ChatOutlineIcon} alt='' className='cursor-pointer' onClick={() => setOpenComments(true)} />
           ) : (
-            <Image src={ChatFillIcon} alt='' onClick={() => setOpenComments(false)} />
+            <Image src={ChatFillIcon} alt='' className='cursor-pointer' onClick={() => setOpenComments(false)} />
           )}
           {isSubscribe ? (
             <FilledButton onClick={() => subscribeHandler(false)}>

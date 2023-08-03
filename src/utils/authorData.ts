@@ -38,9 +38,9 @@ export const authorData = {
       bio: [
         'Interests: Pretending to be old?',
         'Comic drawing experience: Progressing through the years, started as early as 7 years old',
-        "Created works/chapters: 3 stories, but they're all unfinished and stored away.",
+        "Created works/chapters: 3 stories, but they're all unfinished and stored away",
         'Favorite comic genres: Sennen, shounen, adventure, philosophy, psychology, comedy, etc',
-        "Comic creation philosophy: Haven't really thought of anything serious, just a feeling that the story needs a perspective.",
+        "Comic creation philosophy: Haven't really thought of anything serious, just a feeling that the story needs a perspective",
       ],
     },
     {
@@ -56,7 +56,7 @@ export const authorData = {
       bio: [
         'Interests: Watching movies, reading books, sports',
         'Favorite comic genres: Adventure, shounen, horror, detective',
-        "Comic creation philosophy: If drawing for money, won't make it beautiful.",
+        "Comic creation philosophy: If drawing for money, won't make it beautiful",
       ],
     },
     {
@@ -111,7 +111,7 @@ export const authorData = {
       bio: [
         'Interests: Drawing, dancing, volleyball, listening to music, traveling',
         'Comic drawing experience: Over 10 years',
-        "Created works/chapters: 'Ghi nhớ' (Remember).",
+        "Created works/chapters: 'Ghi nhớ' (Remember)",
         'Favorite comic genres: Psychological, shoujo, adventure, one shot',
         'Comic creation philosophy: Creating out of passion, for the sake of art',
       ],
