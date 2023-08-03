@@ -181,7 +181,9 @@ const Chapter: React.FC = ({
             <div className='flex justify-center items-center'>
               <Image
                 className={`w-6 h-6 cursor-pointer ${
-                  currentChapIndex == comicDetails.data.chapters.length - 1 ? 'opacity-60 cursor-not-allowed ' : ''
+                  currentChapIndex == comicDetails.data.chapters.length - 1
+                    ? 'opacity-60 cursor-not-allowed pointer-events-none'
+                    : ''
                 }`}
                 onClick={() => goToChap('Prev')}
                 src={SquareArrowLeftIcon}
@@ -220,7 +222,11 @@ const Chapter: React.FC = ({
                 </div>
               </div>
               <Image
-                className={`cursor-pointer w-6 h-6 ${currentChapIndex == 0 ? 'opacity-60 cursor-not-allowed ' : ''}`}
+                className={`cursor-pointer w-6 h-6 ${
+                  currentChapIndex == 0 || comicDetails.data.chapters?.[currentChapIndex - 1]?.status == 'Upcoming'
+                    ? 'opacity-60 cursor-not-allowed pointer-events-none'
+                    : ''
+                }`}
                 onClick={() => goToChap('Next')}
                 src={SquareArrowRightIcon}
                 alt=''

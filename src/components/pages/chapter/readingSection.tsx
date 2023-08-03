@@ -336,7 +336,7 @@ export default function ReadingSection({
           <Image className='cursor-pointer' onClick={() => setMode('minscreen')} src={MinscreenIcon} alt='' />
           <Image
             className={`cursor-pointer ${
-              currentChapIndex == data.chapters.length - 1 ? 'opacity-60 cursor-not-allowed ' : ''
+              currentChapIndex == data.chapters.length - 1 ? 'opacity-60 cursor-not-allowed pointer-events-none' : ''
             }`}
             onClick={() => goToChap('Prev')}
             src={SquareArrowLeftIcon}
@@ -373,7 +373,11 @@ export default function ReadingSection({
             </div>
           </div>
           <Image
-            className={`cursor-pointer ${currentChapIndex == 0 ? 'opacity-60 cursor-not-allowed ' : ''}`}
+            className={`cursor-pointer ${
+              currentChapIndex == 0 || data.chapters?.[currentChapIndex - 1]?.status == 'Upcoming'
+                ? 'opacity-60 cursor-not-allowed pointer-events-none'
+                : ''
+            }`}
             onClick={() => goToChap('Next')}
             src={SquareArrowRightIcon}
             alt=''
