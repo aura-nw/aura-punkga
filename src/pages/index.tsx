@@ -178,7 +178,8 @@ export default function Home() {
                 ? Array.apply(null, Array(2)).map((d, index) => {
                     return <DummyComic key={index} />
                   })
-                : latestComic.data
+                : latestComic.data?.length
+                ? latestComic.data
                     .filter((data) =>
                       statusFilter.length && !statusFilter.some((s) => s.key == 'All status')
                         ? statusFilter.some((filter) => data.status.text == filter?.key)
@@ -192,7 +193,8 @@ export default function Home() {
                     .slice(0, 6)
                     .map((data, index) => {
                       return <Comic key={index} {...data} />
-                    })}
+                    })
+                : null}
             </div>
           </div>
           <div className='lg:flex-auto lg:w-[24%] mt-6 lg:mt-0 px-2 md:px-0'>
