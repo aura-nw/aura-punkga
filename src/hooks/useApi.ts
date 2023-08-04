@@ -17,8 +17,8 @@ export default function useApi<T>(action: Function, actionCondition: boolean, de
         } else {
           setData(null)
         }
-        _.delay(() => setLoading(false), 500)
       }
+      _.delay(() => setLoading(false), 500)
     } catch (error) {
       setData(null)
       _.delay(() => setLoading(false), 500)
