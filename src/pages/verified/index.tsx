@@ -7,6 +7,7 @@ import { useRouter } from "next/router"
 import { useSearchParams } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { i18n } from 'next-i18next'
+import HeadComponent from 'components/Head'
 export default function EmailVerified() {
   const r = useRouter()
   const searchParams = useSearchParams()
@@ -15,6 +16,7 @@ export default function EmailVerified() {
   if (error) {
     return (
       <>
+        <HeadComponent title='Verify email | Punkga.me' />
         <Header />
         <div className='flex flex-col justify-center items-center h-[calc(80vh-80px)]'>
           <p className='text-xl font-semibold mb-5'>{t('Something went wrong. Your email has not been verified.')}</p>
@@ -29,6 +31,7 @@ export default function EmailVerified() {
   }
   return (
     <>
+      <HeadComponent title='Verify email | Punkga.me' />
       <Header />
       <div className='flex flex-col justify-center items-center h-[calc(80vh-80px)]'>
         <p className='text-xl font-semibold mb-5'>{t('Your email has been verified')}</p>

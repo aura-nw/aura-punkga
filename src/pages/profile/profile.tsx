@@ -22,6 +22,7 @@ import FemaleIcon from 'images/icons/female.svg'
 import { useTranslation } from 'react-i18next'
 import _ from 'lodash'
 import vi from 'date-fns/locale/vi'
+import HeadComponent from 'components/Head'
 export default function Profile({ profile, subscribeList, unsubscribe, subscribe, curentlyReading, updateProfile }) {
   const { account, isSettingUp, getProfile } = useContext(Context)
   const { t } = useTranslation()
@@ -128,6 +129,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
 
   return (
     <>
+      <HeadComponent title={`${profile.data.nickname} | Punkga.me`} />
       <Header />
       <div className='pk-container py-5 px-2 md:px-0'>
         {isSettingUp || profile.loading ? (

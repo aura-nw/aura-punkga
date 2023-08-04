@@ -1,4 +1,5 @@
 import DummyComic from 'components/DummyComponent/comic'
+import HeadComponent from 'components/Head'
 import Header from 'components/Header'
 import Comic from 'components/pages/homepage/comic'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -16,6 +17,7 @@ export default function Search() {
   const searchComic = useApi<any[]>(async () => await search(keyword), !!keyword, [keyword])
   return (
     <>
+      <HeadComponent title={`${keyword || ''} | Punkga.me`} />
       <Header />
       <div className='pk-container px-2 md:px-0'>
         <p className='md:text-2xl font-extrabold leading-6 mt-2 md:mt-10'>{`${searchComic.data?.length} ${t(

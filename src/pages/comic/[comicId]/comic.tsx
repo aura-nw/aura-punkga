@@ -3,6 +3,7 @@ import { BellAlertIcon, EyeIcon, HeartIcon } from '@heroicons/react/20/solid'
 import { BellAlertIcon as BellAlertIconOutline } from '@heroicons/react/24/outline'
 import FilledButton from 'components/Button/FilledButton'
 import OutlineButton from 'components/Button/OutlineButton'
+import HeadComponent from 'components/Head'
 import Header from 'components/Header'
 import Tag from 'components/Label/Tag'
 import ChapterList from 'components/pages/comic/ChapterList'
@@ -52,6 +53,7 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
 
   return (
     <>
+      <HeadComponent title={`${data[selectedLanguage.shortLang]?.title} | Punkga.me`} />
       <Header />
       <div className='flex flex-col min-h-[100vh] bg-black'>
         <div className='max-h-[350px] min-h-[220px] h-[40vh] w-full relative'>

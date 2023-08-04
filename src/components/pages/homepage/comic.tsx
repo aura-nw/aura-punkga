@@ -98,13 +98,13 @@ export default function Comic(props: IComic) {
             height={240}
             className={`${
               props.image ? 'object-cover' : 'object-contain bg-light-gray'
-            } rounded-md w-[180px] aspect-[123/164]`}
+            } rounded-md w-[180px] aspect-[18/24] bg-gray-200`}
           />
           <div className='absolute top-0 left-1'>
             <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
           </div>
-          <div className='text-xs font-extrabold text-second-color mt-2'>{props[locale].title}</div>
-          <div className='text-[10px] text-medium-gray flex-1 h-full'>
+          <div className='text-sm font-extrabold text-second-color mt-2'>{props[locale].title}</div>
+          <div className='text-sm text-medium-gray flex-1 h-full'>
             {t('by')}{' '}
             {props.authors.map((author, index) => (
               <Fragment key={index}>
@@ -113,7 +113,7 @@ export default function Comic(props: IComic) {
               </Fragment>
             ))}
           </div>
-          <div className='flex justify-between items-center text-second-color text-xs mt-3'>
+          <div className='flex justify-between items-center text-second-color text-sm mt-3'>
             <div className='flex items-center gap-1'>
               <EyeIcon className='w-4 h-4' />
               <strong>{props.views.toLocaleString('en-US')}</strong>

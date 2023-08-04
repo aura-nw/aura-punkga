@@ -2,6 +2,7 @@ import { ChevronUpIcon } from '@heroicons/react/24/outline'
 import FlashAnimation from 'components/AnimationIconHOC/Flash'
 import Comment from 'components/Comment'
 import DummyComicDetail from 'components/DummyComponent/comicDetail'
+import HeadComponent from 'components/Head'
 import Header from 'components/Header'
 import ChatInput from 'components/Input/ChatInput'
 import ComicDetail from 'components/pages/chapter/comicDetail'
@@ -165,6 +166,7 @@ const Chapter: React.FC = ({
 
   return (
     <>
+      <HeadComponent title={`${chapterDetails.data.name} | ${comicDetails.data[locale]?.title}`} />
       <div className='xl:hidden'>
         <div className='relative w-[100vw] h-full bg-black'>
           <div
@@ -258,7 +260,7 @@ const Chapter: React.FC = ({
           </div>
           <div className='pt-[48px]'>
             {chapterDetails.data[chapterLocale]?.map((page, index) => (
-              <Image src={page} key={index} alt='' loading='eager' width={700} height={1000} className='mx-auto' />
+              <Image src={page} key={index} alt='' width={700} height={1000} className='mx-auto' />
             ))}
           </div>
           <div
@@ -303,6 +305,7 @@ const Chapter: React.FC = ({
         </div>
       </div>
       <div className='hidden xl:block'>
+        <HeadComponent title={`${chapterDetails.data.name} | ${comicDetails.data[locale]?.title}`} />
         <Header />
         <div className='flex h-[calc(100vh-80px)] relative'>
           <div className='flex-auto w-2/3 h-full z-[5]'>

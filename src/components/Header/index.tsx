@@ -150,10 +150,11 @@ export default function Header({}) {
                     {searchComic.data?.map((manga, index) => (
                       <div
                         key={index}
-                        className='flex gap-2 cursor-pointer'
+                        className={`flex gap-2 cursor-pointer ${
+                          manga.status.text == 'Upcoming' && 'pointer-events-none'
+                        }`}
                         onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}>
                         <Image
-                          onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}
                           src={manga.image || NoImage}
                           width={48}
                           height={64}
@@ -316,7 +317,10 @@ export default function Header({}) {
                 }`}>
                 <div className={`max-h-[40vh] overflow-auto  flex flex-col gap-7  p-5`}>
                   {searchComic.data?.map((manga, index) => (
-                    <div key={index} className='flex gap-2' onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}>
+                    <div
+                      key={index}
+                      className={`flex gap-2 ${manga.status.text == 'Upcoming' && 'pointer-events-none'}`}
+                      onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}>
                       <Image
                         src={manga.image || NoImage}
                         width={48}

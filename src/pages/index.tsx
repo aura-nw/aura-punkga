@@ -20,6 +20,7 @@ import { IComic } from 'src/models/comic'
 import { getAllTags, getLatestComic, getTrendingComic } from 'src/services'
 import { i18n } from 'next-i18next'
 import _ from 'lodash'
+import HeadComponent from 'components/Head'
 
 declare global {
   interface Window {
@@ -75,8 +76,8 @@ export default function Home() {
   }, [t('All status')])
   return (
     <>
+      <HeadComponent />
       <Header />
-
       <div className='pk-container'>
         <div className='mt-[40px] md:grid grid-cols-1 px-2 md:px-0 gap-[40px] hidden'>
           <Carousel>
@@ -112,7 +113,13 @@ export default function Home() {
         </div>
       </div>
       <div className='md:hidden md:px-0 gap-[40px]'>
-        <Carousel setting={{ slidesToShow: 1, slidesToScroll: 1 }}>
+        <Carousel
+          setting={{
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            appendDots: () => <></>,
+            customPaging: () => <></>,
+          }}>
           <div>
             <Image className='w-full h-[125px] object-cover' src={Mock1} alt='' />
             <Image className='w-full h-[125px] object-cover' src={Mock2} alt='' />
@@ -124,7 +131,7 @@ export default function Home() {
         </Carousel>
       </div>
       <div className='pk-container'>
-        <div className='my-[50px] lg:flex gap-[10%]'>
+        <div className='md:my-[50px] lg:flex gap-[10%]'>
           <div className='lg:flex-auto lg:w-[70%] px-2 md:px-0'>
             <div className='flex justify-between items-center'>
               <div className='md:text-[24px] text-sm leading-6 font-[800]'>{t('Latest update')}</div>
@@ -184,7 +191,7 @@ export default function Home() {
                 />
               </div>
             </div>
-            <div className='grid grid-cols-3 md:grid-cols-2 gap-10 md:gap-[80px] mt-2 md:mt-[76px]'>
+            <div className='grid grid-cols-2 gap-10 md:gap-[80px] mt-2 md:mt-[76px]'>
               {latestComic.loading
                 ? Array.apply(null, Array(2)).map((d, index) => {
                     return <DummyComic key={index} />

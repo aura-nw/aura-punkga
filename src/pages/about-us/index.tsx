@@ -18,12 +18,14 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { authorData } from '../../utils/authorData'
 import { useRouter } from 'next/router'
+import HeadComponent from 'components/Head'
 
 export default function AboutUs() {
   const { t } = useTranslation()
   const { locale } = useRouter()
   return (
     <>
+      <HeadComponent title={`About us | Punkg.me`} />
       <Header />
       <div className='pk-container py-3 md:mt-6 lg:mt-16'>
         <div className='w-full'>
