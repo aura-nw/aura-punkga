@@ -258,7 +258,7 @@ const Chapter: React.FC = ({
           </div>
           <div className='pt-[48px]'>
             {chapterDetails.data[chapterLocale]?.map((page, index) => (
-              <Image src={page} key={index} alt='' width={700} height={1000} className='mx-auto' />
+              <Image src={page} key={index} alt='' loading='eager' width={700} height={1000} className='mx-auto' />
             ))}
           </div>
           <div

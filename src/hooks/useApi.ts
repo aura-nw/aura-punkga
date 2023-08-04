@@ -1,5 +1,6 @@
-import { useState, useEffect, DependencyList, useContext } from "react"
-import { Context } from "src/context"
+import _ from 'lodash'
+import { useState, useEffect, DependencyList, useContext } from 'react'
+import { Context } from 'src/context'
 export default function useApi<T>(action: Function, actionCondition: boolean, deps?: DependencyList) {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<T | null | undefined>(undefined)
@@ -16,12 +17,12 @@ export default function useApi<T>(action: Function, actionCondition: boolean, de
         } else {
           setData(null)
         }
+        _.delay(() => setLoading(false), 500)
       }
-      setLoading(false)
     } catch (error) {
       setData(null)
-      setLoading(false)
-      console.log("useApi", error)
+      _.delay(() => setLoading(false), 500)
+      console.log('useApi', error)
     }
   }
 

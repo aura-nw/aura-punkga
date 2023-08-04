@@ -226,6 +226,7 @@ export default function ReadingSection({
                   src={page || PageMockup}
                   key={index}
                   alt=''
+                  loading='eager'
                   className={`${
                     readingMode == 'onePage'
                       ? 'mx-auto'
