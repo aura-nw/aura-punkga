@@ -25,7 +25,7 @@ export default function AboutUs() {
   const { locale } = useRouter()
   return (
     <>
-      <HeadComponent title={`About us | Punkg.me`} />
+      <HeadComponent title={`${t('About us')} | Punkga.me`} />
       <Header />
       <div className='pk-container py-3 md:mt-6 lg:mt-16'>
         <div className='w-full'>

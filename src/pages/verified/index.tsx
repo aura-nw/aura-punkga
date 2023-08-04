@@ -16,7 +16,7 @@ export default function EmailVerified() {
   if (error) {
     return (
       <>
-        <HeadComponent title='Verify email | Punkga.me' />
+        <HeadComponent title={`${t('Verify email')} | Punkga.me`} />
         <Header />
         <div className='flex flex-col justify-center items-center h-[calc(80vh-80px)]'>
           <p className='text-xl font-semibold mb-5'>{t('Something went wrong. Your email has not been verified.')}</p>
@@ -31,7 +31,7 @@ export default function EmailVerified() {
   }
   return (
     <>
-      <HeadComponent title='Verify email | Punkga.me' />
+      <HeadComponent title={`${t('Verify email')} | Punkga.me`} />
       <Header />
       <div className='flex flex-col justify-center items-center h-[calc(80vh-80px)]'>
         <p className='text-xl font-semibold mb-5'>{t('Your email has been verified')}</p>

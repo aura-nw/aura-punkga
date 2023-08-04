@@ -30,10 +30,19 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
     }
   }, [comicDetails.data])
   if (comicDetails.loading) {
-    return null
+    return (
+      <>
+        <HeadComponent />
+      </>
+    )
   }
   const data = comicDetails.data
-  if (!data) return null
+  if (!data)
+    return (
+      <>
+        <HeadComponent />
+      </>
+    )
 
   const selectedLanguage =
     data.languages.find((l) => l.shortLang == language) || data.languages.find((l) => l.isMainLanguage)

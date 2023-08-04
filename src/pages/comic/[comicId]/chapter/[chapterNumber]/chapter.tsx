@@ -118,11 +118,17 @@ const Chapter: React.FC = ({
     }
   }, [comicDetails?.data?.id, account])
 
-  if (comicDetails.loading || chapterDetails.loading) return null
+  if (comicDetails.loading || chapterDetails.loading)
+    return (
+      <>
+        <HeadComponent />
+      </>
+    )
 
   if ((!comicDetails.data && !comicDetails.loading) || (!chapterDetails.data && !chapterDetails.loading)) {
     return (
       <div className='h-[100vh]'>
+        <HeadComponent />
         <Header />
         <div className='flex justify-center items-center'>{t('Error while fetching data')}!</div>
       </div>

@@ -8,7 +8,7 @@ export default function Policy() {
   if (locale == 'vn') {
     return (
       <>
-        <HeadComponent title='Policy | Punkga.me' />
+        <HeadComponent title='Chính sách Bảo mật | Punkga.me' />
         <Header />
         <div className='pk-container py-5 px-3 md:px-0 text-sm [&_p]:mb-2 [&>h1]:font-bold [&>h1]:text-4xl [&>h1]:mb-3 [&>h1]:mt-7 [&>h2]:font-bold [&>h2]:text-2xl [&>h2]:mb-3 [&>h2]:mt-5 [&>ul]:pl-6 [&>ul]:list-disc [&>ul>*]:mb-2'>
           <h1>Chính sách Bảo mật</h1>

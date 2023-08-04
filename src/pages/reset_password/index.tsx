@@ -74,7 +74,7 @@ export default function ResetPassword() {
 
   return (
     <>
-      <HeadComponent title='Reset password | Punkga.me' />
+      <HeadComponent title={`${t('Reset password')} | Punkga.me`} />
       <Header />
       <div className='flex justify-center md:items-center min-h-[80vh]'>
         <div className={`p-6 w-[322px] relative transition-all duration-300 ${success ? 'h-[400px]' : ''}`}>
