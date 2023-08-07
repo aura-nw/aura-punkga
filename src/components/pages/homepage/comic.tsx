@@ -44,13 +44,17 @@ export default function Comic(props: IComic) {
                 <Link href={`/comic/${props.id}`} className=' text-second-color font-bold text-[18px] '>
                   {props[locale].title}
                 </Link>
-                <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
+                {props.status.text != 'Ongoing' && (
+                  <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
+                )}
               </div>
-              <div className='justify-between items-start flex-nowrap  hidden xl:flex'>
-                <Link href={`/comic/${props.id}/chapter/1`} className=' text-second-color font-bold text-[18px]'>
+              <div className='justify-between items-start flex-nowrap hidden xl:flex'>
+                <Link href={`/comic/${props.id}/chapter/1`} className='text-second-color font-bold text-[18px]'>
                   {props[locale].title}
                 </Link>
-                <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
+                {props.status.text != 'Ongoing' && (
+                  <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
+                )}
               </div>
               <div>
                 {t('by')}{' '}
@@ -101,7 +105,9 @@ export default function Comic(props: IComic) {
             } rounded-md w-[180px] aspect-[18/24] bg-gray-200`}
           />
           <div className='absolute top-0 left-1'>
-            <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
+            {props.status.text != 'Ongoing' && (
+              <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
+            )}
           </div>
           <div className='text-sm font-extrabold text-second-color mt-2'>{props[locale].title}</div>
           <div className='text-sm text-medium-gray flex-1 h-full'>

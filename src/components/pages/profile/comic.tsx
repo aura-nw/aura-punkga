@@ -36,7 +36,9 @@ export default function Comic(props: IComic & { unsubscribe?: () => void; subscr
             <Link href={`/comic/${props.id}/chapter/1`} className=' text-second-color font-bold text-[18px]'>
               {props[locale].title}
             </Link>
-            <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
+            {props.status.text != 'Ongoing' && (
+              <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
+            )}
           </div>
           <div>
             {t('by')}{' '}
