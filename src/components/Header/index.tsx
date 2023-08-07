@@ -110,7 +110,9 @@ export default function Header({}) {
         }`}></div>
       <header
         className={`bg-white border-b-2 border-light-gray border-solid ${
-          showFixedHeader ? 'fixed w-[100vw] top-0 z-50 transition-all duration-300' : '-top-14'
+          showFixedHeader
+            ? 'fixed w-[100vw] top-0 z-50 transition-all duration-300 backdrop-blur-[15px] !bg-transparent'
+            : '-top-14'
         }`}>
         <nav className='md:hidden pk-container p-3'>
           <div className='flex justify-between items-center gap-2'>
