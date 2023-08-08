@@ -102,7 +102,7 @@ export default function Header({}) {
           isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
         }`}></div>
       <header
-        className='border-b-2 border-light-gray border-solid sticky w-full overflow-x-hidden top-0 z-50 transition-all duration-300 backdrop-blur-[15px] !bg-transparent
+        className='border-b-2 border-light-gray border-solid sticky w-full top-0 z-50 transition-all duration-300 backdrop-blur-[15px] !bg-transparent
         '>
         <nav className='md:hidden pk-container p-3'>
           <div className='flex justify-between items-center gap-2'>
