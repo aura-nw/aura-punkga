@@ -20,25 +20,22 @@ import { useRouter } from 'next/router'
 import { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import { Context } from 'src/context'
 import useApi from 'src/hooks/useApi'
+import { useClickOutside } from 'src/hooks/useClickOutside'
 import { search } from 'src/services'
 import ConnectWalletModal from './ConnectWalletModal'
 import ForgotPasswordModal from './ForgotPasswordModal'
 import SignInModal from './SignInModal'
 import SignUpModal from './SignUpModal'
 import SignUpSuccessModal from './SignUpSuccessModal'
-import { useClickOutside } from 'src/hooks/useClickOutside'
-import useScrollPosition from 'src/hooks/useScrollPosition'
 
 export default function Header({}) {
   const { t } = useTranslation()
-  const pos = useScrollPosition()
   const router = useRouter()
   const [isSearchFocused, setIsSearchFocused] = useState(false)
   const ref = useRef<any>()
   const divRef = useRef<any>()
   const mref = useRef<any>()
   const mdivRef = useRef<any>()
-  const [showFixedHeader, setShowFixedHeader] = useState(false)
   useClickOutside(divRef, () => {
     if (window.innerWidth > 768) {
       setIsSearchFocused(false)
@@ -68,10 +65,6 @@ export default function Header({}) {
     ;(window as any).isSearchFocused = isSearchFocused
   }, [isSearchFocused])
 
-  useEffect(() => {
-    if (pos > 250) setShowFixedHeader(true)
-    if (pos < 150) setShowFixedHeader(false)
-  }, [pos])
   useEffect(() => {
     ref.current?.addEventListener(
       'keypress',
@@ -109,7 +102,7 @@ export default function Header({}) {
           isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
         }`}></div>
       <header
-        className='border-b-2 border-light-gray border-solid sticky w-full overflow-hidden top-0 z-50 transition-all duration-300 backdrop-blur-[15px] !bg-transparent
+        className='border-b-2 border-light-gray border-solid fixed w-full overflow-hidden top-0 z-50 transition-all duration-300 backdrop-blur-[15px] !bg-transparent
         '>
         <nav className='md:hidden pk-container p-3'>
           <div className='flex justify-between items-center gap-2'>
@@ -443,6 +436,7 @@ export default function Header({}) {
           </div>
         </nav>
       </header>
+      <div className='h-[100px] md:h-[80px]'></div>
       <Modal
         open={signInOpen || signUpOpen}
         setOpen={() => {
