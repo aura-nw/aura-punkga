@@ -104,13 +104,13 @@ export default function Comic(props: IComic) {
               props.image ? 'object-cover' : 'object-contain bg-light-gray'
             } rounded-md w-[180px] aspect-[18/24] bg-gray-200`}
           />
-          <div className='absolute top-0 left-1'>
+          <div className='absolute top-[2px] left-[2px] [&>span]:absolute'>
             {props.status.text != 'Ongoing' && (
               <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
             )}
           </div>
           <div className='text-sm font-extrabold text-second-color mt-2'>{props[locale].title}</div>
-          <div className='text-sm text-medium-gray flex-1 h-full'>
+          <div className='text-sm text-subtle-dark flex-1 h-full'>
             {t('by')}{' '}
             {props.authors.map((author, index) => (
               <Fragment key={index}>

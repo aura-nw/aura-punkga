@@ -132,7 +132,7 @@ export default function Home() {
       </div>
       <div className='pk-container'>
         <div className='md:my-[50px] lg:flex gap-[10%]'>
-          <div className='lg:flex-auto lg:w-[70%] px-2 md:px-0'>
+          <div className='lg:flex-auto lg:w-[70%] px-5 md:px-0'>
             <div className='flex justify-between items-center'>
               <div className='md:text-[24px] text-sm leading-6 font-[800]'>{t('Latest update')}</div>
               <div className='md:flex hidden gap-[20px] items-center'>

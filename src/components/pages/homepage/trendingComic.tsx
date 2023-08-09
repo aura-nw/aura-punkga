@@ -1,4 +1,4 @@
-import { EyeIcon } from '@heroicons/react/20/solid'
+import { EyeIcon, HeartIcon } from '@heroicons/react/20/solid'
 import NoImage from 'images/no_img.png'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -18,7 +18,7 @@ export default function TrendingComic(props: IComic) {
           alt=''
           width={140}
           height={180}
-          className={`rounded-[15px] w-[140px] aspect-[15/20] ${
+          className={`rounded-[5px] w-[140px] aspect-[15/20] ${
             props.image ? 'object-cover' : 'object-contain bg-light-gray'
           }`}
         />
@@ -43,7 +43,7 @@ export default function TrendingComic(props: IComic) {
         <Link href={`/comic/${props.id}/chapter/1`} className=' font-bold text-[18px] hidden xl:block'>
           {props[locale].title}
         </Link>
-        <div className='text-sm md:text-base'>
+        <div className='text-sm md:text-base text-subtle-dark'>
           {t('by')}{' '}
           {props.authors.map((author, index) => (
             <Fragment key={index}>
@@ -52,10 +52,13 @@ export default function TrendingComic(props: IComic) {
             </Fragment>
           ))}
         </div>
-        <div className='md:hidden text-sm line-clamp-4 my-2'>{props[locale].description}</div>
-        <div className='text-second-color md:text-medium-gray flex-1'>
+        <div className='md:hidden text-sm line-clamp-4 my-2 text-subtle-dark'>{props[locale].description}</div>
+        <div className='text-second-color md:text-medium-gray flex gap-[11px]'>
           <div className='flex items-center text-sm md:text-base'>
             <EyeIcon className='w-4 md:w-5 inline mr-1' /> {props.views.toLocaleString('en-US')}
+          </div>
+          <div className='flex items-center text-sm md:text-base'>
+            <HeartIcon className='w-4 h-4' /> {props.likes.toLocaleString('en-US')}
           </div>
         </div>
         {!!props.latestChap.number && (

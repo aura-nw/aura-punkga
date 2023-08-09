@@ -93,22 +93,25 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
               <div className='text-xs font-semibold leading-6'>
                 {data.authors.map((author, index) => (
                   <Fragment key={index}>
-                    <span className='text-second-color font-[600] first:hidden'>, </span>
-                    <span className='text-second-color font-[600]'>{t(author)}</span>
+                    <span className='text-primary-color font-[600] first:hidden'>, </span>
+                    <span className='text-primary-color font-[600]'>{t(author)}</span>
                   </Fragment>
                 ))}
               </div>
-              <div className='text-xs mt-2 line-clamp-5'>{data[selectedLanguage.shortLang]?.description}</div>
-              <div className='flex gap-1 mt-2 flex-wrap'>
+              <div className='text-xs mt-2 line-clamp-3 max-w-[250px]'>
+                {data[selectedLanguage.shortLang]?.description}
+              </div>
+              <div className='flex gap-1 mt-2 flex-wrap [&>button]:text-[#f2f2f2] [&>button]:border-[#f2f2f2]'>
                 {data.tags.map((tag, index) => {
                   return <Tag key={index}>{tag[selectedLanguage.shortLang]}</Tag>
                 })}
               </div>
-              <div className='flex gap-5 items-center text-xs mt-3'>
+              <div className='flex gap-3 items-center text-xs mt-3'>
                 <div className='flex items-center gap-1'>
                   <EyeIcon className='w-4 h-4' />
                   <strong>{data.views.toLocaleString('en-US')}</strong>
                 </div>
+                •
                 <div className='flex items-center gap-1'>
                   <HeartIcon className='w-4 h-4' />
                   <strong>{comicLikes.toLocaleString('en-US')}</strong>
@@ -138,7 +141,7 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
           <Tab.Group>
             <Tab.List className='w-full flex justify-between bg-black text-white text-sm'>
               <Tab className='w-1/3 flex-auto ui-selected:text-second-color ui-selected:font-bold ui-selected:underline'>
-                <div className='my-3'>{t('Chapter')}</div>
+                <div className='my-3'>{t('Chapters')}</div>
               </Tab>
               <Tab className='w-1/3 flex-auto ui-selected:text-second-color ui-selected:font-bold ui-selected:underline'>
                 <div className='my-3'>NFTs</div>

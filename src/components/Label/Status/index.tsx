@@ -10,7 +10,7 @@ export default function StatusLabel({ status, children }: IStatusLabel) {
   }
   return (
     <span
-      className={`rounded-[6px] font-bold px-[8px] pb-[1px] md:text-[14px] text-[10px] md:leading-[24px] ${classes[status]} inline-flex items-center whitespace-nowrap`}>
+      className={`rounded-[3px] md:rounded-[6px] font-bold px-[8px] pb-[1px] md:text-[14px] text-[10px] leading-[13px] md:leading-[24px] ${classes[status]} inline-flex items-center whitespace-nowrap`}>
       {children}
     </span>
   )

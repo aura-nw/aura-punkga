@@ -28,7 +28,7 @@ import SignInModal from './SignInModal'
 import SignUpModal from './SignUpModal'
 import SignUpSuccessModal from './SignUpSuccessModal'
 
-export default function Header({}) {
+export default function Header({ className }: { className?: string }) {
   const { t } = useTranslation()
   const router = useRouter()
   const [isSearchFocused, setIsSearchFocused] = useState(false)
@@ -102,9 +102,8 @@ export default function Header({}) {
           isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
         }`}></div>
       <header
-        className='border-b-2 border-light-gray border-solid sticky w-full top-0 z-50 transition-all duration-300 backdrop-blur-[15px] !bg-transparent
-        '>
-        <nav className='md:hidden pk-container p-3'>
+        className={`border-b-2 border-light-gray border-solid sticky w-full top-0 z-50 transition-all duration-300 backdrop-blur-[15px] !bg-transparent ${className}`}>
+        <nav className='md:hidden pk-container py-[10px] px-5'>
           <div className='flex justify-between items-center gap-2'>
             <div onClick={() => router.push('/')}>
               <Image src={Logo} alt='header logo' className='h-[40px] w-auto' />
@@ -114,14 +113,15 @@ export default function Header({}) {
                 inputref={mref}
                 onChange={_.debounce(setSearchValue, 500)}
                 onFocus={() => setIsSearchFocused(true)}
-                className={`transition-[width] bg-light-gray duration-500`}
+                className={`transition-[width] bg-light-gray duration-500 text-sm leading-6 [&>input]:py-[3px] rounded-lg`}
                 placeholder={t('Search by title')}
                 trailingComponent={
                   searchComic.loading ? (
-                    <Spinner className='w-6 h-6' />
+                    <Spinner className='w-[22px] h-[22px]' />
                   ) : (
                     <Image
                       src={SearchIcon}
+                      className='w-[22px] h-[22px]'
                       alt=''
                       onClick={() => {
                         if (mref.current.value) {
@@ -135,10 +135,10 @@ export default function Header({}) {
               />
               {!!searchComic.data?.length && (
                 <div
-                  className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[20px] max-h-[40vh] overflow-hidden ${
-                    isSearchFocused ? 'opacity-100 w-[160%]' : 'pointer-events-none opacity-0 w-full'
+                  className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[10px] max-h-[40vh] overflow-hidden ${
+                    isSearchFocused ? 'opacity-100 w-[70vw]' : 'pointer-events-none opacity-0 w-full'
                   }`}>
-                  <div className={`max-h-[40vh] overflow-auto  flex flex-col gap-7  p-5`}>
+                  <div className={`max-h-[40vh] overflow-auto flex flex-col gap-7 p-2`}>
                     {searchComic.data?.map((manga, index) => (
                       <div
                         key={index}
@@ -155,9 +155,7 @@ export default function Header({}) {
                         />
                         <div className='flex flex-col justify-between'>
                           <div>
-                            <p className='text-second-color text-base font-bold cursor-pointer'>
-                              {manga[locale].title}
-                            </p>
+                            <p className='text-second-color text-sm font-bold cursor-pointer'>{manga[locale].title}</p>
                             <div className='text-xs'>
                               {manga.authors.map((author, index) => (
                                 <Fragment key={index}>
@@ -205,15 +203,17 @@ export default function Header({}) {
                 <Dropdown>
                   <DropdownToggle>
                     <FilledButton size='sm'>
-                      <div className='flex items-center whitespace-nowrap w-max gap-[10px] h-[25px]'>
+                      <div className='flex items-center whitespace-nowrap w-max gap-[5px]'>
                         <Image
                           src={account.image || Avatar}
                           alt=''
                           width={36}
                           height={36}
-                          className='rounded-full object-cover h-full w-[25px]'
+                          className='rounded-full object-cover w-[18px] aspect-square'
                         />
-                        <span className='max-w-[150px] text-ellipsis overflow-hidden'>{account.name}</span>
+                        <span className='max-w-[150px] text-ellipsis overflow-hidden text-sm leading-[125%] font-bold'>
+                          {account.name}
+                        </span>
                       </div>
                     </FilledButton>
                   </DropdownToggle>

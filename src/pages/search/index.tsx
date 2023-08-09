@@ -19,11 +19,11 @@ export default function Search() {
     <>
       <HeadComponent title={`${keyword || ''} | Punkga.me`} />
       <Header />
-      <div className='pk-container px-2 md:px-0'>
+      <div className='pk-container px-5 md:px-0'>
         <p className='md:text-2xl font-extrabold leading-6 mt-2 md:mt-10'>{`${searchComic.data?.length} ${t(
           'results for'
         )} "${keyword}"`}</p>
-        <div className='mt-2 md:mt-10 grid grid-cols-3 gap-10'>
+        <div className='mt-2 md:mt-10 grid grid-cols-2 gap-10'>
           {searchComic.loading
             ? Array.apply(null, Array(6)).map((d, index) => {
                 return <DummyComic key={index} />

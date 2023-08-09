@@ -57,6 +57,7 @@ export const getTrendingComic = async (): Promise<IComic[]> => {
         },
         authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : 'Unknown creator')),
         views: m.manga_total_views?.views || 0,
+        likes: m.manga_total_likes?.likes || 0,
         latestChap: {
           number: m.chapters?.[0]?.chapter_number,
           id: m.chapters?.[0]?.id,
