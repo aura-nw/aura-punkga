@@ -23,7 +23,7 @@ export default function Comic(props: IComic) {
             height={240}
             className={`${
               props.image ? 'object-cover' : 'object-contain bg-light-gray'
-            } rounded-[15px] w-[180px] aspect-[180/240]`}
+            } rounded-[15px] w-[180px] aspect-[180/240] mx-auto`}
           />
         </Link>
         <Link href={`/comic/${props.id}/chapter/1`} className='flex-auto w-1/3 hidden xl:block'>

@@ -5,6 +5,6 @@
   "AUTHORIZER_URL": "https://auth.staging.punkga.me",
   "CHAIN_ID": "serenity-testnet-001",
   "CHAIN_INFO": "{'chainId':'serenity-testnet-001','chainName':'Serenity Testnet','rpc':'https://rpc.serenity.aura.network','rest':'https://lcd.serenity.aura.network','bip44':{'coinType':118},'bech32Config':{'bech32PrefixAccAddr':'aura','bech32PrefixAccPub':'aurapub','bech32PrefixValAddr':'auravaloper','bech32PrefixValPub':'auravaloperpub','bech32PrefixConsAddr':'auravalcons','bech32PrefixConsPub':'auravalconspub'},'currencies':[{'coinDenom':'AURA','coinMinimalDenom':'uaura','coinDecimals':6}],'feeCurrencies':[{'coinDenom':'AURA','coinMinimalDenom':'uaura','coinDecimals':6}],'stakeCurrency':{'coinDenom':'AURA','coinMinimalDenom':'uaura','coinDecimals':6}}",
-  "REDIRECT_URL": "https://staging.punkga.me",
+  "REDIRECT_URL": "http://localhost:3000/",
   "REST_API_URL": "https://api.staging.punkga.me"
 }
