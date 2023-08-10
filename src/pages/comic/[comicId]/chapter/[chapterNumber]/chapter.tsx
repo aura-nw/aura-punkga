@@ -7,6 +7,7 @@ import Header from 'components/Header'
 import ChatInput from 'components/Input/ChatInput'
 import ComicDetail from 'components/pages/chapter/comicDetail'
 import CommentSection from 'components/pages/chapter/commentSection'
+import HeaderBar from 'components/pages/chapter/headerBar'
 import ReadingSection from 'components/pages/chapter/readingSection'
 import ChatOutlineIcon from 'images/icons/chat_outline.svg'
 import HeartFillIcon from 'images/icons/heart_fill.svg'
@@ -63,18 +64,12 @@ const Chapter: React.FC = ({
   const [language, setLanguage] = useState<LanguageType>(locale as LanguageType)
   const commentIntervalId = useRef<any>()
   const router = useRouter()
-  const [showChapterList, setShowChapterList] = useState(false)
   const [isLiked, setIsLiked] = useState(false)
   const { account } = useContext(Context)
-  const { scrollDirection } = useScrollDirection()
-  const [lastDirection, setLastDirection] = useState('UP')
   const [comicLikes, setComicLikes] = useState(0)
   const [chapterLikes, setChapterLikes] = useState(0)
   const { t } = useTranslation()
 
-  useEffect(() => {
-    if (scrollDirection) setLastDirection(scrollDirection)
-  }, [scrollDirection])
   useEffect(() => {
     if (chapterDetails.data?.id) {
       addView()
@@ -175,96 +170,18 @@ const Chapter: React.FC = ({
       <HeadComponent title={`${chapterDetails.data.name} | ${comicDetails.data[locale]?.title}`} />
       <div className='xl:hidden min-h-[100dvh] h-full flex flex-col'>
         <Header className='!relative' />
-        <div
-          className={`sticky top-[-1px] transition-all z-10 flex justify-between items-center px-5 py-3 bg-black w-full`}>
-          <div>
-            {openComments ? (
-              <Image src={XIcon} alt='' className='w-5 h-5' onClick={() => setOpenComments(false)} />
-            ) : (
-              <Image src={ChatOutlineIcon} alt='' className='w-6 h-6' onClick={() => setOpenComments(true)} />
-            )}
-          </div>
-          <div className='flex justify-center items-center'>
-            <Image
-              className={`w-6 h-6 cursor-pointer ${
-                currentChapIndex == comicDetails.data.chapters.length - 1
-                  ? 'opacity-60 cursor-not-allowed pointer-events-none'
-                  : ''
-              }`}
-              onClick={() => goToChap('Prev')}
-              src={SquareArrowLeftIcon}
-              alt=''
-            />
-            <div className='relative px-[10px] mx-2 rounded-lg border-second-color border-[1.5px] flex gap-[10px] items-center justify-between cursor-pointer '>
-              <span
-                onClick={() => setShowChapterList(!showChapterList)}
-                className='text-second-color w-full text-xs leading-5'>{`${t('Chapter')} ${
-                chapterDetails.data.number
-              }`}</span>
-              <ChevronUpIcon
-                onClick={() => setShowChapterList(!showChapterList)}
-                className={`h-6 w-6 text-second-color transition-all ${showChapterList ? 'rotate-0' : 'rotate-180'}`}
-              />
-              <div
-                className={`absolute bg-light-gray top-[120%] left-0 px-[10px] py-[6px] border-[1.5px] border-second-color rounded-xl w-full flex gap-[10px] flex-col-reverse transition-all ${
-                  showChapterList
-                    ? 'max-h-[135px] overflow-auto opacity-100'
-                    : 'max-h-[0px] overflow-hidden opacity-0 pointer-events-none'
-                }`}>
-                {comicDetails.data?.chapters
-                  ?.filter((chapter) => chapter.status == 'Published')
-                  ?.map((chapter, index) => {
-                    return (
-                      <div
-                        onClick={() => {
-                          setShowChapterList(false)
-                          router.push(`/comic/${comicDetails.data.id}/chapter/${chapter?.number}`)
-                        }}
-                        key={index}
-                        className={`cursor-pointer text-xs hover:bg-light-medium-gray ${
-                          currentChapIndex == index ? 'text-second-color' : ''
-                        }`}>
-                        {t('Chapter')} {chapter.number}
-                      </div>
-                    )
-                  })}
-              </div>
-            </div>
-            <Image
-              className={`cursor-pointer w-6 h-6 ${
-                currentChapIndex == 0 || comicDetails.data.chapters?.[currentChapIndex - 1]?.status == 'Upcoming'
-                  ? 'opacity-60 cursor-not-allowed pointer-events-none'
-                  : ''
-              }`}
-              onClick={() => goToChap('Next')}
-              src={SquareArrowRightIcon}
-              alt=''
-            />
-          </div>
-          <div>
-            <FlashAnimation
-              InactiveComponent={(props: any) => (
-                <Image
-                  className='cursor-pointer w-6 h-6'
-                  onClick={() => likeHandler(true)}
-                  src={HeartOutlineIcon}
-                  alt=''
-                  {...props}
-                />
-              )}
-              ActiveComponent={(props: any) => (
-                <Image
-                  className='cursor-pointer w-6 h-6'
-                  onClick={() => likeHandler(false)}
-                  src={HeartFillIcon}
-                  alt=''
-                  {...props}
-                />
-              )}
-              active={isLiked}
-            />
-          </div>
-        </div>
+        <HeaderBar
+          openComments={openComments}
+          setOpenComments={setOpenComments}
+          currentChapIndex={currentChapIndex}
+          comicDetails={comicDetails}
+          goToChap={goToChap}
+          chapterDetails={chapterDetails}
+          likeHandler={likeHandler}
+          isLiked={isLiked}
+          chapterComments={chapterComments}
+          postComment={postComment}
+        />
         <div className='relative w-[100vw] h-full flex-1 bg-black'>
           {!account && chapterDetails.data.type == 'Account only' ? (
             <div className='h-[50vh] w-full flex justify-center items-center text-center p-5'>
@@ -287,45 +204,6 @@ const Chapter: React.FC = ({
               ))}
             </div>
           )}
-          <div
-            className={`${
-              openComments ? 'h-[calc(100dvh-48px)] pb-[52px]' : 'pb-0 h-0'
-            } transition-all w-full overflow-auto fixed bottom-0  bg-[#000000b2]`}>
-            <div className='flex flex-col gap-5 overflow-auto p-5'>
-              {!!chapterComments.data?.length &&
-                chapterComments.data.map((comment, index) => (
-                  <Comment
-                    reload={() => chapterComments.callApi(true)}
-                    key={index}
-                    data={comment}
-                    chapterId={chapterDetails.data.id}
-                  />
-                ))}
-            </div>
-            {openComments ? (
-              account?.verified && account?.name ? (
-                <div className='bg-light-gray fixed bottom-0 right-0 left-0 w-full'>
-                  <ChatInput onSubmit={postComment} />
-                </div>
-              ) : (
-                <div className='bg-light-gray fixed bottom-0 right-0 left-0 w-full py-[14px]'>
-                  <div className=' text-sm font-medium text-center leading-6 text-subtle-dark'>
-                    {t('You must')}{' '}
-                    <span
-                      className='text-second-color underline font-bold cursor-pointer'
-                      onClick={() => {
-                        ;(document.querySelector('#open-sign-in-btn') as any)?.click()
-                      }}>
-                      {t('sign in')}
-                    </span>{' '}
-                    {t('to comment')}
-                  </div>
-                </div>
-              )
-            ) : (
-              <></>
-            )}
-          </div>
         </div>
       </div>
       <div className='hidden xl:block'>
