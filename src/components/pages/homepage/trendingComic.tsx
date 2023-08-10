@@ -30,7 +30,7 @@ export default function TrendingComic(props: IComic) {
           )}
         </div>
       </Link>
-      <Link href={`/comic/${props.id}/chapter/1`} className='flex-auto w-1/3 hidden xl:block'>
+      <Link href={`/comic/${props.id}/chapter/1`} className='flex-auto hidden xl:block min-w-[140px]'>
         <Image
           src={props.image || NoImage}
           alt=''
