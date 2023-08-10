@@ -215,7 +215,10 @@ const Chapter: React.FC = ({
                   ?.map((chapter, index) => {
                     return (
                       <div
-                        onClick={() => router.push(`/comic/${comicDetails.data.id}/chapter/${chapter?.id}`)}
+                        onClick={() => {
+                          setShowChapterList(false)
+                          router.push(`/comic/${comicDetails.data.id}/chapter/${chapter?.number}`)
+                        }}
                         key={index}
                         className={`cursor-pointer text-xs hover:bg-light-medium-gray ${
                           currentChapIndex == index ? 'text-second-color' : ''
