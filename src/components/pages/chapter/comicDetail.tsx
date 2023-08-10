@@ -26,6 +26,7 @@ import m6 from 'src/assets/images/mockup6.png'
 import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
 import { IComicDetail } from 'src/models/comic'
+import { getBlurUrl } from 'src/utils'
 export default function ComicDetail({
   data,
   language,
@@ -123,6 +124,8 @@ export default function ComicDetail({
         }`}>
         <Image
           src={data.cover || mockBanner}
+          placeholder='blur'
+          blurDataURL={getBlurUrl()}
           height={280}
           width={1000}
           className={`${expandDetail ? 'h-[280px]' : 'h-[160px]'} duration-500 transition-all object-cover w-full`}
@@ -132,6 +135,8 @@ export default function ComicDetail({
           <div className={` duration-500 transition-all flex gap-5`}>
             <Image
               src={data.image || mockAvar}
+              placeholder='blur'
+              blurDataURL={getBlurUrl()}
               height={320}
               width={240}
               className={`${expandDetail ? ' w-[240px] aspect-[24/32]' : ' w-[120px] aspect-[12/16]'} ${
@@ -433,6 +438,8 @@ const Chapter = ({
         }`}></div>
       <div className='flex gap-4 cursor-pointer'>
         <Image
+          placeholder='blur'
+          blurDataURL={getBlurUrl()}
           src={chapter.thumbnail || m6}
           alt=''
           className={`transition-all duration-500 object-cover rounded-xl ${

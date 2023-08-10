@@ -30,6 +30,7 @@ import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
 import { IChapter } from 'src/models/chapter'
 import { IComicDetail } from 'src/models/comic'
+import { getBlurUrl } from 'src/utils'
 import { getItem, setItem } from 'src/utils/localStorage'
 
 export default function ReadingSection({
@@ -231,8 +232,10 @@ export default function ReadingSection({
                       ? 'mx-auto'
                       : 'h-fit max-h-full max-w-[50%] w-auto first:ml-auto last:mr-auto'
                   } `}
-                  width={1000}
-                  height={1000}
+                  width={500}
+                  height={500}
+                  priority={true}
+                  quality={25}
                 />
               ))}
           </div>

@@ -47,7 +47,7 @@ export default function Comment({
             <strong
               className='flex items-center text-second-color cursor-pointer  text-xs md:text-base'
               onClick={() => setShowInput(!showInput)}>
-              <Image src={RepIcon} alt='' className='mr-2 ' />
+              <Image src={RepIcon} alt='' className='mr-2' />
               {t('Reply')}
             </strong>
           )}

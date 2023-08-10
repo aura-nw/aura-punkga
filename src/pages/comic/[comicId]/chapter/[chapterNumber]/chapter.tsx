@@ -200,7 +200,16 @@ const Chapter: React.FC = ({
           ) : (
             <div>
               {chapterDetails.data[chapterLocale]?.map((page, index) => (
-                <Image src={page} key={index} alt='' width={700} height={1000} className='mx-auto' loading='eager' />
+                <Image
+                  src={page}
+                  key={index}
+                  alt=''
+                  width={400}
+                  height={700}
+                  className='mx-auto'
+                  priority={true}
+                  quality={25}
+                />
               ))}
             </div>
           )}
