@@ -52,8 +52,8 @@ export const getTrendingComic = async (): Promise<IComic[]> => {
         id: m.id,
         image: m.poster,
         status: {
-          type: COMIC_STATUS[m.status],
-          text: m.status,
+          type: COMIC_STATUS[formatStatus(m.status)],
+          text: formatStatus(m.status),
         },
         authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : 'Unknown creator')),
         views: m.manga_total_views?.views || 0,
@@ -62,6 +62,14 @@ export const getTrendingComic = async (): Promise<IComic[]> => {
           number: m.chapters?.[0]?.chapter_number,
           id: m.chapters?.[0]?.id,
         },
+        tags: m.manga_tags.map(({ tag }: any) => {
+          const r = {}
+          LANGUAGE.forEach((l) => {
+            const tagLanguage = tag.tag_languages.find((tl) => tl.language_id == l.id) || tag.tag_languages[0]
+            r[l.shortLang] = tagLanguage.value
+          })
+          return r
+        }),
       }
       LANGUAGE.forEach((language) => {
         const l =

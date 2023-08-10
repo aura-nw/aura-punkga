@@ -1,4 +1,6 @@
 import { EyeIcon, HeartIcon } from '@heroicons/react/20/solid'
+import StatusLabel from 'components/Label/Status'
+import Tag from 'components/Label/Tag'
 import NoImage from 'images/no_img.png'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -12,16 +14,21 @@ export default function TrendingComic(props: IComic) {
   const { t } = useTranslation()
   return (
     <div className={`flex gap-[20px] ${props.status.text == 'Upcoming' ? 'pointer-events-none' : ''}`}>
-      <Link href={`/comic/${props.id}`} className='flex-auto w-1/3 xl:hidden'>
+      <Link href={`/comic/${props.id}`} className='flex-auto xl:hidden relative min-w-[150px]'>
         <Image
           src={props.image || NoImage}
           alt=''
-          width={140}
-          height={180}
-          className={`rounded-[5px] w-[140px] aspect-[15/20] ${
+          width={150}
+          height={200}
+          className={`rounded-[5px] w-[150px] aspect-[15/20] ${
             props.image ? 'object-cover' : 'object-contain bg-light-gray'
           }`}
         />
+        <div className='absolute top-[2px] left-[2px] [&>span]:absolute'>
+          {props.status.text != 'Ongoing' && (
+            <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
+          )}
+        </div>
       </Link>
       <Link href={`/comic/${props.id}/chapter/1`} className='flex-auto w-1/3 hidden xl:block'>
         <Image
@@ -34,35 +41,42 @@ export default function TrendingComic(props: IComic) {
           }`}
         />
       </Link>
-      <div className='flex-auto w-2/3 flex flex-col'>
-        <Link
-          href={`/comic/${props.id}`}
-          className=' font-bold text-sm text-second-color md:text-black md:text-[18px] xl:hidden'>
-          {props[locale].title}
-        </Link>
-        <Link href={`/comic/${props.id}/chapter/1`} className=' font-bold text-[18px] hidden xl:block'>
-          {props[locale].title}
-        </Link>
-        <div className='text-sm md:text-base text-subtle-dark'>
-          {t('by')}{' '}
-          {props.authors.map((author, index) => (
-            <Fragment key={index}>
-              <span className='font-[500] first:hidden text-second-color md:text-black'>, </span>
-              <span className='font-[500] text-second-color md:text-black'>{t(author)}</span>
-            </Fragment>
-          ))}
+      <div className='flex-auto flex flex-col gap-[10px]'>
+        <div>
+          <Link
+            href={`/comic/${props.id}`}
+            className=' font-bold text-sm text-second-color md:text-black md:text-[18px] xl:hidden'>
+            {props[locale].title}
+          </Link>
+          <Link href={`/comic/${props.id}/chapter/1`} className=' font-bold text-[18px] hidden xl:block'>
+            {props[locale].title}
+          </Link>
+          <div className='text-sm md:text-base text-subtle-dark'>
+            {t('by')}{' '}
+            {props.authors.map((author, index) => (
+              <Fragment key={index}>
+                <span className='font-[500] first:hidden text-second-color md:text-black'>, </span>
+                <span className='font-[500] text-second-color md:text-black'>{t(author)}</span>
+              </Fragment>
+            ))}
+          </div>
         </div>
-        <div className='md:hidden text-sm line-clamp-4 my-2 text-subtle-dark'>{props[locale].description}</div>
+        <div className='flex gap-x-[8px] gap-y-1 flex-wrap'>
+          {props.tags.map((tag, index) => {
+            return <Tag key={index}>{tag[locale]}</Tag>
+          })}
+        </div>
+        <div className='md:hidden text-sm line-clamp-4 text-subtle-dark'>{props[locale].description}</div>
         <div className='text-second-color md:text-medium-gray flex gap-[11px]'>
-          <div className='flex items-center text-sm md:text-base'>
+          <div className='flex items-center text-sm md:text-base leading-4'>
             <EyeIcon className='w-4 md:w-5 inline mr-1' /> {props.views.toLocaleString('en-US')}
           </div>
-          <div className='flex items-center text-sm md:text-base'>
+          <div className='flex items-center text-sm md:text-base leading-4'>
             <HeartIcon className='w-4 h-4' /> {props.likes.toLocaleString('en-US')}
           </div>
         </div>
         {!!props.latestChap.number && (
-          <div className='mt-[10px] text-sm md:text-base'>
+          <div className='text-sm md:text-base text-subtle-dark'>
             {t('Latest')}:{' '}
             <Link
               href={`/comic/${props.id}/chapter/${props.latestChap.number}`}

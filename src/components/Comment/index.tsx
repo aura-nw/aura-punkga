@@ -30,7 +30,7 @@ export default function Comment({
   }
   return (
     <div className='flex flex-col gap-[10px]'>
-      <div className='bg-white px-6 py-4 rounded-xl'>
+      <div className='bg-white px-3 md:px-6 py-2 md:py-4 rounded-xl'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center'>
             <Image
@@ -38,10 +38,10 @@ export default function Comment({
               alt=''
               width={32}
               height={32}
-              className='w-8 h-8 object-cover rounded-full'
+              className='w-6 h-6 md:w-8 md:h-8 object-cover rounded-full'
             />
             <strong className='ml-[10px] text-xs md:text-base'>{data.author.nickname}</strong>
-            <p className='ml-4  text-xs md:text-base'>{moment(data.createAt).fromNow()}</p>
+            <p className='ml-4 text-xs md:text-base text-subtle-dark'>{moment(data.createAt).fromNow()}</p>
           </div>
           {account && (
             <strong
@@ -52,18 +52,20 @@ export default function Comment({
             </strong>
           )}
         </div>
-        <div className='mt-3 font-[500] text-xs md:text-sm'>{data.content}</div>
+        <div className='mt-[6px] md:mt-3 font-[500] text-xs md:text-sm text-subtle-dark'>{data.content}</div>
       </div>
       {showInput && account && (
         <div className='bg-white rounded-xl ml-16'>
           <ChatInput onSubmit={reply} />
         </div>
       )}
-      <div className='flex flex-col gap-[10px]'>
-        {data.replies?.map((d, i) => (
-          <Reply key={i} data={d} />
-        ))}
-      </div>
+      {!!data.replies.length && (
+        <div className='flex flex-col gap-[10px]'>
+          {data.replies?.map((d, i) => (
+            <Reply key={i} data={d} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

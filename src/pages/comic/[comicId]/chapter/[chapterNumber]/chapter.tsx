@@ -279,7 +279,7 @@ const Chapter: React.FC = ({
           ) : (
             <div>
               {chapterDetails.data[chapterLocale]?.map((page, index) => (
-                <Image src={page} key={index} alt='' width={700} height={1000} className='mx-auto' />
+                <Image src={page} key={index} alt='' width={700} height={1000} className='mx-auto' loading='eager' />
               ))}
             </div>
           )}
@@ -287,7 +287,7 @@ const Chapter: React.FC = ({
             className={`${
               openComments ? 'h-[calc(100dvh-48px)] pb-[52px]' : 'pb-0 h-0'
             } transition-all w-full overflow-auto fixed bottom-0  bg-[#000000b2]`}>
-            <div className='flex flex-col gap-6 overflow-auto p-5'>
+            <div className='flex flex-col gap-5 overflow-auto p-5'>
               {!!chapterComments.data?.length &&
                 chapterComments.data.map((comment, index) => (
                   <Comment
@@ -305,7 +305,7 @@ const Chapter: React.FC = ({
                 </div>
               ) : (
                 <div className='bg-light-gray fixed bottom-0 right-0 left-0 w-full py-[14px]'>
-                  <div className=' text-sm font-medium text-center leading-6'>
+                  <div className=' text-sm font-medium text-center leading-6 text-subtle-dark'>
                     {t('You must')}{' '}
                     <span
                       className='text-second-color underline font-bold cursor-pointer'

@@ -215,7 +215,7 @@ export default function Home() {
                 : null}
             </div>
           </div>
-          <div className='lg:flex-auto lg:w-[24%] mt-6 lg:mt-0 px-2 md:px-0'>
+          <div className='lg:flex-auto lg:w-[24%] mt-6 lg:mt-0 px-5 md:px-0'>
             <div className='md:text-[24px] text-sm leading-6 font-[800]'>{t('Trending')}</div>
             <div className='flex flex-col gap-10 mt-2 md:mt-10'>
               {trendingComic.loading

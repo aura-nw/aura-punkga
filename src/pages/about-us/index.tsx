@@ -48,16 +48,16 @@ export default function AboutUs() {
               customPaging: () => <></>,
             }}>
             <div className='px-3'>
-              <Image src={Img1} alt='' className='mx-auto h-[120px] w-[120px]' />
-              <p className='text-center text-subtle-dark max-w-[400px] mx-auto mt-2'>{t('about-us-des-1')}</p>
+              <Image src={Img1} alt='' className='mx-auto h-[150px] w-[150px]' />
+              <p className='text-center text-subtle-dark max-w-[400px] mx-auto mt-2 text-xs'>{t('about-us-des-1')}</p>
             </div>
             <div className='px-3'>
-              <Image src={Img2} alt='' className='mx-auto h-[120px] w-[120px]' />
-              <p className='text-center text-subtle-dark max-w-[400px] mx-auto mt-2'>{t('about-us-des-2')}</p>
+              <Image src={Img2} alt='' className='mx-auto h-[150px] w-[150px]' />
+              <p className='text-center text-subtle-dark max-w-[400px] mx-auto mt-2 text-xs'>{t('about-us-des-2')}</p>
             </div>
             <div className='px-3'>
-              <Image src={Img3} alt='' className='mx-auto h-[120px] w-[120px]' />
-              <p className='text-center text-subtle-dark max-w-[400px] mx-auto mt-2'>{t('about-us-des-3')}</p>
+              <Image src={Img3} alt='' className='mx-auto h-[150px] w-[150px]' />
+              <p className='text-center text-subtle-dark max-w-[400px] mx-auto mt-2 text-xs'>{t('about-us-des-3')}</p>
             </div>
           </Carousel>
         </div>
@@ -78,7 +78,7 @@ export default function AboutUs() {
         <div className='px-3 md:mt-14 lg:mt-28'>
           <div className='lg:flex justify-start items-center lg:mb-10'>
             <div className='px-2 bg-[#23FF81] rounded-md w-fit mx-auto mt-8 lg:mt-0 lg:mx-0'>
-              <h1 className='text-[40px] font-medium'>{t('Authors')}</h1>
+              <h1 className='text-[40px] font-medium leading-[50px]'>{t('Authors')}</h1>
             </div>
             <p className='text-xs max-w-[270px] text-center mx-auto mt-3 md:text-lg md:max-w-[470px] lg:mt-0 lg:mx-10 lg:text-left'>
               {t('Meet the skilled and experienced team behind our successful artwork strategies')}
@@ -139,7 +139,7 @@ const Author = ({ data }) => {
         </div>
       </div>
       <div className='w-full my-5 flex items-center gap-1'>
-        <div className='flex-auto h-[2px] bg-black'></div>
+        <div className='flex-auto h-[1px] bg-black'></div>
         <div
           className='w-fit flex gap-3 items-center justify-center px-5 py-1 rounded-full bg-primary-color cursor-pointer'
           onClick={() => setOpen(!open)}>
