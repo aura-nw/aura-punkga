@@ -267,7 +267,7 @@ const Chapter: React.FC = ({
         </div>
         <div className='relative w-[100vw] h-full flex-1 bg-black'>
           {!account && chapterDetails.data.type == 'Account only' ? (
-            <div className='h-[50vh] w-full flex justify-center items-center text-center'>
+            <div className='h-[50vh] w-full flex justify-center items-center text-center p-5'>
               <div>
                 <p className='italic text-subtle-dark '>
                   {t('This is account only chapter')}. {t('Please')}{' '}

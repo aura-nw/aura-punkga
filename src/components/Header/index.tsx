@@ -135,10 +135,10 @@ export default function Header({ className }: { className?: string }) {
               />
               {!!searchComic.data?.length && (
                 <div
-                  className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[10px] max-h-[40vh] overflow-hidden ${
-                    isSearchFocused ? 'opacity-100 w-[70vw]' : 'pointer-events-none opacity-0 w-full'
+                  className={`absolute -left-1/4 bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[10px] max-h-[40vh] overflow-hidden ${
+                    isSearchFocused ? 'opacity-100 w-[70vw] max-w-sm' : 'pointer-events-none opacity-0 w-full'
                   }`}>
-                  <div className={`max-h-[40vh] overflow-auto flex flex-col gap-7 p-2`}>
+                  <div className={`max-h-[40vh] overflow-auto flex flex-col gap-3 p-2`}>
                     {searchComic.data?.map((manga, index) => (
                       <div
                         key={index}
@@ -150,7 +150,7 @@ export default function Header({ className }: { className?: string }) {
                           src={manga.image || NoImage}
                           width={48}
                           height={64}
-                          className='w-12 h-16 bg-medium-gray rounded-xl object-cover'
+                          className='w-12 h-16 bg-medium-gray rounded-md object-cover'
                           alt=''
                         />
                         <div className='flex flex-col justify-between'>
