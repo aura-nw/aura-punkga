@@ -175,7 +175,8 @@ const Chapter: React.FC = ({
       <HeadComponent title={`${chapterDetails.data.name} | ${comicDetails.data[locale]?.title}`} />
       <div className='xl:hidden min-h-[100dvh] h-full flex flex-col'>
         <Header className='!relative' />
-        <div className={`sticky top-0 transition-all z-10 flex justify-between items-center px-5 py-3 bg-black w-full`}>
+        <div
+          className={`sticky top-[-1px] transition-all z-10 flex justify-between items-center px-5 py-3 bg-black w-full`}>
           <div>
             {openComments ? (
               <Image src={XIcon} alt='' className='w-5 h-5' onClick={() => setOpenComments(false)} />
