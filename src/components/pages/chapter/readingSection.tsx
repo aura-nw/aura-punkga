@@ -235,7 +235,8 @@ export default function ReadingSection({
                   width={500}
                   height={500}
                   priority={true}
-                  quality={25}
+                  placeholder='blur'
+                  blurDataURL={getBlurUrl()}
                 />
               ))}
           </div>
@@ -309,9 +310,9 @@ export default function ReadingSection({
             active={isLiked}
           />
           {!openComments ? (
-            <Image src={ChatOutlineIcon} alt='' onClick={() => setOpenComments(true)} />
+            <Image src={ChatOutlineIcon} className='cursor-pointer' alt='' onClick={() => setOpenComments(true)} />
           ) : (
-            <Image src={ChatFillIcon} alt='' onClick={() => setOpenComments(false)} />
+            <Image src={ChatFillIcon} className='cursor-pointer' alt='' onClick={() => setOpenComments(false)} />
           )}
         </div>
       </div>
@@ -320,7 +321,7 @@ export default function ReadingSection({
         onMouseLeave={onMouseLeaveHandler}
         className={`peer bg-light-gray absolute bottom-0 right-0 left-0 w-full flex items-center px-[40px] py-[6px] duration-300 transition-opacity ${
           mode != 'minscreen' ? 'visible' : 'invisible -z-10'
-        } ${true ? 'opacity-100' : 'opacity-0'}`}>
+        } ${hovering ? 'opacity-100' : 'opacity-0'}`}>
         <div className='flex-auto w-1/3 self-center'>
           <div className='text-ellipsis max-w-[90%] overflow-hidden whitespace-nowrap'>
             <strong className='font-bold'>{`${t('Chapter')} ${chapterData.number} • ${chapterData.name}`}</strong>

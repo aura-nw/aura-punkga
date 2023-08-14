@@ -25,6 +25,7 @@ import { Context } from 'src/context'
 import { IChapter } from 'src/models/chapter'
 import { IComicDetail } from 'src/models/comic'
 import { IComment } from 'src/models/comment'
+import { getBlurUrl } from 'src/utils'
 import { getItem, setItem } from 'src/utils/localStorage'
 const Chapter: React.FC = ({
   comicDetails,
@@ -208,7 +209,8 @@ const Chapter: React.FC = ({
                   height={700}
                   className='mx-auto'
                   priority={true}
-                  quality={25}
+                  placeholder='blur'
+                  blurDataURL={getBlurUrl()}
                 />
               ))}
             </div>
@@ -217,7 +219,7 @@ const Chapter: React.FC = ({
       </div>
       <div className='hidden xl:block'>
         <HeadComponent title={`${chapterDetails.data.name} | ${comicDetails.data[locale]?.title}`} />
-        <Header />
+        {mode == 'minscreen' && <Header />}
         <div className='flex h-[calc(100vh-80px)] relative'>
           <div className='flex-auto w-2/3 h-full z-[5]'>
             {!chapterDetails || chapterDetails.loading ? (
