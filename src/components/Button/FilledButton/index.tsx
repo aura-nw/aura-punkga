@@ -22,7 +22,7 @@ export default function FilledButton({
   buttonRef,
 }: IFilledButton) {
   const classes = {
-    xs: `${buttonClasses} text-[12px] leading-[15px] font-bold px-[8px] pt-[2px] pb-[2px] bg-primary-color rounded-[5px]  whitespace-nowrap`,
+    xs: `${buttonClasses} text-[12px] leading-[15px] font-medium px-[8px] pt-[2px] pb-[2px] bg-primary-color rounded-[5px]  whitespace-nowrap`,
     sm: `${buttonClasses} text-[14px] leading-[17.5px] font-bold px-[18px] pt-[4px] pb-[4px] bg-primary-color rounded-[12px]  whitespace-nowrap`,
     md: `${buttonClasses} text-[16px] [&>span]:min-h-[24px] leading-[20px] font-bold px-[16px] pt-[5px] pb-[5px] bg-primary-color rounded-[12px]  whitespace-nowrap`,
     lg: `${buttonClasses} text-[20px] leading-[25px] font-bold px-[32px] pt-[10px] pb-[13px] bg-primary-color rounded-[20px]  whitespace-nowrap`,

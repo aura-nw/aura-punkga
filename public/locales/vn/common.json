@@ -153,5 +153,6 @@
   "Link wallet": "Kết nối ví",
   "Connect to this wallet address": "Liên kết tài khoản tới địa chỉ ví sau",
   "link-wallet-warning": "Mỗi tài khoản chỉ được phép kết nối tới một địa chỉ ví và không thể thay đổi. Vui lòng giữ bảo mật ví của bạn.",
-  "Change Wallet": "Thay đổi ví"
+  "Change Wallet": "Thay đổi ví",
+  "Other": "Khác"
 }

@@ -18,7 +18,7 @@ export default function OutlineButton({
   className,
 }: IOutlineButton) {
   const classes = {
-    xs: `${buttonClasses} text-[12px] leading-[15px] font-bold px-[8px] py-[1px] border-[1px] border-second-color text-second-color border-solid rounded-[6px]`,
+    xs: `${buttonClasses} text-[12px] leading-[15px] font-medium px-[8px] py-[1px] border-[1px] border-second-color text-second-color border-solid rounded-[6px]`,
     sm: `${buttonClasses} text-[12px] leading-[15px] font-bold px-[8px] border-[1.5px] border-second-color text-second-color border-solid rounded-[6px]`,
     md: `${buttonClasses} text-[16px] [&>span]:min-h-[24px] leading-[20px] font-bold px-[14.5px] pt-[3.5px] pb-[3.5px] border-[1.5px] border-second-color text-second-color border-solid rounded-[12px]`,
     lg: `${buttonClasses} text-[20px] leading-[25px] font-bold px-[30px] pt-[7.5px] pb-[9.5px] border-[3px] border-second-color text-second-color border-solid rounded-[20px]`,
@@ -27,7 +27,7 @@ export default function OutlineButton({
     <button
       onClick={disabled ? () => {} : onClick}
       className={`whitespace-nowrap ${classes[size]} ${
-        (disabled || loading) && 'opacity-60 cursor-no-drop pointer-events-none'
+        (disabled || loading) && 'opacity-60 font cursor-no-drop pointer-events-none'
       } ${className}`}>
       <div className='flex items-center'>
         {typeof loading != 'undefined' && (

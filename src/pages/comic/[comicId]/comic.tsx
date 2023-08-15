@@ -144,10 +144,10 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
         <div className='h-full flex-auto z-10 flex flex-col'>
           <Tab.Group>
             <Tab.List className='w-full flex justify-between bg-black/60 text-white text-sm'>
-              <Tab className='w-1/3 flex-auto ui-selected:text-primary-color ui-selected:font-bold ui-selected:underline'>
+              <Tab className='w-1/3 flex-auto ui-selected:text-primary-color ui-selected:font-semibold ui-selected:underline'>
                 <div className='my-[8px]'>{t('Chapters')}</div>
               </Tab>
-              <Tab className='w-1/3 flex-auto ui-selected:text-primary-color ui-selected:font-bold ui-selected:underline'>
+              <Tab className='w-1/3 flex-auto ui-selected:text-primary-color ui-selected:font-semibold ui-selected:underline'>
                 <div className='my-[8px]'>NFTs</div>
               </Tab>
             </Tab.List>

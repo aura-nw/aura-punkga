@@ -20,6 +20,7 @@ import FilledButton from 'components/Button/FilledButton'
 import MaleIcon from 'images/icons/male.svg'
 import EditIcon from 'images/icons/edit-circle.svg'
 import FemaleIcon from 'images/icons/female.svg'
+import OtherIcon from 'images/icons/other-gender.svg'
 import { useTranslation } from 'react-i18next'
 import _ from 'lodash'
 import vi from 'date-fns/locale/vi'
@@ -71,7 +72,11 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
 
   useEffect(() => {
     if (profile.data) {
-      setGender({ key: profile.data.gender, value: t(profile.data.gender) })
+      setGender(
+        profile.data.gender == 'Undisclosed'
+          ? { key: 'Other', value: t('Other') }
+          : { key: profile.data.gender, value: t(profile.data.gender) }
+      )
       setBirthdate(profile.data.birthdate ? new Date(profile.data.birthdate).getTime() : undefined)
       setBio(profile.data.bio)
     }
@@ -90,7 +95,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
   const updateProfileHandler = async () => {
     const form = new FormData()
     if (gender.key && gender.key != profile.data.gender) {
-      form.append('gender', gender.key as string)
+      form.append('gender', gender.key == 'Other' ? 'Undisclosed' : (gender.key as string))
     }
     if (birthdate && new Date(profile.data.birthdate).getTime() != new Date(birthdate).getTime()) {
       form.append('birthdate', moment(birthdate).format('yyyy-MM-DD') as string)
@@ -277,6 +282,10 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                               key: 'Female',
                               value: t('Female'),
                             },
+                            {
+                              key: 'Other',
+                              value: t('Other'),
+                            },
                           ]}
                         />
                       </div>
@@ -294,10 +303,16 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                       )}
                       {profile.data.gender && (
                         <div className='text-xs md:text-base md:leading-5 capitalize flex'>
-                          {t(profile.data.gender)}{' '}
+                          {t(profile.data.gender == 'Undisclosed' ? 'Other' : profile.data.gender)}{' '}
                           <Image
-                            className='h-[14px] w-[14px] md:h-[20px] md:w-[20px]'
-                            src={profile.data.gender.toLowerCase() == 'male' ? MaleIcon : FemaleIcon}
+                            className='h-[12px] w-[12px] m-[2px] md:h-[18px] md:w-[18px]'
+                            src={
+                              profile.data.gender.toLowerCase() == 'male'
+                                ? MaleIcon
+                                : profile.data.gender.toLowerCase() == 'female'
+                                ? FemaleIcon
+                                : OtherIcon
+                            }
                             alt=''
                           />
                         </div>
