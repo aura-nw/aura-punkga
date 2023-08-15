@@ -182,7 +182,9 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                       height={360}
                       width={360}
                       alt=''
-                      className='h-[18px] w-[18px] md:hidden absolute bottom-[10px] right-[10px]'
+                      className={`h-[18px] w-[18px] md:hidden absolute bottom-[10px] right-[10px] transition-all ${
+                        open ? 'opacity-100' : 'opacity-0'
+                      }`}
                       onClick={() => (document.querySelector('#change-profile-picture-input') as any)?.click()}
                     />
                     <Image
