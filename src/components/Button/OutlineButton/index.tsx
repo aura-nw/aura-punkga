@@ -29,15 +29,17 @@ export default function OutlineButton({
       className={`whitespace-nowrap ${classes[size]} ${
         (disabled || loading) && 'opacity-60 cursor-no-drop pointer-events-none'
       } ${className}`}>
-      {typeof loading != 'undefined' && (
-        <span
-          className={`transition-all duration-300 pointer-events-none overflow-hidden ${
-            loading ? `${size == 'lg' ? 'h-[25px] w-[25px]' : 'w-5'} opacity-100 mr-2` : 'w-0 h-0 opacity-0'
-          }`}>
-          <Spinner className={`border-[#84CCA3] ${size == 'lg' ? 'h-[25px] w-[25px]' : 'h-4 w-4'}`} />
-        </span>
-      )}
-      <span>{children}</span>
+      <div className='flex items-center'>
+        {typeof loading != 'undefined' && (
+          <div
+            className={`transition-all inline-block duration-300 pointer-events-none overflow-hidden ${
+              loading ? `${size == 'lg' ? 'h-[25px] w-[25px]' : 'w-5'} opacity-100 mr-2` : 'w-0 h-0 opacity-0'
+            }`}>
+            <Spinner className={`border-[#84CCA3] ${size == 'lg' ? 'h-[25px] w-[25px]' : 'h-4 w-4'}`} />
+          </div>
+        )}
+        <span>{children}</span>
+      </div>
     </button>
   )
 }

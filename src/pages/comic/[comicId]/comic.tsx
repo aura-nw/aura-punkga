@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next'
 import mockAvar from 'src/assets/images/mockup4.png'
 import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
+import Ninja from 'images/ninja-2.svg'
 export default function Comic({ comicDetails, subscribe, unsubscribe, like, unlike }) {
   const { t } = useTranslation()
   const { locale } = useRouter()
@@ -64,18 +65,21 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
     <>
       <HeadComponent title={`${data[selectedLanguage.shortLang]?.title} | Punkga.me`} />
       <Header />
-      <div className='flex flex-col min-h-[100vh] bg-black'>
-        <div className='max-h-[350px] min-h-[220px] h-[40vh] w-full relative'>
-          <div className='absolute inset-0 '>
-            <Image
-              src={data.image || mockAvar}
-              height={320}
-              width={240}
-              className='h-full w-full object-cover'
-              alt=''
-            />
-          </div>
-          <div className='w-full bg-gradient-to-r from-[#000000cc] to-[#00000034] h-full z-10 relative px-5 py-3 flex flex-col justify-between'>
+      <div className='bg-black fixed top-[96px] left-0 right-0 bottom-0'>
+        <div className='fixed top-[96px] left-0 right-0'>
+          <Image
+            src={data.image || mockAvar}
+            height={320}
+            width={240}
+            className='h-[350px] w-full object-cover'
+            alt=''
+          />
+          <div className='absolute inset-0 bg-gradient-to-r from-[#000000cc] to-[#00000034]'></div>
+        </div>
+      </div>
+      <div className='flex flex-col min-h-[calc(100vh-96px)] '>
+        <div className='h-[350px] min-h-[220px] w-full relative'>
+          <div className='w-full h-full z-10 relative px-5 py-3 flex flex-col justify-between'>
             <div className='flex gap-2 flex-wrap'>
               {data.languages.map((language, index) => {
                 return (
@@ -106,15 +110,15 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
                   return <Tag key={index}>{tag[selectedLanguage.shortLang]}</Tag>
                 })}
               </div>
-              <div className='flex gap-3 items-center text-xs mt-3'>
+              <div className='flex gap-3 items-center text-xs mt-3 font-semibold'>
                 <div className='flex items-center gap-1'>
                   <EyeIcon className='w-4 h-4' />
-                  <strong>{data.views.toLocaleString('en-US')}</strong>
+                  <span>{data.views.toLocaleString('en-US')}</span>
                 </div>
                 •
                 <div className='flex items-center gap-1'>
                   <HeartIcon className='w-4 h-4' />
-                  <strong>{comicLikes.toLocaleString('en-US')}</strong>
+                  <span>{comicLikes.toLocaleString('en-US')}</span>
                 </div>
               </div>
             </div>
@@ -137,21 +141,26 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
             </div>
           </div>
         </div>
-        <div className='h-full flex-auto'>
+        <div className='h-full flex-auto z-10 flex flex-col'>
           <Tab.Group>
-            <Tab.List className='w-full flex justify-between bg-black text-white text-sm'>
-              <Tab className='w-1/3 flex-auto ui-selected:text-second-color ui-selected:font-bold ui-selected:underline'>
+            <Tab.List className='w-full flex justify-between bg-black/60 text-white text-sm'>
+              <Tab className='w-1/3 flex-auto ui-selected:text-primary-color ui-selected:font-bold ui-selected:underline'>
                 <div className='my-3'>{t('Chapters')}</div>
               </Tab>
-              <Tab className='w-1/3 flex-auto ui-selected:text-second-color ui-selected:font-bold ui-selected:underline'>
+              <Tab className='w-1/3 flex-auto ui-selected:text-primary-color ui-selected:font-bold ui-selected:underline'>
                 <div className='my-3'>NFTs</div>
               </Tab>
             </Tab.List>
-            <Tab.Panels className='bg-black h-full'>
+            <Tab.Panels className='h-full flex-1 flex flex-col'>
               <Tab.Panel>
                 <ChapterList list={data.chapters} like={like} unlike={unlike} setComicLikes={setComicLikes} />
               </Tab.Panel>
-              <Tab.Panel>NFTs</Tab.Panel>
+              <Tab.Panel className='flex-1 flex flex-col'>
+                <div className='flex-1 w-full bg-[#292929]/80 flex flex-col items-center justify-center'>
+                  <Image src={Ninja} alt='' className='h-[260px] aspect-square mx-auto opacity-60' />
+                  <div className='font-extrabold text-2xl leading-6 text-subtle-dark'>Artist Composing</div>
+                </div>
+              </Tab.Panel>
             </Tab.Panels>
           </Tab.Group>
         </div>

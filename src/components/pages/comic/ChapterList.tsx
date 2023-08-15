@@ -41,7 +41,7 @@ export default function ChapterList({ list, like, unlike, setComicLikes }) {
           <Image alt='' src={ArrowSwapIcon} onClick={() => setIsDesc(!isDesc)} className='cursor-pointer w-5 h-w-5' />
         </div>
       </div>
-      <div className='px-5'>
+      <div className='px-5 bg-black/60'>
         <p className='italic text-subtle-dark text-xs leading-8'>
           <a
             className='text-second-color underline font-semibold cursor-pointer'
@@ -106,7 +106,7 @@ const Chapter = ({
             : null
           : null
       }
-      className='flex border-bottom border-[#414141] bg-[#212121] text-white relative'>
+      className='flex border-bottom border-[#414141] bg-[#292929]/80 text-white relative'>
       <Image
         src={chapter.thumbnail || m6}
         alt=''

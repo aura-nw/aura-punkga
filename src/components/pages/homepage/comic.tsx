@@ -93,7 +93,7 @@ export default function Comic(props: IComic) {
           )}
         </div>
       </div>
-      <div className='md:hidden h-full'>
+      <div className='md:hidden h-full w-fit mx-auto'>
         <Link href={`/comic/${props.id}`} className='relative flex flex-col h-full'>
           <Image
             src={props.image || NoImage}

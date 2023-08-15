@@ -40,6 +40,7 @@ export default function AutoGrowingTextField({
       placeholder={placeholder}
       onKeyDown={onKeyDown}
       contentEditable={true}
-      className={`whitespace-pre-wrap break-words min-h-[26px] md:min-h-[32px] w-full focus:outline-none text-[12px] leading-[20px] px-[10px] py-1 md:py-[7px] rounded-[12px] border-[1.5px] border-solid border-medium-gray ${className}`}></div>
+      className={`whitespace-pre-wrap break-words truncate hyphens-auto min-h-[26px] md:min-h-[32px] w-full focus:outline-none text-[12px] leading-[20px] px-[10px] py-1 
+      md:py-[7px] rounded-[12px] border-[1.5px] border-solid border-medium-gray ${className}`}></div>
   )
 }

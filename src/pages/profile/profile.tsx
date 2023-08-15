@@ -52,7 +52,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
   }, [selectedFile])
 
   const onSelectFile = (e) => {
-    if (!e.target.files || e.target.files.length === 0) {
+    if (!e.target?.files || e.target.files.length === 0) {
       setSelectedFile(undefined)
       return
     }
@@ -81,7 +81,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
       if (prev)
         return _.cloneDeep({
           key: prev.key,
-          value: t(prev.key.toString()),
+          value: t(prev.key?.toString()),
         })
     })
   }, [t('Male')])
@@ -97,7 +97,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
     if (profile.data.bio != bio) {
       form.append('bio', bio || '')
     }
-    if ((profilePicture.current as any).files[0]) {
+    if ((profilePicture.current as any)?.files[0]) {
       form.append('picture', (profilePicture.current as any).files[0])
     }
     if (Object.keys(Object.fromEntries(form)).length) {
@@ -114,11 +114,17 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
   const CustomInput = forwardRef(({ value, onClick }: any, ref: any) => {
     return (
       <button
-        className='relative w-full cursor-default rounded-[12px] bg-white py-[3px] pl-[13px] pr-[57px] text-left text-gray-900 shadow-sm ring-1 ring-inset ring-medium-gray focus:outline-none focus:ring-2 sm:text-sm sm:leading-6 lg:h-10 font-bold'
+        className='relative w-full cursor-default bg-white py-[1px] md:py-[7px] pl-[10px] pr-[57px] text-left text-gray-900 
+        focus:outline-none lg:h-10 md:font-bold text-sm rounded-lg 
+        border-[1px] border-medium-gray leading-6'
         onClick={onClick}
         ref={ref}>
-        {value ? moment(value).format('DD/MM/yyyy') : <span className='text-medium-gray'>{t('Click to change')}</span>}
-        <span className='pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2'>
+        {value ? (
+          moment(value).format('DD/MM/yyyy')
+        ) : (
+          <span className='text-medium-gray text-sm leading-6 font-normal'>{t('dd/mm/yyyy')}</span>
+        )}
+        <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center justify-center h-full mr-[10px]'>
           <ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />
         </span>
       </button>
@@ -131,7 +137,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
     <>
       <HeadComponent title={`${profile.data.nickname} | Punkga.me`} />
       <Header />
-      <div className='pk-container py-5 px-2 md:px-0'>
+      <div className='pk-container py-5 px-5 md:px-0'>
         {isSettingUp || profile.loading ? (
           <div className='flex gap-[60px]'>
             <div className='w-[320px] h-[320px] rounded-xl object-cover bg-light-gray animate-pulse'></div>
@@ -148,224 +154,248 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
             </div>
           </div>
         ) : (
-          <div className='flex gap-5 md:gap-[60px]'>
-            <div className='w-2/5 md:w-[320px] relative self-baseline'>
-              <div className=' aspect-square rounded-full md:rounded-xl object-contain bg-light-gray overflow-hidden '>
-                <div
-                  className={`aspect-square w-full transition-all bg-medium-gray duration-300 absolute top-0 opacity-0 flex flex-col justify-center items-center cursor-pointer ${
-                    open ? 'hover:opacity-40' : 'hidden'
-                  }`}>
-                  <CloudArrowUpIcon className='w-10 h-10' />
-                  <div className='hidden md:block text-xl font-semibold'>{t('Upload profile picture')}</div>
-                  <input
-                    ref={profilePicture}
-                    onChange={onSelectFile}
-                    type='file'
-                    className='bg-black absolute inset-0 opacity-0'
-                  />
+          <>
+            <div className={`flex gap-[10px] md:gap-[60px] flex-wrap`}>
+              <div
+                className={`flex transition-all justify-center md:max-w-[320px] ${
+                  open ? 'w-full md:w-2/5' : 'w-[130px] md:w-2/5'
+                }`}>
+                <div className='max-w-[130px] md:max-w-[320px] relative flex-1'>
+                  <div className='border-[3px] md:border-none border-second-color p-[2px] aspect-square rounded-full md:rounded-xl object-contain bg-light-gray overflow-hidden'>
+                    <div
+                      className={`aspect-square rounded-full md:rounded-xl w-full transition-all bg-medium-gray duration-300 absolute top-0 right-[1.5px] opacity-0 flex flex-col justify-center items-center cursor-pointer ${
+                        open ? 'hover:opacity-40' : 'hidden'
+                      }`}>
+                      <CloudArrowUpIcon className='w-10 h-10' />
+                      <div className='hidden md:block text-xl font-semibold'>{t('Upload profile picture')}</div>
+                      <input
+                        ref={profilePicture}
+                        onChange={onSelectFile}
+                        type='file'
+                        className='bg-black absolute inset-0 opacity-0'
+                      />
+                    </div>
+                    <Image
+                      src={preview || profile.data.picture || NoImg}
+                      height={360}
+                      width={360}
+                      alt=''
+                      className='h-full w-full object-cover rounded-full md:rounded-xl'
+                    />
+                  </div>
                 </div>
-                <Image
-                  src={preview || profile.data.picture || NoImg}
-                  height={360}
-                  width={360}
-                  alt=''
-                  className='h-full w-full object-cover'
-                />
               </div>
-              <FilledButton
-                className={`md:hidden mt-3 w-full ${open ? 'opacity-100' : 'opacity-0'}`}
-                size='xs'
-                loading={loading}
-                onClick={updateProfileHandler}>
-                {t('Save')}
-              </FilledButton>
-            </div>
-            <div className='flex flex-col md:justify-between w-full md:w-1/2'>
-              <div>
-                <div className='flex'>
-                  <div
-                    className={`inline-block text-medium-gray transition-all  ${
-                      open ? 'w-[88px] md:w-[130px] opacity-100 font-bold text-sm md:text-base' : 'w-0 h-0 opacity-0'
-                    }`}>
-                    {t('Username')}:
-                  </div>
-                  <p
-                    className={` text-second-color transition-all ${
-                      open
-                        ? 'text-sm md:text-base font-bold mb-0'
-                        : 'text-sm md:text-[32px] md:leading-10 font-extrabold  mb-1 md:mb-4 '
-                    }`}>
-                    {profile.data.nickname}
-                  </p>
-                </div>
-                <div className='flex'>
-                  <div
-                    className={`inline-block text-medium-gray transition-all  ${
-                      open ? 'w-[88px] md:w-[130px] opacity-100 font-bold text-sm md:text-base' : 'w-[0px] opacity-0'
-                    }`}>
-                    {t('Email')}:
-                  </div>
-                  <p
-                    className={`transition-all text-sm md:text-base ${
-                      open ? 'mb-0 text-black' : 'mb-1 text-second-color'
-                    }`}>
-                    {profile.data.email}
-                  </p>
-                </div>
-                <div
-                  className={`flex flex-col gap-2 md:gap-4 font-medium transition-all ${
-                    !open ? 'opacity-0 h-0 overflow-hidden mb-0' : 'opacity-100 h-[76px] md:h-24 md:mb-2 mt-1 md:mt-2'
-                  }`}>
-                  <div className='flex items-center'>
+              <div className='flex-[1_0_180px] flex flex-col justify-between'>
+                <div>
+                  <div className='flex'>
                     <div
-                      className={`inline-block text-medium-gray transition-all  ${
-                        open ? 'w-[88px] md:w-[130px] opacity-100 font-bold text-sm md:text-base' : 'w-[0px] opacity-0'
+                      className={`inline-block text-medium-gray transition-all md:font-bold text-sm md:text-base leading-[18px] md:leading-10 ${
+                        open ? 'w-[88px] md:w-[130px] opacity-100 md:leading-6' : 'w-0 h-0 opacity-0'
                       }`}>
-                      {t('DOB')}:
+                      {t('Username')}:
                     </div>
-                    <div>
-                      <DatePicker
-                        selected={birthdate}
-                        showMonthDropdown
-                        showYearDropdown
-                        locale={locale == 'vn' ? vi : ''}
-                        dropdownMode='select'
-                        onChange={(date) => setBirthdate(date)}
-                        customInput={<CustomInput />}
-                        maxDate={new Date()}
-                      />
-                    </div>
-                  </div>
-                  <div className='flex items-center'>
                     <div
-                      className={`inline-block text-medium-gray transition-all  ${
-                        open ? 'w-[88px] md:w-[130px] opacity-100 font-bold text-sm md:text-base' : 'w-[0px] opacity-0'
+                      className={`text-black md:text-second-color transition-all leading-[18px] md:leading-10 ${
+                        open
+                          ? 'text-sm md:text-base font-extrabold mb-0 md:leading-6'
+                          : 'text-sm md:text-[32px] font-semibold md:font-extrabold md:mb-4 '
                       }`}>
-                      {t('Gender')}:
-                    </div>
-                    <div>
-                      <Select
-                        selected={gender}
-                        onChange={setGender}
-                        className='font-bold'
-                        placeholder={t('Select a gender')}
-                        icon={<ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />}
-                        options={[
-                          {
-                            key: 'Male',
-                            value: t('Male'),
-                          },
-                          {
-                            key: 'Female',
-                            value: t('Female'),
-                          },
-                        ]}
-                      />
+                      {profile.data.nickname}
                     </div>
                   </div>
-                </div>
-                {(!!profile.data.birthdate || profile.data.gender) && (
+                  <div className={`flex ${open ? 'mt-[10px] md:mt-2' : ''}`}>
+                    <div
+                      className={`inline-block text-medium-gray transition-all md:font-bold text-sm md:text-base leading-[18px] md:leading-10 ${
+                        open ? 'w-[88px] md:w-[130px] opacity-100 md:leading-6' : 'w-0 h-0 opacity-0'
+                      }`}>
+                      {t('Email')}:
+                    </div>
+                    <div
+                      className={`transition-all text-sm md:text-base leading-[18px] md:leading-5 ${
+                        open
+                          ? 'mb-0 text-[#0F4072] md:text-black md:leading-6'
+                          : 'mb-[2px] md:mb-[8px] text-[#0F4072] md:text-second-color'
+                      }`}>
+                      {profile.data.email}
+                    </div>
+                  </div>
                   <div
-                    className={`flex gap-[30px] font-medium  transition-all ${
-                      open ? 'opacity-0 h-0 overflow-hidden mb-0' : 'opacity-100 h-6 md:mb-6'
+                    className={`flex flex-col gap-[10px] md:gap-4 font-medium transition-all ${
+                      !open ? 'opacity-0 h-0 overflow-hidden mb-0' : 'opacity-100 md:h-24 mt-[10px] md:my-4'
                     }`}>
-                    {profile.data.birthdate && (
-                      <div className='text-xs md:text-base'>{moment(profile.data.birthdate).format('DD/MM/yyyy')}</div>
-                    )}
-                    {profile.data.gender && (
-                      <div className='text-xs md:text-base capitalize flex gap-1'>
-                        {t(profile.data.gender)}{' '}
-                        <span>
-                          <Image src={profile.data.gender.toLowerCase() == 'male' ? MaleIcon : FemaleIcon} alt='' />
-                        </span>
+                    <div className='flex items-center'>
+                      <div
+                        className={`inline-block text-medium-gray transition-all md:font-bold text-sm md:text-base leading-[18px] md:leading-10 ${
+                          open ? 'w-[88px] md:w-[130px] opacity-100' : 'w-[0px] opacity-0'
+                        }`}>
+                        {t('DOB')}:
                       </div>
+                      <div>
+                        <DatePicker
+                          selected={birthdate}
+                          showMonthDropdown
+                          showYearDropdown
+                          locale={locale == 'vn' ? vi : ''}
+                          dropdownMode='select'
+                          onChange={(date) => setBirthdate(date)}
+                          customInput={<CustomInput />}
+                          maxDate={new Date()}
+                        />
+                      </div>
+                    </div>
+                    <div className='flex items-center'>
+                      <div
+                        className={`inline-block text-medium-gray transition-all md:font-bold text-sm md:text-base leading-[18px] md:leading-10 ${
+                          open ? 'w-[88px] md:w-[130px] opacity-100' : 'w-[0px] opacity-0'
+                        }`}>
+                        {t('Gender')}:
+                      </div>
+                      <div>
+                        <Select
+                          selected={gender}
+                          onChange={setGender}
+                          placeholder={t('Select a gender')}
+                          icon={<ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />}
+                          options={[
+                            {
+                              key: 'Male',
+                              value: t('Male'),
+                            },
+                            {
+                              key: 'Female',
+                              value: t('Female'),
+                            },
+                          ]}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  {(!!profile.data.birthdate || profile.data.gender) && (
+                    <div
+                      className={`flex gap-[30px] font-medium  transition-all ${
+                        open ? 'opacity-0 h-0 overflow-hidden mb-0' : 'opacity-100 md:mb-4'
+                      }`}>
+                      {profile.data.birthdate && (
+                        <div className='text-xs md:text-base md:leading-5'>
+                          {moment(profile.data.birthdate).format('DD/MM/yyyy')}
+                        </div>
+                      )}
+                      {profile.data.gender && (
+                        <div className='text-xs md:text-base md:leading-5 capitalize flex'>
+                          {t(profile.data.gender)}{' '}
+                          <Image
+                            className='h-[14px] w-[14px] md:h-[20px] md:w-[20px]'
+                            src={profile.data.gender.toLowerCase() == 'male' ? MaleIcon : FemaleIcon}
+                            alt=''
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  {profile.data.bio && (
+                    <div
+                      className={`font-medium transition-all overflow-hidden flex flex-col ${
+                        open ? 'opacity-0 h-0' : 'opacity-100 text-sm md:text-base mt-[6px]'
+                      }`}>
+                      <label className='text-medium-gray text-xs leading-[15px] md:text-base'>{t('Bio')}:</label>
+                      <p
+                        className={`${showMore ? '' : 'line-clamp-3 cursor-pointer'}`}
+                        onClick={() => setShowMore(!showMore)}>
+                        {profile.data.bio}
+                      </p>
+                    </div>
+                  )}
+                  <div
+                    className={`flex transition-all overflow-hidden items-center ${
+                      !open ? 'opacity-0 h-0' : 'opacity-100 mt-[10px] md:mt-0'
+                    }`}>
+                    <div className='text-medium-gray min-w-[88px] md:min-w-[130px] text-sm md:text-base md:font-bold md:self-start'>
+                      {t('Bio')}:
+                    </div>
+                    <AutoGrowingTextField
+                      value={bio}
+                      onChange={setBio}
+                      placeholder={t('Write something about yourself')}
+                      className='text-sm font-normal md:font-bold leading-6 min-h-[52px] flex-1 max-w-[calc(100vw-128px)] max-h-[150px] md:min-h-[72px] rounded-lg'
+                    />
+                  </div>
+                </div>
+                <div className='relative mt-[10px] md:mt-4 h-[19px] md:h-[48px]'>
+                  <div
+                    className={`flex gap-2 md:gap-6 absolute top-0 transition-all ${
+                      open ? 'left-1/2 -translate-x-1/2 opacity-0 pointer-events-none' : 'left-[0%] opacity-100 '
+                    }`}>
+                    <>
+                      <OutlineButton className='md:hidden' size='xs' onClick={() => setOpen(!open)}>
+                        {t('Edit profile')}
+                      </OutlineButton>
+                      <OutlineButton className='hidden md:flex' size='lg' onClick={() => setOpen(!open)}>
+                        {t('Edit profile')}
+                      </OutlineButton>
+                    </>
+                    {profile.data?.signup_methods?.includes('basic_auth') ? (
+                      <>
+                        <OutlineButton
+                          className='md:hidden'
+                          onClick={() => setChangingPasswordModalOpen(true)}
+                          size='xs'>
+                          {t('Change password')}
+                        </OutlineButton>
+                        <OutlineButton
+                          className='hidden md:flex'
+                          onClick={() => setChangingPasswordModalOpen(true)}
+                          size='lg'>
+                          {t('Change password')}
+                        </OutlineButton>
+                      </>
+                    ) : (
+                      <>
+                        <OutlineButton
+                          className='md:hidden'
+                          onClick={() => setSettingPasswordModalOpen(true)}
+                          size='xs'>
+                          {t('Set password')}
+                        </OutlineButton>
+                        <OutlineButton
+                          className='hidden md:flex'
+                          onClick={() => setSettingPasswordModalOpen(true)}
+                          size='lg'>
+                          {t('Set password')}
+                        </OutlineButton>
+                      </>
                     )}
                   </div>
-                )}
-                {profile.data.bio && (
                   <div
-                    className={`font-medium transition-all overflow-hidden ${
-                      open ? 'opacity-0 h-0' : 'opacity-100 min-h-[80px] text-sm md:text-base'
+                    className={`gap-6 absolute top-0 transition-all ${
+                      open
+                        ? 'right-1/2 translate-x-1/2 opacity-100 md:right-0 md:translate-x-0'
+                        : 'right-1/2 opacity-0 translate-x-1/2 pointer-events-none'
                     }`}>
-                    <label className='text-medium-gray text-sm md:text-base'>{t('Bio')}:</label>
-                    <p
-                      className={`${showMore ? '' : 'line-clamp-3 cursor-pointer'}`}
-                      onClick={() => setShowMore(!showMore)}>
-                      {profile.data.bio}
-                    </p>
+                    <OutlineButton
+                      loading={loading}
+                      size='lg'
+                      className='hidden md:block'
+                      onClick={updateProfileHandler}>
+                      {t('Save')}
+                    </OutlineButton>
+                    <FilledButton
+                      loading={loading}
+                      size='xs'
+                      className='md:hidden w-[80px]'
+                      onClick={updateProfileHandler}>
+                      {t('Save')}
+                    </FilledButton>
                   </div>
-                )}
-                <div
-                  className={`flex transition-all md:mt-2 overflow-hidden ${
-                    !open ? 'opacity-0 min-h-0 max-h-0' : 'opacity-100 min-h-[80px]'
-                  }`}>
-                  <label className='text-medium-gray font-bold min-w-[88px] md:min-w-[130px] flex-auto pt-[7px] text-sm md:text-base'>
-                    {t('Bio')}:
-                  </label>
-                  <AutoGrowingTextField
-                    value={bio}
-                    onChange={setBio}
-                    placeholder={t('Write something about yourself')}
-                    className='text-sm font-bold leading-6'
-                  />
-                </div>
-              </div>
-              <div className='relative mt-5 md:mt-2 h-[19px] md:h-[48px]'>
-                <div
-                  className={`flex gap-2 md:gap-6 absolute top-0 transition-all ${
-                    open ? 'left-1/2 -translate-x-1/2 opacity-0 pointer-events-none' : 'left-[0%] opacity-100 '
-                  }`}>
-                  <>
-                    <OutlineButton className='md:hidden' size='sm' onClick={() => setOpen(!open)}>
-                      {t('Edit profile')}
-                    </OutlineButton>
-                    <OutlineButton className='hidden md:flex' size='lg' onClick={() => setOpen(!open)}>
-                      {t('Edit profile')}
-                    </OutlineButton>
-                  </>
-                  {profile.data?.signup_methods?.includes('basic_auth') ? (
-                    <>
-                      <OutlineButton className='md:hidden' onClick={() => setChangingPasswordModalOpen(true)} size='sm'>
-                        {t('Change password')}
-                      </OutlineButton>
-                      <OutlineButton
-                        className='hidden md:flex'
-                        onClick={() => setChangingPasswordModalOpen(true)}
-                        size='lg'>
-                        {t('Change password')}
-                      </OutlineButton>
-                    </>
-                  ) : (
-                    <>
-                      <OutlineButton className='md:hidden' onClick={() => setSettingPasswordModalOpen(true)} size='sm'>
-                        {t('Set password')}
-                      </OutlineButton>
-                      <OutlineButton
-                        className='hidden md:flex'
-                        onClick={() => setSettingPasswordModalOpen(true)}
-                        size='lg'>
-                        {t('Set password')}
-                      </OutlineButton>
-                    </>
-                  )}
-                </div>
-                <div
-                  className={`gap-6 absolute top-0 transition-all hidden md:flex ${
-                    open ? 'right-[0%]  opacity-100' : 'right-1/2 opacity-0 translate-x-1/2 pointer-events-none'
-                  }`}>
-                  <OutlineButton loading={loading} size='lg' onClick={updateProfileHandler}>
-                    {t('Save')}
-                  </OutlineButton>
                 </div>
               </div>
             </div>
-          </div>
+          </>
         )}
         <div className='mt-5 md:mt-[100px]'>
           {!!(isSettingUp || curentlyReading.loading || curentlyReading.data?.length) && (
             <p className='text-sm md:text-2xl leading-6 font-extrabold mb-2 md:mb-10'>{t('Currently reading')}</p>
           )}
-          <div className='grid gap-x-3 md:gap-x-24 gap-y-5 md:gap-y-10 grid-cols-3 md:grid-cols-2 xl:grid-cols-3'>
+          <div className='grid gap-x-3 md:gap-x-24 gap-y-5 md:gap-y-10 grid-cols-2 xl:grid-cols-3'>
             {isSettingUp || curentlyReading.loading ? (
               <>
                 <DummyComic />

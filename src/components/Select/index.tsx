@@ -1,9 +1,9 @@
-import { Fragment, useState } from "react"
-import { Listbox, Transition } from "@headlessui/react"
-import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid"
+import { Fragment, useState } from 'react'
+import { Listbox, Transition } from '@headlessui/react'
+import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid'
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(" ")
+  return classes.filter(Boolean).join(' ')
 }
 interface ISelect {
   selected?: { key: string | number; value: string }
@@ -17,7 +17,7 @@ interface ISelect {
 export default function Select({
   onChange,
   selected,
-  icon = <ChevronDownIcon className="h-5 w-5 text-medium-gray" aria-hidden="true" />,
+  icon = <ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />,
   options,
   label,
   placeholder,
@@ -33,12 +33,12 @@ export default function Select({
         <>
           <Listbox.Label className='block text-sm font-medium leading-6 text-gray-900'>{label}</Listbox.Label>
           <div className='relative'>
-            <Listbox.Button className='relative w-full cursor-default rounded-[12px] bg-white py-[3px] pl-[13px] pr-[57px] text-left text-gray-900 shadow-sm ring-1 ring-inset ring-medium-gray focus:outline-none focus:ring-2 sm:text-sm sm:leading-6 lg:h-10'>
+            <Listbox.Button className='relative w-full cursor-default rounded-[8px] bg-white py-[1px] md:py-[7px] pl-[10px] pr-[57px] text-left text-gray-900 focus:outline-none text-sm leading-6 lg:h-10 border border-medium-gray font-normal'>
               <span className={`flex items-center text-[14px] leading-[24px] ${className}`}>
                 {selected?.key ? (
-                  <span className='block truncate'>{selected.value}</span>
+                  <span className='block truncate font-normal md:font-bold'>{selected.value}</span>
                 ) : (
-                  <span className='block truncate text-medium-gray'>{placeholder}</span>
+                  <span className='block truncate text-medium-gray font-normal md:font-bold'>{placeholder}</span>
                 )}
               </span>
               <span className='pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2'>{icon}</span>
@@ -70,7 +70,7 @@ export default function Select({
                           <span
                             className={classNames(
                               option.key == selected?.key ? 'font-semibold' : 'font-normal',
-                              'ml-3 block truncate'
+                              'ml-3 block truncate text-sm md:text-base'
                             )}>
                             {option.value}
                           </span>
