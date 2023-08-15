@@ -211,8 +211,8 @@ export default function Header({ className }: { className?: string }) {
                           height={36}
                           className='rounded-full object-cover w-[18px] aspect-square'
                         />
-                        <span className='max-w-[150px] text-ellipsis overflow-hidden text-sm leading-[125%] font-bold'>
-                          {account.name}
+                        <span className='max-w-[250px] text-ellipsis overflow-hidden text-sm leading-[125%] font-bold'>
+                          {`${account.name}${wallet ? ` · ${wallet.substr(0, 4)} **** **** ${wallet.substr(-4)}` : ''}`}
                         </span>
                       </div>
                     </FilledButton>
@@ -250,10 +250,10 @@ export default function Header({ className }: { className?: string }) {
                           <div onClick={() => router.push('/profile')}>
                             <strong>{t('My profile')}</strong>
                           </div>
-                          {/* <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
+                          <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={() => setConnectWalletOpen(true)}>
                             <strong>{t('Link Wallet')}</strong>
-                          </div> */}
+                          </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={logout}>
                             <strong>{t('Log out')}</strong>
@@ -377,7 +377,9 @@ export default function Header({ className }: { className?: string }) {
                           height={36}
                           className='rounded-full object-cover h-full w-[25px]'
                         />
-                        <span className='max-w-[150px] text-ellipsis overflow-hidden'>{account.name}</span>
+                        <span className='max-w-[350px] text-ellipsis overflow-hidden'>{`${account.name}${
+                          wallet ? ` · ${wallet.substr(0, 4)} **** **** ${wallet.substr(-4)}` : ''
+                        }`}</span>
                       </div>
                     </FilledButton>
                   </DropdownToggle>

@@ -29,7 +29,7 @@ export default function TextField({
   const ex = ['e', '-', '=', '*', '(', ')', '+', '.']
   if (size == 'lg') {
     return (
-      <div className={`relative w-full  rounded-[20px] ${className}`}>
+      <div className={`relative w-full flex rounded-[20px] ${className}`}>
         {leadingComponent && (
           <div className=' absolute inset-y-0 left-0 flex items-center justify-center p-[13px] max-w-[50px]'>
             {leadingComponent}
@@ -66,9 +66,11 @@ export default function TextField({
   }
   if (size == 'sm') {
     return (
-      <div className='relative w-full'>
+      <div className='relative w-full flex'>
         {leadingComponent && (
-          <div className=' absolute top-1 left-[10px] flex items-center justify-center w-5 h-5'>{leadingComponent}</div>
+          <div className=' absolute top-[2px] left-[10px] flex items-center justify-center w-5 h-5'>
+            {leadingComponent}
+          </div>
         )}
         <input
           onKeyDown={(event) => {
@@ -95,9 +97,11 @@ export default function TextField({
   }
   if (size == 'xs') {
     return (
-      <div className='relative w-full'>
+      <div className='relative w-full flex'>
         {leadingComponent && (
-          <div className=' absolute top-1 left-[10px] flex items-center justify-center w-5 h-5'>{leadingComponent}</div>
+          <div className=' absolute top-[2px] left-[10px] flex items-center justify-center w-5 h-5'>
+            {leadingComponent}
+          </div>
         )}
         <input
           onKeyDown={(event) => {
@@ -124,7 +128,7 @@ export default function TextField({
   }
 
   return (
-    <div className={`relative w-full  rounded-[20px] ${className}`}>
+    <div className={`relative w-full flex rounded-[20px] ${className}`}>
       {leadingComponent && (
         <div className=' absolute inset-y-0 left-0 flex items-center justify-center p-[13px] max-w-[50px]'>
           {leadingComponent}

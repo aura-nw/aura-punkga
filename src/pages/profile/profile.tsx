@@ -18,6 +18,7 @@ import ChangingPasswordModal from 'components/pages/profile/changingPasswordModa
 import MComic from 'components/pages/homepage/comic'
 import FilledButton from 'components/Button/FilledButton'
 import MaleIcon from 'images/icons/male.svg'
+import EditIcon from 'images/icons/edit-circle.svg'
 import FemaleIcon from 'images/icons/female.svg'
 import { useTranslation } from 'react-i18next'
 import _ from 'lodash'
@@ -158,10 +159,10 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
             <div className={`flex gap-[10px] md:gap-[60px] flex-wrap`}>
               <div
                 className={`flex transition-all justify-center md:max-w-[320px] ${
-                  open ? 'w-full md:w-2/5' : 'w-[130px] md:w-2/5'
+                  open ? 'w-full md:w-2/5' : 'w-[120px] h-[120px] md:w-2/5'
                 }`}>
-                <div className='max-w-[130px] md:max-w-[320px] relative flex-1'>
-                  <div className='border-[3px] md:border-none border-second-color p-[2px] aspect-square rounded-full md:rounded-xl object-contain bg-light-gray overflow-hidden'>
+                <div className='max-w-[120px] md:max-w-[320px] relative flex-1'>
+                  <div className='border-[4px] md:border-none border-second-color aspect-square rounded-full md:rounded-xl object-contain bg-light-gray overflow-hidden'>
                     <div
                       className={`aspect-square rounded-full md:rounded-xl w-full transition-all bg-medium-gray duration-300 absolute top-0 right-[1.5px] opacity-0 flex flex-col justify-center items-center cursor-pointer ${
                         open ? 'hover:opacity-40' : 'hidden'
@@ -173,8 +174,17 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                         onChange={onSelectFile}
                         type='file'
                         className='bg-black absolute inset-0 opacity-0'
+                        id='change-profile-picture-input'
                       />
                     </div>
+                    <Image
+                      src={EditIcon}
+                      height={360}
+                      width={360}
+                      alt=''
+                      className='h-[18px] w-[18px] md:hidden absolute bottom-[10px] right-[10px]'
+                      onClick={() => (document.querySelector('#change-profile-picture-input') as any)?.click()}
+                    />
                     <Image
                       src={preview || profile.data.picture || NoImg}
                       height={360}
@@ -420,7 +430,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
           {!!(isSettingUp || subscribeList.loading || subscribeList.data?.length) && (
             <p className='text-sm md:text-2xl leading-6 font-extrabold mb-2 md:mb-10'>{t('Subscribe list')}</p>
           )}
-          <div className='grid gap-x-3 md:gap-x-24 gap-y-5 md:gap-y-10 grid-cols-3 md:grid-cols-2 xl:grid-cols-3'>
+          <div className='grid gap-x-3 md:gap-x-24 gap-y-5 md:gap-y-10 grid-cols-2 xl:grid-cols-3'>
             {isSettingUp || subscribeList.loading ? (
               <>
                 <DummyComic />

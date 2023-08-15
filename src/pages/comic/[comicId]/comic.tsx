@@ -74,11 +74,11 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
             className='h-[350px] w-full object-cover'
             alt=''
           />
-          <div className='absolute inset-0 bg-gradient-to-r from-[#000000cc] to-[#00000034]'></div>
+          <div className='absolute inset-0 bg-gradient-to-r from-[28%] from-[#000]/80 to-[#00000000]'></div>
         </div>
       </div>
       <div className='flex flex-col min-h-[calc(100vh-96px)] '>
-        <div className='h-[350px] min-h-[220px] w-full relative'>
+        <div className='h-[314px] min-h-[220px] w-full relative'>
           <div className='w-full h-full z-10 relative px-5 py-3 flex flex-col justify-between'>
             <div className='flex gap-2 flex-wrap'>
               {data.languages.map((language, index) => {
@@ -145,10 +145,10 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
           <Tab.Group>
             <Tab.List className='w-full flex justify-between bg-black/60 text-white text-sm'>
               <Tab className='w-1/3 flex-auto ui-selected:text-primary-color ui-selected:font-bold ui-selected:underline'>
-                <div className='my-3'>{t('Chapters')}</div>
+                <div className='my-[8px]'>{t('Chapters')}</div>
               </Tab>
               <Tab className='w-1/3 flex-auto ui-selected:text-primary-color ui-selected:font-bold ui-selected:underline'>
-                <div className='my-3'>NFTs</div>
+                <div className='my-[8px]'>NFTs</div>
               </Tab>
             </Tab.List>
             <Tab.Panels className='h-full flex-1 flex flex-col'>
@@ -158,7 +158,7 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
               <Tab.Panel className='flex-1 flex flex-col'>
                 <div className='flex-1 w-full bg-[#292929]/80 flex flex-col items-center justify-center'>
                   <Image src={Ninja} alt='' className='h-[260px] aspect-square mx-auto opacity-60' />
-                  <div className='font-extrabold text-2xl leading-6 text-subtle-dark'>Artist Composing</div>
+                  <div className='font-extrabold text-2xl leading-6 text-subtle-dark mt-[10px]'>Artist Composing</div>
                 </div>
               </Tab.Panel>
             </Tab.Panels>

@@ -138,7 +138,7 @@ function ContextProvider({ children }) {
     }
     setProvider(p)
     const keplr = p == 'Coin98' ? window.coin98?.keplr : window.keplr
-    await keplr.experimentalSuggestChain(JSON.parse(getConfig().CHAIN_INFO))
+    await keplr.experimentalSuggestChain(getConfig().CHAIN_INFO)
     await keplr.enable(getConfig().CHAIN_ID)
     key.current = await keplr.getKey(getConfig().CHAIN_ID)
     return key.current.bech32Address
