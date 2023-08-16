@@ -256,7 +256,7 @@ function ContextProvider({ children }) {
       return res
     } catch (error) {
       console.log('update profile error: ' + error)
-      return null
+      throw new Error(error)
     }
   }
   const forgotPassword = async (email: string) => {

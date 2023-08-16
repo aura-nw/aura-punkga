@@ -17,6 +17,7 @@ import { Plus_Jakarta_Sans } from 'next/font/google'
 import Script from 'next/script'
 import Head from 'next/head'
 import MaintainPage from 'components/pages/maintainPage'
+import { validateEmail } from 'src/utils'
 const pjs = Plus_Jakarta_Sans({ subsets: ['latin', 'vietnamese'] })
 function MyApp(props: AppProps) {
   const [isSetting, setIsSetting] = useState(true)
@@ -65,7 +66,9 @@ function MyApp(props: AppProps) {
 const App = ({ Component, pageProps }: AppProps) => {
   const { isSettingUp, account, updateProfile } = useContext(Context)
   const [errorMsg, setErrorMsg] = useState('')
+  const [emailErrorMsg, setEmailErrorMsg] = useState('')
   const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(true)
   const { t } = useTranslation()
@@ -73,6 +76,9 @@ const App = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
     setErrorMsg('')
   }, [name])
+  useEffect(() => {
+    setEmailErrorMsg('')
+  }, [email])
 
   if (isSettingUp) {
     return <></>
@@ -81,7 +87,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   const setUName = async () => {
     try {
       setLoading(true)
-      const res = await updateProfile({
+      await updateProfile({
         nickname: name,
       })
       setLoading(false)
@@ -90,11 +96,30 @@ const App = ({ Component, pageProps }: AppProps) => {
       setLoading(false)
     }
   }
+  const setUNameAndEmail = async () => {
+    try {
+      if (!validateEmail(email)) {
+        setEmailErrorMsg('Invalid email address')
+        return
+      }
+      setLoading(true)
+      await updateProfile({
+        nickname: name,
+        email,
+      })
+      setLoading(false)
+    } catch (error) {
+      if (error.message?.includes('authorizer_users_nickname_key')) setErrorMsg(t('Name already taken'))
+      if (error.message?.includes('email address already exists'))
+        setEmailErrorMsg(t('This email address already exists'))
+      setLoading(false)
+    }
+  }
 
   return (
     <>
       {account?.verified ? (
-        account?.email ? (
+        validateEmail(account?.email) ? (
           account?.name ? (
             <></>
           ) : (
@@ -104,10 +129,10 @@ const App = ({ Component, pageProps }: AppProps) => {
                   <div className='gap-2 flex flex-col'>
                     <div className='text-xl font-semibold leading-6 text-center'>{t('Set a username')}</div>
 
-                    <OutlineTextField label='Username' errorMsg={errorMsg} value={name} onChange={setName} />
-                    <OutlineTextField label='Email' value={account.email} disabled={true} />
+                    <OutlineTextField label={t('Username')} errorMsg={errorMsg} value={name} onChange={setName} />
+                    <OutlineTextField label={t('Email')} value={account.email} disabled={true} />
                   </div>
-                  <p className='text-xs mt-[6px]'>
+                  <p className='text-xs mt-[6px] text-center'>
                     {t('This email will also be used to receive updates of new chapter when you subscribe a manga.')}
                   </p>
                   <div className='mt-3 mx-auto'>
@@ -132,7 +157,51 @@ const App = ({ Component, pageProps }: AppProps) => {
             </>
           )
         ) : (
-          <></>
+          <>
+            <Modal open={open} setOpen={setOpen}>
+              <div className='p-6 flex flex-col w-[322px]'>
+                <div className='gap-3 flex flex-col'>
+                  <div className='text-xl font-semibold leading-6 text-center'>{t('Verify your email')}</div>
+                  <p className='text-[10px] leading-3 text-center'>
+                    {t(
+                      'An active email is required when sign in to Punkga, verify it only once and enjoy all of our great mangas.'
+                    )}
+                  </p>
+                  <OutlineTextField
+                    label={t('Email')}
+                    value={email}
+                    onChange={setEmail}
+                    errorMsg={emailErrorMsg}
+                    placeholder={t('Enter your email')}
+                  />
+                  <OutlineTextField
+                    label={t('Username')}
+                    errorMsg={errorMsg}
+                    value={name}
+                    onChange={setName}
+                    placeholder={t('Enter username')}
+                  />
+                </div>
+                <div className='mt-3 mx-auto'>
+                  <FilledButton size='lg' disabled={!name} loading={loading} onClick={setUNameAndEmail}>
+                    {t('Continue')}
+                  </FilledButton>
+                </div>
+                <p className='text-xs mt-2 font-medium text-center'>
+                  {t('Or')}{' '}
+                  <a
+                    className='text-second-color font-bold'
+                    onClick={() => {
+                      setOpen(false)
+                      document.getElementById('open-sign-in-btn')?.click()
+                    }}>
+                    {t('sign in')}
+                  </a>{' '}
+                  {t('with another account')}
+                </p>
+              </div>
+            </Modal>
+          </>
         )
       ) : (
         <></>
