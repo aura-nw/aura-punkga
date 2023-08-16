@@ -2,22 +2,23 @@ import axios from 'axios'
 import FilledButton from 'components/Button/FilledButton'
 import OutlineTextField from 'components/Input/TextField/Outline'
 import Modal from 'components/Modal'
+import MaintainPage from 'components/pages/maintainPage'
 import moment from 'moment'
 import 'moment/locale/vi'
 import { appWithTranslation, useTranslation } from 'next-i18next'
 import { AppProps } from 'next/app'
 import getConfig, { setConfig } from 'next/config'
+import { Plus_Jakarta_Sans } from 'next/font/google'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 import ContextProvider, { Context } from 'src/context'
 import 'src/styles/globals.scss'
-import { Plus_Jakarta_Sans } from 'next/font/google'
-import Script from 'next/script'
-import Head from 'next/head'
-import MaintainPage from 'components/pages/maintainPage'
 import { validateEmail } from 'src/utils'
+import Mail from 'images/Mail.svg'
+
 const pjs = Plus_Jakarta_Sans({ subsets: ['latin', 'vietnamese'] })
 function MyApp(props: AppProps) {
   const [isSetting, setIsSetting] = useState(true)
@@ -64,13 +65,14 @@ function MyApp(props: AppProps) {
   )
 }
 const App = ({ Component, pageProps }: AppProps) => {
-  const { isSettingUp, account, updateProfile } = useContext(Context)
+  const { isSettingUp, account, updateProfile, resendVerifyEmail } = useContext(Context)
   const [errorMsg, setErrorMsg] = useState('')
   const [emailErrorMsg, setEmailErrorMsg] = useState('')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(true)
+  const [openSuccessModal, setOpenSuccessModal] = useState(false)
   const { t } = useTranslation()
 
   useEffect(() => {
@@ -108,6 +110,8 @@ const App = ({ Component, pageProps }: AppProps) => {
         email,
       })
       setLoading(false)
+      setOpen(false)
+      setOpenSuccessModal(true)
     } catch (error) {
       if (error.message?.includes('authorizer_users_nickname_key')) setErrorMsg(t('Name already taken'))
       if (error.message?.includes('email address already exists'))
@@ -199,6 +203,40 @@ const App = ({ Component, pageProps }: AppProps) => {
                   </a>{' '}
                   {t('with another account')}
                 </p>
+              </div>
+            </Modal>
+            <Modal open={openSuccessModal} setOpen={setOpenSuccessModal}>
+              <div className={` py-6 px-[60px] flex flex-col gap-4 w-full max-w-[670px]`}>
+                <p className='text-center text-xl leading-6 font-semibold'>{t('Email verification')}</p>
+                <Image src={Mail} alt='' className='mx-auto' />
+                <p className=' font-medium text-center w-full max-w-[500px] mx-auto'>
+                  {t('A verification link has been sent to')}{' '}
+                  <span className='text-second-color font-bold'>{email}</span>.
+                  {t('Please click on the link to verify your email account.')}
+                </p>
+                <div className='flex flex-col text-center'>
+                  <p className=' font-medium text-center w-full max-w-[500px] mx-auto'>
+                    {t('Have not received any email')}?{' '}
+                    <span
+                      className='text-second-color font-bold cursor-pointer'
+                      onClick={() => resendVerifyEmail(email)}>
+                      {t('Click here')}
+                    </span>{' '}
+                    {t('to resend verification link')}
+                  </p>
+                  <p className=' font-medium text-center w-full max-w-[500px] mx-auto'>
+                    {t('Or')}{' '}
+                    <span
+                      className='text-second-color font-bold cursor-pointer'
+                      onClick={() => {
+                        setOpenSuccessModal(false)
+                        document.getElementById('open-sign-in-btn')?.click()
+                      }}>
+                      {t('sign up')}
+                    </span>{' '}
+                    {t('with another email')}
+                  </p>
+                </div>
               </div>
             </Modal>
           </>
