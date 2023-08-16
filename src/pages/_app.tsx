@@ -6,7 +6,7 @@ import moment from 'moment'
 import 'moment/locale/vi'
 import { appWithTranslation, useTranslation } from 'next-i18next'
 import { AppProps } from 'next/app'
-import { setConfig } from 'next/config'
+import getConfig, { setConfig } from 'next/config'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import 'slick-carousel/slick/slick-theme.css'
@@ -16,6 +16,7 @@ import 'src/styles/globals.scss'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import Script from 'next/script'
 import Head from 'next/head'
+import MaintainPage from 'components/pages/maintainPage'
 const pjs = Plus_Jakarta_Sans({ subsets: ['latin', 'vietnamese'] })
 function MyApp(props: AppProps) {
   const [isSetting, setIsSetting] = useState(true)
@@ -36,6 +37,18 @@ function MyApp(props: AppProps) {
     }
   }, [locale])
   if (isSetting) return <></>
+  if (getConfig().IN_MAINTENANCE_MODE) {
+    return (
+      <>
+        <style jsx global>{`
+          html {
+            font-family: ${pjs.style.fontFamily};
+          }
+        `}</style>
+        <MaintainPage />
+      </>
+    )
+  }
   return (
     <>
       <style jsx global>{`
