@@ -14,6 +14,8 @@ import 'slick-carousel/slick/slick.css'
 import ContextProvider, { Context } from 'src/context'
 import 'src/styles/globals.scss'
 import { Plus_Jakarta_Sans } from 'next/font/google'
+import Script from 'next/script'
+import Head from 'next/head'
 const pjs = Plus_Jakarta_Sans({ subsets: ['latin', 'vietnamese'] })
 function MyApp(props: AppProps) {
   const [isSetting, setIsSetting] = useState(true)
@@ -78,6 +80,15 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   return (
     <>
+      <Head>
+        <Script id='gtm'>
+          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PF4MH72V');`}
+        </Script>
+      </Head>
       {account?.verified ? (
         account?.email ? (
           account?.name ? (
