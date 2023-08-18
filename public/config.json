@@ -24,5 +24,6 @@
   },
   "REDIRECT_URL": "http://localhost:3000/",
   "REST_API_URL": "https://api.staging.punkga.me",
-  "IN_MAINTENANCE_MODE": false
+  "IN_MAINTENANCE_MODE": false,
+  "GTM_ID": "GTM-PF4MH72V"
 }

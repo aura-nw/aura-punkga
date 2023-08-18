@@ -36,7 +36,6 @@ const Chapter: React.FC = ({
   unlike,
   subscribe,
   unsubscribe,
-  addView,
 }: {
   comicDetails: {
     data: IComicDetail
@@ -56,7 +55,6 @@ const Chapter: React.FC = ({
   unlike: () => void
   subscribe: () => void
   unsubscribe: () => void
-  addView: () => void
 }) => {
   const [openComments, setOpenComments] = useState(false)
   const [mode, setMode] = useState<'minscreen' | 'fullscreen'>('minscreen')
@@ -73,7 +71,6 @@ const Chapter: React.FC = ({
 
   useEffect(() => {
     if (chapterDetails.data?.id) {
-      addView()
       setChapterLikes(chapterDetails.data?.likes)
     }
   }, [chapterDetails?.data?.id])
