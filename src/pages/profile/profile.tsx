@@ -164,7 +164,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
             <div className={`flex gap-[10px] md:gap-[60px] flex-wrap`}>
               <div
                 className={`flex transition-all justify-center md:max-w-[320px] ${
-                  open ? 'w-full md:w-2/5' : 'w-[120px] h-[120px] md:w-2/5'
+                  open ? 'w-full md:w-2/5' : 'w-[120px] h-[120px] md:w-2/5 md:h-auto'
                 }`}>
                 <div className='max-w-[120px] md:max-w-[320px] relative flex-1'>
                   <div className='border-[4px] md:border-none border-second-color aspect-square rounded-full md:rounded-xl object-contain bg-light-gray overflow-hidden'>

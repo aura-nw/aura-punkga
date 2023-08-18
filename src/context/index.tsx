@@ -284,11 +284,11 @@ function ContextProvider({ children }) {
       return null
     }
   }
-  async function resendVerifyEmail(email: string) {
+  async function resendVerifyEmail(email: string, identifier?: string) {
     try {
       await authorizerRef.graphqlQuery({
         query: `mutation ResendVerifyEmail($email: String!) {
-        resend_verify_email(params: {identifier: "basic_auth_signup", email: $email}) {
+        resend_verify_email(params: {identifier: ${identifier || 'basic_auth_signup'}, email: $email}) {
             message
         }
     }`,

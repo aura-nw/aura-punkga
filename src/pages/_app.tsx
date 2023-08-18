@@ -219,7 +219,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                     {t('Have not received any email')}?{' '}
                     <span
                       className='text-second-color font-bold cursor-pointer'
-                      onClick={() => resendVerifyEmail(email)}>
+                      onClick={() => resendVerifyEmail(email, 'update_email')}>
                       {t('Click here')}
                     </span>{' '}
                     {t('to resend verification link')}
