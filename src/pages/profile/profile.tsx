@@ -293,7 +293,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                   </div>
                   {(!!profile.data.birthdate || profile.data.gender) && (
                     <div
-                      className={`flex gap-[30px] font-medium  transition-all ${
+                      className={`flex gap-[30px] font-medium text-[#19191B] transition-all ${
                         open ? 'opacity-0 h-0 overflow-hidden mb-0' : 'opacity-100 md:mb-4'
                       }`}>
                       {profile.data.birthdate && (
@@ -305,7 +305,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                         <div className='text-xs md:text-base md:leading-5 capitalize flex'>
                           {t(profile.data.gender == 'Undisclosed' ? 'Other' : profile.data.gender)}{' '}
                           <Image
-                            className='h-[12px] w-[12px] m-[2px] md:h-[18px] md:w-[18px]'
+                            className='h-[16px] w-[16px] md:h-[24px] md:w-[24px]'
                             src={
                               profile.data.gender.toLowerCase() == 'male'
                                 ? MaleIcon
@@ -324,9 +324,11 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                       className={`font-medium transition-all overflow-hidden flex flex-col ${
                         open ? 'opacity-0 h-0' : 'opacity-100 text-sm md:text-base mt-[6px]'
                       }`}>
-                      <label className='text-medium-gray text-xs leading-[15px] md:text-base'>{t('Bio')}:</label>
+                      <label className='text-medium-gray text-xs leading-[15px] md:text-base text-[#AFB1B6]'>
+                        {t('Bio')}:
+                      </label>
                       <p
-                        className={`${showMore ? '' : 'line-clamp-3 cursor-pointer'}`}
+                        className={`text-[#19191B] ${showMore ? '' : 'line-clamp-3 cursor-pointer'}`}
                         onClick={() => setShowMore(!showMore)}>
                         {profile.data.bio}
                       </p>

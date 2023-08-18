@@ -40,7 +40,7 @@ export default function Comic(props: IComic & { unsubscribe?: () => void; subscr
               <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
             )}
           </div>
-          <div>
+          <div className='text-subtle-dark'>
             {t('by')}{' '}
             {props.authors.map((author, index) => (
               <Fragment key={index}>
@@ -54,7 +54,7 @@ export default function Comic(props: IComic & { unsubscribe?: () => void; subscr
               return <Tag key={index}>{tag[locale]}</Tag>
             })}
           </div>
-          <div className=' flex gap-[24px]'>
+          <div className='text-subtle-dark flex gap-[24px]'>
             <div>
               <strong>{props.views.toLocaleString('en-US')}</strong> {t('views')}
             </div>
@@ -65,7 +65,7 @@ export default function Comic(props: IComic & { unsubscribe?: () => void; subscr
           <div className=' text-[16px] leading-[20px] line-clamp-3'>{props[locale].description}</div>
         </div>
         <div className='flex flex-col gap-[10px]'>
-          <div className=' leading-[20px]'>
+          <div className='text-subtle-dark leading-[20px]'>
             {t('Latest')}:{' '}
             <Link
               href={`/comic/${props.id}/chapter/${props.latestChap.number}`}
