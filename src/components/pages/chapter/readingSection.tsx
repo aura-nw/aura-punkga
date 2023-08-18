@@ -211,7 +211,7 @@ export default function ReadingSection({
           <div
             ref={ref}
             className={`${mode == 'minscreen' ? '' : ''} ${
-              readingMode == 'onePage' ? 'w-[70%]' : 'flex h-full items-center'
+              readingMode == 'onePage' ? 'w-[90%] max-w-[940px]' : 'flex h-full items-center'
             } mx-auto pb-[60px]`}>
             {chapterData[chapterLocale]
               ?.slice(
@@ -232,8 +232,8 @@ export default function ReadingSection({
                       ? 'mx-auto'
                       : 'h-fit max-h-full max-w-[50%] w-auto first:ml-auto last:mr-auto'
                   } `}
-                  width={500}
-                  height={500}
+                  width={1900}
+                  height={1000}
                   priority={true}
                   placeholder='blur'
                   blurDataURL={getBlurUrl()}

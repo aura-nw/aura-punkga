@@ -139,6 +139,8 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
 
   if (!profile.data) return <></>
 
+  console.log(profile.data.picture.replace('width=50', 'width=500').replace('height=50', 'height=500'))
+
   return (
     <>
       <HeadComponent title={`${profile.data.nickname} | Punkga.me`} />
