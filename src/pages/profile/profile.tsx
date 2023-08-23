@@ -25,6 +25,7 @@ import { useTranslation } from 'react-i18next'
 import _ from 'lodash'
 import vi from 'date-fns/locale/vi'
 import HeadComponent from 'components/Head'
+import LinkSvg from 'images/icons/Link.svg'
 export default function Profile({ subscribeList, unsubscribe, subscribe, curentlyReading, updateProfile }) {
   const { account, isSettingUp, getProfile } = useContext(Context)
   const { t } = useTranslation()
@@ -119,7 +120,7 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
   const CustomInput = forwardRef(({ value, onClick }: any, ref: any) => {
     return (
       <button
-        className='relative w-full cursor-default bg-white py-[1px] md:py-[7px] pl-[10px] pr-[57px] text-left text-gray-900 
+        className='relative w-full cursor-default bg-white py-[1px] md:py-[7px] pl-[10px] pr-[57px] text-left text-[#61646B] 
         focus:outline-none lg:h-10 md:font-bold text-sm rounded-lg 
         border-[1px] border-medium-gray leading-6'
         onClick={onClick}
@@ -142,7 +143,7 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
     <>
       <HeadComponent title={`${account.name} | Punkga.me`} />
       <Header />
-      <div className='pk-container py-5 px-5 md:px-0'>
+      <div className='pk-container py-5 px-5 md:px-0 md:py-10'>
         {isSettingUp ? (
           <div className='flex gap-[60px]'>
             <div className='w-[320px] h-[320px] rounded-xl object-cover bg-light-gray animate-pulse'></div>
@@ -162,10 +163,10 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
           <>
             <div className={`flex gap-[10px] md:gap-[60px] flex-wrap`}>
               <div
-                className={`flex transition-all justify-center md:max-w-[320px] ${
+                className={`flex transition-all justify-center md:max-w-[320px] p-[5px] md:p-0 ${
                   open ? 'w-full md:w-2/5' : 'w-[120px] h-[120px] md:w-2/5 md:h-auto'
                 }`}>
-                <div className='max-w-[120px] md:max-w-[320px] relative flex-1'>
+                <div className='max-w-[120px] md:max-w-[320px] relative flex-1 '>
                   <div className='border-[4px] md:border-none border-second-color aspect-square rounded-full md:rounded-xl object-contain bg-light-gray overflow-hidden'>
                     <div
                       className={`aspect-square rounded-full md:rounded-xl w-full transition-all bg-medium-gray duration-300 absolute top-0 right-[1.5px] opacity-0 flex flex-col justify-center items-center cursor-pointer ${
@@ -201,51 +202,56 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
                   </div>
                 </div>
               </div>
-              <div className='flex-[1_0_180px] flex flex-col justify-between'>
-                <div>
-                  <div className='flex'>
-                    <div
-                      className={`inline-block text-medium-gray transition-all md:font-bold text-sm md:text-base leading-[18px] md:leading-10 ${
-                        open ? 'w-[88px] md:w-[130px] opacity-100 md:leading-6' : 'w-0 h-0 opacity-0'
-                      }`}>
-                      {t('Username')}:
-                    </div>
-                    <div
-                      className={`text-black md:text-second-color transition-all leading-[18px] md:leading-10 ${
-                        open
-                          ? 'text-sm md:text-base font-extrabold mb-0 md:leading-6'
-                          : 'text-sm md:text-[32px] font-semibold md:font-extrabold md:mb-4 '
-                      }`}>
-                      {account.name}
-                    </div>
-                  </div>
-                  <div className={`flex ${open ? 'mt-[10px] md:mt-2' : ''}`}>
-                    <div
-                      className={`inline-block text-medium-gray transition-all md:font-bold text-sm md:text-base leading-[18px] md:leading-10 ${
-                        open ? 'w-[88px] md:w-[130px] opacity-100 md:leading-6' : 'w-0 h-0 opacity-0'
-                      }`}>
-                      {t('Email')}:
-                    </div>
-                    <div
-                      className={`transition-all text-sm md:text-base leading-[18px] md:leading-5 ${
-                        open
-                          ? 'mb-0 text-[#0F4072] md:text-black md:leading-6'
-                          : 'mb-[2px] md:mb-[8px] text-[#0F4072] md:text-second-color'
-                      }`}>
-                      {account.email}
-                    </div>
+              <div
+                className={`flex-[1_0_180px] flex flex-col relative ${
+                  open ? 'gap-[10px]' : 'gap-[5px] md:gap-[10px]'
+                }`}>
+                <div className='flex'>
+                  <div
+                    className={`inline-block text-medium-gray transition-all md:font-bold text-sm md:text-base leading-[18px] md:leading-10 ${
+                      open ? 'w-[88px] md:w-[130px] opacity-100 md:leading-6' : 'w-0 h-0 opacity-0'
+                    }`}>
+                    {t('Username')}:
                   </div>
                   <div
-                    className={`flex flex-col gap-[10px] md:gap-4 font-medium transition-all ${
-                      !open ? 'opacity-0 h-0 overflow-hidden mb-0' : 'opacity-100 md:h-24 mt-[10px] md:my-4'
+                    className={`text-black md:text-second-color transition-all leading-[18px] md:leading-10 ${
+                      open
+                        ? 'text-sm md:text-base font-extrabold mb-0 md:leading-6'
+                        : 'text-sm md:text-[32px] font-semibold md:font-extrabold'
                     }`}>
-                    <div className='flex items-center'>
-                      <div
-                        className={`inline-block text-medium-gray transition-all md:font-bold text-sm md:text-base leading-[18px] md:leading-10 ${
-                          open ? 'w-[88px] md:w-[130px] opacity-100' : 'w-[0px] opacity-0'
-                        }`}>
-                        {t('DOB')}:
-                      </div>
+                    {account.name}
+                  </div>
+                </div>
+                <div className={`flex`}>
+                  <div
+                    className={`inline-block text-medium-gray transition-all md:font-bold text-sm md:text-base leading-[18px] md:leading-10 ${
+                      open ? 'w-[88px] md:w-[130px] opacity-100 md:leading-6' : 'w-0 h-0 opacity-0'
+                    }`}>
+                    {t('Email')}:
+                  </div>
+                  <div
+                    className={`transition-all text-sm md:text-base leading-[18px] md:leading-5 flex gap-1 items-center ${
+                      open
+                        ? 'mb-0 text-[#0F4072] md:text-[#61646B] md:leading-6 md:font-bold'
+                        : 'text-[#0F4072] md:text-second-color'
+                    }`}>
+                    <span className={open ? 'hidden' : ''}>
+                      <Image src={LinkSvg} alt='' className='md:w-4 md:h-4' />
+                    </span>
+                    {account.email}
+                  </div>
+                </div>
+                {account.birthdate && (
+                  <div className={`flex items-center`}>
+                    <div
+                      className={`inline-block text-medium-gray transition-all md:text-base md:leading-5 ${
+                        open
+                          ? 'text-sm leading-[18px] w-[88px] md:font-bold md:w-[130px]'
+                          : 'text-xs leading-[15px] w-[63px] md:w-[84px] md:font-medium'
+                      }`}>
+                      {t('DOB')}:
+                    </div>
+                    {open ? (
                       <div>
                         <DatePicker
                           selected={birthdate}
@@ -258,16 +264,27 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
                           maxDate={new Date()}
                         />
                       </div>
-                    </div>
-                    <div className='flex items-center'>
-                      <div
-                        className={`inline-block text-medium-gray transition-all md:font-bold text-sm md:text-base leading-[18px] md:leading-10 ${
-                          open ? 'w-[88px] md:w-[130px] opacity-100' : 'w-[0px] opacity-0'
-                        }`}>
-                        {t('Gender')}:
+                    ) : (
+                      <div className='text-xs text-[#19191B] font-medium leading-[15px] md:text-base md:leading-5'>
+                        {moment(account.birthdate).format('DD/MM/yyyy')}
                       </div>
+                    )}
+                  </div>
+                )}
+                {account.gender && (
+                  <div className={`flex items-center`}>
+                    <div
+                      className={`inline-block text-medium-gray transition-all md:text-base md:leading-5 ${
+                        open
+                          ? 'text-sm leading-[18px] w-[88px] md:font-bold md:w-[130px]'
+                          : 'text-xs leading-[15px] w-[63px] md:w-[84px] md:font-medium'
+                      }`}>
+                      {t('Gender')}:
+                    </div>
+                    {open ? (
                       <div>
                         <Select
+                          className='text-[#61646B]'
                           selected={gender}
                           onChange={setGender}
                           placeholder={t('Select a gender')}
@@ -288,69 +305,55 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
                           ]}
                         />
                       </div>
-                    </div>
+                    ) : (
+                      <div className='text-xs text-[#19191B] font-medium leading-[15px] md:text-base md:leading-5 capitalize flex items-center'>
+                        {t(account.gender == 'Undisclosed' ? 'Other' : account.gender)}{' '}
+                        <Image
+                          className='h-[14px] w-[14px] md:h-[20px] md:w-[20px]'
+                          src={
+                            account.gender.toLowerCase() == 'male'
+                              ? MaleIcon
+                              : account.gender.toLowerCase() == 'female'
+                              ? FemaleIcon
+                              : OtherIcon
+                          }
+                          alt=''
+                        />
+                      </div>
+                    )}
                   </div>
-                  {(!!account.birthdate || account.gender) && (
+                )}
+                {account.bio && (
+                  <div className={`flex items-center`}>
                     <div
-                      className={`flex gap-[30px] font-medium text-[#19191B] transition-all ${
-                        open ? 'opacity-0 h-0 overflow-hidden mb-0' : 'opacity-100 md:mb-4'
+                      className={`inline-block text-medium-gray transition-all md:text-base md:leading-5 ${
+                        open
+                          ? 'text-sm leading-[18px] w-[88px] md:font-bold md:w-[130px]'
+                          : 'text-xs leading-[15px] w-[63px] md:w-[84px] md:font-medium'
                       }`}>
-                      {account.birthdate && (
-                        <div className='text-xs md:text-base md:leading-5'>
-                          {moment(account.birthdate).format('DD/MM/yyyy')}
-                        </div>
-                      )}
-                      {account.gender && (
-                        <div className='text-xs md:text-base md:leading-5 capitalize flex'>
-                          {t(account.gender == 'Undisclosed' ? 'Other' : account.gender)}{' '}
-                          <Image
-                            className='h-[16px] w-[16px] md:h-[24px] md:w-[24px]'
-                            src={
-                              account.gender.toLowerCase() == 'male'
-                                ? MaleIcon
-                                : account.gender.toLowerCase() == 'female'
-                                ? FemaleIcon
-                                : OtherIcon
-                            }
-                            alt=''
-                          />
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  {account.bio && (
-                    <div
-                      className={`font-medium transition-all overflow-hidden flex flex-col ${
-                        open ? 'opacity-0 h-0' : 'opacity-100 text-sm md:text-base mt-[6px]'
-                      }`}>
-                      <label className='text-medium-gray text-xs leading-[15px] md:text-base text-[#AFB1B6]'>
-                        {t('Bio')}:
-                      </label>
-                      <p
-                        className={`text-[#19191B] ${showMore ? '' : 'line-clamp-3 cursor-pointer'}`}
-                        onClick={() => setShowMore(!showMore)}>
-                        {account.bio}
-                      </p>
-                    </div>
-                  )}
-                  <div
-                    className={`flex transition-all overflow-hidden items-center ${
-                      !open ? 'opacity-0 h-0' : 'opacity-100 mt-[10px] md:mt-0'
-                    }`}>
-                    <div className='text-medium-gray min-w-[88px] md:min-w-[130px] text-sm md:text-base md:font-bold md:self-start'>
                       {t('Bio')}:
                     </div>
-                    <AutoGrowingTextField
-                      value={bio}
-                      onChange={setBio}
-                      placeholder={t('Write something about yourself')}
-                      className='text-sm font-normal md:font-bold leading-6 min-h-[52px] flex-1 max-w-[calc(100vw-128px)] max-h-[150px] md:min-h-[72px] rounded-lg'
-                    />
+                    {open ? (
+                      <AutoGrowingTextField
+                        value={bio}
+                        onChange={setBio}
+                        placeholder={t('Write something about yourself')}
+                        className='text-sm text-[#61646B] font-normal md:font-bold leading-6 min-h-[52px] flex-1 max-w-[calc(100vw-128px)] max-h-[150px] md:min-h-[72px] rounded-lg'
+                      />
+                    ) : (
+                      <div className='text-xs text-[#19191B] font-medium leading-[15px] md:font-medium md:text-base md:leading-5'>
+                        <p
+                          className={`text-[#19191B] ${showMore ? '' : 'line-clamp-3 cursor-pointer'}`}
+                          onClick={() => setShowMore(!showMore)}>
+                          {account.bio}
+                        </p>
+                      </div>
+                    )}
                   </div>
-                </div>
-                <div className='relative mt-[10px] md:mt-4 h-[19px] md:h-[48px]'>
+                )}
+                <div className='relative md:absolute md:bottom-0 md:w-full'>
                   <div
-                    className={`flex gap-2 md:gap-6 absolute top-0 transition-all ${
+                    className={`flex gap-2 mt-[15px] md:gap-6 absolute top-0 md:top-[unset] md:bottom-0 transition-all ${
                       open ? 'left-1/2 -translate-x-1/2 opacity-0 pointer-events-none' : 'left-[0%] opacity-100 '
                     }`}>
                     <>
@@ -394,7 +397,7 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
                     )}
                   </div>
                   <div
-                    className={`gap-6 absolute top-0 transition-all ${
+                    className={`gap-6 absolute top-0 md:top-[unset] md:bottom-0 transition-all ${
                       open
                         ? 'right-1/2 translate-x-1/2 opacity-100 md:right-0 md:translate-x-0'
                         : 'right-1/2 opacity-0 translate-x-1/2 pointer-events-none'

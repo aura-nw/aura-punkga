@@ -15,7 +15,7 @@ import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
 import { IComicDetail } from 'src/models/comic'
 import { getBlurUrl } from 'src/utils'
-import ChapterList from './ChapterList'
+import ChapterList from './chapterList'
 import { Tab } from '@headlessui/react'
 import Ninja from 'images/ninja-2.svg'
 
