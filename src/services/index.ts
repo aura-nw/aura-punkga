@@ -93,6 +93,31 @@ export const replyComment = async (content: string, ref: string, chapterId: stri
   return data
 }
 
+export const setAddress = async (address: string) => {
+  const { data } = await privateAxios.post(`${getConfig().API_URL}/api/rest/user/address`, {
+    wallet_address: address,
+  })
+  return data
+}
+
+export const getProfile = async () => {
+  const res: any = await privateAxios.get(`${getConfig().API_URL}/api/rest/user/profile`)
+  if (res) {
+    return {
+      id: res.data.authorizer_users[0].id,
+      email: res.data.authorizer_users[0].email,
+      gender: res.data.authorizer_users[0].gender,
+      nickname: res.data.authorizer_users[0].nickname,
+      picture: res.data.authorizer_users[0].picture,
+      birthdate: res.data.authorizer_users[0].birthdate,
+      bio: res.data.authorizer_users[0].bio,
+      signup_methods: res.data.authorizer_users[0].signup_methods,
+      wallet_address: res.data.authorizer_users[0].wallet_address,
+      email_verified_at: res.data.authorizer_users[0].email_verified_at,
+    }
+  }
+}
+
 export const getAllTags = async () => {
   const { data } = await axios.get(`${getConfig().API_URL}/api/rest/public/tags`)
   return data?.tags?.map((tag: any) => {

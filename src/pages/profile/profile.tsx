@@ -25,7 +25,7 @@ import { useTranslation } from 'react-i18next'
 import _ from 'lodash'
 import vi from 'date-fns/locale/vi'
 import HeadComponent from 'components/Head'
-export default function Profile({ profile, subscribeList, unsubscribe, subscribe, curentlyReading, updateProfile }) {
+export default function Profile({ subscribeList, unsubscribe, subscribe, curentlyReading, updateProfile }) {
   const { account, isSettingUp, getProfile } = useContext(Context)
   const { t } = useTranslation()
   const [birthdate, setBirthdate] = useState(null)
@@ -71,16 +71,16 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
   }, [isSettingUp, account?.verified])
 
   useEffect(() => {
-    if (profile.data) {
+    if (account) {
       setGender(
-        profile.data.gender == 'Undisclosed'
+        account.gender == 'Undisclosed'
           ? { key: 'Other', value: t('Other') }
-          : { key: profile.data.gender, value: t(profile.data.gender) }
+          : { key: account.gender, value: t(account.gender) }
       )
-      setBirthdate(profile.data.birthdate ? new Date(profile.data.birthdate).getTime() : undefined)
-      setBio(profile.data.bio)
+      setBirthdate(account.birthdate ? new Date(account.birthdate).getTime() : undefined)
+      setBio(account.bio)
     }
-  }, [profile.data])
+  }, [account])
 
   useEffect(() => {
     setGender((prev) => {
@@ -94,13 +94,13 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
 
   const updateProfileHandler = async () => {
     const form = new FormData()
-    if (gender.key && gender.key != profile.data.gender) {
+    if (gender.key && gender.key != account.gender) {
       form.append('gender', gender.key == 'Other' ? 'Undisclosed' : (gender.key as string))
     }
-    if (birthdate && new Date(profile.data.birthdate).getTime() != new Date(birthdate).getTime()) {
+    if (birthdate && new Date(account.birthdate).getTime() != new Date(birthdate).getTime()) {
       form.append('birthdate', moment(birthdate).format('yyyy-MM-DD') as string)
     }
-    if (profile.data.bio != bio) {
+    if (account.bio != bio) {
       form.append('bio', bio || '')
     }
     if ((profilePicture.current as any)?.files[0]) {
@@ -108,8 +108,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
     }
     if (Object.keys(Object.fromEntries(form)).length) {
       setLoading(true)
-      const res = await updateProfile(form)
-      await profile.callApi(true)
+      await updateProfile(form)
       await getProfile()
     }
     setSelectedFile(undefined)
@@ -137,16 +136,14 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
     )
   })
 
-  if (!profile.data) return <></>
-
-  console.log(profile.data.picture.replace('width=50', 'width=500').replace('height=50', 'height=500'))
+  if (!account) return <></>
 
   return (
     <>
-      <HeadComponent title={`${profile.data.nickname} | Punkga.me`} />
+      <HeadComponent title={`${account.name} | Punkga.me`} />
       <Header />
       <div className='pk-container py-5 px-5 md:px-0'>
-        {isSettingUp || profile.loading ? (
+        {isSettingUp ? (
           <div className='flex gap-[60px]'>
             <div className='w-[320px] h-[320px] rounded-xl object-cover bg-light-gray animate-pulse'></div>
             <div className='flex flex-col justify-between'>
@@ -195,7 +192,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                       onClick={() => (document.querySelector('#change-profile-picture-input') as any)?.click()}
                     />
                     <Image
-                      src={preview || profile.data.picture || NoImg}
+                      src={preview || account.picture || NoImg}
                       height={360}
                       width={360}
                       alt=''
@@ -219,7 +216,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                           ? 'text-sm md:text-base font-extrabold mb-0 md:leading-6'
                           : 'text-sm md:text-[32px] font-semibold md:font-extrabold md:mb-4 '
                       }`}>
-                      {profile.data.nickname}
+                      {account.name}
                     </div>
                   </div>
                   <div className={`flex ${open ? 'mt-[10px] md:mt-2' : ''}`}>
@@ -235,7 +232,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                           ? 'mb-0 text-[#0F4072] md:text-black md:leading-6'
                           : 'mb-[2px] md:mb-[8px] text-[#0F4072] md:text-second-color'
                       }`}>
-                      {profile.data.email}
+                      {account.email}
                     </div>
                   </div>
                   <div
@@ -293,25 +290,25 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                       </div>
                     </div>
                   </div>
-                  {(!!profile.data.birthdate || profile.data.gender) && (
+                  {(!!account.birthdate || account.gender) && (
                     <div
                       className={`flex gap-[30px] font-medium text-[#19191B] transition-all ${
                         open ? 'opacity-0 h-0 overflow-hidden mb-0' : 'opacity-100 md:mb-4'
                       }`}>
-                      {profile.data.birthdate && (
+                      {account.birthdate && (
                         <div className='text-xs md:text-base md:leading-5'>
-                          {moment(profile.data.birthdate).format('DD/MM/yyyy')}
+                          {moment(account.birthdate).format('DD/MM/yyyy')}
                         </div>
                       )}
-                      {profile.data.gender && (
+                      {account.gender && (
                         <div className='text-xs md:text-base md:leading-5 capitalize flex'>
-                          {t(profile.data.gender == 'Undisclosed' ? 'Other' : profile.data.gender)}{' '}
+                          {t(account.gender == 'Undisclosed' ? 'Other' : account.gender)}{' '}
                           <Image
                             className='h-[16px] w-[16px] md:h-[24px] md:w-[24px]'
                             src={
-                              profile.data.gender.toLowerCase() == 'male'
+                              account.gender.toLowerCase() == 'male'
                                 ? MaleIcon
-                                : profile.data.gender.toLowerCase() == 'female'
+                                : account.gender.toLowerCase() == 'female'
                                 ? FemaleIcon
                                 : OtherIcon
                             }
@@ -321,7 +318,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                       )}
                     </div>
                   )}
-                  {profile.data.bio && (
+                  {account.bio && (
                     <div
                       className={`font-medium transition-all overflow-hidden flex flex-col ${
                         open ? 'opacity-0 h-0' : 'opacity-100 text-sm md:text-base mt-[6px]'
@@ -332,7 +329,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                       <p
                         className={`text-[#19191B] ${showMore ? '' : 'line-clamp-3 cursor-pointer'}`}
                         onClick={() => setShowMore(!showMore)}>
-                        {profile.data.bio}
+                        {account.bio}
                       </p>
                     </div>
                   )}
@@ -364,7 +361,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
                         {t('Edit profile')}
                       </OutlineButton>
                     </>
-                    {profile.data?.signup_methods?.includes('basic_auth') ? (
+                    {account?.signupMethods?.includes('basic_auth') ? (
                       <>
                         <OutlineButton
                           className='md:hidden'
@@ -480,7 +477,7 @@ export default function Profile({ profile, subscribeList, unsubscribe, subscribe
           </div>
         </div>
       </div>
-      <SettingPasswordModal open={settingPasswordModalOpen} setOpen={setSettingPasswordModalOpen} profile={profile} />
+      <SettingPasswordModal open={settingPasswordModalOpen} setOpen={setSettingPasswordModalOpen} profile={account} />
       <ChangingPasswordModal open={changingPasswordModalOpen} setOpen={setChangingPasswordModalOpen} />
     </>
   )

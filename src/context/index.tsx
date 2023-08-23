@@ -6,8 +6,10 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 import { createContext, useEffect, useRef, useState } from 'react'
 import { IUser } from 'src/models/user'
+import { setAddress } from 'src/services'
 import { getItem, removeItem, setItem } from 'src/utils/localStorage'
 import { handleConnectWallet } from 'src/utils/signer'
+import { getProfile as getProfileService } from 'src/services'
 export const Context = createContext(null)
 export const privateAxios = axios.create()
 function ContextProvider({ children }) {
@@ -109,16 +111,22 @@ function ContextProvider({ children }) {
       if (!t) {
         throw new Error('Unauthorized access token')
       }
-      const res = await authorizerRef.getProfile({
-        Authorization: `Bearer ${t}`,
-      })
+      const res = await getProfileService()
       if (res) {
+        if (res.wallet_address) {
+          setWallet(res.wallet_address)
+        }
         setAccount({
           email: res.email,
           name: res.nickname,
           image: res.picture,
+          verified: !!res.email_verified_at,
           id: res.id,
-          verified: res.email_verified,
+          gender: res.gender,
+          birthdate: res.birthdate,
+          bio: res.bio,
+          signupMethods: res.signup_methods,
+          walletAddress: res.wallet_address,
         } as IUser)
       }
       return res
@@ -144,14 +152,17 @@ function ContextProvider({ children }) {
     return key.current.bech32Address
   }
 
-  const connectWallet = async (callback?: () => void) => {
+  const connectWallet = async (callback?: (status: string) => void) => {
     try {
       const keplr = provider == 'Coin98' ? window.coin98?.keplr : window.keplr
-      const res = await handleConnectWallet(keplr, key.current)
+      await handleConnectWallet(keplr, key.current)
+      const res = await setAddress(key.current.bech32Address)
       setItem('connected_provider', provider)
       if (res) {
         setWallet(key.current.bech32Address)
-        callback && callback()
+        callback && callback('success')
+      } else {
+        callback && callback('fail')
       }
     } catch (error) {
       console.log(error)
@@ -175,13 +186,7 @@ function ContextProvider({ children }) {
         callback && callback('success')
         setItem('token', res.access_token, new Date(Date.now() + res.expires_in * 1000))
         setLogoutTimeout(res.expires_in * 1000)
-        setAccount({
-          email: res.user.email,
-          name: res.user.nickname,
-          image: res.user.picture,
-          id: res.user.id,
-          verified: res.user.email_verified,
-        } as IUser)
+        getProfile(res.access_token)
       } else {
         callback && callback('failed', 'Admin account cannot be used for user purposes')
       }

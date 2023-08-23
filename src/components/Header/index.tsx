@@ -27,7 +27,7 @@ import ForgotPasswordModal from './ForgotPasswordModal'
 import SignInModal from './SignInModal'
 import SignUpModal from './SignUpModal'
 import SignUpSuccessModal from './SignUpSuccessModal'
-
+import CopySvg from 'images/icons/copy.svg'
 export default function Header({ className }: { className?: string }) {
   const { t } = useTranslation()
   const router = useRouter()
@@ -54,6 +54,7 @@ export default function Header({ className }: { className?: string }) {
 
   const [signInOpen, setSignInOpen] = useState(false)
   const [signUpOpen, setSignUpOpen] = useState(false)
+  const [isCopied, setIsCopied] = useState(false)
   const [signUpSuccessOpen, setSignUpSuccessOpen] = useState(false)
   const [connectWalletOpen, setConnectWalletOpen] = useState(false)
   const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false)
@@ -95,6 +96,15 @@ export default function Header({ className }: { className?: string }) {
       )
     )
   }, [])
+
+  const copyAddress = async () => {
+    navigator.clipboard.writeText(wallet)
+    setIsCopied(true)
+    _.debounce(() => {
+      _.delay(() => setIsCopied(false), 3000)
+    }, 1000)()
+  }
+
   return (
     <>
       <div
@@ -218,27 +228,31 @@ export default function Header({ className }: { className?: string }) {
                     </FilledButton>
                   </DropdownToggle>
                   {wallet ? (
-                    <DropdownMenu customClass='right-0 min-w-[200px]'>
+                    <DropdownMenu customClass='right-0 min-w-[300px]'>
                       <div className='p-5 flex flex-col gap-5'>
-                        <div className='flex justify-center items-center'>
-                          <Image src={c98} alt='c98' />
-                          <div className='ml-[10px] font-[500]'>{t('Connected with coin 98')}</div>
+                        <div
+                          className='flex justify-between items-center text-second-color text-sm bg-light-gray p-[10px] rounded-xl'
+                          onClick={copyAddress}>
+                          {`${wallet.substr(0, 8)}...${wallet.substr(-8)}`}
+                          <div className='flex items-center'>
+                            <span
+                              className={`transition-all w-fit overflow-hidden mr-2 ${
+                                isCopied ? 'max-w-[90px]' : 'max-w-[0px]'
+                              }`}>
+                              Copied
+                            </span>
+                            <span>
+                              <Image src={CopySvg} alt='' />
+                            </span>
+                          </div>
                         </div>
-                        <div className='flex'>
-                          <div className='flex-auto w-[60%]'></div>
-                          <div className='flex-auto w-[10%]'></div>
-                          <div className='flex-auto w-[30%]'></div>
-                        </div>
-                        <SubFilledButton className='w-full' size='lg' onClick={unlinkWallet}>
-                          {t('Disconnect Wallet')}
-                        </SubFilledButton>
                         <div className='mt-[10px]'>
                           <div onClick={() => router.push('/profile')}>
-                            <strong>{t('My profile')}</strong>
+                            <strong className='text-sm'>{t('My profile')}</strong>
                           </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={logout}>
-                            <strong>{t('Log out')}</strong>
+                            <strong className='text-sm'>{t('Log out')}</strong>
                           </div>
                         </div>
                       </div>
@@ -248,15 +262,15 @@ export default function Header({ className }: { className?: string }) {
                       <div className='p-5 flex flex-col gap-5'>
                         <div className='mt-[10px]'>
                           <div onClick={() => router.push('/profile')}>
-                            <strong>{t('My profile')}</strong>
+                            <strong className='text-sm'>{t('My profile')}</strong>
                           </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={() => setConnectWalletOpen(true)}>
-                            <strong>{t('Link Wallet')}</strong>
+                            <strong className='text-sm'>{t('Link Wallet')}</strong>
                           </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={logout}>
-                            <strong>{t('Log out')}</strong>
+                            <strong className='text-sm'>{t('Log out')}</strong>
                           </div>
                         </div>
                       </div>
@@ -384,20 +398,24 @@ export default function Header({ className }: { className?: string }) {
                     </FilledButton>
                   </DropdownToggle>
                   {wallet ? (
-                    <DropdownMenu customClass='right-[50%] translate-x-[50%] min-w-[200px]'>
+                    <DropdownMenu customClass='right-[50%] translate-x-[50%] min-w-[200px] w-full max-w-full'>
                       <div className='p-5 flex flex-col gap-5'>
-                        <div className='flex justify-center items-center'>
-                          <Image src={c98} alt='c98' />
-                          <div className='ml-[10px] font-[500]'>{t('Connected with coin 98')}</div>
+                        <div
+                          className='flex justify-between items-center text-second-color bg-light-gray p-[10px] rounded-xl'
+                          onClick={copyAddress}>
+                          {`${wallet.substr(0, 8)}...${wallet.substr(-8)}`}
+                          <div className='flex items-center'>
+                            <span
+                              className={`transition-all w-fit overflow-hidden mr-2 ${
+                                isCopied ? 'max-w-[90px]' : 'max-w-[0px]'
+                              }`}>
+                              Copied
+                            </span>
+                            <span>
+                              <Image src={CopySvg} alt='' />
+                            </span>
+                          </div>
                         </div>
-                        <div className='flex'>
-                          <div className='flex-auto w-[60%]'></div>
-                          <div className='flex-auto w-[10%]'></div>
-                          <div className='flex-auto w-[30%]'></div>
-                        </div>
-                        <SubFilledButton className='w-full' size='lg' onClick={unlinkWallet}>
-                          {t('Disconnect Wallet')}
-                        </SubFilledButton>
                         <div className='mt-[10px]'>
                           <div onClick={() => router.push('/profile')}>
                             <strong>{t('My profile')}</strong>
@@ -416,10 +434,10 @@ export default function Header({ className }: { className?: string }) {
                           <div onClick={() => router.push('/profile')}>
                             <strong>{t('My profile')}</strong>
                           </div>
-                          {/* <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
+                          <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={() => setConnectWalletOpen(true)}>
                             <strong>{t('Link Wallet')}</strong>
-                          </div> */}
+                          </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={logout}>
                             <strong>{t('Log out')}</strong>

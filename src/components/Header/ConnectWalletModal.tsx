@@ -18,6 +18,14 @@ export default function ConnectWalletModal({ onClose }) {
     setStep(2)
   }
 
+  const connectWalletCallback = (status: string) => {
+    if (status === 'success') {
+      onClose()
+    } else {
+      alert('Link wallet failed')
+    }
+  }
+
   return (
     <div
       className={`flex flex-col p-5 gap-[10px] transition-all duration-300 overflow-hidden justify-start ${
@@ -62,13 +70,16 @@ export default function ConnectWalletModal({ onClose }) {
             <SubFilledButton className='w-full hidden md:block' size='lg' onClick={() => setStep(1)}>
               {t('Change Wallet')}
             </SubFilledButton>
-            <FilledButton className='w-full hidden md:block' size='lg' onClick={() => connectWallet(onClose)}>
+            <FilledButton
+              className='w-full hidden md:block'
+              size='lg'
+              onClick={() => connectWallet(connectWalletCallback)}>
               {t('Link Wallet')}
             </FilledButton>
             <SubFilledButton className='w-full md:hidden' size='md' onClick={() => setStep(1)}>
               {t('Change Wallet')}
             </SubFilledButton>
-            <FilledButton className='w-full md:hidden' size='md' onClick={() => connectWallet(onClose)}>
+            <FilledButton className='w-full md:hidden' size='md' onClick={() => connectWallet(connectWalletCallback)}>
               {t('Link Wallet')}
             </FilledButton>
           </div>

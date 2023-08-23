@@ -10,21 +10,6 @@ import { getItem } from 'src/utils/localStorage'
 const withApi = (Component: React.FC<any>) => (props: any) => {
   const { account } = useContext(Context)
   const config = getConfig()
-  const getProfile = async () => {
-    const res: any = await privateAxios.get(`${config.API_URL}/api/rest/user/profile`)
-    if (res) {
-      return {
-        id: res.data.authorizer_users[0].id,
-        email: res.data.authorizer_users[0].email,
-        gender: res.data.authorizer_users[0].gender,
-        nickname: res.data.authorizer_users[0].nickname,
-        picture: res.data.authorizer_users[0].picture,
-        birthdate: res.data.authorizer_users[0].birthdate,
-        bio: res.data.authorizer_users[0].bio,
-        signup_methods: res.data.authorizer_users[0].signup_methods,
-      }
-    }
-  }
   const getSubscribeList = async () => {
     const res: any = await axios.get(`${config.API_URL}/api/rest/public/profiles/${account?.id}/subscribe`)
     return res.data?.subscribers?.map(({ subscribers_manga: m }: any) => {
@@ -165,7 +150,6 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     await privateAxios.put(`${config.REST_API_URL}/user/update-profile`, data)
   }
 
-  const profile = useApi<any>(getProfile, !!account?.verified, [account?.verified])
   const subscribeList = useApi<IComic[]>(getSubscribeList, !!account?.id && !!account?.verified, [
     account?.id,
     account?.verified,
@@ -177,7 +161,6 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   return (
     <Component
       {...props}
-      profile={profile}
       subscribeList={subscribeList}
       curentlyReading={curentlyReading}
       unsubscribe={unsubscribe}
