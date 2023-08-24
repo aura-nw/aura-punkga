@@ -161,7 +161,7 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
           </div>
         ) : (
           <>
-            <div className={`flex gap-[10px] md:gap-[60px] flex-wrap`}>
+            <div className={`flex gap-[10px] md:gap-[60px]`}>
               <div
                 className={`flex transition-all justify-center md:max-w-[280px] p-[5px] md:p-0 ${
                   open ? 'w-full md:w-2/5' : 'w-[120px] h-[120px] md:w-2/5 md:h-auto'
@@ -203,13 +203,13 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
                 </div>
               </div>
               <div
-                className={`flex-[1_0_180px] flex flex-col relative ${
+                className={`flex-[1_0_80px] flex flex-col relative ${
                   open ? 'gap-[10px]' : 'gap-[5px] md:gap-[10px] md:justify-between'
                 }`}>
                 <div className={`flex flex-col ${open ? 'gap-[10px]' : 'gap-[5px]'}`}>
                   <div className='flex'>
                     <div
-                      className={`inline-block text-medium-gray transition-all md:font-bold text-sm md:text-base leading-[18px] md:leading-10 ${
+                      className={`shrink-0 text-medium-gray transition-all md:font-bold text-sm md:text-base leading-[18px] md:leading-10 ${
                         open ? 'w-[88px] md:w-[130px] opacity-100 md:leading-6' : 'w-0 h-0 opacity-0'
                       }`}>
                       {t('Username')}:
@@ -225,7 +225,7 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
                   </div>
                   <div className={`flex`}>
                     <div
-                      className={`inline-block text-medium-gray transition-all md:font-bold text-sm md:text-base leading-[18px] md:leading-10 ${
+                      className={`shrink-0 text-medium-gray transition-all md:font-bold text-sm md:text-base leading-[18px] md:leading-10 ${
                         open ? 'w-[88px] md:w-[130px] opacity-100 md:leading-6' : 'w-0 h-0 opacity-0'
                       }`}>
                       {t('Email')}:
@@ -236,10 +236,10 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
                           ? 'mb-0 text-[#0F4072] md:text-[#61646B] md:leading-6 md:font-bold'
                           : 'text-[#0F4072] md:text-second-color'
                       }`}>
-                      <span className={open ? 'hidden' : ''}>
+                      <span className={open ? 'hidden' : 'shrink-0'}>
                         <Image src={LinkSvg} alt='' className='md:w-4 md:h-4' />
                       </span>
-                      {account.email}
+                      <div className='truncate'>{account.email}</div>
                     </div>
                   </div>
                 </div>
@@ -247,7 +247,7 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
                   {account.birthdate && (
                     <div className={`flex items-center`}>
                       <div
-                        className={`inline-block text-medium-gray transition-all md:text-base md:leading-5 ${
+                        className={`shrink-0 text-medium-gray transition-all md:text-base md:leading-5 ${
                           open
                             ? 'text-sm leading-[18px] w-[88px] md:font-bold md:w-[130px]'
                             : 'text-xs leading-[15px] w-[63px] md:w-[84px] md:font-medium'
@@ -277,7 +277,7 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
                   {account.gender && (
                     <div className={`flex items-center`}>
                       <div
-                        className={`inline-block text-medium-gray transition-all md:text-base md:leading-5 ${
+                        className={`shrink-0 text-medium-gray transition-all md:text-base md:leading-5 ${
                           open
                             ? 'text-sm leading-[18px] w-[88px] md:font-bold md:w-[130px]'
                             : 'text-xs leading-[15px] w-[63px] md:w-[84px] md:font-medium'
@@ -329,7 +329,7 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
                   {account.bio && (
                     <div className={`flex items-center`}>
                       <div
-                        className={`inline-block text-medium-gray transition-all md:text-base md:leading-5 ${
+                        className={`shrink-0 text-medium-gray transition-all md:text-base md:leading-5 ${
                           open
                             ? 'text-sm leading-[18px] w-[88px] md:font-bold md:w-[130px]'
                             : 'text-xs leading-[15px] w-[63px] md:w-[84px] md:font-medium'
