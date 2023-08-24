@@ -255,7 +255,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             </Modal>
           </>
         )
-      ) : validateEmail(account?.email) ? (
+      ) : !validateEmail(account?.email) ? (
         <>
           <Modal open={open} setOpen={setOpen}>
             <div className='p-6 flex flex-col w-[322px]'>
