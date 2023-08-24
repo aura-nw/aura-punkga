@@ -138,7 +138,6 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
   })
 
   if (!account) return <></>
-
   return (
     <>
       <HeadComponent title={`${account.name} | Punkga.me`} />
@@ -193,7 +192,7 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
                       onClick={() => (document.querySelector('#change-profile-picture-input') as any)?.click()}
                     />
                     <Image
-                      src={preview || account.picture || NoImg}
+                      src={preview || account.image || NoImg}
                       height={360}
                       width={360}
                       alt=''
