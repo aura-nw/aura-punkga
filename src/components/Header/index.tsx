@@ -228,18 +228,19 @@ export default function Header({ className }: { className?: string }) {
                     </FilledButton>
                   </DropdownToggle>
                   {wallet ? (
-                    <DropdownMenu customClass='right-0 min-w-[300px]'>
+                    <DropdownMenu customClass='right-0 min-w-[300px] !overflow-visible w-[90vwd]'>
                       <div className='p-5 flex flex-col gap-5'>
                         <div
-                          className='flex justify-between items-center text-second-color text-sm bg-light-gray p-[10px] rounded-xl'
+                          className='flex justify-between items-center text-second-color text-sm bg-light-gray p-[10px] rounded-xl relative'
                           onClick={copyAddress}>
                           {`${wallet.substr(0, 8)}...${wallet.substr(-8)}`}
                           <div className='flex items-center'>
                             <span
-                              className={`transition-all w-fit overflow-hidden mr-2 ${
-                                isCopied ? 'max-w-[90px]' : 'max-w-[0px]'
+                              className={`transition-all w-fit mr-2 absolute bottom-[110%] left-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
+                                isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
                               }`}>
-                              Copied
+                              <span className='absolute border-[5px] border-light-gray border-r-transparent border-b-transparent border-l-transparent top-full left-1/2 -translate-x-1/2'></span>
+                              {t('Copied')}
                             </span>
                             <span>
                               <Image src={CopySvg} alt='' />
@@ -398,18 +399,19 @@ export default function Header({ className }: { className?: string }) {
                     </FilledButton>
                   </DropdownToggle>
                   {wallet ? (
-                    <DropdownMenu customClass='right-[50%] translate-x-[50%] min-w-[200px] w-full max-w-full'>
+                    <DropdownMenu customClass='right-[50%] translate-x-[50%] min-w-[200px] w-full max-w-full !overflow-visible'>
                       <div className='p-5 flex flex-col gap-5'>
                         <div
-                          className='flex justify-between items-center text-second-color bg-light-gray p-[10px] rounded-xl'
+                          className='flex justify-between items-center text-second-color bg-light-gray p-[10px] rounded-xl relative'
                           onClick={copyAddress}>
                           {`${wallet.substr(0, 8)}...${wallet.substr(-8)}`}
                           <div className='flex items-center'>
                             <span
-                              className={`transition-all w-fit overflow-hidden mr-2 ${
-                                isCopied ? 'max-w-[90px]' : 'max-w-[0px]'
+                              className={`transition-all w-fit mr-2 absolute bottom-[110%] left-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
+                                isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
                               }`}>
-                              Copied
+                              <span className='absolute border-[5px] border-light-gray border-r-transparent border-b-transparent border-l-transparent top-full left-1/2 -translate-x-1/2'></span>
+                              {t('Copied')}
                             </span>
                             <span>
                               <Image src={CopySvg} alt='' />
