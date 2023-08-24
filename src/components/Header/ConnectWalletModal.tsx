@@ -29,24 +29,24 @@ export default function ConnectWalletModal({ onClose }) {
   return (
     <div
       className={`flex flex-col p-5 gap-[10px] transition-all duration-300 overflow-hidden justify-start ${
-        step == 1 ? 'h-[222px]' : 'h-[300px] min-[430px]:h-[320px] md:h-[338px]'
+        step == 1 ? 'h-[222px] md:w-[380px]' : 'h-[300px] min-[430px]:h-[320px] md:h-[348px]'
       }`}>
-      <p className='text-2xl leading-7 font-semibold text-center '>{t('Link Wallet')}</p>
+      <p className='text-2xl leading-7 font-semibold text-center mt-[14px]'>{t('Link wallet')}</p>
       <div className='relative'>
         <div
-          className={`top-0 w-full flex flex-col gap-5 transition-all duration-300 absolute ${
+          className={`top-0 w-full flex flex-col gap-[10px] transition-all duration-300 absolute ${
             step == 1 ? 'opacity-100 z-10 ' : 'opacity-0 -z-10'
           }`}>
           <div
-            className='flex items-center justify-between bg-light-medium-gray text-gray-600 p-[10px] rounded-xl cursor-pointer'
+            className='flex items-center justify-between bg-[#F1F2F4] text-subtle-dark p-[10px] rounded-xl cursor-pointer'
             onClick={() => connectWalletHandler('Coin98')}>
-            <span className='text-base leading-10 font-medium'>Coin98</span>
+            <span className='text-2xl leading-10 font-medium'>Coin98</span>
             <Image src={C98} alt='' />
           </div>
           <div
-            className='flex items-center justify-between bg-light-medium-gray text-gray-600 p-[10px] rounded-xl cursor-pointer'
+            className='flex items-center justify-between bg-[#F1F2F4] text-subtle-dark p-[10px] rounded-xl cursor-pointer'
             onClick={() => connectWalletHandler('Keplr')}>
-            <span className='text-base leading-10 font-medium'>Keplr</span>
+            <span className='text-2xl leading-10 font-medium'>Keplr</span>
             <Image src={Keplr} alt='' />
           </div>
         </div>
@@ -54,19 +54,19 @@ export default function ConnectWalletModal({ onClose }) {
           className={`top-0 absolute w-full flex flex-col gap-5 transition-all overflow-hidden duration-300 ${
             step == 2 ? 'opacity-100 z-10 ' : 'opacity-0 -z-10 h-0'
           }`}>
-          <div className='font-semibold text-md sm:text-lg leading-6 text-center'>
+          <div className='font-semibold text-sm sm:text-lg sm:leading-6 text-center h-6'>
             {t('Connect to this wallet address')}?
           </div>
-          <div className='p-[10px] rounded-xl bg-light-medium-gray text-gray-600 font-medium flex md:text-base min-[430px]:text-sm min-[390px]:text-xs text-[11px] justify-center'>
+          <div className='p-[10px] rounded-xl bg-light-medium-gray text-subtle-dark font-medium flex md:text-base min-[430px]:text-sm min-[390px]:text-xs text-[11px] justify-center'>
             {wallet}
           </div>
           <div className='flex p-[10px] rounded-xl bg-light-yellow gap-[10px]'>
             <ExclamationTriangleIcon className='text-medium-yellow w-6 h-6 min-w-[24px]' />
-            <p className='text-gray-600 font-medium max-w-[350px] text-xs min-[430px]:text-sm md:text-base'>
+            <p className='text-subtle-dark font-medium max-w-[350px] text-xs min-[430px]:text-sm md:text-base'>
               {t('link-wallet-warning')}
             </p>
           </div>
-          <div className='flex gap-[10px] md:-mt-[10px]'>
+          <div className='flex gap-[10px] -mt-[10px]'>
             <SubFilledButton className='w-full hidden md:block' size='lg' onClick={() => setStep(1)}>
               {t('Change Wallet')}
             </SubFilledButton>

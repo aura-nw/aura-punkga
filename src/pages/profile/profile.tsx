@@ -161,7 +161,7 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
           </div>
         ) : (
           <>
-            <div className={`flex gap-[10px] md:gap-[60px]`}>
+            <div className={`flex gap-[10px] md:gap-[60px] ${open ? 'flex-wrap' : ''}`}>
               <div
                 className={`flex transition-all justify-center md:max-w-[280px] p-[5px] md:p-0 ${
                   open ? 'w-full md:w-2/5' : 'w-[120px] h-[120px] md:w-2/5 md:h-auto'
@@ -234,12 +234,12 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
                       className={`transition-all text-sm md:text-base leading-[18px] md:leading-5 flex gap-1 items-center ${
                         open
                           ? 'mb-0 text-[#0F4072] md:text-[#61646B] md:leading-6 md:font-bold'
-                          : 'text-[#0F4072] md:text-second-color'
+                          : 'text-[#0F4072] md:text-second-color text-xs'
                       }`}>
                       <span className={open ? 'hidden' : 'shrink-0'}>
                         <Image src={LinkSvg} alt='' className='md:w-4 md:h-4' />
                       </span>
-                      <div className='truncate'>{account.email}</div>
+                      <p className='break-all'>{account.email}</p>
                     </div>
                   </div>
                 </div>
@@ -327,7 +327,7 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
                     </div>
                   )}
                   {account.bio && (
-                    <div className={`flex items-center`}>
+                    <div className={`flex ${open ? 'items-center' : 'items-start'}`}>
                       <div
                         className={`shrink-0 text-medium-gray transition-all md:text-base md:leading-5 ${
                           open
