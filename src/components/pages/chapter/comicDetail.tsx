@@ -8,7 +8,7 @@ import CalendarIcon from 'images/icons/solar_calendar-linear.svg'
 import moment from 'moment'
 import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
-import { Fragment, useContext, useState } from 'react'
+import { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import mockBanner from 'src/assets/images/mockup3.png'
 import mockAvar from 'src/assets/images/mockup4.png'
 import { LanguageType } from 'src/constants/global.types'
@@ -56,6 +56,13 @@ export default function ComicDetail({
   const [expandDescription, setExpandDescription] = useState(false)
   const { t } = useTranslation()
   const { account } = useContext(Context)
+  const tabRef = useRef<any>()
+
+  useEffect(() => {
+    if (!expandDetail) {
+      tabRef.current?.click()
+    }
+  }, [expandDetail])
 
   const subscribeHandler = (isSub: boolean) => {
     if (account?.verified && account?.name) {
@@ -109,7 +116,10 @@ export default function ComicDetail({
           className={`${expandDetail ? 'h-[280px]' : 'h-[160px]'} duration-500 transition-all object-cover w-full`}
           alt=''
         />
-        <div className='px-[16px] flex flex-col gap-[10px] mt-2 2xl:px-[60px]'>
+        <div
+          className={`px-[16px] flex flex-col gap-[10px] 2xl:px-[60px] transition-all ${
+            expandDetail ? 'mt-4' : 'mt-[10px]'
+          }`}>
           <div className={` duration-500 transition-all flex gap-5`}>
             <Image
               src={data.image || mockAvar}
@@ -117,26 +127,25 @@ export default function ComicDetail({
               blurDataURL={getBlurUrl()}
               height={320}
               width={240}
-              className={`${expandDetail ? ' w-[240px] aspect-[24/32]' : ' w-[120px] aspect-[12/16]'} ${
-                expandDetail ? ' mt-[-180px]' : ' mt-[-50px]'
+              className={`${expandDetail ? ' w-[240px] h-[320px]' : ' w-[120px] h-[160px]'} ${
+                expandDetail ? ' mt-[-198px]' : ' mt-[-58px]'
               } duration-500 transition-all object-cover rounded-[15px] overflow-hidden bg-medium-gray`}
               alt=''
             />
-            <div className='flex-1 flex flex-col gap-[10px]'>
-              <div className={`font-bold ${expandDetail ? 'text-black' : 'text-second-color'} transition-all text-2xl`}>
+            <div className={`flex-1 flex flex-col ${expandDetail ? 'gap-[5px]' : 'gap-[10px]'}`}>
+              <div
+                className={`font-bold ${
+                  expandDetail ? 'text-black' : 'text-second-color'
+                } transition-all text-2xl leading-6 flex items-start gap-[10px]`}>
                 <span className={`${!expandDetail ? 'line-clamp-1' : ''}`}>
                   {data[selectedLanguage.shortLang]?.title}
                 </span>
-                {expandDetail && (
-                  <span className='ml-3'>
-                    <StatusLabel status={data.status?.type}>{t(data.status?.text)}</StatusLabel>
-                  </span>
-                )}
+                {expandDetail && <StatusLabel status={data.status?.type}>{t(data.status?.text)}</StatusLabel>}
               </div>
               <p
                 className={`${
                   expandDetail ? 'opacity-100 max-h-[100px]' : 'opacity-0 max-h-0 mt-[-10px]'
-                } font-semibold text-xl duration-500 transition-all text-second-color overflow-auto`}>
+                } font-semibold text-xl leading-6 duration-500 transition-all text-second-color overflow-auto`}>
                 {data.authors.map((author, index) => (
                   <Fragment key={index}>
                     <span className='text-second-color font-[600] first:hidden'>, </span>
@@ -144,7 +153,7 @@ export default function ComicDetail({
                   </Fragment>
                 ))}
               </p>
-              <p className=''>
+              <p className='text-subtle-dark'>
                 {' '}
                 <strong>{data.views?.toLocaleString('en-US')}</strong> {t('views')} •{' '}
                 <strong>{comicLikes?.toLocaleString('en-US')}</strong> {t('likes')}
@@ -159,8 +168,8 @@ export default function ComicDetail({
                       </div>
                     </FilledButton>
                   ) : (
-                    <OutlineButton>
-                      <div onClick={() => subscribeHandler(true)} className='h-5 flex items-start '>
+                    <OutlineButton className=''>
+                      <div onClick={() => subscribeHandler(true)} className='flex items-start '>
                         <BellAlertIconOutline className='w-6 h-6 mr-2 inline-block ' />
                         {t('Subscribe')}
                       </div>
@@ -246,15 +255,17 @@ export default function ComicDetail({
                 expandDetail ? 'opacity-100 h-9 mt-10' : 'opacity-0 h-0 mt-0'
               }`}>
               <span className='w-full absolute bottom-0 h-[1px] bg-medium-gray'></span>
-              <Tab className='ui-selected:text-second-color w-[150px] z-10 relative ui-selected:font-extrabold ui-selected:border-b-[2px] border-second-color py-[5px] text-2xl leading-6 font-medium'>
+              <Tab
+                ref={tabRef}
+                className='ui-selected:text-second-color w-[150px] text-medium-gray z-10 relative ui-selected:font-extrabold ui-selected:border-b-[2px] border-second-color py-[5px] text-2xl leading-6 font-medium'>
                 <div className=''>{t('Chapters')}</div>
               </Tab>
-              <Tab className='ui-selected:text-second-color w-[150px] z-10 relative ui-selected:font-extrabold ui-selected:border-b-[2px] border-second-color py-[5px] text-2xl leading-6 font-medium'>
+              <Tab className='ui-selected:text-second-color w-[150px] text-medium-gray z-10 relative ui-selected:font-extrabold ui-selected:border-b-[2px] border-second-color py-[5px] text-2xl leading-6 font-medium'>
                 <div className=''>NFTs</div>
               </Tab>
             </Tab.List>
-            <Tab.Panels className='h-full flex-1 flex flex-col mt-5'>
-              <Tab.Panel>
+            <Tab.Panels className='h-full flex-1 flex flex-col'>
+              <Tab.Panel className='mt-5'>
                 <ChapterList
                   data={data}
                   expandDetail={expandDetail}
@@ -271,7 +282,7 @@ export default function ComicDetail({
               <Tab.Panel className='flex-1 flex flex-col'>
                 <div className='flex-1 w-full flex flex-col items-center justify-center mt-[136px]'>
                   <Image src={Ninja} alt='' className='h-[260px] aspect-square mx-auto' />
-                  <div className='font-extrabold text-2xl leading-6 text-subtle-dark mt-[10px]'>Artist Composing</div>
+                  <div className='font-extrabold text-2xl leading-6 mt-[10px]'>Artist Composing</div>
                 </div>
               </Tab.Panel>
             </Tab.Panels>
