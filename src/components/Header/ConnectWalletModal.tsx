@@ -11,25 +11,36 @@ export default function ConnectWalletModal({ onClose }) {
   const [step, setStep] = useState(1)
   const [wallet, setWallet] = useState('')
   const { getWallet, connectWallet } = useContext(Context)
+  const [errorMsg, setErrorMsg] = useState('')
   const { t } = useTranslation()
   const connectWalletHandler = async (provider) => {
     const w = await getWallet(provider)
-    setWallet(w)
-    setStep(2)
+    if (w) {
+      setWallet(w)
+      setStep(2)
+    }
   }
 
-  const connectWalletCallback = (status: string) => {
+  const connectWalletCallback = (status: string, error?: any) => {
     if (status === 'success') {
       onClose()
     } else {
-      alert('Link wallet failed')
+      if (error?.response?.data?.error.includes('authorizer_users_wallet_address_key')) {
+        setErrorMsg(t('This wallet address was linked to another account'))
+      } else {
+        alert(t('Link wallet failed'))
+      }
     }
   }
 
   return (
     <div
       className={`flex flex-col p-5 gap-[10px] transition-all duration-300 overflow-hidden justify-start ${
-        step == 1 ? 'h-[222px] md:w-[380px]' : 'h-[300px] min-[430px]:h-[320px] md:h-[348px]'
+        step == 1
+          ? 'h-[222px] md:w-[380px]'
+          : `h-[300px] min-[430px]:h-[320px] md:h-[348px] ${
+              errorMsg ? 'h-[312px] min-[430px]:h-[332px] md:h-[360px]' : ''
+            }`
       }`}>
       <p className='text-2xl leading-7 font-semibold text-center mt-[14px]'>{t('Link wallet')}</p>
       <div className='relative'>
@@ -60,6 +71,7 @@ export default function ConnectWalletModal({ onClose }) {
           <div className='p-[10px] rounded-xl bg-light-medium-gray text-subtle-dark font-medium flex md:text-base min-[430px]:text-sm min-[390px]:text-xs text-[11px] justify-center'>
             {wallet}
           </div>
+          {errorMsg && <div className='-mb-[10px] -mt-[15px] text-[#e50000] text-xs'>{errorMsg}</div>}
           <div className='flex p-[10px] rounded-xl bg-light-yellow gap-[10px]'>
             <ExclamationTriangleIcon className='text-medium-yellow w-6 h-6 min-w-[24px]' />
             <p className='text-subtle-dark font-medium max-w-[350px] text-xs min-[430px]:text-sm md:text-base'>
@@ -67,19 +79,40 @@ export default function ConnectWalletModal({ onClose }) {
             </p>
           </div>
           <div className='flex gap-[10px] -mt-[10px]'>
-            <SubFilledButton className='w-full hidden md:block' size='lg' onClick={() => setStep(1)}>
+            <SubFilledButton
+              className='w-full hidden md:block'
+              size='lg'
+              onClick={() => {
+                setErrorMsg('')
+                setStep(1)
+              }}>
               {t('Change Wallet')}
             </SubFilledButton>
             <FilledButton
               className='w-full hidden md:block'
               size='lg'
-              onClick={() => connectWallet(connectWalletCallback)}>
+              onClick={() => {
+                setErrorMsg('')
+                connectWallet(connectWalletCallback)
+              }}>
               {t('Link Wallet')}
             </FilledButton>
-            <SubFilledButton className='w-full md:hidden' size='md' onClick={() => setStep(1)}>
+            <SubFilledButton
+              className='w-full md:hidden'
+              size='md'
+              onClick={() => {
+                setErrorMsg('')
+                setStep(1)
+              }}>
               {t('Change Wallet')}
             </SubFilledButton>
-            <FilledButton className='w-full md:hidden' size='md' onClick={() => connectWallet(connectWalletCallback)}>
+            <FilledButton
+              className='w-full md:hidden'
+              size='md'
+              onClick={() => {
+                setErrorMsg('')
+                connectWallet(connectWalletCallback)
+              }}>
               {t('Link Wallet')}
             </FilledButton>
           </div>

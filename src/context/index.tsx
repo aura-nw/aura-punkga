@@ -10,6 +10,7 @@ import { setAddress } from 'src/services'
 import { getItem, removeItem, setItem } from 'src/utils/localStorage'
 import { handleConnectWallet } from 'src/utils/signer'
 import { getProfile as getProfileService } from 'src/services'
+import { useTranslation } from 'react-i18next'
 export const Context = createContext(null)
 export const privateAxios = axios.create()
 function ContextProvider({ children }) {
@@ -19,6 +20,7 @@ function ContextProvider({ children }) {
   const key = useRef<Key>()
   const [provider, setProvider] = useState<'Coin98' | 'Keplr'>()
   const router = useRouter()
+  const { t } = useTranslation()
   const searchParams = useSearchParams()
   const accessTokenParam = searchParams.get('access_token')
   const expiresInParam = searchParams.get('expires_in')
@@ -137,11 +139,11 @@ function ContextProvider({ children }) {
   }
   const getWallet = async (p: 'Coin98' | 'Keplr') => {
     if (p == 'Coin98' && !window.coin98?.keplr) {
-      alert('Please install Coin98 wallet extension.')
+      alert(t('Please install Coin98 wallet extension'))
       return
     }
     if (p == 'Keplr' && !window.keplr) {
-      alert('Please install Keplr wallet extension.')
+      alert(t('Please install Keplr wallet extension'))
       return
     }
     setProvider(p)
@@ -152,7 +154,7 @@ function ContextProvider({ children }) {
     return key.current.bech32Address
   }
 
-  const connectWallet = async (callback?: (status: string) => void) => {
+  const connectWallet = async (callback?: (status: string, error?: any) => void) => {
     try {
       const keplr = provider == 'Coin98' ? window.coin98?.keplr : window.keplr
       await handleConnectWallet(keplr, key.current)
@@ -165,6 +167,7 @@ function ContextProvider({ children }) {
         callback && callback('fail')
       }
     } catch (error) {
+      callback && callback('fail', error)
       console.log(error)
     }
   }

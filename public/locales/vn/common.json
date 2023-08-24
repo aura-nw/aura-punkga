@@ -156,5 +156,9 @@
   "Change Wallet": "Thay đổi ví",
   "Other": "Khác",
   "Enter username": "Nhập tên tài khoản",
-  "This email address already exists": "Email đã tồn tại trên hệ thống"
+  "This email address already exists": "Email đã tồn tại trên hệ thống",
+  "Please install Coin98 wallet extension": "Vui lòng cài đặt ví Coin98",
+  "Please install Keplr wallet extension": "Vui lòng cài đặt ví Keplr",
+  "Link wallet failed": "Kết nối ví thất bại",
+  "This wallet address was linked to another account": "Địa chỉ ví đã được kết nối với tài khoản khác"
 }
