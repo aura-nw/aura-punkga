@@ -295,13 +295,14 @@ function ContextProvider({ children }) {
   async function resendVerifyEmail(email: string, identifier?: string) {
     try {
       await authorizerRef.graphqlQuery({
-        query: `mutation ResendVerifyEmail($email: String!) {
-        resend_verify_email(params: {identifier: ${identifier || 'basic_auth_signup'}, email: $email}) {
+        query: `mutation ResendVerifyEmail($identifier: String!, $email: String!) {
+        resend_verify_email(params: {identifier: $identifier, email: $email}) {
             message
         }
     }`,
         variables: {
           email,
+          identifier,
         },
       })
     } catch (error) {
