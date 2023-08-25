@@ -113,7 +113,7 @@ export default function Header({ className }: { className?: string }) {
         }`}></div>
       <header
         className={`border-b-2 border-light-gray border-solid sticky w-full top-0 z-50 transition-all duration-300 backdrop-blur-[15px] !bg-transparent ${className}`}>
-        <nav className='md:hidden pk-container py-[10px] px-5'>
+        <nav className='lg:hidden pk-container py-[10px] px-5'>
           <div className='flex justify-between items-center gap-2'>
             <div onClick={() => router.push('/')}>
               <Image src={Logo} alt='header logo' className='h-[40px] w-auto' />
@@ -221,15 +221,17 @@ export default function Header({ className }: { className?: string }) {
                           height={36}
                           className='rounded-full object-cover w-[18px] aspect-square'
                         />
-                        <span className='max-w-[250px] text-ellipsis overflow-hidden text-sm leading-[125%] font-bold'>
-                          {`${account.name}${wallet ? ` · ${wallet.substr(0, 4)} **** **** ${wallet.substr(-4)}` : ''}`}
-                        </span>
+                        <span className='max-w-[150px] truncate'>{account.name}</span>
+                        {wallet && <span className='w-[14px]'>·</span>}
+                        {wallet && (
+                          <span className='font-medium'>{`${wallet.substr(0, 4)} **** ${wallet.substr(-4)}`}</span>
+                        )}
                       </div>
                     </FilledButton>
                   </DropdownToggle>
                   {wallet ? (
-                    <DropdownMenu customClass='right-0 min-w-[300px] !overflow-visible w-[90vwd]'>
-                      <div className='p-5 flex flex-col gap-5'>
+                    <DropdownMenu customClass='right-0 min-w-[300px] !overflow-visible w-[90dvw] max-w-[390px] mt-[10px]'>
+                      <div className='p-5 flex flex-col gap-[10px]'>
                         <div
                           className='flex justify-between items-center text-second-color text-sm bg-light-gray p-[10px] rounded-xl relative'
                           onClick={copyAddress}>
@@ -247,11 +249,11 @@ export default function Header({ className }: { className?: string }) {
                             </span>
                           </div>
                         </div>
-                        <div className='mt-[10px]'>
+                        <div>
                           <div onClick={() => router.push('/profile')}>
                             <strong className='text-sm'>{t('My profile')}</strong>
                           </div>
-                          <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
+                          <span className='w-full block my-[5px] border-[1px] border-solid border-light-medium-gray '></span>
                           <div onClick={logout}>
                             <strong className='text-sm'>{t('Log out')}</strong>
                           </div>
@@ -259,19 +261,19 @@ export default function Header({ className }: { className?: string }) {
                       </div>
                     </DropdownMenu>
                   ) : (
-                    <DropdownMenu customClass='right-0 min-w-[200px]'>
-                      <div className='p-5 flex flex-col gap-5'>
-                        <div className='mt-[10px]'>
-                          <div onClick={() => router.push('/profile')}>
-                            <strong className='text-sm'>{t('My profile')}</strong>
+                    <DropdownMenu closeOnClick={true} customClass='right-0 w-[90dvw] max-w-[220px] mt-[10px]'>
+                      <div className='px-5 py-[10px] flex flex-col gap-5'>
+                        <div>
+                          <div className='text-xs leading-[15px] font-bold' onClick={() => router.push('/profile')}>
+                            {t('My profile')}
                           </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
-                          <div onClick={() => setConnectWalletOpen(true)}>
-                            <strong className='text-sm'>{t('Link Wallet')}</strong>
+                          <div className='text-xs leading-[15px] font-bold' onClick={() => setConnectWalletOpen(true)}>
+                            {t('Link Wallet')}
                           </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
-                          <div onClick={logout}>
-                            <strong className='text-sm'>{t('Log out')}</strong>
+                          <div className='text-xs leading-[15px] font-bold' onClick={logout}>
+                            {t('Log out')}
                           </div>
                         </div>
                       </div>
@@ -287,7 +289,7 @@ export default function Header({ className }: { className?: string }) {
           </div>
         </nav>
         <nav
-          className={`pk-container gap-3 md:flex items-center justify-between pt-[10px] pb-[8px] hidden`}
+          className={`pk-container gap-3 lg:flex items-center justify-between pt-[10px] pb-[8px] hidden`}
           aria-label='Global'>
           <div className=''>
             <Link href='/' className='flex'>
@@ -295,7 +297,11 @@ export default function Header({ className }: { className?: string }) {
               <Image src={Logo} alt='header logo' className='h-[60px] min-w-[107px]' />
             </Link>
           </div>
-          <div ref={divRef} className={`${isSearchFocused ? 'z-30' : ''} w-full max-w-[500px] relative`}>
+          <div
+            ref={divRef}
+            className={`${
+              isSearchFocused ? 'z-30' : ''
+            } w-full md:max-w-[170px] lg:max-w-[200px] xl:max-w-[300px] 2xl:max-w-[500px] relative`}>
             <TextField
               inputref={ref}
               onChange={_.debounce(setSearchValue, 500)}
@@ -367,7 +373,7 @@ export default function Header({ className }: { className?: string }) {
               </div>
             )}
           </div>
-          <div className='flex gap-[40px] lg:justify-end min-w-[430px]'>
+          <div className='flex lg:gap-[40px] lg:justify-end min-w-[430px]'>
             <Button size='lg' onClick={() => router.push('/about-us')}>
               {t('aboutUs')}
             </Button>
@@ -390,16 +396,18 @@ export default function Header({ className }: { className?: string }) {
                           alt=''
                           width={36}
                           height={36}
-                          className='rounded-full object-cover h-full w-[25px]'
+                          className='rounded-full object-cover aspect-square w-[36px]'
                         />
-                        <span className='max-w-[350px] text-ellipsis overflow-hidden'>{`${account.name}${
-                          wallet ? ` · ${wallet.substr(0, 4)} **** **** ${wallet.substr(-4)}` : ''
-                        }`}</span>
+                        <span className='max-w-[150px] truncate'>{account.name}</span>
+                        {wallet && <span className='w-6'>·</span>}
+                        {wallet && (
+                          <span className='font-medium'>{`${wallet.substr(0, 4)} **** ${wallet.substr(-4)}`}</span>
+                        )}
                       </div>
                     </FilledButton>
                   </DropdownToggle>
                   {wallet ? (
-                    <DropdownMenu customClass='right-[50%] translate-x-[50%] min-w-[200px] w-full max-w-full !overflow-visible'>
+                    <DropdownMenu customClass='right-0 w-[405px] max-w-[405px] !overflow-visible mt-[26px]'>
                       <div className='p-5 flex flex-col gap-5'>
                         <div
                           className='flex justify-between items-center text-second-color bg-light-gray p-[10px] rounded-xl relative'
@@ -430,7 +438,7 @@ export default function Header({ className }: { className?: string }) {
                       </div>
                     </DropdownMenu>
                   ) : (
-                    <DropdownMenu customClass='right-[50%] translate-x-[50%] min-w-[200px]'>
+                    <DropdownMenu customClass='right-0 w-[220px] max-w-[220px] mt-[26px]' closeOnClick={true}>
                       <div className='p-5 flex flex-col gap-5'>
                         <div className='mt-[10px]'>
                           <div onClick={() => router.push('/profile')}>

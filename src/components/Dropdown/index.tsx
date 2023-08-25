@@ -1,6 +1,6 @@
-import { Fragment, createContext, useContext, useRef, useState } from "react"
-import { Transition } from "@headlessui/react"
-import { useClickOutside } from "src/hooks/useClickOutside"
+import { Fragment, createContext, useContext, useRef, useState } from 'react'
+import { Transition } from '@headlessui/react'
+import { useClickOutside } from 'src/hooks/useClickOutside'
 
 const ControlContext = createContext<{ open: boolean; setOpen: (o: boolean) => void }>({
   open: false,
@@ -13,7 +13,9 @@ export default function Dropdown({ children }) {
 
   return (
     <ControlContext.Provider value={{ open, setOpen }}>
-      <div className="relative" ref={ref}>{children}</div>
+      <div className='relative' ref={ref}>
+        {children}
+      </div>
     </ControlContext.Provider>
   )
 }
@@ -23,11 +25,13 @@ export function DropdownToggle({ children }) {
 }
 
 export function DropdownMenu({
-  customClass = "",
+  customClass = '',
   children,
+  closeOnClick,
 }: {
   customClass?: string
   children: JSX.Element
+  closeOnClick?: boolean
 }) {
   const { open, setOpen } = useContext(ControlContext)
   return (
@@ -41,6 +45,7 @@ export function DropdownMenu({
       enterFrom='opacity-0'
       enterTo='opacity-100'>
       <div
+        onClick={() => (closeOnClick ? setOpen(false) : null)}
         className={`${customClass} absolute z-50 mt-1 w-full min-w-fit whitespace-nowrap max-w-[200px] truncate rounded-[12px] overflow-auto bg-white shadow-[0px_10px_50px_rgba(0,0,0,0.15)]`}>
         {children}
       </div>
