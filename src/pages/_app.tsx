@@ -143,11 +143,48 @@ const App = ({ Component, pageProps }: AppProps) => {
   }
   return (
     <>
-      {account?.verified ? (
-        account?.name ? (
-          <></>
-        ) : (
-          <>
+      {account ? (
+        validateEmail(account?.email) ? (
+          account?.name ? (
+            account?.verified ? (
+              <></>
+            ) : (
+              <Modal open={openSuccessModal} setOpen={setOpenSuccessModal}>
+                <div className={` py-6 px-[60px] flex flex-col gap-4 w-full max-w-[670px]`}>
+                  <p className='text-center text-xl leading-6 font-semibold'>{t('Email verification')}</p>
+                  <Image src={Mail} alt='' className='mx-auto' />
+                  <p className=' font-medium text-center w-full max-w-[500px] mx-auto'>
+                    {t('A verification link has been sent to')}{' '}
+                    <span className='text-second-color font-bold'>{email}</span>.
+                    {t('Please click on the link to verify your email account.')}
+                  </p>
+                  <div className='flex flex-col text-center text-xs leading-[14px]'>
+                    <p className=' font-medium text-center w-full max-w-[500px] mx-auto'>
+                      {t('Have not received any email')}?{' '}
+                      <span
+                        className='text-second-color font-bold cursor-pointer'
+                        onClick={() => resendVerifyEmail(email, 'update_email')}>
+                        {t('Click here')}
+                      </span>{' '}
+                      {t('to resend verification link')}
+                    </p>
+                    <p className=' font-medium text-center w-full max-w-[500px] mx-auto'>
+                      {t('Or')}{' '}
+                      <span
+                        className='text-second-color font-bold cursor-pointer'
+                        onClick={() => {
+                          setOpenSuccessModal(false)
+                          document.getElementById('open-sign-in-btn')?.click()
+                        }}>
+                        {t('sign up')}
+                      </span>{' '}
+                      {t('with another email')}
+                    </p>
+                  </div>
+                </div>
+              </Modal>
+            )
+          ) : (
             <Modal open={open} setOpen={setOpen}>
               <div className='p-6 flex flex-col w-[322px]'>
                 <div className='gap-2 flex flex-col'>
@@ -178,10 +215,8 @@ const App = ({ Component, pageProps }: AppProps) => {
                 </p>
               </div>
             </Modal>
-          </>
-        )
-      ) : account && !validateEmail(account?.email) ? (
-        <>
+          )
+        ) : (
           <Modal open={open} setOpen={setOpen}>
             <div className='p-6 flex flex-col w-[322px]'>
               <div className='gap-3 flex flex-col'>
@@ -225,7 +260,7 @@ const App = ({ Component, pageProps }: AppProps) => {
               </p>
             </div>
           </Modal>
-        </>
+        )
       ) : (
         <></>
       )}
