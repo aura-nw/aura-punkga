@@ -161,5 +161,7 @@
   "Please install Keplr wallet extension": "Vui lòng cài đặt ví Keplr",
   "Link wallet failed": "Kết nối ví thất bại",
   "This wallet address was linked to another account": "Địa chỉ ví đã được kết nối với tài khoản khác",
-  "Copied": "Đã sao chép"
+  "Copied": "Đã sao chép",
+  "Deleted user": "Người dùng đã bị xóa",
+  "Deleted comment": "Bình luận đã bị xóa"
 }

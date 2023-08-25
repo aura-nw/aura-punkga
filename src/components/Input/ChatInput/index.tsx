@@ -1,4 +1,4 @@
-import Avatar from 'images/avatar.png'
+import Avatar from 'images/avatar.svg'
 import SendIcon from 'images/icons/send.svg'
 import Image from 'next/image'
 import AutoGrowingTextField from '../TextField/AutoGrowing'

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { capitalize } from 'lodash'
 import getConfig from 'next/config'
 import { useRouter } from 'next/router'
 import { useContext, useRef } from 'react'
@@ -121,18 +120,22 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
         replies: socialActivity.replies.map((reply) => ({
           content: reply.content,
           createAt: reply.created_at,
-          author: {
-            id: reply.social_activities_authorizer_user.id,
-            nickname: reply.social_activities_authorizer_user.nickname,
-            image: reply.social_activities_authorizer_user.picture,
-          },
+          author: socialActivity.social_activities_authorizer_user
+            ? {
+                id: socialActivity.social_activities_authorizer_user.id,
+                nickname: socialActivity.social_activities_authorizer_user.nickname,
+                image: socialActivity.social_activities_authorizer_user.picture,
+              }
+            : null,
         })),
         createAt: socialActivity.created_at,
-        author: {
-          id: socialActivity.social_activities_authorizer_user.id,
-          nickname: socialActivity.social_activities_authorizer_user.nickname,
-          image: socialActivity.social_activities_authorizer_user.picture,
-        },
+        author: socialActivity.social_activities_authorizer_user
+          ? {
+              id: socialActivity.social_activities_authorizer_user.id,
+              nickname: socialActivity.social_activities_authorizer_user.nickname,
+              image: socialActivity.social_activities_authorizer_user.picture,
+            }
+          : null,
       }))
     }
     return []

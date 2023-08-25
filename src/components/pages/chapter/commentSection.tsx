@@ -27,6 +27,7 @@ export default function CommentSection({
   const { account } = useContext(Context)
   const { t } = useTranslation()
   const { locale } = useRouter()
+  console.log(comments)
 
   const length = comments.reduce((total, current) => {
     return total + 1 + current.replies.length

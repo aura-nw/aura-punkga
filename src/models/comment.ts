@@ -12,7 +12,7 @@ export interface IComment {
 export interface IReply {
   content: string
   createAt: Date
-  author: {
+  author?: {
     id: string
     nickname: string
     image?: string

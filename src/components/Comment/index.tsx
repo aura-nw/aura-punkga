@@ -1,5 +1,5 @@
 import ChatInput from 'components/Input/ChatInput'
-import Avatar from 'images/avatar.png'
+import Avatar from 'images/avatar.svg'
 import RepIcon from 'images/icons/reply.svg'
 import moment from 'moment'
 import Image from 'next/image'
@@ -34,13 +34,15 @@ export default function Comment({
         <div className='flex items-center justify-between'>
           <div className='flex items-center'>
             <Image
-              src={data.author.image || Avatar}
+              src={data.author?.image || Avatar}
               alt=''
               width={32}
               height={32}
               className='w-6 h-6 md:w-8 md:h-8 object-cover rounded-full'
             />
-            <strong className='ml-[10px] text-xs md:text-base'>{data.author.nickname}</strong>
+            <strong className={`ml-[10px] text-xs md:text-base ${!data.author?.nickname ? 'italic' : ''}`}>
+              {data.author?.nickname || t('Deleted user')}
+            </strong>
             <p className='ml-4 text-xs md:text-base text-subtle-dark'>{moment(data.createAt).fromNow()}</p>
           </div>
           {account && (
@@ -52,7 +54,12 @@ export default function Comment({
             </strong>
           )}
         </div>
-        <div className='mt-[6px] md:mt-3 font-[500] text-xs md:text-sm text-subtle-dark'>{data.content}</div>
+        <div
+          className={`mt-[6px] md:mt-3 font-[500] text-xs md:text-sm text-subtle-dark ${
+            !data.content ? 'italic' : ''
+          }`}>
+          {data.content || t('Deleted comment')}
+        </div>
       </div>
       {showInput && account && (
         <div className='bg-white rounded-xl ml-16'>

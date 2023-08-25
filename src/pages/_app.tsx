@@ -152,7 +152,6 @@ const App = ({ Component, pageProps }: AppProps) => {
       setLoading(false)
     }
   }
-  console.log(account)
 
   return (
     <>

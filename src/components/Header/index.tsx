@@ -1,4 +1,4 @@
-import Avatar from 'assets/images/avatar.png'
+import Avatar from 'assets/images/avatar.svg'
 import EN from 'assets/images/en.svg'
 import Logo from 'assets/images/header-logo.svg'
 import SearchIcon from 'assets/images/icons/search.svg'
