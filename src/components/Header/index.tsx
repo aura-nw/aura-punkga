@@ -221,7 +221,7 @@ export default function Header({ className }: { className?: string }) {
                           height={36}
                           className='rounded-full object-cover w-[18px] aspect-square'
                         />
-                        <span className='max-w-[150px] truncate'>{account.name}</span>
+                        <span className='md:max-w-[150px] max-w-[80px] truncate'>{account.name}</span>
                         {wallet && <span className='w-[14px]'>·</span>}
                         {wallet && (
                           <span className='font-medium'>{`${wallet.substr(0, 4)} **** ${wallet.substr(-4)}`}</span>
@@ -233,7 +233,7 @@ export default function Header({ className }: { className?: string }) {
                     <DropdownMenu customClass='right-0 min-w-[300px] !overflow-visible w-[90dvw] max-w-[390px] mt-[10px]'>
                       <div className='p-5 flex flex-col gap-[10px]'>
                         <div
-                          className='flex justify-between items-center text-second-color text-sm bg-light-gray p-[10px] rounded-xl relative'
+                          className='flex justify-between items-center text-second-color text-sm bg-light-gray p-[10px] font-medium rounded-xl relative'
                           onClick={copyAddress}>
                           {`${wallet.substr(0, 8)}...${wallet.substr(-8)}`}
                           <div className='flex items-center'>
@@ -253,7 +253,7 @@ export default function Header({ className }: { className?: string }) {
                           <div onClick={() => router.push('/profile')}>
                             <strong className='text-sm'>{t('My profile')}</strong>
                           </div>
-                          <span className='w-full block my-[5px] border-[1px] border-solid border-light-medium-gray '></span>
+                          <span className='w-full block my-[5px] border-[1px] border-solid border-[#F0F0F0]'></span>
                           <div onClick={logout}>
                             <strong className='text-sm'>{t('Log out')}</strong>
                           </div>
@@ -267,11 +267,11 @@ export default function Header({ className }: { className?: string }) {
                           <div className='text-xs leading-[15px] font-bold' onClick={() => router.push('/profile')}>
                             {t('My profile')}
                           </div>
-                          <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
+                          <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
                           <div className='text-xs leading-[15px] font-bold' onClick={() => setConnectWalletOpen(true)}>
                             {t('Link Wallet')}
                           </div>
-                          <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
+                          <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
                           <div className='text-xs leading-[15px] font-bold' onClick={logout}>
                             {t('Log out')}
                           </div>
@@ -398,7 +398,7 @@ export default function Header({ className }: { className?: string }) {
                           height={36}
                           className='rounded-full object-cover aspect-square w-[36px]'
                         />
-                        <span className='max-w-[150px] truncate'>{account.name}</span>
+                        <span className='md:max-w-[150px] max-w-[80px] truncate'>{account.name}</span>
                         {wallet && <span className='w-6'>·</span>}
                         {wallet && (
                           <span className='font-medium'>{`${wallet.substr(0, 4)} **** ${wallet.substr(-4)}`}</span>
@@ -410,7 +410,7 @@ export default function Header({ className }: { className?: string }) {
                     <DropdownMenu customClass='right-0 w-[405px] max-w-[405px] !overflow-visible mt-[26px]'>
                       <div className='p-5 flex flex-col gap-5'>
                         <div
-                          className='flex justify-between items-center text-second-color bg-light-gray p-[10px] rounded-xl relative'
+                          className='flex font-medium justify-between items-center text-second-color bg-light-gray p-[10px] rounded-xl relative'
                           onClick={copyAddress}>
                           {`${wallet.substr(0, 8)}...${wallet.substr(-8)}`}
                           <div className='flex items-center'>
@@ -426,11 +426,11 @@ export default function Header({ className }: { className?: string }) {
                             </span>
                           </div>
                         </div>
-                        <div className='mt-[10px]'>
+                        <div>
                           <div onClick={() => router.push('/profile')}>
                             <strong>{t('My profile')}</strong>
                           </div>
-                          <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
+                          <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0] '></span>
                           <div onClick={logout}>
                             <strong>{t('Log out')}</strong>
                           </div>
@@ -440,15 +440,15 @@ export default function Header({ className }: { className?: string }) {
                   ) : (
                     <DropdownMenu customClass='right-0 w-[220px] max-w-[220px] mt-[26px]' closeOnClick={true}>
                       <div className='p-5 flex flex-col gap-5'>
-                        <div className='mt-[10px]'>
+                        <div>
                           <div onClick={() => router.push('/profile')}>
                             <strong>{t('My profile')}</strong>
                           </div>
-                          <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
+                          <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
                           <div onClick={() => setConnectWalletOpen(true)}>
                             <strong>{t('Link Wallet')}</strong>
                           </div>
-                          <span className='w-full block my-[10px] border-[1px] border-solid border-light-medium-gray '></span>
+                          <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
                           <div onClick={logout}>
                             <strong>{t('Log out')}</strong>
                           </div>

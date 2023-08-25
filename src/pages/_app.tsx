@@ -8,7 +8,7 @@ import 'moment/locale/vi'
 import { appWithTranslation, useTranslation } from 'next-i18next'
 import { AppProps } from 'next/app'
 import getConfig, { setConfig } from 'next/config'
-import { Plus_Jakarta_Sans } from 'next/font/google'
+import { Plus_Jakarta_Sans, Work_Sans } from 'next/font/google'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
@@ -20,6 +20,7 @@ import { validateEmail } from 'src/utils'
 import Mail from 'images/Mail.svg'
 
 const pjs = Plus_Jakarta_Sans({ subsets: ['latin', 'vietnamese'] })
+const ws = Work_Sans({ subsets: ['latin', 'vietnamese'] })
 function MyApp(props: AppProps) {
   const [isSetting, setIsSetting] = useState(true)
   const { locale } = useRouter()
@@ -46,6 +47,9 @@ function MyApp(props: AppProps) {
           html {
             font-family: ${pjs.style.fontFamily};
           }
+          .font-ws {
+            font-family: ${ws.style.fontFamily};
+          }
         `}</style>
         <MaintainPage />
       </>
@@ -56,6 +60,9 @@ function MyApp(props: AppProps) {
       <style jsx global>{`
         html {
           font-family: ${pjs.style.fontFamily};
+        }
+        .font-ws {
+          font-family: ${ws.style.fontFamily};
         }
       `}</style>
       <ContextProvider>
