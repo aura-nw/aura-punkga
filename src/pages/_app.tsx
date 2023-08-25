@@ -155,7 +155,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                   <Image src={Mail} alt='' className='mx-auto' />
                   <p className=' font-medium text-center w-full max-w-[500px] mx-auto'>
                     {t('A verification link has been sent to')}{' '}
-                    <span className='text-second-color font-bold'>{email}</span>.
+                    <span className='text-second-color font-bold'>{account?.email || email}</span>.
                     {t('Please click on the link to verify your email account.')}
                   </p>
                   <div className='flex flex-col text-center text-xs leading-[14px]'>
@@ -163,7 +163,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                       {t('Have not received any email')}?{' '}
                       <span
                         className='text-second-color font-bold cursor-pointer'
-                        onClick={() => resendVerifyEmail(email, 'update_email')}>
+                        onClick={() => resendVerifyEmail(account?.email || email, 'update_email')}>
                         {t('Click here')}
                       </span>{' '}
                       {t('to resend verification link')}
