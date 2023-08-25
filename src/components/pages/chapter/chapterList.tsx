@@ -52,7 +52,7 @@ export default function ChapterList({
   }, [t('All status')])
   return (
     <>
-      <div className='w-full bg-medium-gray px-[16px] 2xl:px-[60px] py-[16px] flex items-center justify-between'>
+      <div className='w-full bg-[#DEDEDE] px-[16px] 2xl:px-[60px] py-[16px] flex items-center justify-between'>
         <div className='flex gap-5 items-center whitespace-nowrap'>
           <strong className='text-[16px]'>
             {locale == 'en'

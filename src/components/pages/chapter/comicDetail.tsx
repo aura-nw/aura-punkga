@@ -153,13 +153,17 @@ export default function ComicDetail({
                   </Fragment>
                 ))}
               </p>
-              <p className='text-subtle-dark flex items-center'>
+              <p className='text-subtle-dark items-center'>
                 <strong>{data.views?.toLocaleString('en-US')}</strong> {t('views')}
-                <span className='mx-3'>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='3' height='4' viewBox='0 0 3 4' fill='none'>
-                    <circle cx='1.5' cy='2' r='1.5' fill='#61646B' />
-                  </svg>
-                </span>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='3'
+                  height='4'
+                  viewBox='0 0 3 4'
+                  fill='none'
+                  className='inline mx-3'>
+                  <circle cx='1.5' cy='2' r='1.5' fill='#61646B' />
+                </svg>
                 <strong>{comicLikes?.toLocaleString('en-US')}</strong> {t('likes')}
               </p>
               <div className={`${expandDetail ? '' : 'flex-col 2xl:flex-row'} 2xl:items-start  flex gap-[10px]`}>
