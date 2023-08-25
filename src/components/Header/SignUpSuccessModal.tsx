@@ -15,7 +15,7 @@ export default function SignUpSuccessModal({ setSignUpOpen, onClose }) {
         <span className='text-second-color font-bold'>{account?.email}</span>.
         {t('Please click on the link to verify your email account.')}
       </p>
-      <div className='flex flex-col text-center'>
+      <div className='flex flex-col text-center text-xs leading-[14px]'>
         <p className=' font-medium text-center w-full max-w-[500px] mx-auto'>
           {t('Have not received any email')}?{' '}
           <span

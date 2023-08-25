@@ -345,7 +345,9 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
                       ) : (
                         <div className='text-xs text-[#19191B] font-medium leading-[15px] md:font-medium md:text-base md:leading-5'>
                           <p
-                            className={`text-[#19191B] ${showMore ? '' : 'line-clamp-3 cursor-pointer'}`}
+                            className={`text-[#19191B] ${
+                              showMore ? '' : 'md:line-clamp-3 line-clamp-5 cursor-pointer'
+                            }`}
                             onClick={() => setShowMore(!showMore)}>
                             {account.bio}
                           </p>

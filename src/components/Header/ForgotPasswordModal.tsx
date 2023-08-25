@@ -79,7 +79,7 @@ export default function ForgotPasswordModal({ onClose }) {
               {t('Please click on the link to change your password.')}
             </p>
           </div>
-          <div className='flex flex-col text-center'>
+          <div className='flex flex-col text-center text-xs leading-[14px]'>
             <p className='line-clamp-1'>
               {t('Have not received any email')}?{' '}
               <span className='text-second-color font-semibold cursor-pointer' onClick={() => setIsFirstStep(true)}>
