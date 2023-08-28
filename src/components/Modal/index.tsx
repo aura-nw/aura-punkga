@@ -1,8 +1,8 @@
-import { Dialog, Transition } from "@headlessui/react"
-import { XMarkIcon } from "@heroicons/react/24/outline"
-import { Fragment, useRef } from "react"
+import { Dialog, Transition } from '@headlessui/react'
+import { XMarkIcon } from '@heroicons/react/24/outline'
+import { Fragment, useRef } from 'react'
 
-export default function Modal({ open, setOpen, children }) {
+export default function Modal({ open, setOpen, children, hideClose }: any) {
   const cancelButtonRef = useRef(null)
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -29,11 +29,13 @@ export default function Modal({ open, setOpen, children }) {
               leaveFrom='opacity-100 translate-y-0 sm:scale-100'
               leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'>
               <Dialog.Panel className='relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8'>
-                <div
-                  className='absolute z-50 right-2 top-2 cursor-pointer text-gray-600'
-                  onClick={() => setOpen(false)}>
-                  <XMarkIcon className='w-5 h-5' />
-                </div>
+                {!hideClose && (
+                  <div
+                    className='absolute z-50 right-2 top-2 cursor-pointer text-gray-600'
+                    onClick={() => setOpen(false)}>
+                    <XMarkIcon className='w-5 h-5' />
+                  </div>
+                )}
                 {children}
               </Dialog.Panel>
             </Transition.Child>

@@ -22,7 +22,7 @@ export default function ChangingPasswordModal({ open, setOpen }) {
   const r2 = useRef<any>()
   const { t } = useTranslation()
   useEffect(() => {
-    if (open) {
+    if (!open) {
       setSuccess(false)
       setLoading(false)
       setRepasswordValidateSuccess(false)
@@ -87,8 +87,8 @@ export default function ChangingPasswordModal({ open, setOpen }) {
   }
 
   return (
-    <Modal open={open} setOpen={setOpen}>
-      <div className={`p-6 w-[322px] relative transition-all duration-300 ${success ? 'h-[430px]' : ''}`}>
+    <Modal open={open} setOpen={setOpen} hideClose={success}>
+      <div className={`p-6 w-[322px] relative transition-all duration-300 ${success ? 'h-[400px]' : ''}`}>
         <div className={` flex flex-col gap-3 transition-all duration-300 ${success ? 'opacity-0' : 'opacity-100'}`}>
           <p className='text-center text-xl leading-6 font-semibold'>{t('Change password')}</p>
           <OutlineTextField
@@ -137,16 +137,16 @@ export default function ChangingPasswordModal({ open, setOpen }) {
           </FilledButton>
         </div>
         <div
-          className={`absolute inset-0 py-6 px-4 flex flex-col gap-3 transition-all duration-300 ${
+          className={`absolute inset-0 py-6 px-4 flex flex-col gap-4 transition-all duration-300 ${
             success ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}>
           <p className='text-center text-xl leading-6 font-semibold'>{t('Successful password change')}!</p>
-          <Image src={SuccessImg} alt='' className='mx-auto' />
+          <Image src={SuccessImg} alt='' className='mx-auto h-[188px]' />
           <p className='text-sm leading-6 font-medium text-center w-[246px] mx-auto'>
             {t('You can now use the new password to sign in to your account')}
           </p>
           <FilledButton
-            className='mt-2 mx-auto'
+            className='-mt-1 mx-auto'
             size='lg'
             onClick={() => {
               setOpen(false)

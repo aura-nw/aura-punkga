@@ -19,7 +19,7 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
   const { t } = useTranslation()
   const r1 = useRef<any>()
   useEffect(() => {
-    if (open) {
+    if (!open) {
       setSuccess(false)
       setLoading(false)
       setRepasswordValidateSuccess(false)
@@ -56,6 +56,7 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
         new_password: newPassword,
         confirm_new_password: rePassword,
       })
+      console.log(res)
       if (res) {
         await profile.callApi(true)
         setLoading(false)
@@ -67,7 +68,7 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
   }
 
   return (
-    <Modal open={open} setOpen={setOpen}>
+    <Modal open={open} setOpen={setOpen} hideClose={success}>
       <div className={`p-6 w-[322px] relative transition-all duration-300 ${success ? 'h-[400px]' : ''}`}>
         <div className={` flex flex-col gap-3 transition-all duration-300 ${success ? 'opacity-0' : 'opacity-100'}`}>
           <p className='text-center text-xl leading-6 font-semibold'>{t('Set password')}</p>
@@ -103,22 +104,22 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
           </FilledButton>
         </div>
         <div
-          className={`absolute inset-0 py-6 px-4 flex flex-col gap-3 transition-all duration-300 ${
+          className={`absolute inset-0 py-6 px-4 flex flex-col gap-4 transition-all duration-300 ${
             success ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}>
-          <p className='text-center text-xl leading-6 font-semibold'>{t('Successful password set up')}!</p>
-          <Image src={SuccessImg} alt='' className='mx-auto' />
+          <p className='text-center text-xl leading-6 font-semibold'>{t('Password set')}!</p>
+          <Image src={SuccessImg} alt='' className='mx-auto h-[188px]' />
           <p className='text-sm leading-6 font-medium text-center w-[246px] mx-auto'>
             {t('You can now use the new password to sign in to your account')}
           </p>
           <FilledButton
-            className='mt-2 mx-auto'
+            className='-mt-1 mx-auto'
             size='lg'
             onClick={() => {
               setOpen(false)
               setSuccess(false)
             }}>
-            {t('Explore')}
+            {t('Continue')}
           </FilledButton>
         </div>
       </div>
