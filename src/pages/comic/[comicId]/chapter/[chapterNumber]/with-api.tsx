@@ -120,11 +120,11 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
         replies: socialActivity.replies.map((reply) => ({
           content: reply.content,
           createAt: reply.created_at,
-          author: socialActivity.social_activities_authorizer_user
+          author: reply.social_activities_authorizer_user
             ? {
-                id: socialActivity.social_activities_authorizer_user.id,
-                nickname: socialActivity.social_activities_authorizer_user.nickname,
-                image: socialActivity.social_activities_authorizer_user.picture,
+                id: reply.social_activities_authorizer_user.id,
+                nickname: reply.social_activities_authorizer_user.nickname,
+                image: reply.social_activities_authorizer_user.picture,
               }
             : null,
         })),
