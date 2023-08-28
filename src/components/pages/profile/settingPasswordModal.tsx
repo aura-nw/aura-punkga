@@ -8,6 +8,7 @@ import SuccessImg from 'images/ninja.svg'
 import { validatePassword } from 'src/utils'
 import CheckSquare from 'images/icons/check_square_fill.svg'
 import { useTranslation } from 'react-i18next'
+import _ from 'lodash'
 export default function SettingPasswordModal({ open, setOpen, profile }) {
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -19,14 +20,16 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
   const { t } = useTranslation()
   const r1 = useRef<any>()
   useEffect(() => {
-    if (!open) {
-      setSuccess(false)
-      setLoading(false)
-      setRepasswordValidateSuccess(false)
-      setNewPassword('')
-      setRePassword('')
-      setRePasswordError('')
-    }
+    _.delay(() => {
+      if (!open) {
+        setSuccess(false)
+        setLoading(false)
+        setRepasswordValidateSuccess(false)
+        setNewPassword('')
+        setRePassword('')
+        setRePasswordError('')
+      }
+    }, 1000)
   }, [open])
   useEffect(() => {
     setRePasswordError('')
@@ -56,13 +59,12 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
         new_password: newPassword,
         confirm_new_password: rePassword,
       })
-      console.log(res)
       if (res) {
-        await profile.callApi(true)
         setLoading(false)
         setSuccess(true)
       }
     } catch (error) {
+      console.log(error)
       setLoading(false)
     }
   }
@@ -117,7 +119,6 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
             size='lg'
             onClick={() => {
               setOpen(false)
-              setSuccess(false)
             }}>
             {t('Continue')}
           </FilledButton>

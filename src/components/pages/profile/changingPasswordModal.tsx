@@ -8,6 +8,7 @@ import SuccessImg from 'images/ninja.svg'
 import { validatePassword } from 'src/utils'
 import CheckSquare from 'images/icons/check_square_fill.svg'
 import { useTranslation } from 'react-i18next'
+import _ from 'lodash'
 export default function ChangingPasswordModal({ open, setOpen }) {
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -22,16 +23,18 @@ export default function ChangingPasswordModal({ open, setOpen }) {
   const r2 = useRef<any>()
   const { t } = useTranslation()
   useEffect(() => {
-    if (!open) {
-      setSuccess(false)
-      setLoading(false)
-      setRepasswordValidateSuccess(false)
-      setCurrentPassword('')
-      setCurrentPasswordError('')
-      setNewPassword('')
-      setRePassword('')
-      setRePasswordError('')
-    }
+    _.delay(() => {
+      if (!open) {
+        setSuccess(false)
+        setLoading(false)
+        setRepasswordValidateSuccess(false)
+        setCurrentPassword('')
+        setCurrentPasswordError('')
+        setNewPassword('')
+        setRePassword('')
+        setRePasswordError('')
+      }
+    }, 1000)
   }, [open])
   useEffect(() => {
     setRePasswordError('')
@@ -150,7 +153,6 @@ export default function ChangingPasswordModal({ open, setOpen }) {
             size='lg'
             onClick={() => {
               setOpen(false)
-              setSuccess(false)
             }}>
             {t('Continue')}
           </FilledButton>
