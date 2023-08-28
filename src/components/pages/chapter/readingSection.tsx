@@ -74,7 +74,7 @@ export default function ReadingSection({
   const [showChapterList, setShowChapterList] = useState(false)
   const mainLanguage = data?.languages?.find((l) => l.isMainLanguage).shortLang
   const chapterLocale = chapterData?.[language] ? language : mainLanguage
-  const ref = useRef()
+  const ref = useRef<any>()
   const chapterLengthRef = useRef(chapterData?.[chapterLocale]?.length)
   const { account } = useContext(Context)
   const { t } = useTranslation()
@@ -138,7 +138,13 @@ export default function ReadingSection({
 
   useEffect(() => {
     const pageHandler = (event: any) => {
-      if (!chapterData || !chapterData?.[chapterLocale] || (window as any).isSearchFocused) return
+      if (
+        !chapterData ||
+        !chapterData?.[chapterLocale] ||
+        (window as any).isSearchFocused ||
+        !ref.current?.matches(':hover')
+      )
+        return
       if (event.deltaY < 0 || event.which == 37 || event.which == 38) {
         setCurrentPage((prevState) => (prevState - 2 < 0 ? 0 : prevState - 2))
       } else if (event.deltaY > 0 || event.which == 39 || event.which == 40) {

@@ -37,12 +37,11 @@ export default function FilledSelect({
             if (value.at(-1).key == allKey) {
               onChange([value.find((s) => s.key == allKey)])
             } else {
-              onChange(
-                value
-                  .filter((s) => s.key != allKey)
-                  .filter((value, index, self) => self.filter((t) => t.key === value.key).length % 2)
-                  .filter((value, index, self) => index === self.findIndex((t) => t.key === value.key))
-              )
+              const newValue = value
+                .filter((s) => s.key != allKey)
+                .filter((value, index, self) => self.filter((t) => t.key === value.key).length % 2)
+                .filter((value, index, self) => index === self.findIndex((t) => t.key === value.key))
+              newValue.length ? onChange(newValue) : onChange([options.find((s) => s.key == allKey)])
             }
           }
         }}>
