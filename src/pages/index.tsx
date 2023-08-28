@@ -137,6 +137,7 @@ export default function Home() {
               <div className='md:text-[24px] text-sm leading-6 font-[800]'>{t('Latest update')}</div>
               <div className='md:flex hidden gap-[20px] items-center'>
                 <FilledSelect
+                  label='genres'
                   icon={<ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />}
                   selected={genreFilter}
                   multiple={true}
@@ -164,6 +165,7 @@ export default function Home() {
                   placeholder={t('All genres')}
                 />
                 <FilledSelect
+                  label='status'
                   multiple={true}
                   icon={<ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />}
                   selected={statusFilter}

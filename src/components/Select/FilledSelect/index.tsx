@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid'
+import { useTranslation } from 'react-i18next'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -13,6 +14,7 @@ interface IFilledSelect {
   placeholder: string
   className?: string
   allKey?: string
+  label: string
   selected?: any
 }
 export default function FilledSelect({
@@ -23,8 +25,10 @@ export default function FilledSelect({
   selected,
   multiple,
   allKey,
+  label,
   className,
 }: IFilledSelect) {
+  const { t } = useTranslation()
   if (multiple) {
     const selectedKey = selected.map((s) => s.key)
     const isTooLong = selectedKey.join('').length > 30
@@ -53,7 +57,7 @@ export default function FilledSelect({
                   {!!selected.length ? (
                     isTooLong ? (
                       <span className='block truncate text-medium-gray'>
-                        {selected.map((s) => s.value).length} genres selected
+                        {`${selected.map((s) => s.value).length} ${t(`selected ${label}`)}`}
                       </span>
                     ) : (
                       <span className='block truncate text-medium-gray'>{selected.map((s) => s.value).join(', ')}</span>

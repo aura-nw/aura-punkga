@@ -75,6 +75,7 @@ export default function ChapterList({
                 expandDetail ? 'max-w-[180px] opacity-100' : 'max-w-0 overflow-hidden opacity-0'
               } transition-all`}>
               <FilledSelect
+                label='genres'
                 icon={<ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />}
                 selected={chapterType}
                 onChange={setChapterType}
