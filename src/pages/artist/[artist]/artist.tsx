@@ -19,7 +19,7 @@ import getConfig from 'next/config'
 import MobileComic from 'components/pages/homepage/trendingComic'
 import Comic from 'components/pages/homepage/comic'
 import Pagination from 'components/pages/artist/Pagination'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 
 export default function Artist({ artistDetail }) {
   const artist = artistDetail.data as IArtist
@@ -72,8 +72,8 @@ export default function Artist({ artistDetail }) {
                 {artist.dob && (
                   <>
                     <div className='text-medium-gray'>
-                      <div>DoB:</div>
-                      <div className='h-0 invisible'>Total subscribes:</div>
+                      <div>{t('DoB')}:</div>
+                      <div className='h-0 invisible'>{t('Total subscribers')}:</div>
                     </div>
                     <div className='font-medium'>
                       {locale == 'vn'
@@ -84,7 +84,7 @@ export default function Artist({ artistDetail }) {
                 )}
                 {artist.gender && artist.gender != 'Do not display' && (
                   <>
-                    <div className='text-medium-gray'>Gender:</div>
+                    <div className='text-medium-gray'>{t('Gender')}:</div>
                     <div className='flex items-center font-medium'>
                       {t(artist.gender == 'Undisclosed' ? 'Other' : artist.gender)}{' '}
                       <Image
@@ -105,7 +105,7 @@ export default function Artist({ artistDetail }) {
             )}
             <div className='hidden lg:grid grid-cols-[max-content_auto] gap-y-[5px] gap-x-[15px] lg:gap-x-5 text-xs lg:text-base leading-[15px] lg:leading-5 lg:font-medium'>
               <>
-                <div className='text-medium-gray'>Joined date:</div>
+                <div className='text-medium-gray'>{t('Joined date')}:</div>
                 <div className='font-medium'>
                   {locale == 'vn'
                     ? moment(artist.joinDate).format('DD/MM/yyyy')
@@ -113,7 +113,7 @@ export default function Artist({ artistDetail }) {
                 </div>
               </>
               <>
-                <div className='text-medium-gray'>Total subscribes:</div>
+                <div className='text-medium-gray'>{t('Total subscribers')}:</div>
                 <div className='flex items-center font-medium'>
                   {new Intl.NumberFormat().format(artist.totalSubscribers || 0)}
                 </div>
@@ -121,31 +121,31 @@ export default function Artist({ artistDetail }) {
             </div>
             <div className='flex gap-[15px] text-xs leading-[15px] lg:text-base lg:leading-5 lg:font-medium lg:gap-5'>
               <div className='text-medium-gray'>
-                <div>Bio:</div>
-                <div className='h-0 invisible'>Total subscribes:</div>
+                <div>{t('Bio')}:</div>
+                <div className='h-0 invisible'>{t('Total subscribers')}:</div>
               </div>
               <div className='font-medium line-clamp-3'>{artist?.bio}</div>
             </div>
           </div>
         </div>
         <div className='mt-10 lg:-mx-[35px]'>
-          <Card title='Mangas'>
+          <Card title={t('Mangas')}>
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-10'>
               {artist.comics?.slice(0, 2)?.map((comic, index) => (
-                <>
+                <Fragment key={index}>
                   <div className='bg-white p-[10px] rounded-[10px] md:hidden'>
-                    <MobileComic {...comic} key={index} />
+                    <MobileComic {...comic} />
                   </div>
                   <div className='bg-white p-[10px] rounded-[10px] hidden md:block'>
-                    <Comic {...comic} key={index} />
+                    <Comic {...comic} />
                   </div>
-                </>
+                </Fragment>
               ))}
             </div>
           </Card>
         </div>
         <div className='mt-10 lg:-mx-[35px]'>
-          <Card title='NFT Collections'>
+          <Card title={t('NFT Collections')}>
             <div className='my-[10px] lg:my-0 flex flex-col gap-5 lg:gap-10'>
               {artist.collections.slice(currentPage * 2 - 2, currentPage * 2).map((collection, index) => (
                 <SubCard
@@ -154,7 +154,7 @@ export default function Artist({ artistDetail }) {
                     <div className='flex gap-[10px]'>
                       <div className='text-sm leading-6 truncate lg:text-xl lg:leading-6'>{collection.name}</div>
                       <Link
-                        title='View more on Seekhype'
+                        title={t('View more on Seekhype')}
                         href={`${getConfig().SEEKHYPE_URL}/collection/${collection.address}`}
                         className='cursor-pointer'>
                         <Image src={ShareIcon} alt='' className='w-5 h-5' />
@@ -177,7 +177,7 @@ export default function Artist({ artistDetail }) {
                               alt=''
                             />
                             <div className='view-on-seekhype transition-all translate-y-full absolute bottom-0 bg-primary-color py-2 w-full text-xl leading-[25px] font-bold text-center'>
-                              View on SEEKHYPE
+                              {t('View on SEEKHYPE')}
                             </div>
                           </div>
                           <div className='mt-[10px] text-subtle-dark text-sm font-bold leading-[18px] text-center truncate lg:text-xl lg:leading-[25px]'>
