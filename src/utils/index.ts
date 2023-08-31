@@ -32,3 +32,6 @@ export function getBlurUrl() {
     typeof window === 'undefined' ? Buffer.from(str).toString('base64') : window.btoa(str)
   return `data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`
 }
+export function appendHttps(url: string) {
+  return url.includes('https://') ? url : `https://${url}`
+}

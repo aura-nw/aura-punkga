@@ -14,13 +14,13 @@ export default function TrendingComic(props: IComic) {
   const { t } = useTranslation()
   return (
     <div className={`flex gap-[20px] ${props.status.text == 'Upcoming' ? 'pointer-events-none' : ''}`}>
-      <Link href={`/comic/${props.id}`} className='flex-auto xl:hidden relative min-w-[150px]'>
+      <Link href={`/comic/${props.id}`} className='xl:hidden relative w-[150px] shrink-0'>
         <Image
           src={props.image || NoImage}
           alt=''
           width={150}
           height={200}
-          className={`rounded-[5px] w-[150px] aspect-[15/20] ${
+          className={`rounded-[10px] w-[150px] aspect-[15/20] ${
             props.image ? 'object-cover' : 'object-contain bg-light-gray'
           }`}
         />
@@ -30,7 +30,7 @@ export default function TrendingComic(props: IComic) {
           )}
         </div>
       </Link>
-      <Link href={`/comic/${props.id}/chapter/1`} className='flex-auto hidden xl:block min-w-[140px]'>
+      <Link href={`/comic/${props.id}/chapter/1`} className='shrink-0 hidden xl:block w-[140px]'>
         <Image
           src={props.image || NoImage}
           alt=''
@@ -41,7 +41,7 @@ export default function TrendingComic(props: IComic) {
           }`}
         />
       </Link>
-      <div className='flex-auto flex flex-col gap-[10px]'>
+      <div className='flex-1 flex flex-col gap-[10px]'>
         <div>
           <Link
             href={`/comic/${props.id}`}
