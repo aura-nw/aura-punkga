@@ -15,6 +15,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
 
   const getDetail = async () => {
     try {
+      const env = config.CHAIN_ID.includes('xstaxy') ? 'xstaxy' : 'euphoria'
       const { data } = await axios.get(`${config.API_URL}/api/rest/creators/${artist}`)
       const detail = data.creators[0]
       if (detail) {
@@ -26,7 +27,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
         if (collections.length) {
           const { data } = await axios.post(`${config.CHAIN_INFO.indexerV2}`, {
             query: `query QueryCw721Tokens($contract_addresses: [String!]) {
-                    euphoria {
+                    ${env} {
                       smart_contract(where: {address: {_in: $contract_addresses}}) {
                         cw721_contract {
                           name
@@ -48,7 +49,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
             },
             operationName: 'QueryCw721Tokens',
           })
-          collectionsData = data.data.euphoria.smart_contract.map(({ cw721_contract }) => ({
+          collectionsData = data.data[env].smart_contract.map(({ cw721_contract }) => ({
             name: cw721_contract.name,
             address: cw721_contract.smart_contract.address,
             tokens: cw721_contract.cw721_tokens.slice(0, 10).map((token) => ({

@@ -24,7 +24,6 @@ export default function Artist({ artistDetail }) {
   const { locale } = useRouter()
   const { t } = useTranslation()
   if (!artist) return <></>
-  console.log(artist)
   return (
     <>
       <HeadComponent title={`Sunday | Punkga.me`} />
@@ -152,6 +151,7 @@ export default function Artist({ artistDetail }) {
                     <div className='flex gap-[10px]'>
                       <div className='text-sm leading-6 truncate lg:text-xl lg:leading-6'>{collection.name}</div>
                       <Link
+                        title='View more on Seekhype'
                         href={`${getConfig().SEEKHYPE_URL}/collection/${collection.address}`}
                         className='cursor-pointer'>
                         <Image src={ShareIcon} alt='' className='w-5 h-5' />
