@@ -18,11 +18,14 @@ import { appendHttps } from 'src/utils'
 import getConfig from 'next/config'
 import MobileComic from 'components/pages/homepage/trendingComic'
 import Comic from 'components/pages/homepage/comic'
+import Pagination from 'components/pages/artist/Pagination'
+import { useState } from 'react'
 
 export default function Artist({ artistDetail }) {
   const artist = artistDetail.data as IArtist
   const { locale } = useRouter()
   const { t } = useTranslation()
+  const [currentPage, setCurrentPage] = useState(1)
   if (!artist) return <></>
   return (
     <>
@@ -144,7 +147,7 @@ export default function Artist({ artistDetail }) {
         <div className='mt-10 lg:-mx-[35px]'>
           <Card title='NFT Collections'>
             <div className='my-[10px] lg:my-0 flex flex-col gap-5 lg:gap-10'>
-              {artist.collections.map((collection, index) => (
+              {artist.collections.slice(currentPage * 2 - 2, currentPage * 2).map((collection, index) => (
                 <SubCard
                   key={index}
                   title={
@@ -186,6 +189,13 @@ export default function Artist({ artistDetail }) {
                   </div>
                 </SubCard>
               ))}
+              {!!artist.collections.length && (
+                <Pagination
+                  length={Math.ceil(artist.collections.length / 2)}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                />
+              )}
             </div>
           </Card>
         </div>
