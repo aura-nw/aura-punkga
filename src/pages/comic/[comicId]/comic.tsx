@@ -15,6 +15,7 @@ import mockAvar from 'src/assets/images/mockup4.png'
 import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
 import Ninja from 'images/ninja-2.svg'
+import Link from 'next/link'
 export default function Comic({ comicDetails, subscribe, unsubscribe, like, unlike }) {
   const { t } = useTranslation()
   const { locale } = useRouter()
