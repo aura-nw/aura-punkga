@@ -82,9 +82,10 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
                 type: COMIC_STATUS[formatStatus(manga.status)],
                 text: formatStatus(manga.status),
               },
-              authors: manga.manga_creators?.map((c: any) =>
-                c.creator?.isActive ? c.creator?.name : 'Unknown creator'
-              ),
+              authors: manga.manga_creators?.map((c: any) => ({
+                id: c.creator?.isActive ? c.creator?.id : undefined,
+                name: c.creator?.isActive ? c.creator?.name : 'Unknown creator',
+              })),
               views: manga.manga_total_views?.views || 0,
               likes: manga.manga_total_likes?.likes || 0,
               latestChap: {

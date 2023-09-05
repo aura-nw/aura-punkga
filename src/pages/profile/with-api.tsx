@@ -20,7 +20,10 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
           type: COMIC_STATUS[formatStatus(m.status)],
           text: formatStatus(m.status),
         },
-        authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : 'Unknown creator')),
+        authors: m.manga_creators?.map((c: any) => ({
+          id: c.creator?.isActive ? c.creator?.id : undefined,
+          name: c.creator?.isActive ? c.creator?.name : 'Unknown creator',
+        })),
         views: m.manga_total_views?.views || 0,
         likes: m.manga_total_likes?.likes || 0,
         nearestUpcoming: m.nearest_upcoming,
@@ -106,7 +109,10 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
             type: COMIC_STATUS[formatStatus(m.status)],
             text: formatStatus(m.status),
           },
-          authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : 'Unknown creator')),
+          authors: m.manga_creators?.map((c: any) => ({
+            id: c.creator?.isActive ? c.creator?.id : undefined,
+            name: c.creator?.isActive ? c.creator?.name : 'Unknown creator',
+          })),
           views: m.manga_total_views?.views || 0,
           likes: m.manga_total_likes?.likes || 0,
           nearestUpcoming: m.nearest_upcoming,

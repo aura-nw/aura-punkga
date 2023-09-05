@@ -15,7 +15,10 @@ export const getLatestComic = async (): Promise<IComic[]> => {
           type: COMIC_STATUS[formatStatus(m.status)],
           text: formatStatus(m.status),
         },
-        authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : 'Unknown creator')),
+        authors: m.manga_creators?.map((c: any) => ({
+          id: c.creator?.isActive ? c.creator?.id : undefined,
+          name: c.creator?.isActive ? c.creator?.name : 'Unknown creator',
+        })),
         views: m.manga_total_views?.views || 0,
         likes: m.manga_total_likes?.likes || 0,
         latestChap: {
@@ -55,7 +58,10 @@ export const getTrendingComic = async (): Promise<IComic[]> => {
           type: COMIC_STATUS[formatStatus(m.status)],
           text: formatStatus(m.status),
         },
-        authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : 'Unknown creator')),
+        authors: m.manga_creators?.map((c: any) => ({
+          id: c.creator?.isActive ? c.creator?.id : undefined,
+          name: c.creator?.isActive ? c.creator?.name : 'Unknown creator',
+        })),
         views: m.manga_total_views?.views || 0,
         likes: m.manga_total_likes?.likes || 0,
         latestChap: {
@@ -145,7 +151,10 @@ export const search = async (content: string) => {
         type: COMIC_STATUS[formatStatus(m.status)],
         text: formatStatus(m.status),
       },
-      authors: m.manga_creators?.map((c: any) => (c.creator?.isActive ? c.creator?.name : 'Unknown creator')),
+      authors: m.manga_creators?.map((c: any) => ({
+        id: c.creator?.isActive ? c.creator?.id : undefined,
+        name: c.creator?.isActive ? c.creator?.name : 'Unknown creator',
+      })),
       views: m.manga_total_views?.views || 0,
       likes: m.manga_total_likes?.likes || 0,
       latestChap: {

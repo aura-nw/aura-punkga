@@ -1,13 +1,16 @@
-import { LANGUAGE } from "src/constants"
-import { IMultiLanguageContent } from "./multiLanguageContent"
-import { IStatus } from "./status"
-import { IChapter } from "./chapter"
+import { LANGUAGE } from 'src/constants'
+import { IMultiLanguageContent } from './multiLanguageContent'
+import { IStatus } from './status'
+import { IChapter } from './chapter'
 
 interface Basic {
   id: string
   image: string
   status: IStatus
-  authors: string[]
+  authors: {
+    id?: string
+    name: string
+  }[]
   tags: IMultiLanguageContent<string>[]
   views: number
   likes: number

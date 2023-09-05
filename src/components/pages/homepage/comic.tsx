@@ -61,7 +61,9 @@ export default function Comic(props: IComic) {
                 {props.authors.map((author, index) => (
                   <Fragment key={index}>
                     <span className='text-second-color font-[600] first:hidden'>, </span>
-                    <span className='text-second-color font-[600]'>{t(author)}</span>
+                    <span className='text-second-color font-[600]'>
+                      {author.id ? <Link href={`/artist/${author.id}`}>{t(author.name)}</Link> : t(author.name)}
+                    </span>
                   </Fragment>
                 ))}
               </div>
@@ -115,7 +117,9 @@ export default function Comic(props: IComic) {
             {props.authors.map((author, index) => (
               <Fragment key={index}>
                 <span className='text-second-color font-[600] first:hidden'>, </span>
-                <span className='text-second-color font-[600]'>{t(author)}</span>
+                <span className='text-second-color font-[600]'>
+                  {author.id ? <Link href={`/artist/${author.id}`}>{t(author.name)}</Link> : t(author.name)}
+                </span>
               </Fragment>
             ))}
           </div>

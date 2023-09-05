@@ -18,6 +18,7 @@ import { getBlurUrl } from 'src/utils'
 import ChapterList from './chapterList'
 import { Tab } from '@headlessui/react'
 import Ninja from 'images/ninja-2.svg'
+import Link from 'next/link'
 
 export default function ComicDetail({
   data,
@@ -149,7 +150,9 @@ export default function ComicDetail({
                 {data.authors.map((author, index) => (
                   <Fragment key={index}>
                     <span className='text-second-color font-[600] first:hidden'>, </span>
-                    <span className='text-second-color font-[600]'>{t(author)}</span>
+                    <span className='text-second-color font-[600]'>
+                      {author.id ? <Link href={`/artist/${author.id}`}>{t(author.name)}</Link> : t(author.name)}
+                    </span>
                   </Fragment>
                 ))}
               </p>
