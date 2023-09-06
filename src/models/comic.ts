@@ -32,6 +32,7 @@ export interface IComic
 
 interface Detail {
   cover: string
+  hasAccess: boolean
   languages: Array<
     (typeof LANGUAGE)[number] & {
       isMainLanguage: boolean

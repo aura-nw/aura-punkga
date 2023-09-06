@@ -14,8 +14,9 @@ import NoteIcon from 'images/icons/ic_note.svg'
 import ArrowSwapIcon from 'images/icons/arrow-swap-light.svg'
 import { IChapter } from 'src/models/chapter'
 import { useTranslation } from 'react-i18next'
+import { CHAPTER_STATUS, CHAPTER_TYPE } from 'src/constants/chapter.constant'
 
-export default function ChapterList({ list, like, unlike, setComicLikes }) {
+export default function ChapterList({ list, like, unlike, setComicLikes, hasAccess }) {
   const { t } = useTranslation()
   const [isDesc, setIsDesc] = useState(true)
   const [searchChapter, setSearchChapter] = useState('')
@@ -58,7 +59,14 @@ export default function ChapterList({ list, like, unlike, setComicLikes }) {
           })
           .sort(() => (isDesc ? 1 : -1))
           .map((chapter, index) => (
-            <Chapter chapter={chapter} key={index} like={like} unlike={unlike} setComicLikes={setComicLikes} />
+            <Chapter
+              chapter={chapter}
+              key={index}
+              like={like}
+              hasAccess={hasAccess}
+              unlike={unlike}
+              setComicLikes={setComicLikes}
+            />
           ))}
       </div>
     </div>
@@ -69,11 +77,13 @@ const Chapter = ({
   like,
   unlike,
   setComicLikes,
+  hasAccess,
 }: {
   chapter: IChapter
   like: any
   unlike: any
   setComicLikes: any
+  hasAccess: boolean
 }) => {
   const router = useRouter()
   const { query } = useRouter()
@@ -97,15 +107,13 @@ const Chapter = ({
       ;(document.querySelector('#open-sign-in-btn') as any)?.click()
     }
   }
+  const unavailable =
+    chapter.status == CHAPTER_STATUS.UPCOMING ||
+    (!account && chapter.type == CHAPTER_TYPE.ACCOUNT_ONLY) ||
+    (!hasAccess && chapter.type == CHAPTER_TYPE.NFTS_ONLY)
   return (
     <div
-      onClick={() =>
-        chapter.status != 'Upcoming'
-          ? !(!account && chapter.type == 'Account only')
-            ? router.push(`/comic/${query.comicId}/chapter/${chapter.number}`)
-            : null
-          : null
-      }
+      onClick={() => (!unavailable ? router.push(`/comic/${query.comicId}/chapter/${chapter.number}`) : null)}
       className='flex border-bottom border-[#414141] bg-[#292929]/80 text-white relative'>
       <Image
         src={chapter.thumbnail || m6}
@@ -117,7 +125,7 @@ const Chapter = ({
       <div className='absolute top-0 left-0 [&>*]:absolute [&>*]:w-[100px] [&>*]:rounded-none [&_span]:text-xs [&_span]:px-0 [&_span]:w-[100px] [&_span]:flex [&_span]:justify-center'>
         {(function () {
           switch (chapter.type) {
-            case 'Account only':
+            case CHAPTER_TYPE.ACCOUNT_ONLY:
               if (account) {
                 return (
                   <StatusLabel status='success'>
@@ -134,6 +142,23 @@ const Chapter = ({
                   </StatusLabel>
                 )
               }
+            case CHAPTER_TYPE.NFTS_ONLY:
+              if (hasAccess) {
+                return (
+                  <StatusLabel status='success'>
+                    <>{t('NFTs only')}</>
+                  </StatusLabel>
+                )
+              } else {
+                return (
+                  <StatusLabel status='error'>
+                    <div className='flex gap-1'>
+                      <Image src={LockIcon} alt='' />
+                      {t('NFTs only')}
+                    </div>
+                  </StatusLabel>
+                )
+              }
             default:
               return <div></div>
           }
@@ -143,24 +168,6 @@ const Chapter = ({
         <div>
           <div className='flex items-center gap-5'>
             <p className='text-[10px]'>{`${t('Chapter')} ${chapter.number}`}</p>
-            {/* {(function () {
-              switch (chapter.status) {
-                case 'Published':
-                  return <></>
-                case 'Upcoming':
-                  return (
-                    <StatusLabel status='warning'>
-                      <>{t('Upcoming')}</>
-                    </StatusLabel>
-                  )
-                default:
-                  return (
-                    <div>
-                      <>{t(chapter.status)}</>
-                    </div>
-                  )
-              }
-            })()} */}
           </div>
           <div className='font-[600] text-xs'>{chapter.name}</div>
         </div>

@@ -58,10 +58,10 @@ export default function Comic(props: IComic & { unsubscribe?: () => void; subscr
           </div>
           <div className='text-subtle-dark flex gap-[24px]'>
             <div>
-              <strong>{props.views.toLocaleString('en-US')}</strong> {t('views')}
+              <strong>{props.views.toLocaleString('en-US')}</strong> {props.views > 1 ? t('views') : t('view')}
             </div>
             <div>
-              <strong>{props.likes.toLocaleString('en-US')}</strong> {t('likes')}
+              <strong>{props.likes.toLocaleString('en-US')}</strong> {props.likes > 1 ? t('likes') : t('like')}
             </div>
           </div>
           <div className=' text-[16px] leading-[20px] line-clamp-3'>{props[locale].description}</div>

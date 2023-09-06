@@ -19,6 +19,7 @@ import ChapterList from './chapterList'
 import { Tab } from '@headlessui/react'
 import Ninja from 'images/ninja-2.svg'
 import Link from 'next/link'
+import { CHAPTER_STATUS } from 'src/constants/chapter.constant'
 
 export default function ComicDetail({
   data,
@@ -157,7 +158,7 @@ export default function ComicDetail({
                 ))}
               </p>
               <p className='text-subtle-dark items-center'>
-                <strong>{data.views?.toLocaleString('en-US')}</strong> {t('views')}
+                <strong>{data.views?.toLocaleString('en-US')}</strong> {data.views > 1 ? t('views') : t('view')}
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   width='3'
@@ -167,7 +168,7 @@ export default function ComicDetail({
                   className='inline mx-3'>
                   <circle cx='1.5' cy='2' r='1.5' fill='#61646B' />
                 </svg>
-                <strong>{comicLikes?.toLocaleString('en-US')}</strong> {t('likes')}
+                <strong>{comicLikes?.toLocaleString('en-US')}</strong> {comicLikes > 1 ? t('likes') : t('like')}
               </p>
               <div className={`${expandDetail ? '' : 'flex-col 2xl:flex-row'} 2xl:items-start  flex gap-[10px]`}>
                 <div>
@@ -218,7 +219,7 @@ export default function ComicDetail({
               </p>
             )}
           </div>
-          {data.chapters.find((chapter) => chapter.status === 'Upcoming')?.date && (
+          {data.chapters.find((chapter) => chapter.status === CHAPTER_STATUS.UPCOMING)?.date && (
             <div
               className={`flex gap-2 items-center text-second-color text-sm font-semibold italic ${
                 expandDetail ? ' h-6 opacity-100' : 'opacity-0 h-0'
@@ -226,7 +227,7 @@ export default function ComicDetail({
               <Image src={CalendarIcon} alt='' className='w-5 h-5' />{' '}
               <div>
                 {`${t('New chapter arrives on')} 
-                ${moment(data.chapters.find((chapter) => chapter.status === 'Upcoming')?.date).format(
+                ${moment(data.chapters.find((chapter) => chapter.status === CHAPTER_STATUS.UPCOMING)?.date).format(
                   'dddd, DD/MM/yyyy'
                 )}.
                 ${t('Don’t miss latest update, subscribe now')}!`}

@@ -12,6 +12,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { CHAPTER_STATUS } from 'src/constants/chapter.constant'
 import { Context } from 'src/context'
 export default function HeaderBar({
   openComments,
@@ -88,7 +89,8 @@ export default function HeaderBar({
           </div>
           <Image
             className={`cursor-pointer w-6 h-6 ${
-              currentChapIndex == 0 || comicDetails.data.chapters?.[currentChapIndex - 1]?.status == 'Upcoming'
+              currentChapIndex == 0 ||
+              comicDetails.data.chapters?.[currentChapIndex - 1]?.status == CHAPTER_STATUS.UPCOMING
                 ? 'opacity-60 cursor-not-allowed pointer-events-none'
                 : ''
             }`}

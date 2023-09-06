@@ -156,7 +156,13 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
             </Tab.List>
             <Tab.Panels className='h-full flex-1 flex flex-col'>
               <Tab.Panel>
-                <ChapterList list={data.chapters} like={like} unlike={unlike} setComicLikes={setComicLikes} />
+                <ChapterList
+                  list={data.chapters}
+                  hasAccess={data.hasAccess}
+                  like={like}
+                  unlike={unlike}
+                  setComicLikes={setComicLikes}
+                />
               </Tab.Panel>
               <Tab.Panel className='flex-1 flex flex-col'>
                 <div className='flex-1 w-full bg-[#292929]/80 flex flex-col items-center justify-center'>

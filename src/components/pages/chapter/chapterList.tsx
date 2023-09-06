@@ -17,6 +17,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import m6 from 'src/assets/images/mockup6.png'
+import { CHAPTER_STATUS, CHAPTER_TYPE } from 'src/constants/chapter.constant'
 import { Context } from 'src/context'
 import { getBlurUrl } from 'src/utils'
 
@@ -86,15 +87,15 @@ export default function ChapterList({
                   },
 
                   {
-                    key: 'Free',
+                    key: CHAPTER_TYPE.FREE,
                     value: t('Free'),
                   },
                   {
-                    key: 'NFTs only',
+                    key: CHAPTER_TYPE.NFTS_ONLY,
                     value: t('NFTs only'),
                   },
                   {
-                    key: 'Account only',
+                    key: CHAPTER_TYPE.ACCOUNT_ONLY,
                     value: t('Account only'),
                   },
                 ]}
@@ -206,6 +207,10 @@ const Chapter = ({
       ;(document.querySelector('#open-sign-in-btn') as any)?.click()
     }
   }
+  const unavailable =
+    chapter.status == CHAPTER_STATUS.UPCOMING ||
+    (!account && chapter.type == CHAPTER_TYPE.ACCOUNT_ONLY) ||
+    (!data.hasAccess && chapter.type == CHAPTER_TYPE.NFTS_ONLY)
   return (
     <>
       <div
@@ -224,7 +229,7 @@ const Chapter = ({
           width={60}
           height={60}
           onClick={() => {
-            if (chapter.status == 'Upcoming' || (!account && chapter.type == 'Account only')) return
+            if (unavailable) return
             setExpandDetail(false)
             router.push(`/comic/${data.id}/chapter/${chapter.number}`)
           }}
@@ -235,7 +240,7 @@ const Chapter = ({
               <p>{`${t('Chapter')} ${chapter.number}`}</p>
               {(function () {
                 switch (chapter.type) {
-                  case 'Account only':
+                  case CHAPTER_TYPE.ACCOUNT_ONLY:
                     if (account) {
                       return (
                         <StatusLabel status='success'>
@@ -252,19 +257,30 @@ const Chapter = ({
                         </StatusLabel>
                       )
                     }
-                  case 'Upcoming':
-                    return (
-                      <StatusLabel status='warning'>
-                        <>{t('Upcoming')}</>
-                      </StatusLabel>
-                    )
+                  case CHAPTER_TYPE.NFTS_ONLY:
+                    if (data.hasAccess) {
+                      return (
+                        <StatusLabel status='success'>
+                          <>{t('NFTs only')}</>
+                        </StatusLabel>
+                      )
+                    } else {
+                      return (
+                        <StatusLabel status='error'>
+                          <div className='flex gap-1'>
+                            <Image src={LockIcon} alt='' />
+                            {t('NFTs only')}
+                          </div>
+                        </StatusLabel>
+                      )
+                    }
                   default:
                     return <div></div>
                 }
               })()}
               {(function () {
                 switch (chapter.status) {
-                  case 'Upcoming':
+                  case CHAPTER_STATUS.UPCOMING:
                     return (
                       <StatusLabel status='warning'>
                         <>{t('Upcoming')}</>
@@ -278,7 +294,7 @@ const Chapter = ({
             <div
               className='font-[600]'
               onClick={() => {
-                if (chapter.status == 'Upcoming' || (!account && chapter.type == 'Account only')) return
+                if (unavailable) return
                 setExpandDetail(false)
                 router.push(`/comic/${data.id}/chapter/${chapter.number}`)
               }}>

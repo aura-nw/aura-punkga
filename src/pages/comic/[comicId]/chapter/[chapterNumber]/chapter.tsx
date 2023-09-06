@@ -20,6 +20,7 @@ import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useScrollDirection } from 'react-use-scroll-direction'
+import { CHAPTER_TYPE } from 'src/constants/chapter.constant'
 import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
 import { IChapter } from 'src/models/chapter'
@@ -181,7 +182,7 @@ const Chapter: React.FC = ({
           postComment={postComment}
         />
         <div className='relative w-[100vw] h-full flex-1 bg-black'>
-          {!account && chapterDetails.data.type == 'Account only' ? (
+          {!account && chapterDetails.data.type == CHAPTER_TYPE.ACCOUNT_ONLY ? (
             <div className='h-[50vh] w-full flex justify-center items-center text-center p-5'>
               <div>
                 <p className='italic text-subtle-dark '>

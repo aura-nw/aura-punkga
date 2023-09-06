@@ -182,3 +182,74 @@ export const search = async (content: string) => {
     return response
   })
 }
+export const getComicDetail = async (comicId: string, accountId: string) => {
+  const d: any = await axios.get(`${getConfig().API_URL}/api/rest/public/manga/${comicId}`, {
+    params: {
+      user_id: accountId,
+    },
+  })
+  const data = d?.data?.manga[0]
+  const hasAccess = await getAccess(data.id)
+  const res = {
+    id: data.id,
+    languages: data.manga_languages.map((ml) => ({
+      ...LANGUAGE.find((l) => l.id == ml.language_id),
+      isMainLanguage: ml.is_main_language,
+    })),
+    hasAccess: hasAccess,
+    chapters: data.chapters.map((chapter) => ({
+      id: chapter.id,
+      name: chapter.chapter_name,
+      number: chapter.chapter_number,
+      type: chapter.chapter_type,
+      status: formatStatus(chapter.status),
+      thumbnail: chapter.thumbnail_url,
+      date: chapter.pushlish_date,
+      likes: chapter.chapter_total_likes?.likes || 0,
+      views: chapter.views || 0,
+      isLiked: !!chapter.chapters_likes?.length,
+    })),
+    status: {
+      type: COMIC_STATUS[formatStatus(data.status)],
+      text: formatStatus(data.status),
+    },
+    views: data.manga_total_views?.views || 0,
+    likes: data.manga_total_likes?.likes || 0,
+    isSubscribe: !!data.manga_subscribers.length,
+    image: data.poster,
+    cover: data.banner,
+    tags: data.manga_tags.map(({ tag }: any) => {
+      const r = {}
+      LANGUAGE.forEach((l) => {
+        const tagLanguage = tag.tag_languages.find((tl) => tl.language_id == l.id) || tag.tag_languages[0]
+        r[l.shortLang] = tagLanguage.value
+      })
+      return r
+    }),
+    authors: data.manga_creators?.map((c: any) => ({
+      id: c.creator?.isActive ? c.creator?.id : undefined,
+      name: c.creator?.isActive ? c.creator?.name : 'Unknown creator',
+    })),
+    releaseDate: data.release_date,
+  }
+
+  LANGUAGE.forEach((l) => {
+    const mangaLanguages =
+      data.manga_languages.find((ml) => ml.language_id == l.id) ||
+      data.manga_languages.find((ml) => ml.is_main_language)
+    res[l.shortLang] = {
+      title: mangaLanguages?.title,
+      description: mangaLanguages?.description,
+    }
+  })
+  return res
+}
+export const getAccess = async (id: number) => {
+  try {
+    const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/manga/${id}/get-access`)
+    return data?.nft
+  } catch (error) {
+    console.log(error)
+    return false
+  }
+}

@@ -26,6 +26,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { CHAPTER_STATUS, CHAPTER_TYPE } from 'src/constants/chapter.constant'
 import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
 import { IChapter } from 'src/models/chapter'
@@ -198,7 +199,7 @@ export default function ReadingSection({
           </div>
         </div>
       </div>
-      {!account && chapterData.type == 'Account only' ? (
+      {!account && chapterData.type == CHAPTER_TYPE.ACCOUNT_ONLY ? (
         <div className='h-full w-full flex justify-center items-center'>
           <div>
             <p className='italic text-subtle-dark '>
@@ -260,9 +261,9 @@ export default function ReadingSection({
           <div className='text-ellipsis max-w-[90%] overflow-hidden whitespace-nowrap'>
             <div className='font-bold truncate'>{`Chapter ${chapterData.number} • ${chapterData.name}`}</div>
             <p className='text-subtle-dark truncate'>
-              {(chapterLikes || 0).toLocaleString('en-US')} {t('likes')} •{' '}
-              {(chapterData.views || 0).toLocaleString('en-US')} {t('views')} •{' '}
-              {(commentNumber || 0).toLocaleString('en-US')} {t('comments')}
+              {(chapterLikes || 0).toLocaleString('en-US')} {chapterLikes > 1 ? t('likes') : t('like')} •{' '}
+              {(chapterData.views || 0).toLocaleString('en-US')} {chapterData.views > 1 ? t('views') : t('view')} •{' '}
+              {(commentNumber || 0).toLocaleString('en-US')} {commentNumber > 1 ? t('comments') : t('comment')}
             </p>
           </div>
         </div>
@@ -275,7 +276,9 @@ export default function ReadingSection({
           </OutlineButton>
           <OutlineButton
             onClick={() => goToChap('Next')}
-            disabled={currentChapIndex == 0 || data.chapters?.[currentChapIndex - 1]?.status == 'Upcoming'}>
+            disabled={
+              currentChapIndex == 0 || data.chapters?.[currentChapIndex - 1]?.status == CHAPTER_STATUS.UPCOMING
+            }>
             <div className='flex items-center w-[130px] justify-between py-[3px] mx-[-6px] whitespace-nowrap'>
               {t('Next chap')}
               <ChevronRightIcon className='w-5 h-5' />
@@ -332,9 +335,9 @@ export default function ReadingSection({
           <div className='text-ellipsis max-w-[90%] overflow-hidden whitespace-nowrap'>
             <strong className='font-bold'>{`${t('Chapter')} ${chapterData.number} • ${chapterData.name}`}</strong>
             <p className='text-subtle-dark truncate'>
-              {(chapterLikes || 0).toLocaleString('en-US')} {t('likes')} •{' '}
-              {(chapterData.views || 0).toLocaleString('en-US')} {t('views')} •{' '}
-              {(commentNumber || 0).toLocaleString('en-US')} {t('comments')}
+              {(chapterLikes || 0).toLocaleString('en-US')} {chapterLikes > 1 ? t('likes') : t('like')} •{' '}
+              {(chapterData.views || 0).toLocaleString('en-US')} {chapterData.views > 1 ? t('views') : t('view')} •{' '}
+              {(commentNumber || 0).toLocaleString('en-US')} {commentNumber > 1 ? t('comments') : t('comment')}
             </p>
           </div>
         </div>
@@ -386,7 +389,7 @@ export default function ReadingSection({
           </div>
           <Image
             className={`cursor-pointer ${
-              currentChapIndex == 0 || data.chapters?.[currentChapIndex - 1]?.status == 'Upcoming'
+              currentChapIndex == 0 || data.chapters?.[currentChapIndex - 1]?.status == CHAPTER_STATUS.UPCOMING
                 ? 'opacity-60 cursor-not-allowed pointer-events-none'
                 : ''
             }`}
