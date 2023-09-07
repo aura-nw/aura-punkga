@@ -249,7 +249,7 @@ export const getAccess = async (id: number) => {
     const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/manga/${id}/get-access`)
     return data?.nft
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     return false
   }
 }

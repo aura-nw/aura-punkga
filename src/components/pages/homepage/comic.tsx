@@ -11,6 +11,7 @@ import { IComic } from 'src/models/comic'
 
 export default function Comic(props: IComic) {
   const { locale } = useRouter()
+  const router = useRouter()
   const { t } = useTranslation()
   return (
     <div className={`${props.status.text == 'Upcoming' ? 'pointer-events-none' : ''}`}>
@@ -96,7 +97,7 @@ export default function Comic(props: IComic) {
         </div>
       </div>
       <div className='md:hidden h-full w-fit mx-auto'>
-        <Link href={`/comic/${props.id}`} className='relative flex flex-col h-full'>
+        <div onClick={() => router.push(`/comic/${props.id}`)} className='relative flex flex-col h-full'>
           <Image
             src={props.image || NoImage}
             alt=''
@@ -133,7 +134,7 @@ export default function Comic(props: IComic) {
               <strong>{props.likes.toLocaleString('en-US')}</strong>
             </div>
           </div>
-        </Link>
+        </div>
       </div>
     </div>
   )

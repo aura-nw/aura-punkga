@@ -20,6 +20,7 @@ import MobileComic from 'components/pages/homepage/trendingComic'
 import Comic from 'components/pages/homepage/comic'
 import Pagination from 'components/pages/artist/Pagination'
 import { Fragment, useState } from 'react'
+import NoImage from 'images/no_img.png'
 
 export default function Artist({ artistDetail }) {
   const artist = artistDetail.data as IArtist
@@ -174,7 +175,7 @@ export default function Artist({ artistDetail }) {
                           <div className='bg-white rounded-[20px] p-[10px]'>
                             <div className='w-full aspect-square rounded-[15px] overflow-hidden relative'>
                               <Image
-                                src={token.image}
+                                src={token.image || NoImage}
                                 width={160}
                                 height={160}
                                 className='w-full object-cover aspect-square'
