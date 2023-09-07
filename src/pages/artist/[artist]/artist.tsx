@@ -27,6 +27,7 @@ export default function Artist({ artistDetail }) {
   const { locale } = useRouter()
   const { t } = useTranslation()
   const [currentPage, setCurrentPage] = useState(1)
+  const seekhypeBaseUrl = new URL(getConfig().SEEKHYPE_URL).origin
   if (!artist) return <></>
   return (
     <>
@@ -160,7 +161,7 @@ export default function Artist({ artistDetail }) {
                         <div className='text-sm leading-6 truncate lg:text-xl lg:leading-6'>{collection.name}</div>
                         <Link
                           title={t('View more on Seekhype')}
-                          href={`${getConfig().SEEKHYPE_URL}/collection/${collection.address}`}
+                          href={`${seekhypeBaseUrl}/collection/${collection.address}`}
                           className='cursor-pointer'>
                           <Image src={ShareIcon} alt='' className='w-5 h-5' />
                         </Link>
@@ -169,7 +170,7 @@ export default function Artist({ artistDetail }) {
                     <div className='grid grid-cols-[repeat(auto-fill,minmax(max(160px,calc(100%/5)),1fr))] grid-rows-[auto_auto] lg:grid-rows-1 auto-rows-[0px] overflow-hidden -m-[5px] lg:-m-5'>
                       {collection.tokens.map((token, index) => (
                         <Link
-                          href={`${getConfig().SEEKHYPE_URL}/nft/${collection.address}/${token.id}`}
+                          href={`${seekhypeBaseUrl}/nft/${collection.address}/${token.id}`}
                           key={index}
                           className='p-[5px] lg:p-5 [&:hover_.view-on-seekhype]:translate-y-0'>
                           <div className='bg-white rounded-[20px] p-[10px]'>
