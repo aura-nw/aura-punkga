@@ -13,7 +13,8 @@ export default function TrendingComic(props: IComic) {
   const { locale } = useRouter()
   const { t } = useTranslation()
   return (
-    <div className={`flex gap-[20px] ${props.status.text == 'Upcoming' ? 'pointer-events-none' : ''}`}>
+    <div
+      className={`flex gap-[20px] ${props.status.text == 'Upcoming' ? '[&_a:not(.author)]:pointer-events-none' : ''}`}>
       <Link href={`/comic/${props.id}`} className='xl:hidden relative w-[150px] shrink-0'>
         <Image
           src={props.image || NoImage}
@@ -57,7 +58,13 @@ export default function TrendingComic(props: IComic) {
               <Fragment key={index}>
                 <span className='font-[500] first:hidden text-second-color md:text-black'>, </span>
                 <span className='font-[500] text-second-color md:text-black'>
-                  {author.id ? <Link href={`/artist/${author.id}`}>{t(author.name)}</Link> : t(author.name)}
+                  {author.id ? (
+                    <Link className='author' href={`/artist/${author.id}`}>
+                      {t(author.name)}
+                    </Link>
+                  ) : (
+                    t(author.name)
+                  )}
                 </span>
               </Fragment>
             ))}

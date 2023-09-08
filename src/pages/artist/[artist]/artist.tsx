@@ -27,6 +27,7 @@ export default function Artist({ artistDetail }) {
   const { locale } = useRouter()
   const { t } = useTranslation()
   const [currentPage, setCurrentPage] = useState(1)
+  const [showMore, setShowMore] = useState(false)
   const seekhypeBaseUrl = new URL(getConfig().SEEKHYPE_URL).origin
   if (!artist) return <></>
   return (
@@ -127,7 +128,9 @@ export default function Artist({ artistDetail }) {
                 <div className='h-0 w-max invisible hidden lg:block'>{t('Total subscribers')}:</div>
                 <div className='h-0 w-max invisible lg:hidden'>{t('Gender')}:</div>
               </div>
-              <div className='font-medium line-clamp-3'>{artist?.bio}</div>
+              <div className={`font-medium ${showMore ? '' : 'line-clamp-3'}`} onClick={() => setShowMore(!showMore)}>
+                {artist?.bio}
+              </div>
             </div>
           </div>
         </div>
@@ -160,7 +163,7 @@ export default function Artist({ artistDetail }) {
                       <div className='flex gap-[10px]'>
                         <div className='text-sm leading-6 truncate lg:text-xl lg:leading-6'>{collection.name}</div>
                         <Link
-                          title={t('View more on Seekhype')}
+                          title={t('View more on SEEKHYPE')}
                           href={`${seekhypeBaseUrl}/collection/${collection.address}`}
                           className='cursor-pointer'>
                           <Image src={ShareIcon} alt='' className='w-5 h-5' />
@@ -171,6 +174,7 @@ export default function Artist({ artistDetail }) {
                       {collection.tokens.map((token, index) => (
                         <Link
                           href={`${seekhypeBaseUrl}/nft/${collection.address}/${token.id}`}
+                          target='_blank'
                           key={index}
                           className='p-[5px] lg:p-5 [&:hover_.view-on-seekhype]:translate-y-0'>
                           <div className='bg-white rounded-[20px] p-[10px]'>

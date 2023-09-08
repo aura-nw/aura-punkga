@@ -14,7 +14,7 @@ export default function Comic(props: IComic) {
   const router = useRouter()
   const { t } = useTranslation()
   return (
-    <div className={`${props.status.text == 'Upcoming' ? 'pointer-events-none' : ''}`}>
+    <div className={`${props.status.text == 'Upcoming' ? '[&_a:not(.author)]:pointer-events-none' : ''}`}>
       <div className='hidden md:flex gap-[20px]'>
         <Link href={`/comic/${props.id}`} className='flex-auto w-1/3 xl:hidden'>
           <Image
@@ -63,7 +63,13 @@ export default function Comic(props: IComic) {
                   <Fragment key={index}>
                     <span className='text-second-color font-[600] first:hidden'>, </span>
                     <span className='text-second-color font-[600]'>
-                      {author.id ? <Link href={`/artist/${author.id}`}>{t(author.name)}</Link> : t(author.name)}
+                      {author.id ? (
+                        <Link className='author' href={`/artist/${author.id}`}>
+                          {t(author.name)}
+                        </Link>
+                      ) : (
+                        t(author.name)
+                      )}
                     </span>
                   </Fragment>
                 ))}
@@ -97,7 +103,11 @@ export default function Comic(props: IComic) {
         </div>
       </div>
       <div className='md:hidden h-full w-fit mx-auto'>
-        <div onClick={() => router.push(`/comic/${props.id}`)} className='relative flex flex-col h-full'>
+        <div
+          onClick={() => {
+            props.status.text == 'Upcoming' ? null : router.push(`/comic/${props.id}`)
+          }}
+          className='relative flex flex-col h-full'>
           <Image
             src={props.image || NoImage}
             alt=''
@@ -119,7 +129,13 @@ export default function Comic(props: IComic) {
               <Fragment key={index}>
                 <span className='text-second-color font-[600] first:hidden'>, </span>
                 <span className='text-second-color font-[600]'>
-                  {author.id ? <Link href={`/artist/${author.id}`}>{t(author.name)}</Link> : t(author.name)}
+                  {author.id ? (
+                    <Link className='author' onClick={(e) => e.stopPropagation()} href={`/artist/${author.id}`}>
+                      {t(author.name)}
+                    </Link>
+                  ) : (
+                    t(author.name)
+                  )}
                 </span>
               </Fragment>
             ))}

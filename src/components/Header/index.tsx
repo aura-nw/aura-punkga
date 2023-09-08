@@ -151,7 +151,7 @@ export default function Header({ className }: { className?: string }) {
                       <div
                         key={index}
                         className={`flex gap-2 cursor-pointer ${
-                          manga.status.text == 'Upcoming' && 'pointer-events-none'
+                          manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
                         }`}
                         onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}>
                         <Image
@@ -170,7 +170,9 @@ export default function Header({ className }: { className?: string }) {
                                   <span className='text-second-color font-[600] first:hidden'>, </span>
                                   <span className='text-second-color font-[600]'>
                                     {author.id ? (
-                                      <Link href={`/artist/${author.id}`}>{t(author.name)}</Link>
+                                      <Link className='author' href={`/artist/${author.id}`}>
+                                        {t(author.name)}
+                                      </Link>
                                     ) : (
                                       t(author.name)
                                     )}
@@ -336,7 +338,9 @@ export default function Header({ className }: { className?: string }) {
                   {searchComic.data?.map((manga, index) => (
                     <div
                       key={index}
-                      className={`flex gap-2 ${manga.status.text == 'Upcoming' && 'pointer-events-none'}`}
+                      className={`flex gap-2 ${
+                        manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
+                      }`}
                       onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}>
                       <Image
                         src={manga.image || NoImage}
@@ -354,7 +358,9 @@ export default function Header({ className }: { className?: string }) {
                                 <span className='text-second-color font-[600] first:hidden'>, </span>
                                 <span className='text-second-color font-[600]'>
                                   {author.id ? (
-                                    <Link href={`/artist/${author.id}`}>{t(author.name)}</Link>
+                                    <Link className='author' href={`/artist/${author.id}`}>
+                                      {t(author.name)}
+                                    </Link>
                                   ) : (
                                     t(author.name)
                                   )}
