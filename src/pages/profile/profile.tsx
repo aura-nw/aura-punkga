@@ -242,120 +242,122 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
                     </div>
                   </div>
                 </div>
-                <div className={`flex flex-col ${open ? 'gap-[10px]' : 'gap-[5px] md:gap-[10px]'}`}>
-                  {account.birthdate && (
-                    <div className={`flex items-center`}>
-                      <div
-                        className={`shrink-0 text-medium-gray transition-all md:text-base md:leading-5 ${
-                          open
-                            ? 'text-sm leading-[18px] w-[88px] md:font-bold md:w-[130px]'
-                            : 'text-xs leading-[15px] w-[63px] md:w-[84px] md:font-medium'
-                        }`}>
-                        {t('DOB')}:
+                {(account.birthdate || account.gender || open) && (
+                  <div className={`flex flex-col ${open ? 'gap-[10px]' : 'gap-[5px] md:gap-[10px]'}`}>
+                    {(account.birthdate || open) && (
+                      <div className={`flex items-center`}>
+                        <div
+                          className={`shrink-0 text-medium-gray transition-all md:text-base md:leading-5 ${
+                            open
+                              ? 'text-sm leading-[18px] w-[88px] md:font-bold md:w-[130px]'
+                              : 'text-xs leading-[15px] w-[63px] md:w-[84px] md:font-medium'
+                          }`}>
+                          {t('DOB')}:
+                        </div>
+                        {open ? (
+                          <div>
+                            <DatePicker
+                              selected={birthdate}
+                              showMonthDropdown
+                              showYearDropdown
+                              locale={locale == 'vn' ? vi : ''}
+                              dropdownMode='select'
+                              onChange={(date) => setBirthdate(date)}
+                              customInput={<CustomInput />}
+                              maxDate={new Date()}
+                            />
+                          </div>
+                        ) : (
+                          <div className='text-xs text-[#19191B] font-medium leading-[15px] md:text-base md:leading-5'>
+                            {moment(account.birthdate).format('DD/MM/yyyy')}
+                          </div>
+                        )}
                       </div>
-                      {open ? (
-                        <div>
-                          <DatePicker
-                            selected={birthdate}
-                            showMonthDropdown
-                            showYearDropdown
-                            locale={locale == 'vn' ? vi : ''}
-                            dropdownMode='select'
-                            onChange={(date) => setBirthdate(date)}
-                            customInput={<CustomInput />}
-                            maxDate={new Date()}
-                          />
+                    )}
+                    {(account.gender || open) && (
+                      <div className={`flex items-center`}>
+                        <div
+                          className={`shrink-0 text-medium-gray transition-all md:text-base md:leading-5 ${
+                            open
+                              ? 'text-sm leading-[18px] w-[88px] md:font-bold md:w-[130px]'
+                              : 'text-xs leading-[15px] w-[63px] md:w-[84px] md:font-medium'
+                          }`}>
+                          {t('Gender')}:
                         </div>
-                      ) : (
-                        <div className='text-xs text-[#19191B] font-medium leading-[15px] md:text-base md:leading-5'>
-                          {moment(account.birthdate).format('DD/MM/yyyy')}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  {account.gender && (
-                    <div className={`flex items-center`}>
-                      <div
-                        className={`shrink-0 text-medium-gray transition-all md:text-base md:leading-5 ${
-                          open
-                            ? 'text-sm leading-[18px] w-[88px] md:font-bold md:w-[130px]'
-                            : 'text-xs leading-[15px] w-[63px] md:w-[84px] md:font-medium'
-                        }`}>
-                        {t('Gender')}:
+                        {open ? (
+                          <div>
+                            <Select
+                              className='text-[#61646B]'
+                              selected={gender}
+                              onChange={setGender}
+                              placeholder={t('Select a gender')}
+                              icon={<ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />}
+                              options={[
+                                {
+                                  key: 'Male',
+                                  value: t('Male'),
+                                },
+                                {
+                                  key: 'Female',
+                                  value: t('Female'),
+                                },
+                                {
+                                  key: 'Other',
+                                  value: t('Other'),
+                                },
+                              ]}
+                            />
+                          </div>
+                        ) : (
+                          <div className='text-xs text-[#19191B] font-medium leading-[15px] md:text-base md:leading-5 capitalize flex items-center'>
+                            {t(account.gender == 'Undisclosed' ? 'Other' : account.gender)}{' '}
+                            <Image
+                              className='h-[14px] w-[14px] md:h-[20px] md:w-[20px]'
+                              src={
+                                account.gender.toLowerCase() == 'male'
+                                  ? MaleIcon
+                                  : account.gender.toLowerCase() == 'female'
+                                  ? FemaleIcon
+                                  : OtherIcon
+                              }
+                              alt=''
+                            />
+                          </div>
+                        )}
                       </div>
-                      {open ? (
-                        <div>
-                          <Select
-                            className='text-[#61646B]'
-                            selected={gender}
-                            onChange={setGender}
-                            placeholder={t('Select a gender')}
-                            icon={<ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />}
-                            options={[
-                              {
-                                key: 'Male',
-                                value: t('Male'),
-                              },
-                              {
-                                key: 'Female',
-                                value: t('Female'),
-                              },
-                              {
-                                key: 'Other',
-                                value: t('Other'),
-                              },
-                            ]}
-                          />
+                    )}
+                    {(account.bio || open) && (
+                      <div className={`flex ${open ? 'items-center' : 'items-start'}`}>
+                        <div
+                          className={`shrink-0 text-medium-gray transition-all md:text-base md:leading-5 ${
+                            open
+                              ? 'text-sm leading-[18px] w-[88px] md:font-bold md:w-[130px]'
+                              : 'text-xs leading-[15px] w-[63px] md:w-[84px] md:font-medium'
+                          }`}>
+                          {t('Bio')}:
                         </div>
-                      ) : (
-                        <div className='text-xs text-[#19191B] font-medium leading-[15px] md:text-base md:leading-5 capitalize flex items-center'>
-                          {t(account.gender == 'Undisclosed' ? 'Other' : account.gender)}{' '}
-                          <Image
-                            className='h-[14px] w-[14px] md:h-[20px] md:w-[20px]'
-                            src={
-                              account.gender.toLowerCase() == 'male'
-                                ? MaleIcon
-                                : account.gender.toLowerCase() == 'female'
-                                ? FemaleIcon
-                                : OtherIcon
-                            }
-                            alt=''
+                        {open ? (
+                          <AutoGrowingTextField
+                            value={bio}
+                            onChange={setBio}
+                            placeholder={t('Write something about yourself')}
+                            className='text-sm text-[#61646B] font-normal md:font-bold leading-6 min-h-[52px] flex-1 max-w-[calc(100vw-128px)] max-h-[150px] md:min-h-[72px] rounded-lg'
                           />
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  {account.bio && (
-                    <div className={`flex ${open ? 'items-center' : 'items-start'}`}>
-                      <div
-                        className={`shrink-0 text-medium-gray transition-all md:text-base md:leading-5 ${
-                          open
-                            ? 'text-sm leading-[18px] w-[88px] md:font-bold md:w-[130px]'
-                            : 'text-xs leading-[15px] w-[63px] md:w-[84px] md:font-medium'
-                        }`}>
-                        {t('Bio')}:
+                        ) : (
+                          <div className='text-xs text-[#19191B] font-medium leading-[15px] md:font-medium md:text-base md:leading-5'>
+                            <p
+                              className={`text-[#19191B] ${
+                                showMore ? '' : 'md:line-clamp-3 line-clamp-5 cursor-pointer'
+                              }`}
+                              onClick={() => setShowMore(!showMore)}>
+                              {account.bio}
+                            </p>
+                          </div>
+                        )}
                       </div>
-                      {open ? (
-                        <AutoGrowingTextField
-                          value={bio}
-                          onChange={setBio}
-                          placeholder={t('Write something about yourself')}
-                          className='text-sm text-[#61646B] font-normal md:font-bold leading-6 min-h-[52px] flex-1 max-w-[calc(100vw-128px)] max-h-[150px] md:min-h-[72px] rounded-lg'
-                        />
-                      ) : (
-                        <div className='text-xs text-[#19191B] font-medium leading-[15px] md:font-medium md:text-base md:leading-5'>
-                          <p
-                            className={`text-[#19191B] ${
-                              showMore ? '' : 'md:line-clamp-3 line-clamp-5 cursor-pointer'
-                            }`}
-                            onClick={() => setShowMore(!showMore)}>
-                            {account.bio}
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
+                    )}
+                  </div>
+                )}
                 <div className='relative'>
                   <div
                     className={`flex gap-2 mt-[15px] md:mt-0 md:gap-6 transition-all left-0 ${
