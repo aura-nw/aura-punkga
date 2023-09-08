@@ -30,7 +30,6 @@ export default function Artist({ artistDetail }) {
   const [showMore, setShowMore] = useState(false)
   const seekhypeBaseUrl = new URL(getConfig().SEEKHYPE_URL).origin
   if (!artist) return <></>
-  console.log(artist)
   return (
     <>
       <HeadComponent title={`Sunday | Punkga.me`} />

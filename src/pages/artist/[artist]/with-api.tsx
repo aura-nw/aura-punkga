@@ -74,7 +74,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
             website: detail.socials.web,
             behance: detail.socials.behance,
           },
-          collections: collectionsData,
+          collections: collectionsData.sort((a, b) => collections.indexOf(a.address) - collections.indexOf(b.address)),
           comics: detail.manga_creators?.map(({ manga }: any) => {
             const response = {
               id: manga.id,
