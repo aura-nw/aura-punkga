@@ -21,7 +21,9 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
         const collections = []
         let collectionsData = []
         detail.manga_creators.forEach(({ manga }) =>
-          manga.contract_addresses?.forEach((address) => collections.push(address))
+          manga.contract_addresses?.forEach((address) =>
+            collections.includes(address) ? null : collections.push(address)
+          )
         )
         if (collections.length) {
           const { data } = await axios.post(`${config.CHAIN_INFO.indexerV2}`, {
