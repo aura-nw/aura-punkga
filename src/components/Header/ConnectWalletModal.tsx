@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
+import { isMobile } from 'react-device-detect'
 export default function ConnectWalletModal({ onClose }) {
   const [step, setStep] = useState(1)
   const [wallet, setWallet] = useState('')
@@ -55,7 +56,9 @@ export default function ConnectWalletModal({ onClose }) {
             <Image src={C98} alt='' />
           </div>
           <div
-            className='flex items-center justify-between bg-[#F1F2F4] text-subtle-dark p-[10px] rounded-xl cursor-pointer'
+            className={`flex items-center justify-between bg-[#F1F2F4] text-subtle-dark p-[10px] rounded-xl cursor-pointer ${
+              isMobile ? 'opacity-50 pointer-events-none' : ''
+            }`}
             onClick={() => connectWalletHandler('Keplr')}>
             <span className='text-2xl leading-10 font-medium'>Keplr</span>
             <Image src={Keplr} alt='' />

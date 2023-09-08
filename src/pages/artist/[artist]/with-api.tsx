@@ -12,7 +12,6 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   const config = getConfig()
   const { query } = useRouter()
   const artist = query.artist
-
   const getDetail = async () => {
     try {
       const env = config.CHAIN_ID.includes('xstaxy') ? 'xstaxy' : 'euphoria'
@@ -119,7 +118,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     }
   }
 
-  const artistDetail = useApi<IArtist>(getDetail, !!artist, [])
+  const artistDetail = useApi<IArtist>(getDetail, !!artist, [artist])
 
   return <Component {...props} artistDetail={artistDetail} />
 }
