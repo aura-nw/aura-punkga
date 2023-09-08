@@ -3,6 +3,7 @@ import getConfig from 'next/config'
 import { useRouter } from 'next/router'
 import { useContext, useRef } from 'react'
 import { LANGUAGE } from 'src/constants'
+import { CHAPTER_TYPE } from 'src/constants/chapter.constant'
 import { Context, privateAxios } from 'src/context'
 import useApi from 'src/hooks/useApi'
 import { IChapter } from 'src/models/chapter'
@@ -43,10 +44,18 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       isLiked: !!data.chapters_likes.length,
     }
 
-    LANGUAGE.forEach((l) => {
-      const chapterLanguage = data.chapter_languages.find((cl) => cl.language_id == l.id)
-      res[l.shortLang] = chapterLanguage?.detail ? chapterLanguage.detail.map((page) => page.image_path) : null
-    })
+    if (data.chapter_type == CHAPTER_TYPE.ACCOUNT_ONLY || data.chapter_type == CHAPTER_TYPE.NFTS_ONLY) {
+      const { data: protectedData } = await privateAxios.get(`${config.REST_API_URL}/chapter/${data.id}/protected`)
+      LANGUAGE.forEach((l) => {
+        const chapterLanguage = protectedData.data.chapters[0].chapter_languages.find((cl) => cl.language_id == l.id)
+        res[l.shortLang] = chapterLanguage?.detail ? chapterLanguage.detail.map((page) => page.image_path) : null
+      })
+    } else {
+      LANGUAGE.forEach((l) => {
+        const chapterLanguage = data.chapter_languages.find((cl) => cl.language_id == l.id)
+        res[l.shortLang] = chapterLanguage?.detail ? chapterLanguage.detail.map((page) => page.image_path) : null
+      })
+    }
 
     chapterId.current = data.id
 
