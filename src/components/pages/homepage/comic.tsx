@@ -16,7 +16,9 @@ export default function Comic(props: IComic) {
   return (
     <div className={`${props.status.text == 'Upcoming' ? '[&_a:not(.author)]:pointer-events-none' : ''}`}>
       <div className='hidden md:flex gap-[20px]'>
-        <Link href={`/comic/${props.id}`} className=' xl:hidden shrink-0 block w-[180px] aspect-[180/240] mx-auto'>
+        <Link
+          href={`/comic/${props.id}`}
+          className=' xl:hidden shrink-0 block w-[180px] h-fit aspect-[180/240] mx-auto'>
           <Image
             src={props.image || NoImage}
             alt=''
@@ -25,7 +27,9 @@ export default function Comic(props: IComic) {
             className={`w-full h-full ${props.image ? 'object-cover' : 'object-contain bg-light-gray'} rounded-[15px] `}
           />
         </Link>
-        <Link href={`/comic/${props.id}/chapter/1`} className='shrink-0 w-[180px] aspect-[180/240] hidden xl:block'>
+        <Link
+          href={`/comic/${props.id}/chapter/1`}
+          className='shrink-0 w-[180px] h-fit aspect-[180/240] hidden xl:block'>
           <Image
             src={props.image || NoImage}
             alt=''
