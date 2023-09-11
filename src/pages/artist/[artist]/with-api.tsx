@@ -12,7 +12,6 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   const config = getConfig()
   const { query } = useRouter()
   const artist = query.artist
-
   const getDetail = async () => {
     try {
       const env = config.CHAIN_ID.includes('xstaxy') ? 'xstaxy' : 'euphoria'
@@ -22,7 +21,9 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
         const collections = []
         let collectionsData = []
         detail.manga_creators.forEach(({ manga }) =>
-          manga.contract_addresses?.forEach((address) => collections.push(address))
+          manga.contract_addresses?.forEach((address) =>
+            collections.includes(address) ? null : collections.push(address)
+          )
         )
         if (collections.length) {
           const { data } = await axios.post(`${config.CHAIN_INFO.indexerV2}`, {
@@ -73,7 +74,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
             website: detail.socials.web,
             behance: detail.socials.behance,
           },
-          collections: collectionsData,
+          collections: collectionsData.sort((a, b) => collections.indexOf(a.address) - collections.indexOf(b.address)),
           comics: detail.manga_creators?.map(({ manga }: any) => {
             const response = {
               id: manga.id,
@@ -83,8 +84,8 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
                 text: formatStatus(manga.status),
               },
               authors: manga.manga_creators?.map((c: any) => ({
-                id: c.creator?.isActive ? c.creator?.id : undefined,
-                name: c.creator?.isActive ? c.creator?.name : 'Unknown creator',
+                id: c.creator?.id,
+                name: c.creator?.pen_name || c.creator?.name,
               })),
               views: manga.manga_total_views?.views || 0,
               likes: manga.manga_total_likes?.likes || 0,
@@ -119,7 +120,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     }
   }
 
-  const artistDetail = useApi<IArtist>(getDetail, !!artist, [])
+  const artistDetail = useApi<IArtist>(getDetail, !!artist, [artist])
 
   return <Component {...props} artistDetail={artistDetail} />
 }
