@@ -3,7 +3,7 @@ const { i18n } = require("./next-i18next.config")
 module.exports = {
   i18n,
   images: {
-    domains: ['d3qkhwzkyp1991.cloudfront.net', 's3-dev.punkga.me', 'nft.aurascan.io'],
+    domains: ['d3qkhwzkyp1991.cloudfront.net', 's3-dev.punkga.me', 'nft.aurascan.io', 's3.punkga.me'],
     remotePatterns: [
       {
         protocol: 'https',
