@@ -44,7 +44,10 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       isLiked: !!data.chapters_likes.length,
     }
 
-    if (data.chapter_type == CHAPTER_TYPE.ACCOUNT_ONLY || data.chapter_type == CHAPTER_TYPE.NFTS_ONLY) {
+    if (
+      (data.chapter_type == CHAPTER_TYPE.ACCOUNT_ONLY || data.chapter_type == CHAPTER_TYPE.NFTS_ONLY) &&
+      account?.id
+    ) {
       const { data: protectedData } = await privateAxios.get(`${config.REST_API_URL}/chapter/${data.id}/protected`)
       LANGUAGE.forEach((l) => {
         const chapterLanguage = protectedData.data.chapters[0].chapter_languages.find((cl) => cl.language_id == l.id)

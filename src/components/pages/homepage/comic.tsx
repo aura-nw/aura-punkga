@@ -16,29 +16,25 @@ export default function Comic(props: IComic) {
   return (
     <div className={`${props.status.text == 'Upcoming' ? '[&_a:not(.author)]:pointer-events-none' : ''}`}>
       <div className='hidden md:flex gap-[20px]'>
-        <Link href={`/comic/${props.id}`} className='flex-auto w-1/3 xl:hidden'>
+        <Link href={`/comic/${props.id}`} className=' xl:hidden shrink-0 block w-[180px] aspect-[180/240] mx-auto'>
           <Image
             src={props.image || NoImage}
             alt=''
             width={180}
             height={240}
-            className={`${
-              props.image ? 'object-cover' : 'object-contain bg-light-gray'
-            } rounded-[15px] w-[180px] aspect-[180/240] mx-auto`}
+            className={`w-full h-full ${props.image ? 'object-cover' : 'object-contain bg-light-gray'} rounded-[15px] `}
           />
         </Link>
-        <Link href={`/comic/${props.id}/chapter/1`} className='flex-auto w-1/3 hidden xl:block'>
+        <Link href={`/comic/${props.id}/chapter/1`} className='shrink-0 w-[180px] aspect-[180/240] hidden xl:block'>
           <Image
             src={props.image || NoImage}
             alt=''
             width={180}
             height={240}
-            className={`${
-              props.image ? 'object-cover' : 'object-contain bg-light-gray'
-            } rounded-[15px] w-[180px] aspect-[180/240]`}
+            className={`w-full h-full ${props.image ? 'object-cover' : 'object-contain bg-light-gray'} rounded-[15px] `}
           />
         </Link>
-        <div className='flex-auto w-2/3 flex flex-col justify-between gap-[10px]'>
+        <div className='flex-auto w-[calc(100%-200px)] flex flex-col justify-between gap-[10px]'>
           <div className='flex flex-col gap-[10px]'>
             <div>
               <div className='flex justify-between xl:hidden items-start flex-nowrap'>
@@ -88,7 +84,7 @@ export default function Comic(props: IComic) {
                 <strong>{props.likes.toLocaleString('en-US')}</strong> {props.likes > 1 ? t('likes') : t('like')}
               </div>
             </div>
-            <div className=' text-[16px] leading-[20px] line-clamp-3'>{props[locale].description}</div>
+            <div className=' text-[16px] leading-[20px] line-clamp-3 break-words'>{props[locale].description}</div>
           </div>
           {!!props.latestChap.number && (
             <div className='leading-[20px]'>

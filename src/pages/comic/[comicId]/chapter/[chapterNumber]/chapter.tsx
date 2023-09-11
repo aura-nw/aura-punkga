@@ -100,6 +100,14 @@ const Chapter: React.FC = ({
   }, [openComments])
 
   useEffect(() => {
+    window.addEventListener('keydown', (e) => {
+      if (e.which == 27) {
+        setMode('minscreen')
+      }
+    })
+  }, [])
+
+  useEffect(() => {
     if (comicDetails?.data?.id && account) {
       const currentReading = getItem('current_reading_manga')
       if (currentReading) {

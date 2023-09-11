@@ -20,6 +20,7 @@ import { Tab } from '@headlessui/react'
 import Ninja from 'images/ninja-2.svg'
 import Link from 'next/link'
 import { CHAPTER_STATUS } from 'src/constants/chapter.constant'
+import NFTList from './nftList'
 
 export default function ComicDetail({
   data,
@@ -298,10 +299,14 @@ export default function ComicDetail({
                 />
               </Tab.Panel>
               <Tab.Panel className='flex-1 flex flex-col'>
-                <div className='flex-1 w-full flex flex-col items-center justify-center mt-[136px]'>
-                  <Image src={Ninja} alt='' className='h-[260px] aspect-square mx-auto' />
-                  <div className='font-extrabold text-2xl leading-6 mt-[10px]'>Artist Composing</div>
-                </div>
+                {!!data.collections.length ? (
+                  <NFTList theme={undefined} collections={data.collections} />
+                ) : (
+                  <div className='flex-1 w-full flex flex-col items-center justify-center mt-[136px]'>
+                    <Image src={Ninja} alt='' className='h-[260px] aspect-square mx-auto' />
+                    <div className='font-extrabold text-2xl leading-6 mt-[10px]'>Artist Composing</div>
+                  </div>
+                )}
               </Tab.Panel>
             </Tab.Panels>
           </Tab.Group>

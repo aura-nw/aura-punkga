@@ -32,7 +32,7 @@ export default function Artist({ artistDetail }) {
   if (!artist) return <></>
   return (
     <>
-      <HeadComponent title={`Sunday | Punkga.me`} />
+      <HeadComponent title={`${artist.name} | Punkga.me`} />
       <Header />
       <div className='px-[10px] lg:px-0 lg:py-[47px] py-[17px] pk-container'>
         <div className='flex gap-[10px] lg:gap-[60px] px-[10px] lg:px-0'>

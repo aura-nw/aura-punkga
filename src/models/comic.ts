@@ -39,6 +39,7 @@ interface Detail {
     }
   >
   chapters: IChapter[]
+  collections: any[]
   isSubscribe?: boolean
 }
 

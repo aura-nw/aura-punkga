@@ -42,7 +42,7 @@ export default function TrendingComic(props: IComic) {
           }`}
         />
       </Link>
-      <div className='flex-1 flex flex-col gap-[10px]'>
+      <div className='flex-auto w-[calc(100%-170px)] flex flex-col gap-[10px]'>
         <div>
           <Link
             href={`/comic/${props.id}`}

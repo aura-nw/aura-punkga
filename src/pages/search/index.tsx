@@ -23,7 +23,7 @@ export default function Search() {
         <p className='md:text-2xl font-extrabold leading-6 mt-2 md:mt-10'>{`${searchComic.data?.length} ${t(
           'results for'
         )} "${keyword}"`}</p>
-        <div className='mt-2 md:mt-10 grid grid-cols-2 gap-10'>
+        <div className='mt-2 md:mt-10 grid grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-y-20'>
           {searchComic.loading
             ? Array.apply(null, Array(6)).map((d, index) => {
                 return <DummyComic key={index} />

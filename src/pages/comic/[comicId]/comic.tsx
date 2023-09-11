@@ -173,7 +173,7 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
               </Tab.Panel>
               <Tab.Panel className='flex-1 flex flex-col'>
                 {!!comicDetails.data.collections.length ? (
-                  <NFTList collections={comicDetails.data.collections} />
+                  <NFTList theme='dark' collections={comicDetails.data.collections} />
                 ) : (
                   <div className='flex-1 w-full bg-[#292929]/80 flex flex-col items-center justify-center'>
                     <Image src={Ninja} alt='' className='h-[260px] aspect-square mx-auto opacity-60' />
