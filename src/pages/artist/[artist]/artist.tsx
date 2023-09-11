@@ -59,12 +59,12 @@ export default function Artist({ artistDetail }) {
               </div>
               <div className='flex gap-4'>
                 {artist.link.behance && (
-                  <Link href={appendHttps(artist.link.behance)}>
+                  <Link target='_blank' href={appendHttps(artist.link.behance)}>
                     <Image src={BeIcon} alt='' className='w-8 aspect-square' />
                   </Link>
                 )}
                 {artist.link.website && (
-                  <Link href={appendHttps(artist.link.website)}>
+                  <Link target='_blank' href={appendHttps(artist.link.website)}>
                     <Image src={WebsiteIcon} alt='' className='w-8 aspect-square' />
                   </Link>
                 )}
@@ -163,6 +163,7 @@ export default function Artist({ artistDetail }) {
                       <div className='flex gap-[10px]'>
                         <div className='text-sm leading-6 truncate lg:text-xl lg:leading-6'>{collection.name}</div>
                         <Link
+                          target='_blank'
                           title={t('View more on SEEKHYPE')}
                           href={`${seekhypeBaseUrl}/collection/${collection.address}`}
                           className='cursor-pointer'>
@@ -173,8 +174,8 @@ export default function Artist({ artistDetail }) {
                     <div className='grid grid-cols-[repeat(auto-fill,minmax(max(160px,calc(100%/5)),1fr))] grid-rows-[auto_auto] lg:grid-rows-1 auto-rows-[0px] overflow-hidden -m-[5px] lg:-m-5'>
                       {collection.tokens.map((token, index) => (
                         <Link
-                          href={`${seekhypeBaseUrl}/nft/${collection.address}/${token.id}`}
                           target='_blank'
+                          href={`${seekhypeBaseUrl}/nft/${collection.address}/${token.id}`}
                           key={index}
                           className='p-[5px] lg:p-5 [&:hover_.view-on-seekhype]:translate-y-0'>
                           <div className='bg-white rounded-[20px] p-[10px]'>

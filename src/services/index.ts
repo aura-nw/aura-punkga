@@ -190,6 +190,45 @@ export const getComicDetail = async (comicId: string, accountId: string) => {
   })
   const data = d?.data?.manga[0]
   const hasAccess = await getAccess(data.id)
+  const env = getConfig().CHAIN_ID.includes('xstaxy') ? 'xstaxy' : 'euphoria'
+  const collections = []
+  let collectionsData = []
+  data?.contract_addresses?.forEach((address) => (collections.includes(address) ? null : collections.push(address)))
+  if (collections.length) {
+    const { data } = await axios.post(`${getConfig().CHAIN_INFO.indexerV2}`, {
+      query: `query QueryCw721Tokens($contract_addresses: [String!]) {
+                    ${env} {
+                      smart_contract(where: {address: {_in: $contract_addresses}}) {
+                        cw721_contract {
+                          name
+                          smart_contract{
+                            address
+                          }
+                          cw721_tokens(where: {burned: {_eq: false}}) {
+                            token_id
+                            name: media_info(path: "onchain.metadata.name")
+                            image_url: media_info(path: "offchain.image.url")
+                            content_type: media_info(path: "offchain.image.content_type")
+                          }
+                        }
+                      }
+                    }
+                  }`,
+      variables: {
+        contract_addresses: collections,
+      },
+      operationName: 'QueryCw721Tokens',
+    })
+    collectionsData = data.data[env].smart_contract.map(({ cw721_contract }) => ({
+      name: cw721_contract.name,
+      address: cw721_contract.smart_contract.address,
+      tokens: cw721_contract.cw721_tokens.slice(0, 10).map((token) => ({
+        image: token.image_url,
+        name: token.name,
+        id: token.token_id,
+      })),
+    }))
+  }
   const res = {
     id: data.id,
     languages: data.manga_languages.map((ml) => ({
@@ -231,6 +270,7 @@ export const getComicDetail = async (comicId: string, accountId: string) => {
       name: c.creator?.isActive ? c.creator?.pen_name || c.creator?.name : 'Unknown creator',
     })),
     releaseDate: data.release_date,
+    collections: collectionsData,
   }
 
   LANGUAGE.forEach((l) => {

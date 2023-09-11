@@ -16,6 +16,7 @@ import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
 import Ninja from 'images/ninja-2.svg'
 import Link from 'next/link'
+import NFTList from 'components/pages/chapter/nftList'
 export default function Comic({ comicDetails, subscribe, unsubscribe, like, unlike }) {
   const { t } = useTranslation()
   const { locale } = useRouter()
@@ -171,10 +172,14 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
                 />
               </Tab.Panel>
               <Tab.Panel className='flex-1 flex flex-col'>
-                <div className='flex-1 w-full bg-[#292929]/80 flex flex-col items-center justify-center'>
-                  <Image src={Ninja} alt='' className='h-[260px] aspect-square mx-auto opacity-60' />
-                  <div className='font-extrabold text-2xl leading-6 text-subtle-dark mt-[10px]'>Artist Composing</div>
-                </div>
+                {!!comicDetails.data.collections.length ? (
+                  <NFTList collections={comicDetails.data.collections} />
+                ) : (
+                  <div className='flex-1 w-full bg-[#292929]/80 flex flex-col items-center justify-center'>
+                    <Image src={Ninja} alt='' className='h-[260px] aspect-square mx-auto opacity-60' />
+                    <div className='font-extrabold text-2xl leading-6 text-subtle-dark mt-[10px]'>Artist Composing</div>
+                  </div>
+                )}
               </Tab.Panel>
             </Tab.Panels>
           </Tab.Group>
