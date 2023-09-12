@@ -18,7 +18,12 @@ import ContextProvider, { Context } from 'src/context'
 import 'src/styles/globals.scss'
 import { validateEmail } from 'src/utils'
 import Mail from 'images/Mail.svg'
-
+import { ChainProvider } from '@cosmos-kit/react'
+import { chains, assets } from 'chain-registry'
+import { wallets as keplrExtension } from '@cosmos-kit/keplr-extension'
+import { wallets as c98Extension } from '@cosmos-kit/coin98-extension'
+import '@interchain-ui/react/styles'
+import ConnectWalletModal from 'components/Modal/ConnectWalletModal'
 const pjs = Plus_Jakarta_Sans({ subsets: ['latin', 'vietnamese'] })
 const ws = Work_Sans({ subsets: ['latin', 'vietnamese'] })
 function MyApp(props: AppProps) {
@@ -66,7 +71,13 @@ function MyApp(props: AppProps) {
         }
       `}</style>
       <ContextProvider>
-        <App {...props} />
+        <ChainProvider
+          chains={chains}
+          assetLists={assets}
+          wallets={[...c98Extension, ...keplrExtension]}
+          walletModal={ConnectWalletModal}>
+          <App {...props} />
+        </ChainProvider>
       </ContextProvider>
     </>
   )

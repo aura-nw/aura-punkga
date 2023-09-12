@@ -1,3 +1,4 @@
+import { useChain } from '@cosmos-kit/react'
 import Avatar from 'assets/images/avatar.svg'
 import EN from 'assets/images/en.svg'
 import Logo from 'assets/images/header-logo.svg'
@@ -21,7 +22,6 @@ import { Context } from 'src/context'
 import useApi from 'src/hooks/useApi'
 import { useClickOutside } from 'src/hooks/useClickOutside'
 import { search } from 'src/services'
-import ConnectWalletModal from './ConnectWalletModal'
 import ForgotPasswordModal from './ForgotPasswordModal'
 import SignInModal from './SignInModal'
 import SignUpModal from './SignUpModal'
@@ -54,12 +54,11 @@ export default function Header({ className }: { className?: string }) {
   const [signUpOpen, setSignUpOpen] = useState(false)
   const [isCopied, setIsCopied] = useState(false)
   const [signUpSuccessOpen, setSignUpSuccessOpen] = useState(false)
-  const [connectWalletOpen, setConnectWalletOpen] = useState(false)
   const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false)
   const [searchValue, setSearchValue] = useState('')
-  const { account, wallet, logout, unlinkWallet } = useContext(Context)
+  const { account, wallet, logout } = useContext(Context)
   const searchComic = useApi<any[]>(async () => await search(searchValue), !!searchValue, [searchValue])
-
+  const { connect } = useChain('aura')
   useEffect(() => {
     ;(window as any).isSearchFocused = isSearchFocused
   }, [isSearchFocused])
@@ -274,7 +273,7 @@ export default function Header({ className }: { className?: string }) {
                             {t('My profile')}
                           </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
-                          <div className='text-xs leading-[15px] font-bold' onClick={() => setConnectWalletOpen(true)}>
+                          <div className='text-xs leading-[15px] font-bold' onClick={() => connect()}>
                             {t('Link Wallet')}
                           </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
@@ -461,7 +460,7 @@ export default function Header({ className }: { className?: string }) {
                             <strong>{t('My profile')}</strong>
                           </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
-                          <div onClick={() => setConnectWalletOpen(true)}>
+                          <div onClick={() => connect()}>
                             <strong>{t('Link Wallet')}</strong>
                           </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
@@ -509,9 +508,7 @@ export default function Header({ className }: { className?: string }) {
           />
         </div>
       </Modal>
-      <Modal open={connectWalletOpen} setOpen={setConnectWalletOpen}>
-        <ConnectWalletModal onClose={() => setConnectWalletOpen(false)} />
-      </Modal>
+
       <Modal open={forgotPasswordOpen} setOpen={setForgotPasswordOpen}>
         <ForgotPasswordModal onClose={() => setForgotPasswordOpen(false)} />
       </Modal>
