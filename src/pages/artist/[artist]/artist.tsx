@@ -128,9 +128,7 @@ export default function Artist({ artistDetail }) {
                 <div className='h-0 w-max invisible hidden lg:block'>{t('Total subscribers')}:</div>
                 <div className='h-0 w-max invisible lg:hidden'>{t('Gender')}:</div>
               </div>
-              <div className={`font-medium ${showMore ? '' : 'line-clamp-3'}`} onClick={() => setShowMore(!showMore)}>
-                {artist?.bio}
-              </div>
+              <div className={`font-medium ${showMore ? '' : 'line-clamp-3'}`} onClick={() => setShowMore(!showMore)} dangerouslySetInnerHTML={{__html: artist.bio}} />
             </div>
           </div>
         </div>
