@@ -21,7 +21,7 @@ import Comic from 'components/pages/homepage/comic'
 import Pagination from 'components/pages/artist/Pagination'
 import { Fragment, useState } from 'react'
 import NoImage from 'images/no_img.png'
-
+import DOMPurify from 'dompurify'
 export default function Artist({ artistDetail }) {
   const artist = artistDetail.data as IArtist
   const { locale } = useRouter()
@@ -128,9 +128,10 @@ export default function Artist({ artistDetail }) {
                 <div className='h-0 w-max invisible hidden lg:block'>{t('Total subscribers')}:</div>
                 <div className='h-0 w-max invisible lg:hidden'>{t('Gender')}:</div>
               </div>
-              <div className={`font-medium ${showMore ? '' : 'line-clamp-3'}`} onClick={() => setShowMore(!showMore)}>
-                {artist?.bio}
-              </div>
+              <div
+                className={`font-medium whitespace-pre-wrap ${showMore ? '' : 'line-clamp-3'}`}
+                onClick={() => setShowMore(!showMore)}
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(artist?.bio) }}></div>
             </div>
           </div>
         </div>
