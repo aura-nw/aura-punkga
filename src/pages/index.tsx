@@ -1,10 +1,11 @@
 import Carousel from 'components/Carousel'
 
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import Mock1 from 'assets/images/comic-banner/1.png'
-import Mock2 from 'assets/images/comic-banner/2.png'
-import Mock3 from 'assets/images/comic-banner/3.png'
-import Mock4 from 'assets/images/comic-banner/4.png'
+import HeroCyberpunkBanner from 'assets/images/comic-banner/hero_cyberpunk.jpg'
+import HamulageBanner from 'assets/images/comic-banner/hamulage.jpg'
+import HeroicBanner from 'assets/images/comic-banner/heroic.png'
+import TCOTPBanner from 'assets/images/comic-banner/the_chaos_of_the_past.jpg'
+import UltraVBanner from 'assets/images/comic-banner/ultra_v.jpg'
 import DummyComic from 'components/DummyComponent/comic'
 import Header from 'components/Header'
 import FilledSelect from 'components/Select/FilledSelect'
@@ -21,6 +22,7 @@ import { getAllTags, getLatestComic, getTrendingComic } from 'src/services'
 import { i18n } from 'next-i18next'
 import _ from 'lodash'
 import HeadComponent from 'components/Head'
+import Link from 'next/link'
 
 declare global {
   interface Window {
@@ -79,35 +81,52 @@ export default function Home() {
       <HeadComponent />
       <Header />
       <div className='pk-container'>
-        <div className='mt-[40px] md:grid grid-cols-1 px-2 md:px-0 gap-[40px] hidden'>
+        <div className='mt-[40px] md:grid grid-cols-1 px-2 md:px-0 gap-[40px] hidden -mx-5 [&_.slick-dots]:-mx-5'>
           <Carousel>
-            <div className='pr-5 '>
-              <Image
-                className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-cover'
-                src={Mock1}
-                alt=''
-              />
+            <div className='p-5 outline-none'>
+              <Link href='https://punkga.me/comic/1/chapter/1'>
+                <Image
+                  className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
+                  src={HeroCyberpunkBanner}
+                  alt=''
+                />
+              </Link>
             </div>
-            <div className='pl-5 '>
-              <Image
-                className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-cover'
-                src={Mock2}
-                alt=''
-              />
+            <div className='p-5 outline-none '>
+              <Link href='https://punkga.me/comic/3/chapter/1'>
+                <Image
+                  className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
+                  src={HamulageBanner}
+                  alt=''
+                />
+              </Link>
             </div>
-            <div className='pr-5 '>
-              <Image
-                className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-cover'
-                src={Mock3}
-                alt=''
-              />
+            <div className='p-5 outline-none '>
+              <Link href='#'>
+                <Image
+                  className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
+                  src={HeroicBanner}
+                  alt=''
+                />
+              </Link>
             </div>
-            <div className='pl-5 '>
-              <Image
-                className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-cover'
-                src={Mock4}
-                alt=''
-              />
+            <div className='p-5 outline-none '>
+              <Link href='https://punkga.me/comic/4/chapter/1'>
+                <Image
+                  className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
+                  src={TCOTPBanner}
+                  alt=''
+                />
+              </Link>
+            </div>
+            <div className='p-5 outline-none '>
+              <Link href='https://punkga.me/comic/2/chapter/1'>
+                <Image
+                  className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
+                  src={UltraVBanner}
+                  alt=''
+                />
+              </Link>
             </div>
           </Carousel>
         </div>
@@ -121,12 +140,28 @@ export default function Home() {
             customPaging: () => <></>,
           }}>
           <div>
-            <Image className='w-full h-[125px] object-cover' src={Mock1} alt='' />
-            <Image className='w-full h-[125px] object-cover' src={Mock2} alt='' />
+            <Link href='https://punkga.me/comic/1/chapter/1'>
+              <Image className='w-full aspect-[21/9] object-fill' src={HeroCyberpunkBanner} alt='' />
+            </Link>
+            <Link href='https://punkga.me/comic/3/chapter/1'>
+              <Image className='w-full aspect-[21/9] object-fill' src={HamulageBanner} alt='' />
+            </Link>
           </div>
           <div>
-            <Image className='w-full h-[125px] object-cover' src={Mock3} alt='' />
-            <Image className='w-full h-[125px] object-cover' src={Mock4} alt='' />
+            <Link href='#'>
+              <Image className='w-full aspect-[21/9] object-fill' src={HeroicBanner} alt='' />
+            </Link>
+            <Link href='https://punkga.me/comic/4/chapter/1'>
+              <Image className='w-full aspect-[21/9] object-fill' src={TCOTPBanner} alt='' />
+            </Link>
+          </div>
+          <div>
+            <Link href='https://punkga.me/comic/2/chapter/1'>
+              <Image className='w-full aspect-[21/9] object-fill' src={UltraVBanner} alt='' />
+            </Link>
+            <Link href='https://punkga.me/comic/1/chapter/1'>
+              <Image className='w-full aspect-[21/9] object-fill' src={HeroCyberpunkBanner} alt='' />
+            </Link>
           </div>
         </Carousel>
       </div>
