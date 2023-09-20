@@ -25,26 +25,14 @@ export const c98MobileInfo: Wallet = {
   ],
   connectEventNamesOnWindow: ['c98_keystorechange'],
   walletconnect: {
-    name: 'C98',
-    projectId: '###',
+    name: 'coin98',
+    projectId: '2a3c89040ac3b723a1972a33a125b1db11e258a6975d3a61252cd64e6ea5ea01',
     encoding: 'base64',
     mobile: {
       native: {
         ios: 'coin98:',
         android: 'intent:',
       },
-    },
-    formatNativeUrl: (appUrl: string, wcUri: string, os: OS | undefined, _name: string): string => {
-      const plainAppUrl = appUrl.replaceAll('/', '').replaceAll(':', '')
-      const encodedWcUrl = encodeURIComponent(wcUri)
-      switch (os) {
-        case 'ios':
-          return `${plainAppUrl}://wcV2?${encodedWcUrl}`
-        case 'android':
-          return `${plainAppUrl}://wcV2?${encodedWcUrl}#Intent;package=coin98.crypto.finance.media;scheme=###;end;`
-        default:
-          return `${plainAppUrl}://wcV2?${encodedWcUrl}`
-      }
     },
   },
 }
