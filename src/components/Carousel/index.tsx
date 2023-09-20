@@ -5,6 +5,7 @@ export default function Carousel({ children, setting }: any) {
     infinite: true,
     speed: 500,
     autoplaySpeed: 5000,
+    swipeToSlide: true,
     autoplay: true,
     slidesToShow: 2,
     slidesToScroll: 2,

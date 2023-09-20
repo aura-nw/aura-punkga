@@ -83,7 +83,7 @@ export default function Home() {
       <div className='pk-container'>
         <div className='mt-[40px] md:grid grid-cols-1 px-2 md:px-0 gap-[40px] hidden -mx-5 [&_.slick-dots]:-mx-5'>
           <Carousel>
-            <div className='p-5 outline-none'>
+            <div className='p-5 outline-none [&_*]:outline-none'>
               <Link href='https://punkga.me/comic/1/chapter/1'>
                 <Image
                   className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
@@ -92,7 +92,7 @@ export default function Home() {
                 />
               </Link>
             </div>
-            <div className='p-5 outline-none '>
+            <div className='p-5 outline-none [&_*]:outline-none '>
               <Link href='https://punkga.me/comic/3/chapter/1'>
                 <Image
                   className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
@@ -101,8 +101,8 @@ export default function Home() {
                 />
               </Link>
             </div>
-            <div className='p-5 outline-none '>
-              <Link href='#'>
+            <div className='p-5 outline-none [&_*]:outline-none '>
+              <Link href='https://punkga.me/comic/5/chapter/1'>
                 <Image
                   className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
                   src={HeroicBanner}
@@ -110,7 +110,7 @@ export default function Home() {
                 />
               </Link>
             </div>
-            <div className='p-5 outline-none '>
+            <div className='p-5 outline-none [&_*]:outline-none '>
               <Link href='https://punkga.me/comic/4/chapter/1'>
                 <Image
                   className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
@@ -119,7 +119,7 @@ export default function Home() {
                 />
               </Link>
             </div>
-            <div className='p-5 outline-none '>
+            <div className='p-5 outline-none [&_*]:outline-none '>
               <Link href='https://punkga.me/comic/2/chapter/1'>
                 <Image
                   className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
@@ -148,7 +148,7 @@ export default function Home() {
             </Link>
           </div>
           <div>
-            <Link href='#'>
+            <Link href='https://punkga.me/comic/5/chapter/1'>
               <Image className='w-full aspect-[21/9] object-fill' src={HeroicBanner} alt='' />
             </Link>
             <Link href='https://punkga.me/comic/4/chapter/1'>

@@ -293,3 +293,12 @@ export const getAccess = async (id: number) => {
     return false
   }
 }
+export const getUserData = async (id: string) => {
+  try {
+    const { data } = await axios.get(`${getConfig().API_URL}/api/rest/public/users/${id}`)
+    return data?.authorizer_users?.[0]
+  } catch (error) {
+    // console.log(error)
+    return false
+  }
+}

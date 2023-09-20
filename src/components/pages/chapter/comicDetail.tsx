@@ -206,10 +206,10 @@ export default function ComicDetail({
             </div>
           </div>
           <div className='flex'>
-            {data.releaseDate && (
+            {data.releaseDate && !moment().diff(moment(data.releaseDate)) && (
               <div
                 className={` text-subtle-dark transition-all whitespace-nowrap overflow-hidden ${
-                  expandDetail ? 'max-w-[300px] min-w-[260px]' : 'max-w-[0px] min-w-[0px]'
+                  expandDetail ? 'max-w-[300px] min-w-[260px] max-h-[50px]' : 'max-w-[0px] min-w-[0px] max-h-0'
                 } `}>
                 {t('Release date')}:{' '}
                 <span className='text-gray-600 font-semibold'>{moment(data.releaseDate).format('DD/MM/yyyy')}</span>

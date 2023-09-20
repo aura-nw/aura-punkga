@@ -21,11 +21,13 @@ import Mail from 'images/Mail.svg'
 import { ChainProvider } from '@cosmos-kit/react'
 import { chains, assets } from 'chain-registry'
 import { wallets as keplrExtension } from '@cosmos-kit/keplr-extension'
+import { wallets as keplrMobile } from '@cosmos-kit/keplr-mobile'
 import { wallets as c98Extension } from '@cosmos-kit/coin98-extension'
 import '@interchain-ui/react/styles'
 import ConnectWalletModal from 'components/Modal/ConnectWalletModal'
 const pjs = Plus_Jakarta_Sans({ subsets: ['latin', 'vietnamese'] })
 const ws = Work_Sans({ subsets: ['latin', 'vietnamese'] })
+console.log(keplrMobile)
 function MyApp(props: AppProps) {
   const [isSetting, setIsSetting] = useState(true)
   const { locale } = useRouter()
