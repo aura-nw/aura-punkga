@@ -66,7 +66,7 @@ export default function ProfileCard({ data }) {
           {data.gender && (
             <>
               <div className='text-[#AFB1B6]'>{t('Gender')}:</div>
-              <div>
+              <div className='flex items-center'>
                 {t(data.gender == 'Undisclosed' ? 'Other' : data.gender)}{' '}
                 <Image
                   className='h-[14px] w-[14px] md:h-[20px] md:w-[20px]'
