@@ -55,7 +55,22 @@ export default function Comment({
       <div className='bg-white px-3 md:px-6 py-2 md:py-4 rounded-xl'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center'>
-            <Popover popoverRender={popoverRender}>
+            {data.author?.nickname ? (
+              <Popover popoverRender={popoverRender}>
+                <div className='flex items-center cursor-pointer'>
+                  <Image
+                    src={data.author?.image || Avatar}
+                    alt=''
+                    width={32}
+                    height={32}
+                    className='w-6 h-6 md:w-8 md:h-8 object-cover rounded-full'
+                  />
+                  <strong className={`ml-[10px] text-xs md:text-base ${!data.author?.nickname ? 'italic' : ''}`}>
+                    {data.author?.nickname || t('Deleted user')}
+                  </strong>
+                </div>
+              </Popover>
+            ) : (
               <div className='flex items-center cursor-pointer'>
                 <Image
                   src={data.author?.image || Avatar}
@@ -68,7 +83,7 @@ export default function Comment({
                   {data.author?.nickname || t('Deleted user')}
                 </strong>
               </div>
-            </Popover>
+            )}
 
             <p className='ml-4 text-xs md:text-base text-subtle-dark'>{moment(data.createAt).fromNow()}</p>
           </div>
