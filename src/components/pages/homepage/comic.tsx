@@ -140,14 +140,14 @@ export default function Comic(props: IComic) {
               </Fragment>
             ))}
           </div>
-          <div className='flex justify-between items-center text-second-color text-sm mt-3'>
+          <div className='flex justify-between items-center text-subtle-dark text-sm mt-3'>
             <div className='flex items-center gap-1'>
               <EyeIcon className='w-4 h-4' />
-              <strong>{props.views.toLocaleString('en-US')}</strong>
+              <div className='font-medium'>{props.views.toLocaleString('en-US')}</div>
             </div>
             <div className='flex items-center gap-1'>
               <HeartIcon className='w-4 h-4' />
-              <strong>{props.likes.toLocaleString('en-US')}</strong>
+              <div className='font-medium'>{props.likes.toLocaleString('en-US')}</div>
             </div>
           </div>
         </div>
