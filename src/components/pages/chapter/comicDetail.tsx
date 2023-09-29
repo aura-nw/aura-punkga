@@ -246,13 +246,13 @@ export default function ComicDetail({
               return <Tag key={index}>{tag[selectedLanguage.shortLang]}</Tag>
             })}
           </div>
-          <p
-            className={`${expandDescription ? '' : 'line-clamp-3'} min-h-[72px]`}
-            onClick={() => setExpandDescription(!expandDescription)}>
-            {data[selectedLanguage.shortLang]?.description}{' '}
-            {!expandDescription && data[selectedLanguage.shortLang]?.description?.length >= 210 && (
+          <p onClick={() => setExpandDescription(!expandDescription)}>
+            <span className={`${expandDescription ? '' : 'line-clamp-3'}`}>
+              {data[selectedLanguage.shortLang]?.description}{' '}
+            </span>
+            {/* {!expandDescription && data[selectedLanguage.shortLang]?.description?.length >= 210 && (
               <span className='text-second-color cursor-pointer'>{t('see more')}...</span>
-            )}
+            )} */}
           </p>
           <div className='flex gap-2 flex-wrap'>
             {data.languages.map((language, index) => {
