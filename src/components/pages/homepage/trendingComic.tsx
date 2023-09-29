@@ -21,7 +21,7 @@ export default function TrendingComic(props: IComic) {
           alt=''
           width={150}
           height={200}
-          className={`rounded-[10px] w-[115px] aspect-square ${
+          className={`rounded-[5px] w-[115px] aspect-square ${
             props.image ? 'object-cover' : 'object-contain bg-light-gray'
           }`}
         />
@@ -37,7 +37,7 @@ export default function TrendingComic(props: IComic) {
           alt=''
           width={140}
           height={180}
-          className={`rounded-[15px] w-[115px] aspect-square ${
+          className={`rounded-[5px] w-[115px] aspect-square ${
             props.image ? 'object-cover' : 'object-contain bg-light-gray'
           }`}
         />

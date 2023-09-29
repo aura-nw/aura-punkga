@@ -77,6 +77,7 @@ export default function Artist({ artistDetail }) {
                     <div className='text-medium-gray'>
                       <div>{t('DoB')}:</div>
                       <div className='h-0 invisible hidden w-max lg:block'>{t('Total subscribers')}:</div>
+                      <div className='h-0 w-max invisible lg:hidden'>{t('Gender')}:</div>
                     </div>
                     <div className='font-medium'>
                       {locale == 'vn'
@@ -87,7 +88,10 @@ export default function Artist({ artistDetail }) {
                 )}
                 {artist.gender && artist.gender != 'Do not display' && (
                   <>
-                    <div className='text-medium-gray'>{t('Gender')}:</div>
+                    <div className='text-medium-gray'>
+                      <div>{t('Gender')}:</div>
+                      <div className='h-0 invisible hidden w-max lg:block'>{t('Total subscribers')}:</div>
+                    </div>
                     <div className='flex items-center font-medium'>
                       {t(artist.gender == 'Undisclosed' ? 'Other' : artist.gender)}{' '}
                       <Image
