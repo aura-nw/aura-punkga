@@ -273,10 +273,10 @@ export default function Header({ className }: { className?: string }) {
                           <div className='text-xs leading-[15px] font-bold' onClick={() => router.push('/profile')}>
                             {t('My profile')}
                           </div>
-                          <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
+                          {/* <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
                           <div className='text-xs leading-[15px] font-bold' onClick={() => setConnectWalletOpen(true)}>
                             {t('Link Wallet')}
-                          </div>
+                          </div> */}
                           <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
                           <div className='text-xs leading-[15px] font-bold' onClick={logout}>
                             {t('Log out')}
@@ -460,10 +460,10 @@ export default function Header({ className }: { className?: string }) {
                           <div onClick={() => router.push('/profile')}>
                             <strong>{t('My profile')}</strong>
                           </div>
-                          <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
+                          {/* <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
                           <div onClick={() => setConnectWalletOpen(true)}>
                             <strong>{t('Link Wallet')}</strong>
-                          </div>
+                          </div> */}
                           <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
                           <div onClick={logout}>
                             <strong>{t('Log out')}</strong>
