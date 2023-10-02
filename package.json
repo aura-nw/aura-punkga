@@ -28,9 +28,7 @@
     "cosmos-kit": "^2.4.2",
     "dompurify": "^3.0.5",
     "i18next": "^23.2.1",
-    "localforage": "^1.10.0",
     "lodash": "^4.17.21",
-    "match-sorter": "^6.3.1",
     "moment": "^2.29.4",
     "next": "^13.4.4",
     "next-auth": "^4.22.1",
@@ -50,8 +48,7 @@
     "react-truncate": "^2.4.0",
     "react-use-scroll-direction": "^0.1.0",
     "sharp": "^0.32.1",
-    "slick-carousel": "^1.8.1",
-    "sort-by": "^1.2.0"
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "@keplr-wallet/types": "^0.12.14",

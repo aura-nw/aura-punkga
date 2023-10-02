@@ -23,6 +23,7 @@ import { i18n } from 'next-i18next'
 import _ from 'lodash'
 import HeadComponent from 'components/Head'
 import Link from 'next/link'
+import Footer from 'components/Footer'
 
 declare global {
   interface Window {
@@ -266,6 +267,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

@@ -48,6 +48,9 @@ function MyApp(props: AppProps) {
     }
   }, [locale])
   if (isSetting) return <></>
+  console.log(getConfig())
+  console.log(chains.filter((chain) => chain.chain_name == 'aura'))
+  console.log(assets.filter((asset) => asset.chain_name == 'aura'))
   if (getConfig().IN_MAINTENANCE_MODE) {
     return (
       <>
@@ -63,7 +66,6 @@ function MyApp(props: AppProps) {
       </>
     )
   }
-  console.log(chains.filter((chain) => chain.chain_name == 'aura' || chain.chain_name == 'aura'))
   return (
     <>
       <style jsx global>{`
