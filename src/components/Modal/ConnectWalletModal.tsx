@@ -56,7 +56,9 @@ export default function ConnectWalletModal({ isOpen, setOpen, walletRepo, theme 
                 <div
                   key={index}
                   className={`flex items-center justify-between bg-[#F1F2F4] text-subtle-dark p-[10px] rounded-xl ${
-                    isMobile ? 'cursor-not-allowed opacity-60 pointer-events-none' : 'cursor-pointer'
+                    isMobile || (!isMobile && !window.keplr)
+                      ? 'cursor-not-allowed opacity-60 pointer-events-none'
+                      : 'cursor-pointer'
                   }`}
                   onClick={() => connect()}>
                   <span className='text-2xl leading-10 font-medium'>Keplr</span>
@@ -65,7 +67,11 @@ export default function ConnectWalletModal({ isOpen, setOpen, walletRepo, theme 
               ) : (
                 <div
                   key={index}
-                  className='flex items-center justify-between bg-[#F1F2F4] text-subtle-dark p-[10px] rounded-xl cursor-pointer'
+                  className={`flex items-center justify-between bg-[#F1F2F4] text-subtle-dark p-[10px] rounded-xl ${
+                    !isMobile && !window.coin98?.keplr
+                      ? 'cursor-not-allowed opacity-60 pointer-events-none'
+                      : 'cursor-pointer'
+                  }`}
                   onClick={() => connect()}>
                   <span className='text-2xl leading-10 font-medium'>C98</span>
                   <Image src={C98} alt='' />
