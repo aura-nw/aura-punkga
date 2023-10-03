@@ -10,6 +10,7 @@ export const getLatestComic = async (): Promise<IComic[]> => {
     res.data?.manga?.map((m: any) => {
       const response = {
         id: m.id,
+        slug: m.slug,
         image: m.poster,
         status: {
           type: COMIC_STATUS[formatStatus(m.status)],
@@ -53,6 +54,7 @@ export const getTrendingComic = async (): Promise<IComic[]> => {
     res.data?.manga?.map((m: any) => {
       const response = {
         id: m.id,
+        slug: m.slug,
         image: m.poster,
         status: {
           type: COMIC_STATUS[formatStatus(m.status)],
@@ -146,6 +148,7 @@ export const search = async (content: string) => {
   return data?.manga?.map((m: any) => {
     const response = {
       id: m.id,
+      slug: m.slug,
       image: m.poster,
       status: {
         type: COMIC_STATUS[formatStatus(m.status)],
@@ -182,8 +185,8 @@ export const search = async (content: string) => {
     return response
   })
 }
-export const getComicDetail = async (comicId: string, accountId: string) => {
-  const d: any = await axios.get(`${getConfig().API_URL}/api/rest/public/manga/${comicId}`, {
+export const getComicDetail = async (comicSlug: string, accountId: string) => {
+  const d: any = await axios.get(`${getConfig().API_URL}/api/rest/public/manga/${comicSlug}`, {
     params: {
       user_id: accountId,
     },
@@ -231,6 +234,7 @@ export const getComicDetail = async (comicId: string, accountId: string) => {
   }
   const res = {
     id: data.id,
+    slug: data.slug,
     languages: data.manga_languages.map((ml) => ({
       ...LANGUAGE.find((l) => l.id == ml.language_id),
       isMainLanguage: ml.is_main_language,

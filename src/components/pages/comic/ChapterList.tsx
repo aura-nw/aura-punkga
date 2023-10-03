@@ -113,7 +113,7 @@ const Chapter = ({
     (!hasAccess && chapter.type == CHAPTER_TYPE.NFTS_ONLY)
   return (
     <div
-      onClick={() => (!unavailable ? router.push(`/comic/${query.comicId}/chapter/${chapter.number}`) : null)}
+      onClick={() => (!unavailable ? router.push(`/comic/${query.comicSlug}/chapter/${chapter.number}`) : null)}
       className='flex border-bottom border-[#414141] bg-[#292929]/80 text-white relative'>
       <Image
         src={chapter.thumbnail || m6}

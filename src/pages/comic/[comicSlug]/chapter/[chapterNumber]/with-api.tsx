@@ -20,7 +20,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     const {
       data: { chapters: cdata },
     } = await privateAxios.get(
-      `${config.API_URL}/api/rest/public/manga/${query.comicId}/chapters/${query.chapterNumber}`,
+      `${config.API_URL}/api/rest/public/manga/${query.comicSlug}/chapters/${query.chapterNumber}`,
       {
         params: {
           user_id: account?.id,
@@ -96,13 +96,13 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   }
 
   const comicDetails = useApi<IComicDetail>(
-    async () => await getComicDetail(query.comicId as string, account?.id),
-    !!query.comicId,
-    [query.comicId, account?.id]
+    async () => await getComicDetail(query.comicSlug as string, account?.id),
+    !!query.comicSlug,
+    [query.comicSlug, account?.id]
   )
   const chapterComments = useApi<IComment[]>(getChapterComments, !!chapterId.current, [chapterId.current])
-  const chapterDetails = useApi<IChapter>(getChapterDetails, !!query.comicId && !!query.chapterNumber, [
-    query.comicId,
+  const chapterDetails = useApi<IChapter>(getChapterDetails, !!query.comicSlug && !!query.chapterNumber, [
+    query.comicSlug,
     query.chapterNumber,
     account?.id,
   ])
@@ -124,10 +124,10 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     await privateAxios.delete(`${config.API_URL}/api/rest/user/chapters/${id || chapterId.current}/likes`)
   }
   const subscribe = async () => {
-    await privateAxios.post(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
+    await privateAxios.post(`${config.API_URL}/api/rest/user/manga/${query.comicSlug}/subscribe`)
   }
   const unsubscribe = async () => {
-    await privateAxios.delete(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
+    await privateAxios.delete(`${config.API_URL}/api/rest/user/manga/${query.comicSlug}/subscribe`)
   }
 
   return (

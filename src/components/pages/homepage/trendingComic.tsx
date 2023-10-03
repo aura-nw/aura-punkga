@@ -15,7 +15,7 @@ export default function TrendingComic(props: IComic) {
   return (
     <div
       className={`flex gap-[20px] ${props.status.text == 'Upcoming' ? '[&_a:not(.author)]:pointer-events-none' : ''}`}>
-      <Link href={`/comic/${props.id}`} className='xl:hidden relative w-fit shrink-0'>
+      <Link href={`/comic/${props.slug}`} className='xl:hidden relative w-fit shrink-0'>
         <Image
           src={props.image || NoImage}
           alt=''
@@ -31,7 +31,7 @@ export default function TrendingComic(props: IComic) {
           )}
         </div>
       </Link>
-      <Link href={`/comic/${props.id}/chapter/1`} className='shrink-0 hidden xl:block w-fit'>
+      <Link href={`/comic/${props.slug}/chapter/1`} className='shrink-0 hidden xl:block w-fit'>
         <Image
           src={props.image || NoImage}
           alt=''
@@ -46,12 +46,12 @@ export default function TrendingComic(props: IComic) {
         <div className='flex flex-col gap-[10px]'>
           <div>
             <Link
-              href={`/comic/${props.id}`}
+              href={`/comic/${props.slug}`}
               className='font-extrabold text-sm leading-[18px] text-second-color md:text-base md:leading-5 xl:hidden'>
               {props[locale].title}
             </Link>
             <Link
-              href={`/comic/${props.id}/chapter/1`}
+              href={`/comic/${props.slug}/chapter/1`}
               className='font-extrabold text-second-color text-base leading-5 hidden xl:block'>
               {props[locale].title}
             </Link>
@@ -104,7 +104,7 @@ export default function TrendingComic(props: IComic) {
             <div className='text-sm md:text-base text-subtle-dark'>
               {t('Latest')}:{' '}
               <Link
-                href={`/comic/${props.id}/chapter/${props.latestChap.number}`}
+                href={`/comic/${props.slug}/chapter/${props.latestChap.number}`}
                 className='text-second-color font-[600]'>
                 {t('Chap')} #{props.latestChap.number}
               </Link>

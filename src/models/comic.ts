@@ -5,6 +5,7 @@ import { IChapter } from './chapter'
 
 interface Basic {
   id: string
+  slug: string
   image: string
   status: IStatus
   authors: {

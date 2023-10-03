@@ -78,6 +78,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
           comics: detail.manga_creators?.map(({ manga }: any) => {
             const response = {
               id: manga.id,
+              slug: manga.slug,
               image: manga.poster,
               status: {
                 type: COMIC_STATUS[formatStatus(manga.status)],

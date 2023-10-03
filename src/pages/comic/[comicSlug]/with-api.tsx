@@ -10,10 +10,10 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   const { query } = useRouter()
   const config = getConfig()
   const subscribe = async () => {
-    await privateAxios.post(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
+    await privateAxios.post(`${config.API_URL}/api/rest/user/manga/${query.comicSlug}/subscribe`)
   }
   const unsubscribe = async () => {
-    await privateAxios.delete(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
+    await privateAxios.delete(`${config.API_URL}/api/rest/user/manga/${query.comicSlug}/subscribe`)
   }
 
   const like = async (id) => {
@@ -24,9 +24,9 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   }
 
   const comicDetails = useApi<IComicDetail>(
-    async () => await getComicDetail(query.comicId as string, account?.id),
-    !!query.comicId,
-    [query.comicId, account?.id]
+    async () => await getComicDetail(query.comicSlug as string, account?.id),
+    !!query.comicSlug,
+    [query.comicSlug, account?.id]
   )
   return (
     <Component

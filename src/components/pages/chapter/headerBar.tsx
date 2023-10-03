@@ -75,7 +75,7 @@ export default function HeaderBar({
                     <div
                       onClick={() => {
                         setShowChapterList(false)
-                        router.push(`/comic/${comicDetails.data.id}/chapter/${chapter?.number}`)
+                        router.push(`/comic/${comicDetails.data.slug}/chapter/${chapter?.number}`)
                       }}
                       key={index}
                       className={`cursor-pointer text-xs hover:bg-light-medium-gray ${
