@@ -39,7 +39,7 @@ export default function Footer() {
             <div onClick={() => router.push('/')}>
               <Image src={Logo} alt='header logo' className='h-[60px] w-auto' />
             </div>
-            <div className='text-sm leading-[18px] lg:leading-[21px] text-[#C8C8C8]'>
+            <div className='text-sm leading-[18px] lg:leading-[21px] text-[#ABABAB]'>
               <p>{t('Punkga.me is the best Nft manga in the world')}</p>
               <p>{t('You can creative manga, NFTs, trading NFT')}</p>
             </div>
