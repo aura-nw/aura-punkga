@@ -75,8 +75,8 @@ function MyApp(props: AppProps) {
       `}</style>
       <ContextProvider>
         <ChainProvider
-          chains={chains.filter((chain) => chain.chain_name == 'aura')}
-          assetLists={assets.filter((asset) => asset.chain_name == 'aura')}
+          chains={chains}
+          assetLists={assets}
           wallets={isMobile ? [...c98Mobile, ...keplrExtension] : [...c98Extension, ...keplrExtension]}
           walletConnectOptions={
             isMobile
