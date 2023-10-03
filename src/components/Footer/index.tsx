@@ -2,12 +2,34 @@ import Image from 'next/image'
 import Logo from 'assets/images/header-logo-native.svg'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { postSubscribeEmail } from 'src/services'
+import { validateEmail } from 'src/utils'
 
 export default function Footer() {
   const router = useRouter()
   const { t } = useTranslation()
   const [value, setValue] = useState('')
+  const [isSuccess, setIsSuccess] = useState<boolean>()
+  const subscibeHandler = async () => {
+    try {
+      if (validateEmail(value)) {
+        const data = await postSubscribeEmail(value)
+        if (data) {
+          setIsSuccess(true)
+        } else {
+          setIsSuccess(false)
+        }
+      } else {
+        alert(t('Invalid email'))
+      }
+    } catch (error) {
+      setIsSuccess(false)
+    }
+  }
+  useEffect(() => {
+    setIsSuccess(undefined)
+  }, [value])
   return (
     <>
       <div className='w-full bg-[#1B1B1B] relative mt-32'>
@@ -31,16 +53,29 @@ export default function Footer() {
                 {t('Subscribe to get fresh news update trending NFT')}
               </div>
             </div>
-            <div className='border-[1.5px] py-2 pl-6 pr-2 flex gap-6 rounded-[32px] max-w-md'>
-              <input
-                placeholder={t('Enter your email')}
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-                className='text-xs leading-[15px] placeholder:text-[#545454] outline-none border-none bg-transparent w-full'
-              />
-              <button className='py-[10px] lg:py-4 px-6 text-sm leading-[18px] text-[#1B1B1B] bg-primary-color rounded-full font-semibold'>
-                {t('Subscribe')}
-              </button>
+            <div>
+              <div className='border-[1.5px] py-2 pl-6 pr-2 flex gap-6 rounded-[32px] max-w-md'>
+                <input
+                  placeholder={t('Enter your email')}
+                  value={value}
+                  onChange={(e) => setValue(e.target.value)}
+                  className='text-xs lg:text-sm lg:leading-5 text-white leading-[15px] placeholder:text-[#545454] outline-none border-none !bg-transparent w-full'
+                />
+                <button
+                  className='py-[10px] lg:py-4 px-6 text-sm leading-[18px] text-[#1B1B1B] bg-primary-color rounded-full font-semibold'
+                  onClick={subscibeHandler}>
+                  {t('Subscribe')}
+                </button>
+              </div>
+              {isSuccess != undefined ? (
+                isSuccess ? (
+                  <div className='text-xs text-primary-color mt-1'>
+                    {t('Thank you for subscribing to our newsletter.')}
+                  </div>
+                ) : (
+                  <div className='text-xs text-[red] mt-1'>{t('Something went wrong')}</div>
+                )
+              ) : null}
             </div>
           </div>
         </div>

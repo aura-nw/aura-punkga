@@ -302,3 +302,14 @@ export const getUserData = async (id: string) => {
     return false
   }
 }
+export const postSubscribeEmail = async (email: string) => {
+  try {
+    const { data } = await axios.post(`${getConfig().API_URL}/api/rest/public/subscribe`, {
+      email,
+    })
+    return data
+  } catch (error) {
+    // console.log(error)
+    return false
+  }
+}
