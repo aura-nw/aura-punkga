@@ -49,7 +49,7 @@ export default function Footer() {
               <div className='text-2xl leading-[38px] text-[#C8C8C8] capitalize font-bold lg:text-5xl lg:leading-[54px]'>
                 {t('Never miss a drop')}
               </div>
-              <div className='text-sm leading-[18px] text-[#727272] lg:text-xl lg:leading-[30px]'>
+              <div className='text-sm leading-[18px] text-[#ABABAB]'>
                 {t('Subscribe to get fresh news update trending NFT')}
               </div>
             </div>
