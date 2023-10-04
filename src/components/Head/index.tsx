@@ -19,18 +19,18 @@ export default function HeadComponent({ title, description }: { title?: string; 
 
       <meta itemProp='name' content={punkgaTitle}></meta>
       <meta itemProp='description' content={punkgaDescription}></meta>
-      <meta itemProp='image' content='/assets/images/thumb.png'></meta>
+      <meta itemProp='image' content='https://punkga.me/assets/images/thumb.png'></meta>
 
       <meta property='og:url' content={punkgaTitle}></meta>
       <meta property='og:type' content='website'></meta>
       <meta property='og:title' content={punkgaTitle}></meta>
       <meta property='og:description' content={punkgaDescription}></meta>
-      <meta property='og:image' content='/assets/images/thumb.png'></meta>
+      <meta property='og:image' content='https://punkga.me/assets/images/thumb.png'></meta>
 
       <meta name='twitter:card' content='summary_large_image'></meta>
       <meta name='twitter:title' content={punkgaTitle}></meta>
       <meta name='twitter:description' content={punkgaDescription}></meta>
-      <meta name='twitter:image' content='/assets/images/thumb.png'></meta>
+      <meta name='twitter:image' content='https://punkga.me/assets/images/thumb.png'></meta>
     </Head>
   )
 }
