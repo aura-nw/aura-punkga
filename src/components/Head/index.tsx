@@ -21,7 +21,7 @@ export default function HeadComponent({ title, description }: { title?: string; 
       <meta itemProp='description' content={punkgaDescription}></meta>
       <meta itemProp='image' content='/assets/images/thumb.png'></meta>
 
-      <meta property='og:url' content='https://docs.halotrade.zone'></meta>
+      <meta property='og:url' content={punkgaTitle}></meta>
       <meta property='og:type' content='website'></meta>
       <meta property='og:title' content={punkgaTitle}></meta>
       <meta property='og:description' content={punkgaDescription}></meta>
