@@ -11,6 +11,7 @@ export default function Footer() {
   const { t } = useTranslation()
   const [value, setValue] = useState('')
   const [isSuccess, setIsSuccess] = useState<boolean>()
+  const [error, setError] = useState('')
   const subscibeHandler = async () => {
     try {
       if (validateEmail(value)) {
@@ -21,7 +22,7 @@ export default function Footer() {
           setIsSuccess(false)
         }
       } else {
-        alert(t('Invalid email'))
+        setError(t('Invalid email'))
       }
     } catch (error) {
       setIsSuccess(false)
@@ -29,6 +30,7 @@ export default function Footer() {
   }
   useEffect(() => {
     setIsSuccess(undefined)
+    setError('')
   }, [value])
   return (
     <>
@@ -73,7 +75,7 @@ export default function Footer() {
                     {t('Thank you for subscribing to our newsletter.')}
                   </div>
                 ) : (
-                  <div className='text-xs text-[red] mt-1'>{t('Something went wrong')}</div>
+                  <div className='text-xs text-[red] mt-1'>{error || t('Something went wrong')}</div>
                 )
               ) : null}
             </div>
