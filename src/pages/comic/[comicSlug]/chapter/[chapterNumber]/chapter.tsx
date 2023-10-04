@@ -218,7 +218,6 @@ const Chapter: React.FC = ({
         </div>
       </div>
       <div className='hidden xl:block'>
-        <HeadComponent title={`${chapterDetails.data.name} | ${comicDetails.data[locale]?.title}`} />
         {mode == 'minscreen' && <Header />}
         <div className='flex h-[calc(100vh-80px)] relative'>
           <div className='flex-auto w-2/3 h-full z-[5]'>
