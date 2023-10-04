@@ -275,7 +275,7 @@ export default function Header({ className }: { className?: string }) {
                           <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
                           <div className='text-xs leading-[15px] font-bold' onClick={() => connect()}>
                             {t('Link Wallet')}
-                          </div> */}
+                          </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
                           <div className='text-xs leading-[15px] font-bold' onClick={logout}>
                             {t('Log out')}
@@ -462,7 +462,7 @@ export default function Header({ className }: { className?: string }) {
                           <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
                           <div onClick={() => connect()}>
                             <strong>{t('Link Wallet')}</strong>
-                          </div> */}
+                          </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
                           <div onClick={logout}>
                             <strong>{t('Log out')}</strong>
