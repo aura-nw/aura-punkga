@@ -19,14 +19,11 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   const getChapterDetails = async () => {
     const {
       data: { chapters: cdata },
-    } = await privateAxios.get(
-      `${config.API_URL}/api/rest/public/manga/${query.comicSlug}/chapters/${query.chapterNumber}`,
-      {
-        params: {
-          user_id: account?.id,
-        },
-      }
-    )
+    } = await privateAxios.get(`${config.REST_API_URL}/manga/${query.comicSlug}/chapter/${query.chapterNumber}`, {
+      params: {
+        user_id: account?.id,
+      },
+    })
     const data = cdata[0]
 
     if (!data) {

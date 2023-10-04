@@ -186,7 +186,7 @@ export const search = async (content: string) => {
   })
 }
 export const getComicDetail = async (comicSlug: string, accountId: string) => {
-  const d: any = await axios.get(`${getConfig().API_URL}/api/rest/public/manga/${comicSlug}`, {
+  const d: any = await axios.get(`${getConfig().REST_API_URL}/manga/${comicSlug}`, {
     params: {
       user_id: accountId,
     },
