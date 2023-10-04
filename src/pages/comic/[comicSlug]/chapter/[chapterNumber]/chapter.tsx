@@ -1,25 +1,14 @@
-import { ChevronUpIcon } from '@heroicons/react/24/outline'
-import FlashAnimation from 'components/AnimationIconHOC/Flash'
-import Comment from 'components/Comment'
 import DummyComicDetail from 'components/DummyComponent/comicDetail'
 import HeadComponent from 'components/Head'
 import Header from 'components/Header'
-import ChatInput from 'components/Input/ChatInput'
 import ComicDetail from 'components/pages/chapter/comicDetail'
 import CommentSection from 'components/pages/chapter/commentSection'
 import HeaderBar from 'components/pages/chapter/headerBar'
 import ReadingSection from 'components/pages/chapter/readingSection'
-import ChatOutlineIcon from 'images/icons/chat_outline.svg'
-import HeartFillIcon from 'images/icons/heart_fill.svg'
-import HeartOutlineIcon from 'images/icons/heart_outline.svg'
-import SquareArrowLeftIcon from 'images/icons/square_arrow_left_outline.svg'
-import SquareArrowRightIcon from 'images/icons/square_arrow_right_outline.svg'
-import XIcon from 'images/icons/x-icon.svg'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useScrollDirection } from 'react-use-scroll-direction'
 import { CHAPTER_TYPE } from 'src/constants/chapter.constant'
 import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
@@ -28,6 +17,7 @@ import { IComicDetail } from 'src/models/comic'
 import { IComment } from 'src/models/comment'
 import { getBlurUrl } from 'src/utils'
 import { getItem, setItem } from 'src/utils/localStorage'
+import { isMobile } from 'react-device-detect'
 const Chapter: React.FC = ({
   comicDetails,
   chapterDetails,
@@ -143,10 +133,10 @@ const Chapter: React.FC = ({
   const goToChap = (direction: 'Prev' | 'Next') => {
     if (direction == 'Prev') {
       const prevChap = comicDetails.data.chapters[currentChapIndex + 1]
-      router.push(`/comic/${comicDetails.data.id}/chapter/${prevChap?.number}`)
+      router.push(`/comic/${comicDetails.data.slug}/chapter/${prevChap?.number}`)
     } else {
       const nextChap = comicDetails.data.chapters[currentChapIndex - 1]
-      router.push(`/comic/${comicDetails.data.id}/chapter/${nextChap?.number}`)
+      router.push(`/comic/${comicDetails.data.slug}/chapter/${nextChap?.number}`)
     }
   }
   const likeHandler = (isLike: boolean) => {
@@ -209,19 +199,20 @@ const Chapter: React.FC = ({
             </div>
           ) : (
             <div>
-              {chapterDetails.data[chapterLocale]?.map((page, index) => (
-                <Image
-                  src={page}
-                  key={index}
-                  alt=''
-                  width={400}
-                  height={700}
-                  className='mx-auto'
-                  priority={true}
-                  placeholder='blur'
-                  blurDataURL={getBlurUrl()}
-                />
-              ))}
+              {chapterDetails.data[chapterLocale]?.map((page, index) =>
+                isMobile ? (
+                  <Image
+                    src={page}
+                    key={index}
+                    alt=''
+                    width={400}
+                    height={700}
+                    className='mx-auto'
+                    placeholder='blur'
+                    blurDataURL={getBlurUrl()}
+                  />
+                ) : null
+              )}
             </div>
           )}
         </div>

@@ -152,7 +152,7 @@ export default function Header({ className }: { className?: string }) {
                         className={`flex gap-2 cursor-pointer ${
                           manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
                         }`}
-                        onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}>
+                        onClick={() => router.push(`/comic/${manga.slug}/chapter/1`)}>
                         <Image
                           src={manga.image || NoImage}
                           width={48}
@@ -186,7 +186,7 @@ export default function Header({ className }: { className?: string }) {
                               <span
                                 className='text-second-color font-semibold cursor-pointer'
                                 onClick={(e) => {
-                                  router.push(`/comic/${manga.id}/chapter/${manga.latestChap.number}`)
+                                  router.push(`/comic/${manga.slug}/chapter/${manga.latestChap.number}`)
                                   e.preventDefault()
                                 }}>
                                 {manga.latestChap.number}
@@ -340,7 +340,7 @@ export default function Header({ className }: { className?: string }) {
                       className={`flex gap-2 ${
                         manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
                       }`}
-                      onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}>
+                      onClick={() => router.push(`/comic/${manga.slug}/chapter/1`)}>
                       <Image
                         src={manga.image || NoImage}
                         width={48}
@@ -374,7 +374,7 @@ export default function Header({ className }: { className?: string }) {
                             <span
                               className='text-second-color font-semibold cursor-pointer'
                               onClick={(e) => {
-                                router.push(`/comic/${manga.id}/chapter/${manga.latestChap.number}`)
+                                router.push(`/comic/${manga.slug}/chapter/${manga.latestChap.number}`)
                                 e.preventDefault()
                               }}>
                               {manga.latestChap.number}

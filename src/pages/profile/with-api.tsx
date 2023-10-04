@@ -15,6 +15,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     return res.data?.subscribers?.map(({ subscribers_manga: m }: any) => {
       const response = {
         id: m.id,
+        slug: m.slug,
         image: m.poster,
         status: {
           type: COMIC_STATUS[formatStatus(m.status)],
@@ -105,6 +106,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       return res.data.data?.manga?.map((m) => {
         const response = {
           id: m.id,
+          slug: m.slug,
           image: m.poster,
           status: {
             type: COMIC_STATUS[formatStatus(m.status)],
@@ -146,11 +148,11 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     return null
   }
 
-  const subscribe = async (comicId) => {
-    await privateAxios.post(`${config.API_URL}/api/rest/user/manga/${comicId}/subscribe`)
+  const subscribe = async (comicSlug) => {
+    await privateAxios.post(`${config.API_URL}/api/rest/user/manga/${comicSlug}/subscribe`)
   }
-  const unsubscribe = async (comicId) => {
-    await privateAxios.delete(`${config.API_URL}/api/rest/user/manga/${comicId}/subscribe`)
+  const unsubscribe = async (comicSlug) => {
+    await privateAxios.delete(`${config.API_URL}/api/rest/user/manga/${comicSlug}/subscribe`)
   }
 
   const updateProfile = async (data) => {

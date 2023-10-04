@@ -25,6 +25,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useRef, useState } from 'react'
+import { isMobile } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
 import { CHAPTER_STATUS, CHAPTER_TYPE } from 'src/constants/chapter.constant'
 import { LanguageType } from 'src/constants/global.types'
@@ -33,7 +34,6 @@ import { IChapter } from 'src/models/chapter'
 import { IComicDetail } from 'src/models/comic'
 import { getBlurUrl } from 'src/utils'
 import { getItem, setItem } from 'src/utils/localStorage'
-
 export default function ReadingSection({
   openComments,
   setOpenComments,
@@ -69,7 +69,7 @@ export default function ReadingSection({
   commentNumber: number
   chapterLikes: number
 }) {
-  const [readingMode, setReadingMode] = useState('onePage')
+  const [readingMode, setReadingMode] = useState('twoPage')
   const [currentPage, setCurrentPage] = useState(0)
   const [hovering, setHovering] = useState(false)
   const [showChapterList, setShowChapterList] = useState(false)
@@ -227,25 +227,27 @@ export default function ReadingSection({
                   ? chapterLengthRef.current
                   : currentPage + 2 > chapterLengthRef.current
                   ? chapterLengthRef.current
-                  : currentPage + 2
+                  : currentPage + 4
               )
-              ?.map((page, index) => (
-                <Image
-                  src={page || PageMockup}
-                  key={index}
-                  alt=''
-                  className={`${
-                    readingMode == 'onePage'
-                      ? 'mx-auto'
-                      : 'h-fit max-h-full max-w-[50%] w-auto first:ml-auto last:mr-auto'
-                  } `}
-                  width={1900}
-                  height={1000}
-                  priority={true}
-                  placeholder='blur'
-                  blurDataURL={getBlurUrl()}
-                />
-              ))}
+              ?.map((page, index) =>
+                isMobile ? null : (
+                  <Image
+                    src={page || PageMockup}
+                    key={index}
+                    alt=''
+                    className={`${
+                      readingMode == 'onePage'
+                        ? 'mx-auto'
+                        : 'h-fit max-h-full max-w-[50%] w-auto first:ml-auto last:mr-auto'
+                    } ${readingMode != 'onePage' && index > 1 && 'hidden'}`}
+                    width={1900}
+                    height={1000}
+                    priority={index < 4}
+                    placeholder='blur'
+                    blurDataURL={getBlurUrl()}
+                  />
+                )
+              )}
           </div>
         </div>
       ) : (
@@ -376,7 +378,7 @@ export default function ReadingSection({
                 ?.map((chapter, index) => {
                   return (
                     <div
-                      onClick={() => router.push(`/comic/${data.id}/chapter/${chapter?.number}`)}
+                      onClick={() => router.push(`/comic/${data.slug}/chapter/${chapter?.number}`)}
                       key={index}
                       className={`cursor-pointer text-xs hover:bg-light-medium-gray ${
                         currentChapIndex == index ? 'text-second-color' : ''
