@@ -191,7 +191,7 @@ export const getComicDetail = async (comicSlug: string, accountId: string) => {
       user_id: accountId,
     },
   })
-  const data = d?.data?.manga[0]
+  const data = d?.data?.data?.manga[0]
   const hasAccess = await getAccess(data.id)
   const env = getConfig().CHAIN_ID.includes('xstaxy') ? 'xstaxy' : 'euphoria'
   const collections = []
