@@ -5,6 +5,7 @@ import '@interchain-ui/react/styles'
 import axios from 'axios'
 import { assets, chains } from 'chain-registry'
 import FilledButton from 'components/Button/FilledButton'
+import HeadComponent from 'components/Head'
 import OutlineTextField from 'components/Input/TextField/Outline'
 import Modal from 'components/Modal'
 import ConnectWalletModal from 'components/Modal/ConnectWalletModal'
@@ -47,7 +48,7 @@ function MyApp(props: AppProps) {
       moment.locale('en')
     }
   }, [locale])
-  if (isSetting) return <></>
+  if (isSetting) return <HeadComponent />
   if (getConfig().IN_MAINTENANCE_MODE) {
     return (
       <>
@@ -59,12 +60,14 @@ function MyApp(props: AppProps) {
             font-family: ${ws.style.fontFamily};
           }
         `}</style>
+        <HeadComponent />
         <MaintainPage />
       </>
     )
   }
   return (
     <>
+      <HeadComponent />
       <style jsx global>{`
         html {
           font-family: ${pjs.style.fontFamily};

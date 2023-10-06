@@ -1,29 +1,28 @@
 import Carousel from 'components/Carousel'
 
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import HeroCyberpunkBanner from 'assets/images/comic-banner/hero_cyberpunk.jpg'
 import HamulageBanner from 'assets/images/comic-banner/hamulage.jpg'
+import HeroCyberpunkBanner from 'assets/images/comic-banner/hero_cyberpunk.jpg'
 import HeroicBanner from 'assets/images/comic-banner/heroic.png'
 import TCOTPBanner from 'assets/images/comic-banner/the_chaos_of_the_past.jpg'
 import UltraVBanner from 'assets/images/comic-banner/ultra_v.jpg'
 import DummyComic from 'components/DummyComponent/comic'
+import Footer from 'components/Footer'
 import Header from 'components/Header'
 import FilledSelect from 'components/Select/FilledSelect'
 import Comic from 'components/pages/homepage/comic'
 import TrendingComic from 'components/pages/homepage/trendingComic'
+import _ from 'lodash'
+import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useApi from 'src/hooks/useApi'
 import { IComic } from 'src/models/comic'
 import { getAllTags, getLatestComic, getTrendingComic } from 'src/services'
-import { i18n } from 'next-i18next'
-import _ from 'lodash'
-import HeadComponent from 'components/Head'
-import Link from 'next/link'
-import Footer from 'components/Footer'
 
 declare global {
   interface Window {
@@ -79,7 +78,6 @@ export default function Home() {
   }, [t('All status')])
   return (
     <>
-      <HeadComponent />
       <Header />
       <div className='pk-container'>
         <div className='mt-[40px] md:grid grid-cols-1 px-2 md:px-0 gap-[40px] hidden -mx-5 [&_.slick-dots]:-mx-5'>

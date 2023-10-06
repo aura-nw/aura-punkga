@@ -1,5 +1,4 @@
 import FilledButton from 'components/Button/FilledButton'
-import HeadComponent from 'components/Head'
 import Header from 'components/Header'
 import OutlineTextField from 'components/Input/TextField/Outline'
 import CheckSquare from 'images/icons/check_square_fill.svg'
@@ -65,7 +64,6 @@ export default function ResetPassword() {
   if (!token) {
     return (
       <>
-        <HeadComponent title='Missing token | Punkga.me' />
         <Header />
         <div className='pk-container py-4'>Missing token!</div>
       </>
@@ -74,7 +72,6 @@ export default function ResetPassword() {
 
   return (
     <>
-      <HeadComponent title={`${t('Reset password')} | Punkga.me`} />
       <Header />
       <div className='flex justify-center md:items-center min-h-[80vh]'>
         <div className={`p-6 w-[322px] relative transition-all duration-300 ${success ? 'h-[400px]' : ''}`}>

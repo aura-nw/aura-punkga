@@ -1,31 +1,30 @@
-import Header from 'components/Header'
-import { useRouter } from 'next/router'
-import { Fragment, forwardRef, useContext, useEffect, useRef, useState } from 'react'
-import { Context } from 'src/context'
-import NoImg from 'images/avatar.svg'
-import Image from 'next/image'
+import { ChevronDownIcon, CloudArrowUpIcon } from '@heroicons/react/24/outline'
+import FilledButton from 'components/Button/FilledButton'
 import OutlineButton from 'components/Button/OutlineButton'
 import DummyComic from 'components/DummyComponent/comic'
-import Comic from 'components/pages/profile/comic'
-import Select from 'components/Select'
-import { ChevronDownIcon, CloudArrowUpIcon } from '@heroicons/react/24/outline'
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
+import Header from 'components/Header'
 import AutoGrowingTextField from 'components/Input/TextField/AutoGrowing'
-import moment from 'moment'
-import SettingPasswordModal from 'components/pages/profile/settingPasswordModal'
-import ChangingPasswordModal from 'components/pages/profile/changingPasswordModal'
+import Select from 'components/Select'
 import MComic from 'components/pages/homepage/comic'
-import FilledButton from 'components/Button/FilledButton'
-import MaleIcon from 'images/icons/male.svg'
+import ChangingPasswordModal from 'components/pages/profile/changingPasswordModal'
+import Comic from 'components/pages/profile/comic'
+import SettingPasswordModal from 'components/pages/profile/settingPasswordModal'
+import vi from 'date-fns/locale/vi'
+import NoImg from 'images/avatar.svg'
+import LinkSvg from 'images/icons/Link.svg'
 import EditIcon from 'images/icons/edit-circle.svg'
 import FemaleIcon from 'images/icons/female.svg'
+import MaleIcon from 'images/icons/male.svg'
 import OtherIcon from 'images/icons/other-gender.svg'
-import { useTranslation } from 'react-i18next'
 import _ from 'lodash'
-import vi from 'date-fns/locale/vi'
-import HeadComponent from 'components/Head'
-import LinkSvg from 'images/icons/Link.svg'
+import moment from 'moment'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+import { Fragment, forwardRef, useContext, useEffect, useRef, useState } from 'react'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import { useTranslation } from 'react-i18next'
+import { Context } from 'src/context'
 export default function Profile({ subscribeList, unsubscribe, subscribe, curentlyReading, updateProfile }) {
   const { account, isSettingUp, getProfile } = useContext(Context)
   const { t } = useTranslation()
@@ -140,7 +139,6 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
   if (!account) return <></>
   return (
     <>
-      <HeadComponent title={`${account.name} | Punkga.me`} />
       <Header />
       <div className='pk-container py-5 px-5 md:px-0 md:py-10'>
         {isSettingUp ? (

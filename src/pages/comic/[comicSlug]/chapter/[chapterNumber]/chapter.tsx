@@ -1,5 +1,4 @@
 import DummyComicDetail from 'components/DummyComponent/comicDetail'
-import HeadComponent from 'components/Head'
 import Header from 'components/Header'
 import ComicDetail from 'components/pages/chapter/comicDetail'
 import CommentSection from 'components/pages/chapter/commentSection'
@@ -8,6 +7,7 @@ import ReadingSection from 'components/pages/chapter/readingSection'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useRef, useState } from 'react'
+import { isMobile } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
 import { CHAPTER_TYPE } from 'src/constants/chapter.constant'
 import { LanguageType } from 'src/constants/global.types'
@@ -17,7 +17,6 @@ import { IComicDetail } from 'src/models/comic'
 import { IComment } from 'src/models/comment'
 import { getBlurUrl } from 'src/utils'
 import { getItem, setItem } from 'src/utils/localStorage'
-import { isMobile } from 'react-device-detect'
 const Chapter: React.FC = ({
   comicDetails,
   chapterDetails,
@@ -110,17 +109,11 @@ const Chapter: React.FC = ({
     }
   }, [comicDetails?.data?.id, account])
 
-  if (comicDetails.loading || chapterDetails.loading)
-    return (
-      <>
-        <HeadComponent />
-      </>
-    )
+  if (comicDetails.loading || chapterDetails.loading) return <></>
 
   if ((!comicDetails.data && !comicDetails.loading) || (!chapterDetails.data && !chapterDetails.loading)) {
     return (
       <div className='h-[100vh]'>
-        <HeadComponent />
         <Header />
         <div className='flex justify-center items-center'>{t('Error while fetching data')}!</div>
       </div>
@@ -164,10 +157,6 @@ const Chapter: React.FC = ({
 
   return (
     <>
-      <HeadComponent
-        title={`${chapterDetails.data.name} | ${comicDetails.data[locale]?.title}`}
-        description={comicDetails.data[locale]?.description}
-      />
       <div className='xl:hidden min-h-[100dvh] h-full flex flex-col'>
         <Header className='!relative' />
         <HeaderBar

@@ -1,27 +1,26 @@
-import HeadComponent from 'components/Head'
+import Card, { SubCard } from 'components/Card'
 import Header from 'components/Header'
-import Image from 'next/image'
+import Pagination from 'components/pages/artist/Pagination'
+import Comic from 'components/pages/homepage/comic'
+import MobileComic from 'components/pages/homepage/trendingComic'
+import DOMPurify from 'dompurify'
 import NoImg from 'images/avatar.svg'
 import BeIcon from 'images/behance.svg'
 import WebsiteIcon from 'images/icons/Website.svg'
-import MaleIcon from 'images/icons/male.svg'
-import ShareIcon from 'images/icons/share.svg'
 import FemaleIcon from 'images/icons/female.svg'
-import Card, { SubCard } from 'components/Card'
-import { IArtist } from 'src/models/artist'
-import { useRouter } from 'next/router'
-import moment from 'moment'
+import MaleIcon from 'images/icons/male.svg'
 import OtherIcon from 'images/icons/other-gender.svg'
-import { useTranslation } from 'react-i18next'
-import Link from 'next/link'
-import { appendHttps } from 'src/utils'
-import getConfig from 'next/config'
-import MobileComic from 'components/pages/homepage/trendingComic'
-import Comic from 'components/pages/homepage/comic'
-import Pagination from 'components/pages/artist/Pagination'
-import { Fragment, useState } from 'react'
+import ShareIcon from 'images/icons/share.svg'
 import NoImage from 'images/no_img.png'
-import DOMPurify from 'dompurify'
+import moment from 'moment'
+import getConfig from 'next/config'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { Fragment, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { IArtist } from 'src/models/artist'
+import { appendHttps } from 'src/utils'
 export default function Artist({ artistDetail }) {
   const artist = artistDetail.data as IArtist
   const { locale } = useRouter()
@@ -32,7 +31,6 @@ export default function Artist({ artistDetail }) {
   if (!artist) return <></>
   return (
     <>
-      <HeadComponent title={`${artist.name} | Punkga.me`} />
       <Header />
       <div className='px-[10px] lg:px-0 lg:py-[47px] py-[17px] pk-container'>
         <div className='flex gap-[10px] lg:gap-[60px] px-[10px] lg:px-0'>
