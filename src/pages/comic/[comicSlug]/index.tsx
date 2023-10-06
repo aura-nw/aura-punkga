@@ -7,11 +7,11 @@ const ComposedComic = compose(withApi)(Comic)
 
 export default function Page(props) {
   if (props.justHead || props.pageProps?.justHead) {
-    return <HeadComponent data={props.metadata} />
+    return <HeadComponent data={props.pageProps?.metadata || props.metadata} />
   }
   return (
     <>
-      <HeadComponent data={props.metadata} />
+      <HeadComponent data={props.pageProps?.metadata || props.metadata} />
       <ComposedComic />
     </>
   )
