@@ -4,7 +4,7 @@ export default function HeadComponent({ data }: { data?: any }) {
   const { locale } = useRouter()
   const title = data?.title
   const description = data?.description
-  const punkgaImage = data.image || 'https://punkga.me/assets/images/thumb.png'
+  const punkgaImage = data?.image || 'https://punkga.me/assets/images/thumb.png'
   const punkgaTitle = title
     ? title
     : locale == 'vn'
