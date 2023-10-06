@@ -77,7 +77,9 @@ export default function Footer() {
                 ) : (
                   <div className='text-xs text-[red] mt-1'>{error || t('Something went wrong')}</div>
                 )
-              ) : null}
+              ) : (
+                <div className='text-xs text-[red] mt-1'>{error || t('Something went wrong')}</div>
+              )}
             </div>
           </div>
         </div>
