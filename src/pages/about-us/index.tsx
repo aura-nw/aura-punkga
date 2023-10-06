@@ -19,7 +19,13 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { authorData } from '../../utils/authorData'
 
-export default function AboutUs() {
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <AboutUs />
+}
+function AboutUs() {
   const { t } = useTranslation()
   const { locale } = useRouter()
   return (

@@ -12,7 +12,13 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { validatePassword } from 'src/utils'
-export default function ResetPassword() {
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <ResetPassword />
+}
+function ResetPassword() {
   const searchParams = useSearchParams()
   const token = searchParams.get('token')
   const { t } = useTranslation()

@@ -7,7 +7,13 @@ import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
-export default function EmailVerified() {
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <EmailVerified />
+}
+function EmailVerified() {
   const r = useRouter()
   const searchParams = useSearchParams()
   const error = searchParams.get('error')

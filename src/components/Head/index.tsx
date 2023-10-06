@@ -17,52 +17,23 @@ export default function HeadComponent({ data }: { data?: any }) {
     : 'Read Manga online free, fast updated, officially licensed with high-quality translated chapters. Start reading now!'
   return (
     <Head>
-      <title>{punkgaTitle}</title>
-      <meta name='description' content={punkgaDescription}></meta>
+      <title key='title'>{punkgaTitle}</title>
+      <meta name='description' key='description' content={punkgaDescription}></meta>
 
-      <meta itemProp='name' content={punkgaTitle}></meta>
-      <meta itemProp='description' content={punkgaDescription}></meta>
-      <meta itemProp='image' content={punkgaImage}></meta>
+      <meta itemProp='name' key='ip:name' content={punkgaTitle}></meta>
+      <meta itemProp='description' key='ip:description' content={punkgaDescription}></meta>
+      <meta itemProp='image' key='ip:image' content={punkgaImage}></meta>
 
-      <meta property='og:url' content={punkgaTitle}></meta>
-      <meta property='og:type' content='website'></meta>
-      <meta property='og:title' content={punkgaTitle}></meta>
-      <meta property='og:description' content={punkgaDescription}></meta>
-      <meta property='og:image' content={punkgaImage}></meta>
+      <meta property='og:url' key='og:url' content='https://punkga.me'></meta>
+      <meta property='og:type' key='og:type' content='website'></meta>
+      <meta property='og:title' key='og:title' content={punkgaTitle}></meta>
+      <meta property='og:description' key='og:description' content={punkgaDescription}></meta>
+      <meta property='og:image' key='og:image' content={punkgaImage}></meta>
 
-      <meta name='twitter:card' content='summary_large_image'></meta>
-      <meta name='twitter:title' content={punkgaTitle}></meta>
-      <meta name='twitter:description' content={punkgaDescription}></meta>
-      <meta name='twitter:image' content={punkgaImage}></meta>
+      <meta name='twitter:card' key='twitter:card' content='summary_large_image'></meta>
+      <meta name='twitter:title' key='twitter:title' content={punkgaTitle}></meta>
+      <meta name='twitter:description' key='twitter:description' content={punkgaDescription}></meta>
+      <meta name='twitter:image' key='twitter:image' content={punkgaImage}></meta>
     </Head>
   )
-}
-export const getServerSideProps = async ({ params, locale }) => {
-  if (params?.comicSlug) {
-    const res = await fetch(`https://api.staging.punkga.me/manga/${params?.comicSlug}`)
-    const data = await res.json()
-    const manga = data?.data?.manga?.[0]
-    const props = {
-      image: manga.poster,
-      title: '',
-      description: '',
-    }
-    if (locale == 'en') {
-      const mangaLanguages =
-        data.manga_languages.find((ml) => ml.language_id == 1) || data.manga_languages.find((ml) => ml.is_main_language)
-      props.title = mangaLanguages?.title
-      props.description = mangaLanguages?.description
-    }
-    if (locale == 'vn') {
-      const mangaLanguages =
-        data.manga_languages.find((ml) => ml.language_id == 2) || data.manga_languages.find((ml) => ml.is_main_language)
-      props.title = mangaLanguages?.title
-      props.description = mangaLanguages?.description
-    }
-    return {
-      props: {
-        data: props,
-      },
-    }
-  }
 }

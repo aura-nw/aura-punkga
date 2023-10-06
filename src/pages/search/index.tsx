@@ -8,7 +8,13 @@ import { useTranslation } from 'react-i18next'
 import useApi from 'src/hooks/useApi'
 import { search } from 'src/services'
 
-export default function Search() {
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <Search />
+}
+function Search() {
   const r = useRouter()
   const params = useSearchParams()
   const keyword = params.get('keyword')

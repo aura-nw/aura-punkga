@@ -48,7 +48,15 @@ function MyApp(props: AppProps) {
       moment.locale('en')
     }
   }, [locale])
-  if (isSetting) return <HeadComponent />
+  if (isSetting) {
+    const Component = props.Component
+    return (
+      <>
+        <HeadComponent />
+        <Component {...props} justHead={true} />
+      </>
+    )
+  }
   if (getConfig().IN_MAINTENANCE_MODE) {
     return (
       <>

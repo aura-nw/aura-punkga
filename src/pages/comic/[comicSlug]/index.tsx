@@ -1,27 +1,56 @@
+import HeadComponent from 'components/Head'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { compose } from 'ramda'
 import Comic from './comic'
 import withApi from './with-api'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { i18n } from 'next-i18next'
 const ComposedComic = compose(withApi)(Comic)
 
-export default ComposedComic
-
-export const getStaticProps = async ({ locale }) => {
-  if (process.env.NODE_ENV === 'development') {
-    await i18n?.reloadResources()
+export default function Page(props) {
+  if (props.justHead) {
+    return <HeadComponent data={props.metadata} />
   }
-  return {
-    props: {
-      ...(await serverSideTranslations(locale!, ['common'])),
-    },
-  }
+  return (
+    <>
+      <HeadComponent data={props.metadata} />
+      <ComposedComic />
+    </>
+  )
 }
 
-
-export const getStaticPaths = ({ locales }) => {
-  return {
-    paths: [],
-    fallback: true,
+export const getServerSideProps = async (context) => {
+  if (context.params?.comicSlug) {
+    const res = await fetch(`https://api.staging.punkga.me/manga/${context.params?.comicSlug}`)
+    const data = await res.json()
+    const manga = data?.data?.manga?.[0]
+    if (!manga)
+      return {
+        props: {
+          ...(await serverSideTranslations(context?.locale!, ['common'])),
+        },
+      }
+    const props = {
+      image: manga.poster,
+      title: '',
+      description: '',
+    }
+    if (context.locale == 'en') {
+      const mangaLanguages =
+        manga.manga_languages.find((ml) => ml.language_id == 1) ||
+        manga.manga_languages.find((ml) => ml.is_main_language)
+      props.title = mangaLanguages?.title
+      props.description = mangaLanguages?.description
+    } else {
+      const mangaLanguages =
+        manga.manga_languages.find((ml) => ml.language_id == 2) ||
+        manga.manga_languages.find((ml) => ml.is_main_language)
+      props.title = mangaLanguages?.title
+      props.description = mangaLanguages?.description
+    }
+    return {
+      props: {
+        metadata: props,
+        ...(await serverSideTranslations(context?.locale!, ['common'])),
+      },
+    }
   }
 }

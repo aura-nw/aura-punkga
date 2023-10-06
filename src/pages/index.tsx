@@ -23,6 +23,7 @@ import { useTranslation } from 'react-i18next'
 import useApi from 'src/hooks/useApi'
 import { IComic } from 'src/models/comic'
 import { getAllTags, getLatestComic, getTrendingComic } from 'src/services'
+import HeadComponent from 'components/Head'
 
 declare global {
   interface Window {
@@ -35,7 +36,7 @@ declare global {
   }
 }
 
-export default function Home() {
+function Home() {
   const latestComic = useApi<IComic[]>(getLatestComic, true, [])
   const trendingComic = useApi<IComic[]>(getTrendingComic, true, [])
   const allTags = useApi<any[]>(getAllTags, true, [])
@@ -270,6 +271,12 @@ export default function Home() {
   )
 }
 
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <Home />
+}
 export const getStaticProps = async ({ locale }) => {
   if (process.env.NODE_ENV === 'development') {
     await i18n?.reloadResources()
