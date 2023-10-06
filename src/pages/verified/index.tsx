@@ -1,4 +1,5 @@
 import FilledButton from 'components/Button/FilledButton'
+import Footer from 'components/Footer'
 import Header from 'components/Header'
 import Ninja from 'images/ninja.svg'
 import { i18n } from 'next-i18next'
@@ -30,6 +31,7 @@ function EmailVerified() {
             {t('Explore Punkga')}
           </FilledButton>
         </div>
+        <Footer />
       </>
     )
   }
@@ -43,6 +45,7 @@ function EmailVerified() {
           {t('Explore Punkga')}
         </FilledButton>
       </div>
+      <Footer />
     </>
   )
 }

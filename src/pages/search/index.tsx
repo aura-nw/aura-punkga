@@ -1,4 +1,5 @@
 import DummyComic from 'components/DummyComponent/comic'
+import Footer from 'components/Footer'
 import Header from 'components/Header'
 import Comic from 'components/pages/homepage/comic'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -37,6 +38,7 @@ function Search() {
               })}
         </div>
       </div>
+      <Footer />
     </>
   )
 }

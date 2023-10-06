@@ -18,6 +18,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { authorData } from '../../utils/authorData'
+import Footer from 'components/Footer'
 
 export default function Page(props) {
   if (props.justHead) {
@@ -104,6 +105,7 @@ function AboutUs() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

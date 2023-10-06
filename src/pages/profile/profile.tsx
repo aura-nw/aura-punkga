@@ -2,6 +2,7 @@ import { ChevronDownIcon, CloudArrowUpIcon } from '@heroicons/react/24/outline'
 import FilledButton from 'components/Button/FilledButton'
 import OutlineButton from 'components/Button/OutlineButton'
 import DummyComic from 'components/DummyComponent/comic'
+import Footer from 'components/Footer'
 import Header from 'components/Header'
 import AutoGrowingTextField from 'components/Input/TextField/AutoGrowing'
 import Select from 'components/Select'
@@ -485,6 +486,7 @@ export default function Profile({ subscribeList, unsubscribe, subscribe, curentl
           </div>
         </div>
       </div>
+      <Footer />
       <SettingPasswordModal open={settingPasswordModalOpen} setOpen={setSettingPasswordModalOpen} profile={account} />
       <ChangingPasswordModal open={changingPasswordModalOpen} setOpen={setChangingPasswordModalOpen} />
     </>

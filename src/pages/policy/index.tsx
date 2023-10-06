@@ -1,3 +1,4 @@
+import Footer from 'components/Footer'
 import Header from 'components/Header'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
@@ -400,6 +401,7 @@ export default function Policy() {
             <li>Email: support@aura.network</li>
           </ul>
         </div>
+        <Footer />
       </>
     )
   }
@@ -789,6 +791,7 @@ export default function Policy() {
           <li>By email: support@aura.network</li>
         </ul>
       </div>
+      <Footer />
     </>
   )
 }

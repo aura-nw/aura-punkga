@@ -1,4 +1,5 @@
 import FilledButton from 'components/Button/FilledButton'
+import Footer from 'components/Footer'
 import Header from 'components/Header'
 import OutlineTextField from 'components/Input/TextField/Outline'
 import CheckSquare from 'images/icons/check_square_fill.svg'
@@ -72,6 +73,7 @@ function ResetPassword() {
       <>
         <Header />
         <div className='pk-container py-4'>Missing token!</div>
+        <Footer />
       </>
     )
   }
@@ -134,6 +136,7 @@ function ResetPassword() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

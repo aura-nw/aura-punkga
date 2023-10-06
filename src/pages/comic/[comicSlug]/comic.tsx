@@ -3,6 +3,7 @@ import { BellAlertIcon, EyeIcon, HeartIcon } from '@heroicons/react/20/solid'
 import { BellAlertIcon as BellAlertIconOutline } from '@heroicons/react/24/outline'
 import FilledButton from 'components/Button/FilledButton'
 import OutlineButton from 'components/Button/OutlineButton'
+import Footer from 'components/Footer'
 import Header from 'components/Header'
 import Tag from 'components/Label/Tag'
 import NFTList from 'components/pages/chapter/nftList'
@@ -174,6 +175,7 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
           </Tab.Group>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

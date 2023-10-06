@@ -1,4 +1,5 @@
 import Card, { SubCard } from 'components/Card'
+import Footer from 'components/Footer'
 import Header from 'components/Header'
 import Pagination from 'components/pages/artist/Pagination'
 import Comic from 'components/pages/homepage/comic'
@@ -215,6 +216,7 @@ export default function Artist({ artistDetail }) {
           </div>
         )}
       </div>
+      <Footer />
     </>
   )
 }
