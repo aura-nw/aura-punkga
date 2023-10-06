@@ -177,6 +177,7 @@ const Chapter: React.FC = ({
       <HeadComponent
         title={`${chapterDetails.data.name} | ${comicDetails.data[locale]?.title}`}
         description={comicDetails.data[locale]?.description}
+        thumb={comicDetails.data?.image}
       />
       <div className='xl:hidden min-h-[100dvh] h-full flex flex-col'>
         <Header className='!relative' />

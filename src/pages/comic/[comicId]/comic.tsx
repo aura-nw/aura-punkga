@@ -68,6 +68,7 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
       <HeadComponent
         title={`${data[selectedLanguage.shortLang]?.title} | Punkga.me`}
         description={data[selectedLanguage.shortLang]?.description}
+        thumb={data.image}
       />
       <Header />
       <div className='bg-black fixed top-[96px] left-0 right-0 bottom-0'>
