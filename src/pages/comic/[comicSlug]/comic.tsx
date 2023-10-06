@@ -51,9 +51,9 @@ function Comic({ comicDetails, like, unlike }) {
   const subscribeHandler = (isSub: boolean) => {
     if (account?.verified && account?.name) {
       if (isSub) {
-        subscribe(data.slug)
+        subscribe(data.id)
       } else {
-        unsubscribe(data.slug)
+        unsubscribe(data.id)
       }
       setIsSubscribe(isSub)
     } else {

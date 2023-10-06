@@ -6,7 +6,7 @@ import { i18n } from 'next-i18next'
 const ComposedProfile = compose(withApi)(Profile)
 
 export default function Page(props) {
-  if (props.justHead || props.pageProps.justHead) {
+  if (props.justHead || props.pageProps?.justHead) {
     return <></>
   }
   return <ComposedProfile />

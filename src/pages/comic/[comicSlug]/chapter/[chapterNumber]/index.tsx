@@ -8,7 +8,7 @@ import HeadComponent from 'components/Head'
 const ComposedChapter = compose(withCssModule, withStyle, withApi)(Chapter)
 
 export default function Page(props) {
-  if (props.justHead || props.pageProps.justHead) {
+  if (props.justHead || props.pageProps?.justHead) {
     return <HeadComponent data={props.pageProps?.metadata || props.metadata} />
   }
   return (

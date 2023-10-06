@@ -6,7 +6,7 @@ import withApi from './with-api'
 const ComposedComic = compose(withApi)(Comic)
 
 export default function Page(props) {
-  if (props.justHead || props.pageProps.justHead) {
+  if (props.justHead || props.pageProps?.justHead) {
     return <HeadComponent data={props.metadata} />
   }
   return (

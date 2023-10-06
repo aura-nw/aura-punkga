@@ -61,6 +61,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
         query: `query GetListMangaById($id: [Int!]=${ids}) {
   manga(where: {_and: {id: {_in: $id}, status: {_neq: "Removed"}}}) {
     id
+    slug
     banner
     poster
     status
