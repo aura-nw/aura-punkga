@@ -69,7 +69,7 @@ export default function Footer() {
                   {t('Subscribe')}
                 </button>
               </div>
-              {isSuccess != undefined ? (
+              {isSuccess != undefined || error ? (
                 isSuccess ? (
                   <div className='text-xs text-primary-color mt-1'>
                     {t('Thank you for subscribing to our newsletter.')}
@@ -77,9 +77,7 @@ export default function Footer() {
                 ) : (
                   <div className='text-xs text-[red] mt-1'>{error || t('Something went wrong')}</div>
                 )
-              ) : (
-                <div className='text-xs text-[red] mt-1'>{error || t('Something went wrong')}</div>
-              )}
+              ) : null}
             </div>
           </div>
         </div>
