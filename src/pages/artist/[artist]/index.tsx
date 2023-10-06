@@ -6,7 +6,7 @@ import { i18n } from 'next-i18next'
 const ComposedArtist = compose(withApi)(Artist)
 
 export default function Page(props) {
-  if (props.justHead) {
+  if (props.justHead || props.pageProps.justHead) {
     return <></>
   }
   return <ComposedArtist />

@@ -17,7 +17,14 @@ import { useTranslation } from 'react-i18next'
 import mockAvar from 'src/assets/images/mockup4.png'
 import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
-export default function Comic({ comicDetails, subscribe, unsubscribe, like, unlike }) {
+import { subscribe, unsubscribe } from 'src/services'
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <Comic {...props} />
+}
+function Comic({ comicDetails, like, unlike }) {
   const { t } = useTranslation()
   const { locale } = useRouter()
   const [language, setLanguage] = useState<LanguageType>(locale as LanguageType)
@@ -44,9 +51,9 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
   const subscribeHandler = (isSub: boolean) => {
     if (account?.verified && account?.name) {
       if (isSub) {
-        subscribe()
+        subscribe(data.slug)
       } else {
-        unsubscribe()
+        unsubscribe(data.slug)
       }
       setIsSubscribe(isSub)
     } else {

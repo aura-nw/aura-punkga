@@ -24,8 +24,6 @@ const Chapter: React.FC = ({
   postComment,
   like,
   unlike,
-  subscribe,
-  unsubscribe,
 }: {
   comicDetails: {
     data: IComicDetail
@@ -43,8 +41,6 @@ const Chapter: React.FC = ({
   postComment: (content: string) => void
   like: () => void
   unlike: () => void
-  subscribe: () => void
-  unsubscribe: () => void
 }) => {
   const [openComments, setOpenComments] = useState(false)
   const [mode, setMode] = useState<'minscreen' | 'fullscreen'>('minscreen')
@@ -222,8 +218,6 @@ const Chapter: React.FC = ({
                 setOpenComments={setOpenComments}
                 openComments={openComments}
                 language={language}
-                subscribe={subscribe}
-                unsubscribe={unsubscribe}
                 mode={mode}
                 setMode={setMode}
                 isSubscribe={isSubscribe}
@@ -246,8 +240,6 @@ const Chapter: React.FC = ({
                   setLanguage={setLanguage}
                   isSubscribe={isSubscribe}
                   setIsSubscribe={setIsSubscribe}
-                  subscribe={subscribe}
-                  unsubscribe={unsubscribe}
                   like={like}
                   unlike={unlike}
                   chapterId={chapterDetails.data.id}
@@ -279,4 +271,9 @@ const Chapter: React.FC = ({
     </>
   )
 }
-export default Chapter
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <Chapter {...props} />
+}

@@ -53,7 +53,7 @@ function MyApp(props: AppProps) {
     return (
       <>
         <HeadComponent />
-        <Component {...props} justHead={true} />
+        <Component {...props} justHead />
       </>
     )
   }

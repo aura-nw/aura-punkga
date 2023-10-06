@@ -26,7 +26,14 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
-export default function Profile({ subscribeList, unsubscribe, subscribe, curentlyReading, updateProfile }) {
+import { subscribe, unsubscribe } from 'src/services'
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <Profile {...props} />
+}
+function Profile({ subscribeList, curentlyReading, updateProfile }) {
   const { account, isSettingUp, getProfile } = useContext(Context)
   const { t } = useTranslation()
   const [birthdate, setBirthdate] = useState(null)

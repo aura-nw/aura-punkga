@@ -21,6 +21,7 @@ import Ninja from 'images/ninja-2.svg'
 import Link from 'next/link'
 import { CHAPTER_STATUS } from 'src/constants/chapter.constant'
 import NFTList from './nftList'
+import { subscribe, unsubscribe } from 'src/services'
 
 export default function ComicDetail({
   data,
@@ -28,8 +29,6 @@ export default function ComicDetail({
   setLanguage,
   isSubscribe,
   setIsSubscribe,
-  subscribe,
-  unsubscribe,
   like,
   unlike,
   chapterId,
@@ -45,8 +44,6 @@ export default function ComicDetail({
   isSubscribe: boolean
   chapterIsLiked: boolean
   setIsSubscribe: any
-  subscribe: () => void
-  unsubscribe: () => void
   like: () => void
   unlike: () => void
   likeHandler: any
@@ -70,9 +67,9 @@ export default function ComicDetail({
   const subscribeHandler = (isSub: boolean) => {
     if (account?.verified && account?.name) {
       if (isSub) {
-        subscribe()
+        subscribe(data.slug)
       } else {
-        unsubscribe()
+        unsubscribe(data.slug)
       }
       setIsSubscribe(isSub)
     } else {

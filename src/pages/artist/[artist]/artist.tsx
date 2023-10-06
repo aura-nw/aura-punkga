@@ -22,7 +22,13 @@ import { Fragment, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IArtist } from 'src/models/artist'
 import { appendHttps } from 'src/utils'
-export default function Artist({ artistDetail }) {
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <Artist {...props} />
+}
+function Artist({ artistDetail }) {
   const artist = artistDetail.data as IArtist
   const { locale } = useRouter()
   const { t } = useTranslation()

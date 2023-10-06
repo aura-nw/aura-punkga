@@ -32,6 +32,7 @@ import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
 import { IChapter } from 'src/models/chapter'
 import { IComicDetail } from 'src/models/comic'
+import { subscribe, unsubscribe } from 'src/services'
 import { getBlurUrl } from 'src/utils'
 import { getItem, setItem } from 'src/utils/localStorage'
 export default function ReadingSection({
@@ -42,8 +43,6 @@ export default function ReadingSection({
   data,
   chapterData,
   language,
-  subscribe,
-  unsubscribe,
   isSubscribe,
   setIsSubscribe,
   likeHandler,
@@ -61,8 +60,6 @@ export default function ReadingSection({
   language: LanguageType
   isSubscribe: boolean
   setIsSubscribe: any
-  subscribe: () => void
-  unsubscribe: () => void
   goToChap: (d: 'Prev' | 'Next') => void
   likeHandler: (isLiked: boolean) => void
   isLiked: boolean
@@ -109,9 +106,9 @@ export default function ReadingSection({
   const subscribeHandler = (isSub: boolean) => {
     if (account?.verified && account?.name) {
       if (isSub) {
-        subscribe()
+        subscribe(data.slug)
       } else {
-        unsubscribe()
+        unsubscribe(data.slug)
       }
       setIsSubscribe(isSub)
     } else {

@@ -3,7 +3,13 @@ import Header from 'components/Header'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
 
-export default function Policy() {
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <Policy />
+}
+function Policy() {
   const { locale } = useRouter()
   if (locale == 'vn') {
     return (

@@ -122,12 +122,6 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   const unlike = async (id?: string) => {
     await privateAxios.delete(`${config.API_URL}/api/rest/user/chapters/${id || chapterId.current}/likes`)
   }
-  const subscribe = async () => {
-    await privateAxios.post(`${config.API_URL}/api/rest/user/manga/${query.comicSlug}/subscribe`)
-  }
-  const unsubscribe = async () => {
-    await privateAxios.delete(`${config.API_URL}/api/rest/user/manga/${query.comicSlug}/subscribe`)
-  }
 
   return (
     <Component
@@ -138,8 +132,6 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       postComment={postComment}
       like={like}
       unlike={unlike}
-      subscribe={subscribe}
-      unsubscribe={unsubscribe}
     />
   )
 }

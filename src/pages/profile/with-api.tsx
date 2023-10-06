@@ -148,13 +148,6 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     return null
   }
 
-  const subscribe = async (comicSlug) => {
-    await privateAxios.post(`${config.API_URL}/api/rest/user/manga/${comicSlug}/subscribe`)
-  }
-  const unsubscribe = async (comicSlug) => {
-    await privateAxios.delete(`${config.API_URL}/api/rest/user/manga/${comicSlug}/subscribe`)
-  }
-
   const updateProfile = async (data) => {
     await privateAxios.put(`${config.REST_API_URL}/user/update-profile`, data)
   }
@@ -172,8 +165,6 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       {...props}
       subscribeList={subscribeList}
       curentlyReading={curentlyReading}
-      unsubscribe={unsubscribe}
-      subscribe={subscribe}
       updateProfile={updateProfile}
     />
   )

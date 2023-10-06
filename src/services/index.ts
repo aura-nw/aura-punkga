@@ -317,3 +317,10 @@ export const postSubscribeEmail = async (email: string) => {
     return false
   }
 }
+
+export const subscribe = async (id) => {
+  await privateAxios.post(`${getConfig().API_URL}/api/rest/user/manga/${id}/subscribe`)
+}
+export const unsubscribe = async (id) => {
+  await privateAxios.delete(`${getConfig().API_URL}/api/rest/user/manga/${id}/subscribe`)
+}
