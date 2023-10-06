@@ -71,11 +71,11 @@ export default function Footer() {
               </div>
               {isSuccess != undefined || error ? (
                 isSuccess ? (
-                  <div className='text-xs px-6 mt-[5px] text-primary-color'>
+                  <div className='text-sm px-6 mt-[5px] text-primary-color'>
                     {t('Thank you for subscribing to our newsletter')}
                   </div>
                 ) : (
-                  <div className='text-xs px-6 mt-[5px] text-[#F0263C]'>{error || t('Something went wrong')}</div>
+                  <div className='text-sm px-6 mt-[5px] text-[#F0263C]'>{error || t('Something went wrong')}</div>
                 )
               ) : null}
             </div>
