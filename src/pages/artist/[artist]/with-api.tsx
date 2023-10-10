@@ -15,8 +15,8 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   const getDetail = async () => {
     try {
       const env = config.CHAIN_ID.includes('xstaxy') ? 'xstaxy' : 'euphoria'
-      const { data } = await axios.get(`${config.API_URL}/api/rest/creators/${artist}`)
-      const detail = data.creators[0]
+      const { data } = await axios.get(`${config.REST_API_URL}/creator/${artist}`)
+      const detail = data.data.creators[0]
       if (detail) {
         const collections = []
         let collectionsData = []
@@ -86,6 +86,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
               },
               authors: manga.manga_creators?.map((c: any) => ({
                 id: c.creator?.id,
+                slug: c.creator?.slug,
                 name: c.creator?.pen_name || c.creator?.name,
               })),
               views: manga.manga_total_views?.views || 0,

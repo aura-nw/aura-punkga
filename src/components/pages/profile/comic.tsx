@@ -46,8 +46,8 @@ export default function Comic(props: IComic & { unsubscribe?: () => void; subscr
               <Fragment key={index}>
                 <span className='text-second-color font-[600] first:hidden'>, </span>
                 <span className='text-second-color font-[600]'>
-                  {author.id ? (
-                    <Link className='author' href={`/artist/${author.id}`}>
+                  {author.slug ? (
+                    <Link className='author' href={`/artist/${author.slug}`}>
                       {t(author.name)}
                     </Link>
                   ) : (

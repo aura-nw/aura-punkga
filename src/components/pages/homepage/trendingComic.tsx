@@ -60,8 +60,8 @@ export default function TrendingComic(props: IComic) {
               {props.authors.map((author, index) => (
                 <Fragment key={index}>
                   <span className='font-semibold text-second-color'>
-                    {author.id ? (
-                      <Link className='author' href={`/artist/${author.id}`}>
+                    {author.slug ? (
+                      <Link className='author' href={`/artist/${author.slug}`}>
                         {t(author.name)}
                       </Link>
                     ) : (

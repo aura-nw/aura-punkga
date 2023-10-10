@@ -23,6 +23,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
         },
         authors: m.manga_creators?.map((c: any) => ({
           id: c.creator?.isActive ? c.creator?.id : undefined,
+          slug: c.creator?.isActive ? c.creator?.slug : undefined,
           name: c.creator?.isActive ? c.creator?.pen_name || c.creator?.name : 'Unknown creator',
         })),
         views: m.manga_total_views?.views || 0,
@@ -75,6 +76,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       creator {
         id
         name
+        slug
         pen_name
         isActive
       }
@@ -115,6 +117,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
           },
           authors: m.manga_creators?.map((c: any) => ({
             id: c.creator?.isActive ? c.creator?.id : undefined,
+            slug: c.creator?.isActive ? c.creator?.slug : undefined,
             name: c.creator?.isActive ? c.creator?.pen_name || c.creator?.name : 'Unknown creator',
           })),
           views: m.manga_total_views?.views || 0,

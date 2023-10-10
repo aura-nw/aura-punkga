@@ -18,6 +18,7 @@ export const getLatestComic = async (): Promise<IComic[]> => {
         },
         authors: m.manga_creators?.map((c: any) => ({
           id: c.creator?.isActive ? c.creator?.id : undefined,
+          slug: c.creator?.isActive ? c.creator?.slug : undefined,
           name: c.creator?.isActive ? c.creator?.pen_name || c.creator?.name : 'Unknown creator',
         })),
         views: m.manga_total_views?.views || 0,
@@ -62,6 +63,7 @@ export const getTrendingComic = async (): Promise<IComic[]> => {
         },
         authors: m.manga_creators?.map((c: any) => ({
           id: c.creator?.isActive ? c.creator?.id : undefined,
+          slug: c.creator?.isActive ? c.creator?.slug : undefined,
           name: c.creator?.isActive ? c.creator?.pen_name || c.creator?.name : 'Unknown creator',
         })),
         views: m.manga_total_views?.views || 0,
@@ -156,6 +158,7 @@ export const search = async (content: string) => {
       },
       authors: m.manga_creators?.map((c: any) => ({
         id: c.creator?.isActive ? c.creator?.id : undefined,
+        slug: c.creator?.isActive ? c.creator?.slug : undefined,
         name: c.creator?.isActive ? c.creator?.pen_name || c.creator?.name : 'Unknown creator',
       })),
       views: m.manga_total_views?.views || 0,
@@ -271,6 +274,7 @@ export const getComicDetail = async (comicSlug: string, accountId: string) => {
     }),
     authors: data.manga_creators?.map((c: any) => ({
       id: c.creator?.isActive ? c.creator?.id : undefined,
+      slug: c.creator?.isActive ? c.creator?.slug : undefined,
       name: c.creator?.isActive ? c.creator?.pen_name || c.creator?.name : 'Unknown creator',
     })),
     releaseDate: data.release_date,
