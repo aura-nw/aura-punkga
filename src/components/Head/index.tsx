@@ -1,15 +1,10 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-export default function HeadComponent({
-  title,
-  description,
-  thumb,
-}: {
-  title?: string
-  description?: string
-  thumb?: string
-}) {
+export default function HeadComponent({ data }: { data?: any }) {
   const { locale } = useRouter()
+  const title = data?.title
+  const description = data?.description
+  const punkgaImage = data?.image || 'https://punkga.me/assets/images/thumb.png'
   const punkgaTitle = title
     ? title
     : locale == 'vn'
@@ -22,23 +17,23 @@ export default function HeadComponent({
     : 'Read Manga online free, fast updated, officially licensed with high-quality translated chapters. Start reading now!'
   return (
     <Head>
-      <title>{punkgaTitle}</title>
-      <meta name='description' content={punkgaDescription}></meta>
+      <title key='title'>{punkgaTitle}</title>
+      <meta name='description' key='description' content={punkgaDescription}></meta>
 
-      <meta itemProp='name' content={punkgaTitle}></meta>
-      <meta itemProp='description' content={punkgaDescription}></meta>
-      <meta itemProp='image' content={thumb || 'https://punkga.me/assets/images/thumb.png'}></meta>
+      <meta itemProp='name' key='ip:name' content={punkgaTitle}></meta>
+      <meta itemProp='description' key='ip:description' content={punkgaDescription}></meta>
+      <meta itemProp='image' key='ip:image' content={punkgaImage}></meta>
 
-      <meta property='og:url' content={window.location.href}></meta>
-      <meta property='og:type' content='website'></meta>
-      <meta property='og:title' content={punkgaTitle}></meta>
-      <meta property='og:description' content={punkgaDescription}></meta>
-      <meta property='og:image' content={thumb || 'https://punkga.me/assets/images/thumb.png'}></meta>
+      <meta property='og:url' key='og:url' content='https://punkga.me'></meta>
+      <meta property='og:type' key='og:type' content='website'></meta>
+      <meta property='og:title' key='og:title' content={punkgaTitle}></meta>
+      <meta property='og:description' key='og:description' content={punkgaDescription}></meta>
+      <meta property='og:image' key='og:image' content={punkgaImage}></meta>
 
-      <meta name='twitter:card' content='summary_large_image'></meta>
-      <meta name='twitter:title' content={punkgaTitle}></meta>
-      <meta name='twitter:description' content={punkgaDescription}></meta>
-      <meta name='twitter:image' content={thumb || 'https://punkga.me/assets/images/thumb.png'}></meta>
+      <meta name='twitter:card' key='twitter:card' content='summary_large_image'></meta>
+      <meta name='twitter:title' key='twitter:title' content={punkgaTitle}></meta>
+      <meta name='twitter:description' key='twitter:description' content={punkgaDescription}></meta>
+      <meta name='twitter:image' key='twitter:image' content={punkgaImage}></meta>
     </Head>
   )
 }

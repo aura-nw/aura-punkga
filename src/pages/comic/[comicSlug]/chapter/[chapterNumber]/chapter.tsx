@@ -1,25 +1,14 @@
-import { ChevronUpIcon } from '@heroicons/react/24/outline'
-import FlashAnimation from 'components/AnimationIconHOC/Flash'
-import Comment from 'components/Comment'
 import DummyComicDetail from 'components/DummyComponent/comicDetail'
-import HeadComponent from 'components/Head'
 import Header from 'components/Header'
-import ChatInput from 'components/Input/ChatInput'
 import ComicDetail from 'components/pages/chapter/comicDetail'
 import CommentSection from 'components/pages/chapter/commentSection'
 import HeaderBar from 'components/pages/chapter/headerBar'
 import ReadingSection from 'components/pages/chapter/readingSection'
-import ChatOutlineIcon from 'images/icons/chat_outline.svg'
-import HeartFillIcon from 'images/icons/heart_fill.svg'
-import HeartOutlineIcon from 'images/icons/heart_outline.svg'
-import SquareArrowLeftIcon from 'images/icons/square_arrow_left_outline.svg'
-import SquareArrowRightIcon from 'images/icons/square_arrow_right_outline.svg'
-import XIcon from 'images/icons/x-icon.svg'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useRef, useState } from 'react'
+import { isMobile } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
-import { useScrollDirection } from 'react-use-scroll-direction'
 import { CHAPTER_TYPE } from 'src/constants/chapter.constant'
 import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
@@ -35,8 +24,6 @@ const Chapter: React.FC = ({
   postComment,
   like,
   unlike,
-  subscribe,
-  unsubscribe,
 }: {
   comicDetails: {
     data: IComicDetail
@@ -54,8 +41,6 @@ const Chapter: React.FC = ({
   postComment: (content: string) => void
   like: () => void
   unlike: () => void
-  subscribe: () => void
-  unsubscribe: () => void
 }) => {
   const [openComments, setOpenComments] = useState(false)
   const [mode, setMode] = useState<'minscreen' | 'fullscreen'>('minscreen')
@@ -120,17 +105,11 @@ const Chapter: React.FC = ({
     }
   }, [comicDetails?.data?.id, account])
 
-  if (comicDetails.loading || chapterDetails.loading)
-    return (
-      <>
-        <HeadComponent />
-      </>
-    )
+  if (comicDetails.loading || chapterDetails.loading) return <></>
 
   if ((!comicDetails.data && !comicDetails.loading) || (!chapterDetails.data && !chapterDetails.loading)) {
     return (
       <div className='h-[100vh]'>
-        <HeadComponent />
         <Header />
         <div className='flex justify-center items-center'>{t('Error while fetching data')}!</div>
       </div>
@@ -143,10 +122,10 @@ const Chapter: React.FC = ({
   const goToChap = (direction: 'Prev' | 'Next') => {
     if (direction == 'Prev') {
       const prevChap = comicDetails.data.chapters[currentChapIndex + 1]
-      router.push(`/comic/${comicDetails.data.id}/chapter/${prevChap?.number}`)
+      router.push(`/comic/${comicDetails.data.slug}/chapter/${prevChap?.number}`)
     } else {
       const nextChap = comicDetails.data.chapters[currentChapIndex - 1]
-      router.push(`/comic/${comicDetails.data.id}/chapter/${nextChap?.number}`)
+      router.push(`/comic/${comicDetails.data.slug}/chapter/${nextChap?.number}`)
     }
   }
   const likeHandler = (isLike: boolean) => {
@@ -174,11 +153,6 @@ const Chapter: React.FC = ({
 
   return (
     <>
-      <HeadComponent
-        title={`${chapterDetails.data.name} | ${comicDetails.data[locale]?.title}`}
-        description={comicDetails.data[locale]?.description}
-        thumb={comicDetails.data?.image}
-      />
       <div className='xl:hidden min-h-[100dvh] h-full flex flex-col'>
         <Header className='!relative' />
         <HeaderBar
@@ -210,19 +184,20 @@ const Chapter: React.FC = ({
             </div>
           ) : (
             <div>
-              {chapterDetails.data[chapterLocale]?.map((page, index) => (
-                <Image
-                  src={page}
-                  key={index}
-                  alt=''
-                  width={400}
-                  height={700}
-                  className='mx-auto'
-                  priority={true}
-                  placeholder='blur'
-                  blurDataURL={getBlurUrl()}
-                />
-              ))}
+              {chapterDetails.data[chapterLocale]?.map((page, index) =>
+                isMobile ? (
+                  <Image
+                    src={page}
+                    key={index}
+                    alt=''
+                    width={400}
+                    height={700}
+                    className='mx-auto'
+                    placeholder='blur'
+                    blurDataURL={getBlurUrl()}
+                  />
+                ) : null
+              )}
             </div>
           )}
         </div>
@@ -243,8 +218,6 @@ const Chapter: React.FC = ({
                 setOpenComments={setOpenComments}
                 openComments={openComments}
                 language={language}
-                subscribe={subscribe}
-                unsubscribe={unsubscribe}
                 mode={mode}
                 setMode={setMode}
                 isSubscribe={isSubscribe}
@@ -267,8 +240,6 @@ const Chapter: React.FC = ({
                   setLanguage={setLanguage}
                   isSubscribe={isSubscribe}
                   setIsSubscribe={setIsSubscribe}
-                  subscribe={subscribe}
-                  unsubscribe={unsubscribe}
                   like={like}
                   unlike={unlike}
                   chapterId={chapterDetails.data.id}
@@ -300,4 +271,9 @@ const Chapter: React.FC = ({
     </>
   )
 }
-export default Chapter
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <Chapter {...props} />
+}

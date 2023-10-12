@@ -10,6 +10,7 @@ export const getLatestComic = async (): Promise<IComic[]> => {
     res.data?.manga?.map((m: any) => {
       const response = {
         id: m.id,
+        slug: m.slug,
         image: m.poster,
         status: {
           type: COMIC_STATUS[formatStatus(m.status)],
@@ -17,6 +18,7 @@ export const getLatestComic = async (): Promise<IComic[]> => {
         },
         authors: m.manga_creators?.map((c: any) => ({
           id: c.creator?.isActive ? c.creator?.id : undefined,
+          slug: c.creator?.isActive ? c.creator?.slug : undefined,
           name: c.creator?.isActive ? c.creator?.pen_name || c.creator?.name : 'Unknown creator',
         })),
         views: m.manga_total_views?.views || 0,
@@ -53,6 +55,7 @@ export const getTrendingComic = async (): Promise<IComic[]> => {
     res.data?.manga?.map((m: any) => {
       const response = {
         id: m.id,
+        slug: m.slug,
         image: m.poster,
         status: {
           type: COMIC_STATUS[formatStatus(m.status)],
@@ -60,6 +63,7 @@ export const getTrendingComic = async (): Promise<IComic[]> => {
         },
         authors: m.manga_creators?.map((c: any) => ({
           id: c.creator?.isActive ? c.creator?.id : undefined,
+          slug: c.creator?.isActive ? c.creator?.slug : undefined,
           name: c.creator?.isActive ? c.creator?.pen_name || c.creator?.name : 'Unknown creator',
         })),
         views: m.manga_total_views?.views || 0,
@@ -146,6 +150,7 @@ export const search = async (content: string) => {
   return data?.manga?.map((m: any) => {
     const response = {
       id: m.id,
+      slug: m.slug,
       image: m.poster,
       status: {
         type: COMIC_STATUS[formatStatus(m.status)],
@@ -153,6 +158,7 @@ export const search = async (content: string) => {
       },
       authors: m.manga_creators?.map((c: any) => ({
         id: c.creator?.isActive ? c.creator?.id : undefined,
+        slug: c.creator?.isActive ? c.creator?.slug : undefined,
         name: c.creator?.isActive ? c.creator?.pen_name || c.creator?.name : 'Unknown creator',
       })),
       views: m.manga_total_views?.views || 0,
@@ -182,13 +188,13 @@ export const search = async (content: string) => {
     return response
   })
 }
-export const getComicDetail = async (comicId: string, accountId: string) => {
-  const d: any = await axios.get(`${getConfig().API_URL}/api/rest/public/manga/${comicId}`, {
+export const getComicDetail = async (comicSlug: string, accountId: string) => {
+  const d: any = await axios.get(`${getConfig().REST_API_URL}/manga/${comicSlug}`, {
     params: {
       user_id: accountId,
     },
   })
-  const data = d?.data?.manga[0]
+  const data = d?.data?.data?.manga[0]
   const hasAccess = await getAccess(data.id)
   const env = getConfig().CHAIN_ID.includes('xstaxy') ? 'xstaxy' : 'euphoria'
   const collections = []
@@ -231,6 +237,7 @@ export const getComicDetail = async (comicId: string, accountId: string) => {
   }
   const res = {
     id: data.id,
+    slug: data.slug,
     languages: data.manga_languages.map((ml) => ({
       ...LANGUAGE.find((l) => l.id == ml.language_id),
       isMainLanguage: ml.is_main_language,
@@ -267,6 +274,7 @@ export const getComicDetail = async (comicId: string, accountId: string) => {
     }),
     authors: data.manga_creators?.map((c: any) => ({
       id: c.creator?.isActive ? c.creator?.id : undefined,
+      slug: c.creator?.isActive ? c.creator?.slug : undefined,
       name: c.creator?.isActive ? c.creator?.pen_name || c.creator?.name : 'Unknown creator',
     })),
     releaseDate: data.release_date,
@@ -292,4 +300,31 @@ export const getAccess = async (id: number) => {
     // console.log(error)
     return false
   }
+}
+export const getUserData = async (id: string) => {
+  try {
+    const { data } = await axios.get(`${getConfig().API_URL}/api/rest/public/users/${id}`)
+    return data?.authorizer_users?.[0]
+  } catch (error) {
+    // console.log(error)
+    return false
+  }
+}
+export const postSubscribeEmail = async (email: string) => {
+  try {
+    const { data } = await axios.post(`${getConfig().API_URL}/api/rest/public/subscribe`, {
+      email,
+    })
+    return data
+  } catch (error) {
+    // console.log(error)
+    return false
+  }
+}
+
+export const subscribe = async (id) => {
+  await privateAxios.post(`${getConfig().API_URL}/api/rest/user/manga/${id}/subscribe`)
+}
+export const unsubscribe = async (id) => {
+  await privateAxios.delete(`${getConfig().API_URL}/api/rest/user/manga/${id}/subscribe`)
 }

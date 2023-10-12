@@ -21,6 +21,7 @@ import Ninja from 'images/ninja-2.svg'
 import Link from 'next/link'
 import { CHAPTER_STATUS } from 'src/constants/chapter.constant'
 import NFTList from './nftList'
+import { subscribe, unsubscribe } from 'src/services'
 
 export default function ComicDetail({
   data,
@@ -28,8 +29,6 @@ export default function ComicDetail({
   setLanguage,
   isSubscribe,
   setIsSubscribe,
-  subscribe,
-  unsubscribe,
   like,
   unlike,
   chapterId,
@@ -45,8 +44,6 @@ export default function ComicDetail({
   isSubscribe: boolean
   chapterIsLiked: boolean
   setIsSubscribe: any
-  subscribe: () => void
-  unsubscribe: () => void
   like: () => void
   unlike: () => void
   likeHandler: any
@@ -70,9 +67,9 @@ export default function ComicDetail({
   const subscribeHandler = (isSub: boolean) => {
     if (account?.verified && account?.name) {
       if (isSub) {
-        subscribe()
+        subscribe(data.id)
       } else {
-        unsubscribe()
+        unsubscribe(data.id)
       }
       setIsSubscribe(isSub)
     } else {
@@ -153,8 +150,8 @@ export default function ComicDetail({
                   <Fragment key={index}>
                     <span className='text-second-color font-[600] first:hidden'>, </span>
                     <span className='text-second-color font-[600]'>
-                      {author.id ? (
-                        <Link className='author' href={`/artist/${author.id}`}>
+                      {author.slug ? (
+                        <Link className='author' href={`/artist/${author.slug}`}>
                           {t(author.name)}
                         </Link>
                       ) : (
@@ -206,10 +203,10 @@ export default function ComicDetail({
             </div>
           </div>
           <div className='flex'>
-            {data.releaseDate && (
+            {data.releaseDate && !moment().diff(moment(data.releaseDate)) && (
               <div
                 className={` text-subtle-dark transition-all whitespace-nowrap overflow-hidden ${
-                  expandDetail ? 'max-w-[300px] min-w-[260px]' : 'max-w-[0px] min-w-[0px]'
+                  expandDetail ? 'max-w-[300px] min-w-[260px] max-h-[50px]' : 'max-w-[0px] min-w-[0px] max-h-0'
                 } `}>
                 {t('Release date')}:{' '}
                 <span className='text-gray-600 font-semibold'>{moment(data.releaseDate).format('DD/MM/yyyy')}</span>
@@ -246,13 +243,13 @@ export default function ComicDetail({
               return <Tag key={index}>{tag[selectedLanguage.shortLang]}</Tag>
             })}
           </div>
-          <p
-            className={`${expandDescription ? '' : 'line-clamp-3'} min-h-[72px]`}
-            onClick={() => setExpandDescription(!expandDescription)}>
-            {data[selectedLanguage.shortLang]?.description}{' '}
-            {!expandDescription && data[selectedLanguage.shortLang]?.description?.length >= 210 && (
+          <p onClick={() => setExpandDescription(!expandDescription)}>
+            <span className={`${expandDescription ? '' : 'line-clamp-3'}`}>
+              {data[selectedLanguage.shortLang]?.description}{' '}
+            </span>
+            {/* {!expandDescription && data[selectedLanguage.shortLang]?.description?.length >= 210 && (
               <span className='text-second-color cursor-pointer'>{t('see more')}...</span>
-            )}
+            )} */}
           </p>
           <div className='flex gap-2 flex-wrap'>
             {data.languages.map((language, index) => {

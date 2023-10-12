@@ -9,12 +9,6 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   const { account } = useContext(Context)
   const { query } = useRouter()
   const config = getConfig()
-  const subscribe = async () => {
-    await privateAxios.post(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
-  }
-  const unsubscribe = async () => {
-    await privateAxios.delete(`${config.API_URL}/api/rest/user/manga/${query.comicId}/subscribe`)
-  }
 
   const like = async (id) => {
     await privateAxios.post(`${config.API_URL}/api/rest/user/chapters/${id}/likes`)
@@ -24,20 +18,11 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   }
 
   const comicDetails = useApi<IComicDetail>(
-    async () => await getComicDetail(query.comicId as string, account?.id),
-    !!query.comicId,
-    [query.comicId, account?.id]
+    async () => await getComicDetail(query.comicSlug as string, account?.id),
+    !!query.comicSlug,
+    [query.comicSlug, account?.id]
   )
-  return (
-    <Component
-      {...props}
-      comicDetails={comicDetails}
-      subscribe={subscribe}
-      unsubscribe={unsubscribe}
-      like={like}
-      unlike={unlike}
-    />
-  )
+  return <Component {...props} comicDetails={comicDetails} like={like} unlike={unlike} />
 }
 
 export default withApi

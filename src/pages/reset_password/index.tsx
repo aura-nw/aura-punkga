@@ -1,5 +1,5 @@
 import FilledButton from 'components/Button/FilledButton'
-import HeadComponent from 'components/Head'
+import Footer from 'components/Footer'
 import Header from 'components/Header'
 import OutlineTextField from 'components/Input/TextField/Outline'
 import CheckSquare from 'images/icons/check_square_fill.svg'
@@ -13,7 +13,13 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { validatePassword } from 'src/utils'
-export default function ResetPassword() {
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <ResetPassword />
+}
+function ResetPassword() {
   const searchParams = useSearchParams()
   const token = searchParams.get('token')
   const { t } = useTranslation()
@@ -65,16 +71,15 @@ export default function ResetPassword() {
   if (!token) {
     return (
       <>
-        <HeadComponent title='Missing token | Punkga.me' />
         <Header />
         <div className='pk-container py-4'>Missing token!</div>
+        <Footer />
       </>
     )
   }
 
   return (
     <>
-      <HeadComponent title={`${t('Reset password')} | Punkga.me`} />
       <Header />
       <div className='flex justify-center md:items-center min-h-[80vh]'>
         <div className={`p-6 w-[322px] relative transition-all duration-300 ${success ? 'h-[400px]' : ''}`}>
@@ -131,6 +136,7 @@ export default function ResetPassword() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

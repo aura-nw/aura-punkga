@@ -231,7 +231,7 @@ const Chapter = ({
           onClick={() => {
             if (unavailable) return
             setExpandDetail(false)
-            router.push(`/comic/${data.id}/chapter/${chapter.number}`)
+            router.push(`/comic/${data.slug}/chapter/${chapter.number}`)
           }}
         />
         <div className='flex flex-col justify-center flex-1'>
@@ -296,7 +296,7 @@ const Chapter = ({
               onClick={() => {
                 if (unavailable) return
                 setExpandDetail(false)
-                router.push(`/comic/${data.id}/chapter/${chapter.number}`)
+                router.push(`/comic/${data.slug}/chapter/${chapter.number}`)
               }}>
               {chapter.name}
             </div>

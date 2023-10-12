@@ -1,3 +1,4 @@
+import { useChain } from '@cosmos-kit/react'
 import Avatar from 'assets/images/avatar.svg'
 import EN from 'assets/images/en.svg'
 import Logo from 'assets/images/header-logo.svg'
@@ -21,7 +22,6 @@ import { Context } from 'src/context'
 import useApi from 'src/hooks/useApi'
 import { useClickOutside } from 'src/hooks/useClickOutside'
 import { search } from 'src/services'
-import ConnectWalletModal from './ConnectWalletModal'
 import ForgotPasswordModal from './ForgotPasswordModal'
 import SignInModal from './SignInModal'
 import SignUpModal from './SignUpModal'
@@ -54,12 +54,11 @@ export default function Header({ className }: { className?: string }) {
   const [signUpOpen, setSignUpOpen] = useState(false)
   const [isCopied, setIsCopied] = useState(false)
   const [signUpSuccessOpen, setSignUpSuccessOpen] = useState(false)
-  const [connectWalletOpen, setConnectWalletOpen] = useState(false)
   const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false)
   const [searchValue, setSearchValue] = useState('')
-  const { account, wallet, logout, unlinkWallet } = useContext(Context)
+  const { account, wallet, logout } = useContext(Context)
   const searchComic = useApi<any[]>(async () => await search(searchValue), !!searchValue, [searchValue])
-
+  const { connect } = useChain('aura')
   useEffect(() => {
     ;(window as any).isSearchFocused = isSearchFocused
   }, [isSearchFocused])
@@ -153,7 +152,7 @@ export default function Header({ className }: { className?: string }) {
                         className={`flex gap-2 cursor-pointer ${
                           manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
                         }`}
-                        onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}>
+                        onClick={() => router.push(`/comic/${manga.slug}/chapter/1`)}>
                         <Image
                           src={manga.image || NoImage}
                           width={48}
@@ -169,8 +168,8 @@ export default function Header({ className }: { className?: string }) {
                                 <Fragment key={index}>
                                   <span className='text-second-color font-[600] first:hidden'>, </span>
                                   <span className='text-second-color font-[600]'>
-                                    {author.id ? (
-                                      <Link className='author' href={`/artist/${author.id}`}>
+                                    {author.slug ? (
+                                      <Link className='author' href={`/artist/${author.slug}`}>
                                         {t(author.name)}
                                       </Link>
                                     ) : (
@@ -187,7 +186,7 @@ export default function Header({ className }: { className?: string }) {
                               <span
                                 className='text-second-color font-semibold cursor-pointer'
                                 onClick={(e) => {
-                                  router.push(`/comic/${manga.id}/chapter/${manga.latestChap.number}`)
+                                  router.push(`/comic/${manga.slug}/chapter/${manga.latestChap.number}`)
                                   e.preventDefault()
                                 }}>
                                 {manga.latestChap.number}
@@ -273,10 +272,10 @@ export default function Header({ className }: { className?: string }) {
                           <div className='text-xs leading-[15px] font-bold' onClick={() => router.push('/profile')}>
                             {t('My profile')}
                           </div>
-                          {/* <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
-                          <div className='text-xs leading-[15px] font-bold' onClick={() => setConnectWalletOpen(true)}>
+                          <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
+                          <div className='text-xs leading-[15px] font-bold' onClick={() => connect()}>
                             {t('Link Wallet')}
-                          </div> */}
+                          </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
                           <div className='text-xs leading-[15px] font-bold' onClick={logout}>
                             {t('Log out')}
@@ -341,7 +340,7 @@ export default function Header({ className }: { className?: string }) {
                       className={`flex gap-2 ${
                         manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
                       }`}
-                      onClick={() => router.push(`/comic/${manga.id}/chapter/1`)}>
+                      onClick={() => router.push(`/comic/${manga.slug}/chapter/1`)}>
                       <Image
                         src={manga.image || NoImage}
                         width={48}
@@ -357,8 +356,8 @@ export default function Header({ className }: { className?: string }) {
                               <Fragment key={index}>
                                 <span className='text-second-color font-[600] first:hidden'>, </span>
                                 <span className='text-second-color font-[600]'>
-                                  {author.id ? (
-                                    <Link className='author' href={`/artist/${author.id}`}>
+                                  {author.slug ? (
+                                    <Link className='author' href={`/artist/${author.slug}`}>
                                       {t(author.name)}
                                     </Link>
                                   ) : (
@@ -375,7 +374,7 @@ export default function Header({ className }: { className?: string }) {
                             <span
                               className='text-second-color font-semibold cursor-pointer'
                               onClick={(e) => {
-                                router.push(`/comic/${manga.id}/chapter/${manga.latestChap.number}`)
+                                router.push(`/comic/${manga.slug}/chapter/${manga.latestChap.number}`)
                                 e.preventDefault()
                               }}>
                               {manga.latestChap.number}
@@ -460,10 +459,10 @@ export default function Header({ className }: { className?: string }) {
                           <div onClick={() => router.push('/profile')}>
                             <strong>{t('My profile')}</strong>
                           </div>
-                          {/* <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
-                          <div onClick={() => setConnectWalletOpen(true)}>
+                          <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
+                          <div onClick={() => connect()}>
                             <strong>{t('Link Wallet')}</strong>
-                          </div> */}
+                          </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
                           <div onClick={logout}>
                             <strong>{t('Log out')}</strong>
@@ -509,9 +508,7 @@ export default function Header({ className }: { className?: string }) {
           />
         </div>
       </Modal>
-      <Modal open={connectWalletOpen} setOpen={setConnectWalletOpen}>
-        <ConnectWalletModal onClose={() => setConnectWalletOpen(false)} />
-      </Modal>
+
       <Modal open={forgotPasswordOpen} setOpen={setForgotPasswordOpen}>
         <ForgotPasswordModal onClose={() => setForgotPasswordOpen(false)} />
       </Modal>

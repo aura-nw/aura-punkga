@@ -2,6 +2,7 @@ import { IComic } from './comic'
 
 export interface IArtist {
   id: string
+  slug?: string
   name?: string
   penName: string
   bio?: string

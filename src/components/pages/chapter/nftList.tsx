@@ -5,13 +5,16 @@ import NoImage from 'images/no_img.png'
 import { useTranslation } from 'react-i18next'
 import { SubCard } from 'components/Card'
 import ShareIcon from 'images/icons/share.svg'
+import { useState } from 'react'
+import Pagination from '../artist/Pagination'
 
 export default function NFTList({ collections, theme }) {
+  const [currentPage, setCurrentPage] = useState(1)
   const { t } = useTranslation()
   const seekhypeBaseUrl = new URL(getConfig().SEEKHYPE_URL).origin
   return (
     <div className='p-5 flex flex-col gap-5 bg-black lg:py-10 lg:px-0 lg:bg-transparent lg:w-[calc(100%-140px)] lg:gap-10'>
-      {collections?.map((collection, index) => (
+      {collections?.slice(currentPage * 2 - 2, currentPage * 2)?.map((collection, index) => (
         <SubCard
           key={index}
           theme={theme}
@@ -75,6 +78,13 @@ export default function NFTList({ collections, theme }) {
           </div>
         </SubCard>
       ))}
+      {!!collections.length && (
+        <Pagination
+          length={Math.ceil(collections.length / 2)}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
     </div>
   )
 }

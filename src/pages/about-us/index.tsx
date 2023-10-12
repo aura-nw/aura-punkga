@@ -3,10 +3,10 @@ import Carousel from 'components/Carousel'
 import Header from 'components/Header'
 import FbIcon from 'images/Facebook.svg'
 import XVector from 'images/XVector.svg'
+import AbuImg from 'images/about-us-img.png'
 import Img1 from 'images/abu-1.svg'
 import Img2 from 'images/abu-2.svg'
 import Img3 from 'images/abu-3.svg'
-import AbuImg from 'images/about-us-img.png'
 import BeIcon from 'images/behance.svg'
 import FemaleIcon from 'images/icons/female.svg'
 import MaleIcon from 'images/icons/male.svg'
@@ -15,17 +15,22 @@ import MonoLogo from 'images/mono-logo.svg'
 import { i18n, useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { authorData } from '../../utils/authorData'
-import { useRouter } from 'next/router'
-import HeadComponent from 'components/Head'
+import Footer from 'components/Footer'
 
-export default function AboutUs() {
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <AboutUs />
+}
+function AboutUs() {
   const { t } = useTranslation()
   const { locale } = useRouter()
   return (
     <>
-      <HeadComponent title={`${t('About us')} | Punkga.me`} />
       <Header />
       <div className='pk-container py-3 md:mt-6 lg:mt-16'>
         <div className='w-full'>
@@ -100,6 +105,7 @@ export default function AboutUs() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

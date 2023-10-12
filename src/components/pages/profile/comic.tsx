@@ -19,7 +19,7 @@ export default function Comic(props: IComic & { unsubscribe?: () => void; subscr
   const { t } = useTranslation()
   return (
     <div className='flex gap-[20px]'>
-      <Link href={`/comic/${props.id}/chapter/1`} className='flex-auto w-1/3'>
+      <Link href={`/comic/${props.slug}/chapter/1`} className='flex-auto w-1/3'>
         <Image
           src={props.image || NoImage}
           alt=''
@@ -33,7 +33,7 @@ export default function Comic(props: IComic & { unsubscribe?: () => void; subscr
       <div className='flex-auto w-2/3 flex flex-col justify-between gap-[10px]'>
         <div className='flex flex-col gap-2'>
           <div className='flex justify-between items-start'>
-            <Link href={`/comic/${props.id}/chapter/1`} className=' text-second-color font-bold text-[18px]'>
+            <Link href={`/comic/${props.slug}/chapter/1`} className=' text-second-color font-bold text-[18px]'>
               {props[locale].title}
             </Link>
             {props.status.text != 'Ongoing' && (
@@ -46,8 +46,8 @@ export default function Comic(props: IComic & { unsubscribe?: () => void; subscr
               <Fragment key={index}>
                 <span className='text-second-color font-[600] first:hidden'>, </span>
                 <span className='text-second-color font-[600]'>
-                  {author.id ? (
-                    <Link className='author' href={`/artist/${author.id}`}>
+                  {author.slug ? (
+                    <Link className='author' href={`/artist/${author.slug}`}>
                       {t(author.name)}
                     </Link>
                   ) : (
@@ -76,7 +76,7 @@ export default function Comic(props: IComic & { unsubscribe?: () => void; subscr
           <div className='text-subtle-dark leading-[20px]'>
             {t('Latest')}:{' '}
             <Link
-              href={`/comic/${props.id}/chapter/${props.latestChap.number}`}
+              href={`/comic/${props.slug}/chapter/${props.latestChap.number}`}
               className='text-second-color font-[600]'>
               {t('Chap')} #{props.latestChap.number}
             </Link>

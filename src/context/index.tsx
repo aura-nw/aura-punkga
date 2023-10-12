@@ -1,24 +1,20 @@
 import { Authorizer } from '@authorizerdev/authorizer-js'
-import { Key } from '@keplr-wallet/types'
 import axios from 'axios'
 import getConfig from 'next/config'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
-import { createContext, useEffect, useRef, useState } from 'react'
-import { IUser } from 'src/models/user'
-import { setAddress } from 'src/services'
-import { getItem, removeItem, setItem } from 'src/utils/localStorage'
-import { handleConnectWallet } from 'src/utils/signer'
-import { getProfile as getProfileService } from 'src/services'
+import { createContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { IUser } from 'src/models/user'
+import { getProfile as getProfileService } from 'src/services'
+import { getItem, removeItem, setItem } from 'src/utils/localStorage'
+
 export const Context = createContext(null)
 export const privateAxios = axios.create()
 function ContextProvider({ children }) {
   const [account, setAccount] = useState<IUser>()
   const [wallet, setWallet] = useState<string>()
   const [isSettingUp, setIsSettingUp] = useState(true)
-  const key = useRef<Key>()
-  const [provider, setProvider] = useState<'Coin98' | 'Keplr'>()
   const router = useRouter()
   const { t } = useTranslation()
   const searchParams = useSearchParams()
@@ -30,6 +26,7 @@ function ContextProvider({ children }) {
     redirectURL: config.REDIRECT_URL,
     clientID: config.AUTHORIZER_CLIENT_ID,
   })
+
   useEffect(() => {
     privateAxios.interceptors.request.use(
       (config) => {
@@ -92,11 +89,6 @@ function ContextProvider({ children }) {
             const t = localStorage.getItem('token')
             setLogoutTimeout(new Date(JSON.parse(t).exprire).getTime() - Date.now())
             await getProfile(token)
-            const connectedProvider = getItem('connected_provider') as 'Coin98' | 'Keplr'
-            if (connectedProvider) {
-              await getWallet(connectedProvider)
-              await connectWallet()
-            }
           }
         }
       }
@@ -137,47 +129,6 @@ function ContextProvider({ children }) {
       console.log('getProfile', error)
     }
   }
-  const getWallet = async (p: 'Coin98' | 'Keplr') => {
-    if (p == 'Coin98' && !window.coin98?.keplr) {
-      alert(t('Please install Coin98 wallet extension'))
-      return
-    }
-    if (p == 'Keplr' && !window.keplr) {
-      alert(t('Please install Keplr wallet extension'))
-      return
-    }
-    setProvider(p)
-    const keplr = p == 'Coin98' ? window.coin98?.keplr : window.keplr
-    await keplr.experimentalSuggestChain(getConfig().CHAIN_INFO)
-    await keplr.enable(getConfig().CHAIN_ID)
-    key.current = await keplr.getKey(getConfig().CHAIN_ID)
-    return key.current.bech32Address
-  }
-
-  const connectWallet = async (callback?: (status: string, error?: any) => void) => {
-    try {
-      const keplr = provider == 'Coin98' ? window.coin98?.keplr : window.keplr
-      await handleConnectWallet(keplr, key.current)
-      const res = await setAddress(key.current.bech32Address)
-      setItem('connected_provider', provider)
-      if (res) {
-        setWallet(key.current.bech32Address)
-        callback && callback('success')
-      } else {
-        callback && callback('fail')
-      }
-    } catch (error) {
-      callback && callback('fail', error)
-      console.log(error)
-    }
-  }
-
-  const unlinkWallet = async (callback?: () => void) => {
-    removeItem('connected_provider')
-    key.current = null
-    setWallet(null)
-    setProvider(null)
-  }
 
   const login = async (email: string, password: string, callback?: (status: string, msg?: string) => void) => {
     try {
@@ -214,7 +165,6 @@ function ContextProvider({ children }) {
       removeItem('token')
       removeItem('current_reading_manga')
       setAccount(null)
-      unlinkWallet()
       router.push(location.origin + location.pathname)
     } catch (error) {
       console.log('logout', error)
@@ -315,9 +265,6 @@ function ContextProvider({ children }) {
       value={{
         account,
         wallet,
-        getWallet,
-        connectWallet,
-        unlinkWallet,
         login,
         oauth,
         logout,

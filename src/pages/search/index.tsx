@@ -1,5 +1,5 @@
 import DummyComic from 'components/DummyComponent/comic'
-import HeadComponent from 'components/Head'
+import Footer from 'components/Footer'
 import Header from 'components/Header'
 import Comic from 'components/pages/homepage/comic'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -9,7 +9,13 @@ import { useTranslation } from 'react-i18next'
 import useApi from 'src/hooks/useApi'
 import { search } from 'src/services'
 
-export default function Search() {
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <Search />
+}
+function Search() {
   const r = useRouter()
   const params = useSearchParams()
   const keyword = params.get('keyword')
@@ -17,7 +23,6 @@ export default function Search() {
   const searchComic = useApi<any[]>(async () => await search(keyword), !!keyword, [keyword])
   return (
     <>
-      <HeadComponent title={`${keyword || ''} | Punkga.me`} />
       <Header />
       <div className='pk-container px-5 md:px-0'>
         <p className='md:text-2xl font-extrabold leading-6 mt-2 md:mt-10'>{`${searchComic.data?.length} ${t(
@@ -33,6 +38,7 @@ export default function Search() {
               })}
         </div>
       </div>
+      <Footer />
     </>
   )
 }

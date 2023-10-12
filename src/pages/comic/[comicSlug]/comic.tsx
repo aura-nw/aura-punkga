@@ -3,21 +3,28 @@ import { BellAlertIcon, EyeIcon, HeartIcon } from '@heroicons/react/20/solid'
 import { BellAlertIcon as BellAlertIconOutline } from '@heroicons/react/24/outline'
 import FilledButton from 'components/Button/FilledButton'
 import OutlineButton from 'components/Button/OutlineButton'
-import HeadComponent from 'components/Head'
+import Footer from 'components/Footer'
 import Header from 'components/Header'
 import Tag from 'components/Label/Tag'
+import NFTList from 'components/pages/chapter/nftList'
 import ChapterList from 'components/pages/comic/ChapterList'
+import Ninja from 'images/ninja-2.svg'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import mockAvar from 'src/assets/images/mockup4.png'
 import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
-import Ninja from 'images/ninja-2.svg'
-import Link from 'next/link'
-import NFTList from 'components/pages/chapter/nftList'
-export default function Comic({ comicDetails, subscribe, unsubscribe, like, unlike }) {
+import { subscribe, unsubscribe } from 'src/services'
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <Comic {...props} />
+}
+function Comic({ comicDetails, like, unlike }) {
   const { t } = useTranslation()
   const { locale } = useRouter()
   const [language, setLanguage] = useState<LanguageType>(locale as LanguageType)
@@ -33,19 +40,10 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
     }
   }, [comicDetails.data])
   if (comicDetails.loading) {
-    return (
-      <>
-        <HeadComponent />
-      </>
-    )
+    return <></>
   }
   const data = comicDetails.data
-  if (!data)
-    return (
-      <>
-        <HeadComponent />
-      </>
-    )
+  if (!data) return <></>
 
   const selectedLanguage =
     data.languages.find((l) => l.shortLang == language) || data.languages.find((l) => l.isMainLanguage)
@@ -53,9 +51,9 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
   const subscribeHandler = (isSub: boolean) => {
     if (account?.verified && account?.name) {
       if (isSub) {
-        subscribe()
+        subscribe(data.id)
       } else {
-        unsubscribe()
+        unsubscribe(data.id)
       }
       setIsSubscribe(isSub)
     } else {
@@ -65,11 +63,6 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
 
   return (
     <>
-      <HeadComponent
-        title={`${data[selectedLanguage.shortLang]?.title} | Punkga.me`}
-        description={data[selectedLanguage.shortLang]?.description}
-        thumb={data.image}
-      />
       <Header />
       <div className='bg-black fixed top-[96px] left-0 right-0 bottom-0'>
         <div className='fixed top-[96px] left-0 right-0'>
@@ -105,8 +98,8 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
                   <Fragment key={index}>
                     <span className='text-primary-color font-[600] first:hidden'>, </span>
                     <span className='text-primary-color font-[600]'>
-                      {author.id ? (
-                        <Link className='author' href={`/artist/${author.id}`}>
+                      {author.slug ? (
+                        <Link className='author' href={`/artist/${author.slug}`}>
                           {t(author.name)}
                         </Link>
                       ) : (
@@ -189,6 +182,7 @@ export default function Comic({ comicDetails, subscribe, unsubscribe, like, unli
           </Tab.Group>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

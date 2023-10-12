@@ -1,28 +1,34 @@
-import HeadComponent from 'components/Head'
+import Card, { SubCard } from 'components/Card'
+import Footer from 'components/Footer'
 import Header from 'components/Header'
-import Image from 'next/image'
+import Pagination from 'components/pages/artist/Pagination'
+import Comic from 'components/pages/homepage/comic'
+import MobileComic from 'components/pages/homepage/trendingComic'
+import DOMPurify from 'dompurify'
 import NoImg from 'images/avatar.svg'
 import BeIcon from 'images/behance.svg'
 import WebsiteIcon from 'images/icons/Website.svg'
-import MaleIcon from 'images/icons/male.svg'
-import ShareIcon from 'images/icons/share.svg'
 import FemaleIcon from 'images/icons/female.svg'
-import Card, { SubCard } from 'components/Card'
-import { IArtist } from 'src/models/artist'
-import { useRouter } from 'next/router'
-import moment from 'moment'
+import MaleIcon from 'images/icons/male.svg'
 import OtherIcon from 'images/icons/other-gender.svg'
-import { useTranslation } from 'react-i18next'
-import Link from 'next/link'
-import { appendHttps } from 'src/utils'
-import getConfig from 'next/config'
-import MobileComic from 'components/pages/homepage/trendingComic'
-import Comic from 'components/pages/homepage/comic'
-import Pagination from 'components/pages/artist/Pagination'
-import { Fragment, useState } from 'react'
+import ShareIcon from 'images/icons/share.svg'
 import NoImage from 'images/no_img.png'
-import DOMPurify from 'dompurify'
-export default function Artist({ artistDetail }) {
+import moment from 'moment'
+import getConfig from 'next/config'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { Fragment, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { IArtist } from 'src/models/artist'
+import { appendHttps } from 'src/utils'
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <Artist {...props} />
+}
+function Artist({ artistDetail }) {
   const artist = artistDetail.data as IArtist
   const { locale } = useRouter()
   const { t } = useTranslation()
@@ -32,7 +38,6 @@ export default function Artist({ artistDetail }) {
   if (!artist) return <></>
   return (
     <>
-      <HeadComponent title={`${artist.name} | Punkga.me`} />
       <Header />
       <div className='px-[10px] lg:px-0 lg:py-[47px] py-[17px] pk-container'>
         <div className='flex gap-[10px] lg:gap-[60px] px-[10px] lg:px-0'>
@@ -77,6 +82,7 @@ export default function Artist({ artistDetail }) {
                     <div className='text-medium-gray'>
                       <div>{t('DoB')}:</div>
                       <div className='h-0 invisible hidden w-max lg:block'>{t('Total subscribers')}:</div>
+                      <div className='h-0 w-max invisible lg:hidden'>{t('Gender')}:</div>
                     </div>
                     <div className='font-medium'>
                       {locale == 'vn'
@@ -87,7 +93,10 @@ export default function Artist({ artistDetail }) {
                 )}
                 {artist.gender && artist.gender != 'Do not display' && (
                   <>
-                    <div className='text-medium-gray'>{t('Gender')}:</div>
+                    <div className='text-medium-gray'>
+                      <div>{t('Gender')}:</div>
+                      <div className='h-0 invisible hidden w-max lg:block'>{t('Total subscribers')}:</div>
+                    </div>
                     <div className='flex items-center font-medium'>
                       {t(artist.gender == 'Undisclosed' ? 'Other' : artist.gender)}{' '}
                       <Image
@@ -213,6 +222,7 @@ export default function Artist({ artistDetail }) {
           </div>
         )}
       </div>
+      <Footer />
     </>
   )
 }

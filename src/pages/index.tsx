@@ -1,28 +1,29 @@
 import Carousel from 'components/Carousel'
 
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import HeroCyberpunkBanner from 'assets/images/comic-banner/hero_cyberpunk.jpg'
 import HamulageBanner from 'assets/images/comic-banner/hamulage.jpg'
+import HeroCyberpunkBanner from 'assets/images/comic-banner/hero_cyberpunk.jpg'
 import HeroicBanner from 'assets/images/comic-banner/heroic.png'
 import TCOTPBanner from 'assets/images/comic-banner/the_chaos_of_the_past.jpg'
 import UltraVBanner from 'assets/images/comic-banner/ultra_v.jpg'
 import DummyComic from 'components/DummyComponent/comic'
+import Footer from 'components/Footer'
 import Header from 'components/Header'
 import FilledSelect from 'components/Select/FilledSelect'
 import Comic from 'components/pages/homepage/comic'
 import TrendingComic from 'components/pages/homepage/trendingComic'
+import _ from 'lodash'
+import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useApi from 'src/hooks/useApi'
 import { IComic } from 'src/models/comic'
 import { getAllTags, getLatestComic, getTrendingComic } from 'src/services'
-import { i18n } from 'next-i18next'
-import _ from 'lodash'
 import HeadComponent from 'components/Head'
-import Link from 'next/link'
 
 declare global {
   interface Window {
@@ -35,7 +36,7 @@ declare global {
   }
 }
 
-export default function Home() {
+function Home() {
   const latestComic = useApi<IComic[]>(getLatestComic, true, [])
   const trendingComic = useApi<IComic[]>(getTrendingComic, true, [])
   const allTags = useApi<any[]>(getAllTags, true, [])
@@ -78,12 +79,11 @@ export default function Home() {
   }, [t('All status')])
   return (
     <>
-      <HeadComponent />
       <Header />
       <div className='pk-container'>
         <div className='mt-[40px] md:grid grid-cols-1 px-2 md:px-0 gap-[40px] hidden -mx-5 [&_.slick-dots]:-mx-5'>
           <Carousel>
-            <div className='p-5 outline-none'>
+            <div className='p-5 outline-none [&_*]:outline-none'>
               <Link href='https://punkga.me/comic/1/chapter/1'>
                 <Image
                   className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
@@ -92,7 +92,7 @@ export default function Home() {
                 />
               </Link>
             </div>
-            <div className='p-5 outline-none '>
+            <div className='p-5 outline-none [&_*]:outline-none '>
               <Link href='https://punkga.me/comic/3/chapter/1'>
                 <Image
                   className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
@@ -101,8 +101,8 @@ export default function Home() {
                 />
               </Link>
             </div>
-            <div className='p-5 outline-none '>
-              <Link href='#'>
+            <div className='p-5 outline-none [&_*]:outline-none '>
+              <Link href='https://punkga.me/comic/5/chapter/1'>
                 <Image
                   className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
                   src={HeroicBanner}
@@ -110,7 +110,7 @@ export default function Home() {
                 />
               </Link>
             </div>
-            <div className='p-5 outline-none '>
+            <div className='p-5 outline-none [&_*]:outline-none '>
               <Link href='https://punkga.me/comic/4/chapter/1'>
                 <Image
                   className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
@@ -119,7 +119,7 @@ export default function Home() {
                 />
               </Link>
             </div>
-            <div className='p-5 outline-none '>
+            <div className='p-5 outline-none [&_*]:outline-none '>
               <Link href='https://punkga.me/comic/2/chapter/1'>
                 <Image
                   className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
@@ -148,7 +148,7 @@ export default function Home() {
             </Link>
           </div>
           <div>
-            <Link href='#'>
+            <Link href='https://punkga.me/comic/5/chapter/1'>
               <Image className='w-full aspect-[21/9] object-fill' src={HeroicBanner} alt='' />
             </Link>
             <Link href='https://punkga.me/comic/4/chapter/1'>
@@ -266,10 +266,17 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }
 
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <Home />
+}
 export const getStaticProps = async ({ locale }) => {
   if (process.env.NODE_ENV === 'development') {
     await i18n?.reloadResources()

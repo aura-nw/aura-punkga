@@ -2,15 +2,14 @@ import { LANGUAGE } from 'src/constants'
 import { IMultiLanguageContent } from './multiLanguageContent'
 import { IStatus } from './status'
 import { IChapter } from './chapter'
+import { IArtist } from './artist'
 
 interface Basic {
   id: string
+  slug: string
   image: string
   status: IStatus
-  authors: {
-    id?: string
-    name: string
-  }[]
+  authors: IArtist[]
   tags: IMultiLanguageContent<string>[]
   views: number
   likes: number

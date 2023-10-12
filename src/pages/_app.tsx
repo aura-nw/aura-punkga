@@ -1,8 +1,16 @@
+import { wallets as c98Extension } from '@cosmos-kit/coin98-extension'
+import { wallets as keplrExtension } from '@cosmos-kit/keplr-extension'
+import { ChainProvider } from '@cosmos-kit/react'
+import '@interchain-ui/react/styles'
 import axios from 'axios'
+import { assets, chains } from 'chain-registry'
 import FilledButton from 'components/Button/FilledButton'
+import HeadComponent from 'components/Head'
 import OutlineTextField from 'components/Input/TextField/Outline'
 import Modal from 'components/Modal'
+import ConnectWalletModal from 'components/Modal/ConnectWalletModal'
 import MaintainPage from 'components/pages/maintainPage'
+import Mail from 'images/Mail.svg'
 import moment from 'moment'
 import 'moment/locale/vi'
 import { appWithTranslation, useTranslation } from 'next-i18next'
@@ -12,12 +20,13 @@ import { Plus_Jakarta_Sans, Work_Sans } from 'next/font/google'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
+import { isMobile } from 'react-device-detect'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 import ContextProvider, { Context } from 'src/context'
+import { wallets as c98Mobile } from 'src/services/c98MobileWallet'
 import 'src/styles/globals.scss'
 import { validateEmail } from 'src/utils'
-import Mail from 'images/Mail.svg'
 
 const pjs = Plus_Jakarta_Sans({ subsets: ['latin', 'vietnamese'] })
 const ws = Work_Sans({ subsets: ['latin', 'vietnamese'] })
@@ -39,7 +48,15 @@ function MyApp(props: AppProps) {
       moment.locale('en')
     }
   }, [locale])
-  if (isSetting) return <></>
+  if (isSetting) {
+    const Component = props.Component
+    return (
+      <>
+        <HeadComponent />
+        <Component {...props} justHead />
+      </>
+    )
+  }
   if (getConfig().IN_MAINTENANCE_MODE) {
     return (
       <>
@@ -51,12 +68,14 @@ function MyApp(props: AppProps) {
             font-family: ${ws.style.fontFamily};
           }
         `}</style>
+        <HeadComponent />
         <MaintainPage />
       </>
     )
   }
   return (
     <>
+      <HeadComponent />
       <style jsx global>{`
         html {
           font-family: ${pjs.style.fontFamily};
@@ -66,7 +85,29 @@ function MyApp(props: AppProps) {
         }
       `}</style>
       <ContextProvider>
-        <App {...props} />
+        <ChainProvider
+          chains={chains}
+          assetLists={assets}
+          wallets={isMobile ? [...c98Mobile, ...keplrExtension] : [...c98Extension, ...keplrExtension]}
+          walletConnectOptions={
+            isMobile
+              ? {
+                  signClient: {
+                    projectId: '2dbe4db7e11c1057cc45b368eeb34319',
+                    relayUrl: 'wss://relay.walletconnect.org',
+                    metadata: {
+                      name: 'Punkga',
+                      description: 'Punkga.me comic website',
+                      url: 'https://punkga.me/',
+                      icons: ['htts://punkga.me/logo.png'],
+                    },
+                  },
+                }
+              : undefined
+          }
+          walletModal={ConnectWalletModal}>
+          <App {...props} />
+        </ChainProvider>
       </ContextProvider>
     </>
   )

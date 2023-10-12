@@ -15,6 +15,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     return res.data?.subscribers?.map(({ subscribers_manga: m }: any) => {
       const response = {
         id: m.id,
+        slug: m.slug,
         image: m.poster,
         status: {
           type: COMIC_STATUS[formatStatus(m.status)],
@@ -22,6 +23,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
         },
         authors: m.manga_creators?.map((c: any) => ({
           id: c.creator?.isActive ? c.creator?.id : undefined,
+          slug: c.creator?.isActive ? c.creator?.slug : undefined,
           name: c.creator?.isActive ? c.creator?.pen_name || c.creator?.name : 'Unknown creator',
         })),
         views: m.manga_total_views?.views || 0,
@@ -60,6 +62,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
         query: `query GetListMangaById($id: [Int!]=${ids}) {
   manga(where: {_and: {id: {_in: $id}, status: {_neq: "Removed"}}}) {
     id
+    slug
     banner
     poster
     status
@@ -73,6 +76,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       creator {
         id
         name
+        slug
         pen_name
         isActive
       }
@@ -105,6 +109,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       return res.data.data?.manga?.map((m) => {
         const response = {
           id: m.id,
+          slug: m.slug,
           image: m.poster,
           status: {
             type: COMIC_STATUS[formatStatus(m.status)],
@@ -112,6 +117,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
           },
           authors: m.manga_creators?.map((c: any) => ({
             id: c.creator?.isActive ? c.creator?.id : undefined,
+            slug: c.creator?.isActive ? c.creator?.slug : undefined,
             name: c.creator?.isActive ? c.creator?.pen_name || c.creator?.name : 'Unknown creator',
           })),
           views: m.manga_total_views?.views || 0,
@@ -146,13 +152,6 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     return null
   }
 
-  const subscribe = async (comicId) => {
-    await privateAxios.post(`${config.API_URL}/api/rest/user/manga/${comicId}/subscribe`)
-  }
-  const unsubscribe = async (comicId) => {
-    await privateAxios.delete(`${config.API_URL}/api/rest/user/manga/${comicId}/subscribe`)
-  }
-
   const updateProfile = async (data) => {
     await privateAxios.put(`${config.REST_API_URL}/user/update-profile`, data)
   }
@@ -170,8 +169,6 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       {...props}
       subscribeList={subscribeList}
       curentlyReading={curentlyReading}
-      unsubscribe={unsubscribe}
-      subscribe={subscribe}
       updateProfile={updateProfile}
     />
   )

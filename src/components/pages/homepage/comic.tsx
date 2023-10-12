@@ -16,7 +16,9 @@ export default function Comic(props: IComic) {
   return (
     <div className={`${props.status.text == 'Upcoming' ? '[&_a:not(.author)]:pointer-events-none' : ''}`}>
       <div className='hidden md:flex gap-[20px]'>
-        <Link href={`/comic/${props.id}`} className=' xl:hidden shrink-0 block w-[180px] aspect-[180/240] mx-auto'>
+        <Link
+          href={`/comic/${props.slug}`}
+          className=' xl:hidden shrink-0 block w-[180px] h-fit aspect-[180/240] mx-auto'>
           <Image
             src={props.image || NoImage}
             alt=''
@@ -25,7 +27,9 @@ export default function Comic(props: IComic) {
             className={`w-full h-full ${props.image ? 'object-cover' : 'object-contain bg-light-gray'} rounded-[15px] `}
           />
         </Link>
-        <Link href={`/comic/${props.id}/chapter/1`} className='shrink-0 w-[180px] aspect-[180/240] hidden xl:block'>
+        <Link
+          href={`/comic/${props.slug}/chapter/1`}
+          className='shrink-0 w-[180px] h-fit aspect-[180/240] hidden xl:block'>
           <Image
             src={props.image || NoImage}
             alt=''
@@ -38,7 +42,7 @@ export default function Comic(props: IComic) {
           <div className='flex flex-col gap-[10px]'>
             <div>
               <div className='flex justify-between xl:hidden items-start flex-nowrap'>
-                <Link href={`/comic/${props.id}`} className=' text-second-color font-bold text-[18px] '>
+                <Link href={`/comic/${props.slug}`} className=' text-second-color font-bold text-[18px] '>
                   {props[locale].title}
                 </Link>
                 {props.status.text != 'Ongoing' && (
@@ -46,7 +50,7 @@ export default function Comic(props: IComic) {
                 )}
               </div>
               <div className='justify-between items-start flex-nowrap hidden xl:flex'>
-                <Link href={`/comic/${props.id}/chapter/1`} className='text-second-color font-bold text-[18px]'>
+                <Link href={`/comic/${props.slug}/chapter/1`} className='text-second-color font-bold text-[18px]'>
                   {props[locale].title}
                 </Link>
                 {props.status.text != 'Ongoing' && (
@@ -59,8 +63,8 @@ export default function Comic(props: IComic) {
                   <Fragment key={index}>
                     <span className='text-second-color font-[600] first:hidden'>, </span>
                     <span className='text-second-color font-[600]'>
-                      {author.id ? (
-                        <Link className='author' href={`/artist/${author.id}`}>
+                      {author.slug ? (
+                        <Link className='author' href={`/artist/${author.slug}`}>
                           {t(author.name)}
                         </Link>
                       ) : (
@@ -90,7 +94,7 @@ export default function Comic(props: IComic) {
             <div className='leading-[20px]'>
               {t('Latest')}:{' '}
               <Link
-                href={`/comic/${props.id}/chapter/${props.latestChap.number}`}
+                href={`/comic/${props.slug}/chapter/${props.latestChap.number}`}
                 className='text-second-color font-[600]'>
                 {t('Chap')} #{props.latestChap.number}
               </Link>
@@ -101,7 +105,7 @@ export default function Comic(props: IComic) {
       <div className='md:hidden h-full w-fit mx-auto'>
         <div
           onClick={() => {
-            props.status.text == 'Upcoming' ? null : router.push(`/comic/${props.id}`)
+            props.status.text == 'Upcoming' ? null : router.push(`/comic/${props.slug}`)
           }}
           className='relative flex flex-col h-full'>
           <Image
@@ -125,8 +129,8 @@ export default function Comic(props: IComic) {
               <Fragment key={index}>
                 <span className='text-second-color font-[600] first:hidden'>, </span>
                 <span className='text-second-color font-[600]'>
-                  {author.id ? (
-                    <Link className='author' onClick={(e) => e.stopPropagation()} href={`/artist/${author.id}`}>
+                  {author.slug ? (
+                    <Link className='author' onClick={(e) => e.stopPropagation()} href={`/artist/${author.slug}`}>
                       {t(author.name)}
                     </Link>
                   ) : (
@@ -136,14 +140,14 @@ export default function Comic(props: IComic) {
               </Fragment>
             ))}
           </div>
-          <div className='flex justify-between items-center text-second-color text-sm mt-3'>
+          <div className='flex justify-between items-center text-subtle-dark text-sm mt-3'>
             <div className='flex items-center gap-1'>
               <EyeIcon className='w-4 h-4' />
-              <strong>{props.views.toLocaleString('en-US')}</strong>
+              <div className='font-medium'>{props.views.toLocaleString('en-US')}</div>
             </div>
             <div className='flex items-center gap-1'>
               <HeartIcon className='w-4 h-4' />
-              <strong>{props.likes.toLocaleString('en-US')}</strong>
+              <div className='font-medium'>{props.likes.toLocaleString('en-US')}</div>
             </div>
           </div>
         </div>
