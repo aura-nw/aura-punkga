@@ -21,7 +21,7 @@ export default function Page(props) {
 
 export const getServerSideProps = async (context) => {
   if (context.params?.comicSlug) {
-    const res = await fetch(`https://api.staging.punkga.me/manga/${context.params?.comicSlug}`)
+    const res = await fetch(`https://api.punkga.me/manga/${context.params?.comicSlug}`)
     const data = await res.json()
     const manga = data?.data?.manga?.[0]
     if (!manga)
