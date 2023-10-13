@@ -27,6 +27,9 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { subscribe, unsubscribe } from 'src/services'
+import Info from './info'
+import Quest from './quests'
+import LeaderBoard from './leaderboard'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -166,6 +169,11 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
           </div>
         ) : (
           <>
+            <div className='flex'>
+              <Info updateProfile={updateProfile} />
+              <Quest />
+              <LeaderBoard />
+            </div>
             <div className={`flex gap-[10px] md:gap-[60px] ${open ? 'flex-wrap' : ''}`}>
               <div
                 className={`flex transition-all justify-center md:max-w-[280px] p-[5px] md:p-0 ${

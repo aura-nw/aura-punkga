@@ -27,9 +27,28 @@ import ContextProvider, { Context } from 'src/context'
 import { wallets as c98Mobile } from 'src/services/c98MobileWallet'
 import 'src/styles/globals.scss'
 import { validateEmail } from 'src/utils'
-
+import localFont from 'next/font/local'
 const pjs = Plus_Jakarta_Sans({ subsets: ['latin', 'vietnamese'] })
 const ws = Work_Sans({ subsets: ['latin', 'vietnamese'] })
+const orbitron = localFont({
+  src: [
+    {
+      path: '../assets/fonts/Orbitron_Light.otf',
+      weight: '200',
+      style: 'normal',
+    },
+    {
+      path: '../assets/fonts/Orbitron_Medium.otf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../assets/fonts/Orbitron_Bold.otf',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+})
 function MyApp(props: AppProps) {
   const [isSetting, setIsSetting] = useState(true)
   const { locale } = useRouter()
@@ -82,6 +101,9 @@ function MyApp(props: AppProps) {
         }
         .font-ws {
           font-family: ${ws.style.fontFamily};
+        }
+        .font-orbitron {
+          font-family: ${orbitron.style.fontFamily};
         }
       `}</style>
       <ContextProvider>
