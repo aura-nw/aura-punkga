@@ -389,6 +389,9 @@ export default function Header({ className }: { className?: string }) {
             )}
           </div>
           <div className='flex lg:gap-[40px] lg:justify-end min-w-[430px]'>
+            <Button size='lg' onClick={() => router.push('/campains')}>
+              {t('Quest')}
+            </Button>
             <Button size='lg' onClick={() => router.push('/about-us')}>
               {t('aboutUs')}
             </Button>

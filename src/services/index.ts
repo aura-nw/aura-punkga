@@ -328,3 +328,7 @@ export const subscribe = async (id) => {
 export const unsubscribe = async (id) => {
   await privateAxios.delete(`${getConfig().API_URL}/api/rest/user/manga/${id}/subscribe`)
 }
+export const getCampains = async () => {
+  const { data } = await axios.get(`${getConfig().REST_API_URL}/quest`)
+  return data
+}
