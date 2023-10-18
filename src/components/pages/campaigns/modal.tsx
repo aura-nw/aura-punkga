@@ -46,7 +46,7 @@ export default function Modal({ open, setOpen, children, hideClose }: any) {
                   <div
                     className='absolute z-50 right-10 top-12 cursor-pointer text-gray-600'
                     onClick={() => setOpen(false)}>
-                    <XMarkIcon className='w-5 h-5' />
+                    <XMarkIcon className='w-7 h-7' />
                   </div>
                 )}
                 <div className='bg-[#F4F4F4] -mt-1 -mb-10 relative z-10 px-14'>{children}</div>

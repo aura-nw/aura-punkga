@@ -1,10 +1,10 @@
 import Footer from 'components/Footer'
 import Header from 'components/Header'
-import Campain from 'components/pages/campains/campain'
-import LeaderBoard from 'components/pages/campains/leaderboard'
-import TaskSlider from 'components/pages/campains/taskSlider'
+import Campaign from 'components/pages/campaigns/campaign'
+import LeaderBoard from 'components/pages/campaigns/leaderboard'
+import TaskSlider from 'components/pages/campaigns/taskSlider'
 
-export default function Campains() {
+export default function Campaigns() {
   return (
     <>
       <Header />
@@ -14,7 +14,7 @@ export default function Campains() {
           <LeaderBoard />
         </div>
         <div className='my-20'>
-          <Campain />
+          <Campaign />
         </div>
       </div>
       <Footer />

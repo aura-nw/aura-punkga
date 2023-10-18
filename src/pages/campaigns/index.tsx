@@ -1,12 +1,12 @@
 import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Campains from './campains'
+import Campaigns from './campaigns'
 
 export default function Page(props) {
   if (props.justHead || props.pageProps?.justHead) {
     return <></>
   }
-  return <Campains />
+  return <Campaigns />
 }
 
 export const getStaticProps = async ({ locale }) => {
