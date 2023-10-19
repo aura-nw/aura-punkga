@@ -19,8 +19,8 @@ export type Quest = {
   requirement: {
     read?: {
       chapter?: {
-        chapter_number: number
-        chapter_name: string
+        number: number
+        title: string
       }
       manga?: {
         slug: string
@@ -29,8 +29,8 @@ export type Quest = {
     }
     comment?: {
       chapter?: {
-        chapter_number: number
-        chapter_name: string
+        number: number
+        title: string
       }
       manga?: {
         slug: string
@@ -38,8 +38,10 @@ export type Quest = {
       }
     }
     subscribe?: {
-      slug: string
-      title: string
+      manga?: {
+        slug: string
+        title: string
+      }
     }
   }
   reward: {
