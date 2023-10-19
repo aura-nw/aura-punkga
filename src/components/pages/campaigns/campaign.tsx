@@ -48,7 +48,7 @@ export default function Campaign() {
       </div>
       <div className='flex flex-col gap-20'>
         {campaigns
-          .filter((campaign) => selectedCampaigns.includes(campaign.id))
+          .filter((campaign) => !selectedCampaigns.length || selectedCampaigns.includes(campaign.id))
           .map((campaign, index) => (
             <div key={index}>
               <div className='flex gap-2 mb-10'>
