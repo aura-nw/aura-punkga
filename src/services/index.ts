@@ -336,3 +336,11 @@ export const getCampaigns = async (accountId?: string) => {
   })
   return data
 }
+export const getQuestDetail = async (questId: string, accountId?: string) => {
+  const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/quest/${questId}`, {
+    params: {
+      user_id: accountId,
+    },
+  })
+  return data
+}
