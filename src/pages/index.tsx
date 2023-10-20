@@ -27,6 +27,7 @@ import { getAllTags, getLatestComic, getTrendingComic } from 'src/services'
 import HeadComponent from 'components/Head'
 import LeaderBoard from 'components/pages/homepage/leaderboard'
 import TaskSlider from 'components/pages/homepage/taskSlider'
+import SlideSection from 'components/pages/homepage/slideSection'
 
 declare global {
   interface Window {
@@ -83,100 +84,6 @@ function Home() {
   return (
     <>
       <Header />
-      {/* <div className='pk-container'>
-        <div className='mt-[40px] md:grid grid-cols-1 px-2 md:px-0 gap-[40px] hidden -mx-5 [&_.slick-dots]:-mx-5'>
-          <Carousel>
-            <div className='p-5 outline-none [&_*]:outline-none'>
-              <Link href='https://punkga.me/comic/hero_cyberpunk_1/chapter/1'>
-                <Image
-                  className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
-                  src={HeroCyberpunkBanner}
-                  alt=''
-                />
-              </Link>
-            </div>
-            <div className='p-5 outline-none [&_*]:outline-none '>
-              <Link href='https://punkga.me/comic/hamulage_3/chapter/1'>
-                <Image
-                  className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
-                  src={HamulageBanner}
-                  alt=''
-                />
-              </Link>
-            </div>
-            <div className='p-5 outline-none [&_*]:outline-none '>
-              <Link href='https://punkga.me/comic/heroic_librarian_5/chapter/1'>
-                <Image
-                  className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
-                  src={HeroicBanner}
-                  alt=''
-                />
-              </Link>
-            </div>
-            <div className='p-5 outline-none [&_*]:outline-none '>
-              <Link href='https://punkga.me/comic/era_of_chaos_4/chapter/1'>
-                <Image
-                  className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
-                  src={TCOTPBanner}
-                  alt=''
-                />
-              </Link>
-            </div>
-            <div className='p-5 outline-none [&_*]:outline-none '>
-              <Link href='https://punkga.me/comic/neon_force_2/chapter/1'>
-                <Image
-                  className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
-                  src={UltraVBanner}
-                  alt=''
-                />
-              </Link>
-            </div>
-            <div className='p-5 outline-none [&_*]:outline-none '>
-              <Link href='https://punkga.me/comic/errant_6/chapter/1'>
-                <Image
-                  className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
-                  src={ErrantBanner}
-                  alt=''
-                />
-              </Link>
-            </div>
-          </Carousel>
-        </div>
-      </div>
-      <div className='md:hidden md:px-0 gap-[40px]'>
-        <Carousel
-          setting={{
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            appendDots: () => <></>,
-            customPaging: () => <></>,
-          }}>
-          <div>
-            <Link href='https://punkga.me/comic/hero_cyberpunk_1/chapter/1'>
-              <Image className='w-full aspect-[21/9] object-fill' src={HeroCyberpunkBanner} alt='' />
-            </Link>
-            <Link href='https://punkga.me/comic/hamulage_3/chapter/1'>
-              <Image className='w-full aspect-[21/9] object-fill' src={HamulageBanner} alt='' />
-            </Link>
-          </div>
-          <div>
-            <Link href='https://punkga.me/comic/heroic_librarian_5/chapter/1'>
-              <Image className='w-full aspect-[21/9] object-fill' src={HeroicBanner} alt='' />
-            </Link>
-            <Link href='https://punkga.me/comic/era_of_chaos_4/chapter/1'>
-              <Image className='w-full aspect-[21/9] object-fill' src={TCOTPBanner} alt='' />
-            </Link>
-          </div>
-          <div>
-            <Link href='https://punkga.me/comic/neon_force_2/chapter/1'>
-              <Image className='w-full aspect-[21/9] object-fill' src={UltraVBanner} alt='' />
-            </Link>
-            <Link href='https://punkga.me/comic/errant_6/chapter/1'>
-              <Image className='w-full aspect-[21/9] object-fill' src={ErrantBanner} alt='' />
-            </Link>
-          </div>
-        </Carousel>
-      </div> */}
       <div className='pk-container'>
         <div className='md:my-[50px] lg:flex gap-[10px]'>
           <div className='lg:flex-auto lg:w-[67%] px-5 md:px-0'>
@@ -266,6 +173,7 @@ function Home() {
             </div>
           </div>
           <div className='lg:flex-auto lg:w-[32%] mt-6 lg:mt-0 px-5 md:px-0'>
+            <SlideSection />
             <LeaderBoard />
             <div className='md:text-[24px] text-sm leading-6 font-[800] mt-[60px]'>{t('Trending')}</div>
             <div className='flex flex-col gap-10 mt-2 md:mt-10'>
