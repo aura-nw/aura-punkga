@@ -5,13 +5,19 @@ export default function LeaderBoard() {
   return (
     <>
       <div className='relative w-[32%] aspect-[571/581]'>
-        <Image src={Frame} alt='' className='absolute inset-0 w-full h-full' />
-        <div className='flex relative mt-[2%] ml-[2%] w-full'>
+        <Image src={Frame} alt='' className='absolute inset-0 w-full' />
+        <div className='flex flex-col absolute inset-[1.6%] gap-2'>
           <div className='h-fit cursor-pointer relative'>
             <div className='absolute left-[50%] -translate-x-1/2 top-[36%] font-orbitron text-2xl font-extrabold grid place-items-center text-primary-color'>
               Leader board
             </div>
-            <svg xmlns='http://www.w3.org/2000/svg' width='506' height='76' viewBox='0 0 506 76' fill='none'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='506'
+              height='76'
+              viewBox='0 0 506 76'
+              fill='none'
+              className='w-full'>
               <path
                 fillRule='evenodd'
                 clipRule='evenodd'
@@ -27,6 +33,7 @@ export default function LeaderBoard() {
               />
             </svg>
           </div>
+          <div className='flex-1 px-4'>data here</div>
         </div>
       </div>
     </>
