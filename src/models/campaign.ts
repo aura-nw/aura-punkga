@@ -10,10 +10,8 @@ export type Quest = {
   name: string
   unlock: boolean
   condition: {
-    duration?: {
-      after?: string
-      before?: string
-    }
+    after?: string
+    before?: string
     level?: number
   }
   requirement: {
