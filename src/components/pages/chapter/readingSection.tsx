@@ -215,8 +215,8 @@ export default function ReadingSection({
           <div
             ref={ref}
             className={`${mode == 'minscreen' ? '' : ''} ${
-              readingMode == 'onePage' ? 'w-[90%] max-w-[940px]' : 'flex h-full items-center'
-            } mx-auto pb-[60px]`}>
+              readingMode == 'onePage' ? 'w-[90%] max-w-[940px] mx-auto' : 'flex h-full items-center justify-center'
+            } pb-[60px]`}>
             {chapterData[chapterLocale]
               ?.slice(
                 readingMode == 'onePage' ? 0 : currentPage,
@@ -232,11 +232,9 @@ export default function ReadingSection({
                     src={page || PageMockup}
                     key={index}
                     alt=''
-                    className={`${
-                      readingMode == 'onePage'
-                        ? 'mx-auto'
-                        : 'h-fit max-h-full max-w-[50%] w-auto first:ml-auto last:mr-auto'
-                    } ${readingMode != 'onePage' && index > 1 && 'hidden'}`}
+                    className={`${readingMode == 'onePage' ? 'mx-auto' : 'h-fit max-h-full max-w-[50%] w-auto'} ${
+                      readingMode != 'onePage' && index > 1 && 'hidden'
+                    }`}
                     width={1900}
                     height={1000}
                     priority={index < 4}
