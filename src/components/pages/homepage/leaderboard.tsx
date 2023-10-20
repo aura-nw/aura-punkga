@@ -4,7 +4,7 @@ import { useState } from 'react'
 export default function LeaderBoard() {
   return (
     <>
-      <div className='relative w-[32%] aspect-[571/581]'>
+      <div className='relative w-full aspect-[571/646]'>
         <Image src={Frame} alt='' className='absolute inset-0 w-full' />
         <div className='flex flex-col absolute inset-[1.6%] gap-2'>
           <div className='h-fit cursor-pointer relative'>

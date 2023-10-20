@@ -24,6 +24,8 @@ import useApi from 'src/hooks/useApi'
 import { IComic } from 'src/models/comic'
 import { getAllTags, getLatestComic, getTrendingComic } from 'src/services'
 import HeadComponent from 'components/Head'
+import LeaderBoard from 'components/pages/homepage/leaderboard'
+import TaskSlider from 'components/pages/homepage/taskSlider'
 
 declare global {
   interface Window {
@@ -80,7 +82,7 @@ function Home() {
   return (
     <>
       <Header />
-      <div className='pk-container'>
+      {/* <div className='pk-container'>
         <div className='mt-[40px] md:grid grid-cols-1 px-2 md:px-0 gap-[40px] hidden -mx-5 [&_.slick-dots]:-mx-5'>
           <Carousel>
             <div className='p-5 outline-none [&_*]:outline-none'>
@@ -164,11 +166,12 @@ function Home() {
             </Link>
           </div>
         </Carousel>
-      </div>
+      </div> */}
       <div className='pk-container'>
-        <div className='md:my-[50px] lg:flex gap-[10%]'>
-          <div className='lg:flex-auto lg:w-[70%] px-5 md:px-0'>
-            <div className='flex justify-between items-center'>
+        <div className='md:my-[50px] lg:flex gap-[10px]'>
+          <div className='lg:flex-auto lg:w-[67%] px-5 md:px-0'>
+            <TaskSlider />
+            <div className='mt-[60px] flex justify-between items-center px-2'>
               <div className='md:text-[24px] text-sm leading-6 font-[800]'>{t('Latest update')}</div>
               <div className='md:flex hidden gap-[20px] items-center'>
                 <FilledSelect
@@ -252,8 +255,9 @@ function Home() {
                 : null}
             </div>
           </div>
-          <div className='lg:flex-auto lg:w-[24%] mt-6 lg:mt-0 px-5 md:px-0'>
-            <div className='md:text-[24px] text-sm leading-6 font-[800]'>{t('Trending')}</div>
+          <div className='lg:flex-auto lg:w-[32%] mt-6 lg:mt-0 px-5 md:px-0'>
+            <LeaderBoard />
+            <div className='md:text-[24px] text-sm leading-6 font-[800] mt-[60px]'>{t('Trending')}</div>
             <div className='flex flex-col gap-10 mt-2 md:mt-10'>
               {trendingComic.loading
                 ? Array.apply(null, Array(2)).map((d, index) => {

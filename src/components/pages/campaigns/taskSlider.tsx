@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Background from './assets/task-background.svg'
 export default function TaskSlider() {
   return (
-    <div className='relative'>
+    <div className='relative w-[68%]'>
       <Image src={Background} alt='' className='relative z-10' />
       <div className='absolute inset-0'>
         <svg
