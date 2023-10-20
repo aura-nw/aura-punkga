@@ -93,6 +93,9 @@ export default function Info({ updateProfile }) {
     <>
       <div className='relative w-[32%] aspect-[519/595]'>
         <Image src={Frame} alt='' className='absolute inset-0 w-full h-full' />
+        <div className='text-primary-color font-orbitron font-bold absolute top-2 right-8 text-2xl leading-[30px]'>
+          Profile
+        </div>
         <div className='top-[5.5%] left-[9.25%] right-[4.5%] absolute grid grid-cols-2 items-end gap-[7px]'>
           <div className='w-full aspect-square'>
             <div className='h-full w-full p-2 relative'>
