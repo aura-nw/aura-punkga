@@ -7,7 +7,17 @@
 	<priority>0.4</priority>
 </url>
 <url>
+	<loc>https://punkga.me/vn</loc>
+	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
 	<loc>https://punkga.me/comic/hero_cyberpunk_1/chapter/1</loc>
+	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
+	<priority>0.1</priority>
+</url>
+<url>
+	<loc>https://punkga.me/vn/comic/hero_cyberpunk_1/chapter/1</loc>
 	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
 	<priority>0.1</priority>
 </url>
@@ -17,7 +27,17 @@
 	<priority>0.1</priority>
 </url>
 <url>
+	<loc>https://punkga.me/vn/comic/hamulage_3/chapter/1</loc>
+	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
+	<priority>0.1</priority>
+</url>
+<url>
 	<loc>https://punkga.me/comic/hamulage_3/chapter/2</loc>
+	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
+	<priority>0.1</priority>
+</url>
+<url>
+	<loc>https://punkga.me/vn/comic/hamulage_3/chapter/2</loc>
 	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
 	<priority>0.1</priority>
 </url>
@@ -27,7 +47,17 @@
 	<priority>0.4</priority>
 </url>
 <url>
+	<loc>https://punkga.me/vn/comic/heroic_librarian_5/chapter/1</loc>
+	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
 	<loc>https://punkga.me/comic/era_of_chaos_4/chapter/1</loc>
+	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>https://punkga.me/vn/comic/era_of_chaos_4/chapter/1</loc>
 	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
 	<priority>0.4</priority>
 </url>
@@ -37,12 +67,72 @@
 	<priority>0.4</priority>
 </url>
 <url>
+	<loc>https://punkga.me/vn/comic/neon_force_2/chapter/1</loc>
+	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
 	<loc>https://punkga.me/comic/errant_6/chapter/1</loc>
 	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
 	<priority>0.4</priority>
 </url>
 <url>
+	<loc>https://punkga.me/vn/comic/errant_6/chapter/1</loc>
+	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
 	<loc>https://punkga.me/policy</loc>
+	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
+	<priority>0.2</priority>
+</url>
+<url>
+	<loc>https://punkga.me/artist/tien_tran_rb_5y</loc>
+	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
+	<priority>0.2</priority>
+</url>
+<url>
+	<loc>https://punkga.me/vn/artist/tien_tran_rb_5y</loc>
+	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
+	<priority>0.2</priority>
+</url>
+<url>
+	<loc>https://punkga.me/artist/moffi_3</loc>
+	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
+	<priority>0.2</priority>
+</url>
+<url>
+	<loc>https://punkga.me/vn/artist/moffi_3</loc>
+	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
+	<priority>0.2</priority>
+</url>
+<url>
+	<loc>https://punkga.me/artist/hanz_1</loc>
+	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
+	<priority>0.2</priority>
+</url>
+<url>
+	<loc>https://punkga.me/vn/artist/hanz_1</loc>
+	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
+	<priority>0.2</priority>
+</url>
+<url>
+	<loc>https://punkga.me/artist/howater_2</loc>
+	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
+	<priority>0.2</priority>
+</url>
+<url>
+	<loc>https://punkga.me/vn/artist/howater_2</loc>
+	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
+	<priority>0.2</priority>
+</url>
+<url>
+	<loc>https://punkga.me/artist/uma_6</loc>
+	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
+	<priority>0.2</priority>
+</url>
+<url>
+	<loc>https://punkga.me/vn/artist/uma_6</loc>
 	<lastmod>2023-10-17T12:03:40+01:00</lastmod>
 	<priority>0.2</priority>
 </url>
