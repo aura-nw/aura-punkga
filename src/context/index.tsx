@@ -23,7 +23,7 @@ function ContextProvider({ children }) {
   const config = getConfig()
   const authorizerRef = new Authorizer({
     authorizerURL: config.AUTHORIZER_URL,
-    redirectURL: config.REDIRECT_URL,
+    redirectURL: location.href || config.REDIRECT_URL,
     clientID: config.AUTHORIZER_CLIENT_ID,
   })
 

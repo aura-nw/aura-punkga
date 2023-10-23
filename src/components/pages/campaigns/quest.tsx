@@ -57,6 +57,15 @@ export default function Quest({ data }: { data: Quest }) {
           (data.requirement.comment || data.requirement.read).chapter?.number
         }`
       : `/comic/${data.requirement.subscribe.manga?.slug}/chapter/1`
+
+  const openQuestHandler = () => {
+    if (account) {
+      setOpen(true)
+    } else {
+      ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+    }
+  }
+
   if (!data.unlock)
     return (
       <>
@@ -97,7 +106,7 @@ export default function Quest({ data }: { data: Quest }) {
             )}
           </div>
         </Modal>
-        <div className='relative cursor-pointer' onClick={() => setOpen(true)}>
+        <div className='relative cursor-pointer' onClick={openQuestHandler}>
           <Image src={LockQuestBackground} alt='' />
           <div className='absolute top-[9.5%] left-[6%] bottom-[7%] right-[5%]'>
             <div className='flex flex-col items-center justify-between pt-[5%] h-full'>
@@ -197,7 +206,7 @@ export default function Quest({ data }: { data: Quest }) {
           )}
         </div>
       </Modal>
-      <div className='relative cursor-pointer' onClick={() => setOpen(true)}>
+      <div className='relative cursor-pointer' onClick={openQuestHandler}>
         <Image src={QuestBackground} alt='' />
         <div className='absolute top-[9.5%] left-[6%] bottom-[7%] right-[5%] flex flex-col justify-between'>
           <div className='h-[35%] justify-between flex flex-col gap-3'>
