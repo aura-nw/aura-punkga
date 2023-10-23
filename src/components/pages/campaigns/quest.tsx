@@ -160,14 +160,14 @@ export default function Quest({ data }: { data: Quest }) {
                   <div className='bg-white font-bold text-sm'>
                     <Image
                       src={data.reward.nft.img_url}
-                      width={28}
-                      height={28}
+                      width={66}
+                      height={66}
                       alt=''
                       className='object-cover aspect-square'
                     />
                   </div>
                 </div>
-                <div className='text-sm font-medium text-center'>NFT</div>
+                <div className='text-2xl font-medium text-center'>NFT</div>
               </div>
             ) : (
               <div className='h-fit bg-gradient-to-l from-black/[0.0001] via-slate-600/40 to-black/[0.0001]'>
@@ -232,14 +232,14 @@ export default function Quest({ data }: { data: Quest }) {
               <div className='bg-white font-bold text-sm'>
                 <Image
                   src={data.reward.nft.img_url}
-                  width={66}
-                  height={66}
+                  width={28}
+                  height={28}
                   alt=''
                   className='object-cover aspect-square'
                 />
               </div>
             </div>
-            <div className='text-2xl font-medium text-center'>NFT</div>
+            <div className='text-sm font-medium text-center'>NFT</div>
           </div>
         ) : (
           <div className='absolute top-[9.5%] right-[5%] bg-gradient-to-l from-black/[0.0001] via-slate-600/40 to-black/[0.0001]'>
