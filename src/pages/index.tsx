@@ -181,7 +181,7 @@ function Home() {
                 ? Array.apply(null, Array(2)).map((d, index) => {
                     return <DummyComic key={index} />
                   })
-                : trendingComic.data.map((data, index) => {
+                : trendingComic.data.slice(0, 2).map((data, index) => {
                     return <TrendingComic key={index} {...data} />
                   })}
             </div>
