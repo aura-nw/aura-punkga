@@ -52,22 +52,7 @@ function Carousel({ children, setting, className }: any) {
     slidesToShow: 2,
     slidesToScroll: 2,
     arrows: false,
-    appendDots: (dots) => (
-      <div
-        style={{
-          display: 'flex',
-          position: 'absolute',
-          bottom: '16px',
-          right: '26px',
-          justifyContent: 'center',
-          zIndex: 11,
-        }}>
-        <ul className='punkga-carousel' style={{ margin: '0px' }}>
-          {' '}
-          {dots}{' '}
-        </ul>
-      </div>
-    ),
+    appendDots: (dots) => <div></div>,
     customPaging: (i) => (
       <div
         style={{
@@ -90,7 +75,7 @@ export default function SlideSection() {
   return (
     <div className='relative mb-[60px]'>
       <Image src={Frame} alt='' />
-      <div className='absolute top-[7%] left-[5%] right-[0%] bottom-[15%]'>
+      <div className='absolute top-[7%] left-[6%] right-[0%] bottom-[15%]'>
         <Carousel
           className='w-[91%]'
           setting={{

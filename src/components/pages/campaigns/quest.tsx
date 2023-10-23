@@ -99,8 +99,8 @@ export default function Quest({ data }: { data: Quest }) {
         </Modal>
         <div className='relative cursor-pointer' onClick={() => setOpen(true)}>
           <Image src={LockQuestBackground} alt='' />
-          <div className='absolute inset-0'>
-            <div className='p-6 flex gap-5 flex-col items-center justify-center h-full'>
+          <div className='absolute top-[9.5%] left-[6%] bottom-[7%] right-[5%]'>
+            <div className='flex gap-5 flex-col items-center justify-between pt-[5%] h-full'>
               <Image src={LockImage} alt='' />
               <div className='text-xl font-bold text-center'>{data.name}</div>
               {conditions ? (
@@ -114,7 +114,7 @@ export default function Quest({ data }: { data: Quest }) {
             </div>
           </div>
           {data.reward.nft ? (
-            <div className='absolute top-8 right-6'>
+            <div className='absolute top-[9.5%] right-[5%]'>
               <div className='p-1 bg-gradient-to-l from-black/[0.0001] via-slate-600/40 to-black/[0.0001]'>
                 <div className='bg-white font-bold text-sm'>
                   <Image
@@ -129,7 +129,7 @@ export default function Quest({ data }: { data: Quest }) {
               <div className='text-sm font-medium text-center'>NFT</div>
             </div>
           ) : (
-            <div className='absolute top-8 right-6 bg-gradient-to-l from-black/[0.0001] via-slate-600/40 to-black/[0.0001]'>
+            <div className='absolute top-[9.5%] right-[5%] bg-gradient-to-l from-black/[0.0001] via-slate-600/40 to-black/[0.0001]'>
               <div className='bg-white m-1 font-bold text-sm'>
                 <span className='text-second-color'>{data.reward.xp}</span> EXP
               </div>
@@ -199,14 +199,14 @@ export default function Quest({ data }: { data: Quest }) {
       </Modal>
       <div className='relative cursor-pointer' onClick={() => setOpen(true)}>
         <Image src={QuestBackground} alt='' />
-        <div className='absolute top-9 left-5 bottom-6 right-5 flex flex-col justify-between'>
-          <div className='h-20 flex flex-col gap-3'>
-            <div className='text-xl font-bold max-w-[240px] leading-5 h-10'>{data.name}</div>
+        <div className='absolute top-[9.5%] left-[6%] bottom-[7%] right-[5%] flex flex-col justify-between'>
+          <div className='h-[35%] justify-between flex flex-col gap-3'>
+            <div className='text-xl font-bold max-w-[240px] leading-5 pr-1'>{data.name}</div>
             <div className='uppercase font-bold text-lg border py-2 px-3 w-fit leading-3 rounded-sm border-[#414141]'>
               {data.type}
             </div>
           </div>
-          <div className='flex flex-col justify-between h-[140px]'>
+          <div className='flex flex-col justify-between h-[59%]'>
             <div className='text-sm text-[#61646B]'>
               <span className='font-bold'>MISSION:</span>
               {mission}
@@ -218,7 +218,7 @@ export default function Quest({ data }: { data: Quest }) {
           </div>
         </div>
         {data.reward.nft ? (
-          <div className='absolute top-8 right-6'>
+          <div className='absolute top-[9.5%] right-[5%]'>
             <div className='p-1 bg-gradient-to-l from-black/[0.0001] via-slate-600/40 to-black/[0.0001]'>
               <div className='bg-white font-bold text-sm'>
                 <Image
@@ -233,7 +233,7 @@ export default function Quest({ data }: { data: Quest }) {
             <div className='text-sm font-medium text-center'>NFT</div>
           </div>
         ) : (
-          <div className='absolute top-8 right-6 bg-gradient-to-l from-black/[0.0001] via-slate-600/40 to-black/[0.0001]'>
+          <div className='absolute top-[9.5%] right-[5%] bg-gradient-to-l from-black/[0.0001] via-slate-600/40 to-black/[0.0001]'>
             <div className='bg-white m-1 font-bold text-sm'>
               <span className='text-second-color'>{data.reward.xp}</span> EXP
             </div>
