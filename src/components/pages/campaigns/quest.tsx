@@ -70,14 +70,14 @@ export default function Quest({ data }: { data: Quest }) {
                     <div className='bg-white font-bold text-sm'>
                       <Image
                         src={data.reward.nft.img_url}
-                        width={28}
-                        height={28}
+                        width={66}
+                        height={66}
                         alt=''
                         className='object-cover aspect-square'
                       />
                     </div>
                   </div>
-                  <div className='text-sm font-medium text-center'>NFT</div>
+                  <div className='text-2xl font-medium text-center'>NFT</div>
                 </div>
               ) : (
                 <div className='h-fit bg-gradient-to-l from-black/[0.0001] via-slate-600/40 to-black/[0.0001]'>
@@ -100,7 +100,7 @@ export default function Quest({ data }: { data: Quest }) {
         <div className='relative cursor-pointer' onClick={() => setOpen(true)}>
           <Image src={LockQuestBackground} alt='' />
           <div className='absolute top-[9.5%] left-[6%] bottom-[7%] right-[5%]'>
-            <div className='flex gap-5 flex-col items-center justify-between pt-[5%] h-full'>
+            <div className='flex flex-col items-center justify-between pt-[5%] h-full'>
               <Image src={LockImage} alt='' />
               <div className='text-xl font-bold text-center'>{data.name}</div>
               {conditions ? (
@@ -223,14 +223,14 @@ export default function Quest({ data }: { data: Quest }) {
               <div className='bg-white font-bold text-sm'>
                 <Image
                   src={data.reward.nft.img_url}
-                  width={28}
-                  height={28}
+                  width={66}
+                  height={66}
                   alt=''
                   className='object-cover aspect-square'
                 />
               </div>
             </div>
-            <div className='text-sm font-medium text-center'>NFT</div>
+            <div className='text-2xl font-medium text-center'>NFT</div>
           </div>
         ) : (
           <div className='absolute top-[9.5%] right-[5%] bg-gradient-to-l from-black/[0.0001] via-slate-600/40 to-black/[0.0001]'>
