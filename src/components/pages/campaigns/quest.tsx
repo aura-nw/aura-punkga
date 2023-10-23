@@ -56,7 +56,7 @@ export default function Quest({ data }: { data: Quest }) {
       ? `/comic/${(data.requirement.comment || data.requirement.read).manga?.slug}/chapter/${
           (data.requirement.comment || data.requirement.read).chapter?.number
         }`
-      : `/comic/${data.requirement.subscribe.manga?.slug}`
+      : `/comic/${data.requirement.subscribe.manga?.slug}/chapter/1`
   if (!data.unlock)
     return (
       <>
