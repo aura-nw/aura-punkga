@@ -13,6 +13,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment, useContext, useEffect, useState } from 'react'
+import { isMobile } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
 import mockAvar from 'src/assets/images/mockup4.png'
 import { LanguageType } from 'src/constants/global.types'
@@ -31,6 +32,7 @@ function Comic({ comicDetails, like, unlike }) {
   const [isSubscribe, setIsSubscribe] = useState(comicDetails.data?.isSubscribe)
   const [comicLikes, setComicLikes] = useState(0)
   const { account } = useContext(Context)
+  const router = useRouter()
   useEffect(() => {
     setIsSubscribe(comicDetails.data?.isSubscribe)
   }, [comicDetails.data?.isSubscribe])
@@ -39,7 +41,10 @@ function Comic({ comicDetails, like, unlike }) {
       setComicLikes(comicDetails.data.likes)
     }
   }, [comicDetails.data])
-  if (comicDetails.loading) {
+  if (!isMobile) {
+    router.push(`${location.pathname}/chapter/1`)
+  }
+  if (comicDetails.loading || !isMobile) {
     return <></>
   }
   const data = comicDetails.data
