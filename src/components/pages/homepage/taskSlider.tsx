@@ -19,8 +19,9 @@ function Carousel({ children, setting, className }: any) {
         style={{
           display: 'flex',
           position: 'absolute',
-          bottom: '16px',
-          right: '26px',
+          bottom: '10.3%',
+          right: '3%',
+          transform: 'translateY(100%)',
           justifyContent: 'center',
           zIndex: 11,
         }}>
@@ -56,6 +57,7 @@ function Slide({ url }) {
       width='1059'
       height='470'
       viewBox='0 0 1059 470'
+      className='w-full h-full'
       fill='none'>
       <g filter={`url(#filter0_b_3747_60813_${url})`}>
         <path

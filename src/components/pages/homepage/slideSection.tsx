@@ -11,6 +11,7 @@ function Slide({ url }) {
       width='462'
       height='206'
       viewBox='0 0 462 206'
+      className='w-full h-full'
       fill='none'>
       <g filter={`url(#filter0_b_3747_60813_${url})`}>
         <path
@@ -91,7 +92,7 @@ export default function SlideSection() {
       <Image src={Frame} alt='' />
       <div className='absolute top-[7%] left-[5%] right-[0%] bottom-[15%]'>
         <Carousel
-          className=''
+          className='w-[91%]'
           setting={{
             slidesToShow: 1,
             slidesToScroll: 1,
@@ -129,8 +130,14 @@ export default function SlideSection() {
           </div>
         </Carousel>
         <Image src={Banner} alt='' className='ml-[10%] w-[83%] mt-1' />
-        <div className='relative w-fit ml-[55%] -mt-2'>
-          <svg xmlns='http://www.w3.org/2000/svg' width='190' height='57' viewBox='0 0 190 57' fill='none'>
+        <div className='relative w-[38%] ml-auto -mt-[1%] mr-[7%]'>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='190'
+            height='57'
+            viewBox='0 0 190 57'
+            fill='none'
+            className='w-full h-full'>
             <path
               d='M0 23.0336V10.1758C0 4.65293 4.47715 0.175781 10 0.175781H170.858C173.51 0.175781 176.054 1.22935 177.929 3.10471L186.929 12.1047C190.834 16.01 190.834 22.3416 186.929 26.2468L159.929 53.2468C158.054 55.1222 155.51 56.1758 152.858 56.1758H33.1421C30.49 56.1758 27.9464 55.1222 26.0711 53.2468L2.92893 30.1047C1.05357 28.2293 0 25.6858 0 23.0336Z'
               fill='#23FF81'
