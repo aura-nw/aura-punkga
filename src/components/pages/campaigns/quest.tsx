@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from 'react'
 import Modal from './modal'
 import { Quest } from 'src/models/campaign'
 import moment from 'moment'
-import { getQuestDetail } from 'src/services'
+import { claimQuest, getQuestDetail } from 'src/services'
 import { Context } from 'src/context'
 import Link from 'next/link'
 export default function Quest({ data }: { data: Quest }) {
@@ -63,6 +63,17 @@ export default function Quest({ data }: { data: Quest }) {
       setOpen(true)
     } else {
       ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+    }
+  }
+
+  const claimQuestHandler = async () => {
+    try {
+      const res = await claimQuest(data.id)
+      if (res) {
+        fetchQuestDetail()
+      }
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -196,7 +207,7 @@ export default function Quest({ data }: { data: Quest }) {
               <div className='text-[32px] font-bold text-[#414141]'>Claimed</div>
             </button>
           ) : questDetail && questDetail?.reward_status == 1 ? (
-            <button className='p-3 bg-primary-color rounded-[20px] -mb-14'>
+            <button className='p-3 bg-primary-color rounded-[20px] -mb-14' onClick={claimQuestHandler}>
               <div className='text-[32px] font-bold text-[#414141]'>Claim reward</div>
             </button>
           ) : (
@@ -220,10 +231,12 @@ export default function Quest({ data }: { data: Quest }) {
               <span className='font-bold'>MISSION:</span>
               {mission}
             </div>
-            <div className='text-sm text-second-color'>
-              <span className='font-bold'>CONDITION:</span>
-              {conditions}
-            </div>
+            {conditions && (
+              <div className='text-sm text-second-color'>
+                <span className='font-bold'>CONDITION:</span>
+                {conditions}
+              </div>
+            )}
           </div>
         </div>
         {data.reward.nft ? (

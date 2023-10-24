@@ -74,7 +74,7 @@ export default function Campaign() {
                   {campaign.name}
                 </span>
               </div>
-              <div className='grid grid-cols-4 gap-9'>
+              <div className='grid grid-cols-4 gap-9  max-h-[692px] overflow-auto'>
                 {campaign.campaign_quests.map((quest, index) => (
                   <Quest data={quest} key={index} />
                 ))}
