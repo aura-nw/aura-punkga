@@ -115,7 +115,7 @@ export default function SlideSection() {
           </div>
         </Carousel>
         <Image src={Banner} alt='' className='ml-[10%] w-[83%] mt-1' />
-        <div className='relative w-[38%] ml-auto -mt-[1%] mr-[7%]'>
+        <Link href='/campaigns' className='block relative w-[38%] ml-auto -mt-[1%] mr-[7%]'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='190'
@@ -129,7 +129,7 @@ export default function SlideSection() {
             />
           </svg>
           <span className='absolute inset-0 grid place-items-center font-semibold'>Go to quests</span>
-        </div>
+        </Link>
       </div>
     </div>
   )

@@ -85,7 +85,7 @@ function Home() {
     <>
       <Header />
       <div className='pk-container'>
-        <div className='md:my-[50px] lg:flex gap-[10px]'>
+        <div className='md:my-[50px] lg:flex gap-[20px]'>
           <div className='lg:flex-auto lg:w-[67%] px-5 md:px-0'>
             <TaskSlider />
             <div className='mt-[60px] flex justify-between items-center px-2'>

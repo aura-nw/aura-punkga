@@ -1,7 +1,17 @@
 import Image from 'next/image'
 import Frame from './assets/leaderboard-background.svg'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import Avatar from 'assets/images/avatar.svg'
+import { getLeaderboard } from 'src/services'
 export default function LeaderBoard() {
+  const [data, setData] = useState([])
+  useEffect(() => {
+    fetchLeaderboard()
+  }, [])
+  const fetchLeaderboard = async () => {
+    const data = await getLeaderboard()
+    setData(data?.user_level || [])
+  }
   return (
     <>
       <div className='relative w-[32%] aspect-[571/581]'>
@@ -33,7 +43,25 @@ export default function LeaderBoard() {
               />
             </svg>
           </div>
-          <div className='flex-1 px-4'>data here</div>
+          <div className='flex-1 grid grid-rows-[repeat(10,1fr)] border-[length:1.5px] border-light-medium-gray rounded-[20px] mx-4 divide-y-[1.5px] overflow-auto'>
+            <div className='grid grid-cols-[56px_1fr_130px_100px] h-[48px] font-orbitron text-base font-semibold place-items-center pl-3'>
+              <div>Rank</div>
+              <div>User</div>
+              <div>Quests</div>
+              <div>XP</div>
+            </div>
+            {data?.map((item, index) => (
+              <div key={index} className='grid grid-cols-[56px_1fr_130px_100px] place-items-center py-[10px]'>
+                <div>#{index + 1}</div>
+                <div className='flex items-center gap-[10px] justify-self-start px-[10px]'>
+                  <Image className='w-7 h-7 rounded-full' src={item.authorizer_user.picture || Avatar} alt='' />
+                  <div className='font-medium'>{item.authorizer_user.nickname}</div>
+                </div>
+                <div>{item.authorizer_user.user_quests_aggregate.aggregate.count || 0}</div>
+                <div>{item.xp}XP</div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>

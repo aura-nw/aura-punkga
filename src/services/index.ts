@@ -348,3 +348,7 @@ export const claimQuest = async (questId: string) => {
   const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/quest/${questId}/claim`)
   return data
 }
+export const getLeaderboard = async () => {
+  const { data } = await axios.get(`${getConfig().API_URL}/api/rest/pubic/leaderboard`)
+  return data
+}
