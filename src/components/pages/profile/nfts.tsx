@@ -20,7 +20,9 @@ export default function NFTList() {
   }, [wallet])
   const fetchNft = async () => {
     const data = await getUserNfts(wallet)
+    setData(data)
   }
+  console.log(data)
   return (
     <div className='my-[60px] relative'>
       <Image src={HeaderBg} alt='' />
@@ -29,7 +31,7 @@ export default function NFTList() {
       </div>
       <div className='bg-[#f0f0f0] px-[55px]'>
         <div className='grid grid-cols-[repeat(auto-fill,minmax(max(160px,calc(100%/5)),1fr))] grid-rows-[auto_auto] lg:grid-rows-1 auto-rows-[0px] overflow-hidden'>
-          {[...(Array(5).keys() as any)].map((token, index) => (
+          {[...(Array(1).keys() as any)].map((token, index) => (
             <div className='p-[5px] lg:p-5 [&:hover_.view-on-seekhype]:translate-y-0'>
               <div className={`bg-white rounded-[20px] p-[10px]`}>
                 <div className='w-full aspect-square rounded-[15px] overflow-hidden relative'>

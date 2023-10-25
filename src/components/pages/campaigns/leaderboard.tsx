@@ -15,7 +15,6 @@ export default function LeaderBoard() {
     },
     { refreshInterval: 10000 }
   )
-  console.log(account)
   return (
     <>
       <div className='relative w-[32%] aspect-[571/581]'>

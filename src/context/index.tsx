@@ -121,10 +121,10 @@ function ContextProvider({ children }) {
           bio: res.bio,
           signupMethods: res.signup_methods,
           walletAddress: res.authorizer_users_user_wallet?.address,
-          xp: res.levels[0].xp,
-          level: res.levels[0].level,
+          xp: res.levels?.[0]?.xp || 0,
+          level: res.levels?.[0]?.level || 0,
           completedQuests: res.user_quests || [],
-          rank: res.rank,
+          rank: res.rank || 999999,
         } as IUser)
       }
       return res
