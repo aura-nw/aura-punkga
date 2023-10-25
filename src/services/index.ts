@@ -112,18 +112,11 @@ export const setAddress = async (address: string) => {
 
 export const getProfile = async () => {
   const res: any = await privateAxios.get(`${getConfig().API_URL}/api/rest/user/profile`)
+  const rank: any = await privateAxios.get(`${getConfig().API_URL}/api/rest/user/rank`)
   if (res) {
     return {
-      id: res.data.authorizer_users[0].id,
-      email: res.data.authorizer_users[0].email,
-      gender: res.data.authorizer_users[0].gender,
-      nickname: res.data.authorizer_users[0].nickname,
-      picture: res.data.authorizer_users[0].picture,
-      birthdate: res.data.authorizer_users[0].birthdate,
-      bio: res.data.authorizer_users[0].bio,
-      signup_methods: res.data.authorizer_users[0].signup_methods,
-      wallet_address: res.data.authorizer_users[0].wallet_address,
-      email_verified_at: res.data.authorizer_users[0].email_verified_at,
+      ...res?.data?.authorizer_users?.[0],
+      rank: rank?.data?.user_xp_rank?.[0]?.rank || 99999,
     }
   }
 }
@@ -351,4 +344,27 @@ export const claimQuest = async (questId: string) => {
 export const getLeaderboard = async () => {
   const { data } = await axios.get(`${getConfig().API_URL}/api/rest/pubic/leaderboard`)
   return data
+}
+export const getUserNfts = async (address: string) => {
+  const env = getConfig().CHAIN_ID.includes('xstaxy') ? 'xstaxy' : 'euphoria'
+  const { data } = await axios.post(`${getConfig().CHAIN_INFO.indexerV2}`, {
+    query: `query Query721ByOwner($owner_address: String!) {
+  ${env} {
+    cw721_token(where: {owner: {_eq: $owner_address}}) {
+      id
+      image_url: media_info(path: "onchain.token_uri")
+      cw721_contract {
+        smart_contract {
+          address
+        }
+      }
+    }
+  }
+}`,
+    variables: {
+      owner_address: address,
+    },
+    operationName: 'Query721ByOwner',
+  })
+  console.log(data)
 }

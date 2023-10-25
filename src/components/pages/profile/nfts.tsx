@@ -3,9 +3,24 @@ import FooterBg from './assets/nfts-list-footer-background.svg'
 import Image from 'next/image'
 import NoImage from 'images/no_img.png'
 import { useTranslation } from 'react-i18next'
+import { useContext, useEffect, useState } from 'react'
+import { Context } from 'src/context'
+import { getUserNfts } from 'src/services'
 
 export default function NFTList() {
   const { t } = useTranslation()
+  const [data, setData] = useState([])
+  const { wallet } = useContext(Context)
+  useEffect(() => {
+    if (wallet) {
+      fetchNft()
+    } else {
+      setData([])
+    }
+  }, [wallet])
+  const fetchNft = async () => {
+    const data = await getUserNfts(wallet)
+  }
   return (
     <div className='my-[60px] relative'>
       <Image src={HeaderBg} alt='' />

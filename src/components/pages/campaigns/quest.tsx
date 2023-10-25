@@ -1,34 +1,37 @@
-import Image from 'next/image'
-import QuestBackground from './assets/quest-background.svg'
-import LockQuestBackground from './assets/lock-quest-background.svg'
-import LockImage from './assets/lock-image.svg'
-import { useContext, useEffect, useState } from 'react'
-import Modal from './modal'
-import { Quest } from 'src/models/campaign'
+import Spinner from 'components/Spinner'
 import moment from 'moment'
-import { claimQuest, getQuestDetail } from 'src/services'
-import { Context } from 'src/context'
+import Image from 'next/image'
 import Link from 'next/link'
+import { useContext, useEffect, useState } from 'react'
+import { Context } from 'src/context'
+import { Quest } from 'src/models/campaign'
+import { claimQuest, getQuestDetail } from 'src/services'
+import useSWR from 'swr'
+import LockImage from './assets/lock-image.svg'
+import LockQuestBackground from './assets/lock-quest-background.svg'
+import QuestBackground from './assets/quest-background.svg'
+import Modal from './modal'
 export default function Quest({ data }: { data: Quest }) {
   const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [isClaimed, setIsClaimed] = useState<number | undefined>()
   const { account } = useContext(Context)
-  const [questDetail, setQuestDetail] = useState<any>()
-  useEffect(() => {
-    if (open) {
-      fetchQuestDetail()
-    } else {
-      setQuestDetail(undefined)
-    }
-  }, [open])
+  const { data: questDetail } = useSWR(
+    {
+      key: 'get_quest_detail',
+      questId: data.id,
+      accountId: account?.id,
+      open,
+    },
+    ({ questId, accountId, open }) => (open ? getQuestDetail(questId, accountId) : null),
+    { refreshInterval: 5000 }
+  )
 
-  const fetchQuestDetail = async () => {
-    try {
-      const res = await getQuestDetail(data.id, account?.id)
-      setQuestDetail(res)
-    } catch (error) {
-      console.log(error)
+  useEffect(() => {
+    if (questDetail?.reward_status != undefined) {
+      setIsClaimed(questDetail?.reward_status)
     }
-  }
+  }, [questDetail?.reward_status])
 
   const mission = data.requirement.read
     ? `Read chapter ${data.requirement.read?.chapter?.title} of manga ${data.requirement.read?.manga?.title}`
@@ -68,11 +71,15 @@ export default function Quest({ data }: { data: Quest }) {
 
   const claimQuestHandler = async () => {
     try {
+      if (loading) return
+      setLoading(true)
       const res = await claimQuest(data.id)
       if (res) {
-        fetchQuestDetail()
+        setIsClaimed(2)
       }
+      setLoading(false)
     } catch (error) {
+      setLoading(false)
       console.error(error)
     }
   }
@@ -202,17 +209,30 @@ export default function Quest({ data }: { data: Quest }) {
             target='_blank'>
             <div className='underline text-[32px] font-bold text-[#414141]'>Go to page</div>
           </Link>
-          {questDetail && questDetail?.reward_status == 2 ? (
+          {isClaimed == 2 ? (
             <button className='p-3 bg-[#ababab] rounded-[20px] -mb-14 pointer-events-none'>
               <div className='text-[32px] font-bold text-[#414141]'>Claimed</div>
             </button>
-          ) : questDetail && questDetail?.reward_status == 1 ? (
-            <button className='p-3 bg-primary-color rounded-[20px] -mb-14' onClick={claimQuestHandler}>
+          ) : isClaimed == 1 ? (
+            <button
+              className='p-3 bg-primary-color rounded-[20px] -mb-14 flex gap-2 items-center justify-center'
+              onClick={claimQuestHandler}>
+              {loading && (
+                <span>
+                  <Spinner className={` h-8 w-8`} />
+                </span>
+              )}
+              <div className='text-[32px] font-bold text-[#414141]'>Claim reward</div>
+            </button>
+          ) : isClaimed == 0 ? (
+            <button className='p-3 bg-[#ababab] rounded-[20px] -mb-14 pointer-events-none'>
               <div className='text-[32px] font-bold text-[#414141]'>Claim reward</div>
             </button>
           ) : (
             <button className='p-3 bg-[#ababab] rounded-[20px] -mb-14 pointer-events-none'>
-              <div className='text-[32px] font-bold text-[#414141]'>Claim reward</div>
+              <span>
+                <Spinner className={` h-10 w-10`} />
+              </span>
             </button>
           )}
         </div>

@@ -107,8 +107,8 @@ function ContextProvider({ children }) {
       }
       const res = await getProfileService()
       if (res) {
-        if (res.wallet_address) {
-          setWallet(res.wallet_address)
+        if (res.authorizer_users_user_wallet?.address) {
+          setWallet(res.authorizer_users_user_wallet?.address)
         }
         setAccount({
           email: res.email,
@@ -120,7 +120,11 @@ function ContextProvider({ children }) {
           birthdate: res.birthdate,
           bio: res.bio,
           signupMethods: res.signup_methods,
-          walletAddress: res.wallet_address,
+          walletAddress: res.authorizer_users_user_wallet?.address,
+          xp: res.levels[0].xp,
+          level: res.levels[0].level,
+          completedQuests: res.user_quests || [],
+          rank: res.rank,
         } as IUser)
       }
       return res

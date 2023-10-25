@@ -1,17 +1,21 @@
-import Image from 'next/image'
-import Frame from './assets/leaderboard-background.svg'
-import { useEffect, useState } from 'react'
 import Avatar from 'assets/images/avatar.svg'
+import Image from 'next/image'
 import { getLeaderboard } from 'src/services'
+import useSWR from 'swr'
+import Frame from './assets/leaderboard-background.svg'
+import { useContext } from 'react'
+import { Context } from 'src/context'
 export default function LeaderBoard() {
-  const [data, setData] = useState([])
-  useEffect(() => {
-    fetchLeaderboard()
-  }, [])
-  const fetchLeaderboard = async () => {
-    const data = await getLeaderboard()
-    setData(data?.user_level || [])
-  }
+  const { account } = useContext(Context)
+  const { data } = useSWR(
+    'get_leaderboard',
+    async () => {
+      const data = await getLeaderboard()
+      return data?.user_level || []
+    },
+    { refreshInterval: 10000 }
+  )
+  console.log(account)
   return (
     <>
       <div className='relative w-[32%] aspect-[571/581]'>
@@ -55,13 +59,40 @@ export default function LeaderBoard() {
                 <div>#{index + 1}</div>
                 <div className='flex items-center gap-[10px] justify-self-start px-[10px]'>
                   <Image className='w-7 h-7 rounded-full' src={item.authorizer_user.picture || Avatar} alt='' />
-                  <div className='font-medium'>{item.authorizer_user.nickname}</div>
+                  <div className='font-medium line-clamp-1'>{item.authorizer_user.nickname}</div>
                 </div>
                 <div>{item.authorizer_user.user_quests_aggregate.aggregate.count || 0}</div>
                 <div>{item.xp}XP</div>
               </div>
             ))}
           </div>
+          {account && (
+            <div className='relative mx-4'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='960'
+                height='123'
+                viewBox='0 0 320 41'
+                fill='none'
+                className='w-full h-full'>
+                <path d='M320 0.250244H0V22.4351L18.0426 40.2502H301.957L320 22.4351V0.250244Z' fill='#DEDEDE' />
+              </svg>
+              <div className='inset-0 absolute flex items-center justify-between pl-5 pr-4'>
+                <div>
+                  <span className='font-orbitron font-extralight'>Current rank: </span>
+                  <strong>#{account.rank}</strong>
+                </div>
+                <div>
+                  <span className='font-orbitron font-extralight'>Quests: </span>
+                  <strong>{account.completedQuests.length}</strong>
+                </div>
+                <div>
+                  <span className='font-orbitron font-extralight'>XP: </span>
+                  <strong>{account.xp}</strong>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>

@@ -5,27 +5,23 @@ import { Campaign } from 'src/models/campaign'
 import { Context } from 'src/context'
 import HeaderImage from './assets/campaign-filter-header.svg'
 import Image from 'next/image'
+import useSWR from 'swr'
 export default function Campaign() {
-  const [campaigns, setCampaigns] = useState<Campaign[]>([])
   const [selectedCampaigns, setSelectedCampaigns] = useState<string[]>([])
   const { account } = useContext(Context)
-  useEffect(() => {
-    fetchAllCampaign()
-  }, [])
-  const fetchAllCampaign = async () => {
-    try {
-      const data = await getCampaigns(account?.id)
-      setCampaigns(data)
-    } catch (error) {}
-  }
+  const { data: campaigns } = useSWR(
+    { key: 'get_all_campaigns', accountId: account?.id },
+    ({ accountId }) => getCampaigns(accountId),
+    { refreshInterval: 10000 }
+  )
   return (
     <>
       <div className='mb-20'>
         <Image src={HeaderImage} alt='' />
         <div className='border-r-2 border-[#ABABAB] border-l-2 px-10 flex gap-[10px]'>
-          {campaigns.map((campaign, index) => (
+          {campaigns?.map((campaign, index) => (
             <div
-              className={`p-[10px] bg-[#F2F2F2] border-[#DEDEDE] hover:border-[#C6FFDE] cursor-pointer border-[length:1px] rounded-lg text-[#ababab] leading-5 ${
+              className={`p-[10px] bg-[#F2F2F2] border-[#DEDEDE] hover:border-[#C6FFDE] cursor-pointer border-[length:1px] w-max rounded-lg text-[#ababab] leading-5 ${
                 selectedCampaigns.includes(campaign.id) ? '!border-primary-color !bg-black !text-primary-color' : ''
               }`}
               key={index}
@@ -49,15 +45,15 @@ export default function Campaign() {
             <path
               d='M0.999023 0.000938416V0.000938416C0.999023 1.18476 1.46768 2.32045 2.30254 3.15976L12.0512 12.9602C13.9279 14.8469 16.4793 15.9078 19.1404 15.908L1622.85 16.0012C1625.52 16.0014 1628.07 14.9405 1629.94 13.0535L1639.63 3.3196C1640.5 2.43796 1641 1.245 1641 0.00146484V0.00146484'
               stroke='#ABABAB'
-              stroke-width='2'
+              strokeWidth='2'
             />
           </svg>
         </div>
       </div>
       <div className='flex flex-col gap-20'>
         {campaigns
-          .filter((campaign) => !selectedCampaigns.length || selectedCampaigns.includes(campaign.id))
-          .map((campaign, index) => (
+          ?.filter((campaign) => !selectedCampaigns.length || selectedCampaigns.includes(campaign.id))
+          ?.map((campaign, index) => (
             <div key={index}>
               <div className='flex gap-2 mb-10'>
                 <svg xmlns='http://www.w3.org/2000/svg' width='95' height='23' viewBox='0 0 95 23' fill='none'>
