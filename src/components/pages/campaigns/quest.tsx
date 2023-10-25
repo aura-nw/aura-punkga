@@ -15,7 +15,7 @@ export default function Quest({ data }: { data: Quest }) {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [isClaimed, setIsClaimed] = useState<number | undefined>()
-  const { account } = useContext(Context)
+  const { account, getProfile } = useContext(Context)
   const { data: questDetail } = useSWR(
     {
       key: 'get_quest_detail',
@@ -34,10 +34,10 @@ export default function Quest({ data }: { data: Quest }) {
   }, [questDetail?.reward_status])
 
   const mission = data.requirement.read
-    ? `Read chapter ${data.requirement.read?.chapter?.title} of manga ${data.requirement.read?.manga?.title}`
+    ? `Read ${data.requirement.read?.manga?.title} - ${data.requirement.read?.chapter?.title}`
     : data.requirement.comment
-    ? `Comment something in chapter ${data.requirement.comment?.chapter?.title} of manga ${data.requirement.comment?.manga?.title}`
-    : `Subcribe ${data.requirement?.subscribe?.manga?.title}`
+    ? `Leave a comment on ${data.requirement.read?.manga?.title} - ${data.requirement.read?.chapter?.title}`
+    : `Subcribe to ${data.requirement?.subscribe?.manga?.title}` + ' to claim your reward'
   const conditions = data.condition.level
     ? `Unlock at level ${data.condition.level}`
     : `${[
@@ -74,6 +74,7 @@ export default function Quest({ data }: { data: Quest }) {
       if (loading) return
       setLoading(true)
       const res = await claimQuest(data.id)
+      await getProfile()
       if (res) {
         setIsClaimed(2)
       }
@@ -131,7 +132,7 @@ export default function Quest({ data }: { data: Quest }) {
               <Image src={LockImage} alt='' />
               <div className='text-xl font-bold text-center'>{data.name}</div>
               {conditions ? (
-                <div className='text-sm text-second-color text-center'>
+                <div className='text-sm text-second-color text-center line-clamp-2'>
                   <span className='font-bold'>CONDITION:</span>
                   {conditions}
                 </div>
@@ -198,11 +199,12 @@ export default function Quest({ data }: { data: Quest }) {
           <div className='uppercase font-bold text-lg border py-2 px-3 w-fit leading-3 rounded-sm border-[#414141]'>
             {data.type}
           </div>
-          <div className='text-lg text-[#61646B] font-bold'>
-            <span className='font-bold'>MISSION:</span>
-            {mission}
-          </div>
-          {conditions ? <div className='text-2xl text-subtle-dark font-bold'>{conditions}</div> : <div></div>}
+          <div className='text-lg text-[#61646B] font-bold line-clamp-2'>{mission}</div>
+          {conditions ? (
+            <div className='text-2xl text-subtle-dark font-bold line-clamp-2'>{conditions}</div>
+          ) : (
+            <div></div>
+          )}
           <Link
             href={pageLink}
             className='p-3 hover:bg-[#DEDEDE] rounded-[20px] mt-[14px] text-center outline-none'

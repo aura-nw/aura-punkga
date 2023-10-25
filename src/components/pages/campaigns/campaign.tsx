@@ -18,7 +18,7 @@ export default function Campaign() {
     <>
       <div className='mb-20'>
         <Image src={HeaderImage} alt='' />
-        <div className='border-r-2 border-[#ABABAB] border-l-2 px-10 flex gap-[10px]'>
+        <div className='border-r-2 border-[#ABABAB] border-l-2 px-10 flex gap-[10px] flex-wrap'>
           {campaigns?.map((campaign, index) => (
             <div
               className={`p-[10px] bg-[#F2F2F2] border-[#DEDEDE] hover:border-[#C6FFDE] cursor-pointer border-[length:1px] w-max rounded-lg text-[#ababab] leading-5 ${

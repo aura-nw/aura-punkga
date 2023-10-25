@@ -120,7 +120,7 @@ export default function Info({ updateProfile }) {
                     id='image0_3971_11276'
                     width='2048'
                     height='2048'
-                    xlinkHref={preview || account.image || NoImg}
+                    xlinkHref={preview || account.image || NoImg.src}
                   />
                 </defs>
               </svg>

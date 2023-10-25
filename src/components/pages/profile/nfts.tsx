@@ -22,7 +22,6 @@ export default function NFTList() {
     const data = await getUserNfts(wallet)
     setData(data)
   }
-  console.log(data)
   return (
     <div className='my-[60px] relative'>
       <Image src={HeaderBg} alt='' />

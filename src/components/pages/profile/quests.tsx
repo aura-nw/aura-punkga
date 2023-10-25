@@ -4,9 +4,16 @@ import 'swiper/css/navigation'
 import { Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import Frame from './assets/quest-background.svg'
-import { useRef } from 'react'
+import { useContext, useRef, useState } from 'react'
+import useSWR from 'swr'
+import { Context } from 'src/context'
+import { getAvailableQuests } from 'src/services'
 export default function Quest() {
   const swiperRef = useRef<any>()
+  const { account } = useContext(Context)
+  const { data } = useSWR({ key: 'get_available_quests', account }, ({ account }) =>
+    account ? getAvailableQuests() : null
+  )
   return (
     <>
       <div className='relative w-[35%] aspect-[571/581] mr-6'>
@@ -44,8 +51,8 @@ export default function Quest() {
               spaceBetween={50}
               slidesPerView={1}
               modules={[Navigation]}>
-              {[...(Array(10).keys() as any)].map((v, index) => (
-                <SwiperSlide>
+              {data?.map((quest, index) => (
+                <SwiperSlide key={index}>
                   <div className='relative'>
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
@@ -61,7 +68,7 @@ export default function Quest() {
                         strokeWidth='2'
                       />
                     </svg>
-                    <div className='inset-0 absolute'>{`Slide ${index}`}</div>
+                    <div className='inset-0 absolute flex justify-center items-center'>{`${quest.name}`}</div>
                   </div>
                 </SwiperSlide>
               ))}
