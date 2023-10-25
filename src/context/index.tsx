@@ -116,7 +116,7 @@ function ContextProvider({ children }) {
           image: res.picture,
           verified: !!res.email_verified_at,
           id: res.id,
-          gender: res.gender,
+          gender: res.gender || '',
           birthdate: res.birthdate,
           bio: res.bio,
           signupMethods: res.signup_methods,
