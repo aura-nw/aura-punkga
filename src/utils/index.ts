@@ -35,3 +35,16 @@ export function getBlurUrl() {
 export function appendHttps(url: string) {
   return url.includes('https://') ? url : `https://${url}`
 }
+export const levelToXp = (level) => {
+  const a = 100
+  const b = 1.1
+  const n = level
+
+  const breakLevel = 26
+  const m = n % breakLevel
+  const i = Math.floor(n / breakLevel)
+
+  const y = ((a * (1 - b ** breakLevel)) / (1 - b)) * i + (a * (1 - b ** m)) / (1 - b)
+
+  return y
+}

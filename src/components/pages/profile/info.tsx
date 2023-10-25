@@ -20,6 +20,7 @@ import Bg2 from './assets/bg2.svg'
 import AutoGrowingTextField from 'components/Input/TextField/AutoGrowing'
 import SettingPasswordModal from 'components/pages/profile/settingPasswordModal'
 import ChangingPasswordModal from 'components/pages/profile/changingPasswordModal'
+import { levelToXp } from 'src/utils'
 export default function Info({ updateProfile }) {
   const { account, getProfile } = useContext(Context)
   const { t } = useTranslation()
@@ -70,6 +71,7 @@ export default function Info({ updateProfile }) {
     setOpen(false)
   }
 
+  const percentage = (Math.round(levelToXp(4) - account.xp) / Math.round(levelToXp(4) - levelToXp(3))) * 360
   const CustomInput = forwardRef(({ value, onClick }: any, ref: any) => {
     return (
       <button
@@ -306,12 +308,15 @@ export default function Info({ updateProfile }) {
           </div>
         </div>
         <div className='font-orbitron absolute bottom-[11%] right-[23%]'>Level:</div>
-        <div className='p-[10px] items-center justify-center font-orbitron absolute bottom-[1.2%] right-[1%] text-lg font-black flex w-[20%] aspect-square rounded-full bg-[conic-gradient(#1fab5e_267deg,white_0deg)]'>
+        <div
+          className={`p-[10px] items-center justify-center font-orbitron absolute bottom-[1.2%] right-[1%] text-lg font-black flex w-[20%] aspect-square rounded-full bg-[conic-gradient(#1fab5e_${Math.round(
+            percentage
+          )}deg,white_0deg)]`}>
           <div className='bg-white p-1 rounded-full w-full h-full'>
             <div className='border-[length:2px] border-black aspect-square w-fit h-full rounded-full grid place-items-center'>
               <div className='flex flex-col justify-center items-center'>
-                <div className='text-second-color font-bold text-[32px]'>12</div>
-                <div className='text-xs'>222 xp</div>
+                <div className='text-second-color font-bold text-[32px]'>{account.level}</div>
+                <div className='text-xs'>{Math.round(levelToXp(4) - account.xp)} xp</div>
               </div>
             </div>
           </div>
