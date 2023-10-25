@@ -84,7 +84,7 @@ export default function LeaderBoard() {
                 </div>
                 <div>
                   <span className='font-orbitron font-extralight'>Quests: </span>
-                  <strong>{account.completedQuests.length}</strong>
+                  <strong>{account.completedQuests?.length}</strong>
                 </div>
                 <div>
                   <span className='font-orbitron font-extralight'>XP: </span>
