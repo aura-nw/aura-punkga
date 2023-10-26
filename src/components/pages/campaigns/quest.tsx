@@ -8,9 +8,9 @@ import { Quest } from 'src/models/campaign'
 import { claimQuest, getQuestDetail } from 'src/services'
 import useSWR from 'swr'
 import LockImage from './assets/lock-image.svg'
-import LockQuestBackground from './assets/lock-quest-background.svg'
-import QuestBackground from './assets/quest-background.svg'
 import Modal from './modal'
+import DOMPurify from 'dompurify'
+
 export default function Quest({ data }: { data: Quest }) {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -116,7 +116,13 @@ export default function Quest({ data }: { data: Quest }) {
               </div>
             </div>
             <div className='flex flex-col gap-5'>
-              {data.description ? <div className='text-xs text-subtle-dark'>{data.description}</div> : <div></div>}
+              {data.description ? (
+                <div
+                  className='text-xs text-subtle-dark whitespace-pre-wrap'
+                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data?.description) }}></div>
+              ) : (
+                <div></div>
+              )}
               {mission ? (
                 <div className='text-xs text-second-color font-medium'>
                   <span className='font-bold'>CONDITION: </span>
@@ -179,7 +185,13 @@ export default function Quest({ data }: { data: Quest }) {
             </div>
           </div>
           <div className='flex flex-col gap-5'>
-            {data.description ? <div className='text-xs text-subtle-dark'>{data.description}</div> : <div></div>}
+            {data.description ? (
+              <div
+                className='text-xs text-subtle-dark whitespace-pre-wrap'
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data?.description) }}></div>
+            ) : (
+              <div></div>
+            )}
             <div className='text-xs font-bold text-subtle-dark'>{mission}</div>
           </div>
           <Link
@@ -241,7 +253,9 @@ export default function Quest({ data }: { data: Quest }) {
           <div className='flex-1 flex justify-between flex-col'>
             <div className='flex gap-2 flex-col'>
               {data.description ? (
-                <div className='text-xs text-subtle-dark line-clamp-2'>{data.description}</div>
+                <div
+                  className='text-xs text-subtle-dark line-clamp-2 whitespace-pre-wrap'
+                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data?.description) }}></div>
               ) : (
                 <div></div>
               )}
