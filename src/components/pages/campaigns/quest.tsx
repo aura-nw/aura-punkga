@@ -144,13 +144,13 @@ export default function Quest({ data }: { data: Quest }) {
             )}
           </div>
           {data.reward.nft ? (
-            <div className='absolute top-8 right-6 border border-second-color bg-[#1FAB5E]/10 rounded text-xs leading-3 font-medium'>
+            <div className='border border-second-color bg-[#1FAB5E]/10 rounded text-xs leading-3 font-medium w-[38px] aspect-square'>
               <Image
                 src={data.reward.nft.img_url}
                 width={38}
                 height={38}
                 alt=''
-                className='object-cover aspect-square'
+                className='object-cover h-full w-full'
               />
             </div>
           ) : (
@@ -234,13 +234,13 @@ export default function Quest({ data }: { data: Quest }) {
           <div className='flex gap-7 justify-between'>
             <div className='font-bold max-w-[240px] leading-5 pr-1 line-clamp-2'>{data.name}</div>
             {data.reward.nft ? (
-              <div className='border border-second-color bg-[#1FAB5E]/10 rounded text-xs leading-3 font-medium'>
+              <div className='border border-second-color bg-[#1FAB5E]/10 rounded text-xs leading-3 font-medium w-[38px] aspect-square'>
                 <Image
                   src={data.reward.nft.img_url}
                   width={38}
                   height={38}
                   alt=''
-                  className='object-cover aspect-square'
+                  className='object-cover h-full w-full'
                 />
               </div>
             ) : (
