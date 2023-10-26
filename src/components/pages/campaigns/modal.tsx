@@ -37,7 +37,7 @@ export default function Modal({ open, setOpen, children, hideClose }: any) {
                     <XMarkIcon className='w-7 h-7' />
                   </div>
                 )}
-                <div className='bg-[#f4f4f4] p-8 rounded-[10px] min-w-[656px]'>{children}</div>
+                <div className='bg-[#f4f4f4] p-8 rounded-[10px] w-[656px]'>{children}</div>
               </Dialog.Panel>
             </Transition.Child>
           </div>
