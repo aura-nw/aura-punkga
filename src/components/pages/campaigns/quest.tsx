@@ -135,7 +135,7 @@ export default function Quest({ data }: { data: Quest }) {
             <Image src={LockImage} alt='' />
           </div>
           <div className='flex gap-2 flex-col justify-center items-center'>
-            <div className='font-bold text-[#292929]'>{data.name}</div>
+            <div className='font-bold text-[#292929] min-h-[40px]'>{data.name}</div>
             {conditions ? (
               <div className='text-xs text-second-color'>
                 <span className='font-bold'>CONDITION: </span>
@@ -221,7 +221,7 @@ export default function Quest({ data }: { data: Quest }) {
         onClick={openQuestHandler}>
         <div className='flex flex-col justify-between gap-5 min-h-[181px]'>
           <div className='flex gap-7 justify-between'>
-            <div className='font-bold max-w-[240px] leading-5 pr-1 line-clamp-2'>{data.name}</div>
+            <div className='font-bold max-w-[240px] leading-5 pr-1 line-clamp-2 min-h-[40px]'>{data.name}</div>
             {data.reward.nft ? (
               <div className='border border-second-color bg-[#1FAB5E]/10 rounded text-xs leading-3 font-medium w-[38px] aspect-square'>
                 <Image
