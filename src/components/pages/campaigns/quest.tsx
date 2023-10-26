@@ -104,7 +104,7 @@ export default function Quest({ data }: { data: Quest }) {
                     />
                   </div>
                 ) : (
-                  <div className='border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium  whitespace-nowrap'>
+                  <div className='border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium  whitespace-nowrap h-fit'>
                     <span className='text-second-color font-bold'>{data.reward.xp}</span> EXP
                   </div>
                 )}
@@ -165,7 +165,7 @@ export default function Quest({ data }: { data: Quest }) {
                   />
                 </div>
               ) : (
-                <div className='border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium whitespace-nowrap'>
+                <div className='border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium whitespace-nowrap h-fit'>
                   <span className='text-second-color font-bold'>{data.reward.xp}</span> EXP
                 </div>
               )}
@@ -229,7 +229,7 @@ export default function Quest({ data }: { data: Quest }) {
                 />
               </div>
             ) : (
-              <div className='border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-xs leading-3 font-medium whitespace-nowrap'>
+              <div className='border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-xs leading-3 font-medium whitespace-nowrap h-fit'>
                 <span className='text-second-color font-bold'>{data.reward.xp}</span> EXP
               </div>
             )}
