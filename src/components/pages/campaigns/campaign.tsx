@@ -17,7 +17,7 @@ export default function Campaign() {
   return (
     <div className='flex flex-col gap-8'>
       <div className='flex gap-10'>
-        <div className='flex-1 flex flex-col gap-4 sticky top-[150px] h-fit'>
+        <div className='flex-1 flex flex-col gap-4 sticky top-[100px] h-fit'>
           <div className='flex gap-[15px] items-end mb-4'>
             <svg xmlns='http://www.w3.org/2000/svg' width='60' height='15' viewBox='0 0 60 15' fill='none'>
               <path

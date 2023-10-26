@@ -55,6 +55,8 @@ export default function LeaderBoard() {
                   </div>
                   <Image
                     src={data?.[0]?.authorizer_user?.picture || Avatar}
+                    width={137}
+                    height={137}
                     alt=''
                     className='w-[137px] aspect-square rounded-full'
                   />
@@ -94,7 +96,13 @@ export default function LeaderBoard() {
                     <div className='flex items-center'>
                       <div className='w-[45px]'>#{index + 1}</div>
                       <div className='flex items-center gap-[10px] justify-self-start px-[10px]'>
-                        <Image className='w-7 h-7 rounded-full' src={item.authorizer_user.picture || Avatar} alt='' />
+                        <Image
+                          className='w-7 h-7 rounded-full'
+                          width={28}
+                          height={28}
+                          src={item.authorizer_user.picture || Avatar}
+                          alt=''
+                        />
                         <div className='line-clamp-1'>{item.authorizer_user.nickname}</div>
                       </div>
                     </div>

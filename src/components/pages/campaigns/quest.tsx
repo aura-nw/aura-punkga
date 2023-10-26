@@ -104,7 +104,7 @@ export default function Quest({ data }: { data: Quest }) {
                     />
                   </div>
                 ) : (
-                  <div className='border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium'>
+                  <div className='border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium  whitespace-nowrap'>
                     <span className='text-second-color font-bold'>{data.reward.xp}</span> EXP
                   </div>
                 )}
@@ -143,21 +143,6 @@ export default function Quest({ data }: { data: Quest }) {
               <div></div>
             )}
           </div>
-          {data.reward.nft ? (
-            <div className='border border-second-color bg-[#1FAB5E]/10 rounded text-xs leading-3 font-medium w-[38px] aspect-square'>
-              <Image
-                src={data.reward.nft.img_url}
-                width={38}
-                height={38}
-                alt=''
-                className='object-cover h-full w-full'
-              />
-            </div>
-          ) : (
-            <div className='absolute top-8 right-6 border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-xs leading-3 font-medium'>
-              <span className='text-second-color font-bold'>{data.reward.xp}</span> EXP
-            </div>
-          )}
         </div>
       </>
     )
@@ -180,7 +165,7 @@ export default function Quest({ data }: { data: Quest }) {
                   />
                 </div>
               ) : (
-                <div className='border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium'>
+                <div className='border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium whitespace-nowrap'>
                   <span className='text-second-color font-bold'>{data.reward.xp}</span> EXP
                 </div>
               )}
@@ -244,14 +229,18 @@ export default function Quest({ data }: { data: Quest }) {
                 />
               </div>
             ) : (
-              <div className='border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-xs leading-3 font-medium'>
+              <div className='border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-xs leading-3 font-medium whitespace-nowrap'>
                 <span className='text-second-color font-bold'>{data.reward.xp}</span> EXP
               </div>
             )}
           </div>
           <div className='flex-1 flex justify-between flex-col'>
             <div className='flex gap-2 flex-col'>
-              {data.description ? <div className='text-xs text-subtle-dark'>{data.description}</div> : <div></div>}
+              {data.description ? (
+                <div className='text-xs text-subtle-dark line-clamp-2'>{data.description}</div>
+              ) : (
+                <div></div>
+              )}
               {conditions ? (
                 <div className='text-xs text-second-color'>
                   <span className='font-bold'>CONDITION: </span>
