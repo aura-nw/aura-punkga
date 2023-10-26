@@ -80,7 +80,13 @@ export default function LeaderBoard() {
                 <div key={index} className='grid grid-cols-[56px_1fr_130px_100px] place-items-center py-[10px]'>
                   <div>#{index + 1}</div>
                   <div className='flex items-center gap-[10px] justify-self-start px-[10px]'>
-                    <Image className='w-7 h-7 rounded-full' src={item.authorizer_user.picture || Avatar} alt='' />
+                    <Image
+                      className='w-7 h-7 rounded-full'
+                      src={item.authorizer_user.picture || Avatar}
+                      width={28}
+                      height={28}
+                      alt=''
+                    />
                     <div className='font-medium line-clamp-1'>{item.authorizer_user.nickname}</div>
                   </div>
                   <div>{item.authorizer_user.user_quests_aggregate.aggregate.count || 0}</div>

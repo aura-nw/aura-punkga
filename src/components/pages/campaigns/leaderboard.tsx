@@ -68,7 +68,7 @@ export default function LeaderBoard() {
                     {data?.[0]?.authorizer_user?.user_quests_aggregate?.aggregate?.count || 0}
                   </div>
                   <div>
-                    <strong>Xp: </strong>
+                    <strong>XP: </strong>
                     {data?.[0]?.xp || 0}
                   </div>
                 </div>

@@ -92,25 +92,27 @@ export default function Quest({ data }: { data: Quest }) {
           <div className='flex flex-col gap-[26px]'>
             <div className='flex flex-col gap-4'>
               <div className='flex justify-between'>
-                <div className='font-bold'>{data.name}</div>
+                <div className='font-bold flex flex-col gap-5'>
+                  <div>{data.name}</div>
+                  <div className='border border-second-color p-2 rounded text-sm leading-3 font-medium w-fit uppercase'>
+                    {data.type}
+                  </div>
+                </div>
                 {data.reward.nft ? (
-                  <div className='border border-second-color bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium'>
+                  <div className='border border-second-color bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium w-[66px] h-[66px]'>
                     <Image
                       src={data.reward.nft.img_url}
                       width={66}
                       height={66}
                       alt=''
-                      className='object-cover aspect-square'
+                      className='object-cover w-full h-full'
                     />
                   </div>
                 ) : (
                   <div className='border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium  whitespace-nowrap h-fit'>
-                    <span className='text-second-color font-bold'>{data.reward.xp}</span> EXP
+                    <span className='text-second-color font-bold'>{data.reward.xp}</span> XP
                   </div>
                 )}
-              </div>
-              <div className='border border-second-color p-2 rounded text-sm leading-3 font-medium w-fit uppercase'>
-                {data.type}
               </div>
             </div>
             <div className='flex flex-col gap-5'>
@@ -153,25 +155,27 @@ export default function Quest({ data }: { data: Quest }) {
         <div className='flex flex-col gap-[26px]'>
           <div className='flex flex-col gap-4'>
             <div className='flex justify-between'>
-              <div className='font-bold'>{data.name}</div>
+              <div className='font-bold flex flex-col gap-5'>
+                <div>{data.name}</div>
+                <div className='border border-second-color p-2 rounded text-sm leading-3 font-medium w-fit uppercase'>
+                  {data.type}
+                </div>
+              </div>
               {data.reward.nft ? (
-                <div className='border border-second-color bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium'>
+                <div className='border border-second-color bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium w-[66px] h-[66px]'>
                   <Image
                     src={data.reward.nft.img_url}
                     width={66}
                     height={66}
                     alt=''
-                    className='object-cover aspect-square'
+                    className='object-cover w-full h-full'
                   />
                 </div>
               ) : (
                 <div className='border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium whitespace-nowrap h-fit'>
-                  <span className='text-second-color font-bold'>{data.reward.xp}</span> EXP
+                  <span className='text-second-color font-bold'>{data.reward.xp}</span> XP
                 </div>
               )}
-            </div>
-            <div className='border border-second-color p-2 rounded text-sm leading-3 font-medium w-fit uppercase'>
-              {data.type}
             </div>
           </div>
           <div className='flex flex-col gap-5'>
@@ -230,7 +234,7 @@ export default function Quest({ data }: { data: Quest }) {
               </div>
             ) : (
               <div className='border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-xs leading-3 font-medium whitespace-nowrap h-fit'>
-                <span className='text-second-color font-bold'>{data.reward.xp}</span> EXP
+                <span className='text-second-color font-bold'>{data.reward.xp}</span> XP
               </div>
             )}
           </div>

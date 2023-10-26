@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next'
 import { useContext, useEffect, useState } from 'react'
 import { Context } from 'src/context'
 import { getUserNfts } from 'src/services'
+import getConfig from 'next/config'
+import Link from 'next/link'
 
 export default function NFTList() {
   const { t } = useTranslation()
@@ -22,6 +24,7 @@ export default function NFTList() {
     const data = await getUserNfts(wallet)
     setData(data)
   }
+  console.log(data)
   return (
     <div className='my-[60px] relative'>
       <Image src={HeaderBg} alt='' />
@@ -30,19 +33,25 @@ export default function NFTList() {
       </div>
       <div className='bg-[#f0f0f0] px-[55px]'>
         <div className='grid grid-cols-[repeat(auto-fill,minmax(max(160px,calc(100%/5)),1fr))] grid-rows-[auto_auto] lg:grid-rows-1 auto-rows-[0px] overflow-hidden'>
-          {[...(Array(1).keys() as any)].map((token, index) => (
-            <div className='p-[5px] lg:p-5 [&:hover_.view-on-seekhype]:translate-y-0'>
+          {data.map((token, index) => (
+            <Link
+              target='_blank'
+              href={`${getConfig()['CHAIN_INFO'].explorer}/tokens/token-nft/${
+                token.cw721_contract.smart_contract.address
+              }/${token.id}`}
+              className='p-[5px] lg:p-5 [&:hover_.view-on-seekhype]:translate-y-0'
+              key={index}>
               <div className={`bg-white rounded-[20px] p-[10px]`}>
                 <div className='w-full aspect-square rounded-[15px] overflow-hidden relative'>
                   <Image
-                    src={token.image || NoImage}
+                    src={token.image_url || NoImage}
                     width={160}
                     height={160}
                     className='w-full object-cover aspect-square'
                     alt=''
                   />
                   <div className='view-on-seekhype transition-all translate-y-full absolute bottom-0 bg-primary-color py-2 w-full text-xl leading-[25px] font-bold text-center'>
-                    {t('View on SEEKHYPE')}
+                    {t('View on AuraScan')}
                   </div>
                 </div>
                 <div
@@ -50,7 +59,7 @@ export default function NFTList() {
                   Token Name
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
