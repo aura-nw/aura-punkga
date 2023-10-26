@@ -71,7 +71,10 @@ export default function Info({ updateProfile }) {
     setOpen(false)
   }
 
-  const percentage = (Math.round(levelToXp(4) - account.xp) / Math.round(levelToXp(4) - levelToXp(3))) * 360
+  const percentage =
+    (Math.round(levelToXp(account.level) - account.xp) /
+      Math.round(levelToXp(account.level + 1) - levelToXp(account.level))) *
+    360
   const CustomInput = forwardRef(({ value, onClick }: any, ref: any) => {
     return (
       <button
@@ -316,7 +319,7 @@ export default function Info({ updateProfile }) {
             <div className='border-[length:2px] border-black aspect-square w-fit h-full rounded-full grid place-items-center'>
               <div className='flex flex-col justify-center items-center'>
                 <div className='text-second-color font-bold text-[32px]'>{account.level}</div>
-                <div className='text-xs'>{Math.round(levelToXp(4) - account.xp)} xp</div>
+                <div className='text-xs'>{Math.round(levelToXp(account.level + 1) - account.xp)} xp</div>
               </div>
             </div>
           </div>
