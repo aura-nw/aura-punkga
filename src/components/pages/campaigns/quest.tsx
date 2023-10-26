@@ -93,7 +93,7 @@ export default function Quest({ data }: { data: Quest }) {
             <div className='flex flex-col gap-4'>
               <div className='flex justify-between'>
                 <div className='font-bold flex flex-col gap-5'>
-                  <div>{data.name}</div>
+                  <div className=''>{data.name}</div>
                   <div className='border border-second-color p-2 rounded text-sm leading-3 font-medium w-fit uppercase'>
                     {data.type}
                   </div>
@@ -135,7 +135,7 @@ export default function Quest({ data }: { data: Quest }) {
             <Image src={LockImage} alt='' />
           </div>
           <div className='flex gap-2 flex-col justify-center items-center'>
-            <div className='font-bold text-[#292929] min-h-[40px]'>{data.name}</div>
+            <div className='font-bold text-[#292929] min-h-[40px] px-8 text-center'>{data.name}</div>
             {conditions ? (
               <div className='text-xs text-second-color'>
                 <span className='font-bold'>CONDITION: </span>
