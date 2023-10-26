@@ -141,7 +141,7 @@ export default function Quest({ data }: { data: Quest }) {
             <Image src={LockImage} alt='' />
           </div>
           <div className='flex gap-2 flex-col justify-center items-center'>
-            <div className='font-bold text-[#292929] min-h-[40px] px-8 text-center'>{data.name}</div>
+            <div className='font-bold text-[#292929] min-h-[40px] px-8 text-center line-clamp-2'>{data.name}</div>
             {conditions ? (
               <div className='text-xs text-second-color px-8'>
                 <span className='font-bold'>CONDITION: </span>
