@@ -36,7 +36,7 @@ export default function Quest({ data }: { data: Quest }) {
   const mission = data.requirement.read
     ? `Read ${data.requirement.read?.manga?.title} - ${data.requirement.read?.chapter?.title}`
     : data.requirement.comment
-    ? `Leave a comment on ${data.requirement.read?.manga?.title} - ${data.requirement.read?.chapter?.title}`
+    ? `Leave a comment on ${data.requirement.comment?.manga?.title} - ${data.requirement.comment?.chapter?.title}`
     : `Subcribe to ${data.requirement?.subscribe?.manga?.title}` + ' to claim your reward'
   const conditions = data.condition.level
     ? `Unlock at level ${data.condition.level}`
