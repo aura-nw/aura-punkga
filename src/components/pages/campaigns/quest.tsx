@@ -88,95 +88,13 @@ export default function Quest({ data }: { data: Quest }) {
   if (!data.unlock)
     return (
       <>
-        <Modal open={open} setOpen={setOpen} onClose={() => setOpen(false)}>
-          <div className='flex flex-col gap-8'>
-            <div className='flex justify-between'>
-              <div className='text-[32px] font-bold'>{data.name}</div>
-              {data.reward.nft ? (
-                <div className=''>
-                  <div className='p-1 bg-gradient-to-l from-black/[0.0001] via-slate-600/40 to-black/[0.0001]'>
-                    <div className='bg-white font-bold text-sm'>
-                      <Image
-                        src={data.reward.nft.img_url}
-                        width={66}
-                        height={66}
-                        alt=''
-                        className='object-cover aspect-square'
-                      />
-                    </div>
-                  </div>
-                  <div className='text-2xl font-medium text-center'>NFT</div>
-                </div>
-              ) : (
-                <div className='h-fit bg-gradient-to-l from-black/[0.0001] via-slate-600/40 to-black/[0.0001]'>
-                  <div className='bg-[#f4f4f4] m-1 font-bold text-[26px]'>
-                    <span className='text-second-color'>{data.reward.xp}</span> EXP
-                  </div>
-                </div>
-              )}
-            </div>
-            {conditions ? (
-              <div className='text-lg text-second-color font-bold'>
-                <span className='font-bold'>CONDITION: </span>
-                {conditions}
-              </div>
-            ) : (
-              <div></div>
-            )}
-          </div>
-        </Modal>
-        <div className='relative cursor-pointer' onClick={openQuestHandler}>
-          <Image src={LockQuestBackground} alt='' />
-          <div className='absolute top-[9.5%] left-[6%] bottom-[7%] right-[5%]'>
-            <div className='flex flex-col items-center justify-between pt-[5%] h-full'>
-              <Image src={LockImage} alt='' />
-              <div className='text-xl font-bold text-center'>{data.name}</div>
-              {conditions ? (
-                <div className='text-sm text-second-color text-center line-clamp-2'>
-                  <span className='font-bold'>CONDITION:</span>
-                  {conditions}
-                </div>
-              ) : (
-                <div></div>
-              )}
-            </div>
-          </div>
-          {data.reward.nft ? (
-            <div className='absolute top-[9.5%] right-[5%]'>
-              <div className='p-1 bg-gradient-to-l from-black/[0.0001] via-slate-600/40 to-black/[0.0001]'>
-                <div className='bg-white font-bold text-sm'>
-                  <Image
-                    src={data.reward.nft.img_url}
-                    width={28}
-                    height={28}
-                    alt=''
-                    className='object-cover aspect-square'
-                  />
-                </div>
-              </div>
-              <div className='text-sm font-medium text-center'>NFT</div>
-            </div>
-          ) : (
-            <div className='absolute top-[9.5%] right-[5%] bg-gradient-to-l from-black/[0.0001] via-slate-600/40 to-black/[0.0001]'>
-              <div className='bg-white m-1 font-bold text-sm'>
-                <span className='text-second-color'>{data.reward.xp}</span> EXP
-              </div>
-            </div>
-          )}
-        </div>
-      </>
-    )
-
-  return (
-    <>
-      <Modal open={open} setOpen={setOpen} onClose={() => setOpen(false)}>
-        <div className='flex flex-col gap-8'>
-          <div className='flex justify-between'>
-            <div className='text-[32px] font-bold'>{data.name}</div>
-            {data.reward.nft ? (
-              <div className=''>
-                <div className='p-1 bg-gradient-to-l from-black/[0.0001] via-slate-600/40 to-black/[0.0001]'>
-                  <div className='bg-white font-bold text-sm'>
+        <Modal open={open} setOpen={setOpen} onClose={() => setOpen(false)} hideClose>
+          <div className='flex flex-col gap-[26px]'>
+            <div className='flex flex-col gap-4'>
+              <div className='flex justify-between'>
+                <div className='font-bold'>{data.name}</div>
+                {data.reward.nft ? (
+                  <div className='border border-second-color bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium'>
                     <Image
                       src={data.reward.nft.img_url}
                       width={66}
@@ -185,104 +103,169 @@ export default function Quest({ data }: { data: Quest }) {
                       className='object-cover aspect-square'
                     />
                   </div>
+                ) : (
+                  <div className='border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium'>
+                    <span className='text-second-color font-bold'>{data.reward.xp}</span> EXP
+                  </div>
+                )}
+              </div>
+              <div className='border border-second-color p-2 rounded text-sm leading-3 font-medium w-fit uppercase'>
+                {data.type}
+              </div>
+            </div>
+            <div className='flex flex-col gap-5'>
+              {data.description ? <div className='text-xs text-subtle-dark'>{data.description}</div> : <div></div>}
+              {mission ? (
+                <div className='text-xs text-second-color font-medium'>
+                  <span className='font-bold'>CONDITION: </span>
+                  {conditions}
                 </div>
-                <div className='text-2xl font-medium text-center'>NFT</div>
+              ) : (
+                <div></div>
+              )}
+            </div>
+          </div>
+        </Modal>
+        <div
+          className='relative cursor-pointer py-8 flex flex-col gap-5 rounded-[10px] border border-[#DEDEDE] bg-gradient-to-t from-[#39FF53]/10 via-50% via-transparent'
+          onClick={openQuestHandler}>
+          <div className='relative flex justify-center'>
+            <Image src={LockImage} alt='' />
+          </div>
+          <div className='flex gap-2 flex-col justify-center items-center'>
+            <div className='font-bold text-[#292929]'>{data.name}</div>
+            {conditions ? (
+              <div className='text-xs text-second-color'>
+                <span className='font-bold'>CONDITION: </span>
+                {conditions}
               </div>
             ) : (
-              <div className='h-fit bg-gradient-to-l from-black/[0.0001] via-slate-600/40 to-black/[0.0001]'>
-                <div className='bg-[#f4f4f4] m-1 font-bold text-[26px]'>
-                  <span className='text-second-color'>{data.reward.xp}</span> EXP
-                </div>
-              </div>
+              <div></div>
             )}
           </div>
-          <div className='uppercase font-bold text-lg border py-2 px-3 w-fit leading-3 rounded-sm border-[#414141]'>
-            {data.type}
-          </div>
-          <div className='text-lg text-[#61646B] font-bold line-clamp-2'>{mission}</div>
-          {conditions ? (
-            <div className='text-2xl text-subtle-dark font-bold line-clamp-2'>{conditions}</div>
+          {data.reward.nft ? (
+            <div className='absolute top-8 right-6 border border-second-color bg-[#1FAB5E]/10 rounded text-xs leading-3 font-medium'>
+              <Image
+                src={data.reward.nft.img_url}
+                width={38}
+                height={38}
+                alt=''
+                className='object-cover aspect-square'
+              />
+            </div>
           ) : (
-            <div></div>
+            <div className='absolute top-8 right-6 border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-xs leading-3 font-medium'>
+              <span className='text-second-color font-bold'>{data.reward.xp}</span> EXP
+            </div>
           )}
+        </div>
+      </>
+    )
+
+  return (
+    <>
+      <Modal open={open} setOpen={setOpen} onClose={() => setOpen(false)} hideClose>
+        <div className='flex flex-col gap-[26px]'>
+          <div className='flex flex-col gap-4'>
+            <div className='flex justify-between'>
+              <div className='font-bold'>{data.name}</div>
+              {data.reward.nft ? (
+                <div className='border border-second-color bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium'>
+                  <Image
+                    src={data.reward.nft.img_url}
+                    width={66}
+                    height={66}
+                    alt=''
+                    className='object-cover aspect-square'
+                  />
+                </div>
+              ) : (
+                <div className='border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium'>
+                  <span className='text-second-color font-bold'>{data.reward.xp}</span> EXP
+                </div>
+              )}
+            </div>
+            <div className='border border-second-color p-2 rounded text-sm leading-3 font-medium w-fit uppercase'>
+              {data.type}
+            </div>
+          </div>
+          <div className='flex flex-col gap-5'>
+            {data.description ? <div className='text-xs text-subtle-dark'>{data.description}</div> : <div></div>}
+            <div className='text-xs font-bold text-subtle-dark'>{mission}</div>
+          </div>
           <Link
             href={pageLink}
-            className='p-3 hover:bg-[#DEDEDE] rounded-[20px] mt-[14px] text-center outline-none'
+            className='p-3 hover:bg-[#DEDEDE] rounded-[20px] text-center outline-none'
             target='_blank'>
-            <div className='underline text-[32px] font-bold text-[#414141]'>Go to page</div>
+            <div className='underline font-bold text-[#414141]'>Go to page</div>
           </Link>
           {isClaimed == 2 ? (
-            <button className='p-3 bg-[#ababab] rounded-[20px] -mb-14 pointer-events-none'>
-              <div className='text-[32px] font-bold text-[#414141]'>Claimed</div>
+            <button className='p-3 bg-[#ababab] rounded-[20px] pointer-events-none'>
+              <div className='font-bold text-[#414141]'>Claimed</div>
             </button>
           ) : isClaimed == 1 ? (
             <button
-              className='p-3 bg-primary-color rounded-[20px] -mb-14 flex gap-2 items-center justify-center'
+              className='p-3 bg-primary-color rounded-[20px] flex gap-2 items-center justify-center'
               onClick={claimQuestHandler}>
               {loading && (
                 <span>
-                  <Spinner className={` h-8 w-8`} />
+                  <Spinner className={` h-5 w-5`} />
                 </span>
               )}
-              <div className='text-[32px] font-bold text-[#414141]'>Claim reward</div>
+              <div className='font-bold text-[#414141]'>Claim reward</div>
             </button>
           ) : isClaimed == 0 ? (
-            <button className='p-3 bg-[#ababab] rounded-[20px] -mb-14 pointer-events-none'>
-              <div className='text-[32px] font-bold text-[#414141]'>Claim reward</div>
+            <button className='p-3 bg-[#ababab] rounded-[20px] pointer-events-none'>
+              <div className='font-bold text-[#414141]'>Claim reward</div>
             </button>
           ) : (
-            <button className='p-3 bg-[#ababab] rounded-[20px] -mb-14 pointer-events-none'>
+            <button className='p-3 bg-[#ababab] rounded-[20px] pointer-events-none'>
               <span>
-                <Spinner className={` h-10 w-10`} />
+                <Spinner className={` h-6 w-6`} />
               </span>
             </button>
           )}
         </div>
       </Modal>
-      <div className='relative cursor-pointer' onClick={openQuestHandler}>
-        <Image src={QuestBackground} alt='' />
-        <div className='absolute top-[9.5%] left-[6%] bottom-[7%] right-[5%] flex flex-col justify-between'>
-          <div className='h-[35%] justify-between flex flex-col gap-3'>
-            <div className='text-xl font-bold max-w-[240px] leading-5 pr-1'>{data.name}</div>
-            <div className='uppercase font-bold text-lg border py-2 px-3 w-fit leading-3 rounded-sm border-[#414141]'>
-              {data.type}
-            </div>
-          </div>
-          <div className='flex flex-col justify-between h-[59%]'>
-            <div className='text-sm text-[#61646B]'>
-              <span className='font-bold'>MISSION:</span>
-              {mission}
-            </div>
-            {conditions && (
-              <div className='text-sm text-second-color'>
-                <span className='font-bold'>CONDITION:</span>
-                {conditions}
-              </div>
-            )}
-          </div>
-        </div>
-        {data.reward.nft ? (
-          <div className='absolute top-[9.5%] right-[5%]'>
-            <div className='p-1 bg-gradient-to-l from-black/[0.0001] via-slate-600/40 to-black/[0.0001]'>
-              <div className='bg-white font-bold text-sm'>
+      <div
+        className='relative cursor-pointer p-8 flex flex-col gap-5 rounded-[10px] border border-[#DEDEDE] '
+        onClick={openQuestHandler}>
+        <div className='flex flex-col justify-between gap-5 min-h-[181px]'>
+          <div className='flex gap-7 justify-between'>
+            <div className='font-bold max-w-[240px] leading-5 pr-1 line-clamp-2'>{data.name}</div>
+            {data.reward.nft ? (
+              <div className='border border-second-color bg-[#1FAB5E]/10 rounded text-xs leading-3 font-medium'>
                 <Image
                   src={data.reward.nft.img_url}
-                  width={28}
-                  height={28}
+                  width={38}
+                  height={38}
                   alt=''
                   className='object-cover aspect-square'
                 />
               </div>
-            </div>
-            <div className='text-sm font-medium text-center'>NFT</div>
+            ) : (
+              <div className='border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-xs leading-3 font-medium'>
+                <span className='text-second-color font-bold'>{data.reward.xp}</span> EXP
+              </div>
+            )}
           </div>
-        ) : (
-          <div className='absolute top-[9.5%] right-[5%] bg-gradient-to-l from-black/[0.0001] via-slate-600/40 to-black/[0.0001]'>
-            <div className='bg-white m-1 font-bold text-sm'>
-              <span className='text-second-color'>{data.reward.xp}</span> EXP
+          <div className='flex-1 flex justify-between flex-col'>
+            <div className='flex gap-2 flex-col'>
+              {data.description ? <div className='text-xs text-subtle-dark'>{data.description}</div> : <div></div>}
+              {conditions ? (
+                <div className='text-xs text-second-color'>
+                  <span className='font-bold'>CONDITION: </span>
+                  {conditions}
+                </div>
+              ) : (
+                <div></div>
+              )}
+            </div>
+            <div className='border border-second-color p-2 rounded text-xs leading-3 font-medium w-fit uppercase'>
+              {data.type}
             </div>
           </div>
-        )}
+        </div>
       </div>
     </>
   )

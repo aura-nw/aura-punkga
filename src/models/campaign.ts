@@ -9,6 +9,7 @@ export type Quest = {
   status: string
   name: string
   unlock: boolean
+  description?: string
   condition: {
     after?: string
     before?: string

@@ -13,14 +13,9 @@ function Campaigns() {
   return (
     <>
       <Header />
-      <div className='pk-container py-[80px]'>
-        <div className='flex gap-6'>
-          <TaskSlider />
-          <LeaderBoard />
-        </div>
-        <div className='my-20'>
-          <Campaign />
-        </div>
+      <div className='pk-container py-[65px] flex flex-col gap-8'>
+        <LeaderBoard />
+        <Campaign />
       </div>
       <Footer />
     </>
