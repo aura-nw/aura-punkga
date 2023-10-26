@@ -19,7 +19,7 @@ export default function Modal({ open, setOpen, children, hideClose }: any) {
           <div className='fixed inset-0 bg-black bg-opacity-50 transition-opacity' />
         </Transition.Child>
 
-        <div className='fixed inset-0 z-10 overflow-y-auto -translate-y-[20vh]'>
+        <div className='fixed inset-0 z-10 overflow-y-auto'>
           <div className='flex min-h-full justify-center p-4 text-center items-center sm:p-0'>
             <Transition.Child
               as={Fragment}

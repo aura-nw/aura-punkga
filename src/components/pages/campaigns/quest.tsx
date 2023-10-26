@@ -143,7 +143,7 @@ export default function Quest({ data }: { data: Quest }) {
           <div className='flex gap-2 flex-col justify-center items-center'>
             <div className='font-bold text-[#292929] min-h-[40px] px-8 text-center'>{data.name}</div>
             {conditions ? (
-              <div className='text-xs text-second-color'>
+              <div className='text-xs text-second-color px-8'>
                 <span className='font-bold'>CONDITION: </span>
                 {conditions}
               </div>
@@ -231,7 +231,7 @@ export default function Quest({ data }: { data: Quest }) {
       <div
         className='relative cursor-pointer p-8 flex flex-col gap-5 rounded-[10px] border border-[#DEDEDE] '
         onClick={openQuestHandler}>
-        <div className='flex flex-col justify-between gap-5 min-h-[181px]'>
+        <div className='flex flex-col justify-between gap-5 min-h-[181px] h-full'>
           <div className='flex gap-7 justify-between'>
             <div className='font-bold max-w-[240px] leading-5 pr-1 line-clamp-2 min-h-[40px]'>{data.name}</div>
             {data.reward.nft ? (
