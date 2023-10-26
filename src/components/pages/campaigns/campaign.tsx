@@ -32,27 +32,43 @@ export default function Campaign() {
             </svg>
             <div className='font-extrabold text-2xl leading-6'>Campaigns</div>
           </div>
-          <div
-            className={`w-full py-4 px-12 font-bold text-lg cursor-pointer rounded-md ${
-              !selectedCampaigns.length ? 'bg-second-color text-white' : 'hover:bg-light-gray'
-            }`}
-            onClick={() => setSelectedCampaigns([])}>
-            All
-          </div>
-          {campaigns?.map((campaign, index) => (
+          <div className='flex flex-col gap-4 max-h-[75vh] overflow-auto'>
             <div
               className={`w-full py-4 px-12 font-bold text-lg cursor-pointer rounded-md ${
-                selectedCampaigns.includes(campaign.id) ? 'bg-second-color text-white' : 'hover:bg-light-gray'
+                !selectedCampaigns.length ? 'bg-second-color text-white' : 'hover:bg-light-gray'
               }`}
-              key={index}
-              onClick={() =>
-                selectedCampaigns.includes(campaign.id)
-                  ? setSelectedCampaigns((prev) => prev.filter((c) => c != campaign.id))
-                  : setSelectedCampaigns([...selectedCampaigns, campaign.id])
-              }>
-              {campaign.name}
+              onClick={() => setSelectedCampaigns([])}>
+              All
             </div>
-          ))}
+            {campaigns?.map((campaign, index) => (
+              <div
+                className={`w-full py-4 px-12 font-bold text-lg cursor-pointer rounded-md ${
+                  selectedCampaigns.includes(campaign.id) ? 'bg-second-color text-white' : 'hover:bg-light-gray'
+                }`}
+                key={index}
+                onClick={() =>
+                  selectedCampaigns.includes(campaign.id)
+                    ? setSelectedCampaigns((prev) => prev.filter((c) => c != campaign.id))
+                    : setSelectedCampaigns([...selectedCampaigns, campaign.id])
+                }>
+                {campaign.name}
+              </div>
+            ))}
+            {campaigns?.map((campaign, index) => (
+              <div
+                className={`w-full py-4 px-12 font-bold text-lg cursor-pointer rounded-md ${
+                  selectedCampaigns.includes(campaign.id) ? 'bg-second-color text-white' : 'hover:bg-light-gray'
+                }`}
+                key={index}
+                onClick={() =>
+                  selectedCampaigns.includes(campaign.id)
+                    ? setSelectedCampaigns((prev) => prev.filter((c) => c != campaign.id))
+                    : setSelectedCampaigns([...selectedCampaigns, campaign.id])
+                }>
+                {campaign.name}
+              </div>
+            ))}
+          </div>
         </div>
         <div className='flex-[3] pt-[50px]'>
           <div className='flex flex-col'>
