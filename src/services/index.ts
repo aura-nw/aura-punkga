@@ -357,6 +357,7 @@ export const getUserNfts = async (address: string) => {
     cw721_token(where: {owner: {_eq: $owner_address}}) {
       id
       token_id
+      name: media_info(path: "onchain.metadata.name")
       image_url: media_info(path: "offchain.image.url")
       cw721_contract {
         smart_contract {

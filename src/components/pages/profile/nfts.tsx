@@ -56,7 +56,7 @@ export default function NFTList() {
                 </div>
                 <div
                   className={`mt-[10px] text-subtle-dark text-sm font-bold leading-[18px] text-center truncate lg:text-xl lg:leading-[25px]`}>
-                  Token Name
+                  {token.name}
                 </div>
               </div>
             </Link>
