@@ -56,13 +56,18 @@ const Chapter: React.FC = ({
   const [comicLikes, setComicLikes] = useState(0)
   const [chapterLikes, setChapterLikes] = useState(0)
   const { t } = useTranslation()
+  const timerRef = useRef<any>()
 
   useEffect(() => {
     if (chapterDetails.data?.id) {
       setChapterLikes(chapterDetails.data?.likes)
-      _.delay(() => readChapter(chapterDetails.data?.id), 10000)
+      timerRef.current = _.delay(() => readChapter(chapterDetails.data?.id), 10000)
     }
   }, [chapterDetails?.data?.id])
+
+  useEffect(() => {
+    return () => (timerRef.current ? clearTimeout(timerRef.current) : null)
+  }, [])
 
   useEffect(() => {
     setLanguage(locale as LanguageType)
