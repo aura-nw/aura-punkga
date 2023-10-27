@@ -34,7 +34,7 @@ export default function NFTList() {
               target='_blank'
               href={`${getConfig()['CHAIN_INFO'].explorer}/tokens/token-nft/${
                 token.cw721_contract.smart_contract.address
-              }/${token.id}`}
+              }/${token.token_id}`}
               className='p-[5px] lg:p-5 [&:hover_.view-on-seekhype]:translate-y-0'
               key={index}>
               <div className={`bg-white rounded-[20px] p-[10px]`}>
