@@ -4,6 +4,7 @@ import ComicDetail from 'components/pages/chapter/comicDetail'
 import CommentSection from 'components/pages/chapter/commentSection'
 import HeaderBar from 'components/pages/chapter/headerBar'
 import ReadingSection from 'components/pages/chapter/readingSection'
+import _ from 'lodash'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useRef, useState } from 'react'
@@ -15,6 +16,7 @@ import { Context } from 'src/context'
 import { IChapter } from 'src/models/chapter'
 import { IComicDetail } from 'src/models/comic'
 import { IComment } from 'src/models/comment'
+import { readChapter } from 'src/services'
 import { getBlurUrl } from 'src/utils'
 import { getItem, setItem } from 'src/utils/localStorage'
 const Chapter: React.FC = ({
@@ -58,8 +60,10 @@ const Chapter: React.FC = ({
   useEffect(() => {
     if (chapterDetails.data?.id) {
       setChapterLikes(chapterDetails.data?.likes)
+      _.delay(() => readChapter(chapterDetails.data?.id), 10000)
     }
   }, [chapterDetails?.data?.id])
+
   useEffect(() => {
     setLanguage(locale as LanguageType)
   }, [locale])
