@@ -29,7 +29,7 @@ export default function NFTList() {
       </div>
       <div className='bg-[#f0f0f0] px-[55px]'>
         <div className='grid grid-cols-[repeat(auto-fill,minmax(max(160px,calc(100%/5)),1fr))] grid-rows-[auto_auto] lg:grid-rows-1 auto-rows-[0px] overflow-hidden'>
-          {data.map((token, index) => (
+          {data.reverse().map((token, index) => (
             <Link
               target='_blank'
               href={`${getConfig()['CHAIN_INFO'].explorer}/tokens/token-nft/${
