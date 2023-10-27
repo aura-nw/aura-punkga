@@ -12,6 +12,7 @@ import Uma from 'images/authors/uma.jpg'
 import Eng from './assets/eng.svg'
 import Vn from './assets/vn.svg'
 import Banner from './assets/banner.png'
+import { useEffect, useRef } from 'react'
 function Slide({ url }) {
   return (
     <svg
@@ -50,7 +51,11 @@ function Slide({ url }) {
     </svg>
   )
 }
-function Carousel({ children, setting, className }: any) {
+function Carousel({ children, setting, className, slideActive, setSlideActive }: any) {
+  const ref = useRef<any>()
+  useEffect(() => {
+    ref.current?.slickGoTo(slideActive)
+  }, [slideActive])
   var settings = {
     dots: true,
     infinite: true,
@@ -75,33 +80,26 @@ function Carousel({ children, setting, className }: any) {
   }
   return (
     <div className={className}>
-      <Slider {...settings}>{children}</Slider>
+      <Slider ref={ref} {...settings}>
+        {children}
+      </Slider>
     </div>
   )
 }
 
-export default function SlideSection() {
+export default function SlideSection({ slideActive, setSlideActive }) {
   return (
     <>
       <div className='relative w-full rounded-2xl overflow-hidden'>
         <Carousel
+          slideActive={slideActive}
+          setSlideActive={setSlideActive}
           className=''
           setting={{
             slidesToShow: 1,
             slidesToScroll: 1,
             autoplay: false,
           }}>
-          <div className='outline-none [&_*]:outline-none'>
-            <Link href='https://punkga.me/comic/hamulage_3/chapter/1' className='relative'>
-              <Image
-                alt=''
-                width={1920}
-                height={1080}
-                className='w-full aspect-[52/22] object-cover'
-                src='/assets/images/comic-banner/hamulage.jpg'
-              />
-            </Link>
-          </div>
           <div className='outline-none [&_*]:outline-none'>
             <Link href='https://punkga.me/comic/hero_cyberpunk_1/chapter/1' className='relative'>
               <Image
@@ -154,6 +152,17 @@ export default function SlideSection() {
                 height={1080}
                 className='w-full aspect-[52/22]  object-cover'
                 src='/assets/images/comic-banner/errant.jpg'
+              />
+            </Link>
+          </div>
+          <div className='outline-none [&_*]:outline-none'>
+            <Link href='https://punkga.me/comic/hamulage_3/chapter/1' className='relative'>
+              <Image
+                alt=''
+                width={1920}
+                height={1080}
+                className='w-full aspect-[52/22] object-cover'
+                src='/assets/images/comic-banner/hamulage.jpg'
               />
             </Link>
           </div>

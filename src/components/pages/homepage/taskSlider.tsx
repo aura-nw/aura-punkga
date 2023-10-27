@@ -9,27 +9,17 @@ import Uma from 'images/authors/uma.jpg'
 import Slider from 'react-slick'
 import Eng from './assets/eng.svg'
 import Vn from './assets/vn.svg'
-function Carousel({ children, setting, className }: any) {
+function Carousel({ children, setting, className, slideActive, setSlideActive }: any) {
   var settings = {
     dots: true,
     infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
     speed: 500,
     autoplaySpeed: 5000,
-    swipeToSlide: true,
-    autoplay: true,
-    slidesToShow: 2,
-    slidesToScroll: 2,
-    arrows: false,
-    appendDots: (dots) => <></>,
-    customPaging: (i) => (
-      <div
-        style={{
-          background: '#ababab',
-          width: 8,
-          height: 5,
-          borderRadius: '10px',
-        }}></div>
-    ),
+    cssEase: 'linear',
+    afterChange: () => setSlideActive((state) => (state == 5 ? 0 : state + 1)),
     ...setting,
   }
   return (
@@ -39,16 +29,10 @@ function Carousel({ children, setting, className }: any) {
   )
 }
 
-export default function TaskSlider() {
+export default function TaskSlider({ slideActive, setSlideActive }) {
   return (
     <div className='relative w-full rounded-2xl overflow-hidden'>
-      <Carousel
-        className=''
-        setting={{
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          autoplay: false,
-        }}>
+      <Carousel slideActive={slideActive} setSlideActive={setSlideActive} className=''>
         <div className='outline-none [&_*]:outline-none'>
           <Link href='https://punkga.me/comic/hamulage_3/chapter/1' className='relative'>
             <Image

@@ -46,6 +46,7 @@ function Home() {
   const allTags = useApi<any[]>(getAllTags, true, [])
   const { locale } = useRouter()
   const { t } = useTranslation()
+  const [slideActive, setSlideActive] = useState(0)
   const [statusFilter, setStatusFilter] = useState([
     {
       key: 'All status',
@@ -87,7 +88,7 @@ function Home() {
       <div className='pk-container'>
         <div className='md:my-[50px] lg:flex gap-[20px]'>
           <div className='lg:flex-auto lg:w-[67%] px-5 md:px-0'>
-            <TaskSlider />
+            <TaskSlider slideActive={slideActive} setSlideActive={setSlideActive} />
             <div className='mt-[60px] flex justify-between items-center px-2'>
               <div className='md:text-[24px] text-sm leading-6 font-[800]'>{t('Latest update')}</div>
               <div className='md:flex hidden gap-[20px] items-center'>
@@ -173,7 +174,7 @@ function Home() {
             </div>
           </div>
           <div className='lg:flex-auto lg:w-[32%] mt-6 lg:mt-0 px-5 md:px-0'>
-            <SlideSection />
+            <SlideSection slideActive={slideActive} setSlideActive={setSlideActive} />
             <LeaderBoard />
             <div className='md:text-[24px] text-sm leading-6 font-[800] mt-[60px]'>{t('Trending')}</div>
             <div className='flex flex-col gap-10 mt-2 md:mt-10'>
