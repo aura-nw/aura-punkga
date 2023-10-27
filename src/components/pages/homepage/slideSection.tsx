@@ -2,6 +2,15 @@ import Image from 'next/image'
 import Frame from './assets/frame.svg'
 import Slider from 'react-slick'
 import Link from 'next/link'
+
+import Hanz from 'images/authors/hanz.jpg'
+import Howater from 'images/authors/howater.png'
+import Moffi from 'images/authors/moffi.jpg'
+import PhatBear from 'images/authors/phat_bear.jpg'
+import TienTranRB from 'images/authors/tien_tran_rb.jpg'
+import Uma from 'images/authors/uma.jpg'
+import Eng from './assets/eng.svg'
+import Vn from './assets/vn.svg'
 import Banner from './assets/banner.png'
 function Slide({ url }) {
   return (
@@ -73,64 +82,93 @@ function Carousel({ children, setting, className }: any) {
 
 export default function SlideSection() {
   return (
-    <div className='relative mb-[60px]'>
-      <Image src={Frame} alt='' />
-      <div className='absolute top-[7%] left-[6%] right-[0%] bottom-[15%]'>
+    <>
+      <div className='relative w-full rounded-2xl overflow-hidden'>
         <Carousel
-          className='w-[91%]'
+          className=''
           setting={{
             slidesToShow: 1,
             slidesToScroll: 1,
             autoplay: false,
           }}>
           <div className='outline-none [&_*]:outline-none'>
-            <Link href='https://punkga.me/comic/hero_cyberpunk_1/chapter/1'>
-              <Slide url='/assets/images/comic-banner/hamulage.jpg' />
+            <Link href='https://punkga.me/comic/hamulage_3/chapter/1' className='relative'>
+              <Image
+                alt=''
+                width={1920}
+                height={1080}
+                className='w-full aspect-[52/22] object-cover'
+                src='/assets/images/comic-banner/hamulage.jpg'
+              />
             </Link>
           </div>
           <div className='outline-none [&_*]:outline-none'>
-            <Link href='https://punkga.me/comic/hamulage_3/chapter/1'>
-              <Slide url='/assets/images/comic-banner/hero_cyberpunk.jpg' />
+            <Link href='https://punkga.me/comic/hero_cyberpunk_1/chapter/1' className='relative'>
+              <Image
+                alt=''
+                width={1920}
+                height={1080}
+                className='w-full aspect-[52/22]  object-cover'
+                src='/assets/images/comic-banner/hero_cyberpunk.jpg'
+              />
             </Link>
           </div>
           <div className='outline-none [&_*]:outline-none'>
-            <Link href='https://punkga.me/comic/heroic_librarian_5/chapter/1'>
-              <Slide url='/assets/images/comic-banner/heroic.png' />
+            <Link href='https://punkga.me/comic/heroic_librarian_5/chapter/1' className='relative'>
+              <Image
+                alt=''
+                width={1920}
+                height={1080}
+                className='w-full aspect-[52/22]  object-cover'
+                src='/assets/images/comic-banner/heroic.png'
+              />
             </Link>
           </div>
           <div className='outline-none [&_*]:outline-none'>
-            <Link href='https://punkga.me/comic/era_of_chaos_4/chapter/1'>
-              <Slide url='/assets/images/comic-banner/the_chaos_of_the_past.jpg' />
+            <Link href='https://punkga.me/comic/era_of_chaos_4/chapter/1' className='relative'>
+              <Image
+                alt=''
+                width={1920}
+                height={1080}
+                className='w-full aspect-[52/22]  object-cover'
+                src='/assets/images/comic-banner/the_chaos_of_the_past.jpg'
+              />
             </Link>
           </div>
           <div className='outline-none [&_*]:outline-none'>
-            <Link href='https://punkga.me/comic/neon_force_2/chapter/1'>
-              <Slide url='/assets/images/comic-banner/ultra_v.jpg' />
+            <Link href='https://punkga.me/comic/neon_force_2/chapter/1' className='relative'>
+              <Image
+                alt=''
+                width={1920}
+                height={1080}
+                className='w-full aspect-[52/22]  object-cover'
+                src='/assets/images/comic-banner/ultra_v.jpg'
+              />
             </Link>
           </div>
           <div className='outline-none [&_*]:outline-none'>
-            <Link href='https://punkga.me/comic/errant_6/chapter/1'>
-              <Slide url='/assets/images/comic-banner/errant.jpg' />
+            <Link href='https://punkga.me/comic/errant_6/chapter/1' className='relative'>
+              <Image
+                alt=''
+                width={1920}
+                height={1080}
+                className='w-full aspect-[52/22]  object-cover'
+                src='/assets/images/comic-banner/errant.jpg'
+              />
             </Link>
           </div>
         </Carousel>
-        <Image src={Banner} alt='' className='ml-[10%] w-[83%] mt-1' />
-        <Link href='/campaigns' className='block relative w-[38%] ml-auto -mt-[1%] mr-[7%]'>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            width='190'
-            height='57'
-            viewBox='0 0 190 57'
-            fill='none'
-            className='w-full h-full'>
-            <path
-              d='M0 23.0336V10.1758C0 4.65293 4.47715 0.175781 10 0.175781H170.858C173.51 0.175781 176.054 1.22935 177.929 3.10471L186.929 12.1047C190.834 16.01 190.834 22.3416 186.929 26.2468L159.929 53.2468C158.054 55.1222 155.51 56.1758 152.858 56.1758H33.1421C30.49 56.1758 27.9464 55.1222 26.0711 53.2468L2.92893 30.1047C1.05357 28.2293 0 25.6858 0 23.0336Z'
-              fill='#23FF81'
-            />
-          </svg>
-          <span className='absolute inset-0 grid place-items-center font-semibold'>Go to quests</span>
+      </div>
+      <div className='mt-10 rounded-2xl bg-[#F0F0F0] p-[10px] flex flex-col gap-[10px]'>
+        <div>
+          <Image src={Banner} alt='' className='rounded-[10px]' />
+        </div>
+        <Link
+          href='/campaigns'
+          className='bg-[#23FF81] px-8 py-3 text-xl leading-[25px] font-bold rounded-[10px] text-center cursor-pointer'>
+          Go to Quests
         </Link>
       </div>
-    </div>
+    </>
   )
 }

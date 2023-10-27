@@ -17,84 +17,61 @@ export default function LeaderBoard() {
     { refreshInterval: 10000 }
   )
   return (
-    <>
-      <div className='relative w-full aspect-[571/646]'>
-        <Image src={Frame} alt='' className='absolute inset-0 w-full' />
-        <div className='flex flex-col absolute inset-[1.6%] gap-2'>
-          <div className='h-fit cursor-pointer relative'>
-            <div className='absolute left-[50%] -translate-x-1/2 top-[36%] font-orbitron text-2xl font-extrabold grid place-items-center text-primary-color whitespace-nowrap'>
-              Leader board
-            </div>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              width='506'
-              height='26'
-              viewBox='0 0 506 76'
-              fill='none'
-              className='w-full h-full aspect-[506/76]'>
-              <path
-                fillRule='evenodd'
-                clipRule='evenodd'
-                d='M27.1192 0L0.458984 26.6602V75H19.459L30.459 64H121.459L132.459 75H244.959V75.0303H492.586L505.146 62.4753L505.144 22.3918L482.777 0.0302734H438.598L418.463 20.0303H258.459V20L238.459 0H27.1192Z'
-                fill='#61646B'
-              />
-              <path
-                fillRule='evenodd'
-                clipRule='evenodd'
-                d='M27.1192 0L0.458984 26.6602V75H19.459L30.459 64H121.459L132.459 75H244.959V75.0303H492.586L505.146 62.4753L505.144 22.3918L482.777 0.0302734H438.598L418.463 20.0303H258.459V20L238.459 0H27.1192Z'
-                fill='black'
-                fillOpacity='0.2'
-              />
-            </svg>
+    <div className='bg-[#f0f0f0] rounded-[10px] mt-10'>
+      <div className='py-4 px-[32px] w-full h-full flex flex-col'>
+        <div className='text-xl leading-[25px] font-bold w-full text-center border-b-[3px] pb-[2px] mb-3 text-[#414141] border-[#414141]'>
+          Leaderboard
+        </div>
+        <div className='flex justify-between px-[32px] pb-3 pt-1 border-b-[1px] border-medium-gray text-subtle-dark font-bold'>
+          <div className='flex gap-16'>
+            <div>Rank</div>
+            <div>User</div>
           </div>
-          <div className='flex-1 grid grid-rows-[repeat(10,1fr)] border-[length:1.5px] border-light-medium-gray rounded-[20px] mx-4 divide-y-[1.5px] overflow-auto'>
-            <div className='grid grid-cols-[56px_1fr_130px_100px] h-[48px] font-orbitron text-base font-semibold place-items-center pl-3'>
-              <div>Rank</div>
-              <div>User</div>
-              <div>Quests</div>
-              <div>XP</div>
-            </div>
+          <div className='flex gap-16'>
+            <div>Quests</div>
+            <div>XP</div>
+          </div>
+        </div>
+        <div className='h-[321px] flex flex-col relative'>
+          <div
+            className={`absolute inset-0 overflow-auto  gap-3 flex flex-col text-subtle-dark text-sm font-semibold h-full py-3`}>
             {data?.map((item, index) => (
-              <div key={index} className='grid grid-cols-[56px_1fr_130px_100px] place-items-center py-[10px]'>
-                <div>#{index + 1}</div>
-                <div className='flex items-center gap-[10px] justify-self-start px-[10px]'>
-                  <Image className='w-7 h-7 rounded-full' src={item.authorizer_user.picture || Avatar} alt='' />
-                  <div className='font-medium line-clamp-1'>{item.authorizer_user.nickname}</div>
+              <div key={index} className='grid grid-cols-[1fr_115px] py-[6px] px-[32px] bg-white rounded-[10px]'>
+                <div className='flex items-center'>
+                  <div className='w-[45px]'>#{index + 1}</div>
+                  <div className='flex items-center gap-[10px] justify-self-start px-[10px]'>
+                    <Image
+                      className='w-7 h-7 rounded-full'
+                      width={28}
+                      height={28}
+                      src={item.authorizer_user.picture || Avatar}
+                      alt=''
+                    />
+                    <div className='line-clamp-1'>{item.authorizer_user.nickname}</div>
+                  </div>
                 </div>
-                <div>{item.authorizer_user.user_quests_aggregate.aggregate.count || 0}</div>
-                <div>{item.xp}XP</div>
+                <div className='flex justify-between items-center'>
+                  <div>{item.authorizer_user.user_quests_aggregate.aggregate.count || 0}</div>
+                  <div>{item.xp}</div>
+                </div>
               </div>
             ))}
           </div>
-          {account && (
-            <div className='relative mx-4'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='960'
-                height='123'
-                viewBox='0 0 320 41'
-                fill='none'
-                className='w-full h-full'>
-                <path d='M320 0.250244H0V22.4351L18.0426 40.2502H301.957L320 22.4351V0.250244Z' fill='#DEDEDE' />
-              </svg>
-              <div className='inset-0 absolute flex items-center justify-between pl-5 pr-4'>
-                <div>
-                  <span className='font-orbitron font-extralight'>Current rank: </span>
-                  <strong>#{account.rank}</strong>
-                </div>
-                <div>
-                  <span className='font-orbitron font-extralight'>Quests: </span>
-                  <strong>{account.completedQuests?.length}</strong>
-                </div>
-                <div>
-                  <span className='font-orbitron font-extralight'>XP: </span>
-                  <strong>{account.xp}</strong>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
+        {account && (
+          <div className='flex justify-between pt-3 border-t-[1px] pr-5 border-medium-gray text-subtle-dark'>
+            <div>
+              Your rank: <strong>#{account.rank}</strong>
+            </div>
+            <div>
+              Quests: <strong>{account.quests}</strong>
+            </div>
+            <div>
+              XP: <strong>{account.xp}</strong>
+            </div>
+          </div>
+        )}
       </div>
-    </>
+    </div>
   )
 }

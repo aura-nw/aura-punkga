@@ -120,7 +120,7 @@ export default function LeaderBoard() {
                   Your rank: <strong>#{account.rank}</strong>
                 </div>
                 <div>
-                  Quests: <strong>{account.completedQuests?.length}</strong>
+                  Quests: <strong>{account.quests}</strong>
                 </div>
                 <div>
                   XP: <strong>{account.xp}</strong>

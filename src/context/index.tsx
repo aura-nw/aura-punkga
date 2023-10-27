@@ -124,6 +124,7 @@ function ContextProvider({ children }) {
           xp: res.levels?.[0]?.xp || 0,
           level: res.levels?.[0]?.level || 0,
           completedQuests: res.user_quests || [],
+          quests: res?.user_quests_aggregate?.aggregate?.count,
           rank: res.rank || 999999,
         } as IUser)
       }
