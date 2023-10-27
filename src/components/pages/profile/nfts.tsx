@@ -8,23 +8,19 @@ import { Context } from 'src/context'
 import { getUserNfts } from 'src/services'
 import getConfig from 'next/config'
 import Link from 'next/link'
+import useSWR from 'swr'
 
 export default function NFTList() {
   const { t } = useTranslation()
-  const [data, setData] = useState([])
   const { wallet } = useContext(Context)
-  useEffect(() => {
-    if (wallet) {
-      fetchNft()
-    } else {
-      setData([])
-    }
-  }, [wallet])
-  const fetchNft = async () => {
-    const data = await getUserNfts(wallet)
-    setData(data)
-  }
-  console.log(data)
+  const { data } = useSWR(
+    {
+      key: 'pooling nfts',
+      wallet,
+    },
+    ({ wallet }) => (wallet ? getUserNfts(wallet) : null),
+    { refreshInterval: 10000 }
+  )
   return (
     <div className='my-[60px] relative'>
       <Image src={HeaderBg} alt='' />
