@@ -86,8 +86,8 @@ function Home() {
     <>
       <Header />
       <div className='pk-container'>
-        <div className='md:my-[50px] lg:flex gap-[20px]'>
-          <div className='lg:flex-auto lg:w-[67%] px-5 md:px-0'>
+        <div className='md:my-[50px] lg:flex gap-10'>
+          <div className='lg:flex-auto lg:w-[65%] px-5 md:px-0'>
             <TaskSlider slideActive={slideActive} setSlideActive={setSlideActive} />
             <div className='mt-[60px] flex justify-between items-center px-2'>
               <div className='md:text-[24px] text-sm leading-6 font-[800]'>{t('Latest update')}</div>

@@ -170,7 +170,7 @@ export default function SlideSection({ slideActive, setSlideActive }) {
       </div>
       <div className='mt-10 rounded-2xl bg-[#F0F0F0] p-[10px] flex flex-col gap-[10px]'>
         <div>
-          <Image src={Banner} alt='' className='rounded-[10px]' />
+          <Image src={Banner} alt='' className='rounded-[10px] w-full aspect-[5/2] object-cover' />
         </div>
         <Link
           href='/campaigns'
