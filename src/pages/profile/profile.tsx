@@ -12,6 +12,7 @@ import Info from '../../components/pages/profile/info'
 import LeaderBoard from '../../components/pages/profile/leaderboard'
 import Quest from '../../components/pages/profile/quests'
 import NFTList from 'components/pages/profile/nfts'
+import Analystic from 'components/pages/profile/analytic'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -44,12 +45,17 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
           </div>
         ) : (
           <>
-            <div className='flex'>
-              <Info updateProfile={updateProfile} />
-              <Quest />
-              <LeaderBoard />
+            <div className='flex gap-10 '>
+              <div className='flex-1'>
+                <Info updateProfile={updateProfile} />
+                <Quest />
+                <NFTList />
+              </div>
+              <div className='flex-1 max-w-[520px]'>
+                <Analystic />
+                <LeaderBoard />
+              </div>
             </div>
-            <NFTList />
           </>
         )}
         <div className='mt-5 md:mt-[100px]'>

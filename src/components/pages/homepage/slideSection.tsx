@@ -1,18 +1,9 @@
 import Image from 'next/image'
-import Frame from './assets/frame.svg'
-import Slider from 'react-slick'
 import Link from 'next/link'
+import Slider from 'react-slick'
 
-import Hanz from 'images/authors/hanz.jpg'
-import Howater from 'images/authors/howater.png'
-import Moffi from 'images/authors/moffi.jpg'
-import PhatBear from 'images/authors/phat_bear.jpg'
-import TienTranRB from 'images/authors/tien_tran_rb.jpg'
-import Uma from 'images/authors/uma.jpg'
-import Eng from './assets/eng.svg'
-import Vn from './assets/vn.svg'
-import Banner from './assets/banner.png'
 import { useEffect, useRef } from 'react'
+import Banner from './assets/banner.png'
 function Slide({ url }) {
   return (
     <svg

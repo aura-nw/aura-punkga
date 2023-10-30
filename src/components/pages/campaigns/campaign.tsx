@@ -19,31 +19,33 @@ export default function Campaign() {
       <div className='flex gap-10'>
         <div className='flex-1 flex flex-col gap-4 sticky top-[100px] h-fit'>
           <div className='flex gap-[15px] items-end mb-4'>
-            <svg xmlns='http://www.w3.org/2000/svg' width='60' height='15' viewBox='0 0 60 15' fill='none'>
-              <path
-                d='M44.9889 13.9997H28.2284H25.582L33.3007 6.28107H38.3729L43.6657 0.988281H58.0004L44.9889 13.9997Z'
-                stroke='#292929'
-                stroke-width='1.15114'
-              />
-              <path
-                d='M19.4069 13.9997H2.64639H0L7.71865 6.28107H12.7909L18.0837 0.988281H32.4183L19.4069 13.9997Z'
-                fill='#292929'
-              />
-            </svg>
             <div className='font-extrabold text-2xl leading-6'>Campaigns</div>
           </div>
           <div className='flex flex-col gap-4 max-h-[80vh] overflow-auto'>
             <div
-              className={`w-full py-4 px-12 font-bold text-lg cursor-pointer rounded-md ${
-                !selectedCampaigns.length ? 'bg-second-color text-white' : 'hover:bg-light-gray'
+              className={`w-full py-4 px-12 font-bold text-lg cursor-pointer flex items-center ${
+                !selectedCampaigns.length ? 'text-second-color' : ''
               }`}
               onClick={() => setSelectedCampaigns([])}>
+              <div
+                className={`${
+                  !selectedCampaigns.length ? 'bg-second-color' : 'bg-[#1C375A]/20'
+                } inline-block rounded mr-3 w-5 h-5 shrink-0`}>
+                {!selectedCampaigns.length && (
+                  <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
+                    <path
+                      d='M6.28033 9.77562C5.98744 9.48272 5.51256 9.48272 5.21967 9.77562C4.92678 10.0685 4.92678 10.5434 5.21967 10.8363L7.94202 13.5586C8.23492 13.8515 8.70979 13.8515 9.00268 13.5586L15.447 7.11431C15.7399 6.82142 15.7399 6.34655 15.447 6.05365C15.1541 5.76076 14.6792 5.76076 14.3863 6.05365L8.47235 11.9676L6.28033 9.77562Z'
+                      fill='white'
+                    />
+                  </svg>
+                )}
+              </div>
               {`All (${campaigns?.reduce((total, campaign) => total + campaign.campaign_quests.length, 0)})`}
             </div>
             {campaigns?.map((campaign, index) => (
               <div
-                className={`w-full py-4 px-12 font-bold text-lg cursor-pointer rounded-md ${
-                  selectedCampaigns.includes(campaign.id) ? 'bg-second-color text-white' : 'hover:bg-light-gray'
+                className={`w-full py-4 px-12 font-bold text-lg cursor-pointer flex items-center  ${
+                  selectedCampaigns.includes(campaign.id) ? 'text-second-color' : ''
                 }`}
                 key={index}
                 onClick={() =>
@@ -51,6 +53,19 @@ export default function Campaign() {
                     ? setSelectedCampaigns((prev) => prev.filter((c) => c != campaign.id))
                     : setSelectedCampaigns([...selectedCampaigns, campaign.id])
                 }>
+                <div
+                  className={`${
+                    selectedCampaigns.includes(campaign.id) ? 'bg-second-color' : 'bg-[#1C375A]/20'
+                  } inline-block rounded mr-3 w-5 h-5 shrink-0`}>
+                  {selectedCampaigns.includes(campaign.id) && (
+                    <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
+                      <path
+                        d='M6.28033 9.77562C5.98744 9.48272 5.51256 9.48272 5.21967 9.77562C4.92678 10.0685 4.92678 10.5434 5.21967 10.8363L7.94202 13.5586C8.23492 13.8515 8.70979 13.8515 9.00268 13.5586L15.447 7.11431C15.7399 6.82142 15.7399 6.34655 15.447 6.05365C15.1541 5.76076 14.6792 5.76076 14.3863 6.05365L8.47235 11.9676L6.28033 9.77562Z'
+                        fill='white'
+                      />
+                    </svg>
+                  )}
+                </div>
                 {`${campaign.name} (${campaign.campaign_quests.length})`}
               </div>
             ))}

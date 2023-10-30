@@ -376,5 +376,5 @@ export const getUserNfts = async (address: string) => {
     },
     operationName: 'Query721ByOwner',
   })
-  return data?.data?.[env]?.cw721_token || []
+  return data?.data?.[env]?.cw721_token?.reverse() || []
 }

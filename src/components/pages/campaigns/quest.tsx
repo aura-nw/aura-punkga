@@ -123,7 +123,7 @@ export default function Quest({ data }: { data: Quest }) {
               ) : (
                 <div></div>
               )}
-              {mission ? (
+              {conditions ? (
                 <div className='text-xs text-second-color font-medium'>
                   <span className='font-bold'>CONDITION: </span>
                   {conditions}

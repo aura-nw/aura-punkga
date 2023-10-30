@@ -1,18 +1,20 @@
-import HeaderBg from './assets/nfts-list-header-background.svg'
-import FooterBg from './assets/nfts-list-footer-background.svg'
-import Image from 'next/image'
 import NoImage from 'images/no_img.png'
+import getConfig from 'next/config'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useContext, useEffect, useState } from 'react'
 import { Context } from 'src/context'
 import { getUserNfts } from 'src/services'
-import getConfig from 'next/config'
-import Link from 'next/link'
 import useSWR from 'swr'
+import Banner from './assets/banner.png'
+import FooterBg from './assets/nfts-list-footer-background.svg'
+import HeaderBg from './assets/nfts-list-header-background.svg'
 
 export default function NFTList() {
   const { t } = useTranslation()
   const { wallet } = useContext(Context)
+  const [seeAll, setSeeAll] = useState(false)
   const { data } = useSWR(
     {
       key: 'pooling nfts',
@@ -20,6 +22,77 @@ export default function NFTList() {
     },
     ({ wallet }) => (wallet ? getUserNfts(wallet) : null),
     { refreshInterval: 10000 }
+  )
+  if (!data || !data.length) {
+    return (
+      <div className='w-full p-5 rounded-2xl mt-10 bg-[#F2F2F2]'>
+        <div className='text-[#1C1C1C] font-bold text-xl leading-[25px]'>Your NFTs</div>
+        <div className='mt-[10px] flex justify-between'>
+          <div className='pt-5 flex flex-col justify-between'>
+            <div>
+              <div className='font-bold leading-5'>You don't have any NFTs in your collection yet.</div>
+              <div className='text-sm leading-[18px] mt-[10px]'>You can earn NFTs by completing quest</div>
+            </div>
+            <div>
+              <Link
+                href='/campaigns'
+                className='block w-fit bg-primary-color text-lg leading-6 px-8 py-3 rounded-[20px] font-bold'>
+                Go to quests
+              </Link>
+            </div>
+          </div>
+          <div>
+            <Image src={Banner} alt='' className='rounded-[10px] w-[500px] aspect-[5/2] object-cover' />
+          </div>
+        </div>
+      </div>
+    )
+  }
+  return (
+    <div className='w-full p-5 rounded-2xl mt-10 bg-[#F2F2F2]'>
+      <div className='flex items-center gap-5'>
+        <div className='text-[#1C1C1C] font-bold text-xl leading-[25px]'>Your NFTs</div>
+        {data.length > 5 && (
+          <button
+            onClick={() => setSeeAll(!seeAll)}
+            className='px-6 py-2 rounded-full border-2 border-second-color text-second-color font-bold leading-5'>
+            {seeAll ? 'See less' : 'See all'}
+          </button>
+        )}
+      </div>
+      <div
+        className={`mt-[10px] -mx-5 grid grid-cols-[repeat(auto-fill,minmax(max(160px,calc(100%/5)),1fr))] overflow-hidden ${
+          seeAll ? '' : 'grid-rows-1 auto-rows-[0px]'
+        }`}>
+        {data?.map((token, index) => (
+          <Link
+            target='_blank'
+            href={`${getConfig()['CHAIN_INFO'].explorer}/tokens/token-nft/${
+              token.cw721_contract.smart_contract.address
+            }/${token.token_id}`}
+            className='p-5 [&:hover_.view-on-seekhype]:translate-y-0'
+            key={index}>
+            <div className={`bg-white rounded-[20px] p-[10px]`}>
+              <div className='w-full aspect-square rounded-[15px] overflow-hidden relative'>
+                <Image
+                  src={token.image_url || NoImage}
+                  width={160}
+                  height={160}
+                  className='w-full object-cover aspect-square'
+                  alt=''
+                />
+                <div className='view-on-seekhype transition-all translate-y-full absolute bottom-0 bg-primary-color py-2 w-full text-sm leading-[18px] font-bold text-center'>
+                  {t('View on AuraScan')}
+                </div>
+              </div>
+              <div className={`mt-[10px] text-subtle-dark text-sm font-bold leading-[18px] text-center truncate`}>
+                {token.name}
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
   )
   return (
     <div className='my-[60px] relative'>

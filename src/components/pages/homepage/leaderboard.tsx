@@ -1,10 +1,9 @@
 import Avatar from 'assets/images/avatar.svg'
 import Image from 'next/image'
-import { getLeaderboard } from 'src/services'
-import useSWR from 'swr'
-import Frame from './assets/leaderboard-background.svg'
 import { useContext } from 'react'
 import { Context } from 'src/context'
+import { getLeaderboard } from 'src/services'
+import useSWR from 'swr'
 
 export default function LeaderBoard() {
   const { account } = useContext(Context)

@@ -21,17 +21,6 @@ export default function LeaderBoard() {
   return (
     <div className='flex flex-col gap-8'>
       <div className='flex gap-[15px] items-end'>
-        <svg xmlns='http://www.w3.org/2000/svg' width='60' height='15' viewBox='0 0 60 15' fill='none'>
-          <path
-            d='M44.9889 13.9997H28.2284H25.582L33.3007 6.28107H38.3729L43.6657 0.988281H58.0004L44.9889 13.9997Z'
-            stroke='#292929'
-            stroke-width='1.15114'
-          />
-          <path
-            d='M19.4069 13.9997H2.64639H0L7.71865 6.28107H12.7909L18.0837 0.988281H32.4183L19.4069 13.9997Z'
-            fill='#292929'
-          />
-        </svg>
         <div className='font-extrabold text-2xl leading-6'>Leaderboard</div>
       </div>
       <div className='flex gap-10'>
