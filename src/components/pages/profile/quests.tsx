@@ -16,8 +16,10 @@ import Spinner from 'components/Spinner'
 
 export default function Quest() {
   const { account } = useContext(Context)
-  const { data } = useSWR({ key: 'get_available_quests', account }, ({ account }) =>
-    account ? getAvailableQuests() : null
+  const { data } = useSWR(
+    { key: 'get_available_quests', account },
+    ({ account }) => (account ? getAvailableQuests() : null),
+    { refreshInterval: 30000 }
   )
 
   return (
