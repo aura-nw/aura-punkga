@@ -75,6 +75,7 @@ export default function Quest() {
                   </SwiperSlide>
                 )
               })}
+              <SwiperSlide></SwiperSlide>
             </Swiper>
 
             <svg
@@ -259,7 +260,7 @@ const QuestItem = ({ quest }) => {
           <div className='flex gap-7 min-h-[40px] w-full justify-between'>
             <div className='font-bold leading-5 line-clamp-2'>{`${quest.name}`}</div>
             {quest.reward.nft ? (
-              <div className='border border-second-color bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium w-[38px] h-[38px]'>
+              <div className='border border-second-color bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium w-[38px] h-[38px] shrink-0'>
                 <Image
                   src={quest.reward.nft.img_url}
                   width={38}

@@ -40,7 +40,7 @@ export default function Campaign() {
                   </svg>
                 )}
               </div>
-              {`All (${campaigns?.reduce((total, campaign) => total + campaign.campaign_quests.length, 0)})`}
+              {`All (${campaigns?.reduce((total, campaign) => total + campaign.campaign_quests.length, 0) || '0'})`}
             </div>
             {campaigns?.map((campaign, index) => (
               <div
