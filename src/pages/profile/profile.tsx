@@ -3,7 +3,7 @@ import Footer from 'components/Footer'
 import Header from 'components/Header'
 import MComic from 'components/pages/homepage/comic'
 import Comic from 'components/pages/profile/comic'
-import { Fragment, useContext } from 'react'
+import { Fragment, useContext, useEffect } from 'react'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
@@ -13,6 +13,7 @@ import LeaderBoard from '../../components/pages/profile/leaderboard'
 import Quest from '../../components/pages/profile/quests'
 import NFTList from 'components/pages/profile/nfts'
 import Analystic from 'components/pages/profile/analytic'
+import { useRouter } from 'next/router'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -22,6 +23,10 @@ export default function Page(props) {
 function Profile({ subscribeList, curentlyReading, updateProfile }) {
   const { account, isSettingUp } = useContext(Context)
   const { t } = useTranslation()
+  const router = useRouter()
+  useEffect(() => {
+    if (!account) router.push('/')
+  }, [])
 
   if (!account) return <></>
   return (
@@ -58,9 +63,11 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
             </div>
           </>
         )}
-        <div className='mt-5 md:mt-[100px]'>
+        <div className=''>
           {!!(isSettingUp || curentlyReading.loading || curentlyReading.data?.length) && (
-            <p className='text-sm md:text-2xl leading-6 font-extrabold mb-2 md:mb-10'>{t('Currently reading')}</p>
+            <p className='text-sm md:text-2xl leading-6 font-extrabold mb-2 md:mb-10 mt-5 md:mt-10'>
+              {t('Currently reading')}
+            </p>
           )}
           <div className='grid gap-x-3 md:gap-x-24 gap-y-5 md:gap-y-10 grid-cols-2 xl:grid-cols-3'>
             {isSettingUp || curentlyReading.loading ? (
@@ -83,9 +90,11 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
             )}
           </div>
         </div>
-        <div className='mt-5 md:mt-[100px]'>
+        <div className=''>
           {!!(isSettingUp || subscribeList.loading || subscribeList.data?.length) && (
-            <p className='text-sm md:text-2xl leading-6 font-extrabold mb-2 md:mb-10'>{t('Subscribe list')}</p>
+            <p className='text-sm md:text-2xl leading-6 font-extrabold mb-2 md:mb-10 mt-5 md:mt-10'>
+              {t('Subscribe list')}
+            </p>
           )}
           <div className='grid gap-x-3 md:gap-x-24 gap-y-5 md:gap-y-10 grid-cols-2 xl:grid-cols-3'>
             {isSettingUp || subscribeList.loading ? (
