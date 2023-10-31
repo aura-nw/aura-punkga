@@ -75,7 +75,7 @@ export default function Quest() {
                   </SwiperSlide>
                 )
               })}
-              <SwiperSlide></SwiperSlide>
+              {data.length < 2 && <SwiperSlide></SwiperSlide>}
             </Swiper>
 
             <svg
