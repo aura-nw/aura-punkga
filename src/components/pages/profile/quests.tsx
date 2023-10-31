@@ -65,8 +65,13 @@ export default function Quest() {
                 nextEl: '.swiper-next',
                 prevEl: '.swiper-prev',
               }}
+              breakpoints={{
+                1500: {
+                  slidesPerView: 2,
+                },
+              }}
               spaceBetween={50}
-              slidesPerView={2}
+              slidesPerView={1}
               modules={[Navigation]}>
               {data?.map((quest: Quest, index) => {
                 return (
