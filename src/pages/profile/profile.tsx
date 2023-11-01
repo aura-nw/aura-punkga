@@ -26,7 +26,7 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
   const router = useRouter()
   useEffect(() => {
     if (!account) router.push('/')
-  }, [])
+  }, [account])
 
   if (!account) return <></>
   return (

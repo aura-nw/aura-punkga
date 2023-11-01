@@ -13,6 +13,8 @@ import { Quest } from 'src/models/campaign'
 import moment from 'moment'
 import Modal from 'components/Modal'
 import Spinner from 'components/Spinner'
+import { toast } from 'react-toastify'
+import ClaimNftSuccessModal from 'components/Modal/claimNftSuccess'
 
 export default function Quest() {
   const { account } = useContext(Context)
@@ -110,8 +112,9 @@ export default function Quest() {
     </div>
   )
 }
-const QuestItem = ({ quest }) => {
+const QuestItem = ({ quest }: { quest: Quest }) => {
   const [open, setOpen] = useState(false)
+  const [successModalOpen, setSuccessModalOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [isClaimed, setIsClaimed] = useState<number | undefined>()
   const { account, getProfile } = useContext(Context)
@@ -131,6 +134,8 @@ const QuestItem = ({ quest }) => {
       setIsClaimed(questDetail?.reward_status)
     }
   }, [questDetail?.reward_status])
+
+  useEffect(() => setSuccessModalOpen(false), [open])
 
   const mission = quest.requirement.read
     ? `Read ${quest.requirement.read?.manga?.title} - ${quest.requirement.read?.chapter?.title}`
@@ -160,14 +165,6 @@ const QuestItem = ({ quest }) => {
         }`
       : `/comic/${quest.requirement.subscribe.manga?.slug}/chapter/1`
 
-  const openQuestHandler = () => {
-    if (account) {
-      setOpen(true)
-    } else {
-      ;(document.querySelector('#open-sign-in-btn') as any)?.click()
-    }
-  }
-
   const claimQuestHandler = async () => {
     try {
       if (loading) return
@@ -175,7 +172,16 @@ const QuestItem = ({ quest }) => {
       const res = await claimQuest(quest.id)
       await getProfile()
       if (res) {
+        if (quest.reward.xp) {
+          toast(`${quest.reward.xp} XP claimed`, {
+            type: 'success',
+            position: toast.POSITION.BOTTOM_RIGHT,
+            hideProgressBar: true,
+            autoClose: 3000,
+          })
+        }
         setIsClaimed(2)
+        setSuccessModalOpen(true)
       }
       setLoading(false)
     } catch (error) {
@@ -185,6 +191,14 @@ const QuestItem = ({ quest }) => {
   }
   return (
     <>
+      {quest.reward?.nft && (
+        <ClaimNftSuccessModal
+          open={successModalOpen}
+          setOpen={setSuccessModalOpen}
+          image={quest.reward.nft.img_url}
+          name={quest.reward.nft.img_name}
+        />
+      )}
       <Modal open={open} setOpen={setOpen} onClose={() => setOpen(false)} hideClose>
         <div className='bg-[#f4f4f4] p-8 rounded-[10px] w-[656px]'>
           <div className='flex flex-col gap-[26px]'>

@@ -10,12 +10,16 @@ import useSWR from 'swr'
 import LockImage from './assets/lock-image.svg'
 import Modal from './modal'
 import DOMPurify from 'dompurify'
+import { toast } from 'react-toastify'
+import ClaimNftSuccessModal from 'components/Modal/claimNftSuccess'
 
 export default function Quest({ data }: { data: Quest }) {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [isClaimed, setIsClaimed] = useState<number | undefined>()
   const { account, getProfile } = useContext(Context)
+  const [successModalOpen, setSuccessModalOpen] = useState(false)
+  useEffect(() => setSuccessModalOpen(false), [open])
   const { data: questDetail } = useSWR(
     {
       key: 'get_quest_detail',
@@ -76,7 +80,16 @@ export default function Quest({ data }: { data: Quest }) {
       const res = await claimQuest(data.id)
       await getProfile()
       if (res) {
+        if (data.reward.xp) {
+          toast(`${data.reward.xp} XP claimed`, {
+            type: 'success',
+            position: toast.POSITION.BOTTOM_RIGHT,
+            hideProgressBar: true,
+            autoClose: 3000,
+          })
+        }
         setIsClaimed(2)
+        setSuccessModalOpen(true)
       }
       setLoading(false)
     } catch (error) {
@@ -157,6 +170,14 @@ export default function Quest({ data }: { data: Quest }) {
 
   return (
     <>
+      {data.reward?.nft && (
+        <ClaimNftSuccessModal
+          open={successModalOpen}
+          setOpen={setSuccessModalOpen}
+          image={data.reward.nft.img_url}
+          name={data.reward.nft.img_name}
+        />
+      )}
       <Modal open={open} setOpen={setOpen} onClose={() => setOpen(false)} hideClose>
         <div className='flex flex-col gap-[26px]'>
           <div className='flex flex-col gap-4'>

@@ -8,6 +8,7 @@ import { Context } from 'src/context'
 import QuestImage from './assets/complete-quest.png'
 import Top1MedalImage from './assets/top-1-medal.png'
 import Top1Bg from './assets/top-1-bg.svg'
+import { toast } from 'react-toastify'
 export default function LeaderBoard() {
   const { account } = useContext(Context)
   const { data } = useSWR(

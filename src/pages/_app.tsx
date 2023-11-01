@@ -17,17 +17,19 @@ import { appWithTranslation, useTranslation } from 'next-i18next'
 import { AppProps } from 'next/app'
 import getConfig, { setConfig } from 'next/config'
 import { Plus_Jakarta_Sans, Work_Sans } from 'next/font/google'
+import localFont from 'next/font/local'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
+import { ToastContainer } from 'react-toastify'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 import ContextProvider, { Context } from 'src/context'
 import { wallets as c98Mobile } from 'src/services/c98MobileWallet'
 import 'src/styles/globals.scss'
 import { validateEmail } from 'src/utils'
-import localFont from 'next/font/local'
+import 'react-toastify/dist/ReactToastify.css'
 const pjs = Plus_Jakarta_Sans({ subsets: ['latin', 'vietnamese'] })
 const ws = Work_Sans({ subsets: ['latin', 'vietnamese'] })
 const orbitron = localFont({
@@ -106,6 +108,7 @@ function MyApp(props: AppProps) {
           font-family: ${orbitron.style.fontFamily};
         }
       `}</style>
+      <ToastContainer />
       <ContextProvider>
         <ChainProvider
           chains={chains}
