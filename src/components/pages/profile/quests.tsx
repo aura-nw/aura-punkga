@@ -135,8 +135,6 @@ const QuestItem = ({ quest }: { quest: Quest }) => {
     }
   }, [questDetail?.reward_status])
 
-  useEffect(() => setSuccessModalOpen(false), [open])
-
   const mission = quest.requirement.read
     ? `Read ${quest.requirement.read?.manga?.title} - ${quest.requirement.read?.chapter?.title}`
     : quest.requirement.comment

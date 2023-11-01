@@ -19,7 +19,6 @@ export default function Quest({ data }: { data: Quest }) {
   const [isClaimed, setIsClaimed] = useState<number | undefined>()
   const { account, getProfile } = useContext(Context)
   const [successModalOpen, setSuccessModalOpen] = useState(false)
-  useEffect(() => setSuccessModalOpen(false), [open])
   const { data: questDetail } = useSWR(
     {
       key: 'get_quest_detail',
