@@ -358,7 +358,7 @@ export const getUserNfts = async (address: string) => {
   const { data } = await axios.post(`${getConfig().CHAIN_INFO.indexerV2}`, {
     query: `query Query721ByOwner($owner_address: String!) {
   ${env} {
-    cw721_token(where: {owner: {_eq: $owner_address}}) {
+    cw721_token(where: {owner: {_eq: $owner_address}}, order_by: {created_at: desc}) {
       id
       token_id
       name: media_info(path: "onchain.metadata.name")
@@ -376,5 +376,5 @@ export const getUserNfts = async (address: string) => {
     },
     operationName: 'Query721ByOwner',
   })
-  return data?.data?.[env]?.cw721_token?.reverse() || []
+  return data?.data?.[env]?.cw721_token || []
 }
