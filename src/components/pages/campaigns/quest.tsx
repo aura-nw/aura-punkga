@@ -89,6 +89,7 @@ export default function Quest({ data }: { data: Quest }) {
           })
         }
         setIsClaimed(2)
+        setOpen(false)
         setSuccessModalOpen(true)
       }
       setLoading(false)
@@ -175,7 +176,7 @@ export default function Quest({ data }: { data: Quest }) {
           open={successModalOpen}
           setOpen={setSuccessModalOpen}
           image={data.reward.nft.img_url}
-          name={data.reward.nft.img_name}
+          name={data.reward.nft.nft_name}
         />
       )}
       <Modal open={open} setOpen={setOpen} onClose={() => setOpen(false)} hideClose>

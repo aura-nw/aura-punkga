@@ -181,6 +181,7 @@ const QuestItem = ({ quest }: { quest: Quest }) => {
           })
         }
         setIsClaimed(2)
+        setOpen(false)
         setSuccessModalOpen(true)
       }
       setLoading(false)
@@ -196,7 +197,7 @@ const QuestItem = ({ quest }: { quest: Quest }) => {
           open={successModalOpen}
           setOpen={setSuccessModalOpen}
           image={quest.reward.nft.img_url}
-          name={quest.reward.nft.img_name}
+          name={quest.reward.nft.nft_name}
         />
       )}
       <Modal open={open} setOpen={setOpen} onClose={() => setOpen(false)} hideClose>

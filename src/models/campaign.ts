@@ -46,7 +46,7 @@ export type Quest = {
   reward: {
     nft?: {
       img_url: string
-      img_name: string
+      nft_name: string
     }
     xp?: number
   }
