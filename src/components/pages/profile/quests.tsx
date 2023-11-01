@@ -75,9 +75,9 @@ export default function Quest() {
               spaceBetween={50}
               slidesPerView={1}
               modules={[Navigation]}>
-              {data?.map((quest: Quest, index) => {
+              {data?.map((quest: Quest) => {
                 return (
-                  <SwiperSlide key={index}>
+                  <SwiperSlide key={quest.id}>
                     <QuestItem quest={quest} />
                   </SwiperSlide>
                 )
