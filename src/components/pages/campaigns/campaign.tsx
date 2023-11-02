@@ -15,7 +15,7 @@ export default function Campaign() {
   return (
     <div className='flex flex-col gap-8'>
       <div className='flex gap-10'>
-        <div className='flex-1 flex flex-col gap-4 sticky top-[100px] h-fit'>
+        <div className='grow-0 basis-[380px] flex flex-col gap-4 sticky top-[100px] h-fit'>
           <div className='flex gap-[15px] items-end mb-4'>
             <div className='font-extrabold text-2xl leading-6'>Campaigns</div>
           </div>
@@ -69,7 +69,7 @@ export default function Campaign() {
             ))}
           </div>
         </div>
-        <div className='flex-[3] pt-[50px]'>
+        <div className='grow-0 basis-[1220px] pt-[50px]'>
           <div className='flex flex-col'>
             {campaigns
               ?.filter((campaign) => !selectedCampaigns.length || selectedCampaigns.includes(campaign.id))

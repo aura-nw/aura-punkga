@@ -25,7 +25,7 @@ export default function LeaderBoard() {
         <div className='font-extrabold text-2xl leading-6'>Leaderboard</div>
       </div>
       <div className='flex gap-10'>
-        <div className='flex-1 bg-[#f0f0f0] rounded-[10px]'>
+        <div className='grow-0 basis-[380px] bg-[#f0f0f0] rounded-[10px]'>
           <div className='p-7 flex flex-col gap-7 items-center'>
             <div className='flex items-center gap-4'>
               <Image src={Top1MedalImage} alt='' />
@@ -66,7 +66,7 @@ export default function LeaderBoard() {
             </div>
           </div>
         </div>
-        <div className='flex-[2] bg-[#f0f0f0] rounded-[10px]'>
+        <div className='grow-0 basis-[800px] bg-[#f0f0f0] rounded-[10px]'>
           <div className='py-4 px-[32px] w-full h-full flex flex-col'>
             <div className='flex justify-between px-[32px] pb-3 pt-1 border-b-[1px] border-medium-gray text-subtle-dark font-bold'>
               <div className='flex gap-16'>
@@ -119,7 +119,7 @@ export default function LeaderBoard() {
             )}
           </div>
         </div>
-        <div className='flex-1'>
+        <div className='grow-0 basis-[380px]'>
           <Image src={QuestImage} alt='' />
         </div>
       </div>
