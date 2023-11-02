@@ -3,12 +3,14 @@ import Image from 'next/image'
 import { getLeaderboard } from 'src/services'
 import useSWR from 'swr'
 import Frame from './assets/leaderboard-background.svg'
-import { useContext } from 'react'
+import { useContext, useRef } from 'react'
 import { Context } from 'src/context'
 import QuestImage from './assets/complete-quest.png'
 import Top1MedalImage from './assets/top-1-medal.png'
 import Top1Bg from './assets/top-1-bg.svg'
 import { toast } from 'react-toastify'
+import Popover from 'components/Popover'
+import ProfileCard from 'components/Card/ProfileCard'
 export default function LeaderBoard() {
   const { account } = useContext(Context)
   const { data } = useSWR(
@@ -19,9 +21,13 @@ export default function LeaderBoard() {
     },
     { refreshInterval: 10000 }
   )
+  const popoverRender = (open: boolean, data: any) => {
+    if (open) return <ProfileCard data={data.authorizer_user} />
+    return <></>
+  }
   return (
     <div className='flex flex-col gap-8'>
-      <div className='flex gap-[15px] items-end'>
+      <div className='flex gap-[15px] items-end' id='leaderboard'>
         <div className='font-extrabold text-2xl leading-6'>Leaderboard</div>
       </div>
       <div className='flex gap-10'>
@@ -80,26 +86,30 @@ export default function LeaderBoard() {
             </div>
             <div className='h-full flex flex-col relative'>
               <div
-                className={`absolute inset-0 overflow-auto  gap-3 flex flex-col text-subtle-dark text-sm font-semibold h-full py-3`}>
+                className={`absolute inset-0 overflow-y-auto overflow-x-hidden gap-3 flex flex-col text-subtle-dark text-sm font-semibold h-full py-3`}>
                 {data?.map((item, index) => (
-                  <div key={index} className='grid grid-cols-[1fr_115px] py-[6px] px-[32px] bg-white rounded-[10px]'>
-                    <div className='flex items-center'>
-                      <div className='w-[45px]'>#{index + 1}</div>
-                      <div className='flex items-center gap-[10px] justify-self-start px-[10px]'>
-                        <Image
-                          className='w-7 h-7 rounded-full'
-                          width={28}
-                          height={28}
-                          src={item.authorizer_user.picture || Avatar}
-                          alt=''
-                        />
-                        <div className='line-clamp-1'>{item.authorizer_user.nickname}</div>
+                  <div key={index} className='bg-white rounded-[10px] cursor-pointer'>
+                    <Popover freeMode popoverRender={(open) => popoverRender(open, item)}>
+                      <div className='grid grid-cols-[1fr_115px] py-[6px] px-[32px]'>
+                        <div className='flex items-center'>
+                          <div className='w-[45px]'>#{index + 1}</div>
+                          <div className='flex items-center gap-[10px] justify-self-start px-[10px]'>
+                            <Image
+                              className='w-7 h-7 rounded-full'
+                              width={28}
+                              height={28}
+                              src={item.authorizer_user.picture || Avatar}
+                              alt=''
+                            />
+                            <div className='line-clamp-1'>{item.authorizer_user.nickname}</div>
+                          </div>
+                        </div>
+                        <div className='flex justify-between items-center'>
+                          <div>{item.authorizer_user.user_quests_aggregate.aggregate.count || 0}</div>
+                          <div>{item.xp}</div>
+                        </div>
                       </div>
-                    </div>
-                    <div className='flex justify-between items-center'>
-                      <div>{item.authorizer_user.user_quests_aggregate.aggregate.count || 0}</div>
-                      <div>{item.xp}</div>
-                    </div>
+                    </Popover>
                   </div>
                 ))}
               </div>
