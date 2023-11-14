@@ -19,7 +19,7 @@ interface IFilledSelect {
 }
 export default function FilledSelect({
   onChange,
-  icon = <ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />,
+  icon = <ChevronDownIcon className='h-5 w-5 text-subtle-dark' aria-hidden='true' />,
   options,
   placeholder,
   selected,
@@ -56,14 +56,14 @@ export default function FilledSelect({
                 <span className='flex items-center text-[16px] leading-[24px]'>
                   {!!selected.length ? (
                     isTooLong ? (
-                      <span className='block truncate text-medium-gray'>
+                      <span className='block truncate text-subtle-dark'>
                         {`${selected.map((s) => s.value).length} ${t(`selected ${label}`)}`}
                       </span>
                     ) : (
-                      <span className='block truncate text-medium-gray'>{selected.map((s) => s.value).join(', ')}</span>
+                      <span className='block truncate text-subtle-dark'>{selected.map((s) => s.value).join(', ')}</span>
                     )
                   ) : (
-                    <span className='block truncate text-medium-gray'>{placeholder}</span>
+                    <span className='block truncate text-subtle-dark'>{placeholder}</span>
                   )}
                 </span>
                 <span className='pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2'>
@@ -136,9 +136,9 @@ export default function FilledSelect({
             <Listbox.Button className='relative w-full cursor-default rounded-[12px] bg-light-gray py-[3px] pl-[13px] pr-[57px] text-left text-gray-900 focus:outline-none'>
               <span className='flex items-center text-[16px] leading-[24px]'>
                 {selected ? (
-                  <span className='block truncate text-medium-gray'>{selected.value}</span>
+                  <span className='block truncate text-subtle-dark'>{selected.value}</span>
                 ) : (
-                  <span className='block truncate text-medium-gray'>{placeholder}</span>
+                  <span className='block truncate text-subtle-dark'>{placeholder}</span>
                 )}
               </span>
               <span className='pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2'>{icon}</span>

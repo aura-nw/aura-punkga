@@ -89,12 +89,12 @@ function Home() {
         <div className='md:my-[50px] lg:flex gap-10'>
           <div className='lg:flex-auto lg:w-[65%] px-5 md:px-0'>
             <TaskSlider slideActive={slideActive} setSlideActive={setSlideActive} />
-            <div className='mt-[60px] flex justify-between items-center px-2'>
+            <div className='mt-[60px] flex flex-col gap-5 px-2'>
               <div className='md:text-[24px] text-sm leading-6 font-[800]'>{t('Latest update')}</div>
               <div className='md:flex hidden gap-[20px] items-center'>
                 <FilledSelect
                   label='genres'
-                  icon={<ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />}
+                  icon={<ChevronDownIcon className='h-5 w-5 text-subtle-dark' aria-hidden='true' />}
                   selected={genreFilter}
                   multiple={true}
                   onChange={setGenreFilter}
@@ -123,7 +123,7 @@ function Home() {
                 <FilledSelect
                   label='status'
                   multiple={true}
-                  icon={<ChevronDownIcon className='h-5 w-5 text-medium-gray' aria-hidden='true' />}
+                  icon={<ChevronDownIcon className='h-5 w-5 text-subtle-dark' aria-hidden='true' />}
                   selected={statusFilter}
                   onChange={setStatusFilter}
                   allKey='All status'
@@ -149,7 +149,7 @@ function Home() {
                 />
               </div>
             </div>
-            <div className='grid grid-cols-2 gap-10 md:gap-[80px] mt-2 md:mt-[76px]'>
+            <div className='grid grid-cols-2 gap-10 mt-2 md:mt-10'>
               {latestComic.loading
                 ? Array.apply(null, Array(2)).map((d, index) => {
                     return <DummyComic key={index} />
