@@ -117,7 +117,18 @@ export default function ReadingSection({
   }
 
   const setReadingModeHandler = (mode: string) => {
-    setReadingMode(mode)
+    if (mode == 'onePage') {
+      setReadingMode(mode)
+      _.delay(() => document.querySelector(`#page_${currentPage}`)?.scrollIntoView(), 500)
+    } else {
+      for (let index = 0; index < chapterLengthRef.current; index++) {
+        if ((document.querySelector(`#page_${index}`) as any).y > 0) {
+          setCurrentPage(index % 2 == 1 ? index - 1 : index)
+          break
+        }
+      }
+      setReadingMode(mode)
+    }
     setItem('reading_mode', mode)
   }
 
@@ -143,14 +154,24 @@ export default function ReadingSection({
         !ref.current?.matches(':hover')
       )
         return
-      if (event.deltaY < 0 || event.which == 37 || event.which == 38) {
-        setCurrentPage((prevState) => (prevState - 2 < 0 ? 0 : prevState - 2))
-      } else if (event.deltaY > 0 || event.which == 39 || event.which == 40) {
-        setCurrentPage((prevState) => (prevState + 2 >= chapterLengthRef.current ? prevState : prevState + 2))
+      let mode
+      setReadingMode((prevState) => {
+        mode = prevState
+        return prevState
+      })
+      if (mode == 'twoPage') {
+        if (event.deltaY < 0 || event.which == 37 || event.which == 38) {
+          setCurrentPage((prevState) => (prevState - 2 < 0 ? 0 : prevState - 2))
+        } else if (event.deltaY > 0 || event.which == 39 || event.which == 40) {
+          setCurrentPage((prevState) => (prevState + 2 >= chapterLengthRef.current ? prevState : prevState + 2))
+        }
       }
     }
     window.addEventListener('wheel', _.throttle(pageHandler, 500, { trailing: false, leading: true }))
     window.addEventListener('keydown', pageHandler)
+  }, [readingMode])
+
+  useEffect(() => {
     const lsReadingMode = getItem('reading_mode')
     if (lsReadingMode) {
       setReadingMode(lsReadingMode)
@@ -159,7 +180,7 @@ export default function ReadingSection({
 
   useEffect(() => {
     setCurrentPage(0)
-  }, [readingMode, chapterLocale])
+  }, [chapterLocale])
 
   if (typeof chapterData == 'undefined' || typeof data == 'undefined') {
     return <></>
@@ -231,6 +252,7 @@ export default function ReadingSection({
                   <Image
                     src={page || PageMockup}
                     key={index}
+                    id={`page_${index}`}
                     alt=''
                     className={`${readingMode == 'onePage' ? 'mx-auto' : 'h-fit max-h-full max-w-[50%] w-auto'} ${
                       readingMode != 'onePage' && index > 1 && 'hidden'

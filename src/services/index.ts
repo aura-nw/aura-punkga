@@ -4,6 +4,7 @@ import { COMIC_STATUS, LANGUAGE } from 'src/constants'
 import { IComic } from 'src/models/comic'
 import { privateAxios } from 'src/context'
 import { formatStatus } from 'src/utils'
+import { getItem } from 'src/utils/localStorage'
 
 export const getLatestComic = async (): Promise<IComic[]> => {
   return await axios.get(`${getConfig().API_URL}/api/rest/public/latest`).then((res) =>
@@ -342,8 +343,12 @@ export const claimQuest = async (questId: string) => {
   return data
 }
 export const readChapter = async (chapterId: string) => {
-  const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/user/read-chapter/${chapterId}`)
-  return data
+  try {
+    const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/user/read-chapter/${chapterId}`)
+    return data
+  } catch (error) {
+    return undefined
+  }
 }
 export const getAvailableQuests = async () => {
   const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/user/available-quests`)
