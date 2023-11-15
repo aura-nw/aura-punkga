@@ -38,7 +38,7 @@ export default function LeaderBoard() {
             className={`absolute inset-0 overflow-auto  gap-3 flex flex-col text-subtle-dark text-sm font-semibold h-full py-3`}>
             {data?.map((item, index) => (
               <div key={index} className='cursor-pointer bg-white rounded-[10px]'>
-                <Popover freeMode popoverRender={() => <ProfileCard data={item.authorizer_user} />}>
+                <Popover freeMode popoverRender={() => <ProfileCard hideEmail data={item.authorizer_user} />}>
                   <div className='grid grid-cols-[1fr_115px] py-[6px] px-[32px]'>
                     <div className='flex items-center'>
                       <div className='w-[45px]'>#{index + 1}</div>

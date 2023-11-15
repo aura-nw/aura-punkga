@@ -1,16 +1,14 @@
 import Avatar from 'assets/images/avatar.svg'
+import ProfileCard from 'components/Card/ProfileCard'
+import Popover from 'components/Popover'
 import Image from 'next/image'
+import { useContext } from 'react'
+import { Context } from 'src/context'
 import { getLeaderboard } from 'src/services'
 import useSWR from 'swr'
-import Frame from './assets/leaderboard-background.svg'
-import { useContext, useRef } from 'react'
-import { Context } from 'src/context'
 import QuestImage from './assets/complete-quest.png'
-import Top1MedalImage from './assets/top-1-medal.png'
 import Top1Bg from './assets/top-1-bg.svg'
-import { toast } from 'react-toastify'
-import Popover from 'components/Popover'
-import ProfileCard from 'components/Card/ProfileCard'
+import Top1MedalImage from './assets/top-1-medal.png'
 export default function LeaderBoard() {
   const { account } = useContext(Context)
   const { data } = useSWR(
@@ -22,7 +20,7 @@ export default function LeaderBoard() {
     { refreshInterval: 10000 }
   )
   const popoverRender = (open: boolean, data: any) => {
-    if (open) return <ProfileCard data={data.authorizer_user} />
+    if (open) return <ProfileCard hideEmail data={data.authorizer_user} />
     return <></>
   }
   return (
