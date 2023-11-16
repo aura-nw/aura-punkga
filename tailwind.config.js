@@ -26,12 +26,21 @@ module.exports = {
       },
       animation: {
         flash: 'flash 1s cubic-bezier(0, 0, 0.2, 1)',
+        imageslide: 'imageslide 2s ease-in-out infinite',
       },
       keyframes: {
         flash: {
           '75%, 100%': {
             transform: 'scale(1.8)',
             opacity: 0,
+          },
+        },
+        imageslide: {
+          '0%': {
+            backgroundPosition: '-100% 0%',
+          },
+          '100%': {
+            backgroundPosition: '100% 0%',
           },
         },
       },

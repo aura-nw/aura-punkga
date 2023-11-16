@@ -9,6 +9,7 @@ import Logo from 'assets/images/header-logo.svg'
 import FlashAnimation from 'components/AnimationIconHOC/Flash'
 import FilledButton from 'components/Button/FilledButton'
 import OutlineButton from 'components/Button/OutlineButton'
+import LazyImage from 'components/Image'
 import PageMockup from 'images/comicpage.png'
 import BookFillIcon from 'images/icons/book_fill.svg'
 import BookOutlineIcon from 'images/icons/book_outline.svg'
@@ -33,7 +34,6 @@ import { Context } from 'src/context'
 import { IChapter } from 'src/models/chapter'
 import { IComicDetail } from 'src/models/comic'
 import { subscribe, unsubscribe } from 'src/services'
-import { getBlurUrl } from 'src/utils'
 import { getItem, setItem } from 'src/utils/localStorage'
 export default function ReadingSection({
   openComments,
@@ -249,7 +249,7 @@ export default function ReadingSection({
               )
               ?.map((page, index) =>
                 isMobile ? null : (
-                  <Image
+                  <LazyImage
                     src={page || PageMockup}
                     key={index}
                     id={`page_${index}`}
@@ -260,8 +260,6 @@ export default function ReadingSection({
                     width={1900}
                     height={1000}
                     priority={index < 4}
-                    placeholder='blur'
-                    blurDataURL={getBlurUrl()}
                   />
                 )
               )}
