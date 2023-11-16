@@ -119,7 +119,7 @@ export default function ReadingSection({
   const setReadingModeHandler = (mode: string) => {
     if (mode == 'onePage') {
       setReadingMode(mode)
-      _.delay(() => document.querySelector(`#page_${currentPage}`)?.scrollIntoView(), 500)
+      document.querySelector(`#page_${currentPage}`)?.scrollIntoView()
     } else {
       for (let index = 0; index < chapterLengthRef.current; index++) {
         if ((document.querySelector(`#page_${index}`) as any).y > 0) {
@@ -232,12 +232,12 @@ export default function ReadingSection({
           </div>
         </div>
       ) : chapterData[chapterLocale] ? (
-        <div className='h-full overflow-auto' onScroll={onScrollHandler}>
+        <div className='h-[calc(100%-60px)] overflow-auto' onScroll={onScrollHandler}>
           <div
             ref={ref}
             className={`${mode == 'minscreen' ? '' : ''} ${
               readingMode == 'onePage' ? 'w-[90%] max-w-[940px] mx-auto' : 'flex h-full items-center justify-center'
-            } pb-[60px]`}>
+            }`}>
             {chapterData[chapterLocale]
               ?.slice(
                 readingMode == 'onePage' ? 0 : currentPage,
@@ -254,9 +254,11 @@ export default function ReadingSection({
                     key={index}
                     id={`page_${index}`}
                     alt=''
-                    className={`${readingMode == 'onePage' ? 'mx-auto' : 'h-fit max-h-full max-w-[50%] w-auto'} ${
-                      readingMode != 'onePage' && index > 1 && 'hidden'
-                    }`}
+                    className={`${
+                      readingMode == 'onePage'
+                        ? 'mx-auto'
+                        : `h-full w-1/2 [&>img]:!w-fit ${index % 2 == 0 ? '[&>img]:ml-auto' : '[&>img]:mr-auto'}`
+                    } ${readingMode != 'onePage' && index > 1 && 'hidden'}`}
                     width={1900}
                     height={1000}
                     priority={index < 4}
