@@ -64,7 +64,7 @@ export default function Footer() {
                   className='text-xs lg:text-sm lg:leading-5 text-white leading-[15px] placeholder:text-[#545454] outline-none border-none !bg-transparent w-full'
                 />
                 <button
-                  className='py-[10px] lg:py-4 px-6 text-sm leading-[18px] text-[#1B1B1B] bg-primary-color rounded-full font-semibold'
+                  className='py-[10px] lg:py-4 px-6 text-sm leading-[18px] text-[#1B1B1B] bg-primary-color rounded-full font-semibold whitespace-nowrap'
                   onClick={subscibeHandler}>
                   {t('Subscribe')}
                 </button>
