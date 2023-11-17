@@ -133,7 +133,7 @@ export default function ComicDetail({
                 className={`font-bold ${
                   expandDetail ? 'text-black' : 'text-second-color'
                 } transition-all text-2xl leading-6 flex items-start gap-[10px]`}>
-                <span className={`${!expandDetail ? 'line-clamp-1 leading-[125%]' : ''}`}>
+                <span className={`${!expandDetail ? 'line-clamp-1 leading-[150%] -mt-[12px]' : ''}`}>
                   {data[selectedLanguage.shortLang]?.title}
                 </span>
                 {expandDetail && <StatusLabel status={data.status?.type}>{t(data.status?.text)}</StatusLabel>}

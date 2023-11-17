@@ -39,13 +39,13 @@ export const getServerSideProps = async (context) => {
       const mangaLanguages =
         manga.manga_languages.find((ml) => ml.language_id == 1) ||
         manga.manga_languages.find((ml) => ml.is_main_language)
-      props.title = mangaLanguages?.title
+      props.title = `${mangaLanguages?.title} - Chapter ${context.params?.chapterNumber}`
       props.description = mangaLanguages?.description
     } else {
       const mangaLanguages =
         manga.manga_languages.find((ml) => ml.language_id == 2) ||
         manga.manga_languages.find((ml) => ml.is_main_language)
-      props.title = mangaLanguages?.title
+      props.title = `${mangaLanguages?.title} - Chương ${context.params?.chapterNumber}`
       props.description = mangaLanguages?.description
     }
     return {
