@@ -31,7 +31,7 @@ export const getServerSideProps = async (context) => {
       image: creator.avatar_url,
       title: creator.pen_name,
       description: creator.bio,
-      canonical: `htts://punkga.me/artist/${context.params?.artist}`,
+      canonical: `https://punkga.me/artist/${context.params?.artist}`,
     }
     return {
       props: {
