@@ -32,6 +32,7 @@ export const getServerSideProps = async (context) => {
       image: manga.poster,
       title: '',
       description: '',
+      canonical: `htts://punkga.me/comic/${context.params?.comicSlug}`,
     }
     if (context.locale == 'en') {
       const mangaLanguages =

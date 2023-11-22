@@ -34,6 +34,7 @@ export default function HeadComponent({ data }: { data?: any }) {
       <meta name='twitter:title' key='twitter:title' content={punkgaTitle}></meta>
       <meta name='twitter:description' key='twitter:description' content={punkgaDescription}></meta>
       <meta name='twitter:image' key='twitter:image' content={punkgaImage}></meta>
+      {data?.canonical && <link rel='canonical' href={data?.canonical} key='canonical' />}
     </Head>
   )
 }
