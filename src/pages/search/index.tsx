@@ -24,7 +24,7 @@ function Search() {
   return (
     <>
       <Header />
-      <div className='pk-container px-5 md:px-0'>
+      <div className='pk-container px-5 md:px-0 min-h-[calc(100vh-601px)] lg:min-h-[calc(100vh-623px)]'>
         <p className='md:text-2xl font-extrabold leading-6 mt-2 md:mt-10'>{`${searchComic.data?.length} ${t(
           'results for'
         )} "${keyword}"`}</p>
