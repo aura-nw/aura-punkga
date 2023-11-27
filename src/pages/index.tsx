@@ -1,33 +1,22 @@
-import Carousel from 'components/Carousel'
-
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import HamulageBanner from 'assets/images/comic-banner/hamulage.jpg'
-import HeroCyberpunkBanner from 'assets/images/comic-banner/hero_cyberpunk.jpg'
-import HeroicBanner from 'assets/images/comic-banner/heroic.png'
-import TCOTPBanner from 'assets/images/comic-banner/the_chaos_of_the_past.jpg'
-import UltraVBanner from 'assets/images/comic-banner/ultra_v.jpg'
-import ErrantBanner from 'assets/images/comic-banner/errant.jpg'
 import DummyComic from 'components/DummyComponent/comic'
 import Footer from 'components/Footer'
 import Header from 'components/Header'
 import FilledSelect from 'components/Select/FilledSelect'
 import Comic from 'components/pages/homepage/comic'
+import LeaderBoard from 'components/pages/homepage/leaderboard'
+import SlideSection from 'components/pages/homepage/slideSection'
+import TaskSlider from 'components/pages/homepage/comicSlider'
 import TrendingComic from 'components/pages/homepage/trendingComic'
 import _ from 'lodash'
 import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useApi from 'src/hooks/useApi'
 import { IComic } from 'src/models/comic'
 import { getAllTags, getLatestComic, getTrendingComic } from 'src/services'
-import HeadComponent from 'components/Head'
-import LeaderBoard from 'components/pages/homepage/leaderboard'
-import TaskSlider from 'components/pages/homepage/taskSlider'
-import SlideSection from 'components/pages/homepage/slideSection'
 
 declare global {
   interface Window {
@@ -46,7 +35,7 @@ function Home() {
   const allTags = useApi<any[]>(getAllTags, true, [])
   const { locale } = useRouter()
   const { t } = useTranslation()
-  const [slideActive, setSlideActive] = useState(0)
+  const sliderNavRef = useRef<any>()
   const [statusFilter, setStatusFilter] = useState([
     {
       key: 'All status',
@@ -85,11 +74,17 @@ function Home() {
   return (
     <>
       <Header />
+      <div className='md:hidden'>
+        <TaskSlider sliderNavRef={sliderNavRef} />
+        <SlideSection sliderNavRef={sliderNavRef} />
+      </div>
       <div className='pk-container'>
         <div className='md:my-[50px] lg:flex gap-10'>
-          <div className='lg:flex-auto lg:w-[65%] px-5 md:px-0'>
-            <TaskSlider slideActive={slideActive} setSlideActive={setSlideActive} />
-            <div className='mt-[60px] flex flex-col gap-5 px-2'>
+          <div className='lg:flex-auto lg:w-[65%] px-5 md:px-0 relative'>
+            <div className='hidden md:block'>
+              <TaskSlider sliderNavRef={sliderNavRef} />
+            </div>
+            <div className='mt-10 md:mt-[60px] flex flex-col gap-5 px-2'>
               <div className='md:text-[24px] text-sm leading-6 font-[800]'>{t('Latest update')}</div>
               <div className='md:flex hidden gap-[20px] items-center'>
                 <FilledSelect
@@ -174,9 +169,11 @@ function Home() {
             </div>
           </div>
           <div className='lg:flex-auto lg:w-[32%] mt-6 lg:mt-0 px-5 md:px-0'>
-            <SlideSection slideActive={slideActive} setSlideActive={setSlideActive} />
-            <LeaderBoard />
-            <div className='md:text-[24px] text-sm leading-6 font-[800] mt-[60px]'>{t('Trending')}</div>
+            <div className='hidden md:block'>
+              <SlideSection sliderNavRef={sliderNavRef} />
+              <LeaderBoard />
+            </div>
+            <div className='md:text-[24px] text-sm leading-6 font-[800] mt-10 md:mt-[60px]'>{t('Trending')}</div>
             <div className='flex flex-col gap-10 mt-2 md:mt-10'>
               {trendingComic.loading
                 ? Array.apply(null, Array(2)).map((d, index) => {
@@ -185,6 +182,9 @@ function Home() {
                 : trendingComic.data.slice(0, 2).map((data, index) => {
                     return <TrendingComic key={index} {...data} />
                   })}
+            </div>
+            <div className=''>
+              <LeaderBoard />
             </div>
           </div>
         </div>

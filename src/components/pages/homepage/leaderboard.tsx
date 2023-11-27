@@ -19,11 +19,11 @@ export default function LeaderBoard() {
   )
   return (
     <div className='bg-[#f0f0f0] rounded-[10px] mt-10'>
-      <div className='py-4 px-[32px] w-full h-full flex flex-col'>
-        <div className='text-xl leading-[25px] font-bold w-full text-center border-b-[3px] pb-[2px] mb-3 text-[#414141] border-[#414141]'>
+      <div className='md:py-4 py-3 md:px-[32px] px-[16px] w-full h-full flex flex-col'>
+        <div className='md:text-xl leading-5 md:leading-[25px] font-bold w-full text-center border-b-[3px] pb-[2px] md:mb-3 mb-2 text-[#414141] border-[#414141]'>
           Leaderboard
         </div>
-        <div className='flex justify-between px-[32px] pb-3 pt-1 border-b-[1px] border-medium-gray text-subtle-dark font-bold'>
+        <div className='flex justify-between md:px-[32px] px-[6px] py-2 md:pb-3 md:pt-1 border-b-[1px] border-medium-gray text-subtle-dark font-semibold text-xs md:text-sm md:leading-[18px] leading-4'>
           <div className='flex gap-16'>
             <div>Rank</div>
             <div>User</div>
@@ -35,16 +35,16 @@ export default function LeaderBoard() {
         </div>
         <div className='h-[321px] flex flex-col relative'>
           <div
-            className={`absolute inset-0 overflow-auto  gap-3 flex flex-col text-subtle-dark text-sm font-semibold h-full py-3`}>
+            className={`absolute inset-0 overflow-auto  gap-3 flex flex-col text-subtle-dark text-xs md:text-sm md:leading-[18px]  h-full py-3`}>
             {data?.map((item, index) => (
               <div key={index} className='cursor-pointer bg-white rounded-[10px]'>
                 <Popover freeMode popoverRender={() => <ProfileCard hideEmail data={item.authorizer_user} />}>
-                  <div className='grid grid-cols-[1fr_115px] py-[6px] px-[32px]'>
+                  <div className='grid grid-cols-[1fr_90px] md:grid-cols-[1fr_105px] py-[4px] md:py-[6px] px-[16px] md:px-[32px] '>
                     <div className='flex items-center'>
                       <div className='w-[45px]'>#{index + 1}</div>
                       <div className='flex items-center gap-[10px] justify-self-start px-[10px]'>
                         <Image
-                          className='w-7 h-7 rounded-full'
+                          className='w-6 h-6 md:w-7 md:h-7 rounded-full'
                           width={28}
                           height={28}
                           src={item.authorizer_user.picture || Avatar}
