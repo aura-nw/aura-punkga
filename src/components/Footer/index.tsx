@@ -42,8 +42,7 @@ export default function Footer() {
               <Image src={Logo} alt='header logo' className='h-[60px] w-auto' />
             </div>
             <div className='text-sm leading-[18px] lg:leading-[21px] text-[#ABABAB]'>
-              <p>{t('Punkga.me is the best Nft manga in the world')}</p>
-              <p>{t('You can creative manga, NFTs, trading NFT')}</p>
+              <p>{t('The Manga Multiverse For All')}</p>
             </div>
           </div>
           <div className='flex flex-col gap-5'>
@@ -51,9 +50,7 @@ export default function Footer() {
               <div className='text-2xl leading-[38px] text-[#C8C8C8] capitalize font-bold lg:text-5xl lg:leading-[54px]'>
                 {t('Never miss a drop')}
               </div>
-              <div className='text-sm leading-[18px] text-[#ABABAB]'>
-                {t('Subscribe to get fresh news update trending NFT')}
-              </div>
+              <div className='text-sm leading-[18px] text-[#ABABAB]'>{t('Subscribe to get fresh news update')}</div>
             </div>
             <div>
               <div className='border-[1.5px] py-2 pl-6 pr-2 flex gap-6 rounded-[32px] max-w-md'>

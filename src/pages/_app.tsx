@@ -124,7 +124,7 @@ function MyApp(props: AppProps) {
                       name: 'Punkga',
                       description: 'Punkga.me comic website',
                       url: 'https://punkga.me/',
-                      icons: ['htts://punkga.me/logo.png'],
+                      icons: ['https://punkga.me/logo.png'],
                     },
                   },
                 }
