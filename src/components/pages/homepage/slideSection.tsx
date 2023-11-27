@@ -5,7 +5,9 @@ import Slider from 'react-slick'
 import Banner from './assets/banner.png'
 import { list } from './comicSlider'
 function Carousel({ children, className, sliderNavRef }) {
-  var settings = {}
+  var settings = {
+    swipeToSlide: false,
+  }
   return (
     <div className={className}>
       <Slider ref={sliderNavRef} {...settings}>

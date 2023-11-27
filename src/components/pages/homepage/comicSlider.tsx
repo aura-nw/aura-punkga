@@ -14,10 +14,9 @@ import Vn from './assets/vn.svg'
 function Carousel({ sliderRef, children, className, setSlideIndex, sliderNavRef }) {
   var settings = {
     infinite: true,
-    autoplay: true,
     asNavFor: sliderNavRef.current,
+    swipeToSlide: false,
     afterChange: (current) => {
-      console.log(current)
       setSlideIndex(current)
     },
   }
@@ -35,9 +34,6 @@ function MobileCarousel({ children, setSlideIndex, sliderRef }) {
     infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true,
-    speed: 500,
-    autoplaySpeed: 5000,
     cssEase: 'linear',
     arrows: false,
     afterChange: (current) => setSlideIndex(current),
