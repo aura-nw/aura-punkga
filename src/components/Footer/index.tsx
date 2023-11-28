@@ -34,7 +34,7 @@ export default function Footer() {
   }, [value])
   return (
     <>
-      <div className='w-full bg-[#1B1B1B] relative mt-16 md:mt-32'>
+      <div className='w-full bg-[#1B1B1B] relative mt-16 md:mt-40'>
         <div className='absolute border-b-[17px] lg:border-b-[40px] border-b-[#1b1b1b] border-s-[50vw] border-s-transparent border-e-[49vw] border-e-transparent -top-[16px] lg:-top-[40px] left-0'></div>
         <div className='p-10 flex flex-col gap-4 lg:flex-row lg:justify-between lg:items-start lg:pb-[60px] lg:pt-[100px] lg:px-[140px]'>
           <div className='flex flex-col gap-4'>
