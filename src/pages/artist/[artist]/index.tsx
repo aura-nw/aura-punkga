@@ -12,7 +12,7 @@ export default function Page(props) {
   return (
     <>
       <HeadComponent data={props.pageProps?.metadata || props.metadata} />
-      <ComposedArtist />
+      <ComposedArtist data={props.pageProps?.metadata || props.metadata} />
     </>
   )
 }
