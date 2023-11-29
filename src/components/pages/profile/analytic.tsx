@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { levelToXp } from 'src/utils'
-export default function Analystic() {
+export default function Analytic() {
   const { account, getProfile } = useContext(Context)
   const percentage =
     (Math.round(account.xp - levelToXp(account.level)) /
@@ -11,7 +11,7 @@ export default function Analystic() {
   const { t } = useTranslation()
   return (
     <div className='bg-[#F2F2F2] px-10 py-5 rounded-2xl h-[180px] flex flex-col justify-between'>
-      <div className='text-xl leading-6 font-bold text-[#1C1C1C]'>Quests Analystic</div>
+      <div className='text-xl leading-6 font-bold text-[#1C1C1C]'>Quests Analytic</div>
       <div className='flex'>
         <div className='mr-auto'>
           <div className='text-sm leading-[18px] text-[#1C1C1C]'>Level</div>

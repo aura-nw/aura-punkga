@@ -183,7 +183,7 @@ function Home() {
                     return <TrendingComic key={index} {...data} />
                   })}
             </div>
-            <div className=''>
+            <div className='md:hidden'>
               <LeaderBoard />
             </div>
           </div>

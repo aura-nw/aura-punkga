@@ -12,7 +12,7 @@ import Info from '../../components/pages/profile/info'
 import LeaderBoard from '../../components/pages/profile/leaderboard'
 import Quest from '../../components/pages/profile/quests'
 import NFTList from 'components/pages/profile/nfts'
-import Analystic from 'components/pages/profile/analytic'
+import Analytic from 'components/pages/profile/analytic'
 import { useRouter } from 'next/router'
 export default function Page(props) {
   if (props.justHead) {
@@ -57,7 +57,7 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
                 <NFTList />
               </div>
               <div className='flex-1 max-w-[520px]'>
-                <Analystic />
+                <Analytic />
                 <LeaderBoard />
               </div>
             </div>

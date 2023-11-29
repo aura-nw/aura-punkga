@@ -32,24 +32,24 @@ export default function Page(props) {
   return <AboutUs />
 }
 
+
 const slideData = [
   {
     title: 'Platform',
     image: SlideImage1,
-    des: 'Nền tảng sáng tác truyện tranh chuyên nghiệp dành cho các hoạ sĩ truyện tranh trong và ngoài nước về một chủ đề chung chính là Cyberpunk.',
+    des: 'A professional comic creation platform for comic artists both domestically and internationally on a common theme, which is Cyberpunk',
   },
   {
     title: 'NFTs ',
     image: SlideImage2,
-    des: 'Giao dịch những NFT được chính các Manga Creator tạo ra với số lượng giới hạn.',
+    des: 'Opportunity to own limited-edition NFTs created by Manga Creators themselves',
   },
   {
     title: 'Anime debut',
     image: SlideImage3,
-    des: 'Các đầu truyện có lượng fan và cộng đồng lớn có nhiều cơ hội được sản xuất anime',
+    des: 'Popular manga series with a large fanbase and community have a higher chance of being adapted into anime',
   },
 ]
-
 function AboutUs() {
   const { t } = useTranslation()
   const { locale } = useRouter()
@@ -72,7 +72,9 @@ function AboutUs() {
               Punkga Me
             </div>
             <div className='text-2xl leading-[30px] mt-5 lg:text-[55px] lg:leading-[60px] lg:max-w-[45vw]'>
-              is creating a Multiverse of Manga for Vietnamese
+              {locale == 'vn'
+                ? 'đang tạo ra một đa vũ trụ truyện tranh cho người Việt'
+                : 'is creating a Multiverse of Manga for Vietnamese'}
             </div>
           </div>
           <Image src={DecorImg3} alt='' className='hidden lg:block w-[700px] mt-10 -mr-10' />
@@ -82,11 +84,9 @@ function AboutUs() {
           className={`mt-5 lg:-mt-20 flex pt-[14px] pl-[7px] gap-[7px] items-start relative bg-no-repeat bg-[length:100%_100%] lg:p-[52px] lg:pb-24 lg:w-[80vw]`}>
           <div className='relative'>
             <div className='text-[10px] leading-[13px] text-[#828282] min-h-[137px] lg:text-base lg:leading-[30px] lg:max-w-[730px]'>
-              PUNKGA là một dự án hướng tới việc xây dựng một sân chơi chuyên nghiệp dành cho các họa sĩ truyện tranh
-              với chủ đề Cyberpunk. Dự án mục tiêu không chỉ tạo ra các NFT bởi các họa sĩ Manga, mà còn khích lệ sự
-              tham gia của cộng đồng thông qua việc chia sẻ và tham gia vào câu chuyện theo nhiều cách khác nhau. Người
-              dùng sẽ có cơ hội sở hữu những tác phẩm số hóa độc đáo và tham gia vào quá trình phát triển câu chuyện một
-              cách tích cực.
+              {locale == 'vn'
+                ? 'PUNKGA là một dự án hướng tới việc xây dựng một sân chơi chuyên nghiệp dành cho các họa sĩ truyện tranh với chủ đề Cyberpunk. Dự án mục tiêu không chỉ tạo ra các NFT bởi các họa sĩ Manga, mà còn khích lệ sự tham gia của cộng đồng thông qua việc chia sẻ và tham gia vào câu chuyện theo nhiều cách khác nhau. Người dùng sẽ có cơ hội sở hữu những tác phẩm số hóa độc đáo và tham gia vào quá trình phát triển câu chuyện một cách tích cực.'
+                : "PUNKGA is a project aimed at building a professional playground for comic artists with a Cyberpunk theme. The project's goal is not only to create NFTs by Manga artists but also to encourage community participation through sharing and involvement in the story in various ways. Users will have the opportunity to own unique digital artworks and actively participate in the development of the story."}
             </div>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -169,10 +169,10 @@ function AboutUs() {
       <div className='mt-[50px] lg:mt-[160px]'>
         <div className='pk-container px-5'>
           <div className='uppercase font-orbitron font-bold text-2xl leading-[17px] text-center text-subtle-dark lg:text-[#292929] lg:text-[64px]'>
-            Author
+            {t('Authors')}
           </div>
           <div className='text-sm leading-[18px] text-subtle-dark mt-4 text-center lg:text-2xl lg:text-[#ABABAB] lg:mt-8 lg:max-w-[545px] lg:mx-auto'>
-            Meet the skilled and experienced team behind our successful artwork strategies
+            {t('Meet the skilled and experienced team behind our successful artwork strategies')}
           </div>
           <div className='mt-5 lg:hidden'>
             {authorData[locale].map((d, i) => (
@@ -304,6 +304,8 @@ function AboutUs() {
   )
 }
 const Slide = ({ data }) => {
+  const { t } = useTranslation()
+
   return (
     <div className='slide'>
       <div className='relative flex flex-col items-center gap-6 px-[10px]'>
@@ -328,7 +330,7 @@ const Slide = ({ data }) => {
         </svg>
         <div className='absolute inset-x-12 lg:inset-x-16 top-12 lg:top-20'>
           <div className='text-center text-2xl leading-[30px] font-orbitron font-bold uppercase text-[#292929] lg:text-[38px] lg:leading-[47px]'>
-            {data.title}
+            {t(data.title)}
           </div>
           <div className='mb-5 mt-3 lg:mt-8 lg:mb-10 px-2 relative'>
             <svg
@@ -347,7 +349,7 @@ const Slide = ({ data }) => {
               <Image src={data.image} alt='' className='w-[100px] h-auto lg:w-[220px]' />
             </div>
           </div>
-          <div className='text-xs leading-[15px] text-[#292929] lg:text-base'>{data.des}</div>
+          <div className='text-xs leading-[15px] text-[#292929] lg:text-base'>{t(data.des)}</div>
         </div>
       </div>
     </div>
