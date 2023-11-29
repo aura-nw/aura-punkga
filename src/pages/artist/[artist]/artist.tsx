@@ -28,7 +28,7 @@ export default function Page(props) {
   }
   return <Artist {...props} />
 }
-function Artist({ artistDetail }) {
+function Artist({ artistDetail, data }) {
   const artist = artistDetail.data as IArtist
   const { locale } = useRouter()
   const { t } = useTranslation()
@@ -140,7 +140,9 @@ function Artist({ artistDetail }) {
               <div
                 className={`font-medium whitespace-pre-wrap ${showMore ? '' : 'line-clamp-3'}`}
                 onClick={() => setShowMore(!showMore)}
-                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(artist?.bio) }}></div>
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(locale == 'vn' ? artist?.bio : data?.description || artist?.bio),
+                }}></div>
             </div>
           </div>
         </div>
