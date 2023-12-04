@@ -16,7 +16,7 @@ import { authorData } from '../../utils/authorData'
 import BgImage from './assets/bg.png'
 import BgImage2 from './assets/bg-2.png'
 import DecorImg2 from './assets/decor-2.svg'
-import DecorImg3 from './assets/decor-3.svg'
+import DecorImg3 from './assets/decor-3.png'
 import DecorImg from './assets/decor.svg'
 import SlideImage1 from './assets/slide-1.svg'
 import SlideImage2 from './assets/slide-2.svg'
@@ -32,21 +32,20 @@ export default function Page(props) {
   return <AboutUs />
 }
 
-
 const slideData = [
   {
     title: 'Platform',
-    image: SlideImage1,
+    image: <Image src={SlideImage1} alt='' className='w-[48%] h-auto' />,
     des: 'A professional comic creation platform for comic artists both domestically and internationally on a common theme, which is Cyberpunk',
   },
   {
     title: 'NFTs ',
-    image: SlideImage2,
+    image: <Image src={SlideImage2} alt='' className='w-[55%] h-aut' />,
     des: 'Opportunity to own limited-edition NFTs created by Manga Creators themselves',
   },
   {
     title: 'Anime debut',
-    image: SlideImage3,
+    image: <Image src={SlideImage3} alt='' className='w-[55%] h-aut' />,
     des: 'Popular manga series with a large fanbase and community have a higher chance of being adapted into anime',
   },
 ]
@@ -68,22 +67,22 @@ function AboutUs() {
         <div className='flex gap-4 lg:gap-16 mt-[50px] lg:mt-24 items-start'>
           <Image src={DecorImg} alt='' className='lg:h-[365px] lg:w-auto' />
           <div className='font-orbitron font-bold uppercase'>
-            <div className='text-xl leading-[14px] text-second-color lg:mt-20 lg:text-[88px] lg:leading-[64px]'>
+            <div className='text-xl leading-[14px] text-second-color lg:mt-10 lg:text-6xl  2xl:mt-20 2xl:text-[88px] 2xl:leading-[64px]'>
               Punkga Me
             </div>
-            <div className='text-2xl leading-[30px] mt-5 lg:text-[55px] lg:leading-[60px] lg:max-w-[45vw]'>
+            <div className='text-2xl leading-[30px] mt-5 lg:text-4xl 2xl:text-[55px] 2xl:leading-[70px] lg:max-w-[45vw]'>
               {locale == 'vn'
                 ? 'đang tạo ra một đa vũ trụ truyện tranh cho người Việt'
                 : 'is creating a Multiverse of Manga for Vietnamese'}
             </div>
           </div>
-          <Image src={DecorImg3} alt='' className='hidden lg:block w-[700px] mt-10 -mr-10' />
+          <Image src={DecorImg3} alt='' className='hidden lg:block w-[43%] 2xl:min-h-[550px] 2xl:mt-10 -mr-10' />
         </div>
         <div
           style={{ backgroundImage: isMobile ? `url(${BgImage.src})` : `url(${BgImage2.src})` }}
-          className={`mt-5 lg:-mt-20 flex pt-[14px] pl-[7px] gap-[7px] items-start relative bg-no-repeat bg-[length:100%_100%] lg:p-[52px] lg:pb-24 lg:w-[80vw]`}>
+          className={`mt-5 lg:-mt-20 flex pt-[14px] pl-[7px] gap-[7px] items-start relative bg-no-repeat bg-[length:100%_100%] lg:p-[52px] lg:pb-24 lg:w-[95%]`}>
           <div className='relative'>
-            <div className='text-[10px] leading-[13px] text-[#828282] min-h-[137px] lg:text-base lg:leading-[30px] lg:max-w-[730px]'>
+            <div className='text-[10px] leading-[13px] text-[#828282] min-h-[137px] lg:text-base lg:leading-[30px] lg:max-w-[40vw]'>
               {locale == 'vn'
                 ? 'PUNKGA là một dự án hướng tới việc xây dựng một sân chơi chuyên nghiệp dành cho các họa sĩ truyện tranh với chủ đề Cyberpunk. Dự án mục tiêu không chỉ tạo ra các NFT bởi các họa sĩ Manga, mà còn khích lệ sự tham gia của cộng đồng thông qua việc chia sẻ và tham gia vào câu chuyện theo nhiều cách khác nhau. Người dùng sẽ có cơ hội sở hữu những tác phẩm số hóa độc đáo và tham gia vào quá trình phát triển câu chuyện một cách tích cực.'
                 : "PUNKGA is a project aimed at building a professional playground for comic artists with a Cyberpunk theme. The project's goal is not only to create NFTs by Manga artists but also to encourage community participation through sharing and involvement in the story in various ways. Users will have the opportunity to own unique digital artworks and actively participate in the development of the story."}
@@ -116,7 +115,7 @@ function AboutUs() {
           <Image
             src={DecorImg2}
             alt=''
-            className='w-[166px] shrink-0 relative lg:absolute lg:w-[580px] lg:-right-16 lg:-top-[540px]'
+            className='w-[166px] shrink-0 relative lg:absolute lg:w-[37%] lg:-right-16 lg:bottom-[38%]'
           />
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -155,12 +154,14 @@ function AboutUs() {
       <div className='mt-[50px] lg:hidden w-screen overflow-hidden [&_.slick-center_.slide_.stroke]:stroke-second-color [&_.slick-center_.slide_.fill]:fill-second-color [&_.slick-center_.slide_.fill-gray]:fill-[#DEDEDE]'>
         <Slider {...settings}>
           {slideData.map((data, index) => (
-            <Slide key={index} data={data} />
+            <div key={index} className='px-3'>
+              <Slide data={data} />
+            </div>
           ))}
         </Slider>
       </div>
       <div className='hidden lg:block pk-container'>
-        <div className='mt-[180px] flex gap-10 [&_.slide]:cursor-pointer [&_.slide:hover_.stroke]:stroke-second-color [&_.slide:hover_.fill]:fill-second-color [&_.slide:hover_.fill-gray]:fill-[#DEDEDE]'>
+        <div className='mt-[180px] grid grid-cols-3 gap-10 [&_.slide]:cursor-pointer [&_.slide:hover_.stroke]:stroke-second-color [&_.slide:hover_.fill]:fill-second-color [&_.slide:hover_.fill-gray]:fill-[#DEDEDE]'>
           {slideData.map((data, index) => (
             <Slide key={index} data={data} />
           ))}
@@ -307,31 +308,34 @@ const Slide = ({ data }) => {
   const { t } = useTranslation()
 
   return (
-    <div className='slide'>
-      <div className='relative flex flex-col items-center gap-6 px-[10px]'>
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          width='521'
-          height='657'
-          viewBox='0 0 521 657'
-          fill='none'
-          className='w-full h-auto'>
-          <path d='M17.4097 149.344L0.533936 165.488V247.364L17.4097 231.219V149.344Z' fill='#292929' />
-          <path d='M17.4097 242.174L0.533936 258.991V282.535L17.4097 265.718V242.174Z' fill='#292929' />
-          <path d='M17.4097 277.924L0.533936 294.741V318.285L17.4097 301.468V277.924Z' fill='#292929' />
-          <path d='M17.4097 313.674L0.533936 330.491V354.035L17.4097 337.218V313.674Z' fill='#292929' />
-          <path d='M17.4097 349.422L0.533936 366.239V389.783L17.4097 372.966V349.422Z' fill='#292929' />
-          <path d='M185.567 19.938L166.28 1.17383H345.284L325.998 19.938H185.567Z' className='fill' fill='#292929' />
-          <path
-            d='M0.533936 6.68892V103.938C0.533936 105.72 1.24456 107.427 2.50826 108.683L26.8869 132.906C28.1506 134.162 28.8612 135.869 28.8612 137.651V523.4C28.8612 527.094 25.8665 530.089 22.1723 530.089H9.03098C5.33679 530.089 2.34206 533.083 2.34206 536.778V650.058C2.34206 653.752 5.33681 656.747 9.03099 656.747H513.379C517.073 656.747 520.068 653.752 520.068 650.058V448.234C520.068 444.54 517.073 441.545 513.379 441.545H496.019C492.325 441.545 489.33 438.55 489.33 434.856V176.153C489.33 172.459 492.325 169.464 496.019 169.464H513.379C517.073 169.464 520.068 166.469 520.068 162.775V10.7936C520.068 7.0994 517.073 4.10467 513.379 4.10467H364.875C363.133 4.10467 361.46 4.78442 360.211 5.99932L337.587 28.0108C336.338 29.2257 334.665 29.9054 332.922 29.9054H176.228C174.486 29.9054 172.812 29.2257 171.564 28.0108L144.72 1.89465C143.472 0.679751 141.798 0 140.056 0H7.22286C3.52867 0 0.533936 2.99473 0.533936 6.68892Z'
-            className='fill-gray'
-            fill='#F2F2F2'
-          />
-        </svg>
-        <div className='absolute inset-x-12 lg:inset-x-16 top-12 lg:top-20'>
-          <div className='text-center text-2xl leading-[30px] font-orbitron font-bold uppercase text-[#292929] lg:text-[38px] lg:leading-[47px]'>
-            {t(data.title)}
-          </div>
+    <div className='slide h-full'>
+      <div className='relative flex h-full flex-col items-center'>
+        <div className='absolute inset-0'>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='521'
+            height='657'
+            viewBox='0 0 521 657'
+            fill='none'
+            preserveAspectRatio='none'
+            className='w-full h-full'>
+            <path d='M17.4097 149.344L0.533936 165.488V247.364L17.4097 231.219V149.344Z' fill='#292929' />
+            <path d='M17.4097 242.174L0.533936 258.991V282.535L17.4097 265.718V242.174Z' fill='#292929' />
+            <path d='M17.4097 277.924L0.533936 294.741V318.285L17.4097 301.468V277.924Z' fill='#292929' />
+            <path d='M17.4097 313.674L0.533936 330.491V354.035L17.4097 337.218V313.674Z' fill='#292929' />
+            <path d='M17.4097 349.422L0.533936 366.239V389.783L17.4097 372.966V349.422Z' fill='#292929' />
+            <path d='M185.567 19.938L166.28 1.17383H345.284L325.998 19.938H185.567Z' className='fill' fill='#292929' />
+            <path
+              d='M0.533936 6.68892V103.938C0.533936 105.72 1.24456 107.427 2.50826 108.683L26.8869 132.906C28.1506 134.162 28.8612 135.869 28.8612 137.651V523.4C28.8612 527.094 25.8665 530.089 22.1723 530.089H9.03098C5.33679 530.089 2.34206 533.083 2.34206 536.778V650.058C2.34206 653.752 5.33681 656.747 9.03099 656.747H513.379C517.073 656.747 520.068 653.752 520.068 650.058V448.234C520.068 444.54 517.073 441.545 513.379 441.545H496.019C492.325 441.545 489.33 438.55 489.33 434.856V176.153C489.33 172.459 492.325 169.464 496.019 169.464H513.379C517.073 169.464 520.068 166.469 520.068 162.775V10.7936C520.068 7.0994 517.073 4.10467 513.379 4.10467H364.875C363.133 4.10467 361.46 4.78442 360.211 5.99932L337.587 28.0108C336.338 29.2257 334.665 29.9054 332.922 29.9054H176.228C174.486 29.9054 172.812 29.2257 171.564 28.0108L144.72 1.89465C143.472 0.679751 141.798 0 140.056 0H7.22286C3.52867 0 0.533936 2.99473 0.533936 6.68892Z'
+              className='fill-gray'
+              fill='#F2F2F2'
+            />
+          </svg>
+        </div>
+        <div className='relative lg:pt-[90px] pt-[48px] mx-auto text-center text-2xl leading-[30px] font-orbitron font-bold uppercase text-[#292929] lg:text-[38px] lg:leading-[47px] whitespace-nowrap'>
+          {t(data.title)}
+        </div>
+        <div className='relative h-full w-full px-[38px] pb-[36px] lg:pl-[65px] lg:pr-[58px] lg:pb-[84px]'>
           <div className='mb-5 mt-3 lg:mt-8 lg:mb-10 px-2 relative'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -345,9 +349,7 @@ const Slide = ({ data }) => {
               <path d='M10.1111 263.377V292.969H46.7192' className='stroke' stroke='#ABABAB' stroke-width='19.6565' />
               <path d='M345.217 263.377V292.969H308.609' className='stroke' stroke='#ABABAB' stroke-width='19.6565' />
             </svg>
-            <div className='absolute inset-0 grid place-items-center'>
-              <Image src={data.image} alt='' className='w-[100px] h-auto lg:w-[220px]' />
-            </div>
+            <div className='absolute inset-0 grid place-items-center'>{data.image}</div>
           </div>
           <div className='text-xs leading-[15px] text-[#292929] lg:text-base'>{t(data.des)}</div>
         </div>

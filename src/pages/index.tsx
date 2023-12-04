@@ -161,7 +161,6 @@ function Home() {
                         ? genreFilter.some((filter) => data.tags?.some((tag) => tag[locale] == filter.key))
                         : true
                     )
-                    .slice(0, 6)
                     .map((data, index) => {
                       return <Comic key={index} {...data} />
                     })
