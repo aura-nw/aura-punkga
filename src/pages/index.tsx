@@ -25,6 +25,7 @@ import useApi from 'src/hooks/useApi'
 import { IComic } from 'src/models/comic'
 import { getAllTags, getLatestComic, getTrendingComic } from 'src/services'
 import HeadComponent from 'components/Head'
+import XMasComic from 'components/pages/homepage/xmasComic'
 
 declare global {
   interface Window {
@@ -255,8 +256,8 @@ function Home() {
                         ? genreFilter.some((filter) => data.tags?.some((tag) => tag[locale] == filter.key))
                         : true
                     )
-                    .slice(0, 6)
                     .map((data, index) => {
+                      if (index == 0) return <XMasComic key={index} {...data} />
                       return <Comic key={index} {...data} />
                     })
                 : null}
