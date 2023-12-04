@@ -9,6 +9,7 @@ import Logo from 'assets/images/header-logo.svg'
 import FlashAnimation from 'components/AnimationIconHOC/Flash'
 import FilledButton from 'components/Button/FilledButton'
 import OutlineButton from 'components/Button/OutlineButton'
+import Popover from 'components/Popover'
 import PageMockup from 'images/comicpage.png'
 import BookFillIcon from 'images/icons/book_fill.svg'
 import BookOutlineIcon from 'images/icons/book_outline.svg'
@@ -68,7 +69,6 @@ export default function ReadingSection({
 }) {
   const [readingMode, setReadingMode] = useState('twoPage')
   const [currentPage, setCurrentPage] = useState(0)
-  const [hovering, setHovering] = useState(false)
   const [showChapterList, setShowChapterList] = useState(false)
   const mainLanguage = data?.languages?.find((l) => l.isMainLanguage).shortLang
   const chapterLocale = chapterData?.[language] ? language : mainLanguage
@@ -77,31 +77,6 @@ export default function ReadingSection({
   const { account } = useContext(Context)
   const { t } = useTranslation()
   const router = useRouter()
-  const onMouseEnterHandler = () => {
-    if ((window as any).timeoutId) {
-      clearTimeout((window as any).timeoutId)
-    }
-    setHovering(true)
-  }
-
-  const onMouseLeaveHandler = () => {
-    if ((window as any).timeoutId) {
-      clearTimeout((window as any).timeoutId)
-    }
-    ;(window as any).timeoutId = setTimeout(() => setHovering(false), 2000)
-  }
-
-  const onScrollHandler = () => {
-    const position = (ref as any).current.getBoundingClientRect()
-    if (position.bottom < window.innerHeight && readingMode == 'onePage') {
-      if ((window as any).timeoutId) {
-        clearTimeout((window as any).timeoutId)
-      }
-      setHovering(true)
-    } else {
-      setHovering(false)
-    }
-  }
 
   const subscribeHandler = (isSub: boolean) => {
     if (account?.verified && account?.name) {
@@ -176,24 +151,14 @@ export default function ReadingSection({
         mode == 'minscreen' ? 'relative' : 'fixed bg-black z-20 top-0 bottom-0'
       }`}>
       <div
-        onMouseEnter={onMouseEnterHandler}
-        onMouseLeave={onMouseLeaveHandler}
-        className={`bg-light-gray absolute top-0 right-0 left-0 flex items-center duration-300 transition-[opacity] ${
-          mode == 'minscreen' ? 'opacity-100 w-0 overflow-hidden' : hovering ? 'w-full opacity-100' : 'w-full opacity-0'
+        className={`absolute top-[82px] right-[69px] duration-300 transition-[opacity] ${
+          mode == 'minscreen' ? 'opacity-100 w-0 overflow-hidden' : 'w-fit opacity-100'
         }`}>
-        <div className='pk-container py-[5px] flex justify-between items-center'>
-          <div>
-            <Link href='/' className='flex'>
-              <span className='sr-only'>Your Company</span>
-              <Image src={Logo} alt='header logo' className='h-[50px]' />
-            </Link>
-          </div>
-          <div
-            className='px-4 py-1 rounded-xl border-second-color border flex gap-[10px] items-center cursor-pointer'
-            onClick={() => setMode('minscreen')}>
-            <Image className='cursor-pointer h-6 w-6' src={MinscreenIcon} alt='' />
-            <span className='text-second-color font-bold'>{t('Exit Fullscreen')}</span>
-          </div>
+        <div
+          className='px-4 py-1 rounded-xl border-second-color border flex gap-[10px] items-center cursor-pointer'
+          onClick={() => setMode('minscreen')}>
+          <Image className='cursor-pointer h-6 w-6' src={MinscreenIcon} alt='' />
+          <span className='text-second-color font-bold'>{t('Exit Fullscreen')}</span>
         </div>
       </div>
       {!account && chapterData.type == CHAPTER_TYPE.ACCOUNT_ONLY ? (
@@ -211,7 +176,7 @@ export default function ReadingSection({
           </div>
         </div>
       ) : chapterData[chapterLocale] ? (
-        <div className='h-full overflow-auto' onScroll={onScrollHandler}>
+        <div className='h-full overflow-auto'>
           <div
             ref={ref}
             className={`${mode == 'minscreen' ? '' : ''} ${
@@ -283,6 +248,41 @@ export default function ReadingSection({
           </OutlineButton>
         </div>
         <div className={`flex-auto w-1/3 self-center flex gap-2 justify-end`}>
+          <Popover
+            popoverRender={() => (
+              <div className='p-3 bg-white rounded-lg relative -translate-x-[35%] text-xs whitespace-nowrap shadow-[0px_8px_16px_-2px_rgba(27,33,44,0.12)] mb-2'>
+                {isLiked ? 'Unlike this chapter' : 'Like this chapter'}
+                <div className='border-t-[6px] border-x-4 border-t-white border-x-transparent absolute bottom-0 translate-y-full right-1/2'></div>
+              </div>
+            )}>
+            <div>
+              <FlashAnimation
+                InactiveComponent={(props: any) => (
+                  <Image
+                    className='cursor-pointer'
+                    onClick={() => {
+                      likeHandler(true)
+                    }}
+                    src={HeartOutlineIcon}
+                    alt=''
+                    {...props}
+                  />
+                )}
+                ActiveComponent={(props: any) => (
+                  <Image
+                    className='cursor-pointer'
+                    onClick={() => {
+                      likeHandler(false)
+                    }}
+                    src={HeartFillIcon}
+                    alt=''
+                    {...props}
+                  />
+                )}
+                active={isLiked}
+              />
+            </div>
+          </Popover>
           <Image
             className='cursor-pointer'
             onClick={() => setReadingModeHandler(readingMode == 'onePage' ? 'twoPage' : 'onePage')}
@@ -290,31 +290,7 @@ export default function ReadingSection({
             alt=''
           />
           <Image className='cursor-pointer' onClick={() => setMode('fullscreen')} src={FullscreenIcon} alt='' />
-          <FlashAnimation
-            InactiveComponent={(props: any) => (
-              <Image
-                className='cursor-pointer'
-                onClick={() => {
-                  likeHandler(true)
-                }}
-                src={HeartOutlineIcon}
-                alt=''
-                {...props}
-              />
-            )}
-            ActiveComponent={(props: any) => (
-              <Image
-                className='cursor-pointer'
-                onClick={() => {
-                  likeHandler(false)
-                }}
-                src={HeartFillIcon}
-                alt=''
-                {...props}
-              />
-            )}
-            active={isLiked}
-          />
+
           {!openComments ? (
             <Image src={ChatOutlineIcon} className='cursor-pointer' alt='' onClick={() => setOpenComments(true)} />
           ) : (
@@ -323,11 +299,9 @@ export default function ReadingSection({
         </div>
       </div>
       <div
-        onMouseEnter={onMouseEnterHandler}
-        onMouseLeave={onMouseLeaveHandler}
         className={`peer bg-light-gray absolute bottom-0 right-0 left-0 w-full flex items-center px-[40px] py-[6px] duration-300 transition-opacity ${
           mode != 'minscreen' ? 'visible' : 'invisible -z-10'
-        } ${hovering ? 'opacity-100' : 'opacity-0'}`}>
+        } opacity-100`}>
         <div className='flex-auto w-1/3 self-center'>
           <div className='text-ellipsis max-w-[90%] overflow-hidden whitespace-nowrap'>
             <strong className='font-bold'>{`${t('Chapter')} ${chapterData.number} • ${chapterData.name}`}</strong>
@@ -339,13 +313,22 @@ export default function ReadingSection({
           </div>
         </div>
         <div className='flex-auto w-1/3 self-center flex gap-2 items-center'>
-          <Image
-            className='cursor-pointer'
-            onClick={() => setReadingModeHandler(readingMode == 'onePage' ? 'twoPage' : 'onePage')}
-            src={readingMode == 'onePage' ? BookOutlineIcon : BookFillIcon}
-            alt=''
-          />
-          <Image className='cursor-pointer' onClick={() => setMode('minscreen')} src={MinscreenIcon} alt='' />
+          {isSubscribe ? (
+            <FilledButton onClick={() => subscribeHandler(false)}>
+              <div className='h-6 flex items-center'>
+                <BellAlertIcon className='w-6 h-6 mr-2 inline-block animate-[bell-ring_1s_ease-in-out]' />
+                {t('Subscribed')}
+              </div>
+            </FilledButton>
+          ) : (
+            <OutlineButton onClick={() => subscribeHandler(true)}>
+              <div className='h-6 flex items-center'>
+                <BellAlertIconOutline className='w-6 h-6 mr-2 inline-block ' />
+                {t('Subscribe')}
+              </div>
+            </OutlineButton>
+          )}
+
           <Image
             className={`cursor-pointer ${
               currentChapIndex == data.chapters.length - 1 ? 'opacity-60 cursor-not-allowed pointer-events-none' : ''
@@ -394,46 +377,52 @@ export default function ReadingSection({
             src={SquareArrowRightIcon}
             alt=''
           />
-          <FlashAnimation
-            InactiveComponent={(props: any) => (
-              <Image
-                className='cursor-pointer'
-                onClick={() => likeHandler(true)}
-                src={HeartOutlineIcon}
-                alt=''
-                {...props}
+          <Popover
+            popoverRender={() => (
+              <div className='p-3 bg-white rounded-lg relative -translate-x-[35%] text-xs whitespace-nowrap shadow-[0px_8px_16px_-2px_rgba(27,33,44,0.12)] mb-2'>
+                {isLiked ? 'Unlike this chapter' : 'Like this chapter'}
+                <div className='border-t-[6px] border-x-4 border-t-white border-x-transparent absolute bottom-0 translate-y-full right-1/2'></div>
+              </div>
+            )}>
+            <div>
+              <FlashAnimation
+                InactiveComponent={(props: any) => (
+                  <Image
+                    className='cursor-pointer'
+                    onClick={() => {
+                      likeHandler(true)
+                    }}
+                    src={HeartOutlineIcon}
+                    alt=''
+                    {...props}
+                  />
+                )}
+                ActiveComponent={(props: any) => (
+                  <Image
+                    className='cursor-pointer'
+                    onClick={() => {
+                      likeHandler(false)
+                    }}
+                    src={HeartFillIcon}
+                    alt=''
+                    {...props}
+                  />
+                )}
+                active={isLiked}
               />
-            )}
-            ActiveComponent={(props: any) => (
-              <Image
-                className='cursor-pointer'
-                onClick={() => likeHandler(false)}
-                src={HeartFillIcon}
-                alt=''
-                {...props}
-              />
-            )}
-            active={isLiked}
+            </div>
+          </Popover>
+          <Image
+            className='cursor-pointer'
+            onClick={() => setReadingModeHandler(readingMode == 'onePage' ? 'twoPage' : 'onePage')}
+            src={readingMode == 'onePage' ? BookOutlineIcon : BookFillIcon}
+            alt=''
           />
+          <Image className='cursor-pointer' onClick={() => setMode('minscreen')} src={MinscreenIcon} alt='' />
           {!openComments ? (
             <Image src={ChatOutlineIcon} alt='' className='cursor-pointer' onClick={() => setOpenComments(true)} />
           ) : (
             <Image src={ChatFillIcon} alt='' className='cursor-pointer' onClick={() => setOpenComments(false)} />
-          )}
-          {isSubscribe ? (
-            <FilledButton onClick={() => subscribeHandler(false)}>
-              <div className='h-6 flex items-center'>
-                <BellAlertIcon className='w-6 h-6 mr-2 inline-block animate-[bell-ring_1s_ease-in-out]' />
-                {t('Subscribed')}
-              </div>
-            </FilledButton>
-          ) : (
-            <OutlineButton onClick={() => subscribeHandler(true)}>
-              <div className='h-6 flex items-center'>
-                <BellAlertIconOutline className='w-6 h-6 mr-2 inline-block ' />
-                {t('Subscribe')}
-              </div>
-            </OutlineButton>
           )}
         </div>
         <div className={`flex-auto w-1/3 self-center flex gap-2 justify-end`}></div>
