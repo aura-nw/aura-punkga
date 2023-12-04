@@ -137,7 +137,7 @@ export default function ChapterList({
           )}
         </div>
       </div>
-      <div className='px-[16px] 2xl:pl-[60px] 2xl:pr-[140px] py-[20px] flex flex-col gap-5'>
+      <div className='px-[16px] 2xl:px-[60px] py-[20px] flex flex-col gap-5'>
         {data.chapters
           .filter((chapter) => {
             return searchChapter ? chapter?.number?.toString()?.includes(searchChapter) : true
@@ -217,7 +217,7 @@ const Chapter = ({
         className={`w-full h-[1px] bg-light-medium-gray first:hidden transition-all duration-500 ${
           expandDetail ? 'my-[0px] opacity-100' : '-my-[10px] opacity-0'
         }`}></div>
-      <div className='flex gap-4 cursor-pointer'>
+      <div className={`flex gap-4 cursor-pointer ${expandDetail ? '' : 'items-center'}`}>
         <LazyImage
           src={chapter.thumbnail || m6}
           alt=''
@@ -305,10 +305,11 @@ const Chapter = ({
             }`}>
             <div className='text-sm flex gap-10'>
               <div className='flex gap-2 mr-3'>
-                <EyeIcon className='w-5 h-5 text-gray-600' />
                 <span>{chapter.views}</span>
+                <EyeIcon className='w-5 h-5 text-gray-600' />
               </div>
               <div className='flex items-center'>
+                <span className='mr-2'>{likes}</span>
                 <FlashAnimation
                   InactiveComponent={(props: any) => (
                     <Image
@@ -338,11 +339,47 @@ const Chapter = ({
                   )}
                   active={isLiked}
                 />
-                <span className='ml-2'>{likes}</span>
               </div>
             </div>
 
             <div>{moment(chapter.date).format('DD/MM/yyyy')}</div>
+          </div>
+        </div>
+        <div
+          className={` transition-all duration-500 ${
+            expandDetail ? 'h-[0%] max-h-0 opacity-0 pointer-events-none' : 'h-full opacity-100  max-h-[100px]'
+          }`}>
+          <div className='flex items-center'>
+            <span className='mr-2'>{likes}</span>
+            <FlashAnimation
+              InactiveComponent={(props: any) => (
+                <Image
+                  className='cursor-pointer w-5 h-5'
+                  onClick={(e) => {
+                    likeHandler(true)
+                    e.stopPropagation()
+                    e.preventDefault()
+                  }}
+                  src={HeartOutlineIcon}
+                  alt=''
+                  {...props}
+                />
+              )}
+              ActiveComponent={(props: any) => (
+                <Image
+                  className='cursor-pointer w-5 h-5'
+                  onClick={(e) => {
+                    likeHandler(false)
+                    e.stopPropagation()
+                    e.preventDefault()
+                  }}
+                  src={HeartFillIcon}
+                  alt=''
+                  {...props}
+                />
+              )}
+              active={isLiked}
+            />
           </div>
         </div>
       </div>
