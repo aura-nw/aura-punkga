@@ -26,12 +26,22 @@ module.exports = {
       },
       animation: {
         flash: 'flash 1s cubic-bezier(0, 0, 0.2, 1)',
+        textSlide10: 'textSlide 10s linear infinite',
+        textSlide20: 'textSlide 20s linear infinite',
       },
       keyframes: {
         flash: {
           '75%, 100%': {
             transform: 'scale(1.8)',
             opacity: 0,
+          },
+        },
+        textSlide: {
+          '0%': {
+            transform: 'translateX(calc(100vw))',
+          },
+          '100%': {
+            transform: 'translateX(calc(-100%))',
           },
         },
       },

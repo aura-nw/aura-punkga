@@ -63,20 +63,20 @@ a {
 .pk-container {
   margin: auto;
   width: 100%;
-  @media (min-width: 576px) {
-    max-width: 540px;
+  @media (min-width: 640px) {
+    max-width: 620px;
   }
   @media (min-width: 768px) {
-    max-width: 720px;
+    max-width: 748px;
   }
-  @media (min-width: 992px) {
-    max-width: 960px;
+  @media (min-width: 1024px) {
+    max-width: 1004px;
   }
-  @media (min-width: 1200px) {
-    max-width: 1140px;
+  @media (min-width: 1280px) {
+    max-width: 1180px;
   }
-  @media (min-width: 1500px) {
-    max-width: 1440px;
+  @media (min-width: 1536px) {
+    max-width: 1436px;
   }
   @media (min-width: 1700px) {
     max-width: 1640px;

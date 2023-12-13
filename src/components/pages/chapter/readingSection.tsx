@@ -150,17 +150,6 @@ export default function ReadingSection({
       className={`w-full h-full overflow-hidden ${
         mode == 'minscreen' ? 'relative' : 'fixed bg-black z-20 top-0 bottom-0'
       }`}>
-      <div
-        className={`absolute top-[82px] right-[69px] duration-300 transition-[opacity] ${
-          mode == 'minscreen' ? 'opacity-100 w-0 overflow-hidden' : 'w-fit opacity-100'
-        }`}>
-        <div
-          className='px-4 py-1 rounded-xl border-second-color border flex gap-[10px] items-center cursor-pointer'
-          onClick={() => setMode('minscreen')}>
-          <Image className='cursor-pointer h-6 w-6' src={MinscreenIcon} alt='' />
-          <span className='text-second-color font-bold'>{t('Exit Fullscreen')}</span>
-        </div>
-      </div>
       {!account && chapterData.type == CHAPTER_TYPE.ACCOUNT_ONLY ? (
         <div className='h-full w-full flex justify-center items-center'>
           <div>
@@ -251,7 +240,7 @@ export default function ReadingSection({
           <Popover
             popoverRender={() => (
               <div className='p-3 bg-white rounded-lg relative -translate-x-[35%] text-xs whitespace-nowrap shadow-[0px_8px_16px_-2px_rgba(27,33,44,0.12)] mb-2'>
-                {isLiked ? 'Unlike this chapter' : 'Like this chapter'}
+                {t(isLiked ? 'Unlike this chapter' : 'Like this chapter')}
                 <div className='border-t-[6px] border-x-4 border-t-white border-x-transparent absolute bottom-0 translate-y-full right-1/2'></div>
               </div>
             )}>
@@ -377,41 +366,43 @@ export default function ReadingSection({
             src={SquareArrowRightIcon}
             alt=''
           />
-          <Popover
-            popoverRender={() => (
-              <div className='p-3 bg-white rounded-lg relative -translate-x-[35%] text-xs whitespace-nowrap shadow-[0px_8px_16px_-2px_rgba(27,33,44,0.12)] mb-2'>
-                {isLiked ? 'Unlike this chapter' : 'Like this chapter'}
-                <div className='border-t-[6px] border-x-4 border-t-white border-x-transparent absolute bottom-0 translate-y-full right-1/2'></div>
+          <div className='w-9 shrink-0'>
+            <Popover
+              popoverRender={() => (
+                <div className='p-3 bg-white rounded-lg relative -translate-x-[35%] text-xs whitespace-nowrap shadow-[0px_8px_16px_-2px_rgba(27,33,44,0.12)] mb-2'>
+                  {t(isLiked ? 'Unlike this chapter' : 'Like this chapter')}
+                  <div className='border-t-[6px] border-x-4 border-t-white border-x-transparent absolute bottom-0 translate-y-full right-1/2'></div>
+                </div>
+              )}>
+              <div>
+                <FlashAnimation
+                  InactiveComponent={(props: any) => (
+                    <Image
+                      className='cursor-pointer'
+                      onClick={() => {
+                        likeHandler(true)
+                      }}
+                      src={HeartOutlineIcon}
+                      alt=''
+                      {...props}
+                    />
+                  )}
+                  ActiveComponent={(props: any) => (
+                    <Image
+                      className='cursor-pointer'
+                      onClick={() => {
+                        likeHandler(false)
+                      }}
+                      src={HeartFillIcon}
+                      alt=''
+                      {...props}
+                    />
+                  )}
+                  active={isLiked}
+                />
               </div>
-            )}>
-            <div>
-              <FlashAnimation
-                InactiveComponent={(props: any) => (
-                  <Image
-                    className='cursor-pointer'
-                    onClick={() => {
-                      likeHandler(true)
-                    }}
-                    src={HeartOutlineIcon}
-                    alt=''
-                    {...props}
-                  />
-                )}
-                ActiveComponent={(props: any) => (
-                  <Image
-                    className='cursor-pointer'
-                    onClick={() => {
-                      likeHandler(false)
-                    }}
-                    src={HeartFillIcon}
-                    alt=''
-                    {...props}
-                  />
-                )}
-                active={isLiked}
-              />
-            </div>
-          </Popover>
+            </Popover>
+          </div>
           <Image
             className='cursor-pointer'
             onClick={() => setReadingModeHandler(readingMode == 'onePage' ? 'twoPage' : 'onePage')}

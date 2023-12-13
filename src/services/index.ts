@@ -3,10 +3,10 @@ import getConfig from 'next/config'
 import { COMIC_STATUS, LANGUAGE } from 'src/constants'
 import { IComic } from 'src/models/comic'
 import { privateAxios } from 'src/context'
-import { formatStatus } from 'src/utils'
+import { arrayMove, formatStatus } from 'src/utils'
 
 export const getLatestComic = async (): Promise<IComic[]> => {
-  return await axios.get(`${getConfig().API_URL}/api/rest/public/latest`).then((res) =>
+  const res = (await axios.get(`${getConfig().API_URL}/api/rest/public/latest`).then((res) =>
     res.data?.manga?.map((m: any) => {
       const response = {
         id: m.id,
@@ -47,7 +47,13 @@ export const getLatestComic = async (): Promise<IComic[]> => {
       })
       return response
     })
+  )) as any[]
+  arrayMove(
+    res,
+    res.findIndex((manga) => manga.slug.includes('punkga_mery_christmas_collections')),
+    0
   )
+  return res
 }
 
 export const getTrendingComic = async (): Promise<IComic[]> => {
