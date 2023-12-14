@@ -210,14 +210,19 @@ export default function Header({ className }: { className?: string }) {
             </div>
           </div>
           <div className='flex justify-between items-center mt-2'>
-            <Button size='sm' onClick={() => router.push('/about-us')}>
-              {t('aboutUs')}
-            </Button>
+            <div className='flex items-center gap-5'>
+              <Button size='sm' onClick={() => router.push('/about-us')}>
+                {t('aboutUs')}
+              </Button>
+              <Button size='sm' onClick={() => router.push('/campaigns')}>
+                {t('Campaign')}
+              </Button>
+            </div>
             <div>
               {account?.verified && account?.name ? (
                 <Dropdown>
                   <DropdownToggle>
-                    <FilledButton size='sm'>
+                    <FilledButton size='sm' className='!bg-[#F0F0F0]'>
                       <div className='flex items-center whitespace-nowrap w-max gap-[5px]'>
                         <Image
                           src={account.image || Avatar}
@@ -227,10 +232,6 @@ export default function Header({ className }: { className?: string }) {
                           className='rounded-full object-cover w-[18px] aspect-square'
                         />
                         <span className='md:max-w-[150px] max-w-[80px] truncate'>{account.name}</span>
-                        {wallet && <span className='w-[14px]'>·</span>}
-                        {wallet && (
-                          <span className='font-medium'>{`${wallet.substr(0, 4)} **** ${wallet.substr(-4)}`}</span>
-                        )}
                       </div>
                     </FilledButton>
                   </DropdownToggle>
@@ -417,10 +418,6 @@ export default function Header({ className }: { className?: string }) {
                           className='rounded-full object-cover aspect-square w-[36px]'
                         />
                         <span className='md:max-w-[150px] max-w-[80px] truncate'>{account.name}</span>
-                        {wallet && <span className='w-6'>·</span>}
-                        {wallet && (
-                          <span className='font-medium'>{`${wallet.substr(0, 4)} **** ${wallet.substr(-4)}`}</span>
-                        )}
                       </div>
                     </FilledButton>
                   </DropdownToggle>

@@ -42,11 +42,6 @@ export default function SlideSection({ sliderNavRef }) {
           <div>
             <Image src={Banner} alt='' className='rounded-[10px] w-full aspect-[5/2] object-cover' />
           </div>
-          <Link
-            href='/campaigns'
-            className='bg-[#23FF81] px-8 py-3 text-xl leading-[25px] font-bold rounded-[10px] text-center cursor-pointer'>
-            Go to Quests
-          </Link>
         </div>
       </div>
     </>

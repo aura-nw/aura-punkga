@@ -48,3 +48,17 @@ export const levelToXp = (level) => {
 
   return y
 }
+export const statusColor = (status: string) => {
+  switch (status) {
+    case 'Published':
+      return 'success'
+    case 'Upcoming':
+    case 'Up-coming':
+    case 'Ongoing':
+    case 'On-going':
+      return 'warning'
+
+    default:
+      break
+  }
+}

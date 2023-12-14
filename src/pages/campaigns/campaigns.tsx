@@ -13,10 +13,7 @@ function Campaigns() {
   return (
     <>
       <Header />
-      <div className='pk-container py-[65px] flex flex-col gap-8'>
-        <LeaderBoard />
-        <Campaign />
-      </div>
+      <Campaign />
       <Footer />
     </>
   )
