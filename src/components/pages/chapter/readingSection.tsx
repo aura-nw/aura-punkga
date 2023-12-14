@@ -171,17 +171,6 @@ export default function ReadingSection({
       className={`w-full h-full overflow-hidden ${
         mode == 'minscreen' ? 'relative' : 'fixed bg-black z-20 top-0 bottom-0'
       }`}>
-      <div
-        className={`absolute top-[82px] right-[69px] duration-300 transition-[opacity] ${
-          mode == 'minscreen' ? 'opacity-100 w-0 overflow-hidden' : 'w-fit opacity-100'
-        }`}>
-        <div
-          className='px-4 py-1 rounded-xl border-second-color border flex gap-[10px] items-center cursor-pointer'
-          onClick={() => setMode('minscreen')}>
-          <Image className='cursor-pointer h-6 w-6' src={MinscreenIcon} alt='' />
-          <span className='text-second-color font-bold'>{t('Exit Fullscreen')}</span>
-        </div>
-      </div>
       {!account && chapterData.type == CHAPTER_TYPE.ACCOUNT_ONLY ? (
         <div className='h-full w-full flex justify-center items-center'>
           <div>
@@ -362,7 +351,7 @@ export default function ReadingSection({
           <div className='relative px-[10px] py-[4px] rounded-xl border-second-color border-[1.5px] flex gap-[10px] items-center justify-between cursor-pointer w-[200px]'>
             <span
               onClick={() => setShowChapterList(!showChapterList)}
-              className='text-second-color w-full text-xs leading-5'>{`${t('Chapter')} ${chapterData.number}`}</span>
+              className='text-second-color w-full text-sm leading-5'>{`${t('Chapter')} ${chapterData.number}`}</span>
             <ChevronUpIcon
               onClick={() => setShowChapterList(!showChapterList)}
               className={`h-6 w-6 text-second-color transition-all ${showChapterList ? 'rotate-180' : 'rotate-0'}`}
