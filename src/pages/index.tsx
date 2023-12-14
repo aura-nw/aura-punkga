@@ -84,7 +84,7 @@ function Home() {
       <Header />
       <div className='lg:hidden'>
         <div className='rounded-b-[16px] p-[10px] bg-[#F2F2F2] flex flex-col gap-[10px]'>
-          <Image src={XMasImg1} alt='' className='rounded-[10px]' />
+          <Image src={XMasImg1} alt='' className='rounded-[10px] w-full' />
           <div className='grid grid-cols-2 gap-[10px]'>
             <Link
               href='https://airtable.com/appjewI8AfCHj8wJX/pag2JLOBTwVbChJJy/form'
@@ -179,7 +179,7 @@ function Home() {
                 <div className='outline-none [&_*]:outline-none'>
                   <Link href='https://punkga.me/comic/hero_cyberpunk_1/chapter/1'>
                     <Image
-                      className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
+                      className='w-full aspect-[370/166] rounded-[10px] object-cover'
                       src={HeroCyberpunkBanner}
                       alt=''
                     />
@@ -188,7 +188,7 @@ function Home() {
                 <div className='outline-none [&_*]:outline-none '>
                   <Link href='https://punkga.me/comic/hamulage_3/chapter/1'>
                     <Image
-                      className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
+                      className='w-full aspect-[370/166] rounded-[10px] object-cover'
                       src={HamulageBanner}
                       alt=''
                     />
@@ -196,38 +196,22 @@ function Home() {
                 </div>
                 <div className='outline-none [&_*]:outline-none '>
                   <Link href='https://punkga.me/comic/heroic_librarian_5/chapter/1'>
-                    <Image
-                      className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
-                      src={HeroicBanner}
-                      alt=''
-                    />
+                    <Image className='w-full aspect-[370/166] rounded-[10px] object-cover' src={HeroicBanner} alt='' />
                   </Link>
                 </div>
                 <div className='outline-none [&_*]:outline-none '>
                   <Link href='https://punkga.me/comic/era_of_chaos_4/chapter/1'>
-                    <Image
-                      className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
-                      src={TCOTPBanner}
-                      alt=''
-                    />
+                    <Image className='w-full aspect-[370/166] rounded-[10px] object-cover' src={TCOTPBanner} alt='' />
                   </Link>
                 </div>
                 <div className='outline-none [&_*]:outline-none '>
                   <Link href='https://punkga.me/comic/neon_force_2/chapter/1'>
-                    <Image
-                      className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
-                      src={UltraVBanner}
-                      alt=''
-                    />
+                    <Image className='w-full aspect-[370/166] rounded-[10px] object-cover' src={UltraVBanner} alt='' />
                   </Link>
                 </div>
                 <div className='outline-none [&_*]:outline-none '>
                   <Link href='https://punkga.me/comic/errant_6/chapter/1'>
-                    <Image
-                      className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
-                      src={ErrantBanner}
-                      alt=''
-                    />
+                    <Image className='w-full aspect-[370/166] rounded-[10px] object-cover' src={ErrantBanner} alt='' />
                   </Link>
                 </div>
               </Carousel>
@@ -329,7 +313,8 @@ function Home() {
                         : true
                     )
                     .map((data, index) => {
-                      if (index == 0) return <XMasComic key={index} {...data} />
+                      if (index == 0) return null
+                      // if (index == 0) return <XMasComic key={index} {...data} />
                       return <Comic key={index} {...data} />
                     })
                 : null}
