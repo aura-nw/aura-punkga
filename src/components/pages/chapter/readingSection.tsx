@@ -329,7 +329,7 @@ export default function ReadingSection({
           <div className='relative px-[10px] py-[4px] rounded-xl border-second-color border-[1.5px] flex gap-[10px] items-center justify-between cursor-pointer w-[200px]'>
             <span
               onClick={() => setShowChapterList(!showChapterList)}
-              className='text-second-color w-full text-xs leading-5'>{`${t('Chapter')} ${chapterData.number}`}</span>
+              className='text-second-color w-full text-sm leading-5'>{`${t('Chapter')} ${chapterData.number}`}</span>
             <ChevronUpIcon
               onClick={() => setShowChapterList(!showChapterList)}
               className={`h-6 w-6 text-second-color transition-all ${showChapterList ? 'rotate-180' : 'rotate-0'}`}

@@ -8,8 +8,7 @@ import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IComic } from 'src/models/comic'
-import SnowTop from 'src/assets/images/snow_top.png'
-import SnowTopM from 'src/assets/images/snow_top_m.png'
+import BgImg from 'src/assets/images/event-bg.svg'
 import AvatarFrame from 'src/assets/images/frame_avt.png'
 export default function XMasComic(props: IComic) {
   const { locale } = useRouter()
@@ -17,19 +16,9 @@ export default function XMasComic(props: IComic) {
   const { t } = useTranslation()
   return (
     <div className={` ${props.status.text == 'Upcoming' ? '[&_a:not(.author)]:pointer-events-none' : ''}`}>
-      <div className='hidden bg-gradient-to-b from-[#3A3D47] to-[#1E2C62] rounded-2xl relative md:flex gap-[20px]'>
-        <Image
-          src={SnowTop}
-          alt=''
-          className='absolute z-10 min-h-[60px] -top-8 lg:-top-[25px] -left-1 -right-1 max-w-none w-[-webkit-fill-available] hidden md:block'
-        />
-        <div className='absolute inset-0 top-2 overflow-hidden'>
-          {Array(100)
-            .fill(null)
-            .map((d, index) => (
-              <div className='snow' key={index}></div>
-            ))}
-        </div>
+      <div className='hidden bg-gradient-to-b from-[#3A3D47] to-[#1E2C62] rounded-2xl relative md:flex gap-[20px] overflow-hidden'>
+        <div className='absolute inset-0 shadow-[0px_0px_15px_0px_#FF7BE2_inset] pointer-events-none z-20 rounded-2xl'></div>
+        <Image src={BgImg} alt='' className='absolute inset-0 w-full' />
         <Link
           href={`/comic/${props.slug}`}
           className=' xl:hidden shrink-0 block max-w-[180px] w-[35%] h-fit aspect-[180/240] mx-auto relative rounded-2xl overflow-hidden'>
@@ -40,7 +29,6 @@ export default function XMasComic(props: IComic) {
             height={240}
             className={`w-full h-full ${props.image ? 'object-cover' : 'object-contain bg-light-gray'} rounded-[15px] `}
           />
-          <Image src={AvatarFrame} alt='' className='absolute inset-0' />
         </Link>
         <Link
           href={`/comic/${props.slug}/chapter/1`}
@@ -50,11 +38,12 @@ export default function XMasComic(props: IComic) {
             alt=''
             width={180}
             height={240}
-            className={`w-full h-full ${props.image ? 'object-cover' : 'object-contain bg-light-gray'} rounded-[15px] `}
+            className={`w-full h-full  ${
+              props.image ? 'object-cover' : 'object-contain bg-light-gray'
+            } rounded-[15px] `}
           />
-          <Image src={AvatarFrame} alt='' className='absolute inset-0' />
         </Link>
-        <div className='flex-auto w-[calc(100%-200px)] flex flex-col justify-between gap-[10px] py-[10px] pr-[10px]'>
+        <div className='flex-auto w-[calc(100%-200px)] flex flex-col justify-between gap-[10px] py-[10px] pr-[10px] relative'>
           <div className='flex flex-col gap-[10px] text-[#F2F2F2]'>
             <div>
               <div className='flex justify-between xl:hidden items-start flex-nowrap'>
@@ -108,18 +97,6 @@ export default function XMasComic(props: IComic) {
         </div>
       </div>
       <div className='md:hidden relative h-full w-fit mx-auto bg-gradient-to-b from-[#3A3D47] to-[#1E2C62] rounded-2xl'>
-        <Image
-          src={SnowTopM}
-          alt=''
-          className='absolute min-h-[60px] -top-[25px] -left-1 z-10 -right-1 max-w-none w-[-webkit-fill-available] md:hidden'
-        />
-        <div className='absolute inset-0 top-2 overflow-hidden'>
-          {Array(100)
-            .fill(null)
-            .map((d, index) => (
-              <div className='snow' key={index}></div>
-            ))}
-        </div>
         <div
           onClick={() => {
             props.status.text == 'Upcoming' ? null : router.push(`/comic/${props.slug}`)
@@ -135,12 +112,14 @@ export default function XMasComic(props: IComic) {
                 props.image ? 'object-cover' : 'object-contain bg-light-gray'
               } rounded-md w-[180px] aspect-[18/24] bg-gray-200`}
             />
-            <Image src={AvatarFrame} alt='' className='absolute inset-0 rounded-xl' />
           </div>
 
-          <div className='px-[5px] pb-[5px] flex flex-col'>
-            <div className='text-sm font-extrabold text-primary-color mt-2 max-w-[160px]'>{props[locale].title}</div>
-            <div className='text-sm text-white flex-1 h-full'>
+          <div className='px-[5px] pb-[5px] flex flex-col relative'>
+            <Image src={BgImg} alt='' className='absolute inset-0 h-full' />
+            <div className='text-sm font-extrabold text-primary-color mt-2 max-w-[160px] relative'>
+              {props[locale].title}
+            </div>
+            <div className='text-sm text-white flex-1 h-full relative'>
               {t('by')}{' '}
               {props.authors.map((author, index) => (
                 <Fragment key={index}>
@@ -157,7 +136,7 @@ export default function XMasComic(props: IComic) {
                 </Fragment>
               ))}
             </div>
-            <div className='flex justify-between items-center text-white text-sm mt-3'>
+            <div className='flex justify-between items-center text-white text-sm mt-3 relative'>
               <div className='flex items-center gap-1'>
                 <EyeIcon className='w-4 h-4' />
                 <div className='font-medium'>{props.views.toLocaleString('en-US')}</div>

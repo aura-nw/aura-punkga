@@ -34,7 +34,7 @@ export default function Carousel({ children, setting }: any) {
     ...setting,
   }
   return (
-    <div className='w-[100%] pb-5'>
+    <div className='w-[100%]'>
       <Slider {...settings}>{children}</Slider>
     </div>
   )
