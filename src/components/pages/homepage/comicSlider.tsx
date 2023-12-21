@@ -210,7 +210,7 @@ export default function TaskSlider({ sliderNavRef }) {
                     alt=''
                     width={1920}
                     height={1080}
-                    className='w-full aspect-[108/46] object-cover'
+                    className='w-full aspect-[105/46] object-cover'
                     src={data.comic.image}
                   />
                   <div className='absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent pointer-events-none px-[60px] pb-[150px] flex flex-col justify-end'>
