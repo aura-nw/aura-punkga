@@ -102,6 +102,31 @@ function Home() {
         </div>
         <div className='pk-container'>
           <div className='mt-[10px] mx-5 rounded-[16px] p-[10px] bg-[#F2F2F2] relative'>
+            <Image src={XMasImg2} alt='' className='rounded-[10px]' />
+            <div className='absolute bottom-[26px] left-[18px]'>
+              <Countdown
+                date={new Date('18:00 01/02/2024')}
+                renderer={({ days, hours, minutes, seconds, completed }) => {
+                  if (completed) {
+                    return <></>
+                  } else {
+                    return (
+                      <div className='text-xs leading-[15px] font-bold text-primary-color bg-[#414141] rounded-[20px] py-1 px-4'>
+                        {days > 0
+                          ? locale == 'vn'
+                            ? `Bắt đầu sau ${zeroPad(days)} ngày : ${zeroPad(hours)} giờ : ${zeroPad(minutes)} phút`
+                            : `Starts in ${zeroPad(days)}d : ${zeroPad(hours)}h : ${zeroPad(minutes)}m`
+                          : locale == 'vn'
+                          ? `Bắt đầu sau ${zeroPad(hours)} giờ : ${zeroPad(minutes)} phút : ${zeroPad(seconds)} giây`
+                          : `Starts in ${zeroPad(hours)}h : ${zeroPad(minutes)}m : ${zeroPad(seconds)}s`}
+                      </div>
+                    )
+                  }
+                }}
+              />
+            </div>
+          </div>
+          {/* <div className='mt-[10px] mx-5 rounded-[16px] p-[10px] bg-[#F2F2F2] relative'>
             <Carousel
               setting={{
                 slidesToShow: 1,
@@ -144,7 +169,7 @@ function Home() {
                 </Link>
               </div>
             </Carousel>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className='hidden lg:block'>
@@ -169,7 +194,30 @@ function Home() {
               </div>
             </div>
             <div className='relative'>
-              <Carousel
+              <Image src={XMasImg2} alt='' className='rounded-[30px] aspect-[80/36]' />
+              <div className='absolute bottom-[42px] left-[30px]'>
+                <Countdown
+                  date={new Date('18:00 01/02/2024')}
+                  renderer={({ days, hours, minutes, seconds, completed }) => {
+                    if (completed) {
+                      return <></>
+                    } else {
+                      return (
+                        <div className='text-xs leading-[15px] font-bold text-primary-color bg-[#414141] rounded-[20px] py-1 px-4'>
+                          {days > 0
+                            ? locale == 'vn'
+                              ? `Bắt đầu sau ${zeroPad(days)} ngày : ${zeroPad(hours)} giờ : ${zeroPad(minutes)} phút`
+                              : `Starts in ${zeroPad(days)}d : ${zeroPad(hours)}h : ${zeroPad(minutes)}m`
+                            : locale == 'vn'
+                            ? `Bắt đầu sau ${zeroPad(hours)} giờ : ${zeroPad(minutes)} phút : ${zeroPad(seconds)} giây`
+                            : `Starts in ${zeroPad(hours)}h : ${zeroPad(minutes)}m : ${zeroPad(seconds)}s`}
+                        </div>
+                      )
+                    }
+                  }}
+                />
+              </div>
+              {/* <Carousel
                 setting={{
                   slidesToShow: 1,
                   slidesToScroll: 1,
@@ -214,7 +262,7 @@ function Home() {
                     <Image className='w-full aspect-[370/166] rounded-[10px] object-cover' src={ErrantBanner} alt='' />
                   </Link>
                 </div>
-              </Carousel>
+              </Carousel> */}
             </div>
           </div>
         </div>
