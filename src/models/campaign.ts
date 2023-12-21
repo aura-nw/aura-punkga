@@ -2,6 +2,18 @@ export type Campaign = {
   id: string
   name: string
   campaign_quests: Quest[]
+  reward: {
+    xp?: number
+    img_name?: string
+    img_url?: string
+    nft_name?: string
+    ipfs?: string
+  }
+  description?: string
+  start_date: string
+  end_date: string
+  status: string
+  campaign_user: any[]
 }
 export type Quest = {
   id: string
