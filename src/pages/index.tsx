@@ -27,6 +27,7 @@ import TCOTPBanner from 'assets/images/comic-banner/the_chaos_of_the_past.jpg'
 import UltraVBanner from 'assets/images/comic-banner/ultra_v.jpg'
 import ErrantBanner from 'assets/images/comic-banner/errant.jpg'
 import Carousel from 'components/Carousel'
+import moment from 'moment'
 declare global {
   interface Window {
     // ⚠️ notice that "Window" is capitalized here
@@ -82,51 +83,332 @@ function Home() {
   return (
     <>
       <Header />
-      <div className='lg:hidden'>
-        <div className='rounded-b-[16px] p-[10px] bg-[#F2F2F2] flex flex-col gap-[10px]'>
-          <Image src={XMasImg1} alt='' className='rounded-[10px] w-full' />
-          <div className='grid grid-cols-2 gap-[10px]'>
-            <Link
-              href='https://airtable.com/appjewI8AfCHj8wJX/pag2JLOBTwVbChJJy/form'
-              target='_blank'
-              className='leading-5 font-bold bg-primary-color text-center py-2 px-6 rounded-[20px]'>
-              {t('Join now')}
-            </Link>
-            <Link
-              href='https://drive.google.com/file/d/13BsvhyAtdrxfI6_y_bTSiSR737vBofYg/view?usp=drive_link'
-              target='_blank'
-              className='leading-5 font-bold text-second-color border-second-color grid place-items-center text-center border-[2px] rounded-[20px]'>
-              {t('Learn more')}
-            </Link>
-          </div>
-        </div>
-        <div className='pk-container'>
-          <div className='mt-[10px] mx-5 rounded-[16px] p-[10px] bg-[#F2F2F2] relative'>
-            <Image src={XMasImg2} alt='' className='rounded-[10px]' />
-            <div className='absolute bottom-[26px] left-[18px]'>
-              <Countdown
-                date={new Date('18:00 01/02/2024')}
-                renderer={({ days, hours, minutes, seconds, completed }) => {
-                  if (completed) {
-                    return <></>
-                  } else {
-                    return (
-                      <div className='text-xs leading-[15px] font-bold text-primary-color bg-[#414141] rounded-[20px] py-1 px-4'>
-                        {days > 0
-                          ? locale == 'vn'
-                            ? `Bắt đầu sau ${zeroPad(days)} ngày : ${zeroPad(hours)} giờ : ${zeroPad(minutes)} phút`
-                            : `Starts in ${zeroPad(days)}d : ${zeroPad(hours)}h : ${zeroPad(minutes)}m`
-                          : locale == 'vn'
-                          ? `Bắt đầu sau ${zeroPad(hours)} giờ : ${zeroPad(minutes)} phút : ${zeroPad(seconds)} giây`
-                          : `Starts in ${zeroPad(hours)}h : ${zeroPad(minutes)}m : ${zeroPad(seconds)}s`}
-                      </div>
-                    )
-                  }
-                }}
+      {moment('00:00 01/09/2024').isAfter() ? (
+        <>
+          <div className='lg:hidden'>
+            <div className='rounded-b-[16px] p-[10px] bg-[#F2F2F2] flex flex-col gap-[10px]'>
+              <Image
+                src={moment('18:00 01/02/2024').isAfter() ? XMasImg1 : XMasImg2}
+                alt=''
+                className='rounded-[10px] w-full'
               />
+              <div className='grid grid-cols-2 gap-[10px]'>
+                <Link
+                  href='https://airtable.com/appjewI8AfCHj8wJX/pag2JLOBTwVbChJJy/form'
+                  target='_blank'
+                  className='leading-5 font-bold bg-primary-color text-center py-2 px-6 rounded-[20px]'>
+                  {t('Join now')}
+                </Link>
+                <Link
+                  href='https://drive.google.com/file/d/13BsvhyAtdrxfI6_y_bTSiSR737vBofYg/view?usp=drive_link'
+                  target='_blank'
+                  className='leading-5 font-bold text-second-color border-second-color grid place-items-center text-center border-[2px] rounded-[20px]'>
+                  {t('Learn more')}
+                </Link>
+              </div>
+            </div>
+            <div className='pk-container'>
+              {moment('18:00 01/02/2024').isAfter() ? (
+                <div className='mt-[10px] mx-5 rounded-[16px] p-[10px] bg-[#F2F2F2] relative'>
+                  <Image src={XMasImg2} alt='' className='rounded-[10px]' />
+                  <div className='absolute bottom-[26px] left-[18px]'>
+                    <Countdown
+                      date={new Date('18:00 01/02/2024')}
+                      renderer={({ days, hours, minutes, seconds, completed }) => {
+                        if (completed) {
+                          return <></>
+                        } else {
+                          return (
+                            <div className='text-xs leading-[15px] font-bold text-primary-color bg-[#414141] rounded-[20px] py-1 px-4'>
+                              {days > 0
+                                ? locale == 'vn'
+                                  ? `Bắt đầu sau ${zeroPad(days)} ngày : ${zeroPad(hours)} giờ : ${zeroPad(
+                                      minutes
+                                    )} phút`
+                                  : `Starts in ${zeroPad(days)}d : ${zeroPad(hours)}h : ${zeroPad(minutes)}m`
+                                : locale == 'vn'
+                                ? `Bắt đầu sau ${zeroPad(hours)} giờ : ${zeroPad(minutes)} phút : ${zeroPad(
+                                    seconds
+                                  )} giây`
+                                : `Starts in ${zeroPad(hours)}h : ${zeroPad(minutes)}m : ${zeroPad(seconds)}s`}
+                            </div>
+                          )
+                        }
+                      }}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className='mt-[10px] mx-5 rounded-[16px] p-[10px] bg-[#F2F2F2] relative'>
+                  <Carousel
+                    setting={{
+                      slidesToShow: 1,
+                      slidesToScroll: 1,
+                      appendDots: () => <></>,
+                      customPaging: () => <></>,
+                    }}>
+                    <div className='outline-none [&_*]:outline-none'>
+                      <Link href='https://punkga.me/comic/hero_cyberpunk_1/chapter/1'>
+                        <Image
+                          className='w-full aspect-[370/166] rounded-[10px] object-cover'
+                          src={HeroCyberpunkBanner}
+                          alt=''
+                        />
+                      </Link>
+                    </div>
+                    <div className='outline-none [&_*]:outline-none '>
+                      <Link href='https://punkga.me/comic/hamulage_3/chapter/1'>
+                        <Image
+                          className='w-full aspect-[370/166] rounded-[10px] object-cover'
+                          src={HamulageBanner}
+                          alt=''
+                        />
+                      </Link>
+                    </div>
+                    <div className='outline-none [&_*]:outline-none '>
+                      <Link href='https://punkga.me/comic/heroic_librarian_5/chapter/1'>
+                        <Image
+                          className='w-full aspect-[370/166] rounded-[10px] object-cover'
+                          src={HeroicBanner}
+                          alt=''
+                        />
+                      </Link>
+                    </div>
+                    <div className='outline-none [&_*]:outline-none '>
+                      <Link href='https://punkga.me/comic/era_of_chaos_4/chapter/1'>
+                        <Image
+                          className='w-full aspect-[370/166] rounded-[10px] object-cover'
+                          src={TCOTPBanner}
+                          alt=''
+                        />
+                      </Link>
+                    </div>
+                    <div className='outline-none [&_*]:outline-none '>
+                      <Link href='https://punkga.me/comic/neon_force_2/chapter/1'>
+                        <Image
+                          className='w-full aspect-[370/166] rounded-[10px] object-cover'
+                          src={UltraVBanner}
+                          alt=''
+                        />
+                      </Link>
+                    </div>
+                    <div className='outline-none [&_*]:outline-none '>
+                      <Link href='https://punkga.me/comic/errant_6/chapter/1'>
+                        <Image
+                          className='w-full aspect-[370/166] rounded-[10px] object-cover'
+                          src={ErrantBanner}
+                          alt=''
+                        />
+                      </Link>
+                    </div>
+                  </Carousel>
+                </div>
+              )}
             </div>
           </div>
-          {/* <div className='mt-[10px] mx-5 rounded-[16px] p-[10px] bg-[#F2F2F2] relative'>
+          <div className='hidden lg:block'>
+            <div className='pk-container'>
+              <div className='grid grid-cols-2 gap-10 mt-10'>
+                <div className='relative h-fit'>
+                  <Image
+                    src={moment('18:00 01/02/2024').isAfter() ? XMasImg1 : XMasImg2}
+                    alt=''
+                    className='rounded-[30px] aspect-[80/36]'
+                  />
+                  <div className='flex gap-5 absolute bottom-[42px] left-[60px]'>
+                    <Link
+                      href='https://airtable.com/appjewI8AfCHj8wJX/pag2JLOBTwVbChJJy/form'
+                      target='_blank'
+                      className='leading-[25px] font-bold bg-primary-color text-center py-3 px-8 text-xl rounded-[20px] shadow-[0px_0px_15px_0px_#0000008c]'>
+                      {t('Join now')}
+                    </Link>
+                    <Link
+                      href='https://drive.google.com/file/d/13BsvhyAtdrxfI6_y_bTSiSR737vBofYg/view?usp=drive_link'
+                      target='_blank'
+                      className='leading-[25px] px-8 text-xl font-bold text-primary-color border-primary-color grid place-items-center text-center border-[2px] rounded-[20px] shadow-[0px_0px_20px_20px_#0000006b_inset] relative'>
+                      <div className='absolute -inset-[2px] shadow-[0px_0px_15px_0px_#0000008c] rounded-[20px]'></div>
+                      {t('Learn more')}
+                    </Link>
+                  </div>
+                </div>
+                <div className='relative'>
+                  {moment('18:00 01/02/2024').isAfter() ? (
+                    <>
+                      <Image src={XMasImg2} alt='' className='rounded-[30px] aspect-[80/36]' />
+                      <div className='absolute bottom-[42px] left-[30px]'>
+                        <Countdown
+                          date={new Date('18:00 01/02/2024')}
+                          renderer={({ days, hours, minutes, seconds, completed }) => {
+                            if (completed) {
+                              return <></>
+                            } else {
+                              return (
+                                <div className='text-xs leading-[15px] font-bold text-primary-color bg-[#414141] rounded-[20px] py-1 px-4'>
+                                  {days > 0
+                                    ? locale == 'vn'
+                                      ? `Bắt đầu sau ${zeroPad(days)} ngày : ${zeroPad(hours)} giờ : ${zeroPad(
+                                          minutes
+                                        )} phút`
+                                      : `Starts in ${zeroPad(days)}d : ${zeroPad(hours)}h : ${zeroPad(minutes)}m`
+                                    : locale == 'vn'
+                                    ? `Bắt đầu sau ${zeroPad(hours)} giờ : ${zeroPad(minutes)} phút : ${zeroPad(
+                                        seconds
+                                      )} giây`
+                                    : `Starts in ${zeroPad(hours)}h : ${zeroPad(minutes)}m : ${zeroPad(seconds)}s`}
+                                </div>
+                              )
+                            }
+                          }}
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <Carousel
+                      setting={{
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        appendDots: () => <></>,
+                        customPaging: () => <></>,
+                      }}>
+                      <div className='outline-none [&_*]:outline-none'>
+                        <Link href='https://punkga.me/comic/hero_cyberpunk_1/chapter/1'>
+                          <Image
+                            className='w-full aspect-[370/166] rounded-[10px] object-cover'
+                            src={HeroCyberpunkBanner}
+                            alt=''
+                          />
+                        </Link>
+                      </div>
+                      <div className='outline-none [&_*]:outline-none '>
+                        <Link href='https://punkga.me/comic/hamulage_3/chapter/1'>
+                          <Image
+                            className='w-full aspect-[370/166] rounded-[10px] object-cover'
+                            src={HamulageBanner}
+                            alt=''
+                          />
+                        </Link>
+                      </div>
+                      <div className='outline-none [&_*]:outline-none '>
+                        <Link href='https://punkga.me/comic/heroic_librarian_5/chapter/1'>
+                          <Image
+                            className='w-full aspect-[370/166] rounded-[10px] object-cover'
+                            src={HeroicBanner}
+                            alt=''
+                          />
+                        </Link>
+                      </div>
+                      <div className='outline-none [&_*]:outline-none '>
+                        <Link href='https://punkga.me/comic/era_of_chaos_4/chapter/1'>
+                          <Image
+                            className='w-full aspect-[370/166] rounded-[10px] object-cover'
+                            src={TCOTPBanner}
+                            alt=''
+                          />
+                        </Link>
+                      </div>
+                      <div className='outline-none [&_*]:outline-none '>
+                        <Link href='https://punkga.me/comic/neon_force_2/chapter/1'>
+                          <Image
+                            className='w-full aspect-[370/166] rounded-[10px] object-cover'
+                            src={UltraVBanner}
+                            alt=''
+                          />
+                        </Link>
+                      </div>
+                      <div className='outline-none [&_*]:outline-none '>
+                        <Link href='https://punkga.me/comic/errant_6/chapter/1'>
+                          <Image
+                            className='w-full aspect-[370/166] rounded-[10px] object-cover'
+                            src={ErrantBanner}
+                            alt=''
+                          />
+                        </Link>
+                      </div>
+                    </Carousel>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+          {moment('00:00 01/09/2024').isAfter() && (
+            <div className='bg-[#E2D8FF] py-1 overflow-hidden mt-5 lg:mt-[17px] mb-10 lg:mb-2'>
+              {locale == 'vn' ? (
+                <div className='text-sm whitespace-nowrap px-10 w-max animate-textSlide10 md:animate-textSlide20'>
+                  Tham gia cuộc thi vẽ truyện tranh cùng <span className='text-second-color'>Punkga Me</span> với tổng
+                  giải thưởng 20 triệu đồng!
+                </div>
+              ) : (
+                <div className='text-sm whitespace-nowrap px-10 w-max animate-textSlide10 md:animate-textSlide20'>
+                  Join the comic creative contest with <span className='text-second-color'>Punkga Me</span> , with the
+                  total prize $1000
+                </div>
+              )}
+            </div>
+          )}
+        </>
+      ) : (
+        <>
+          <div className='pk-container'>
+            <div className='mt-[40px] md:grid grid-cols-1 px-2 md:px-0 gap-[40px] hidden -mx-5 [&_.slick-dots]:-mx-5'>
+              <Carousel>
+                <div className='p-5 outline-none [&_*]:outline-none'>
+                  <Link href='https://punkga.me/comic/hero_cyberpunk_1/chapter/1'>
+                    <Image
+                      className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
+                      src={HeroCyberpunkBanner}
+                      alt=''
+                    />
+                  </Link>
+                </div>
+                <div className='p-5 outline-none [&_*]:outline-none '>
+                  <Link href='https://punkga.me/comic/hamulage_3/chapter/1'>
+                    <Image
+                      className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
+                      src={HamulageBanner}
+                      alt=''
+                    />
+                  </Link>
+                </div>
+                <div className='p-5 outline-none [&_*]:outline-none '>
+                  <Link href='https://punkga.me/comic/heroic_librarian_5/chapter/1'>
+                    <Image
+                      className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
+                      src={HeroicBanner}
+                      alt=''
+                    />
+                  </Link>
+                </div>
+                <div className='p-5 outline-none [&_*]:outline-none '>
+                  <Link href='https://punkga.me/comic/era_of_chaos_4/chapter/1'>
+                    <Image
+                      className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
+                      src={TCOTPBanner}
+                      alt=''
+                    />
+                  </Link>
+                </div>
+                <div className='p-5 outline-none [&_*]:outline-none '>
+                  <Link href='https://punkga.me/comic/neon_force_2/chapter/1'>
+                    <Image
+                      className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
+                      src={UltraVBanner}
+                      alt=''
+                    />
+                  </Link>
+                </div>
+                <div className='p-5 outline-none [&_*]:outline-none '>
+                  <Link href='https://punkga.me/comic/errant_6/chapter/1'>
+                    <Image
+                      className='w-full md:rounded-[18px] lg:rounded-[30px] md:h-[200px] lg:h-[280px] 2xl:h-[360px] object-fill'
+                      src={ErrantBanner}
+                      alt=''
+                    />
+                  </Link>
+                </div>
+              </Carousel>
+            </div>
+          </div>
+          <div className='md:hidden md:px-0 gap-[40px]'>
             <Carousel
               setting={{
                 slidesToShow: 1,
@@ -134,152 +416,35 @@ function Home() {
                 appendDots: () => <></>,
                 customPaging: () => <></>,
               }}>
-              <div className='outline-none [&_*]:outline-none'>
+              <div>
                 <Link href='https://punkga.me/comic/hero_cyberpunk_1/chapter/1'>
-                  <Image
-                    className='w-full aspect-[370/166] rounded-[10px] object-cover'
-                    src={HeroCyberpunkBanner}
-                    alt=''
-                  />
+                  <Image className='w-full aspect-[21/9] object-fill' src={HeroCyberpunkBanner} alt='' />
                 </Link>
-              </div>
-              <div className='outline-none [&_*]:outline-none '>
                 <Link href='https://punkga.me/comic/hamulage_3/chapter/1'>
-                  <Image className='w-full aspect-[370/166] rounded-[10px] object-cover' src={HamulageBanner} alt='' />
+                  <Image className='w-full aspect-[21/9] object-fill' src={HamulageBanner} alt='' />
                 </Link>
               </div>
-              <div className='outline-none [&_*]:outline-none '>
+              <div>
                 <Link href='https://punkga.me/comic/heroic_librarian_5/chapter/1'>
-                  <Image className='w-full aspect-[370/166] rounded-[10px] object-cover' src={HeroicBanner} alt='' />
+                  <Image className='w-full aspect-[21/9] object-fill' src={HeroicBanner} alt='' />
                 </Link>
-              </div>
-              <div className='outline-none [&_*]:outline-none '>
                 <Link href='https://punkga.me/comic/era_of_chaos_4/chapter/1'>
-                  <Image className='w-full aspect-[370/166] rounded-[10px] object-cover' src={TCOTPBanner} alt='' />
+                  <Image className='w-full aspect-[21/9] object-fill' src={TCOTPBanner} alt='' />
                 </Link>
               </div>
-              <div className='outline-none [&_*]:outline-none '>
+              <div>
                 <Link href='https://punkga.me/comic/neon_force_2/chapter/1'>
-                  <Image className='w-full aspect-[370/166] rounded-[10px] object-cover' src={UltraVBanner} alt='' />
+                  <Image className='w-full aspect-[21/9] object-fill' src={UltraVBanner} alt='' />
                 </Link>
-              </div>
-              <div className='outline-none [&_*]:outline-none '>
                 <Link href='https://punkga.me/comic/errant_6/chapter/1'>
-                  <Image className='w-full aspect-[370/166] rounded-[10px] object-cover' src={ErrantBanner} alt='' />
+                  <Image className='w-full aspect-[21/9] object-fill' src={ErrantBanner} alt='' />
                 </Link>
               </div>
             </Carousel>
-          </div> */}
-        </div>
-      </div>
-      <div className='hidden lg:block'>
-        <div className='pk-container'>
-          <div className='grid grid-cols-2 gap-10 mt-10'>
-            <div className='relative h-fit'>
-              <Image src={XMasImg1} alt='' className='rounded-[30px] aspect-[80/36]' />
-              <div className='flex gap-5 absolute bottom-[42px] left-[60px]'>
-                <Link
-                  href='https://airtable.com/appjewI8AfCHj8wJX/pag2JLOBTwVbChJJy/form'
-                  target='_blank'
-                  className='leading-[25px] font-bold bg-primary-color text-center py-3 px-8 text-xl rounded-[20px] shadow-[0px_0px_15px_0px_#0000008c]'>
-                  {t('Join now')}
-                </Link>
-                <Link
-                  href='https://drive.google.com/file/d/13BsvhyAtdrxfI6_y_bTSiSR737vBofYg/view?usp=drive_link'
-                  target='_blank'
-                  className='leading-[25px] px-8 text-xl font-bold text-primary-color border-primary-color grid place-items-center text-center border-[2px] rounded-[20px] shadow-[0px_0px_20px_20px_#0000006b_inset] relative'>
-                  <div className='absolute -inset-[2px] shadow-[0px_0px_15px_0px_#0000008c] rounded-[20px]'></div>
-                  {t('Learn more')}
-                </Link>
-              </div>
-            </div>
-            <div className='relative'>
-              <Image src={XMasImg2} alt='' className='rounded-[30px] aspect-[80/36]' />
-              <div className='absolute bottom-[42px] left-[30px]'>
-                <Countdown
-                  date={new Date('18:00 01/02/2024')}
-                  renderer={({ days, hours, minutes, seconds, completed }) => {
-                    if (completed) {
-                      return <></>
-                    } else {
-                      return (
-                        <div className='text-xs leading-[15px] font-bold text-primary-color bg-[#414141] rounded-[20px] py-1 px-4'>
-                          {days > 0
-                            ? locale == 'vn'
-                              ? `Bắt đầu sau ${zeroPad(days)} ngày : ${zeroPad(hours)} giờ : ${zeroPad(minutes)} phút`
-                              : `Starts in ${zeroPad(days)}d : ${zeroPad(hours)}h : ${zeroPad(minutes)}m`
-                            : locale == 'vn'
-                            ? `Bắt đầu sau ${zeroPad(hours)} giờ : ${zeroPad(minutes)} phút : ${zeroPad(seconds)} giây`
-                            : `Starts in ${zeroPad(hours)}h : ${zeroPad(minutes)}m : ${zeroPad(seconds)}s`}
-                        </div>
-                      )
-                    }
-                  }}
-                />
-              </div>
-              {/* <Carousel
-                setting={{
-                  slidesToShow: 1,
-                  slidesToScroll: 1,
-                  appendDots: () => <></>,
-                  customPaging: () => <></>,
-                }}>
-                <div className='outline-none [&_*]:outline-none'>
-                  <Link href='https://punkga.me/comic/hero_cyberpunk_1/chapter/1'>
-                    <Image
-                      className='w-full aspect-[370/166] rounded-[10px] object-cover'
-                      src={HeroCyberpunkBanner}
-                      alt=''
-                    />
-                  </Link>
-                </div>
-                <div className='outline-none [&_*]:outline-none '>
-                  <Link href='https://punkga.me/comic/hamulage_3/chapter/1'>
-                    <Image
-                      className='w-full aspect-[370/166] rounded-[10px] object-cover'
-                      src={HamulageBanner}
-                      alt=''
-                    />
-                  </Link>
-                </div>
-                <div className='outline-none [&_*]:outline-none '>
-                  <Link href='https://punkga.me/comic/heroic_librarian_5/chapter/1'>
-                    <Image className='w-full aspect-[370/166] rounded-[10px] object-cover' src={HeroicBanner} alt='' />
-                  </Link>
-                </div>
-                <div className='outline-none [&_*]:outline-none '>
-                  <Link href='https://punkga.me/comic/era_of_chaos_4/chapter/1'>
-                    <Image className='w-full aspect-[370/166] rounded-[10px] object-cover' src={TCOTPBanner} alt='' />
-                  </Link>
-                </div>
-                <div className='outline-none [&_*]:outline-none '>
-                  <Link href='https://punkga.me/comic/neon_force_2/chapter/1'>
-                    <Image className='w-full aspect-[370/166] rounded-[10px] object-cover' src={UltraVBanner} alt='' />
-                  </Link>
-                </div>
-                <div className='outline-none [&_*]:outline-none '>
-                  <Link href='https://punkga.me/comic/errant_6/chapter/1'>
-                    <Image className='w-full aspect-[370/166] rounded-[10px] object-cover' src={ErrantBanner} alt='' />
-                  </Link>
-                </div>
-              </Carousel> */}
-            </div>
           </div>
-        </div>
-      </div>
-      <div className='bg-[#E2D8FF] py-1 overflow-hidden mt-5 lg:mt-[17px] mb-10 lg:mb-2'>
-        {locale == 'vn' ? (
-          <div className='text-sm whitespace-nowrap px-10 w-max animate-textSlide10 md:animate-textSlide20'>
-            Tham gia cuộc thi vẽ truyện tranh cùng <span className='text-second-color'>Punkga Me</span> với tổng giải
-            thưởng 20 triệu đồng!
-          </div>
-        ) : (
-          <div className='text-sm whitespace-nowrap px-10 w-max animate-textSlide10 md:animate-textSlide20'>
-            Join the comic creative contest with <span className='text-second-color'>Punkga Me</span> , with the total
-            prize $1000
-          </div>
-        )}
-      </div>
+        </>
+      )}
+
       <div className='pk-container'>
         <div className='md:mb-[50px] 2xl:flex gap-[100px]'>
           <div className='2xl:flex-auto 2xl:w-[70%] px-5 md:px-0'>
@@ -361,8 +526,12 @@ function Home() {
                         : true
                     )
                     .map((data, index) => {
-                      if (index == 0) return null
-                      // if (index == 0) return <XMasComic key={index} {...data} />
+                      console.log()
+                      if (index == 0) {
+                        if (moment('00:00 01/09/2024').isAfter() && moment('18:00 01/02/2024').isBefore())
+                          return <XMasComic key={index} {...data} />
+                        return null
+                      }
                       return <Comic key={index} {...data} />
                     })
                 : null}
