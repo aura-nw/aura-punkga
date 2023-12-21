@@ -64,7 +64,7 @@ export default function LeaderBoard() {
           </div>
         </div>
         {account && (
-          <div className='flex justify-between pt-3 border-t-[1px] pr-5 border-medium-gray text-subtle-dark'>
+          <div className='flex justify-between text-xs md:text-sm pt-3 border-t-[1px] pr-5 border-medium-gray text-subtle-dark'>
             <div>
               Your rank: <strong>#{account.rank}</strong>
             </div>

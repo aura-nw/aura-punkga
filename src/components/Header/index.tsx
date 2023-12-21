@@ -236,24 +236,20 @@ export default function Header({ className }: { className?: string }) {
                     </FilledButton>
                   </DropdownToggle>
                   {wallet ? (
-                    <DropdownMenu customClass='right-0 min-w-[300px] !overflow-visible w-[90dvw] max-w-[390px] mt-[10px]'>
+                    <DropdownMenu customClass='right-0 !min-w-[300px] !overflow-visible w-[90dvw] max-w-[390px] mt-[10px]'>
                       <div className='p-5 flex flex-col gap-[10px]'>
                         <div
                           className='flex justify-between items-center text-second-color text-sm bg-light-gray p-[10px] font-medium rounded-xl relative'
                           onClick={copyAddress}>
                           {`${wallet.substr(0, 8)}...${wallet.substr(-8)}`}
-                          <div className='flex items-center'>
-                            <span
-                              className={`transition-all w-fit mr-2 absolute bottom-[110%] left-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
-                                isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                              }`}>
-                              <span className='absolute border-[5px] border-light-gray border-r-transparent border-b-transparent border-l-transparent top-full left-1/2 -translate-x-1/2'></span>
-                              {t('Copied')}
-                            </span>
-                            <span>
-                              <Image src={CopySvg} alt='' />
-                            </span>
-                          </div>
+                          <span
+                            className={`transition-all w-fit mr-2 absolute bottom-[110%] left-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
+                              isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                            }`}>
+                            <span className='absolute border-[5px] border-light-gray border-r-transparent border-b-transparent border-l-transparent top-full left-1/2 -translate-x-1/2'></span>
+                            {t('Copied')}
+                          </span>
+                          <Image src={CopySvg} alt='' />
                         </div>
                         <div>
                           <div onClick={() => router.push('/profile')}>
@@ -422,24 +418,20 @@ export default function Header({ className }: { className?: string }) {
                     </FilledButton>
                   </DropdownToggle>
                   {wallet ? (
-                    <DropdownMenu customClass='right-0 w-[405px] max-w-[405px] !overflow-visible mt-[26px]'>
+                    <DropdownMenu customClass='right-0 !w-[405px] max-w-[405px] !overflow-visible mt-[26px]'>
                       <div className='p-5 flex flex-col gap-5'>
                         <div
-                          className='flex font-medium justify-between items-center text-second-color bg-light-gray p-[10px] rounded-xl relative'
+                          className='flex font-medium justify-between items-center text-second-color bg-light-gray p-[10px] rounded-xl relative min'
                           onClick={copyAddress}>
                           {`${wallet.substr(0, 8)}...${wallet.substr(-8)}`}
-                          <div className='flex items-center'>
-                            <span
-                              className={`transition-all w-fit mr-2 absolute bottom-[110%] left-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
-                                isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                              }`}>
-                              <span className='absolute border-[5px] border-light-gray border-r-transparent border-b-transparent border-l-transparent top-full left-1/2 -translate-x-1/2'></span>
-                              {t('Copied')}
-                            </span>
-                            <span>
-                              <Image src={CopySvg} alt='' />
-                            </span>
-                          </div>
+                          <span
+                            className={`transition-all w-fit mr-2 absolute bottom-[110%] left-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
+                              isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                            }`}>
+                            <span className='absolute border-[5px] border-light-gray border-r-transparent border-b-transparent border-l-transparent top-full left-1/2 -translate-x-1/2'></span>
+                            {t('Copied')}
+                          </span>
+                          <Image src={CopySvg} alt='' />
                         </div>
                         <div>
                           <div onClick={() => router.push('/profile')}>

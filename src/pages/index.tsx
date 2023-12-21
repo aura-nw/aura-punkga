@@ -80,7 +80,7 @@ function Home() {
       </div>
       <div className='pk-container'>
         <div className='md:my-[50px] lg:flex gap-10'>
-          <div className='lg:flex-auto lg:w-[65%] px-5 md:px-0 relative'>
+          <div className='lg:flex-auto lg:w-[65%]  relative'>
             <div className='hidden md:block'>
               <TaskSlider sliderNavRef={sliderNavRef} />
             </div>
@@ -167,7 +167,7 @@ function Home() {
                 : null}
             </div>
           </div>
-          <div className='lg:flex-auto lg:w-[32%] mt-6 lg:mt-0 px-5 md:px-0'>
+          <div className='lg:flex-auto lg:w-[32%] mt-6 lg:mt-0 '>
             <div className='hidden md:block'>
               <SlideSection sliderNavRef={sliderNavRef} />
               <LeaderBoard />
