@@ -383,3 +383,7 @@ export const getUserNfts = async (address: string) => {
   })
   return data?.data?.[env]?.cw721_token || []
 }
+export const getCampaignDetail = async (id) => {
+  const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${id}`)
+  return data
+}

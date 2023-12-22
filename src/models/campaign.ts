@@ -14,6 +14,7 @@ export type Campaign = {
   end_date: string
   status: string
   campaign_user: any[]
+  participants: { aggregate: { count: number } }
 }
 export type Quest = {
   id: string

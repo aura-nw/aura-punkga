@@ -1,22 +1,22 @@
+import Checkbox from 'components/Input/Checkbox'
+import StatusLabel from 'components/Label/Status'
+import Tag from 'components/Label/Tag'
+import DOMPurify from 'dompurify'
+import NoImage from 'images/no_img.png'
+import moment from 'moment'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
+import Countdown, { zeroPad } from 'react-countdown'
+import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
+import { Campaign } from 'src/models/campaign'
 import { getCampaigns } from 'src/services'
 import useSWR from 'swr'
-import Quest from './quest'
-import DOMPurify from 'dompurify'
-import { useTranslation } from 'react-i18next'
-import Checkbox from 'components/Input/Checkbox'
-import Tag from 'components/Label/Tag'
-import StatusLabel from 'components/Label/Status'
-import { statusColor } from 'src/utils'
-import moment from 'moment'
-import Countdown, { zeroPad } from 'react-countdown'
-import Image from 'next/image'
-import NoImage from 'images/no_img.png'
 import IllusImage from './assets/illus.svg'
-import { Campaign } from 'src/models/campaign'
 export default function Campaign() {
   const { account } = useContext(Context)
+  const router = useRouter()
   const { t } = useTranslation()
   const { data } = useSWR(
     { key: 'get_all_campaigns', accountId: account?.id },
@@ -48,6 +48,17 @@ export default function Campaign() {
       setList([])
     }
   }, [data?.data.campaign, statusFilter.length, rewardNFTChecked, enrolledChecked])
+  const clickHandler = (id) => {
+    try {
+      if (account) {
+        router.push(`/campaigns/${id}`)
+      } else {
+        ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <div className='pk-container py-5 md:py-16'>
       <div>
@@ -109,7 +120,7 @@ export default function Campaign() {
       </div>
       <div className='mt-[39px] grid grid-cols-1 lg:grid-cols-2 gap-5 2xl:gap-10 xl:grid-cols-3'>
         {list?.map((campaign, index) => (
-          <div key={index} className='px-4 py-3 flex gap-5 bg-[#F2F2F2] rounded-[10px] min-h-[180px]'>
+          <div key={index} className='px-4 py-3 flex gap-5 bg-[#F2F2F2] rounded-[10px] min-h-[180px]' onClick={() => clickHandler(campaign.id)}>
             <div className='flex flex-col justify-between flex-1'>
               <div className='flex flex-col'>
                 <div className='inline-flex'>
