@@ -13,11 +13,12 @@ import { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { Campaign } from 'src/models/campaign'
-import { getCampaignDetail } from 'src/services'
+import { getCampaignAuthorizedData, getCampaignDetail } from 'src/services'
 
 export default function CampaignDetail({}) {
   const { account } = useContext(Context)
   const [data, setData] = useState<Campaign>()
+  const [authData, setAuthData] = useState<Campaign>()
   const [seeMore, setSeeMore] = useState(false)
   const { query } = useRouter()
   const id = query.campaignId
@@ -27,14 +28,23 @@ export default function CampaignDetail({}) {
     if (!account) {
       ;(document.querySelector('#open-sign-in-btn') as any)?.click()
     } else {
-      fetchData()
+      fetchAuthData()
     }
+    fetchData()
   }, [account])
   const fetchData = async () => {
     try {
       const data = await getCampaignDetail(id)
       if (data.data?.campaign?.[0]) {
         setData(data.data.campaign[0])
+      }
+    } catch (error) {}
+  }
+  const fetchAuthData = async () => {
+    try {
+      const authData = await getCampaignAuthorizedData(id)
+      if (authData) {
+        console.log(authData)
       }
     } catch (error) {}
   }

@@ -387,3 +387,7 @@ export const getCampaignDetail = async (id) => {
   const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${id}`)
   return data
 }
+export const getCampaignAuthorizedData = async (id) => {
+  const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${id}/authorized`)
+  return data
+}
