@@ -14,8 +14,13 @@ import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { Campaign } from 'src/models/campaign'
 import { getCampaignAuthorizedData, getCampaignDetail } from 'src/services'
-
-export default function CampaignDetail({}) {
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <CampaignDetail {...props} />
+}
+function CampaignDetail({}) {
   const { account } = useContext(Context)
   const [data, setData] = useState<Campaign>()
   const [authData, setAuthData] = useState<Campaign>()
@@ -49,7 +54,6 @@ export default function CampaignDetail({}) {
     } catch (error) {}
   }
   if (!data) return null
-  console.log(data)
   return (
     <>
       <Header />
