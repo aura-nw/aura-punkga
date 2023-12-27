@@ -34,6 +34,8 @@ export default function HeadComponent({ data }: { data?: any }) {
       <meta name='twitter:title' key='twitter:title' content={punkgaTitle}></meta>
       <meta name='twitter:description' key='twitter:description' content={punkgaDescription}></meta>
       <meta name='twitter:image' key='twitter:image' content={punkgaImage}></meta>
+
+      <meta name="zalo-platform-site-verification" content="FlcZSlNaC71_yvXd-8SAVXA5tYR-ymnzDpCs" />
     </Head>
   )
 }
