@@ -72,9 +72,9 @@ function Home() {
         prev.map((v) =>
           v.key == 'All genres'
             ? {
-                key: v.key,
-                value: t(v.key),
-              }
+              key: v.key,
+              value: t(v.key),
+            }
             : v
         )
       )
@@ -87,11 +87,15 @@ function Home() {
         <>
           <div className='lg:hidden'>
             <div className='rounded-b-[16px] p-[10px] bg-[#F2F2F2] flex flex-col gap-[10px]'>
-              <Image
-                src={moment('2024-01-02T18:00:00.000Z').isAfter() ? XMasImg1 : XMasImg2}
-                alt=''
-                className='rounded-[10px] w-full'
-              />
+              <Link
+                href='https://drive.google.com/file/d/13BsvhyAtdrxfI6_y_bTSiSR737vBofYg/view?usp=drive_link'
+                target='_blank'>
+                <Image
+                  src={moment('2024-01-02T18:00:00.000Z').isAfter() ? XMasImg1 : XMasImg2}
+                  alt=''
+                  className='rounded-[10px] w-full'
+                />
+              </Link>
               <div className='grid grid-cols-2 gap-[10px]'>
                 <Link
                   href='https://airtable.com/appjewI8AfCHj8wJX/pag2JLOBTwVbChJJy/form'
@@ -123,14 +127,14 @@ function Home() {
                               {days > 0
                                 ? locale == 'vn'
                                   ? `Bắt đầu sau ${zeroPad(days)} ngày : ${zeroPad(hours)} giờ : ${zeroPad(
-                                      minutes
-                                    )} phút`
+                                    minutes
+                                  )} phút`
                                   : `Starts in ${zeroPad(days)}d : ${zeroPad(hours)}h : ${zeroPad(minutes)}m`
                                 : locale == 'vn'
-                                ? `Bắt đầu sau ${zeroPad(hours)} giờ : ${zeroPad(minutes)} phút : ${zeroPad(
+                                  ? `Bắt đầu sau ${zeroPad(hours)} giờ : ${zeroPad(minutes)} phút : ${zeroPad(
                                     seconds
                                   )} giây`
-                                : `Starts in ${zeroPad(hours)}h : ${zeroPad(minutes)}m : ${zeroPad(seconds)}s`}
+                                  : `Starts in ${zeroPad(hours)}h : ${zeroPad(minutes)}m : ${zeroPad(seconds)}s`}
                             </div>
                           )
                         }
@@ -210,6 +214,10 @@ function Home() {
             <div className='pk-container'>
               <div className='grid grid-cols-2 gap-10 mt-10'>
                 <div className='relative h-fit'>
+                  <Link
+                    href='https://drive.google.com/file/d/13BsvhyAtdrxfI6_y_bTSiSR737vBofYg/view?usp=drive_link'
+                    target='_blank'>
+                  </Link>
                   <Image
                     src={moment('2024-01-02T18:00:00.000Z').isAfter() ? XMasImg1 : XMasImg2}
                     alt=''
@@ -247,14 +255,14 @@ function Home() {
                                   {days > 0
                                     ? locale == 'vn'
                                       ? `Bắt đầu sau ${zeroPad(days)} ngày : ${zeroPad(hours)} giờ : ${zeroPad(
-                                          minutes
-                                        )} phút`
+                                        minutes
+                                      )} phút`
                                       : `Starts in ${zeroPad(days)}d : ${zeroPad(hours)}h : ${zeroPad(minutes)}m`
                                     : locale == 'vn'
-                                    ? `Bắt đầu sau ${zeroPad(hours)} giờ : ${zeroPad(minutes)} phút : ${zeroPad(
+                                      ? `Bắt đầu sau ${zeroPad(hours)} giờ : ${zeroPad(minutes)} phút : ${zeroPad(
                                         seconds
                                       )} giây`
-                                    : `Starts in ${zeroPad(hours)}h : ${zeroPad(minutes)}m : ${zeroPad(seconds)}s`}
+                                      : `Starts in ${zeroPad(hours)}h : ${zeroPad(minutes)}m : ${zeroPad(seconds)}s`}
                                 </div>
                               )
                             }
@@ -461,21 +469,21 @@ function Home() {
                   options={
                     allTags?.data
                       ? [
-                          {
-                            key: 'All genres',
-                            value: t('All genres'),
-                          },
-                          ...allTags?.data?.map((tag) => ({
-                            key: tag[locale],
-                            value: tag[locale],
-                          })),
-                        ]
+                        {
+                          key: 'All genres',
+                          value: t('All genres'),
+                        },
+                        ...allTags?.data?.map((tag) => ({
+                          key: tag[locale],
+                          value: tag[locale],
+                        })),
+                      ]
                       : [
-                          {
-                            key: 'All genres',
-                            value: t('All genres'),
-                          },
-                        ]
+                        {
+                          key: 'All genres',
+                          value: t('All genres'),
+                        },
+                      ]
                   }
                   placeholder={t('All genres')}
                 />
@@ -511,10 +519,10 @@ function Home() {
             <div className='grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-[80px] mt-5 lg:mt-[24px]'>
               {latestComic.loading
                 ? Array.apply(null, Array(2)).map((d, index) => {
-                    return <DummyComic key={index} />
-                  })
+                  return <DummyComic key={index} />
+                })
                 : latestComic.data?.length
-                ? latestComic.data
+                  ? latestComic.data
                     .filter((data) =>
                       statusFilter.length && !statusFilter.some((s) => s.key == 'All status')
                         ? statusFilter.some((filter) => data.status.text == filter?.key)
@@ -534,7 +542,7 @@ function Home() {
                       }
                       return <Comic key={index} {...data} />
                     })
-                : null}
+                  : null}
             </div>
           </div>
           <div className='2xl:flex-auto 2xl:w-[24%] mt-6 2xl:mt-0 px-5 md:px-0'>
@@ -542,11 +550,11 @@ function Home() {
             <div className='flex flex-col gap-10 mt-2 md:mt-10'>
               {trendingComic.loading
                 ? Array.apply(null, Array(2)).map((d, index) => {
-                    return <DummyComic key={index} />
-                  })
+                  return <DummyComic key={index} />
+                })
                 : trendingComic.data.map((data, index) => {
-                    return <TrendingComic key={index} {...data} />
-                  })}
+                  return <TrendingComic key={index} {...data} />
+                })}
             </div>
           </div>
         </div>
