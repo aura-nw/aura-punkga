@@ -83,12 +83,12 @@ function Home() {
   return (
     <>
       <Header />
-      {moment('00:00 01/09/2024').isAfter() ? (
+      {moment('2024-01-09T00:00:00.000Z').isAfter() ? (
         <>
           <div className='lg:hidden'>
             <div className='rounded-b-[16px] p-[10px] bg-[#F2F2F2] flex flex-col gap-[10px]'>
               <Image
-                src={moment('18:00 01/02/2024').isAfter() ? XMasImg1 : XMasImg2}
+                src={moment('2024-01-02T18:00:00.000Z').isAfter() ? XMasImg1 : XMasImg2}
                 alt=''
                 className='rounded-[10px] w-full'
               />
@@ -108,12 +108,12 @@ function Home() {
               </div>
             </div>
             <div className='pk-container'>
-              {moment('18:00 01/02/2024').isAfter() ? (
+              {moment('2024-01-02T18:00:00.000Z').isAfter() ? (
                 <div className='mt-[10px] mx-5 rounded-[16px] p-[10px] bg-[#F2F2F2] relative'>
                   <Image src={XMasImg2} alt='' className='rounded-[10px]' />
                   <div className='absolute bottom-[26px] left-[18px]'>
                     <Countdown
-                      date={new Date('18:00 01/02/2024')}
+                      date={new Date('2024-01-02T18:00:00.000Z')}
                       renderer={({ days, hours, minutes, seconds, completed }) => {
                         if (completed) {
                           return <></>
@@ -211,7 +211,7 @@ function Home() {
               <div className='grid grid-cols-2 gap-10 mt-10'>
                 <div className='relative h-fit'>
                   <Image
-                    src={moment('18:00 01/02/2024').isAfter() ? XMasImg1 : XMasImg2}
+                    src={moment('2024-01-02T18:00:00.000Z').isAfter() ? XMasImg1 : XMasImg2}
                     alt=''
                     className='rounded-[30px] aspect-[80/36]'
                   />
@@ -232,12 +232,12 @@ function Home() {
                   </div>
                 </div>
                 <div className='relative'>
-                  {moment('18:00 01/02/2024').isAfter() ? (
+                  {moment('2024-01-02T18:00:00.000Z').isAfter() ? (
                     <>
                       <Image src={XMasImg2} alt='' className='rounded-[30px] aspect-[80/36]' />
                       <div className='absolute bottom-[42px] left-[30px]'>
                         <Countdown
-                          date={new Date('18:00 01/02/2024')}
+                          date={new Date('2024-01-02T18:00:00.000Z')}
                           renderer={({ days, hours, minutes, seconds, completed }) => {
                             if (completed) {
                               return <></>
@@ -330,7 +330,7 @@ function Home() {
               </div>
             </div>
           </div>
-          {moment('00:00 01/09/2024').isAfter() && (
+          {moment('2024-01-09T00:00:00.000Z').isAfter() && (
             <div className='bg-[#E2D8FF] py-1 overflow-hidden mt-5 lg:mt-[17px] mb-10 lg:mb-2'>
               {locale == 'vn' ? (
                 <div className='text-sm whitespace-nowrap px-10 w-max animate-textSlide10 md:animate-textSlide20'>
@@ -528,7 +528,7 @@ function Home() {
                     .map((data, index) => {
                       console.log()
                       if (index == 0) {
-                        if (moment('00:00 01/09/2024').isAfter() && moment('18:00 01/02/2024').isBefore())
+                        if (moment('2024-01-09T00:00:00.000Z').isAfter() && moment('2024-01-02T18:00:00.000Z').isBefore())
                           return <XMasComic key={index} {...data} />
                         return null
                       }
