@@ -48,10 +48,10 @@ export default function Campaign() {
       setList([])
     }
   }, [data?.data.campaign, statusFilter.length, rewardNFTChecked, enrolledChecked])
-  const clickHandler = (id) => {
+  const clickHandler = (slug:string) => {
     try {
       if (account) {
-        router.push(`/campaigns/${id}`)
+        router.push(`/campaigns/${slug}`)
       } else {
         ;(document.querySelector('#open-sign-in-btn') as any)?.click()
       }
@@ -120,7 +120,7 @@ export default function Campaign() {
       </div>
       <div className='mt-[39px] grid grid-cols-1 lg:grid-cols-2 gap-5 2xl:gap-10 xl:grid-cols-3'>
         {list?.map((campaign, index) => (
-          <div key={index} className='px-4 py-3 flex gap-5 bg-[#F2F2F2] rounded-[10px] min-h-[180px]' onClick={() => clickHandler(campaign.id)}>
+          <div key={index} className='px-4 py-3 flex gap-5 bg-[#F2F2F2] rounded-[10px] min-h-[180px]' onClick={() => clickHandler(campaign.slug)}>
             <div className='flex flex-col justify-between flex-1'>
               <div className='flex flex-col'>
                 <div className='inline-flex'>

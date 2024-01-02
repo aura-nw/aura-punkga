@@ -383,11 +383,19 @@ export const getUserNfts = async (address: string) => {
   })
   return data?.data?.[env]?.cw721_token || []
 }
-export const getCampaignDetail = async (id) => {
-  const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${id}`)
+export const getCampaignDetail = async (slug:string) => {
+  const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${slug}`)
   return data
 }
-export const getCampaignAuthorizedData = async (id) => {
-  const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${id}/authorized`)
+export const getCampaignAuthorizedData = async (slug:string) => {
+  const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${slug}/authorized`)
+  return data
+}
+export const enrollCampaign = async (id:string) => {
+  const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/campaign/${id}/enroll`)
+  return data
+}
+export const claimCampaignReward = async (id:string) => {
+  const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/campaign/${id}/claim`)
   return data
 }

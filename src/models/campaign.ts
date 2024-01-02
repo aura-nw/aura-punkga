@@ -1,7 +1,8 @@
 export type Campaign = {
   id: string
+  slug: string
   name: string
-  campaign_quests: Quest[]
+  campaign_quests?: Quest[]
   reward: {
     xp?: number
     img_name?: string
@@ -18,7 +19,8 @@ export type Campaign = {
 }
 export type Quest = {
   id: string
-  type: 'Once' | 'Weekly'
+  repeat: 'Once' | 'Weekly'
+  type: 'Quiz' | 'Read'
   status: string
   name: string
   unlock: boolean

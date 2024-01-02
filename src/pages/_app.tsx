@@ -230,7 +230,6 @@ const App = ({ Component, pageProps }: AppProps) => {
               <div className='p-6 flex flex-col w-[322px]'>
                 <div className='gap-2 flex flex-col'>
                   <div className='text-xl font-semibold leading-6 text-center'>{t('Set a username')}</div>
-
                   <OutlineTextField label={t('Username')} errorMsg={errorMsg} value={name} onChange={setName} />
                   <OutlineTextField label={t('Email')} value={account.email} disabled={true} />
                 </div>

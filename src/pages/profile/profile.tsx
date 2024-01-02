@@ -51,12 +51,12 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
         ) : (
           <>
             <div className='flex gap-10 '>
-              <div className='flex-1'>
+              <div className='w-[calc(100%_-_560px)]'>
                 <Info updateProfile={updateProfile} />
                 <Quest />
                 <NFTList />
               </div>
-              <div className='flex-1 max-w-[520px]'>
+              <div className='w-[520px]'>
                 <Analytic />
                 <LeaderBoard />
               </div>

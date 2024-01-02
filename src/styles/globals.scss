@@ -76,26 +76,38 @@ a {
   @media (min-width: 640px) {
     max-width: 620px;
     margin: auto;
+    padding-right: 0px;
+    padding-left: 0px;
   }
   @media (min-width: 768px) {
     max-width: 748px;
     margin: auto;
+    padding-right: 0px;
+    padding-left: 0px;
   }
   @media (min-width: 1024px) {
     max-width: 1004px;
     margin: auto;
+    padding-right: 0px;
+    padding-left: 0px;
   }
   @media (min-width: 1280px) {
     max-width: 1180px;
     margin: auto;
+    padding-right: 0px;
+    padding-left: 0px;
   }
   @media (min-width: 1536px) {
     max-width: 1436px;
     margin: auto;
+    padding-right: 0px;
+    padding-left: 0px;
   }
   @media (min-width: 1700px) {
     max-width: 1640px;
     margin: auto;
+    padding-right: 0px;
+    padding-left: 0px;
   }
 }
 .pk-width__ml {
@@ -200,6 +212,17 @@ input[type='number'] {
   font-family: inherit !important;
   font-weight: 700;
   border: 1px solid #48c1b5;
+  border-radius: 10px !important;
+  align-items: center !important;
+  padding: 20px !important;
+  margin-bottom: 0px !important;
+}
+.Toastify__toast--error {
+  background: #f6fff9 !important;
+  color: #61646b !important;
+  font-family: inherit !important;
+  font-weight: 700;
+  border: 1px solid #c14858;
   border-radius: 10px !important;
   align-items: center !important;
   padding: 20px !important;

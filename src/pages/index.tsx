@@ -144,7 +144,7 @@ function Home() {
                 />
               </div>
             </div>
-            <div className='grid grid-cols-1 2xl:grid-cols-2 gap-10 mt-2 md:mt-10'>
+            <div className='grid md:grid-cols-1 grid-cols-2 2xl:grid-cols-2 gap-10 mt-2 md:mt-10'>
               {latestComic.loading
                 ? Array.apply(null, Array(2)).map((d, index) => {
                     return <DummyComic key={index} />

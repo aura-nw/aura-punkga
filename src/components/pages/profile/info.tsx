@@ -109,8 +109,8 @@ export default function Info({ updateProfile }) {
   })
   return (
     <>
-      <div className='flex gap-10 '>
-        <div className='flex-1'>
+      <div className='w-full'>
+        <div className=''>
           <div className='px-10 pt-[10px] pb-[30px] bg-[#F2F2F2] rounded-2xl flex gap-5 relative'>
             {open ? (
               <div
@@ -191,7 +191,7 @@ export default function Info({ updateProfile }) {
                 </>
               )}
             </div>
-            <div className='w-full'>
+            <div className='w-[calc(100%_-_160px)]'>
               <div className='text-[40px] text-[#1C1C1C] font-bold leading-[50px]'>{account.name}</div>
               <div className='flex items-center gap-[10px]'>
                 <div className='flex items-center gap-[5px]'>
