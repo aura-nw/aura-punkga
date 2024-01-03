@@ -98,10 +98,10 @@ function Home() {
               </Link>
               <div className='grid grid-cols-2 gap-[10px]'>
                 <Link
-                  href='https://airtable.com/appjewI8AfCHj8wJX/pag2JLOBTwVbChJJy/form'
+                  href='https://punkga.me/comic/Vu_Tru_Cua_ME_collection/chapter/1'
                   target='_blank'
                   className='leading-5 font-bold bg-primary-color text-center py-2 px-6 rounded-[20px]'>
-                  {t('Join now')}
+                  {t('Vote now')}
                 </Link>
                 <Link
                   href='https://drive.google.com/file/d/13BsvhyAtdrxfI6_y_bTSiSR737vBofYg/view?usp=drive_link'
@@ -225,10 +225,10 @@ function Home() {
                   />
                   <div className='flex gap-5 absolute bottom-[42px] left-[60px]'>
                     <Link
-                      href='https://airtable.com/appjewI8AfCHj8wJX/pag2JLOBTwVbChJJy/form'
+                      href='https://punkga.me/comic/Vu_Tru_Cua_ME_collection/chapter/1'
                       target='_blank'
                       className='leading-[25px] font-bold bg-primary-color text-center py-3 px-8 text-xl rounded-[20px] shadow-[0px_0px_15px_0px_#0000008c]'>
-                      {t('Join now')}
+                      {t('Vote now')}
                     </Link>
                     <Link
                       href='https://drive.google.com/file/d/13BsvhyAtdrxfI6_y_bTSiSR737vBofYg/view?usp=drive_link'
@@ -534,9 +534,11 @@ function Home() {
                         : true
                     )
                     .map((data, index) => {
-                      console.log()
-                      if (index == 0) {
-                        if (moment('2024-01-09T00:00:00.000Z').isAfter() && moment('2024-01-02T18:00:00.000Z').isBefore())
+                      if ((data.slug == 'Vu_Tru_Cua_ME_collection')) {
+                        if (
+                          moment('2024-01-09T00:00:00.000Z').isAfter() &&
+                          moment('2024-01-02T18:00:00.000Z').isBefore()
+                        )
                           return <XMasComic key={index} {...data} />
                         return null
                       }

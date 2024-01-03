@@ -50,7 +50,7 @@ export const getLatestComic = async (): Promise<IComic[]> => {
   )) as any[]
   arrayMove(
     res,
-    res.findIndex((manga) => manga.slug.includes('punkga_mery_christmas_collections')),
+    res.findIndex((manga) => manga.slug.includes('Vu_Tru_Cua_ME_collection')),
     0
   )
   return res

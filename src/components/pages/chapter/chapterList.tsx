@@ -20,6 +20,7 @@ import m6 from 'src/assets/images/mockup6.png'
 import { CHAPTER_STATUS, CHAPTER_TYPE } from 'src/constants/chapter.constant'
 import { Context } from 'src/context'
 import { getBlurUrl } from 'src/utils'
+import { getItem, setItem } from 'src/utils/localStorage'
 
 export default function ChapterList({
   data,
@@ -51,6 +52,18 @@ export default function ChapterList({
       })
     })
   }, [t('All status')])
+
+  useEffect(() => {
+    setItem('chapter_sort', JSON.stringify(isDesc))
+  }, [isDesc])
+
+  useEffect(() => {
+    const sort = getItem('chapter_sort')
+    if (sort) {
+      setIsDesc(JSON.parse(sort))
+    }
+  }, [])
+
   return (
     <>
       <div className='w-full bg-[#DEDEDE] px-[16px] 2xl:px-[60px] py-[16px] flex items-center justify-between'>
@@ -217,7 +230,7 @@ const Chapter = ({
         className={`w-full h-[1px] bg-light-medium-gray first:hidden transition-all duration-500 ${
           expandDetail ? 'my-[0px] opacity-100' : '-my-[10px] opacity-0'
         }`}></div>
-      <div className={`flex gap-4 cursor-pointer ${expandDetail ? '' : 'items-center'}`}>
+      <div className={`flex gap-4 ${expandDetail ? '' : 'items-center'}`}>
         <Image
           placeholder='blur'
           blurDataURL={getBlurUrl()}
@@ -234,7 +247,13 @@ const Chapter = ({
             router.push(`/comic/${data.slug}/chapter/${chapter.number}`)
           }}
         />
-        <div className='flex flex-col justify-center flex-1'>
+        <div
+          className='flex flex-col justify-center flex-1 cursor-pointer'
+          onClick={() => {
+            if (unavailable) return
+            setExpandDetail(false)
+            router.push(`/comic/${data.slug}/chapter/${chapter.number}`)
+          }}>
           <div>
             <div className='flex items-center gap-5'>
               <p>{`${t('Chapter')} ${chapter.number}`}</p>
@@ -291,15 +310,7 @@ const Chapter = ({
                 }
               })()}
             </div>
-            <div
-              className='font-[600]'
-              onClick={() => {
-                if (unavailable) return
-                setExpandDetail(false)
-                router.push(`/comic/${data.slug}/chapter/${chapter.number}`)
-              }}>
-              {chapter.name}
-            </div>
+            <div className='font-[600]'>{chapter.name}</div>
           </div>
           <div
             className={`flex justify-between items-end transition-all w-full duration-500 ${
