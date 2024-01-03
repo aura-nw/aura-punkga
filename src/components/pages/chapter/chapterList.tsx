@@ -19,6 +19,7 @@ import { useContext, useEffect, useState } from 'react'
 import m6 from 'src/assets/images/mockup6.png'
 import { CHAPTER_STATUS, CHAPTER_TYPE } from 'src/constants/chapter.constant'
 import { Context } from 'src/context'
+import useLocalStorage from 'src/hooks/useLocalStorage'
 import { getBlurUrl } from 'src/utils'
 import { getItem, setItem } from 'src/utils/localStorage'
 
@@ -34,7 +35,7 @@ export default function ChapterList({
   chapterIsLiked,
   setComicLikes,
 }: any) {
-  const [isDesc, setIsDesc] = useState(true)
+  const [isDesc, setIsDesc] = useLocalStorage('chapter_sort', true)
   const { t } = useTranslation()
   const { locale } = useRouter()
   const { account } = useContext(Context)
@@ -52,17 +53,6 @@ export default function ChapterList({
       })
     })
   }, [t('All status')])
-
-  useEffect(() => {
-    setItem('chapter_sort', JSON.stringify(isDesc))
-  }, [isDesc])
-
-  useEffect(() => {
-    const sort = getItem('chapter_sort')
-    if (sort) {
-      setIsDesc(JSON.parse(sort))
-    }
-  }, [])
 
   return (
     <>

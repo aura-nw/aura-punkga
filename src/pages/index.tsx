@@ -98,7 +98,7 @@ function Home() {
               </Link>
               <div className='grid grid-cols-2 gap-[10px]'>
                 <Link
-                  href='https://punkga.me/comic/Vu_Tru_Cua_ME_collection/chapter/1'
+                  href='https://punkga.me/comic/Vu_Tru_Cua_ME_collection'
                   target='_blank'
                   className='leading-5 font-bold bg-primary-color text-center py-2 px-6 rounded-[20px]'>
                   {t('Vote now')}
@@ -225,7 +225,7 @@ function Home() {
                   />
                   <div className='flex gap-5 absolute bottom-[42px] left-[60px]'>
                     <Link
-                      href='https://punkga.me/comic/Vu_Tru_Cua_ME_collection/chapter/1'
+                      href='https://punkga.me/comic/Vu_Tru_Cua_ME_collection'
                       target='_blank'
                       className='leading-[25px] font-bold bg-primary-color text-center py-3 px-8 text-xl rounded-[20px] shadow-[0px_0px_15px_0px_#0000008c]'>
                       {t('Vote now')}
