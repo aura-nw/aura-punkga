@@ -21,7 +21,6 @@ import { CHAPTER_STATUS, CHAPTER_TYPE } from 'src/constants/chapter.constant'
 import { Context } from 'src/context'
 import useLocalStorage from 'src/hooks/useLocalStorage'
 import { getBlurUrl } from 'src/utils'
-import { getItem, setItem } from 'src/utils/localStorage'
 
 export default function ChapterList({
   data,

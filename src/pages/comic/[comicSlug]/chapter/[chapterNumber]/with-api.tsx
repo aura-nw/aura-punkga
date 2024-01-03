@@ -97,7 +97,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   const comicDetails = useApi<IComicDetail>(
     async () => await getComicDetail(query.comicSlug as string, account?.id),
     !!query.comicSlug,
-    [query.comicSlug, account?.id]
+    [query.comicSlug, account?.id, query.chapterNumber]
   )
   const chapterComments = useApi<IComment[]>(getChapterComments, !!chapterId.current, [chapterId.current])
   const chapterDetails = useApi<IChapter>(getChapterDetails, !!query.comicSlug && !!query.chapterNumber, [

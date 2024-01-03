@@ -73,7 +73,7 @@ const Chapter: React.FC = ({
 
   useEffect(() => {
     setIsLiked(chapterDetails.data?.isLiked)
-  }, [chapterDetails.data?.isLiked])
+  }, [chapterDetails?.data?.id])
 
   useEffect(() => {
     if (openComments) {
