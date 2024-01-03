@@ -4,7 +4,7 @@ export type Campaign = {
   name: string
   campaign_quests?: Quest[]
   reward: {
-    xp?: number
+    xp: number
     img_name?: string
     img_url?: string
     nft_name?: string
@@ -19,8 +19,9 @@ export type Campaign = {
 }
 export type Quest = {
   id: string
-  repeat: 'Once' | 'Weekly'
+  repeat: 'Once' | 'Daily'
   type: 'Quiz' | 'Read'
+  reward_status: 'NOT_SATISFY' | 'CAN_CLAIM' | 'CLAIMED' | 'OUT_OF_SLOT'
   status: string
   name: string
   unlock: boolean
@@ -63,6 +64,7 @@ export type Quest = {
       img_url: string
       nft_name: string
     }
-    xp?: number
+    xp: number
+    slots: number
   }
 }
