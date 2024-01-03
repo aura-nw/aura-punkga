@@ -88,7 +88,7 @@ function Home() {
           <div className='lg:hidden'>
             <div className='rounded-b-[16px] p-[10px] bg-[#F2F2F2] flex flex-col gap-[10px]'>
               <Link
-                href='https://drive.google.com/file/d/13BsvhyAtdrxfI6_y_bTSiSR737vBofYg/view?usp=drive_link'
+                href='https://www.facebook.com/groups/punkga.me/posts/1294016481286985/'
                 target='_blank'>
                 <Image
                   src={moment('2024-01-02T18:00:00.000Z').isAfter() ? XMasImg1 : XMasImg2}
@@ -104,7 +104,7 @@ function Home() {
                   {t('Vote now')}
                 </Link>
                 <Link
-                  href='https://drive.google.com/file/d/13BsvhyAtdrxfI6_y_bTSiSR737vBofYg/view?usp=drive_link'
+                  href='https://www.facebook.com/groups/punkga.me/posts/1294016481286985/'
                   target='_blank'
                   className='leading-5 font-bold text-second-color border-second-color grid place-items-center text-center border-[2px] rounded-[20px]'>
                   {t('Learn more')}
@@ -215,7 +215,7 @@ function Home() {
               <div className='grid grid-cols-2 gap-10 mt-10'>
                 <div className='relative h-fit'>
                   <Link
-                    href='https://drive.google.com/file/d/13BsvhyAtdrxfI6_y_bTSiSR737vBofYg/view?usp=drive_link'
+                    href='https://www.facebook.com/groups/punkga.me/posts/1294016481286985/'
                     target='_blank'>
                   </Link>
                   <Image
@@ -231,7 +231,7 @@ function Home() {
                       {t('Vote now')}
                     </Link>
                     <Link
-                      href='https://drive.google.com/file/d/13BsvhyAtdrxfI6_y_bTSiSR737vBofYg/view?usp=drive_link'
+                      href='https://www.facebook.com/groups/punkga.me/posts/1294016481286985/'
                       target='_blank'
                       className='leading-[25px] px-8 text-xl font-bold text-primary-color border-primary-color grid place-items-center text-center border-[2px] rounded-[20px] shadow-[0px_0px_20px_20px_#0000006b_inset] relative'>
                       <div className='absolute -inset-[2px] shadow-[0px_0px_15px_0px_#0000008c] rounded-[20px]'></div>
