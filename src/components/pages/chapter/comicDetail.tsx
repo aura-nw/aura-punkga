@@ -54,13 +54,13 @@ export default function ComicDetail({
 }) {
   const [expandDetail, setExpandDetail] = useState(false)
   const [expandDescription, setExpandDescription] = useState(false)
+  const [selectedIndex, setSelectedIndex] = useState(0)
   const { t } = useTranslation()
   const { account } = useContext(Context)
-  const tabRef = useRef<any>()
 
   useEffect(() => {
     if (!expandDetail) {
-      tabRef.current?.click()
+      setSelectedIndex(0)
     }
   }, [expandDetail])
 
@@ -265,14 +265,15 @@ export default function ComicDetail({
           </div>
         </div>
         <div>
-          <Tab.Group>
+          <Tab.Group
+            selectedIndex={selectedIndex}
+            onChange={(index) => (expandDetail ? setSelectedIndex(index) : null)}>
             <Tab.List
               className={`w-[calc(100%-140px)] flex transition-all overflow-hidden relative ${
                 expandDetail ? 'opacity-100 h-9 mt-10' : 'opacity-0 h-0 mt-0'
               }`}>
               <span className='w-full absolute bottom-0 h-[1px] bg-medium-gray'></span>
               <Tab
-                ref={tabRef}
                 className='ui-selected:text-second-color w-[150px] text-medium-gray z-10 relative ui-selected:font-extrabold ui-selected:border-b-[2px] border-second-color py-[5px] text-2xl leading-6 font-medium'>
                 <div className=''>{t('Chapters')}</div>
               </Tab>
