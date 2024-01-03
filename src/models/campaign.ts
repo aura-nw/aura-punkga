@@ -20,16 +20,17 @@ export type Campaign = {
 export type Quest = {
   id: string
   repeat: 'Once' | 'Daily'
-  type: 'Quiz' | 'Read'
+  type: 'Read' | 'Comment' | 'Subscribe' | 'Like' | 'Poll' | 'Quiz'
   reward_status: 'NOT_SATISFY' | 'CAN_CLAIM' | 'CLAIMED' | 'OUT_OF_SLOT'
   status: string
   name: string
   unlock: boolean
   description?: string
+  quest_reward_claimed: number
   condition: {
-    after?: string
-    before?: string
+    quest_id?: number
     level?: number
+    requiredQuest?: Quest
   }
   requirement: {
     read?: {
@@ -57,6 +58,19 @@ export type Quest = {
         slug: string
         title: string
       }
+    }
+    like?: {
+      manga?: {
+        slug: string
+        title: string
+      }
+    }
+    quiz: {
+      multiple_choice: {
+        question: string
+        correct_answer: string
+        wrong_answer: string[]
+      }[]
     }
   }
   reward: {

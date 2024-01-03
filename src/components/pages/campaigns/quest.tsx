@@ -72,31 +72,7 @@ export default function Quest({ data }: { data: Quest }) {
     }
   }
 
-  const claimQuestHandler = async () => {
-    try {
-      if (loading) return
-      setLoading(true)
-      const res = await claimQuest(data.id)
-      await getProfile()
-      if (res) {
-        if (data.reward.xp) {
-          toast(`${data.reward.xp} XP claimed`, {
-            type: 'success',
-            position: toast.POSITION.BOTTOM_RIGHT,
-            hideProgressBar: true,
-            autoClose: 3000,
-          })
-        }
-        setIsClaimed(2)
-        setOpen(false)
-        setSuccessModalOpen(true)
-      }
-      setLoading(false)
-    } catch (error) {
-      setLoading(false)
-      console.error(error)
-    }
-  }
+  
 
   if (!data.unlock)
     return (

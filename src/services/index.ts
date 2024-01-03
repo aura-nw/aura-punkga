@@ -383,19 +383,33 @@ export const getUserNfts = async (address: string) => {
   })
   return data?.data?.[env]?.cw721_token || []
 }
-export const getCampaignDetail = async (slug:string) => {
+export const getCampaignDetail = async (slug: string) => {
   const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${slug}`)
   return data
 }
-export const getCampaignAuthorizedData = async (slug:string) => {
+export const getCampaignAuthorizedData = async (slug: string) => {
   const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${slug}/authorized`)
-  return data
+  const campaignData = data.data.campaign[0]
+  const quests = data.data.campaign[0].campaign_quests
+  campaignData.campaign_quests = campaignData.campaign_quests?.map((quest) => {
+    if (quest.condition?.quest_id) {
+      const mappedQuest = quest
+      mappedQuest.condition = {
+        ...quest.condition,
+        requiredQuest: quests.find((q) => q.id == quest.condition.quest_id),
+      }
+      return mappedQuest
+    } else {
+      return quest
+    }
+  })
+  return campaignData
 }
-export const enrollCampaign = async (id:string) => {
+export const enrollCampaign = async (id: string) => {
   const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/campaign/${id}/enroll`)
   return data
 }
-export const claimCampaignReward = async (id:string) => {
+export const claimCampaignReward = async (id: string) => {
   const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/campaign/${id}/claim`)
   return data
 }

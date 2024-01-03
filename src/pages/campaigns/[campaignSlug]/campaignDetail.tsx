@@ -1,11 +1,8 @@
 import FilledButton from 'components/Button/FilledButton'
-import Dropdown, { DropdownToggle } from 'components/Dropdown'
 import Footer from 'components/Footer'
 import Header from 'components/Header'
-import Checkbox from 'components/Input/Checkbox'
 import StatusLabel from 'components/Label/Status'
 import IllusImage from 'components/pages/campaigns/assets/illus.svg'
-import LeaderBoard from 'components/pages/campaigns/leaderboard'
 import DOMPurify from 'dompurify'
 import NoImage from 'images/no_img.png'
 import moment from 'moment'
@@ -53,9 +50,9 @@ function CampaignDetail({}) {
   }
   const fetchAuthData = async () => {
     try {
-      const authData = await getCampaignAuthorizedData(slug)
-      if (authData.data?.campaign?.[0]) {
-        setAuthData(authData.data?.campaign?.[0])
+      const campaignDetailData = await getCampaignAuthorizedData(slug)
+      if (campaignDetailData) {
+        setAuthData(campaignDetailData)
       }
     } catch (error) {
       console.error(error)
