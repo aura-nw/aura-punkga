@@ -36,7 +36,7 @@ function CampaignDetail({}) {
     { key: 'fetch_campaign_auth_data', slug },
     ({ key, slug }) => getCampaignAuthorizedData(slug),
     {
-      refreshInterval: 10000,
+      refreshInterval: 60000,
     }
   )
   useEffect(() => {

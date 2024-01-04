@@ -1,22 +1,19 @@
-import Modal from 'components/Modal'
-import Image from 'next/image'
-import { useContext, useEffect, useState } from 'react'
-import { Quest } from 'src/models/campaign'
-import NoImage from 'images/no_img.png'
-import IllusImage from 'components/pages/campaigns/assets/illus.svg'
 import FilledButton from 'components/Button/FilledButton'
-import Countdown, { zeroPad } from 'react-countdown'
-import moment from 'moment'
-import { isMobile } from 'react-device-detect'
+import Modal from 'components/Modal'
+import IllusImage from 'components/pages/campaigns/assets/illus.svg'
 import DOMPurify from 'dompurify'
-import { answerQuest, claimQuest } from 'src/services'
-import { Context } from 'src/context'
-import { toast } from 'react-toastify'
-import Link from 'next/link'
+import NoImage from 'images/no_img.png'
 import _ from 'lodash'
+import moment from 'moment'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import Countdown, { zeroPad } from 'react-countdown'
+import { isMobile } from 'react-device-detect'
+import { toast } from 'react-toastify'
+import { Quest } from 'src/models/campaign'
+import { answerQuest, claimQuest } from 'src/services'
 import { useSWRConfig } from 'swr'
-import BasicQuest from './basicQuest'
 
 export default function QuizQuest({ data }: { data: Quest }) {
   const [open, setOpen] = useState(false)
@@ -115,27 +112,29 @@ export default function QuizQuest({ data }: { data: Quest }) {
   return (
     <>
       <Modal open={open} setOpen={setOpen}>
-        <div className='p-5 pt-10 min-w-[360px]'>
-          <div className='text-xs leading-[15px] font-semibold'>
-            {data.repeat == 'Daily' && (
-              <span className='bg-[#E2D8FF] text-[#A247FF] font-bold rounded-[3px] px-2 pb-[1px] text-[10px] leading-[13px] mr-[5px]'>
-                Daily
-              </span>
+        <div className='p-5 pt-10 min-w-[360px]  max-w-[600px] lg:grid-cols-[1fr_173px] lg:grid lg:gap-x-10 lg:grid-rows-[auto_1fr]'>
+          <div>
+            <div className='text-xs leading-[15px] font-semibold'>
+              {data.repeat == 'Daily' && (
+                <span className='bg-[#E2D8FF] text-[#A247FF] font-bold rounded-[3px] px-2 pb-[1px] text-[10px] leading-[13px] mr-[5px]'>
+                  Daily
+                </span>
+              )}
+              {data.name}
+            </div>
+            <div className='mt-[15px] leading-5 font-bold'>Answer a quiz</div>
+            {data.description && (
+              <>
+                <div
+                  className={`mt-[15px] text-[#777777] text-xs leading-[15px] ${seeMore ? '' : 'line-clamp-5'}`}
+                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.description) }}></div>
+                <div className='font-semibold text-xs text-second-color' onClick={() => setSeeMore(!seeMore)}>
+                  {seeMore ? 'See less' : 'See more'}
+                </div>
+              </>
             )}
-            {data.name}
           </div>
-          <div className='mt-[15px] leading-5 font-bold'>Answer a quiz</div>
-          {data.description && (
-            <>
-              <div
-                className={`mt-[15px] text-[#777777] text-xs leading-[15px] ${seeMore ? '' : 'line-clamp-3'}`}
-                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.description) }}></div>
-              <div className='font-semibold text-xs text-second-color' onClick={() => setSeeMore(!seeMore)}>
-                {seeMore ? 'See less' : 'See more'}
-              </div>
-            </>
-          )}
-          <div className='mt-5 flex flex-col items-center'>
+          <div className='mt-5 flex flex-col items-center row-span-2'>
             <div className='text-sm leading-[18px] font-semibold mb-[10px]'>👑 Reward</div>
             {data.reward.nft.img_url ? (
               <>
@@ -150,12 +149,16 @@ export default function QuizQuest({ data }: { data: Quest }) {
                   <div className='text-sm leading-[18px] text-subtle-dark'>{data.reward.nft.nft_name}</div>
                   <div className='w-[160px] h-[1px] bg-light-medium-gray'></div>
                   <div className='flex gap-2 items-center'>
-                    <div className='text-second-color text-sm leading-[18px] font-bold'>{`+ ${data.reward.xp} XP`}</div>
-                    <div className='w-[1px] h-[26px] bg-light-medium-gray'></div>
-                    <div className='flex flex-col items-center text-[10px] leading-[13px]'>
-                      <div>{`${data.quest_reward_claimed}/${data.reward.slots}`}</div>
-                      <div>rewards claimed</div>
-                    </div>
+                    <div className='text-second-color text-sm leading-[18px] font-bold lg:text-lg lg:leading-[23px]'>{`+ ${data.reward.xp} XP`}</div>
+                    {!!data.reward.slots && (
+                      <>
+                        <div className='w-[1px] h-[26px] bg-light-medium-gray'></div>
+                        <div className='flex flex-col items-center text-[10px] lg:text-xs lg:leading-[15px] leading-[13px]'>
+                          <div>{`${data.quest_reward_claimed}/${data.reward.slots}`}</div>
+                          <div>rewards claimed</div>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               </>
@@ -167,98 +170,109 @@ export default function QuizQuest({ data }: { data: Quest }) {
                     {`+ ${data.reward.xp} XP`}
                   </div>
                 </div>
-                <div className='w-[160px] h-[1px] bg-light-medium-gray my-[10px]'></div>
-                <div className='flex flex-col items-center text-[10px] leading-[13px]'>
-                  <div>{`${data.quest_reward_claimed}/${data.reward.slots}`}</div>
-                  <div>rewards claimed</div>
-                </div>
+                {!!data.reward.slots && (
+                  <>
+                    <div className='w-[160px] h-[1px] bg-light-medium-gray my-[10px]'></div>
+                    <div className='flex flex-col items-center text-[10px] leading-[13px] lg:text-xs lg:leading-[15px]'>
+                      <div>{`${data.quest_reward_claimed}/${data.reward.slots}`}</div>
+                      <div>rewards claimed</div>
+                    </div>
+                  </>
+                )}
               </>
             )}
-            <div className='mt-5 w-full'>
-              <div className='bg-[#F0F0F0] rounded-lg p-4 flex flex-col gap-[10px]'>
-                <div className='text-sm leading-[18px] text-[#414141] font-semibold'>
-                  {data.requirement.quiz.multiple_choice[0].question}
-                </div>
-                {answerList.map((answer, index) => {
-                  return (
-                    <div
-                      className={`px-[10px] py-[7px] rounded-lg border border-light-medium-gray text-xs leading-[15px] cursor-pointer relative ${
-                        selectedAnswer == index ? '!border-primary-color bg-[#C6FFDE]' : ''
-                      }`}
-                      onClick={() => (correctAnswerIndex == -1 ? setSelectedAnswer(index) : null)}
-                      key={index}>
-                      {`${(function () {
-                        switch (index) {
-                          case 0:
-                            return 'A:'
-                          case 1:
-                            return 'B:'
-                          case 2:
-                            return 'C:'
-                          case 3:
-                            return 'D:'
-                        }
-                      })()} ${answer}`}
-                      {correctAnswerIndex == index && (
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          width='18'
-                          height='18'
-                          viewBox='0 0 18 18'
-                          fill='none'
-                          className='absolute right-[10px] inset-y-[6px]'>
-                          <path
-                            fillRule='evenodd'
-                            clipRule='evenodd'
-                            d='M9 15.7559C9.88642 15.7559 10.7642 15.5813 11.5831 15.242C12.4021 14.9028 13.1462 14.4056 13.773 13.7788C14.3998 13.152 14.897 12.4079 15.2362 11.589C15.5754 10.77 15.75 9.89228 15.75 9.00586C15.75 8.11944 15.5754 7.24169 15.2362 6.42275C14.897 5.6038 14.3998 4.85968 13.773 4.23289C13.1462 3.60609 12.4021 3.10889 11.5831 2.76967C10.7642 2.43045 9.88642 2.25586 9 2.25586C7.20979 2.25586 5.4929 2.96702 4.22703 4.23289C2.96116 5.49876 2.25 7.21565 2.25 9.00586C2.25 10.7961 2.96116 12.513 4.22703 13.7788C5.4929 15.0447 7.20979 15.7559 9 15.7559ZM8.826 11.7359L12.576 7.23586L11.424 6.27586L8.199 10.1451L6.53025 8.47561L5.46975 9.53611L7.71975 11.7861L8.30025 12.3666L8.826 11.7359Z'
-                            fill='#2FB101'
-                          />
-                        </svg>
-                      )}
-                    </div>
-                  )
-                })}
-                {data.reward_status == 'CAN_CLAIM' || correctAnswerIndex != -1 ? (
-                  <FilledButton onClick={claimQuestHandler} className='w-full'>
-                    Claim Reward
-                  </FilledButton>
-                ) : data.reward_status == 'OUT_OF_SLOT' ? (
-                  <div className='text-center bg-medium-gray leading-5 font-bold text-light-medium-gray px-6 pt-2 pb-[10px] rounded-[20px]'>
-                    Out of reward
-                  </div>
-                ) : data.reward_status == 'CLAIMED' && data.repeat == 'Daily' ? (
-                  <div className='text-center bg-medium-gray leading-5 font-bold text-light-medium-gray px-6 pt-2 pb-[10px] rounded-[20px]'>
-                    <Countdown
-                      date={moment().add(1, 'd').startOf('day').toISOString()}
-                      renderer={({ hours, minutes, seconds }) => {
-                        return (
-                          <span>
-                            Reset in {zeroPad(hours)}h : {zeroPad(minutes)}m : {zeroPad(seconds)}s
-                          </span>
-                        )
-                      }}
-                    />
-                  </div>
-                ) : selectedAnswer != -1 ? (
-                  <FilledButton loading={submitLoading} onClick={answerQuestHandler} className='w-full'>
-                    Submit
-                  </FilledButton>
-                ) : (
-                  <div className='text-center bg-medium-gray leading-5 font-bold text-light-medium-gray px-6 pt-2 pb-[10px] rounded-[20px]'>
-                    Submit
-                  </div>
-                )}
+          </div>
+          <div className='mt-5 w-full'>
+            <div className='bg-[#F0F0F0] rounded-lg p-4 flex flex-col gap-[10px]'>
+              <div className='text-sm leading-[18px] text-[#414141] font-semibold'>
+                {data.requirement.quiz.multiple_choice[0].question}
               </div>
+              {answerList.map((answer, index) => {
+                return (
+                  <div
+                    className={`px-[10px] py-[7px] rounded-lg border border-light-medium-gray text-xs leading-[15px] cursor-pointer relative ${
+                      selectedAnswer == index ? '!border-primary-color bg-[#C6FFDE]' : ''
+                    }`}
+                    onClick={() => (correctAnswerIndex == -1 ? setSelectedAnswer(index) : null)}
+                    key={index}>
+                    {`${(function () {
+                      switch (index) {
+                        case 0:
+                          return 'A:'
+                        case 1:
+                          return 'B:'
+                        case 2:
+                          return 'C:'
+                        case 3:
+                          return 'D:'
+                      }
+                    })()} ${answer}`}
+                    {correctAnswerIndex == index && (
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        width='18'
+                        height='18'
+                        viewBox='0 0 18 18'
+                        fill='none'
+                        className='absolute right-[10px] inset-y-[6px]'>
+                        <path
+                          fillRule='evenodd'
+                          clipRule='evenodd'
+                          d='M9 15.7559C9.88642 15.7559 10.7642 15.5813 11.5831 15.242C12.4021 14.9028 13.1462 14.4056 13.773 13.7788C14.3998 13.152 14.897 12.4079 15.2362 11.589C15.5754 10.77 15.75 9.89228 15.75 9.00586C15.75 8.11944 15.5754 7.24169 15.2362 6.42275C14.897 5.6038 14.3998 4.85968 13.773 4.23289C13.1462 3.60609 12.4021 3.10889 11.5831 2.76967C10.7642 2.43045 9.88642 2.25586 9 2.25586C7.20979 2.25586 5.4929 2.96702 4.22703 4.23289C2.96116 5.49876 2.25 7.21565 2.25 9.00586C2.25 10.7961 2.96116 12.513 4.22703 13.7788C5.4929 15.0447 7.20979 15.7559 9 15.7559ZM8.826 11.7359L12.576 7.23586L11.424 6.27586L8.199 10.1451L6.53025 8.47561L5.46975 9.53611L7.71975 11.7861L8.30025 12.3666L8.826 11.7359Z'
+                          fill='#2FB101'
+                        />
+                      </svg>
+                    )}
+                  </div>
+                )
+              })}
+              {data.reward_status == 'CAN_CLAIM' || correctAnswerIndex != -1 ? (
+                <FilledButton onClick={claimQuestHandler} className='w-full'>
+                  Claim Reward
+                </FilledButton>
+              ) : data.reward_status == 'OUT_OF_SLOT' ? (
+                <div className='text-center bg-medium-gray leading-5 font-bold text-light-medium-gray px-6 pt-2 pb-[10px] rounded-[20px]'>
+                  Out of reward
+                </div>
+              ) : data.reward_status == 'CLAIMED' && data.repeat == 'Daily' ? (
+                <div className='text-center bg-medium-gray leading-5 font-bold text-light-medium-gray px-6 pt-2 pb-[10px] rounded-[20px]'>
+                  <Countdown
+                    date={moment().add(1, 'd').startOf('day').toISOString()}
+                    renderer={({ hours, minutes, seconds }) => {
+                      return (
+                        <span>
+                          Reset in {zeroPad(hours)}h : {zeroPad(minutes)}m : {zeroPad(seconds)}s
+                        </span>
+                      )
+                    }}
+                  />
+                </div>
+              ) : selectedAnswer != -1 ? (
+                <FilledButton loading={submitLoading} onClick={answerQuestHandler} className='w-full'>
+                  Submit
+                </FilledButton>
+              ) : (
+                <div className='text-center bg-medium-gray leading-5 font-bold text-light-medium-gray px-6 pt-2 pb-[10px] rounded-[20px]'>
+                  Submit
+                </div>
+              )}
             </div>
           </div>
         </div>
       </Modal>
       <div
-        className='bg-[#F2F2F2] rounded-[10px] p-4 flex gap-[10px] min-h-[160px]'
-        onClick={() => (data.reward_status != 'OUT_OF_SLOT' ? setOpen(true) : null)}>
+        className='bg-[#F2F2F2] lg:bg-white lg:border lg:border-light-medium-gray rounded-[10px] p-4 flex gap-[10px] min-h-[160px] relative'
+        onClick={() =>
+          data.unlock &&
+          (data.reward_status == 'CAN_CLAIM' ||
+            data.reward_status == 'NOT_SATISFY' ||
+            (data.reward_status == 'CLAIMED' && data.repeat == 'Daily'))
+            ? setOpen(true)
+            : null
+        }>
         <div className='flex-1 flex flex-col justify-between'>
           <div className='flex flex-col justify-between h-[68px]'>
-            <div className='text-xs leading-[15px] font-bold min-h-[32px] line-clamp-2'>
+            <div className='text-xs leading-[15px] font-bold min-h-[32px] lg:text-base lg:leading-5 lg:min-h-[48px] line-clamp-2'>
               {data.repeat == 'Daily' && (
                 <span className='bg-[#E2D8FF] text-[#A247FF] font-bold rounded-[3px] px-2 pb-[1px] text-[10px] leading-[13px] mr-[5px]'>
                   Daily
@@ -266,7 +280,7 @@ export default function QuizQuest({ data }: { data: Quest }) {
               )}
               {data.name}
             </div>
-            <div className='text-xs leading-[15px] font-semibold text-[#646464] flex items-center gap-[10px]'>
+            <div className='text-xs leading-[15px] lg:text-sm lg:leading-[18px] font-semibold text-[#646464] flex items-center gap-[10px]'>
               <span>{`${data.reward.xp} XP`}</span>
               {data.reward.nft.img_url && (
                 <>
@@ -280,7 +294,7 @@ export default function QuizQuest({ data }: { data: Quest }) {
           </div>
 
           {!data.unlock ? (
-            <div className='flex gap-[10px] items-center text-xs leading-[15px] text-medium-gray'>
+            <div className='flex gap-[10px] items-center text-xs leading-[15px] lg:text-sm lg:leading-[18px] text-medium-gray'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 width='24'
@@ -312,7 +326,13 @@ export default function QuizQuest({ data }: { data: Quest }) {
               </div>
             </div>
           ) : data.reward_status == 'CAN_CLAIM' ? (
-            <FilledButton className='w-fit' onClick={claimQuestHandler}>
+            <FilledButton
+              loading={loading}
+              className='w-fit'
+              onClick={(e) => {
+                claimQuestHandler()
+                e.stopPropagation()
+              }}>
               Claim Reward
             </FilledButton>
           ) : data.reward_status == 'OUT_OF_SLOT' ? (
@@ -359,6 +379,11 @@ export default function QuizQuest({ data }: { data: Quest }) {
             </div>
           )}
         </div>
+        {data.reward_status == 'CLAIMED' && data.repeat == 'Once' && (
+          <div className='bg-[#1FAB5E1A] absolute bottom-0 inset-x-0 h-[60px] backdrop-blur-[10px] rounded-b-[10px] font-semibold text-second-color text-xs lg:text-sm lg:leading-[18px] flex items-center justify-center'>
+            Quest completed
+          </div>
+        )}
       </div>
     </>
   )

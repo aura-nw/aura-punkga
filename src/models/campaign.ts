@@ -79,6 +79,6 @@ export type Quest = {
       nft_name: string
     }
     xp: number
-    slots: number
+    slots?: number
   }
 }

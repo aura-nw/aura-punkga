@@ -80,7 +80,7 @@ export default function QuestList({ quests, isEnded }: { quests: undefined | Que
           <div className='text-sm leading-[18px] font-semibold mt-5 text-center'>No quests to show</div>
         </div>
       ) : (
-        <div className='flex flex-col gap-5 mt-5'>
+        <div className='grid grid-cols-1 2xl:grid-cols-2 gap-5 mt-5'>
           {quests.map((quest: Quest, index) => (
             <QuestItem quest={quest} key={index} />
           ))}

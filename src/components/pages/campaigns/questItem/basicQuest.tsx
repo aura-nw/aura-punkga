@@ -45,7 +45,7 @@ export default function BasicQuest({ data }: { data: Quest }) {
       mutate({ key: 'fetch_campaign_auth_data', slug })
       toast(`Claim failed`, {
         type: 'error',
-        position: toast.POSITION.BOTTOM_RIGHT,
+        position: toast.POSITION.TOP_RIGHT,
         hideProgressBar: true,
         autoClose: 3000,
       })
@@ -55,37 +55,39 @@ export default function BasicQuest({ data }: { data: Quest }) {
   return (
     <>
       <Modal open={open} setOpen={setOpen}>
-        <div className='p-5 pt-10 min-w-[360px]'>
-          <div className='text-xs leading-[15px] font-semibold'>
-            {data.repeat == 'Daily' && (
-              <span className='bg-[#E2D8FF] text-[#A247FF] font-bold rounded-[3px] px-2 pb-[1px] text-[10px] leading-[13px] mr-[5px]'>
-                Daily
-              </span>
+        <div className='p-5 pt-10 min-w-[360px] max-w-[600px] lg:grid-cols-[1fr_173px] lg:grid lg:gap-x-10 lg:grid-rows-[auto_1fr]'>
+          <div>
+            <div className='text-xs leading-[15px] font-semibold'>
+              {data.repeat == 'Daily' && (
+                <span className='bg-[#E2D8FF] text-[#A247FF] font-bold rounded-[3px] px-2 pb-[1px] text-[10px] leading-[13px] mr-[5px]'>
+                  Daily
+                </span>
+              )}
+              {data.name}
+            </div>
+            <div className='mt-[15px] leading-5 font-bold'>
+              {data.type == 'Subscribe'
+                ? `Subscribe to manga ${data.requirement.subscribe.manga.title} to claim your reward`
+                : data.type == 'Like'
+                ? `Like manga ${data.requirement.like.manga.title} to claim your reward`
+                : data.type == 'Read'
+                ? `Read chapter ${data.requirement.read.chapter.number} of manga ${data.requirement.read.manga.title} to claim your reward`
+                : data.type == 'Comment'
+                ? `Comment on chapter ${data.requirement.comment.chapter.number} of manga ${data.requirement.comment.manga.title} to claim your reward`
+                : ``}
+            </div>
+            {data.description && (
+              <>
+                <div
+                  className={`mt-[15px] text-[#777777] text-xs leading-[15px] ${seeMore ? '' : 'line-clamp-5'}`}
+                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.description) }}></div>
+                <div className='font-semibold text-xs text-second-color' onClick={() => setSeeMore(!seeMore)}>
+                  {seeMore ? 'See less' : 'See more'}
+                </div>
+              </>
             )}
-            {data.name}
           </div>
-          <div className='mt-[15px] leading-5 font-bold'>
-            {data.type == 'Subscribe'
-              ? `Subscribe to manga ${data.requirement.subscribe.manga.title} to claim your reward`
-              : data.type == 'Like'
-              ? `Like manga ${data.requirement.like.manga.title} to claim your reward`
-              : data.type == 'Read'
-              ? `Read chapter ${data.requirement.read.chapter.number} of manga ${data.requirement.read.manga.title} to claim your reward`
-              : data.type == 'Comment'
-              ? `Comment on chapter ${data.requirement.comment.chapter.number} of manga ${data.requirement.comment.manga.title} to claim your reward`
-              : ``}
-          </div>
-          {data.description && (
-            <>
-              <div
-                className={`mt-[15px] text-[#777777] text-xs leading-[15px] ${seeMore ? '' : 'line-clamp-3'}`}
-                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.description) }}></div>
-              <div className='font-semibold text-xs text-second-color' onClick={() => setSeeMore(!seeMore)}>
-                {seeMore ? 'See less' : 'See more'}
-              </div>
-            </>
-          )}
-          <div className='mt-5 flex flex-col items-center'>
+          <div className='mt-5 flex flex-col items-center row-span-2'>
             <div className='text-sm leading-[18px] font-semibold mb-[10px]'>👑 Reward</div>
             {data.reward.nft.img_url ? (
               <>
@@ -100,12 +102,16 @@ export default function BasicQuest({ data }: { data: Quest }) {
                   <div className='text-sm leading-[18px] text-subtle-dark'>{data.reward.nft.nft_name}</div>
                   <div className='w-[160px] h-[1px] bg-light-medium-gray'></div>
                   <div className='flex gap-2 items-center'>
-                    <div className='text-second-color text-sm leading-[18px] font-bold'>{`+ ${data.reward.xp} XP`}</div>
-                    <div className='w-[1px] h-[26px] bg-light-medium-gray'></div>
-                    <div className='flex flex-col items-center text-[10px] leading-[13px]'>
-                      <div>{`${data.quest_reward_claimed}/${data.reward.slots}`}</div>
-                      <div>rewards claimed</div>
-                    </div>
+                    <div className='text-second-color text-sm leading-[18px] lg:text-lg lg:leading-[23px] font-bold'>{`+ ${data.reward.xp} XP`}</div>
+                    {!!data.reward.slots && (
+                      <>
+                        <div className='w-[1px] h-[26px] bg-light-medium-gray'></div>
+                        <div className='flex flex-col items-center text-[10px] leading-[13px] lg:text-xs lg:leading-[15px]'>
+                          <div>{`${data.quest_reward_claimed}/${data.reward.slots}`}</div>
+                          <div>rewards claimed</div>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               </>
@@ -117,71 +123,76 @@ export default function BasicQuest({ data }: { data: Quest }) {
                     {`+ ${data.reward.xp} XP`}
                   </div>
                 </div>
-                <div className='w-[160px] h-[1px] bg-light-medium-gray my-[10px]'></div>
-                <div className='flex flex-col items-center text-[10px] leading-[13px]'>
-                  <div>{`${data.quest_reward_claimed}/${data.reward.slots}`}</div>
-                  <div>rewards claimed</div>
-                </div>
+                {!!data.reward.slots && (
+                  <>
+                    <div className='w-[160px] h-[1px] bg-light-medium-gray my-[10px]'></div>
+                    <div className='flex flex-col items-center text-[10px] leading-[13px] lg:text-xs lg:leading-[15px]'>
+                      <div>{`${data.quest_reward_claimed}/${data.reward.slots}`}</div>
+                      <div>rewards claimed</div>
+                    </div>
+                  </>
+                )}
               </>
             )}
-            <div className='mt-5 w-full'>
-              {data.reward_status == 'CAN_CLAIM' ? (
-                <FilledButton onClick={claimQuestHandler} className='w-full'>
-                  Claim Reward
-                </FilledButton>
-              ) : data.reward_status == 'OUT_OF_SLOT' ? (
-                <div className='text-center bg-medium-gray leading-5 font-bold text-light-medium-gray px-6 pt-2 pb-[10px] rounded-[20px]'>
-                  Out of reward
-                </div>
-              ) : data.reward_status == 'CLAIMED' && data.repeat == 'Daily' ? (
-                <div className='text-center bg-medium-gray leading-5 font-bold text-light-medium-gray px-6 pt-2 pb-[10px] rounded-[20px]'>
-                  <Countdown
-                    date={moment().add(1, 'd').startOf('day').toISOString()}
-                    renderer={({ hours, minutes, seconds }) => {
-                      return (
-                        <span>
-                          Reset in {zeroPad(hours)}h : {zeroPad(minutes)}m : {zeroPad(seconds)}s
-                        </span>
-                      )
-                    }}
-                  />
-                </div>
-              ) : (
-                <Link
-                  target='_blank'
-                  href={`/comic/${data.requirement[data.type.toLowerCase()].manga.slug}${
-                    data.requirement[data.type.toLowerCase()]?.chapter?.number
-                      ? `/chapter/${data.requirement[data.type.toLowerCase()].chapter.number}`
-                      : ''
-                  }`}
-                  className='text-center w-full block bg-light-medium-gray leading-5 font-bold text-second-color px-6 pt-2 pb-[10px] rounded-[20px]'>
-                  Go to page
-                </Link>
-              )}
-            </div>
+          </div>
+          <div className='mt-5 w-full'>
+            {data.reward_status == 'CAN_CLAIM' ? (
+              <FilledButton loading={loading} onClick={claimQuestHandler} className='w-full'>
+                Claim Reward
+              </FilledButton>
+            ) : data.reward_status == 'OUT_OF_SLOT' ? (
+              <div className='text-center bg-medium-gray leading-5 font-bold text-light-medium-gray px-6 pt-2 pb-[10px] rounded-[20px]'>
+                Out of reward
+              </div>
+            ) : data.reward_status == 'CLAIMED' && data.repeat == 'Daily' ? (
+              <div className='text-center bg-medium-gray leading-5 font-bold text-light-medium-gray px-6 pt-2 pb-[10px] rounded-[20px]'>
+                <Countdown
+                  date={moment().add(1, 'd').startOf('day').toISOString()}
+                  renderer={({ hours, minutes, seconds }) => {
+                    return (
+                      <span>
+                        Reset in {zeroPad(hours)}h : {zeroPad(minutes)}m : {zeroPad(seconds)}s
+                      </span>
+                    )
+                  }}
+                />
+              </div>
+            ) : (
+              <Link
+                target='_blank'
+                href={`/comic/${data.requirement[data.type.toLowerCase()].manga.slug}${
+                  data.requirement[data.type.toLowerCase()]?.chapter?.number
+                    ? `/chapter/${data.requirement[data.type.toLowerCase()].chapter.number}`
+                    : ''
+                }`}
+                className='text-center w-full block bg-light-medium-gray leading-5 font-bold text-second-color px-6 pt-2 pb-[10px] rounded-[20px]'>
+                Go to page
+              </Link>
+            )}
           </div>
         </div>
       </Modal>
       <div
-        className='bg-[#F2F2F2] rounded-[10px] p-4 flex gap-[10px] min-h-[160px] relative'
+        className='bg-[#F2F2F2] lg:bg-white lg:border lg:border-light-medium-gray rounded-[10px] p-4 flex gap-[10px] min-h-[160px] relative'
         onClick={() =>
-          data.reward_status == 'CAN_CLAIM' ||
-          data.reward_status == 'NOT_SATISFY' ||
-          (data.reward_status == 'CLAIMED' && data.repeat == 'Daily')
+          data.unlock &&
+          (data.reward_status == 'CAN_CLAIM' ||
+            data.reward_status == 'NOT_SATISFY' ||
+            (data.reward_status == 'CLAIMED' && data.repeat == 'Daily'))
             ? setOpen(true)
             : null
         }>
         <div className='flex-1 flex flex-col justify-between relative'>
-          <div className='flex flex-col justify-between h-[68px]'>
-            <div className='text-xs leading-[15px] font-bold min-h-[32px] line-clamp-2'>
+          <div className='flex flex-col justify-between h-[68px] lg:h-[78px]'>
+            <div className='text-xs leading-[15px] lg:text-base lg:leading-5 font-bold min-h-[32px] lg:min-h-[48px] line-clamp-2'>
               {data.repeat == 'Daily' && (
-                <span className='bg-[#E2D8FF] text-[#A247FF] font-bold rounded-[3px] px-2 pb-[1px] text-[10px] leading-[13px] mr-[5px]'>
+                <span className='bg-[#E2D8FF] text-[#A247FF] font-bold rounded-[3px] px-2 pb-[1px] lg:pt-[2px] lg:pb-1 lg:font-semibold text-[10px] lg:text-sm leading-[13px] lg:leading-[18px] mr-[5px]'>
                   Daily
                 </span>
               )}
               {data.name}
             </div>
-            <div className='text-xs leading-[15px] font-semibold text-[#646464] flex items-center gap-[10px]'>
+            <div className='text-xs leading-[15px] lg:text-sm lg:leading-[18px] font-semibold text-[#646464] flex items-center gap-[10px]'>
               <span>{`${data.reward.xp} XP`}</span>
               {data.reward.nft.img_url && (
                 <>
@@ -195,7 +206,7 @@ export default function BasicQuest({ data }: { data: Quest }) {
           </div>
 
           {!data.unlock ? (
-            <div className='flex gap-[10px] items-center text-xs leading-[15px] text-medium-gray'>
+            <div className='flex gap-[10px] items-center text-xs leading-[15px] lg:text-sm lg:leading-[18px] text-medium-gray'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 width='24'
@@ -227,7 +238,13 @@ export default function BasicQuest({ data }: { data: Quest }) {
               </div>
             </div>
           ) : data.reward_status == 'CAN_CLAIM' ? (
-            <FilledButton loading={loading} className='w-fit' onClick={claimQuestHandler}>
+            <FilledButton
+              loading={loading}
+              className='w-fit'
+              onClick={(e) => {
+                claimQuestHandler()
+                e.stopPropagation()
+              }}>
               Claim Reward
             </FilledButton>
           ) : data.reward_status == 'OUT_OF_SLOT' ? (
@@ -276,7 +293,7 @@ export default function BasicQuest({ data }: { data: Quest }) {
         </div>
 
         {data.reward_status == 'CLAIMED' && data.repeat == 'Once' && (
-          <div className='bg-[#1FAB5E1A] absolute bottom-0 inset-x-0 h-[60px] backdrop-blur-[10px] rounded-b-[10px] font-semibold text-second-color text-xs flex items-center justify-center'>
+          <div className='bg-[#1FAB5E1A] absolute bottom-0 inset-x-0 h-[60px] backdrop-blur-[10px] rounded-b-[10px] font-semibold text-second-color text-xs lg:text-sm lg:leading-[18px] flex items-center justify-center'>
             Quest completed
           </div>
         )}

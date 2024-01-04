@@ -235,8 +235,12 @@ input[type='number'] {
 }
 .Toastify__toast-body {
   padding: 0px !important;
-  font-size: 18px !important;
-  line-height: 23px !important;
+  font-size: 16px !important;
+  line-height: 20px !important;
+  @media only screen and (max-width: 480px) {
+  font-size: 14px !important;
+  line-height: 18px !important;
+  }
 }
 .Toastify__toast-container {
   padding: 0px !important;
