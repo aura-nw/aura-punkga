@@ -1,4 +1,5 @@
 import { capitalize } from 'lodash'
+import getConfig from 'next/config'
 
 export const validateEmail = (email: string) => {
   return String(email)
@@ -61,4 +62,32 @@ export const statusColor = (status: string) => {
     default:
       break
   }
+}
+export const oauthLogin = async (
+  oauthProvider: string,
+  roles?: string[],
+  redirect_uri?: string,
+  state?: string
+): Promise<void> => {
+  let urlState = state
+  const config = getConfig()
+  if (!urlState) urlState = btoa(createRandomString())
+
+  if (roles && roles.length) urlState += `&roles=${roles.join(',')}`
+
+  window.location.replace(
+    `${config.AUTHORIZER_URL}/oauth_login/${oauthProvider}?redirect_uri=${
+      redirect_uri || config.REDIRECT_URL
+    }&state=${urlState}`
+  )
+}
+const createRandomString = () => {
+  const charset = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_~.'
+  let random = ''
+  const crypto = (window.crypto || (window as any).msCrypto) as Crypto
+  if (crypto) {
+    const randomValues = Array.from(crypto.getRandomValues(new Uint8Array(43)))
+    randomValues.forEach((v) => (random += charset[v % charset.length]))
+  }
+  return random
 }

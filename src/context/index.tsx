@@ -7,6 +7,7 @@ import { createContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IUser } from 'src/models/user'
 import { getProfile as getProfileService } from 'src/services'
+import { oauthLogin } from 'src/utils'
 import { getItem, removeItem, setItem } from 'src/utils/localStorage'
 
 export const Context = createContext(null)
@@ -157,7 +158,11 @@ function ContextProvider({ children }) {
 
   const oauth = async (provider: string, callback?: (status: string) => void) => {
     try {
-      await authorizerRef.oauthLogin(provider)
+      if (provider == 'zalo') {
+        await oauthLogin('zalo')
+      } else {
+        await authorizerRef.oauthLogin(provider)
+      }
     } catch (error) {
       callback && callback('failed')
       console.log('oauth error: ' + error)
