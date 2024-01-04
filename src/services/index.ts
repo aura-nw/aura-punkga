@@ -413,3 +413,9 @@ export const claimCampaignReward = async (id: string) => {
   const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/campaign/${id}/claim`)
   return data
 }
+export const answerQuest = async (questId: string, answer: string) => {
+  const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/quest/${questId}/answer`, {
+    answer,
+  })
+  return data
+}

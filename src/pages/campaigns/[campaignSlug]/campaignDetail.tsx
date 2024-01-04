@@ -15,6 +15,7 @@ import { Context } from 'src/context'
 import { Campaign } from 'src/models/campaign'
 import { claimCampaignReward, enrollCampaign, getCampaignAuthorizedData, getCampaignDetail } from 'src/services'
 import QuestList from './questList'
+import useSWR, { useSWRConfig } from 'swr'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -24,18 +25,21 @@ export default function Page(props) {
 function CampaignDetail({}) {
   const { account } = useContext(Context)
   const [data, setData] = useState<Campaign>()
-  const [authData, setAuthData] = useState<Campaign>()
   const [seeMore, setSeeMore] = useState(false)
   const [enrollLoading, setEnrollLoading] = useState(false)
   const [claimLoading, setClaimLoading] = useState(false)
   const { query } = useRouter()
   const slug = query.campaignSlug as string
-  const router = useRouter()
+  const { mutate } = useSWRConfig()
   const { t } = useTranslation()
-  useEffect(() => {
-    if (account) {
-      fetchAuthData()
+  const { data: authData } = useSWR(
+    { key: 'fetch_campaign_auth_data', slug },
+    ({ key, slug }) => getCampaignAuthorizedData(slug),
+    {
+      refreshInterval: 10000,
     }
+  )
+  useEffect(() => {
     fetchData()
   }, [account])
   const fetchData = async () => {
@@ -43,16 +47,6 @@ function CampaignDetail({}) {
       const data = await getCampaignDetail(slug)
       if (data.data?.campaign?.[0]) {
         setData(data.data.campaign[0])
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
-  const fetchAuthData = async () => {
-    try {
-      const campaignDetailData = await getCampaignAuthorizedData(slug)
-      if (campaignDetailData) {
-        setAuthData(campaignDetailData)
       }
     } catch (error) {
       console.error(error)
@@ -67,7 +61,7 @@ function CampaignDetail({}) {
         setEnrollLoading(true)
         const res = await enrollCampaign(data.id)
         await fetchData()
-        await fetchAuthData()
+        mutate({ key: 'fetch_campaign_auth_data', slug })
         if (res) {
           toast(`Enroll successful`, {
             type: 'success',
@@ -79,7 +73,7 @@ function CampaignDetail({}) {
         setEnrollLoading(false)
       }
     } catch (error) {
-      await fetchAuthData()
+      mutate({ key: 'fetch_campaign_auth_data', slug })
       setEnrollLoading(false)
       toast(`Enroll failed`, {
         type: 'error',

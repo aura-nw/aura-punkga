@@ -5,7 +5,7 @@ import { useState } from 'react'
 import Mascot2 from 'components/pages/campaigns/assets/Mascot2.svg'
 import Mascot3 from 'components/pages/campaigns/assets/Mascot3.svg'
 import { Quest } from 'src/models/campaign'
-import QuestItem from './quest'
+import QuestItem from '../../../components/pages/campaigns/questItem'
 
 export default function QuestList({ quests, isEnded }: { quests: undefined | Quest[]; isEnded: boolean }) {
   const [rewardNFTChecked, setRewardNFTChecked] = useState<boolean>(false)

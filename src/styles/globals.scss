@@ -218,14 +218,12 @@ input[type='number'] {
   margin-bottom: 0px !important;
 }
 .Toastify__toast--error {
-  background: #f6fff9 !important;
-  color: #61646b !important;
+  background: #ff5c00 !important;
+  color: #fff !important;
   font-family: inherit !important;
-  font-weight: 700;
-  border: 1px solid #c14858;
-  border-radius: 10px !important;
+  border-radius: 8px 0px 0px 8px !important;
   align-items: center !important;
-  padding: 20px !important;
+  padding: 24px 16px !important;
   margin-bottom: 0px !important;
 }
 .Toastify__toast-icon {
@@ -242,6 +240,11 @@ input[type='number'] {
 }
 .Toastify__toast-container {
   padding: 0px !important;
-  right: 69px !important;
-  bottom: 25px !important;
+  right: 0px !important;
+  top: 161px !important;
+  @media only screen and (max-width: 480px) {
+    top: 161px !important;
+    width: 90vw!important;
+    left: unset!important;
+  }
 }
