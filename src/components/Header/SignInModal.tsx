@@ -143,6 +143,12 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
             <Image src={Google} alt='' />
             {t('Continue with Google')}
           </button>
+          <button
+            className='mt-2 flex gap-[10px] items-center rounded-full bg-light-gray px-4 py-2 leading-5 font-medium w-full'
+            onClick={() => oauth('zalo')}>
+            <Image src={Google} alt='' />
+            {t('Continue with Google')}
+          </button>
           <div className='mt-[10px] text-xs font-medium text-center'>
             {t('By continuing, you agree to our')}{' '}
             <Link href='/policy' className='text-second-color font-semibold'>
