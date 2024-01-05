@@ -1,9 +1,8 @@
 import FilledButton from 'components/core/Button/FilledButton'
-import SubFilledButton from 'components/core/Button/SubFilledButton'
 import moment from 'moment'
 import Countdown, { zeroPad } from 'react-countdown'
 import { Quest } from 'src/models/campaign'
-export default function BasicQuest({
+export default function FreeQuest({
   quest,
   loading,
   claimQuestHandler,
@@ -13,7 +12,7 @@ export default function BasicQuest({
   claimQuestHandler: () => void
 }) {
   return (
-    <div className='mt-5 w-full lg:mt-10'>
+    <div className='mt-5 w-full'>
       {quest.reward_status == 'CAN_CLAIM' ? (
         <FilledButton loading={loading} onClick={claimQuestHandler} className='w-full'>
           Claim Reward
@@ -35,17 +34,7 @@ export default function BasicQuest({
             }}
           />
         </div>
-      ) : (
-        <SubFilledButton
-          target='_blank'
-          href={`/comic/${quest.requirement[quest.type.toLowerCase()].manga.slug}${
-            quest.requirement[quest.type.toLowerCase()]?.chapter?.number
-              ? `/chapter/${quest.requirement[quest.type.toLowerCase()].chapter.number}`
-              : ''
-          }`}>
-          Go to page
-        </SubFilledButton>
-      )}
+      ) : null}
     </div>
   )
 }

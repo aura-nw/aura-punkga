@@ -20,7 +20,7 @@ export type Campaign = {
 export type Quest = {
   id: string
   repeat: 'Once' | 'Daily'
-  type: 'Read' | 'Comment' | 'Subscribe' | 'Like' | 'Poll' | 'Quiz'
+  type: 'Read' | 'Comment' | 'Subscribe' | 'Like' | 'Poll' | 'Quiz' | 'Empty'
   reward_status: 'NOT_SATISFY' | 'CAN_CLAIM' | 'CLAIMED' | 'OUT_OF_SLOT'
   status: string
   name: string

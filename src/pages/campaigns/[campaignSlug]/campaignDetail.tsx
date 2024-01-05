@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Context } from 'src/context'
 import { Campaign } from 'src/models/campaign'
-import { claimCampaignReward, enrollCampaign, getCampaignAuthorizedData, getCampaignDetail } from 'src/services'
+import { claimCampaignReward, enrollCampaign, getCampaignAuthorizedData, getCampaignDetail, getCampaignLeaderboard } from 'src/services'
 import QuestList from './questList'
 import useSWR, { useSWRConfig } from 'swr'
 export default function Page(props) {
@@ -39,6 +39,14 @@ function CampaignDetail({}) {
       refreshInterval: 60000,
     }
   )
+  const { data: leaderboardData } = useSWR(
+    { key: 'fetch_campaign_leaderboard_data', id: authData?.id },
+    ({ key, id }) => (id ? getCampaignLeaderboard(id) : null),
+    {
+      refreshInterval: 60000,
+    }
+  )
+  console.log(leaderboardData)
   useEffect(() => {
     fetchData()
   }, [account])
@@ -119,35 +127,67 @@ function CampaignDetail({}) {
     <>
       <Header />
       <div className='pk-container'>
-        <div className='py-5 lg:grid-cols-[1fr_min(50%,520px)] lg:grid lg:gap-x-10 lg:grid-rows-[auto_1fr]'>
+        <div className='py-5 lg:py-16 lg:grid-cols-[1fr_min(50%,520px)] lg:grid lg:gap-x-10 lg:grid-rows-[auto_1fr]'>
           <div>
             {/* Campaign info  */}
-            <StatusLabel status={isUpcoming ? 'warning' : !isEnded ? 'success' : 'default'}>
+            <StatusLabel status={isUpcoming ? 'warning' : !isEnded ? 'success' : 'default'} className='lg:hidden'>
               {t(isUpcoming ? 'Upcoming' : !isEnded ? 'Ongoing' : 'Ended')}
             </StatusLabel>
-            <div className='font-bold mt-[5px] leading-5'>{data.name}</div>
-            <div className='my-5 flex justify-between items-start text-sm leading-[18px]'>
-              <div className='flex flex-col gap-[5px]'>
-                <div>Starts: {moment(data.start_date).format('HH:mm DD/MM/yyyy')}</div>
-                <div>Ends: {moment(data.end_date).format('HH:mm DD/MM/yyyy')}</div>
+            <div className='flex justify-between'>
+              <div className='font-bold mt-[5px] leading-5 lg:text-xl lg:leading-[25px] lg:mt-0'>
+                {data.name}{' '}
+                <span className='hidden lg:inline-block ml-[15px]'>
+                  <StatusLabel status={isUpcoming ? 'warning' : !isEnded ? 'success' : 'default'}>
+                    {t(isUpcoming ? 'Upcoming' : !isEnded ? 'Ongoing' : 'Ended')}
+                  </StatusLabel>
+                </span>
               </div>
-              <div>{`${data?.participants?.aggregate?.count} participants`}</div>
+              <div className='hidden lg:block'>
+                {/* Enroll button */}
+                {isUpcoming ? (
+                  <div>
+                    <button className='w-full bg-[#ABABAB] text-[#DEDEDE] font-bold leading-[25px] text-xl px-8 text-center pt-3 pb-[14px] rounded-[20px]'>
+                      Enroll now
+                    </button>
+                  </div>
+                ) : isOngoing && !isEnrolled ? (
+                  <div>
+                    <FilledButton size='lg' loading={enrollLoading} className='w-full' onClick={enrollHandler}>
+                      Enroll now
+                    </FilledButton>
+                  </div>
+                ) : null}
+              </div>
+            </div>
+            <div className='my-5 flex justify-between items-start text-sm leading-[18px] lg:text-base lg:leading-5'>
+              <div className='flex flex-col gap-[5px] lg:flex-row lg:gap-5 lg:flex-wrap'>
+                <div>Starts: {moment(data.start_date).format('HH:mm DD/MM/yyyy')}</div>
+                <span className='h-5 w-[1px] hidden lg:inline-block bg-[#F0F0F0]'></span>
+                <div>Ends: {moment(data.end_date).format('HH:mm DD/MM/yyyy')}</div>
+                <span className='h-5 w-[1px] hidden lg:inline-block bg-[#F0F0F0]'></span>
+                <div className='lg:block hidden'>{`${data?.participants?.aggregate?.count} participants`}</div>
+              </div>
+              <div className='lg:hidden'>{`${data?.participants?.aggregate?.count} participants`}</div>
             </div>
             <div
-              className={` text-[#61646B] text-sm leading-[18px] ${seeMore ? '' : 'line-clamp-3'}`}
+              className={` text-[#61646B] text-sm leading-[18px] lg:text-base lg:leading-5 ${
+                seeMore ? '' : 'line-clamp-3'
+              }`}
               dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.description) }}></div>
-            <div className='font-semibold text-sm text-second-color mt-1' onClick={() => setSeeMore(!seeMore)}>
+            <div
+              className='font-semibold text-sm lg:text-base lg:leading-5 text-second-color mt-1'
+              onClick={() => setSeeMore(!seeMore)}>
               {seeMore ? 'See less' : 'See more'}
             </div>
             {/* Enroll button */}
             {isUpcoming ? (
-              <div className='mt-10'>
+              <div className='mt-10 lg:hidden'>
                 <button className='w-full bg-[#ABABAB] text-[#DEDEDE] font-bold leading-5 text-center pt-2 pb-[10px] rounded-full'>
                   Enroll now
                 </button>
               </div>
             ) : isOngoing && !isEnrolled ? (
-              <div className='mt-10'>
+              <div className='mt-10 lg:hidden'>
                 <FilledButton loading={enrollLoading} className='w-full' onClick={enrollHandler}>
                   Enroll now
                 </FilledButton>
@@ -156,41 +196,44 @@ function CampaignDetail({}) {
           </div>
           <div className='row-span-2'>
             {/* Claim section */}
-            <div className='p-5 w-full flex flex-col gap-5 bg-[#F0F0F0] rounded-[10px] mt-10'>
-              <p className='text-center w-full text-lg leading-[23px] font-bold'>Bonus to 👑 1st place</p>
+            <div className='p-5 w-full flex flex-col gap-5 bg-[#F0F0F0] rounded-[10px] mt-10 lg:mt-0'>
+              <p className='text-center w-full text-lg lg:text-2xl lg:leading-[30px] leading-[23px] font-bold'>
+                Bonus to 👑 1st place
+              </p>
               <div className='flex gap-[30px] justify-center items-start'>
                 {data?.reward?.nft_name && (
-                  <div className='w-1/2 flex flex-col gap-[10px] justify-center'>
+                  <div className=' w-[160px] h-[160px] flex flex-col gap-[10px] justify-center'>
                     <Image
                       src={data?.reward.img_url || NoImage}
                       width={200}
                       height={200}
                       alt=''
-                      className='w-full aspect-square rounded-lg object-cover'
+                      className=' w-[160px] h-[160px] rounded-lg object-cover'
                     />
                     <p className='text-center text-sm text-[#61646B]'>{data.reward.nft_name}</p>
                   </div>
                 )}
                 {!!data.reward.xp && (
-                  <div className='bg-white rounded-lg w-1/2 aspect-square flex justify-center items-center flex-col gap-[10px]'>
-                    <Image src={IllusImage} alt='' className='h-[100px] w-[100px]' />
-                    <p className='text-xl leading-[25px] text-second-color font-bold'>{`+ ${data.reward.xp} XP`}</p>
+                  <div className='bg-white rounded-lg w-[160px] h-[160px] lg:w-[220px] lg:h-[220px] flex justify-center items-center flex-col gap-[10px]'>
+                    <Image src={IllusImage} alt='' className='h-[100px] w-[100px] lg:w-[140px] lg:h-[140px]' />
+                    <p className='text-xl leading-[25px] lg:text-[32px] lg:leading-[40px] text-second-color font-bold'>{`+ ${data.reward.xp} XP`}</p>
                   </div>
                 )}
               </div>
-              <div>
-                {isEnrolled ? (
-                  isEnded ? (
-                    <FilledButton loading={claimLoading} className='w-full' onClick={claimHandler}>
-                      Claim Reward
-                    </FilledButton>
-                  ) : (
-                    <button className='w-full bg-[#ABABAB] text-[#DEDEDE] font-bold leading-5 text-center pt-2 pb-[10px] rounded-full'>
-                      Claim Reward
-                    </button>
-                  )
-                ) : null}
-              </div>
+              {isEnrolled ? (
+                isEnded ? (
+                  <FilledButton
+                    loading={claimLoading}
+                    className='w-full lg:p-3 lg:rounded-[20px] lg:text-base lg:leading-6'
+                    onClick={claimHandler}>
+                    Claim Reward
+                  </FilledButton>
+                ) : (
+                  <button className='w-full bg-[#ABABAB] text-[#DEDEDE] font-bold leading-5 text-center pt-2 pb-[10px] rounded-full lg:p-3 lg:rounded-[20px] lg:text-base lg:leading-6'>
+                    Claim Reward
+                  </button>
+                )
+              ) : null}
             </div>
             {/* Leaderboard  */}
             <div>
