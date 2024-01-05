@@ -16,6 +16,7 @@ import { Campaign } from 'src/models/campaign'
 import { claimCampaignReward, enrollCampaign, getCampaignAuthorizedData, getCampaignDetail, getCampaignLeaderboard } from 'src/services'
 import QuestList from './questList'
 import useSWR, { useSWRConfig } from 'swr'
+import LeaderBoard from 'components/pages/campaigns/leaderboard'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -237,26 +238,7 @@ function CampaignDetail({}) {
             </div>
             {/* Leaderboard  */}
             <div>
-              <div className='bg-[#f0f0f0] rounded-[10px] mt-10'>
-                <div className='md:py-4 py-3 md:px-[32px] px-[16px] w-full h-full flex flex-col'>
-                  <div className='md:text-xl leading-5 md:leading-[25px] font-bold w-full text-center border-b-[3px] pb-[2px] md:mb-3 mb-2 text-[#414141] border-[#414141]'>
-                    Leaderboard
-                  </div>
-                  <div className='flex justify-between md:px-[32px] px-[6px] py-2 md:pb-3 md:pt-1 border-b-[1px] border-medium-gray text-subtle-dark font-semibold text-xs md:text-sm md:leading-[18px] leading-4'>
-                    <div className='flex gap-16'>
-                      <div>Rank</div>
-                      <div>User</div>
-                    </div>
-                    <div className='flex gap-16'>
-                      <div>Quests</div>
-                      <div>XP</div>
-                    </div>
-                  </div>
-                  <div className='h-[321px] flex flex-col relative justify-center items-center'>
-                    <p className='text-xs font-semibold'>{'Enroll to view leaderboard'}</p>
-                  </div>
-                </div>
-              </div>
+              <LeaderBoard/>
               {/* <LeaderBoard/> */}
             </div>
           </div>
