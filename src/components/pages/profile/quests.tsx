@@ -140,22 +140,7 @@ const QuestItem = ({ quest }: { quest: Quest }) => {
     : quest.requirement.comment
     ? `Leave a comment on ${quest.requirement.comment?.manga?.title} - ${quest.requirement.comment?.chapter?.title}`
     : `Subcribe to ${quest.requirement?.subscribe?.manga?.title}` + ' to claim your reward'
-  const conditions = quest.condition.level
-    ? `Unlock at level ${quest.condition.level}`
-    : `${[
-        quest.condition.after
-          ? new Date(quest.condition.after).getTime() > Date.now()
-            ? `Open in ${moment(quest.condition.after).fromNow(true)}`
-            : `Opened since ${moment(quest.condition.after).fromNow(true)}`
-          : '',
-        quest.condition.before
-          ? new Date(quest.condition.before).getTime() > Date.now()
-            ? `Close in ${moment(quest.condition.before).fromNow(true)}`
-            : `Closed since ${moment(quest.condition.before).fromNow(true)}`
-          : '',
-      ]
-        .filter((v) => v)
-        .join(', ')}`
+  const conditions = ''
   const pageLink =
     quest.requirement.comment || quest.requirement.read
       ? `/comic/${(quest.requirement.comment || quest.requirement.read).manga?.slug}/chapter/${
