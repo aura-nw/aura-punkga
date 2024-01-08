@@ -128,8 +128,10 @@ function ContextProvider({ children }) {
           quests: res?.user_quests_aggregate?.aggregate?.count,
           rank: res.rank || 999999,
         } as IUser)
+        return res
+      } else {
+        removeItem('token')
       }
-      return res
     } catch (error) {
       removeItem('token')
       console.log('getProfile', error)
