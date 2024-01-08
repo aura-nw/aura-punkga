@@ -5,10 +5,12 @@ export type Campaign = {
   campaign_quests?: Quest[]
   reward: {
     xp: number
-    img_name?: string
-    img_url?: string
-    nft_name?: string
-    ipfs?: string
+    nft?: {
+      img_name?: string
+      img_url?: string
+      nft_name?: string
+      ipfs?: string
+    }
   }
   description?: string
   start_date: string

@@ -13,7 +13,13 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Context } from 'src/context'
 import { Campaign } from 'src/models/campaign'
-import { claimCampaignReward, enrollCampaign, getCampaignAuthorizedData, getCampaignDetail, getCampaignLeaderboard } from 'src/services'
+import {
+  claimCampaignReward,
+  enrollCampaign,
+  getCampaignAuthorizedData,
+  getCampaignDetail,
+  getCampaignLeaderboard,
+} from 'src/services'
 import QuestList from './questList'
 import useSWR, { useSWRConfig } from 'swr'
 import LeaderBoard from 'components/pages/campaigns/leaderboard'
@@ -145,13 +151,7 @@ function CampaignDetail({}) {
               </div>
               <div className='hidden lg:block'>
                 {/* Enroll button */}
-                {isUpcoming ? (
-                  <div>
-                    <button className='w-full bg-[#ABABAB] text-[#DEDEDE] font-bold leading-[25px] text-xl px-8 text-center pt-3 pb-[14px] rounded-[20px]'>
-                      Enroll now
-                    </button>
-                  </div>
-                ) : isOngoing && !isEnrolled ? (
+                {(isUpcoming || isOngoing) && !isEnrolled ? (
                   <div>
                     <FilledButton size='lg' loading={enrollLoading} className='w-full' onClick={enrollHandler}>
                       Enroll now
@@ -181,13 +181,7 @@ function CampaignDetail({}) {
               {seeMore ? 'See less' : 'See more'}
             </div>
             {/* Enroll button */}
-            {isUpcoming ? (
-              <div className='mt-10 lg:hidden'>
-                <button className='w-full bg-[#ABABAB] text-[#DEDEDE] font-bold leading-5 text-center pt-2 pb-[10px] rounded-full'>
-                  Enroll now
-                </button>
-              </div>
-            ) : isOngoing && !isEnrolled ? (
+            {(isUpcoming || isOngoing) && !isEnrolled ? (
               <div className='mt-10 lg:hidden'>
                 <FilledButton loading={enrollLoading} className='w-full' onClick={enrollHandler}>
                   Enroll now
@@ -202,17 +196,17 @@ function CampaignDetail({}) {
                 Bonus to 👑 1st place
               </p>
               <div className='flex gap-[30px] justify-center items-start'>
-                {data?.reward?.nft_name && (
+                {data?.reward?.nft?.nft_name && (
                   <div className='flex flex-col gap-[10px] justify-center'>
                     <Image
-                      src={data?.reward.img_url || NoImage}
+                      src={data?.reward?.nft.img_url || NoImage}
                       width={200}
                       height={200}
                       alt=''
                       className=' w-[160px] h-[160px] lg:w-[220px] lg:h-[220px] rounded-lg object-cover'
                     />
                     <p className='text-center text-sm text-[#61646B] max-w-[160px] lg:max-w-[220px] line-clamp-2'>
-                      {data.reward.nft_name}
+                      {data.reward?.nft.nft_name}
                     </p>
                   </div>
                 )}
