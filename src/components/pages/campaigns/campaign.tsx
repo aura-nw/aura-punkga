@@ -39,7 +39,7 @@ export default function Campaign() {
           : 'Ended'
         return (
           ((statusFilter.length && statusFilter.includes(campaignStatus)) || !statusFilter.length) &&
-          (!rewardNFTChecked || campaign.reward.nft_name) &&
+          (!rewardNFTChecked || campaign.reward?.nft.nft_name) &&
           (!enrolledChecked || !!campaign.campaign_user.length)
         )
       })
@@ -120,7 +120,10 @@ export default function Campaign() {
       </div>
       <div className='mt-[39px] grid grid-cols-1 lg:grid-cols-2 gap-5 2xl:gap-10 xl:grid-cols-3'>
         {list?.map((campaign, index) => (
-          <div key={index} className='px-4 py-3 flex gap-5 bg-[#F2F2F2] rounded-[10px] min-h-[180px]' onClick={() => clickHandler(campaign.slug)}>
+          <div
+            key={index}
+            className='px-4 py-3 flex gap-5 bg-[#F2F2F2] rounded-[10px] min-h-[180px]'
+            onClick={() => clickHandler(campaign.slug)}>
             <div className='flex flex-col justify-between flex-1'>
               <div className='flex flex-col'>
                 <div className='inline-flex'>
@@ -204,11 +207,11 @@ export default function Campaign() {
               <div className='text-xs text-[#61646B] text-center md:leading-[15px]'>
                 Bonus to <br className='md:block hidden' /> 👑 1st place
               </div>
-              {campaign?.reward?.nft_name ? (
+              {campaign?.reward?.nft?.nft_name ? (
                 <div className='flex flex-col items-center'>
                   <div className='mt-[6px] md:mt-[9px]'>
                     <Image
-                      src={campaign?.reward.img_url || NoImage}
+                      src={campaign?.reward?.nft.img_url || NoImage}
                       width={80}
                       height={80}
                       alt=''
@@ -216,7 +219,7 @@ export default function Campaign() {
                     />
                   </div>
                   <div className='mt-[6px] md:mt-[9px] mb-1 text-[10px] md:text-xs md:leading-[15px] leading-[13px] text-[#61646B] max-w-[120px] truncate'>
-                    {campaign?.reward?.nft_name}
+                    {campaign?.reward?.nft?.nft_name}
                   </div>
                 </div>
               ) : (
