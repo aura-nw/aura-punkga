@@ -111,15 +111,15 @@ export default function Info({ updateProfile }) {
     <>
       <div className='w-full'>
         <div className=''>
-          <div className='px-10 pt-[10px] pb-[30px] bg-[#F2F2F2] rounded-2xl flex gap-5 relative'>
+          <div className='px-[30px] md:px-10 pt-[10px] pb-[10px] md:pb-[30px] bg-[#F2F2F2] rounded-2xl flex gap-[10px] md:gap-5 relative items-center flex-col md:flex-row md:items-start mt-[70px] md:mt-0'>
             {open ? (
               <div
                 className='flex items-center gap-[3px] absolute top-3 right-3 cursor-pointer bg-primary-color rounded-[10px] px-[10px] py-[5px]'
                 onClick={updateProfileHandler}>
                 <svg xmlns='http://www.w3.org/2000/svg' width='14' height='13' viewBox='0 0 14 13' fill='none'>
                   <path
-                    fill-rule='evenodd'
-                    clip-rule='evenodd'
+                    fillRule='evenodd'
+                    clipRule='evenodd'
                     d='M13.6382 0.905544C14.1206 1.44627 14.1206 2.32296 13.6382 2.86368L5.4029 12.0945C4.92049 12.6352 4.13834 12.6352 3.65593 12.0945L0.361809 8.40215C-0.120603 7.86142 -0.120603 6.98473 0.361809 6.444C0.844222 5.90328 1.62637 5.90328 2.10878 6.444L4.52941 9.15724L11.8912 0.905544C12.3736 0.364819 13.1558 0.364819 13.6382 0.905544Z'
                     fill='#414141'
                   />
@@ -127,7 +127,7 @@ export default function Info({ updateProfile }) {
                 <div className='font-semibold text-lg leading-[23px] text-[#414141]'>Save</div>
               </div>
             ) : (
-              <div className='absolute top-3 right-3 cursor-pointer flex gap-2 [&>.buttons]:hover:block'>
+              <div className='absolute top-3 right-3 cursor-pointer flex gap-2 [&>.buttons]:hover:block z-10'>
                 <div className='border bg-white border-[#ABABAB] rounded-[10px] hidden buttons overflow-hidden'>
                   <div
                     onClick={() => setOpen(true)}
@@ -158,15 +158,15 @@ export default function Info({ updateProfile }) {
                     fill='#ABABAB'
                   />
                   <path
-                    fill-rule='evenodd'
-                    clip-rule='evenodd'
+                    fillRule='evenodd'
+                    clipRule='evenodd'
                     d='M16.5861 0.875H16.4139C12.9514 0.874982 10.2378 0.874967 8.12056 1.15962C5.95345 1.45098 4.24342 2.05899 2.90121 3.40121C1.55899 4.74342 0.95098 6.45345 0.659621 8.62056C0.374967 10.7378 0.374982 13.4513 0.375 16.9139V17.0861C0.374982 20.5486 0.374967 23.2622 0.659621 25.3794C0.95098 27.5465 1.55899 29.2566 2.90121 30.5988C4.24342 31.941 5.95345 32.549 8.12056 32.8404C10.2378 33.125 12.9513 33.125 16.4139 33.125H16.5861C20.0487 33.125 22.7622 33.125 24.8794 32.8404C27.0465 32.549 28.7566 31.941 30.0988 30.5988C31.441 29.2566 32.049 27.5465 32.3404 25.3794C32.625 23.2622 32.625 20.5487 32.625 17.0861V16.9139C32.625 13.4513 32.625 10.7378 32.3404 8.62056C32.049 6.45345 31.441 4.74342 30.0988 3.40121C28.7566 2.05899 27.0465 1.45098 24.8794 1.15962C22.7622 0.874967 20.0486 0.874982 16.5861 0.875ZM4.4922 4.9922C5.34668 4.13771 6.50276 3.64737 8.42037 3.38956C10.3703 3.12739 12.9327 3.125 16.5 3.125C20.0673 3.125 22.6297 3.12739 24.5796 3.38956C26.4972 3.64737 27.6533 4.13771 28.5078 4.9922C29.3623 5.84668 29.8526 7.00276 30.1104 8.92037C30.3726 10.8703 30.375 13.4327 30.375 17C30.375 20.5673 30.3726 23.1297 30.1104 25.0796C29.8526 26.9972 29.3623 28.1533 28.5078 29.0078C27.6533 29.8623 26.4972 30.3526 24.5796 30.6104C22.6297 30.8726 20.0673 30.875 16.5 30.875C12.9327 30.875 10.3703 30.8726 8.42037 30.6104C6.50276 30.3526 5.34668 29.8623 4.4922 29.0078C3.63771 28.1533 3.14737 26.9972 2.88956 25.0796C2.62739 23.1297 2.625 20.5673 2.625 17C2.625 13.4327 2.62739 10.8703 2.88956 8.92037C3.14737 7.00276 3.63771 5.84668 4.4922 4.9922Z'
                     fill='#ABABAB'
                   />
                 </svg>
               </div>
             )}
-            <div className='relative w-[140px] shrink-0 h-[140px] '>
+            <div className='relative w-[140px] shrink-0 h-[140px] -mt-[70px] md:mt-0'>
               <Image
                 src={preview || account.image || NoImg.src}
                 alt=''
@@ -191,14 +191,16 @@ export default function Info({ updateProfile }) {
                 </>
               )}
             </div>
-            <div className='w-[calc(100%_-_160px)]'>
-              <div className='text-[40px] text-[#1C1C1C] font-bold leading-[50px]'>{account.name}</div>
-              <div className='flex items-center gap-[10px]'>
-                <div className='flex items-center gap-[5px]'>
+            <div className='md:w-[calc(100%_-_160px)] w-full flex flex-col items-center md:block'>
+              <div className='text-2xl md:text-[40px] text-[#1C1C1C] font-bold leading-[30px] md:leading-[50px]'>
+                {account.name}
+              </div>
+              <div className='flex items-center gap-[2px] md:gap-[10px] flex-wrap mt-[10px] md:mt-0 flex-col md:flex-row min-w-[290px]'>
+                <div className='flex items-center gap-[5px] w-full md:w-auto'>
                   <svg xmlns='http://www.w3.org/2000/svg' width='25' height='24' viewBox='0 0 25 24' fill='none'>
                     <path
-                      fill-rule='evenodd'
-                      clip-rule='evenodd'
+                      fillRule='evenodd'
+                      clipRule='evenodd'
                       d='M3.67157 5.17157C2.5 6.34315 2.5 8.22876 2.5 12C2.5 15.7712 2.5 17.6569 3.67157 18.8284C4.84315 20 6.72876 20 10.5 20H14.5C18.2712 20 20.1569 20 21.3284 18.8284C22.5 17.6569 22.5 15.7712 22.5 12C22.5 8.22876 22.5 6.34315 21.3284 5.17157C20.1569 4 18.2712 4 14.5 4H10.5C6.72876 4 4.84315 4 3.67157 5.17157ZM19.0762 7.51986C19.3413 7.83807 19.2983 8.31099 18.9801 8.57617L16.7837 10.4066C15.8973 11.1452 15.1789 11.7439 14.5448 12.1517C13.8843 12.5765 13.2411 12.8449 12.5 12.8449C11.7589 12.8449 11.1157 12.5765 10.4552 12.1517C9.82112 11.7439 9.10271 11.1452 8.21636 10.4066L6.01986 8.57617C5.70165 8.31099 5.65866 7.83807 5.92383 7.51986C6.18901 7.20165 6.66193 7.15866 6.98014 7.42383L9.13903 9.22291C10.072 10.0004 10.7197 10.5384 11.2666 10.8901C11.7959 11.2306 12.1549 11.3449 12.5 11.3449C12.8451 11.3449 13.2041 11.2306 13.7334 10.8901C14.2803 10.5384 14.928 10.0004 15.861 9.22291L18.0199 7.42383C18.3381 7.15866 18.811 7.20165 19.0762 7.51986Z'
                       fill='#414141'
                     />
@@ -207,10 +209,16 @@ export default function Info({ updateProfile }) {
                 </div>
                 {open ? (
                   <>
-                    <svg xmlns='http://www.w3.org/2000/svg' width='5' height='4' viewBox='0 0 5 4' fill='none'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='5'
+                      height='4'
+                      viewBox='0 0 5 4'
+                      fill='none'
+                      className='hidden md:block'>
                       <circle cx='2.5' cy='2' r='2' fill='#D9D9D9' />
                     </svg>
-                    <div className='flex items-center gap-[5px]'>
+                    <div className='flex items-center gap-[5px] w-full md:w-auto'>
                       <div className='w-6 h-6 grid place-items-center'>
                         <svg xmlns='http://www.w3.org/2000/svg' width='17' height='20' viewBox='0 0 17 20' fill='none'>
                           <path
@@ -227,7 +235,7 @@ export default function Info({ updateProfile }) {
                           />
                         </svg>
                       </div>
-                      <div>
+                      <div className='[&_button]:!h-[28px] md:[&_button]:!h-[30px] [&_button]:min-w-[261px] md:[&_button]:min-w-0'>
                         <DatePicker
                           selected={birthdate}
                           showMonthDropdown
@@ -244,10 +252,16 @@ export default function Info({ updateProfile }) {
                 ) : (
                   account.birthdate && (
                     <>
-                      <svg xmlns='http://www.w3.org/2000/svg' width='5' height='4' viewBox='0 0 5 4' fill='none'>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        width='5'
+                        height='4'
+                        viewBox='0 0 5 4'
+                        fill='none'
+                        className='hidden md:block'>
                         <circle cx='2.5' cy='2' r='2' fill='#D9D9D9' />
                       </svg>
-                      <div className='flex items-center gap-[5px]'>
+                      <div className='flex items-center gap-[5px] w-full md:w-auto'>
                         <div className='w-6 h-6 grid place-items-center'>
                           <svg
                             xmlns='http://www.w3.org/2000/svg'
@@ -278,25 +292,31 @@ export default function Info({ updateProfile }) {
                 )}
                 {open ? (
                   <>
-                    <svg xmlns='http://www.w3.org/2000/svg' width='5' height='4' viewBox='0 0 5 4' fill='none'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='5'
+                      height='4'
+                      viewBox='0 0 5 4'
+                      fill='none'
+                      className='hidden md:block'>
                       <circle cx='2.5' cy='2' r='2' fill='#D9D9D9' />
                     </svg>
-                    <div className='flex items-center gap-[5px]'>
+                    <div className='flex items-center gap-[5px] w-full md:w-auto'>
                       <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>
                         <path
-                          fill-rule='evenodd'
-                          clip-rule='evenodd'
+                          fillRule='evenodd'
+                          clipRule='evenodd'
                           d='M15.2824 10.2152V11.5661C13.1076 12.0076 11.4707 13.9304 11.4707 16.2355C11.4707 18.8669 13.6039 21.0002 16.2354 21.0002C18.8668 21.0002 21.0001 18.8669 21.0001 16.2355C21.0001 14.0058 19.4685 12.1339 17.4001 11.6142V10.2152L17.922 10.7371C18.3355 11.1505 19.0059 11.1505 19.4193 10.7371C19.8329 10.3235 19.8329 9.65315 19.4193 9.23966L17.5392 7.35947C16.8776 6.69788 15.8049 6.69788 15.1433 7.35947L13.2632 9.23966C12.8497 9.65315 12.8497 10.3235 13.2632 10.7371C13.6767 11.1505 14.3471 11.1505 14.7606 10.7371L15.2824 10.2152ZM16.3413 13.6021C16.2846 13.6021 16.229 13.5977 16.1748 13.5891C14.7408 13.6213 13.5883 14.7938 13.5883 16.2355C13.5883 17.6974 14.7735 18.8825 16.2354 18.8825C17.6973 18.8825 18.8824 17.6974 18.8824 16.2355C18.8824 14.8451 17.8104 13.705 16.4478 13.5968C16.4128 13.6003 16.3772 13.6021 16.3413 13.6021Z'
                           fill='#414141'
                         />
                         <path
-                          fill-rule='evenodd'
-                          clip-rule='evenodd'
+                          fillRule='evenodd'
+                          clipRule='evenodd'
                           d='M12.5294 7.76468C12.5294 10.0524 10.9171 11.9635 8.76683 12.4238V14.0685H9.6629C10.2477 14.0685 10.7217 14.5425 10.7217 15.1273C10.7217 15.7121 10.2477 16.1861 9.6629 16.1861H8.76683V16.9045C8.76683 17.4893 8.29277 17.9634 7.70801 17.9634C7.12325 17.9634 6.64919 17.4893 6.64919 16.9045V16.1861H5.75284C5.16808 16.1861 4.69402 15.7121 4.69402 15.1273C4.69402 14.5425 5.16808 14.0685 5.75284 14.0685H6.64919V12.3981C4.55587 11.8959 3 10.012 3 7.76468C3 5.13322 5.13322 3 7.76468 3C10.3961 3 12.5294 5.13322 12.5294 7.76468ZM7.76468 10.4117C9.22661 10.4117 10.4117 9.22661 10.4117 7.76468C10.4117 6.30275 9.22661 5.11763 7.76468 5.11763C6.30275 5.11763 5.11763 6.30275 5.11763 7.76468C5.11763 9.22661 6.30275 10.4117 7.76468 10.4117Z'
                           fill='#414141'
                         />
                       </svg>
-                      <div className='[&_button]:!py-0 [&_button]:!h-[30px]'>
+                      <div className='[&_button]:!py-0 [&_button]:!h-[28px] md:[&_button]:!h-[30px] [&_button]:min-w-[261px] md:[&_button]:min-w-0'>
                         <Select
                           className='text-[#61646B]'
                           selected={gender}
@@ -324,13 +344,33 @@ export default function Info({ updateProfile }) {
                 ) : (
                   account.gender && (
                     <>
-                      <svg xmlns='http://www.w3.org/2000/svg' width='5' height='4' viewBox='0 0 5 4' fill='none'>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        width='5'
+                        height='4'
+                        viewBox='0 0 5 4'
+                        fill='none'
+                        className='hidden md:block'>
                         <circle cx='2.5' cy='2' r='2' fill='#D9D9D9' />
                       </svg>
-                      <div className='text-sm text-[#19191B] font-medium leading-[18px] capitalize flex items-center'>
+                      <div className='text-sm text-[#19191B] font-medium leading-[18px] capitalize flex items-center  w-full md:w-auto'>
+                        <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' className='md:hidden mr-[5px]'>
+                          <path
+                            fillRule='evenodd'
+                            clipRule='evenodd'
+                            d='M15.2824 10.2152V11.5661C13.1076 12.0076 11.4707 13.9304 11.4707 16.2355C11.4707 18.8669 13.6039 21.0002 16.2354 21.0002C18.8668 21.0002 21.0001 18.8669 21.0001 16.2355C21.0001 14.0058 19.4685 12.1339 17.4001 11.6142V10.2152L17.922 10.7371C18.3355 11.1505 19.0059 11.1505 19.4193 10.7371C19.8329 10.3235 19.8329 9.65315 19.4193 9.23966L17.5392 7.35947C16.8776 6.69788 15.8049 6.69788 15.1433 7.35947L13.2632 9.23966C12.8497 9.65315 12.8497 10.3235 13.2632 10.7371C13.6767 11.1505 14.3471 11.1505 14.7606 10.7371L15.2824 10.2152ZM16.3413 13.6021C16.2846 13.6021 16.229 13.5977 16.1748 13.5891C14.7408 13.6213 13.5883 14.7938 13.5883 16.2355C13.5883 17.6974 14.7735 18.8825 16.2354 18.8825C17.6973 18.8825 18.8824 17.6974 18.8824 16.2355C18.8824 14.8451 17.8104 13.705 16.4478 13.5968C16.4128 13.6003 16.3772 13.6021 16.3413 13.6021Z'
+                            fill='#414141'
+                          />
+                          <path
+                            fillRule='evenodd'
+                            clipRule='evenodd'
+                            d='M12.5294 7.76468C12.5294 10.0524 10.9171 11.9635 8.76683 12.4238V14.0685H9.6629C10.2477 14.0685 10.7217 14.5425 10.7217 15.1273C10.7217 15.7121 10.2477 16.1861 9.6629 16.1861H8.76683V16.9045C8.76683 17.4893 8.29277 17.9634 7.70801 17.9634C7.12325 17.9634 6.64919 17.4893 6.64919 16.9045V16.1861H5.75284C5.16808 16.1861 4.69402 15.7121 4.69402 15.1273C4.69402 14.5425 5.16808 14.0685 5.75284 14.0685H6.64919V12.3981C4.55587 11.8959 3 10.012 3 7.76468C3 5.13322 5.13322 3 7.76468 3C10.3961 3 12.5294 5.13322 12.5294 7.76468ZM7.76468 10.4117C9.22661 10.4117 10.4117 9.22661 10.4117 7.76468C10.4117 6.30275 9.22661 5.11763 7.76468 5.11763C6.30275 5.11763 5.11763 6.30275 5.11763 7.76468C5.11763 9.22661 6.30275 10.4117 7.76468 10.4117Z'
+                            fill='#414141'
+                          />
+                        </svg>
                         {t(account.gender == 'Undisclosed' ? 'Other' : account.gender)}{' '}
                         <Image
-                          className='h-[14px] w-[14px] md:h-[20px] md:w-[20px]'
+                          className='h-[24px] w-[24px] md:h-[20px] md:w-[20px]'
                           src={
                             account.gender.toLowerCase() == 'male'
                               ? MaleIcon
@@ -347,19 +387,19 @@ export default function Info({ updateProfile }) {
               </div>
               {open ? (
                 <div className='mt-[10px]'>
-                  <div className='font-bold mb-[5px] leading-5 text-[#414141]'>bio:</div>
+                  <div className='font-bold mb-0 md:mb-[5px] leading-5 text-[#414141]'>bio:</div>
                   <AutoGrowingTextField
                     value={bio}
                     onChange={setBio}
                     placeholder={t('Write something about yourself')}
-                    className='text-sm text-[#61646B] font-normal md:font-bold leading-6 !py-[5px] !px-[10px] w-full aspect-[84/12]'
+                    className='text-sm text-[#61646B] font-normal md:font-bold leading-6 !py-[5px] !px-[10px] md:w-full md:aspect-[84/12] w-[330px] min-h-[82px]'
                   />
                 </div>
               ) : (
                 account.bio && (
                   <div className='mt-[10px]'>
                     <div className='font-bold leading-5 text-[#414141]'>bio:</div>
-                    <div className='text-sm leading-[18px] text-[#414141] line-clamp-2'>{account.bio}</div>
+                    <div className='text-sm leading-[18px] text-[#414141] line-clamp-4 mb-[18px]'>{account.bio}</div>
                   </div>
                 )
               )}

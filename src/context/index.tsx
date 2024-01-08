@@ -107,7 +107,7 @@ function ContextProvider({ children }) {
         throw new Error('Unauthorized access token')
       }
       const res = await getProfileService()
-      if (res) {
+      if (res?.id) {
         if (res.authorizer_users_user_wallet?.address) {
           setWallet(res.authorizer_users_user_wallet?.address)
         }

@@ -102,7 +102,7 @@ export default function Comic(props: IComic) {
           )}
         </div>
       </div>
-      <div className='md:hidden h-full w-fit mx-auto'>
+      <div className='md:hidden h-full max-w-[180px] mx-auto'>
         <div
           onClick={() => {
             props.status.text == 'Upcoming' ? null : router.push(`/comic/${props.slug}`)

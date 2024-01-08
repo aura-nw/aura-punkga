@@ -50,7 +50,7 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
           </div>
         ) : (
           <>
-            <div className='flex gap-10 '>
+            <div className='gap-10 hidden xl:flex'>
               <div className='w-[calc(100%_-_560px)]'>
                 <Info updateProfile={updateProfile} />
                 <Quest />
@@ -60,6 +60,12 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
                 <Analytic />
                 <LeaderBoard />
               </div>
+            </div>
+            <div className='flex flex-col gap-5'>
+              <Info updateProfile={updateProfile} />
+              <Analytic />
+              <Quest />
+              <NFTList />
             </div>
           </>
         )}

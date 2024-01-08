@@ -10,6 +10,7 @@ import useSWR from 'swr'
 import Banner from './assets/banner.png'
 import FooterBg from './assets/nfts-list-footer-background.svg'
 import HeaderBg from './assets/nfts-list-header-background.svg'
+import FilledButton from 'components/core/Button/FilledButton'
 
 export default function NFTList() {
   const { t } = useTranslation()
@@ -26,23 +27,32 @@ export default function NFTList() {
   if (!data || !data.length) {
     return (
       <div className='w-full p-5 rounded-2xl mt-10 bg-[#F2F2F2]'>
-        <div className='text-[#1C1C1C] font-bold text-xl leading-[25px]'>Your NFTs</div>
-        <div className='mt-[10px] flex justify-between'>
-          <div className='pt-5 flex flex-col justify-between'>
+        <div className='text-[#1C1C1C] font-bold leading-5 md:text-xl md:leading-[25px]'>Your NFTs</div>
+        <div className='mt-5 md:mt-[10px] flex justify-between flex-col md:flex-row'>
+          <div className='2xl:pt-5 flex flex-col justify-between'>
             <div>
-              <div className='font-bold leading-5'>You don't have any NFTs in your collection yet.</div>
-              <div className='text-sm leading-[18px] mt-[10px]'>You can earn NFTs by completing quest</div>
+              <div className='font-bold text-xs leading-[15px] md:text-base md:leading-5'>
+                You don't have any NFTs in your collection yet.
+              </div>
+              <div className='text-xs leading-[15px] md:text-sm md:leading-[18px] mt-[5px] md:mt-[10px]'>
+                You can earn NFTs by completing quest
+              </div>
             </div>
-            <div>
+            <div className='hidden md:block'>
               <Link
                 href='/campaigns'
                 className='block w-fit bg-primary-color text-lg leading-6 px-8 py-3 rounded-[20px] font-bold'>
-                Go to quests
+                Go to campaign
               </Link>
             </div>
           </div>
-          <div>
-            <Image src={Banner} alt='' className='rounded-[10px] w-[500px] aspect-[5/2] object-cover' />
+          <Image src={Banner} alt='' className='rounded-[10px] md:max-w-[500px] md:w-1/2 aspect-[5/2] object-cover my-[10px] md:my-0 w-full max-w-none' />
+          <div className='md:hidden'>
+            <FilledButton
+              href='/campaigns'
+              className='block w-full text-center bg-primary-color text-lg leading-6 px-8 py-3 rounded-[20px] font-bold'>
+              Go to campaign
+            </FilledButton>
           </div>
         </div>
       </div>

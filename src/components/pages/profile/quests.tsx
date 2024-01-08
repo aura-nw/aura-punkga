@@ -1,20 +1,13 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { Context } from 'src/context'
-import { claimQuest, getAvailableQuests, getQuestDetail } from 'src/services'
+import { Quest } from 'src/models/campaign'
+import { getAvailableQuests } from 'src/services'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import { Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import useSWR from 'swr'
-import DOMPurify from 'dompurify'
-import { Quest } from 'src/models/campaign'
-import moment from 'moment'
-import Modal from 'components/Modal'
-import Spinner from 'components/Spinner'
-import { toast } from 'react-toastify'
-import ClaimNftSuccessModal from 'components/Modal/claimNftSuccess'
+import QuestItem from '../campaigns/questItem'
 
 export default function Quest() {
   const { account } = useContext(Context)
@@ -25,14 +18,9 @@ export default function Quest() {
   )
 
   return (
-    <div className='mt-10'>
+    <div className='md:mt-10'>
       <div className='flex items-center gap-5'>
-        <div className='text-xl leading-[25px] font-bold text-[#1C1C1C]'>Available Quests</div>
-        <Link
-          href='/campaigns'
-          className='px-6 py-2 rounded-full border-2 border-second-color text-second-color font-bold leading-5'>
-          See all
-        </Link>
+        <div className='text-base md:text-xl leading-5 md:leading-[25px] font-bold text-[#1C1C1C]'>Available Quests</div>
       </div>
       {!!data?.length && (
         <div className='w-full relative mt-5 h-[244px]'>
@@ -110,194 +98,5 @@ export default function Quest() {
         </div>
       )}
     </div>
-  )
-}
-const QuestItem = ({ quest }: { quest: Quest }) => {
-  const [open, setOpen] = useState(false)
-  const [successModalOpen, setSuccessModalOpen] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [isClaimed, setIsClaimed] = useState<number | undefined>()
-  const { account, getProfile } = useContext(Context)
-  const { data: questDetail } = useSWR(
-    {
-      key: 'get_quest_detail',
-      questId: quest.id,
-      accountId: account?.id,
-      open,
-    },
-    ({ questId, accountId, open }) => (open ? getQuestDetail(questId, accountId) : null),
-    { refreshInterval: 5000 }
-  )
-
-  useEffect(() => {
-    if (questDetail?.reward_status != undefined) {
-      setIsClaimed(questDetail?.reward_status)
-    }
-  }, [questDetail?.reward_status])
-
-  const mission = quest.requirement.read
-    ? `Read ${quest.requirement.read?.manga?.title} - ${quest.requirement.read?.chapter?.title}`
-    : quest.requirement.comment
-    ? `Leave a comment on ${quest.requirement.comment?.manga?.title} - ${quest.requirement.comment?.chapter?.title}`
-    : `Subcribe to ${quest.requirement?.subscribe?.manga?.title}` + ' to claim your reward'
-  const conditions = ''
-  const pageLink =
-    quest.requirement.comment || quest.requirement.read
-      ? `/comic/${(quest.requirement.comment || quest.requirement.read).manga?.slug}/chapter/${
-          (quest.requirement.comment || quest.requirement.read).chapter?.number
-        }`
-      : `/comic/${quest.requirement.subscribe.manga?.slug}/chapter/1`
-
-  const claimQuestHandler = async () => {
-    try {
-      if (loading) return
-      setLoading(true)
-      const res = await claimQuest(quest.id)
-      await getProfile()
-      if (res) {
-        if (quest.reward.xp) {
-          toast(`${quest.reward.xp} XP claimed`, {
-            type: 'success',
-            position: toast.POSITION.BOTTOM_RIGHT,
-            hideProgressBar: true,
-            autoClose: 3000,
-          })
-        }
-        setIsClaimed(2)
-        setOpen(false)
-        setSuccessModalOpen(true)
-      }
-      setLoading(false)
-    } catch (error) {
-      setLoading(false)
-      console.error(error)
-    }
-  }
-  return (
-    <>
-      {quest.reward?.nft && (
-        <ClaimNftSuccessModal
-          open={successModalOpen}
-          setOpen={setSuccessModalOpen}
-          image={quest.reward.nft.img_url}
-          name={quest.reward.nft.nft_name}
-        />
-      )}
-      <Modal open={open} setOpen={setOpen} onClose={() => setOpen(false)} hideClose>
-        <div className='bg-[#f4f4f4] p-8 rounded-[10px] w-[656px]'>
-          <div className='flex flex-col gap-[26px]'>
-            <div className='flex flex-col gap-4'>
-              <div className='flex justify-between'>
-                <div className='font-bold flex flex-col gap-5'>
-                  <div>{quest.name}</div>
-                  <div className='border border-second-color p-2 rounded text-sm leading-3 font-medium w-fit uppercase'>
-                    {quest.type}
-                  </div>
-                </div>
-                {quest.reward.nft ? (
-                  <div className='border border-second-color bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium w-[66px] h-[66px]'>
-                    <Image
-                      src={quest.reward.nft.img_url}
-                      width={66}
-                      height={66}
-                      alt=''
-                      className='object-cover w-full h-full'
-                    />
-                  </div>
-                ) : (
-                  <div className='border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium whitespace-nowrap h-fit'>
-                    <span className='text-second-color font-bold'>{quest.reward.xp}</span> XP
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className='flex flex-col gap-5'>
-              {quest.description ? (
-                <div
-                  className='text-xs text-subtle-dark whitespace-pre-wrap'
-                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(quest?.description) }}></div>
-              ) : (
-                <div></div>
-              )}
-              <div className='text-xs font-bold text-subtle-dark'>{mission}</div>
-            </div>
-            <Link
-              href={pageLink}
-              className='p-3 hover:bg-[#DEDEDE] rounded-[20px] text-center outline-none'
-              target='_blank'>
-              <div className='underline font-bold text-[#414141]'>Go to page</div>
-            </Link>
-            {isClaimed == 2 ? (
-              <button className='p-3 bg-[#ababab] rounded-[20px] pointer-events-none'>
-                <div className='font-bold text-[#414141]'>Claimed</div>
-              </button>
-            ) : isClaimed == 1 ? (
-              <button
-                className='p-3 bg-primary-color rounded-[20px] flex gap-2 items-center justify-center'
-                onClick={claimQuestHandler}>
-                {loading && (
-                  <span>
-                    <Spinner className={` h-5 w-5`} />
-                  </span>
-                )}
-                <div className='font-bold text-[#414141]'>Claim reward</div>
-              </button>
-            ) : isClaimed == 0 ? (
-              <button className='p-3 bg-[#ababab] rounded-[20px] pointer-events-none'>
-                <div className='font-bold text-[#414141]'>Claim reward</div>
-              </button>
-            ) : (
-              <button className='p-3 bg-[#ababab] rounded-[20px] pointer-events-none'>
-                <span>
-                  <Spinner className={` h-6 w-6`} />
-                </span>
-              </button>
-            )}
-          </div>
-        </div>
-      </Modal>
-      <div
-        className='relative mx-auto w-[380px] h-[244px] px-8 py-4 rounded-[10px] border border-[#DEDEDE] flex flex-col justify-between cursor-pointer'
-        onClick={() => setOpen(true)}>
-        <div>
-          <div className='flex gap-7 min-h-[40px] w-full justify-between'>
-            <div className='font-bold leading-5 line-clamp-2'>{`${quest.name}`}</div>
-            {quest.reward.nft ? (
-              <div className='border border-second-color bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium w-[38px] h-[38px] shrink-0'>
-                <Image
-                  src={quest.reward.nft.img_url}
-                  width={38}
-                  height={38}
-                  alt=''
-                  className='object-cover w-full h-full'
-                />
-              </div>
-            ) : (
-              <div className='border border-second-color p-2 bg-[#1FAB5E]/10 rounded text-sm leading-3 font-medium  whitespace-nowrap h-fit'>
-                <span className='text-second-color font-bold'>{quest.reward.xp}</span> XP
-              </div>
-            )}
-          </div>
-          {quest.description ? (
-            <div
-              className='text-xs text-subtle-dark whitespace-pre-wrap mt-5 line-clamp-2'
-              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(quest.description) }}></div>
-          ) : (
-            <div></div>
-          )}
-          {conditions ? (
-            <div className='text-xs text-second-color font-medium mt-5'>
-              <span className='font-bold'>CONDITION: </span>
-              {conditions}
-            </div>
-          ) : (
-            <div></div>
-          )}
-        </div>
-        <div className='border border-second-color p-2 rounded text-sm leading-3 font-medium w-fit uppercase'>
-          {quest.type}
-        </div>
-      </div>
-    </>
   )
 }
