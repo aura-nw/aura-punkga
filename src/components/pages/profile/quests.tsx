@@ -56,7 +56,13 @@ export default function Quest() {
                 prevEl: '.swiper-prev',
               }}
               breakpoints={{
-                1500: {
+                1000: {
+                  slidesPerView: 2,
+                },
+                1280: {
+                  slidesPerView: 1,
+                },
+                1536: {
                   slidesPerView: 2,
                 },
               }}
