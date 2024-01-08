@@ -203,15 +203,17 @@ function CampaignDetail({}) {
               </p>
               <div className='flex gap-[30px] justify-center items-start'>
                 {data?.reward?.nft_name && (
-                  <div className=' w-[160px] h-[160px] flex flex-col gap-[10px] justify-center'>
+                  <div className='flex flex-col gap-[10px] justify-center'>
                     <Image
                       src={data?.reward.img_url || NoImage}
                       width={200}
                       height={200}
                       alt=''
-                      className=' w-[160px] h-[160px] rounded-lg object-cover'
+                      className=' w-[160px] h-[160px] lg:w-[220px] lg:h-[220px] rounded-lg object-cover'
                     />
-                    <p className='text-center text-sm text-[#61646B]'>{data.reward.nft_name}</p>
+                    <p className='text-center text-sm text-[#61646B] max-w-[160px] lg:max-w-[220px] line-clamp-2'>
+                      {data.reward.nft_name}
+                    </p>
                   </div>
                 )}
                 {!!data.reward.xp && (
@@ -238,7 +240,7 @@ function CampaignDetail({}) {
             </div>
             {/* Leaderboard  */}
             <div>
-              <LeaderBoard/>
+              <LeaderBoard />
               {/* <LeaderBoard/> */}
             </div>
           </div>
