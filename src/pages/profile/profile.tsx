@@ -61,7 +61,7 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
                 <LeaderBoard />
               </div>
             </div>
-            <div className='flex flex-col gap-5'>
+            <div className='flex flex-col gap-5 xl:hidden'>
               <Info updateProfile={updateProfile} />
               <Analytic />
               <Quest />
@@ -130,6 +130,9 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
             )}
           </div>
         </div>
+      </div>
+      <div className='pk-container xl:hidden'>
+        <LeaderBoard />
       </div>
       <Footer />
     </>
