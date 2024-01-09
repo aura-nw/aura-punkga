@@ -21,11 +21,10 @@ export default function LeaderBoard() {
     },
     { refreshInterval: 10000 }
   )
-  console.log(data)
   return (
     <div className='overflow-auto'>
       <div className='bg-[#f0f0f0] rounded-[10px] mt-10 min-w-[380px]'>
-        <div className='py-4 px-[32px] w-full h-full flex flex-col'>
+        <div className='py-3 md:py-4 px-4 md:px-[32px] w-full h-full flex flex-col'>
           <div className='flex'>
             <div
               className={`leading-5 md:text-xl md:leading-[25px] cursor-pointer font-bold w-full text-center  pb-[2px] mb-2 md:mb-3 ${
@@ -92,7 +91,7 @@ export default function LeaderBoard() {
                       <Popover freeMode popoverRender={() => <ProfileCard hideEmail data={item.authorizer_user} />}>
                         <div className='flex py-1 md:py-[6px] px-4 md:px-[18px] text-xs leading-[15px] md:text-sm md:leading-[18px] items-center'>
                           <div className='w-[24px] md:w-9 mr-[10px]'>#{index + 1}</div>
-                          <div className='flex items-center gap-[5px] md:gap-[10px] justify-self-start w-full min-w-[150px]'>
+                          <div className='flex items-center gap-[5px] md:gap-[10px] justify-self-start w-full min-w-[80px] md:min-w-[150px]'>
                             <Image
                               className='w-6 h-6 md:w-7 md:h-7 rounded-full'
                               width={28}
