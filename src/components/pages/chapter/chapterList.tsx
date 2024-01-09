@@ -20,6 +20,7 @@ import { useContext, useEffect, useState } from 'react'
 import m6 from 'src/assets/images/mockup6.png'
 import { CHAPTER_STATUS, CHAPTER_TYPE } from 'src/constants/chapter.constant'
 import { Context } from 'src/context'
+import { openSignInModal } from 'src/utils'
 
 export default function ChapterList({
   data,
@@ -204,7 +205,7 @@ const Chapter = ({
       }
       setIsLiked(isLike)
     } else {
-      ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+      openSignInModal()
     }
   }
   const unavailable =

@@ -91,3 +91,6 @@ const createRandomString = () => {
   }
   return random
 }
+export const openSignInModal = () => {
+  ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+}

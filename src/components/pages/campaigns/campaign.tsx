@@ -14,6 +14,7 @@ import { Campaign } from 'src/models/campaign'
 import { getCampaigns } from 'src/services'
 import useSWR from 'swr'
 import IllusImage from './assets/illus.svg'
+import { openSignInModal } from 'src/utils'
 export default function Campaign() {
   const { account } = useContext(Context)
   const router = useRouter()
@@ -48,12 +49,12 @@ export default function Campaign() {
       setList([])
     }
   }, [data?.data.campaign, statusFilter.length, rewardNFTChecked, enrolledChecked])
-  const clickHandler = (slug:string) => {
+  const clickHandler = (slug: string) => {
     try {
       if (account) {
         router.push(`/campaigns/${slug}`)
       } else {
-        ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+        openSignInModal()
       }
     } catch (error) {
       console.log(error)
@@ -78,7 +79,13 @@ export default function Campaign() {
               <Checkbox
                 label={'Enrolled'}
                 checked={enrolledChecked}
-                onClick={() => setEnrolledChecked(!enrolledChecked)}
+                onClick={() => {
+                  if (account) {
+                    setEnrolledChecked(!enrolledChecked)
+                  } else {
+                    openSignInModal()
+                  }
+                }}
               />
             </div>
           </div>

@@ -22,6 +22,7 @@ import { IComicDetail } from 'src/models/comic'
 import { subscribe, unsubscribe } from 'src/services'
 import ChapterList from './chapterList'
 import NFTList from './nftList'
+import { openSignInModal } from 'src/utils'
 
 export default function ComicDetail({
   data,
@@ -73,7 +74,7 @@ export default function ComicDetail({
       }
       setIsSubscribe(isSub)
     } else {
-      ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+      openSignInModal()
     }
   }
 

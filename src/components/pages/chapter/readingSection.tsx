@@ -35,6 +35,7 @@ import { Context } from 'src/context'
 import { IChapter } from 'src/models/chapter'
 import { IComicDetail } from 'src/models/comic'
 import { subscribe, unsubscribe } from 'src/services'
+import { openSignInModal } from 'src/utils'
 import { getItem, setItem } from 'src/utils/localStorage'
 export default function ReadingSection({
   openComments,
@@ -87,7 +88,7 @@ export default function ReadingSection({
       }
       setIsSubscribe(isSub)
     } else {
-      ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+      openSignInModal()
     }
   }
 

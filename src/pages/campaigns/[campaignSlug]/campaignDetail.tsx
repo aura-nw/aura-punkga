@@ -23,6 +23,7 @@ import {
 } from 'src/services'
 import useSWR, { useSWRConfig } from 'swr'
 import QuestList from './questList'
+import { openSignInModal } from 'src/utils'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -63,7 +64,7 @@ function CampaignDetail({}) {
   }, [account])
   useEffect(() => {
     if (data && !account) {
-      ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+      openSignInModal()
     }
   }, [account, data])
   const fetchData = async () => {
@@ -80,7 +81,7 @@ function CampaignDetail({}) {
   const enrollHandler = async () => {
     try {
       if (!account) {
-        ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+        openSignInModal()
       } else {
         setEnrollLoading(true)
         const res = await enrollCampaign(data.id)
@@ -257,10 +258,32 @@ function CampaignDetail({}) {
                 )
               ) : null}
             </div>
-            {/* Leaderboard  */}
             <div>
-              <LeaderBoard data={leaderboardData} />
-              {/* <LeaderBoard/> */}
+              {isEnrolled ? (
+                <LeaderBoard data={leaderboardData} />
+              ) : (
+                <div className='overflow-auto'>
+                  <div className='bg-[#f0f0f0] rounded-[10px] mt-10 min-w-[300px] md:min-w-[400px]'>
+                    <div className='py-3 md:py-4 px-4 md:px-[32px] w-full h-full flex flex-col'>
+                      <div
+                        className={`leading-5 md:text-xl md:leading-[25px] cursor-pointer font-bold w-full text-center  pb-[2px] mb-2 md:mb-3 text-[#414141] border-[#414141] border-b-[3px]`}>
+                        Leaderboard
+                      </div>
+                      <div className='flex px-[6px] py-2 md:px-[18px] md:py-[11px] border-b-[1px] border-medium-gray text-subtle-dark font-bold text-xs leading-[15px] md:text-sm md:leading-[18px]'>
+                        <div className='mr-14 md:mr-[70px]'>Rank</div>
+                        <div className='w-full'>User</div>
+                        <div className='w-[98px] md:w-[88px] shrink-0 text-center'>Level</div>
+                        <div className='w-12 shrink-0 text-center'>XP</div>
+                      </div>
+                      <div className='h-[405px] md:h-[484px] flex flex-col relative'>
+                        <div className={`absolute inset-0  gap-2 flex flex-col text-subtle-dark h-full py-2`}>
+                          <div className='w-full h-full text-center font-semibold text-xs md:text-sm text-black grid place-items-center'>Enroll to view leaderboard</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <div>

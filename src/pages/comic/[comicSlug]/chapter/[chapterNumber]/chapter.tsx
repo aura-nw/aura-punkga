@@ -17,6 +17,7 @@ import { IChapter } from 'src/models/chapter'
 import { IComicDetail } from 'src/models/comic'
 import { IComment } from 'src/models/comment'
 import { readChapter } from 'src/services'
+import { openSignInModal } from 'src/utils'
 import { getItem, setItem } from 'src/utils/localStorage'
 const Chapter: React.FC = ({
   comicDetails,
@@ -149,7 +150,7 @@ const Chapter: React.FC = ({
       }
       setIsLiked(isLike)
     } else {
-      ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+      openSignInModal()
     }
   }
 
