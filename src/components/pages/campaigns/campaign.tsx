@@ -39,7 +39,7 @@ export default function Campaign() {
           : 'Ended'
         return (
           ((statusFilter.length && statusFilter.includes(campaignStatus)) || !statusFilter.length) &&
-          (!rewardNFTChecked || campaign.reward?.nft.nft_name) &&
+          (!rewardNFTChecked || campaign.reward?.nft?.nft_name) &&
           (!enrolledChecked || !!campaign.campaign_user.length)
         )
       })

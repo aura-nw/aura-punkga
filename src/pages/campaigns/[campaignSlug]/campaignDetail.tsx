@@ -40,8 +40,8 @@ function CampaignDetail({}) {
   const { mutate } = useSWRConfig()
   const { t } = useTranslation()
   const { data: authData } = useSWR(
-    { key: 'fetch_campaign_auth_data', slug },
-    ({ key, slug }) => getCampaignAuthorizedData(slug),
+    { key: 'fetch_campaign_auth_data', slug, account },
+    ({ key, slug, account }) => (account ? getCampaignAuthorizedData(slug) : null),
     {
       refreshInterval: 60000,
     }
@@ -61,6 +61,11 @@ function CampaignDetail({}) {
   useEffect(() => {
     fetchData()
   }, [account])
+  useEffect(() => {
+    if (data && !account) {
+      ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+    }
+  }, [account, data])
   const fetchData = async () => {
     try {
       const data = await getCampaignDetail(slug)
@@ -176,9 +181,13 @@ function CampaignDetail({}) {
                 <span className='h-5 w-[1px] hidden lg:inline-block bg-[#F0F0F0]'></span>
                 <div>Ends: {moment(data.end_date).format('HH:mm DD/MM/yyyy')}</div>
                 <span className='h-5 w-[1px] hidden lg:inline-block bg-[#F0F0F0]'></span>
-                <div className='lg:block hidden'>{`${data?.participants?.aggregate?.count} participants`}</div>
+                <div className='lg:block hidden'>{`${data?.participants?.aggregate?.count} ${
+                  data?.participants?.aggregate?.count < 2 ? 'participant' : 'participants'
+                }`}</div>
               </div>
-              <div className='lg:hidden'>{`${data?.participants?.aggregate?.count} participants`}</div>
+              <div className='lg:hidden'>{`${data?.participants?.aggregate?.count} ${
+                data?.participants?.aggregate?.count < 2 ? 'participant' : 'participants'
+              }`}</div>
             </div>
             <div
               className={` text-[#61646B] text-sm leading-[18px] lg:text-base lg:leading-5 ${
@@ -234,7 +243,7 @@ function CampaignDetail({}) {
                 )}
               </div>
               {isEnrolled ? (
-                isEnded && account.id == leaderboardData[0].id ? (
+                isEnded && account?.id == leaderboardData[0].id ? (
                   <FilledButton
                     loading={claimLoading}
                     className='w-full lg:p-3 lg:rounded-[20px] lg:text-base lg:leading-6'
