@@ -13,13 +13,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Context } from 'src/context'
 import { Campaign } from 'src/models/campaign'
-import {
-  claimCampaignReward,
-  enrollCampaign,
-  getCampaignAuthorizedData,
-  getCampaignDetail,
-  getCampaignLeaderboard,
-} from 'src/services'
+import { claimCampaignReward, enrollCampaign, getCampaignAuthorizedData, getCampaignDetail, getCampaignLeaderboard } from 'src/services'
 import QuestList from './questList'
 import useSWR, { useSWRConfig } from 'swr'
 import LeaderBoard from 'components/pages/campaigns/leaderboard'
@@ -151,7 +145,13 @@ function CampaignDetail({}) {
               </div>
               <div className='hidden lg:block'>
                 {/* Enroll button */}
-                {(isUpcoming || isOngoing) && !isEnrolled ? (
+                {isUpcoming ? (
+                  <div>
+                    <button className='w-full bg-[#ABABAB] text-[#DEDEDE] font-bold leading-[25px] text-xl px-8 text-center pt-3 pb-[14px] rounded-[20px]'>
+                      Enroll now
+                    </button>
+                  </div>
+                ) : isOngoing && !isEnrolled ? (
                   <div>
                     <FilledButton size='lg' loading={enrollLoading} className='w-full' onClick={enrollHandler}>
                       Enroll now
@@ -181,7 +181,13 @@ function CampaignDetail({}) {
               {seeMore ? 'See less' : 'See more'}
             </div>
             {/* Enroll button */}
-            {(isUpcoming || isOngoing) && !isEnrolled ? (
+            {isUpcoming ? (
+              <div className='mt-10 lg:hidden'>
+                <button className='w-full bg-[#ABABAB] text-[#DEDEDE] font-bold leading-5 text-center pt-2 pb-[10px] rounded-full'>
+                  Enroll now
+                </button>
+              </div>
+            ) : isOngoing && !isEnrolled ? (
               <div className='mt-10 lg:hidden'>
                 <FilledButton loading={enrollLoading} className='w-full' onClick={enrollHandler}>
                   Enroll now
