@@ -420,6 +420,6 @@ export const answerQuest = async (questId: string, answer: string) => {
   return data
 }
 export const getCampaignLeaderboard = async (campaignId: string) => {
-  const { data } = await privateAxios.get(`${getConfig().API_URL}/api/rest/public/campaign/${campaignId}/leaderboard`)
+  const { data } = await axios.get(`${getConfig().API_URL}/api/rest/public/campaign/${campaignId}/leaderboard`)
   return data
 }

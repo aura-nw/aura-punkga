@@ -4,18 +4,8 @@ import Popover from 'components/Popover'
 import Image from 'next/image'
 import { useContext } from 'react'
 import { Context } from 'src/context'
-import { getLeaderboard } from 'src/services'
-import useSWR from 'swr'
-export default function LeaderBoard() {
+export default function LeaderBoard({ data }: { data: any[] }) {
   const { account } = useContext(Context)
-  const { data } = useSWR(
-    'get_leaderboard',
-    async () => {
-      const data = await getLeaderboard()
-      return data?.user_level || []
-    },
-    { refreshInterval: 10000 }
-  )
   return (
     <div className='overflow-auto'>
       <div className='bg-[#f0f0f0] rounded-[10px] mt-10 min-w-[300px] md:min-w-[400px]'>
@@ -34,7 +24,9 @@ export default function LeaderBoard() {
             <div className={`absolute inset-0  gap-2 flex flex-col text-subtle-dark h-full py-2`}>
               {data?.map((item, index) => (
                 <div key={index} className='cursor-pointer bg-white rounded-[10px]'>
-                  <Popover freeMode popoverRender={() => <ProfileCard hideEmail data={item.authorizer_user} />}>
+                  <Popover
+                    freeMode
+                    popoverRender={() => <ProfileCard hideEmail data={item.user_campaign_authorizer_user} />}>
                     <div className='flex py-1 md:py-[6px] px-4 md:px-[18px] text-xs leading-[15px] md:text-sm md:leading-[18px] items-center'>
                       <div className='w-[24px] md:w-9 mr-[10px]'>#{index + 1}</div>
                       <div className='flex items-center gap-[5px] md:gap-[10px] justify-self-start w-full min-w-[80px] md:min-w-[150px]'>
@@ -42,13 +34,13 @@ export default function LeaderBoard() {
                           className='w-6 h-6 md:w-7 md:h-7 rounded-full'
                           width={28}
                           height={28}
-                          src={item.authorizer_user.picture || Avatar}
+                          src={item.user_campaign_authorizer_user.picture || Avatar}
                           alt=''
                         />
-                        <div className='truncate'>{item.authorizer_user.nickname}</div>
+                        <div className='truncate'>{item.user_campaign_authorizer_user.nickname}</div>
                       </div>
-                      <div className='w-[98px] md:w-[88px] shrink-0 text-center'>{item.level || 0}</div>
-                      <div className='w-12 shrink-0 text-center'>{item.xp}</div>
+                      <div className='w-[98px] md:w-[88px] shrink-0 text-center'>{item.user_campaign_authorizer_user.levels[0].level || 0}</div>
+                      <div className='w-12 shrink-0 text-center'>{item.total_reward_xp}</div>
                     </div>
                   </Popover>
                 </div>

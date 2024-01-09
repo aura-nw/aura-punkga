@@ -3,6 +3,7 @@ import Footer from 'components/Footer'
 import Header from 'components/Header'
 import StatusLabel from 'components/Label/Status'
 import IllusImage from 'components/pages/campaigns/assets/illus.svg'
+import LeaderBoard from 'components/pages/campaigns/leaderboard'
 import DOMPurify from 'dompurify'
 import NoImage from 'images/no_img.png'
 import moment from 'moment'
@@ -13,10 +14,15 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Context } from 'src/context'
 import { Campaign } from 'src/models/campaign'
-import { claimCampaignReward, enrollCampaign, getCampaignAuthorizedData, getCampaignDetail, getCampaignLeaderboard } from 'src/services'
-import QuestList from './questList'
+import {
+  claimCampaignReward,
+  enrollCampaign,
+  getCampaignAuthorizedData,
+  getCampaignDetail,
+  getCampaignLeaderboard,
+} from 'src/services'
 import useSWR, { useSWRConfig } from 'swr'
-import LeaderBoard from 'components/pages/campaigns/leaderboard'
+import QuestList from './questList'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -41,13 +47,17 @@ function CampaignDetail({}) {
     }
   )
   const { data: leaderboardData } = useSWR(
-    { key: 'fetch_campaign_leaderboard_data', id: authData?.id },
-    ({ key, id }) => (id ? getCampaignLeaderboard(id) : null),
-    {
-      refreshInterval: 60000,
-    }
+    { key: `get_leaderboard_${data?.id}`, id: data?.id },
+    async ({ id }) => {
+      if (id) {
+        const data = await getCampaignLeaderboard(id)
+        return data?.user_campaign || []
+      } else {
+        return []
+      }
+    },
+    { refreshInterval: 10000 }
   )
-  console.log(leaderboardData)
   useEffect(() => {
     fetchData()
   }, [account])
@@ -224,7 +234,7 @@ function CampaignDetail({}) {
                 )}
               </div>
               {isEnrolled ? (
-                isEnded ? (
+                isEnded && account.id == leaderboardData[0].id ? (
                   <FilledButton
                     loading={claimLoading}
                     className='w-full lg:p-3 lg:rounded-[20px] lg:text-base lg:leading-6'
@@ -240,7 +250,7 @@ function CampaignDetail({}) {
             </div>
             {/* Leaderboard  */}
             <div>
-              <LeaderBoard />
+              <LeaderBoard data={leaderboardData} />
               {/* <LeaderBoard/> */}
             </div>
           </div>
