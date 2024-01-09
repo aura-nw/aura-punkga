@@ -18,7 +18,7 @@ export default function Comic(props: IComic) {
       <div className='hidden md:flex gap-[20px]'>
         <Link
           href={`/comic/${props.slug}`}
-          className=' xl:hidden shrink-0 block max-w-[180px] w-[35%] h-fit aspect-[180/240] mx-auto'>
+          className=' xl:hidden shrink-0 block w-[180px] h-fit aspect-[180/240] mx-auto'>
           <Image
             src={props.image || NoImage}
             alt=''
@@ -29,7 +29,7 @@ export default function Comic(props: IComic) {
         </Link>
         <Link
           href={`/comic/${props.slug}/chapter/1`}
-          className='shrink-0 max-w-[180px] w-[35%] h-fit aspect-[180/240] hidden xl:block'>
+          className='shrink-0 w-[180px] h-fit aspect-[180/240] hidden xl:block'>
           <Image
             src={props.image || NoImage}
             alt=''
