@@ -161,7 +161,7 @@ function ContextProvider({ children }) {
   const oauth = async (provider: string, callback?: (status: string) => void) => {
     try {
       if (provider == 'zalo') {
-        await oauthLogin('zalo')
+        await oauthLogin('zalo', undefined, location.href || config.REDIRECT_URL)
       } else {
         await authorizerRef.oauthLogin(provider)
       }
