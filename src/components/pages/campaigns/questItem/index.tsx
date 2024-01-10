@@ -57,7 +57,7 @@ export default function QuestItem({ quest }: { quest: Quest }) {
   return (
     <>
       <Modal open={open} setOpen={setOpen}>
-        <div className='p-5 pt-10 min-w-[360px] max-w-[600px] lg:grid-cols-[1fr_173px] lg:grid lg:gap-x-10 lg:grid-rows-[auto_1fr]'>
+        <div className='p-5 pt-10 min-w-[360px] max-w-[600px] lg:grid-cols-[1fr_190px] lg:grid lg:gap-x-10 lg:grid-rows-[auto_1fr]'>
           <div>
             <div className='text-xs lg:text-sm leading-[15px] lg:leading-[18px] font-semibold'>
               {quest.repeat == 'Daily' && (
@@ -107,18 +107,18 @@ export default function QuestItem({ quest }: { quest: Quest }) {
                     alt=''
                     width={180}
                     height={180}
-                    className='w-[160px] h-[160px] rounded-lg'
+                    className='w-[160px] h-[160px] rounded-lg object-contain'
                   />
                   <div className='text-sm lg:text-base leading-[18px] lg:leading-5 text-subtle-dark'>
                     {quest.reward.nft.nft_name}
                   </div>
                   <div className='w-[160px] h-[1px] bg-light-medium-gray'></div>
                   <div className='flex gap-2 items-center'>
-                    <div className='text-second-color text-sm leading-[18px] lg:text-lg lg:leading-[23px] font-bold'>{`+ ${quest.reward.xp} XP`}</div>
+                    <div className='text-second-color text-sm leading-[18px] lg:text-lg lg:leading-[23px] font-bold text-center'>{`+${quest.reward.xp} XP`}</div>
                     {!!quest.reward.slots && (
                       <>
                         <div className='w-[1px] h-[26px] bg-light-medium-gray'></div>
-                        <div className='flex flex-col items-center text-[10px] leading-[13px] lg:text-xs lg:leading-[15px]'>
+                        <div className='flex flex-col items-center text-[10px] leading-[13px] lg:text-xs lg:leading-[15px] whitespace-nowrap'>
                           <div>{`${quest.quest_reward_claimed}/${quest.reward.slots}`}</div>
                           <div>rewards claimed</div>
                         </div>
@@ -276,7 +276,7 @@ export default function QuestItem({ quest }: { quest: Quest }) {
                   width={80}
                   height={80}
                   alt=''
-                  className='w-[80px] h-[80px] rounded-lg mt-1'
+                  className='w-[80px] h-[80px] rounded-lg mt-1 object-contain'
                 />
               </div>
               <div className='text-xs leading-[15px] text-[#61646B] max-w-[120px] truncate'>

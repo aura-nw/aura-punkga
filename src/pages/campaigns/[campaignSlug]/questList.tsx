@@ -10,6 +10,32 @@ import QuestItem from '../../../components/pages/campaigns/questItem'
 export default function QuestList({ quests, isEnded }: { quests: undefined | Quest[]; isEnded: boolean }) {
   const [rewardNFTChecked, setRewardNFTChecked] = useState<boolean>(false)
   const [filter, setFilter] = useState<string>()
+  const questList = quests?.map((quest) => {
+    if (quest.reward_status == 'OUT_OF_SLOT') {
+      return {
+        ...quest,
+        weight: 4,
+      }
+    }
+    if (quest.reward_status == 'CLAIMED') {
+      return {
+        ...quest,
+        weight: 3,
+      }
+    }
+    if (!quest.unlock) {
+      return {
+        ...quest,
+        weight: 2,
+      }
+    }
+    if (quest.unlock) {
+      return {
+        ...quest,
+        weight: 1,
+      }
+    }
+  })
   return (
     <div className='mt-10'>
       <div className='lg:flex lg:items-center lg:flex-wrap lg:justify-between'>
@@ -91,7 +117,9 @@ export default function QuestList({ quests, isEnded }: { quests: undefined | Que
         </div>
       ) : (
         <div className='grid grid-cols-1 2xl:grid-cols-2 gap-5 mt-5'>
-          {quests
+          {questList
+            .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+            .sort((a, b) => a.weight - b.weight)
             .filter((quest) =>
               filter ? quest.repeat == filter : true && rewardNFTChecked ? !!quest.reward.nft?.nft_name : true
             )

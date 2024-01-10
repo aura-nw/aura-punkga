@@ -26,6 +26,7 @@ export type Quest = {
   reward_status: 'NOT_SATISFY' | 'CAN_CLAIM' | 'CLAIMED' | 'OUT_OF_SLOT'
   status: string
   name: string
+  created_at: string
   unlock: boolean
   description?: string
   quest_reward_claimed: number
