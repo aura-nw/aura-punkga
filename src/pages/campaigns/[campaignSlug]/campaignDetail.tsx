@@ -130,7 +130,6 @@ function CampaignDetail({}) {
       console.error(error)
     }
   }
-
   if (!data) return null
 
   const isEnded = moment(data.end_date).isBefore()

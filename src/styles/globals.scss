@@ -208,14 +208,12 @@ input[type='number'] {
   mask-repeat: no-repeat;
 }
 .Toastify__toast--success {
-  background: #f6fff9 !important;
-  color: #61646b !important;
+  background: #1FAB5E !important;
+  color: #fff !important;
   font-family: inherit !important;
-  font-weight: 700;
-  border: 1px solid #48c1b5;
-  border-radius: 10px !important;
+  border-radius: 8px 0px 0px 8px !important;
   align-items: center !important;
-  padding: 20px !important;
+  padding: 24px 16px !important;
   margin-bottom: 0px !important;
 }
 .Toastify__toast--error {
@@ -228,9 +226,11 @@ input[type='number'] {
   margin-bottom: 0px !important;
 }
 .Toastify__toast-icon {
-  display: none !important;
+  --toastify-icon-color-success: #C6FFDE;
+  --toastify-icon-color-error: #FFBE99;
 }
 .Toastify__close-button {
+  display: none !important;
   margin-top: auto;
   margin-bottom: auto;
 }
