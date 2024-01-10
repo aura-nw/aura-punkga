@@ -129,7 +129,7 @@ export default function Campaign() {
         {list?.map((campaign, index) => (
           <div
             key={index}
-            className='px-4 py-3 flex gap-5 bg-[#F2F2F2] rounded-[10px] min-h-[180px]'
+            className='cursor-pointer px-4 py-3 flex gap-5 bg-[#F2F2F2] lg:bg-white lg:border lg:border-[#DEDEDE] rounded-[10px] min-h-[180px] hover:bg-[#F2F2F2] [&_.reward]:hover:bg-white'
             onClick={() => clickHandler(campaign.slug)}>
             <div className='flex flex-col justify-between flex-1'>
               <div className='flex flex-col'>
@@ -210,7 +210,7 @@ export default function Campaign() {
                 )}
               </div>
             </div>
-            <div className='rounded-lg bg-white pt-[6px] px-[10px] pb-2 min-w-[140px] shrink-0 h-fit flex flex-col'>
+            <div className='reward rounded-lg bg-white lg:bg-[#F0F0F0] pt-[6px] px-[10px] pb-2 min-w-[140px] shrink-0 h-fit flex flex-col'>
               <div className='text-xs text-[#61646B] text-center md:leading-[15px]'>
                 Bonus to <br className='md:block hidden' /> 👑 1st place
               </div>
