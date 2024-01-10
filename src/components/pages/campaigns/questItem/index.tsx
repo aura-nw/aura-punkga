@@ -201,12 +201,12 @@ export default function QuestItem({ quest }: { quest: Quest }) {
         </div>
       </Modal>
       <div
-        className={`bg-[#F2F2F2] lg:bg-white lg:border lg:border-light-medium-gray rounded-[10px] p-4 flex gap-[10px] min-h-[160px] relative ${
+        className={`bg-[#F2F2F2] lg:bg-white lg:border lg:border-light-medium-gray  rounded-[10px] p-4 flex gap-[10px] min-h-[160px] relative ${
           quest.unlock &&
           (quest.reward_status == 'CAN_CLAIM' ||
             quest.reward_status == 'NOT_SATISFY' ||
             (quest.reward_status == 'CLAIMED' && quest.repeat == 'Daily'))
-            ? 'cursor-pointer'
+            ? 'cursor-pointer hover:bg-[#F2F2F2] [&_.reward]:hover:bg-white'
             : null
         }`}
         onClick={() =>
@@ -306,7 +306,7 @@ export default function QuestItem({ quest }: { quest: Quest }) {
           ) : null}
         </div>
         <div
-          className={`w-[140px] max-h-[130px] shrink-0 bg-white lg:bg-[#F0F0F0] rounded-lg px-[10px] pt-[6px] pb-2 relative ${
+          className={`reward w-[140px] max-h-[130px] shrink-0 bg-white lg:bg-[#F0F0F0] rounded-lg px-[10px] pt-[6px] pb-2 relative ${
             quest.reward_status == 'OUT_OF_SLOT' ? 'opacity-20' : ''
           }`}>
           {quest.reward.nft?.nft_name ? (
