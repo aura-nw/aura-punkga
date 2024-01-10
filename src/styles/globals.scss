@@ -23,6 +23,7 @@
 a {
   cursor: pointer;
 }
+a, button {outline : none!important;}
 .slick-list {
   overflow: hidden;
   .slick-slide > div > div {

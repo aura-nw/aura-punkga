@@ -181,7 +181,7 @@ export default function QuestItem({ quest }: { quest: Quest }) {
         }>
         <div className='flex-1 flex flex-col justify-between relative'>
           <div className='flex flex-col justify-between h-[68px] lg:h-[76px]'>
-            <div className='text-xs leading-[15px] lg:text-base lg:leading-5 font-bold min-h-[32px] lg:min-h-[48px] line-clamp-2'>
+            <div className='text-xs leading-[15px] lg:text-base lg:leading-5 font-bold line-clamp-2'>
               {quest.repeat == 'Daily' && (
                 <span className='bg-[#E2D8FF] text-[#A247FF] font-bold rounded-[3px] lg:rounded-md px-2 pb-[1px] lg:pt-[2px] lg:pb-1 lg:font-semibold text-[10px] lg:text-sm leading-[13px] lg:leading-[18px] mr-[5px]'>
                   Daily
