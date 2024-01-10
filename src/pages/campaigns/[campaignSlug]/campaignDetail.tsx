@@ -244,7 +244,7 @@ function CampaignDetail({}) {
                 )}
               </div>
               {isEnrolled ? (
-                isEnded && account?.id == leaderboardData[0].id ? (
+                isEnded && account?.id == leaderboardData[0].user_id ? (
                   <FilledButton
                     loading={claimLoading}
                     className='w-full lg:p-3 lg:rounded-[20px] lg:text-base lg:leading-6'
@@ -277,7 +277,9 @@ function CampaignDetail({}) {
                       </div>
                       <div className='h-[405px] md:h-[484px] flex flex-col relative'>
                         <div className={`absolute inset-0  gap-2 flex flex-col text-subtle-dark h-full py-2`}>
-                          <div className='w-full h-full text-center font-semibold text-xs md:text-sm text-black grid place-items-center'>Enroll to view leaderboard</div>
+                          <div className='w-full h-full text-center font-semibold text-xs md:text-sm text-black grid place-items-center'>
+                            Enroll to view leaderboard
+                          </div>
                         </div>
                       </div>
                     </div>
