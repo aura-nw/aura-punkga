@@ -11,11 +11,11 @@ export default function Modal({ open, setOpen, children, hideClose }: any) {
           as={Fragment}
           enter='ease-out duration-300'
           enterFrom='opacity-0'
-          enterTo='opacity-25'
+          enterTo='opacity-70'
           leave='ease-in duration-200'
-          leaveFrom='opacity-25'
+          leaveFrom='opacity-70'
           leaveTo='opacity-0'>
-          <div className='fixed inset-0 bg-black bg-opacity-50 transition-opacity' />
+          <div className='fixed inset-0 bg-white transition-opacity' />
         </Transition.Child>
 
         <div className='fixed inset-0 z-10 overflow-y-auto'>
@@ -28,12 +28,18 @@ export default function Modal({ open, setOpen, children, hideClose }: any) {
               leave='ease-in duration-200'
               leaveFrom='opacity-100 translate-y-0 sm:scale-100'
               leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'>
-              <Dialog.Panel className='relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8'>
+              <Dialog.Panel className='relative transform overflow-hidden rounded-2xl bg-white text-left shadow-[0px_20px_60px_0px_rgba(0,0,0,0.20)] transition-all sm:my-8'>
                 {!hideClose && (
                   <div
                     className='absolute z-50 right-[15px] top-[15px] cursor-pointer text-gray-600'
                     onClick={() => setOpen(false)}>
-                    <svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14' fill='none' className='w-[14px] h-[14px]'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='14'
+                      height='14'
+                      viewBox='0 0 14 14'
+                      fill='none'
+                      className='w-[14px] h-[14px]'>
                       <path
                         fillRule='evenodd'
                         clipRule='evenodd'
