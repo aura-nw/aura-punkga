@@ -24,6 +24,7 @@ import {
 import useSWR, { useSWRConfig } from 'swr'
 import QuestList from './questList'
 import { openSignInModal } from 'src/utils'
+import Modal from 'components/Modal'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -32,6 +33,7 @@ export default function Page(props) {
 }
 function CampaignDetail({}) {
   const { account } = useContext(Context)
+  const [openClaimSuccessModal, setClaimSuccessModalOpen] = useState(false)
   const [data, setData] = useState<Campaign>()
   const [seeMore, setSeeMore] = useState(false)
   const [enrollLoading, setEnrollLoading] = useState(false)
@@ -114,12 +116,7 @@ function CampaignDetail({}) {
       setClaimLoading(true)
       const res = await claimCampaignReward(data.id)
       if (res) {
-        toast(`Claim successful`, {
-          type: 'success',
-          position: toast.POSITION.BOTTOM_RIGHT,
-          hideProgressBar: true,
-          autoClose: 3000,
-        })
+        setClaimSuccessModalOpen(true)
       }
       setClaimLoading(false)
     } catch (error) {
@@ -143,6 +140,48 @@ function CampaignDetail({}) {
   return (
     <>
       <Header />
+      <Modal open={openClaimSuccessModal} setOpen={() => setClaimSuccessModalOpen(false)}>
+        <div
+          className={`w-[320px] lg:w-[448px] px-10 pb-5 pt-7 flex flex-col items-center ${
+            data?.reward.nft?.nft_name ? 'gap-[10px]' : 'gap-5'
+          } text-sm`}>
+          <div className='leading-[18px] lg:leading-5 font-semibold text-center'>👑 Congratulation!</div>
+          <div>You have received quest reward</div>
+          {data?.reward.nft?.nft_name ? (
+            <div className='flex flex-col items-center'>
+              <div className='mb-[10px]'>
+                <Image
+                  src={data?.reward.nft.img_url || NoImage}
+                  width={80}
+                  height={80}
+                  alt=''
+                  className='w-[200px] h-[200px] lg:w-[240px] lg:h-[240px] rounded-lg object-contain'
+                />
+              </div>
+              <div className='text-sm leading-[18px] lg:text-base lg:leading-5 text-[#414141] max-w-[240px] truncate'>
+                {data?.reward.nft?.nft_name}
+              </div>
+              <div className='bg-[#DEDEDE] w-[240px] lg:w-[288px] h-[1px] my-[10px]'></div>
+              <div className='font-bold text-second-color text-lg leading-[23px] lg:text-3xl lg:leading-[30px] text-center'>
+                {`+ ${data?.reward.xp} XP`}
+              </div>
+            </div>
+          ) : (
+            <div className='flex flex-col items-center'>
+              <div className='mb-5'>
+                <Image
+                  src={IllusImage}
+                  width={80}
+                  height={80}
+                  alt=''
+                  className='w-[200px] h-[200px] lg:w-[240px] lg:h-[240px]'
+                />
+              </div>
+              <div className='font-bold text-second-color text-lg leading-[23px] lg:text-3xl lg:leading-[30px] text-center'>{`+ ${data?.reward.xp} XP`}</div>
+            </div>
+          )}
+        </div>
+      </Modal>
       <div className='pk-container'>
         <div className='py-5 lg:py-16 lg:grid-cols-[1fr_min(50%,520px)] lg:grid lg:gap-x-10 lg:grid-rows-[auto_1fr]'>
           <div>

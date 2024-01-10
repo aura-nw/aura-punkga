@@ -18,6 +18,7 @@ import FreeQuest from './freeQuest'
 import QuizQuest from './quizQuest'
 export default function QuestItem({ quest }: { quest: Quest }) {
   const [open, setOpen] = useState(false)
+  const [openClaimSuccessModal, setClaimSuccessModalOpen] = useState(false)
   const [seeMore, setSeeMore] = useState(false)
   const [loading, setLoading] = useState(false)
   const limitChar = isMobile ? 20 : 30
@@ -31,14 +32,7 @@ export default function QuestItem({ quest }: { quest: Quest }) {
       const res = await claimQuest(quest.id)
       mutate({ key: 'fetch_campaign_auth_data', slug })
       if (res) {
-        if (quest.reward.xp) {
-          toast(`${quest.reward.xp} XP claimed`, {
-            type: 'success',
-            position: toast.POSITION.BOTTOM_RIGHT,
-            hideProgressBar: true,
-            autoClose: 3000,
-          })
-        }
+        setClaimSuccessModalOpen(true)
         setOpen(false)
       }
       setLoading(false)
@@ -159,6 +153,48 @@ export default function QuestItem({ quest }: { quest: Quest }) {
               open={open}
               setOpen={setOpen}
             />
+          )}
+        </div>
+      </Modal>
+      <Modal open={openClaimSuccessModal} setOpen={() => setClaimSuccessModalOpen(false)}>
+        <div
+          className={`w-[320px] lg:w-[448px] px-10 pb-5 pt-7 flex flex-col items-center ${
+            quest?.reward.nft?.nft_name ? 'gap-[10px]' : 'gap-5'
+          } text-sm`}>
+          <div className='leading-[18px] lg:leading-5 font-semibold text-center'>👑 Congratulation!</div>
+          <div>You have received quest reward</div>
+          {quest?.reward.nft?.nft_name ? (
+            <div className='flex flex-col items-center'>
+              <div className='mb-[10px]'>
+                <Image
+                  src={quest?.reward.nft.img_url || NoImage}
+                  width={80}
+                  height={80}
+                  alt=''
+                  className='w-[200px] h-[200px] lg:w-[240px] lg:h-[240px] rounded-lg object-contain'
+                />
+              </div>
+              <div className='text-sm leading-[18px] lg:text-base lg:leading-5 text-[#414141] max-w-[240px] truncate'>
+                {quest?.reward.nft?.nft_name}
+              </div>
+              <div className='bg-[#DEDEDE] w-[240px] lg:w-[288px] h-[1px] my-[10px]'></div>
+              <div className='font-bold text-second-color text-lg leading-[23px] lg:text-3xl lg:leading-[30px] text-center'>
+                {`+ ${quest?.reward.xp} XP`}
+              </div>
+            </div>
+          ) : (
+            <div className='flex flex-col items-center'>
+              <div className='mb-5'>
+                <Image
+                  src={IllusImage}
+                  width={80}
+                  height={80}
+                  alt=''
+                  className='w-[200px] h-[200px] lg:w-[240px] lg:h-[240px]'
+                />
+              </div>
+              <div className='font-bold text-second-color text-lg leading-[23px] lg:text-3xl lg:leading-[30px] text-center'>{`+ ${quest?.reward.xp} XP`}</div>
+            </div>
           )}
         </div>
       </Modal>
