@@ -268,7 +268,7 @@ export default function QuestItem({ quest }: { quest: Quest }) {
           ) : null}
         </div>
         <div
-          className={`w-[140px] max-h-[130px] shrink-0 bg-white rounded-lg px-[10px] pt-[6px] pb-2 relative ${
+          className={`w-[140px] max-h-[130px] shrink-0 bg-white lg:bg-[#F0F0F0] rounded-lg px-[10px] pt-[6px] pb-2 relative ${
             quest.reward_status == 'OUT_OF_SLOT' ? 'opacity-20' : ''
           }`}>
           {quest.reward.nft?.nft_name ? (

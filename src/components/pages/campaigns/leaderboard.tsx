@@ -39,7 +39,7 @@ export default function LeaderBoard({ data }: { data: any[] }) {
                         />
                         <div className='truncate'>{item.user_campaign_authorizer_user.nickname}</div>
                       </div>
-                      <div className='w-[98px] md:w-[88px] shrink-0 text-center'>{item.user_campaign_authorizer_user.levels[0].level || 0}</div>
+                      <div className='w-[98px] md:w-[88px] shrink-0 text-center'>{item.user_campaign_authorizer_user?.levels?.[0]?.level || 0}</div>
                       <div className='w-12 shrink-0 text-center'>{item.total_reward_xp}</div>
                     </div>
                   </Popover>
