@@ -249,7 +249,7 @@ export default function QuestItem({ quest }: { quest: Quest }) {
               Claim Reward
             </FilledButton>
           ) : quest.reward_status == 'OUT_OF_SLOT' ? (
-            <div className='text-xs w-fit bg-[#DEDEDE] leading-[15px] font-bold text-medium-gray px-6 pt-1 pb-[5px] rounded-[20px]'>
+            <div className='text-xs w-fit bg-[#F2F2F2] leading-[15px] font-bold text-[#ABABAB] px-6 pt-1 pb-[5px] rounded-[20px]'>
               Out of reward
             </div>
           ) : quest.reward_status == 'CLAIMED' && quest.repeat == 'Daily' ? (
@@ -267,7 +267,10 @@ export default function QuestItem({ quest }: { quest: Quest }) {
             </div>
           ) : null}
         </div>
-        <div className='w-[140px] max-h-[130px] shrink-0 bg-white rounded-lg px-[10px] pt-[6px] pb-2 relative'>
+        <div
+          className={`w-[140px] max-h-[130px] shrink-0 bg-white rounded-lg px-[10px] pt-[6px] pb-2 relative ${
+            quest.reward_status == 'OUT_OF_SLOT' ? 'opacity-20' : ''
+          }`}>
           {quest.reward.nft?.nft_name ? (
             <div className='flex flex-col items-center'>
               <div className='mb-[10px]'>
