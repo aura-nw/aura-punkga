@@ -267,7 +267,7 @@ function CampaignDetail({}) {
                     <div className='py-3 md:py-4 px-4 md:px-[32px] w-full h-full flex flex-col'>
                       <div
                         className={`leading-5 md:text-xl md:leading-[25px] cursor-pointer font-bold w-full text-center  pb-[2px] mb-2 md:mb-3 text-[#414141] border-[#414141] border-b-[3px]`}>
-                        Leaderboard
+                        Campaign Leaderboard
                       </div>
                       <div className='flex px-[6px] py-2 md:px-[18px] md:py-[11px] border-b-[1px] border-medium-gray text-subtle-dark font-bold text-xs leading-[15px] md:text-sm md:leading-[18px]'>
                         <div className='mr-14 md:mr-[70px]'>Rank</div>
