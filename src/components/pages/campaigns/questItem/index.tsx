@@ -6,7 +6,7 @@ import NoImage from 'images/no_img.png'
 import moment from 'moment'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
 import { isMobile } from 'react-device-detect'
 import { toast } from 'react-toastify'
@@ -16,7 +16,9 @@ import { useSWRConfig } from 'swr'
 import BasicQuest from './basicQuest'
 import FreeQuest from './freeQuest'
 import QuizQuest from './quizQuest'
+import { Context } from 'src/context'
 export default function QuestItem({ quest }: { quest: Quest }) {
+  const { account } = useContext(Context)
   const [open, setOpen] = useState(false)
   const [openClaimSuccessModal, setClaimSuccessModalOpen] = useState(false)
   const [seeMore, setSeeMore] = useState(false)
@@ -30,7 +32,7 @@ export default function QuestItem({ quest }: { quest: Quest }) {
       if (loading) return
       setLoading(true)
       const res = await claimQuest(quest.id)
-      mutate({ key: 'fetch_campaign_auth_data', slug })
+      mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
       if (res) {
         setClaimSuccessModalOpen(true)
         setOpen(false)
@@ -38,7 +40,7 @@ export default function QuestItem({ quest }: { quest: Quest }) {
       setLoading(false)
     } catch (error) {
       setLoading(false)
-      mutate({ key: 'fetch_campaign_auth_data', slug })
+      mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
       toast(`Claim failed`, {
         type: 'error',
         position: toast.POSITION.TOP_RIGHT,
@@ -101,7 +103,7 @@ export default function QuestItem({ quest }: { quest: Quest }) {
                     alt=''
                     width={180}
                     height={180}
-                    className='w-[160px] h-[160px] rounded-lg object-contain'
+                    className='w-[160px] h-[160px] rounded-lg object-contain bg-white'
                   />
                   <div className='text-sm lg:text-base leading-[18px] lg:leading-5 text-subtle-dark'>
                     {quest.reward.nft.nft_name}
@@ -171,7 +173,7 @@ export default function QuestItem({ quest }: { quest: Quest }) {
                   width={80}
                   height={80}
                   alt=''
-                  className='w-[200px] h-[200px] lg:w-[240px] lg:h-[240px] rounded-lg object-contain'
+                  className='w-[200px] h-[200px] lg:w-[240px] lg:h-[240px] rounded-lg object-contain bg-white'
                 />
               </div>
               <div className='text-sm leading-[18px] lg:text-base lg:leading-5 text-[#414141] max-w-[240px] truncate'>
@@ -315,7 +317,7 @@ export default function QuestItem({ quest }: { quest: Quest }) {
                   width={80}
                   height={80}
                   alt=''
-                  className='w-[80px] h-[80px] rounded-lg mt-1 object-contain'
+                  className='w-[80px] h-[80px] rounded-lg mt-1 object-contain bg-white'
                 />
               </div>
               <div className='text-xs leading-[15px] text-[#61646B] max-w-[120px] truncate'>

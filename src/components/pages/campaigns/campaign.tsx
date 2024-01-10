@@ -222,7 +222,7 @@ export default function Campaign() {
                       width={80}
                       height={80}
                       alt=''
-                      className='w-[80px] h-[80px] rounded-lg'
+                      className='w-[80px] h-[80px] rounded-lg object-contain bg-white'
                     />
                   </div>
                   <div className='mt-[6px] md:mt-[9px] mb-1 text-[10px] md:text-xs md:leading-[15px] leading-[13px] text-[#61646B] max-w-[120px] truncate'>

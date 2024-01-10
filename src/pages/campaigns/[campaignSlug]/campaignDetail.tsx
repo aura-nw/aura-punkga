@@ -43,7 +43,7 @@ function CampaignDetail({}) {
   const { mutate } = useSWRConfig()
   const { t } = useTranslation()
   const { data: authData } = useSWR(
-    { key: 'fetch_campaign_auth_data', slug, account },
+    { key: 'fetch_campaign_auth_data', slug, account:account?.id },
     ({ key, slug, account }) => (account ? getCampaignAuthorizedData(slug) : null),
     {
       refreshInterval: 60000,
@@ -88,7 +88,7 @@ function CampaignDetail({}) {
         setEnrollLoading(true)
         const res = await enrollCampaign(data.id)
         await fetchData()
-        mutate({ key: 'fetch_campaign_auth_data', slug })
+        mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
         if (res) {
           toast(`Enroll successful`, {
             type: 'success',
@@ -100,7 +100,7 @@ function CampaignDetail({}) {
         setEnrollLoading(false)
       }
     } catch (error) {
-      mutate({ key: 'fetch_campaign_auth_data', slug })
+      mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
       setEnrollLoading(false)
       toast(`Enroll failed`, {
         type: 'error',
@@ -155,7 +155,7 @@ function CampaignDetail({}) {
                   width={80}
                   height={80}
                   alt=''
-                  className='w-[200px] h-[200px] lg:w-[240px] lg:h-[240px] rounded-lg object-contain'
+                  className='w-[200px] h-[200px] lg:w-[240px] lg:h-[240px] rounded-lg object-contain bg-white'
                 />
               </div>
               <div className='text-sm leading-[18px] lg:text-base lg:leading-5 text-[#414141] max-w-[240px] truncate'>
@@ -268,7 +268,7 @@ function CampaignDetail({}) {
                       width={200}
                       height={200}
                       alt=''
-                      className=' w-[160px] h-[160px] lg:w-[220px] lg:h-[220px] rounded-lg object-cover'
+                      className=' w-[160px] h-[160px] lg:w-[220px] lg:h-[220px] rounded-lg object-contain bg-white'
                     />
                     <p className='text-center text-sm text-[#61646B] max-w-[160px] lg:max-w-[220px] line-clamp-2'>
                       {data.reward?.nft.nft_name}

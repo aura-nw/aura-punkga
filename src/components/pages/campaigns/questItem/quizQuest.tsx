@@ -2,9 +2,10 @@ import FilledButton from 'components/core/Button/FilledButton'
 import _ from 'lodash'
 import moment from 'moment'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
 import { toast } from 'react-toastify'
+import { Context } from 'src/context'
 import { Quest } from 'src/models/campaign'
 import { answerQuest } from 'src/services'
 import { useSWRConfig } from 'swr'
@@ -23,6 +24,7 @@ export default function QuizQuest({
   setOpen: (v: boolean) => void
 }) {
   const { query } = useRouter()
+  const {account} = useContext(Context)
   const slug = query.campaignSlug as string
   const { mutate } = useSWRConfig()
   const [selectedAnswer, setSelectedAnswer] = useState(-1)
@@ -54,7 +56,7 @@ export default function QuizQuest({
           (ans) => ans == quest.requirement.quiz.multiple_choice[0].correct_answer
         )
         setCorrectAnswerIndex(correctIndex)
-        mutate({ key: 'fetch_campaign_auth_data', slug })
+        mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
         setSubmitLoading(false)
       } else {
         setOpen(false)
