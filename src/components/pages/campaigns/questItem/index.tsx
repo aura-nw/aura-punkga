@@ -238,13 +238,17 @@ export default function QuestItem({ quest }: { quest: Quest }) {
               {!!quest.reward.slots && (
                 <>
                   <span className='w-1 h-1 rounded-full bg-[#646464]'></span>
-                  <span>{`${quest.reward.slots} slots`}</span>
+                  <span>{`${quest.reward.slots} slot${quest.reward.slots > 1 ? 's' : ''}`}</span>
                 </>
               )}
             </div>
           </div>
 
-          {!quest.unlock ? (
+          {quest.reward_status == 'OUT_OF_SLOT' ? (
+            <div className='text-xs w-fit bg-[#F2F2F2] leading-[15px] font-bold text-[#ABABAB] px-6 pt-1 pb-[5px] rounded-[20px]'>
+              Out of reward
+            </div>
+          ) : !quest.unlock ? (
             <div className='flex gap-[10px] items-center text-xs leading-[15px] lg:text-sm lg:leading-[18px] text-medium-gray'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -286,10 +290,6 @@ export default function QuestItem({ quest }: { quest: Quest }) {
               }}>
               Claim Reward
             </FilledButton>
-          ) : quest.reward_status == 'OUT_OF_SLOT' ? (
-            <div className='text-xs w-fit bg-[#F2F2F2] leading-[15px] font-bold text-[#ABABAB] px-6 pt-1 pb-[5px] rounded-[20px]'>
-              Out of reward
-            </div>
           ) : quest.reward_status == 'CLAIMED' && quest.repeat == 'Daily' ? (
             <div className='text-xs w-fit bg-[#DEDEDE] leading-[15px] font-bold text-medium-gray px-6 pt-1 pb-[5px] rounded-[20px]'>
               <Countdown

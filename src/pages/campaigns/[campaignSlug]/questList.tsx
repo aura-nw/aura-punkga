@@ -56,7 +56,7 @@ export default function QuestList({ quests, isEnded }: { quests: undefined | Que
                 <DropdownToggle>
                   {(open) => (
                     <div
-                      className={`p-[10px] rounded-lg bg-[#F2F2F2] flex justify-between items-center w-[233px] ${
+                      className={`p-[10px] rounded-lg bg-[#F2F2F2] flex justify-between cursor-pointer items-center w-[233px] ${
                         open ? 'border-primary-color border p-[9px] ' : ''
                       }`}>
                       <div className='px-[5px] text-sm leading-[18px] font-semibold'>
@@ -77,15 +77,15 @@ export default function QuestList({ quests, isEnded }: { quests: undefined | Que
                   )}
                 </DropdownToggle>
                 <DropdownMenu customClass='rounded-[8px]' closeOnClick>
-                  <div className='w-[233px] bg-[#F2F2F2]'>
+                  <div className='w-[233px] bg-[#F2F2F2] cursor-pointer'>
                     <div className='p-[15px] text-sm font-semibold' onClick={() => setFilter(undefined)}>
                       All quest
                     </div>
                     <div className='p-[15px] text-sm font-semibold' onClick={() => setFilter('Once')}>
-                      Once
+                      {`Once (${questList.filter((quest) => quest.repeat == 'Once').length})`}
                     </div>
                     <div className='p-[15px] text-sm font-semibold' onClick={() => setFilter('Daily')}>
-                      Daily
+                      {`Daily (${questList.filter((quest) => quest.repeat == 'Daily').length})`}
                     </div>
                   </div>
                 </DropdownMenu>
@@ -120,8 +120,9 @@ export default function QuestList({ quests, isEnded }: { quests: undefined | Que
           {questList
             .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
             .sort((a, b) => a.weight - b.weight)
-            .filter((quest) =>
-              filter ? quest.repeat == filter : true && rewardNFTChecked ? !!quest.reward.nft?.nft_name : true
+            .filter(
+              (quest) =>
+                (filter ? quest.repeat == filter : true) && (rewardNFTChecked ? !!quest.reward.nft?.nft_name : true)
             )
             .map((quest: Quest, index) => (
               <QuestItem quest={quest} key={index} />

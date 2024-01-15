@@ -25,6 +25,7 @@ import useSWR, { useSWRConfig } from 'swr'
 import QuestList from './questList'
 import { openSignInModal } from 'src/utils'
 import Modal from 'components/Modal'
+import NotFound from 'src/pages/404'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -43,7 +44,7 @@ function CampaignDetail({}) {
   const { mutate } = useSWRConfig()
   const { t } = useTranslation()
   const { data: authData } = useSWR(
-    { key: 'fetch_campaign_auth_data', slug, account:account?.id },
+    { key: 'fetch_campaign_auth_data', slug, account: account?.id },
     ({ key, slug, account }) => (account ? getCampaignAuthorizedData(slug) : null),
     {
       refreshInterval: 60000,
@@ -145,7 +146,7 @@ function CampaignDetail({}) {
             data?.reward.nft?.nft_name ? 'gap-[10px]' : 'gap-5'
           } text-sm`}>
           <div className='leading-[18px] lg:leading-5 font-semibold text-center'>👑 Congratulation!</div>
-          <div>You have received quest reward</div>
+          <div>You have received campaign reward</div>
           {data?.reward.nft?.nft_name ? (
             <div className='flex flex-col items-center'>
               <div className='mb-[10px]'>
