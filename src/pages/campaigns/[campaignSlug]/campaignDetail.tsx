@@ -314,7 +314,7 @@ function CampaignDetail({}) {
                         <div className='w-[98px] md:w-[88px] shrink-0 text-center'>Level</div>
                         <div className='w-12 shrink-0 text-center'>XP</div>
                       </div>
-                      <div className='h-[405px] md:h-[484px] flex flex-col relative'>
+                      <div className='h-[240px] md:h-[520px] flex flex-col relative'>
                         <div className={`absolute inset-0  gap-2 flex flex-col text-subtle-dark h-full py-2`}>
                           <div className='w-full h-full text-center font-semibold text-xs md:text-sm text-black grid place-items-center'>
                             Enroll to view leaderboard

@@ -56,8 +56,10 @@ export default function QuestList({ quests, isEnded }: { quests: undefined | Que
                 <DropdownToggle>
                   {(open) => (
                     <div
-                      className={`p-[10px] rounded-lg bg-[#F2F2F2] flex justify-between cursor-pointer items-center w-[233px] ${
-                        open ? 'border-primary-color border p-[9px] ' : ''
+                      className={`p-[10px] rounded-lg bg-[#F2F2F2] flex hover:bg-white justify-between cursor-pointer items-center w-[233px] ${
+                        open
+                          ? 'border-primary-color border bg-white p-[9px]'
+                          : 'hover:border hover:border-[#DEDEDE] hover:p-[9px]'
                       }`}>
                       <div className='px-[5px] text-sm leading-[18px] font-semibold'>
                         {filter ? filter : 'All quests'}
@@ -79,7 +81,7 @@ export default function QuestList({ quests, isEnded }: { quests: undefined | Que
                 <DropdownMenu customClass='rounded-[8px]' closeOnClick>
                   <div className='w-[233px] bg-[#F2F2F2] cursor-pointer'>
                     <div className='p-[15px] text-sm font-semibold' onClick={() => setFilter(undefined)}>
-                      All quest
+                      All quests
                     </div>
                     <div className='p-[15px] text-sm font-semibold' onClick={() => setFilter('Once')}>
                       {`Once (${questList.filter((quest) => quest.repeat == 'Once').length})`}

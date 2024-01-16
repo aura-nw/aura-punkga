@@ -65,7 +65,7 @@ export default function Campaign() {
       <div>
         <div className='flex items-center justify-between'>
           <div className='text-base leading-5 font-bold md:text-2xl md:leading-[18px] md:font-extrabold'>
-            {t('Campaign')} <span className='hidden md:inline'>{` (${list.length})`}</span>
+            {t('Campaign')} <span className=''>{` (${list.length})`}</span>
           </div>
           <div className='flex gap-[10px] items-center md:hidden'>
             <div className='p-1'>

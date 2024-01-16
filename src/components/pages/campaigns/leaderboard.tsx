@@ -20,8 +20,11 @@ export default function LeaderBoard({ data }: { data: any[] }) {
             <div className='w-[98px] md:w-[88px] shrink-0 text-center'>Level</div>
             <div className='w-12 shrink-0 text-center'>XP</div>
           </div>
-          <div className='h-[405px] md:h-[484px] flex flex-col relative'>
-            <div className={`absolute inset-0  gap-2 flex flex-col text-subtle-dark h-full py-2`}>
+          <div
+            className={`${
+              account ? 'h-[208px] md:h-[480px]' : 'h-[240px] md:h-[520px]'
+            } flex flex-col relative overflow-auto`}>
+            <div className={`absolute inset-0  gap-2 md:gap-3 flex flex-col text-subtle-dark h-full py-2 md:py-3`}>
               {data?.map((item, index) => (
                 <div key={index} className='cursor-pointer bg-white rounded-[10px]'>
                   <Popover

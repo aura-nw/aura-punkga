@@ -23,7 +23,7 @@ export default function LeaderBoard() {
   )
   return (
     <div className='overflow-auto'>
-      <div className='bg-[#f0f0f0] rounded-[10px] mt-10 min-w-[350px]'>
+      <div className='bg-[#f0f0f0] rounded-[10px] mt-10 min-w-[320px]'>
         <div className='py-3 md:py-4 px-4 md:px-[32px] w-full h-full flex flex-col'>
           <div className='flex'>
             <div
