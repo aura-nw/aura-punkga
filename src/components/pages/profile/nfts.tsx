@@ -88,7 +88,7 @@ export default function NFTList() {
                   src={token.image_url || NoImage}
                   width={160}
                   height={160}
-                  className='w-full object-cover aspect-square'
+                  className='w-full object-contain aspect-square'
                   alt=''
                 />
                 <div className='view-on-seekhype transition-all translate-y-full absolute bottom-0 bg-primary-color py-2 w-full text-sm leading-[18px] font-bold text-center'>

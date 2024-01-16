@@ -65,7 +65,7 @@ export default function LeaderBoard() {
                         width={38}
                         height={38}
                         alt=''
-                        className='object-cover w-full h-full'
+                        className='object-contain w-full h-full'
                       />
                     </div>
                   ) : null}
