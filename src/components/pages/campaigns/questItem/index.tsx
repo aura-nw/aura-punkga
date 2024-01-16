@@ -1,27 +1,29 @@
 import Modal from 'components/Modal'
 import FilledButton from 'components/core/Button/FilledButton'
 import IllusImage from 'components/pages/campaigns/assets/illus.svg'
-import DOMPurify from 'dompurify'
 import NoImage from 'images/no_img.png'
 import moment from 'moment'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
 import { isMobile } from 'react-device-detect'
+import ReactHtmlParser from 'react-html-parser'
 import { toast } from 'react-toastify'
+import TruncateMarkup from 'react-truncate-markup'
+import { Context } from 'src/context'
 import { Quest } from 'src/models/campaign'
 import { claimQuest } from 'src/services'
 import { useSWRConfig } from 'swr'
 import BasicQuest from './basicQuest'
 import FreeQuest from './freeQuest'
 import QuizQuest from './quizQuest'
-import { Context } from 'src/context'
+
 export default function QuestItem({ quest }: { quest: Quest }) {
   const { account } = useContext(Context)
   const [open, setOpen] = useState(false)
   const [openClaimSuccessModal, setClaimSuccessModalOpen] = useState(false)
-  const [seeMore, setSeeMore] = useState(false)
+  const [seeMore, setSeeMore] = useState(undefined)
   const [loading, setLoading] = useState(false)
   const limitChar = isMobile ? 20 : 30
   const { query } = useRouter()
@@ -50,6 +52,9 @@ export default function QuestItem({ quest }: { quest: Quest }) {
       console.error(error)
     }
   }
+
+  console.log(seeMore)
+
   return (
     <>
       <Modal open={open} setOpen={setOpen}>
@@ -78,18 +83,26 @@ export default function QuestItem({ quest }: { quest: Quest }) {
                 ? `Answer a quiz`
                 : ``}
             </div>
-            {quest.description && (
+            {!!quest.description && (
               <>
-                <div
-                  className={`mt-[15px] lg:mt-5 text-[#777777] text-xs lg:text-sm leading-[15px] lg:leading-[18px] ${
-                    seeMore ? '' : 'line-clamp-5'
-                  }`}
-                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(quest.description) }}></div>
-                <div
-                  className='font-semibold text-xs lg:text-sm lg:leading-[18px] text-second-color'
-                  onClick={() => setSeeMore(!seeMore)}>
-                  {seeMore ? 'See less' : 'See more'}
-                </div>
+                <TruncateMarkup
+                  lines={!seeMore ? 5 : 99}
+                  ellipsis={<span></span>}
+                  onTruncate={(wasTruncated) => {
+                    if (wasTruncated && seeMore == undefined) setSeeMore(false)
+                  }}>
+                  <div
+                    className={` mt-[15px] lg:mt-5 text-[#777777] text-xs lg:text-sm leading-[15px] lg:leading-[18px]`}>
+                    {ReactHtmlParser(quest.description)}
+                  </div>
+                </TruncateMarkup>
+                {seeMore != undefined ? (
+                  <div
+                    className='font-semibold text-xs lg:text-sm lg:leading-[18px] text-second-color cursor-pointer'
+                    onClick={() => setSeeMore(!seeMore)}>
+                    {seeMore ? 'See less' : 'See more'}
+                  </div>
+                ) : null}
               </>
             )}
           </div>

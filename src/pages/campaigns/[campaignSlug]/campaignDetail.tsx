@@ -26,6 +26,8 @@ import QuestList from './questList'
 import { openSignInModal } from 'src/utils'
 import Modal from 'components/Modal'
 import NotFound from 'src/pages/404'
+import TruncateMarkup from 'react-truncate-markup'
+import ReactHtmlParser from 'react-html-parser'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -36,7 +38,7 @@ function CampaignDetail({}) {
   const { account } = useContext(Context)
   const [openClaimSuccessModal, setClaimSuccessModalOpen] = useState(false)
   const [data, setData] = useState<Campaign>()
-  const [seeMore, setSeeMore] = useState(false)
+  const [seeMore, setSeeMore] = useState(undefined)
   const [enrollLoading, setEnrollLoading] = useState(false)
   const [claimLoading, setClaimLoading] = useState(false)
   const { query } = useRouter()
@@ -229,16 +231,23 @@ function CampaignDetail({}) {
                 data?.participants?.aggregate?.count < 2 ? 'participant' : 'participants'
               }`}</div>
             </div>
-            <div
-              className={` text-[#61646B] text-sm leading-[18px] lg:text-base lg:leading-5 ${
-                seeMore ? '' : 'line-clamp-3'
-              }`}
-              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.description) }}></div>
-            <div
-              className='font-semibold text-sm lg:text-base lg:leading-5 text-second-color mt-1'
-              onClick={() => setSeeMore(!seeMore)}>
-              {seeMore ? 'See less' : 'See more'}
-            </div>
+            <TruncateMarkup
+              lines={!seeMore ? 3 : 9999}
+              lineHeight={20}
+              ellipsis={<span></span>}
+              onTruncate={(wasTruncated) => (wasTruncated && seeMore == undefined ? setSeeMore(false) : null)}>
+              <div className={` text-[#61646B] text-sm leading-[18px] lg:text-base lg:leading-5`}>
+                {ReactHtmlParser(data.description)}
+              </div>
+            </TruncateMarkup>
+            {seeMore != undefined ? (
+              <div
+                className='font-semibold text-sm lg:text-base lg:leading-5 text-second-color mt-1 cursor-pointer'
+                onClick={() => setSeeMore(!seeMore)}>
+                {seeMore ? 'See less' : 'See more'}
+              </div>
+            ) : null}
+
             {/* Enroll button */}
             {isUpcoming ? (
               <div className='mt-10 lg:hidden'>
@@ -283,7 +292,7 @@ function CampaignDetail({}) {
                 )}
               </div>
               {isEnrolled ? (
-                isEnded && account?.id == leaderboardData[0].user_id ? (
+                isEnded && account?.id == leaderboardData?.[0]?.user_id ? (
                   <FilledButton
                     loading={claimLoading}
                     className='w-full lg:p-3 lg:rounded-[20px] lg:text-base lg:leading-6'

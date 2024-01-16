@@ -119,7 +119,13 @@ export default function Campaign() {
               <Checkbox
                 label={'Enrolled'}
                 checked={enrolledChecked}
-                onClick={() => setEnrolledChecked(!enrolledChecked)}
+                onClick={() => {
+                  if (account) {
+                    setEnrolledChecked(!enrolledChecked)
+                  } else {
+                    openSignInModal()
+                  }
+                }}
               />
             </div>
           </div>
