@@ -62,7 +62,7 @@ function CampaignDetail({}) {
         return []
       }
     },
-    { refreshInterval: 10000 }
+    { refreshInterval: 60000 }
   )
   useEffect(() => {
     fetchData()
