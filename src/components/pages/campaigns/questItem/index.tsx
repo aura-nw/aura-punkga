@@ -22,6 +22,7 @@ import QuizQuest from './quizQuest'
 export default function QuestItem({ quest }: { quest: Quest }) {
   const { account } = useContext(Context)
   const [open, setOpen] = useState(false)
+  const [openNFTPreview, setOpenNFTPreview] = useState(false)
   const [openClaimSuccessModal, setClaimSuccessModalOpen] = useState(false)
   const [seeMore, setSeeMore] = useState(undefined)
   const [loading, setLoading] = useState(false)
@@ -62,6 +63,17 @@ export default function QuestItem({ quest }: { quest: Quest }) {
   return (
     <>
       <Modal open={open} setOpen={setOpen}>
+        <Modal open={openNFTPreview} setOpen={() => setOpenNFTPreview(false)}>
+          <div className=' p-5 flex flex-col items-center'>
+            <Image
+              src={quest?.reward?.nft?.img_url}
+              width={600}
+              height={600}
+              alt=''
+              className='max-w-[600px] w-[80vw] aspect-square rounded-lg object-contain bg-white'
+            />
+          </div>
+        </Modal>
         <div className='p-5 pt-10 min-w-[360px] max-w-[600px] lg:grid-cols-[1fr_190px] lg:grid lg:gap-x-10 lg:grid-rows-[auto_1fr]'>
           <div>
             <div className='text-xs lg:text-sm leading-[15px] lg:leading-[18px] font-semibold'>
@@ -116,6 +128,7 @@ export default function QuestItem({ quest }: { quest: Quest }) {
               <>
                 <div className='flex flex-col items-center gap-[10px]'>
                   <Image
+                    onClick={() => setOpenNFTPreview(true)}
                     src={quest.reward.nft.img_url}
                     alt=''
                     width={180}

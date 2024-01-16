@@ -37,6 +37,7 @@ export default function Page(props) {
 function CampaignDetail({}) {
   const { account } = useContext(Context)
   const [openClaimSuccessModal, setClaimSuccessModalOpen] = useState(false)
+  const [openNFTPreview, setOpenNFTPreview] = useState(false)
   const [data, setData] = useState<Campaign>()
   const [seeMore, setSeeMore] = useState(undefined)
   const [enrollLoading, setEnrollLoading] = useState(false)
@@ -142,6 +143,17 @@ function CampaignDetail({}) {
   return (
     <>
       <Header />
+      <Modal open={openNFTPreview} setOpen={() => setOpenNFTPreview(false)}>
+        <div className=' p-5 flex flex-col items-center'>
+          <Image
+            src={data?.reward?.nft?.img_url || NoImage}
+            width={600}
+            height={600}
+            alt=''
+            className='max-w-[600px] w-[80vw] aspect-square rounded-lg object-contain bg-white'
+          />
+        </div>
+      </Modal>
       <Modal open={openClaimSuccessModal} setOpen={() => setClaimSuccessModalOpen(false)}>
         <div
           className={`w-[320px] lg:w-[448px] px-10 pb-5 pt-7 flex flex-col items-center ${
@@ -154,8 +166,8 @@ function CampaignDetail({}) {
               <div className='mb-[10px]'>
                 <Image
                   src={data?.reward.nft.img_url || NoImage}
-                  width={80}
-                  height={80}
+                  width={200}
+                  height={200}
                   alt=''
                   className='w-[200px] h-[200px] lg:w-[240px] lg:h-[240px] rounded-lg object-contain bg-white'
                 />
@@ -173,8 +185,8 @@ function CampaignDetail({}) {
               <div className='mb-5'>
                 <Image
                   src={IllusImage}
-                  width={80}
-                  height={80}
+                  width={200}
+                  height={200}
                   alt=''
                   className='w-[200px] h-[200px] lg:w-[240px] lg:h-[240px]'
                 />
@@ -273,6 +285,7 @@ function CampaignDetail({}) {
                 {data?.reward?.nft?.nft_name && (
                   <div className='flex flex-col gap-[10px] justify-center'>
                     <Image
+                      onClick={() => setOpenNFTPreview(true)}
                       src={data?.reward?.nft.img_url || NoImage}
                       width={200}
                       height={200}
