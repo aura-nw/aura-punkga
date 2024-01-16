@@ -53,6 +53,10 @@ export default function QuestItem({ quest }: { quest: Quest }) {
     }
   }
 
+  useEffect(() => {
+    if (open) setSeeMore(undefined)
+  }, [open])
+
   console.log(seeMore)
 
   return (

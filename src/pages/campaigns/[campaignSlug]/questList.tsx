@@ -127,7 +127,7 @@ export default function QuestList({ quests, isEnded }: { quests: undefined | Que
                 (filter ? quest.repeat == filter : true) && (rewardNFTChecked ? !!quest.reward.nft?.nft_name : true)
             )
             .map((quest: Quest, index) => (
-              <QuestItem quest={quest} key={index} />
+              <QuestItem quest={quest} key={quest.id} />
             ))}
         </div>
       )}
