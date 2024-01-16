@@ -32,7 +32,7 @@ export default function LeaderBoard({ data }: { data: any[] }) {
                     popoverRender={() => <ProfileCard hideEmail data={item.user_campaign_authorizer_user} />}>
                     <div className='flex py-1 md:py-[6px] px-4 md:px-[18px] text-xs leading-[15px] md:text-sm md:leading-[18px] items-center'>
                       <div className='w-[24px] md:w-9 mr-[10px]'>#{index + 1}</div>
-                      <div className='flex items-center gap-[5px] md:gap-[10px] justify-self-start w-full min-w-[80px] md:min-w-[150px]'>
+                      <div className='flex items-center gap-[5px] md:gap-[10px] justify-self-start w-full'>
                         <Image
                           className='w-6 h-6 md:w-7 md:h-7 rounded-full'
                           width={28}
