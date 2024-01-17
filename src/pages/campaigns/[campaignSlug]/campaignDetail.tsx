@@ -144,7 +144,7 @@ function CampaignDetail({}) {
     <>
       <Header />
       <Modal open={openNFTPreview} setOpen={() => setOpenNFTPreview(false)}>
-        <div className=' p-5 flex flex-col items-center'>
+        <div className=' p-10 flex flex-col items-center'>
           <Image
             src={data?.reward?.nft?.img_url || NoImage}
             width={600}

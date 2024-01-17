@@ -64,7 +64,7 @@ export default function QuestItem({ quest }: { quest: Quest }) {
     <>
       <Modal open={open} setOpen={setOpen}>
         <Modal open={openNFTPreview} setOpen={() => setOpenNFTPreview(false)}>
-          <div className=' p-5 flex flex-col items-center'>
+          <div className='p-10 flex flex-col items-center'>
             <Image
               src={quest?.reward?.nft?.img_url}
               width={600}
