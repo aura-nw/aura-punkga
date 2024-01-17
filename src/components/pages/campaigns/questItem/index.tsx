@@ -74,7 +74,7 @@ export default function QuestItem({ quest }: { quest: Quest }) {
             />
           </div>
         </Modal>
-        <div className='p-5 pt-10 min-w-[360px] max-w-[600px] lg:grid-cols-[1fr_190px] lg:grid lg:gap-x-10 lg:grid-rows-[auto_1fr]'>
+        <div className='p-5 pt-10 w-[90vw] max-w-[600px] lg:w-[600px] lg:grid-cols-[1fr_190px] lg:grid lg:gap-x-10 lg:grid-rows-[auto_1fr]'>
           <div>
             <div className='text-xs lg:text-sm leading-[15px] lg:leading-[18px] font-semibold'>
               {quest.repeat == 'Daily' && (
