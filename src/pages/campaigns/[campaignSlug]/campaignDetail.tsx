@@ -320,7 +320,7 @@ function CampaignDetail({}) {
               ) : null}
             </div>
             <div>
-              {isEnrolled ? (
+              {isEnrolled || isEnded ? (
                 <LeaderBoard data={leaderboardData} />
               ) : (
                 <div className='overflow-auto'>
