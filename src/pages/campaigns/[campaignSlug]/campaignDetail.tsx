@@ -22,7 +22,7 @@ import {
   getCampaignLeaderboard,
 } from 'src/services'
 import useSWR, { useSWRConfig } from 'swr'
-import QuestList from './questList'
+import QuestList from '../../../components/pages/campaigns/questList'
 import { openSignInModal } from 'src/utils'
 import Modal from 'components/Modal'
 import NotFound from 'src/pages/404'

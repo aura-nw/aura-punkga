@@ -5,7 +5,7 @@ import { useContext, useState } from 'react'
 import Mascot2 from 'components/pages/campaigns/assets/Mascot2.svg'
 import Mascot3 from 'components/pages/campaigns/assets/Mascot3.svg'
 import { Quest } from 'src/models/campaign'
-import QuestItem from '../../../components/pages/campaigns/questItem'
+import QuestItem from './questItem'
 import { useRouter } from 'next/router'
 import { Context } from 'src/context'
 
