@@ -38,7 +38,7 @@ function CampaignDetail({}) {
   const { account } = useContext(Context)
   const [openClaimSuccessModal, setClaimSuccessModalOpen] = useState(false)
   const [openNFTPreview, setOpenNFTPreview] = useState(false)
-  const [data, setData] = useState<Campaign>()
+  const [data, setData] = useState<Campaign>(undefined)
   const [seeMore, setSeeMore] = useState(undefined)
   const [enrollLoading, setEnrollLoading] = useState(false)
   const [claimLoading, setClaimLoading] = useState(false)
@@ -77,7 +77,9 @@ function CampaignDetail({}) {
     try {
       const data = await getCampaignDetail(slug)
       if (data.data?.campaign?.[0]) {
-        setData(data.data.campaign[0])
+        setData(data.data.campaign[0] || null)
+      } else {
+        setData(null)
       }
     } catch (error) {
       console.error(error)
@@ -122,8 +124,12 @@ function CampaignDetail({}) {
       if (res) {
         setClaimSuccessModalOpen(true)
       }
+      mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
+      await fetchData()
       setClaimLoading(false)
     } catch (error) {
+      mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
+      await fetchData()
       setClaimLoading(false)
       toast(`Claim failed`, {
         type: 'error',
@@ -134,7 +140,8 @@ function CampaignDetail({}) {
       console.error(error)
     }
   }
-  if (!data) return null
+  if (typeof data == 'undefined') return null
+  if (!data) return <NotFound />
 
   const isEnded = moment(data.end_date).isBefore()
   const isUpcoming = moment(data.start_date).isAfter()
@@ -305,7 +312,9 @@ function CampaignDetail({}) {
                 )}
               </div>
               {isEnrolled ? (
-                isEnded && account?.id == leaderboardData?.[0]?.user_id ? (
+                isEnded &&
+                account?.id == leaderboardData?.[0]?.user_id &&
+                authData?.user_campaign_rewards?.length == 0 ? (
                   <FilledButton
                     loading={claimLoading}
                     className='w-full lg:p-3 lg:rounded-[20px] lg:text-base lg:leading-6'
