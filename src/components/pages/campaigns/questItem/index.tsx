@@ -19,23 +19,26 @@ import BasicQuest from './basicQuest'
 import FreeQuest from './freeQuest'
 import QuizQuest from './quizQuest'
 
-export default function QuestItem({ quest }: { quest: Quest }) {
-  const { account } = useContext(Context)
+export default function QuestItem({
+  quest,
+  refreshCallbackMuatateKey,
+}: {
+  quest: Quest
+  refreshCallbackMuatateKey?: any
+}) {
   const [open, setOpen] = useState(false)
   const [openNFTPreview, setOpenNFTPreview] = useState(false)
   const [openClaimSuccessModal, setClaimSuccessModalOpen] = useState(false)
   const [seeMore, setSeeMore] = useState(undefined)
   const [loading, setLoading] = useState(false)
   const limitChar = isMobile ? 20 : 30
-  const { query } = useRouter()
-  const slug = query.campaignSlug as string
   const { mutate } = useSWRConfig()
   const claimQuestHandler = async () => {
     try {
       if (loading) return
       setLoading(true)
       const res = await claimQuest(quest.id)
-      mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
+      mutate(refreshCallbackMuatateKey)
       if (res) {
         setClaimSuccessModalOpen(true)
         setOpen(false)
@@ -43,7 +46,7 @@ export default function QuestItem({ quest }: { quest: Quest }) {
       setLoading(false)
     } catch (error) {
       setLoading(false)
-      mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
+      mutate(refreshCallbackMuatateKey)
       toast(`Claim failed`, {
         type: 'error',
         position: toast.POSITION.TOP_RIGHT,

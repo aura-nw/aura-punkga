@@ -14,7 +14,7 @@ import Link from 'next/link'
 export default function Quest() {
   const { account } = useContext(Context)
   const { data } = useSWR(
-    { key: 'get_available_quests', account },
+    { key: 'get_available_quests', account: account?.id },
     ({ account }) => (account ? getAvailableQuests() : null),
     { refreshInterval: 30000 }
   )
@@ -71,7 +71,10 @@ export default function Quest() {
                 {data?.map((quest: Quest) => {
                   return (
                     <SwiperSlide key={quest.id}>
-                      <QuestItem quest={quest} />
+                      <QuestItem
+                        quest={quest}
+                        refreshCallbackMuatateKey={{ key: 'get_available_quests', account: account?.id }}
+                      />
                     </SwiperSlide>
                   )
                 })}
@@ -100,7 +103,9 @@ export default function Quest() {
                 />
               </svg>
             </div>
-            <Link className='text-second-color underline font-bold px-6 w-full text-center block mt-[10px]' href='/campaigns'>
+            <Link
+              className='text-second-color underline font-bold px-6 w-full text-center block mt-[10px]'
+              href='/campaigns'>
               See all
             </Link>
           </div>
@@ -125,7 +130,10 @@ export default function Quest() {
                 {data?.map((quest: Quest) => {
                   return (
                     <SwiperSlide key={quest.id}>
-                      <QuestItem quest={quest} />
+                      <QuestItem
+                        quest={quest}
+                        refreshCallbackMuatateKey={{ key: 'get_available_quests', account: account?.id }}
+                      />
                     </SwiperSlide>
                   )
                 })}

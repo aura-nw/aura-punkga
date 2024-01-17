@@ -1,11 +1,13 @@
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import Checkbox from 'components/Input/Checkbox'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Mascot2 from 'components/pages/campaigns/assets/Mascot2.svg'
 import Mascot3 from 'components/pages/campaigns/assets/Mascot3.svg'
 import { Quest } from 'src/models/campaign'
 import QuestItem from '../../../components/pages/campaigns/questItem'
+import { useRouter } from 'next/router'
+import { Context } from 'src/context'
 
 export default function QuestList({ quests, isEnded }: { quests: undefined | Quest[]; isEnded: boolean }) {
   const [rewardNFTChecked, setRewardNFTChecked] = useState<boolean>(false)
@@ -36,6 +38,9 @@ export default function QuestList({ quests, isEnded }: { quests: undefined | Que
       }
     }
   })
+  const { account } = useContext(Context)
+  const { query } = useRouter()
+  const slug = query.campaignSlug as string
   return (
     <div className='mt-10'>
       <div className='lg:flex lg:items-center lg:flex-wrap lg:justify-between'>
@@ -127,7 +132,11 @@ export default function QuestList({ quests, isEnded }: { quests: undefined | Que
                 (filter ? quest.repeat == filter : true) && (rewardNFTChecked ? !!quest.reward.nft?.nft_name : true)
             )
             .map((quest: Quest, index) => (
-              <QuestItem quest={quest} key={quest.id} />
+              <QuestItem
+                quest={quest}
+                key={quest.id}
+                refreshCallbackMuatateKey={{ key: 'fetch_campaign_auth_data', slug, account: account?.id }}
+              />
             ))}
         </div>
       )}
