@@ -312,15 +312,19 @@ function CampaignDetail({}) {
                 )}
               </div>
               {isEnrolled ? (
-                isEnded &&
-                account?.id == leaderboardData?.[0]?.user_id &&
-                authData?.user_campaign_rewards?.length == 0 ? (
-                  <FilledButton
-                    loading={claimLoading}
-                    className='w-full lg:p-3 lg:rounded-[20px] lg:text-base lg:leading-6'
-                    onClick={claimHandler}>
-                    Claim Reward
-                  </FilledButton>
+                account?.id == leaderboardData?.[0]?.user_id && isEnded ? (
+                  authData?.user_campaign_rewards?.length == 0 ? (
+                    <FilledButton
+                      loading={claimLoading}
+                      className='w-full lg:p-3 lg:rounded-[20px] lg:text-base lg:leading-6'
+                      onClick={claimHandler}>
+                      Claim Reward
+                    </FilledButton>
+                  ) : (
+                    <button className='w-full bg-[#ABABAB] text-[#DEDEDE] font-bold leading-5 text-center pt-2 pb-[10px] rounded-full lg:p-3 lg:rounded-[20px] lg:text-base lg:leading-6'>
+                      Claimed Reward
+                    </button>
+                  )
                 ) : (
                   <button className='w-full bg-[#ABABAB] text-[#DEDEDE] font-bold leading-5 text-center pt-2 pb-[10px] rounded-full lg:p-3 lg:rounded-[20px] lg:text-base lg:leading-6'>
                     Claim Reward
