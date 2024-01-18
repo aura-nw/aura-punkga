@@ -1,15 +1,15 @@
+import Link from 'next/link'
 import { useContext } from 'react'
 import { Context } from 'src/context'
 import { Quest } from 'src/models/campaign'
 import { getAvailableQuests } from 'src/services'
 import 'swiper/css'
-import 'swiper/css/navigation'
 import 'swiper/css/grid'
+import 'swiper/css/navigation'
 import { Grid, Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import useSWR from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 import QuestItem from '../campaigns/questItem'
-import Link from 'next/link'
 
 export default function Quest() {
   const { account } = useContext(Context)
@@ -18,6 +18,7 @@ export default function Quest() {
     ({ account }) => (account ? getAvailableQuests() : null),
     { refreshInterval: 30000 }
   )
+  const { mutate } = useSWRConfig()
 
   return (
     <div className='md:mt-10'>
@@ -73,7 +74,7 @@ export default function Quest() {
                     <SwiperSlide key={quest.id}>
                       <QuestItem
                         quest={quest}
-                        refreshCallbackMuatateKey={{ key: 'get_available_quests', account: account?.id }}
+                        refreshCallback={() => mutate({ key: 'get_available_quests', account: account?.id })}
                       />
                     </SwiperSlide>
                   )
@@ -132,7 +133,7 @@ export default function Quest() {
                     <SwiperSlide key={quest.id}>
                       <QuestItem
                         quest={quest}
-                        refreshCallbackMuatateKey={{ key: 'get_available_quests', account: account?.id }}
+                        refreshCallback={() => mutate({ key: 'get_available_quests', account: account?.id })}
                       />
                     </SwiperSlide>
                   )

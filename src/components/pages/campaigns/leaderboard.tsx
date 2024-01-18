@@ -2,10 +2,7 @@ import Avatar from 'assets/images/avatar.svg'
 import ProfileCard from 'components/Card/ProfileCard'
 import Popover from 'components/Popover'
 import Image from 'next/image'
-import { useContext } from 'react'
-import { Context } from 'src/context'
-export default function LeaderBoard({ data }: { data: any[] }) {
-  const { account } = useContext(Context)
+export default function LeaderBoard({ data, userData }: { data: any[]; userData?: any }) {
   return (
     <div className='overflow-auto'>
       <div className='bg-[#f0f0f0] rounded-[10px] mt-10 min-w-[300px] md:min-w-[400px]'>
@@ -22,7 +19,7 @@ export default function LeaderBoard({ data }: { data: any[] }) {
           </div>
           <div
             className={`${
-              account ? 'h-[208px] md:h-[480px]' : 'h-[240px] md:h-[520px]'
+              userData ? 'h-[208px] md:h-[480px]' : 'h-[240px] md:h-[520px]'
             } flex flex-col relative overflow-auto`}>
             <div className={`absolute inset-0  gap-2 md:gap-3 flex flex-col text-subtle-dark h-full py-2 md:py-3`}>
               {data?.map((item, index) => (
@@ -52,16 +49,17 @@ export default function LeaderBoard({ data }: { data: any[] }) {
               ))}
             </div>
           </div>
-          {account && (
+          {userData && (
             <div className='flex justify-between py-2 md:py-0 md:pt-5 px-3 md:px-[10px] border-t-[1px] border-medium-gray text-subtle-dark text-xs leading-[15px] md:text-sm md:leading-[18px]'>
               <div>
-                Your rank: <strong>#{account.rank}</strong>
+                Your rank: <strong>{userData ? '#' + userData?.user_campaign_rank : '--'}</strong>
               </div>
               <div>
-                Your level: <strong>{account.level}</strong>
+                Your level:{' '}
+                <strong>{userData ? userData?.user_campaign_authorizer_user?.levels?.[0]?.level : '--'}</strong>
               </div>
               <div>
-                XP: <strong>{account.xp}</strong>
+                XP: <strong>{userData ? userData.total_reward_xp : '--'}</strong>
               </div>
             </div>
           )}

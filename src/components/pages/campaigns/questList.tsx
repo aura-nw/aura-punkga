@@ -1,15 +1,21 @@
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import Checkbox from 'components/Input/Checkbox'
-import Image from 'next/image'
-import { useContext, useState } from 'react'
 import Mascot2 from 'components/pages/campaigns/assets/Mascot2.svg'
 import Mascot3 from 'components/pages/campaigns/assets/Mascot3.svg'
+import Image from 'next/image'
+import { useState } from 'react'
 import { Quest } from 'src/models/campaign'
 import QuestItem from './questItem'
-import { useRouter } from 'next/router'
-import { Context } from 'src/context'
 
-export default function QuestList({ quests, isEnded }: { quests: undefined | Quest[]; isEnded: boolean }) {
+export default function QuestList({
+  quests,
+  isEnded,
+  refreshCallback,
+}: {
+  quests: undefined | Quest[]
+  isEnded: boolean
+  refreshCallback?: () => void
+}) {
   const [rewardNFTChecked, setRewardNFTChecked] = useState<boolean>(false)
   const [filter, setFilter] = useState<string>()
   const questList = quests?.map((quest) => {
@@ -38,14 +44,18 @@ export default function QuestList({ quests, isEnded }: { quests: undefined | Que
       }
     }
   })
-  const { account } = useContext(Context)
-  const { query } = useRouter()
-  const slug = query.campaignSlug as string
   return (
     <div className='mt-10'>
       <div className='lg:flex lg:items-center lg:flex-wrap lg:justify-between'>
         <p className='text-lg leading-[23px] lg:text-xl lg:leading-[25px] font-bold'>
-          {quests && !isEnded ? `Quests (${quests.length})` : 'Quests'}
+          {quests && !isEnded
+            ? `Quests (${
+                quests.filter(
+                  (quest) =>
+                    (filter ? quest.repeat == filter : true) && (rewardNFTChecked ? !!quest.reward.nft?.nft_name : true)
+                ).length
+              })`
+            : 'Quests'}
         </p>
         {quests && !isEnded && (
           <div className='mt-[10px] flex justify-between items-center lg:mt-0'>
@@ -132,11 +142,7 @@ export default function QuestList({ quests, isEnded }: { quests: undefined | Que
                 (filter ? quest.repeat == filter : true) && (rewardNFTChecked ? !!quest.reward.nft?.nft_name : true)
             )
             .map((quest: Quest, index) => (
-              <QuestItem
-                quest={quest}
-                key={quest.id}
-                refreshCallbackMuatateKey={{ key: 'fetch_campaign_auth_data', slug, account: account?.id }}
-              />
+              <QuestItem quest={quest} key={quest.id} refreshCallback={refreshCallback} />
             ))}
         </div>
       )}

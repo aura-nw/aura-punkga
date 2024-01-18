@@ -2,32 +2,32 @@ import FilledButton from 'components/Button/FilledButton'
 import Footer from 'components/Footer'
 import Header from 'components/Header'
 import StatusLabel from 'components/Label/Status'
+import Modal from 'components/Modal'
 import IllusImage from 'components/pages/campaigns/assets/illus.svg'
 import LeaderBoard from 'components/pages/campaigns/leaderboard'
-import DOMPurify from 'dompurify'
 import NoImage from 'images/no_img.png'
 import moment from 'moment'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
+import ReactHtmlParser from 'react-html-parser'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import TruncateMarkup from 'react-truncate-markup'
 import { Context } from 'src/context'
 import { Campaign } from 'src/models/campaign'
+import NotFound from 'src/pages/404'
 import {
   claimCampaignReward,
   enrollCampaign,
   getCampaignAuthorizedData,
   getCampaignDetail,
   getCampaignLeaderboard,
+  getUserRankInCampaign,
 } from 'src/services'
+import { openSignInModal } from 'src/utils'
 import useSWR, { useSWRConfig } from 'swr'
 import QuestList from '../../../components/pages/campaigns/questList'
-import { openSignInModal } from 'src/utils'
-import Modal from 'components/Modal'
-import NotFound from 'src/pages/404'
-import TruncateMarkup from 'react-truncate-markup'
-import ReactHtmlParser from 'react-html-parser'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -50,7 +50,7 @@ function CampaignDetail({}) {
     { key: 'fetch_campaign_auth_data', slug, account: account?.id },
     ({ key, slug, account }) => (account ? getCampaignAuthorizedData(slug) : null),
     {
-      refreshInterval: 60000,
+      revalidateOnFocus: true,
     }
   )
   const { data: leaderboardData } = useSWR(
@@ -63,8 +63,27 @@ function CampaignDetail({}) {
         return []
       }
     },
-    { refreshInterval: 60000 }
+    { revalidateOnFocus: true }
   )
+  const { data: userData } = useSWR(
+    { key: `get_leaderboard_${data?.id}_user_rank`, id: data?.id },
+    async ({ id }) => {
+      if (id) {
+        const data = await getUserRankInCampaign(id)
+        return data?.data?.user_campaign?.[0]
+      } else {
+        return undefined
+      }
+    },
+    { revalidateOnFocus: true }
+  )
+
+  const refresh = () => {
+    mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
+    mutate({ key: `get_leaderboard_${data?.id}`, id: data?.id })
+    mutate({ key: `get_leaderboard_${data?.id}_user_rank`, id: data?.id })
+  }
+
   useEffect(() => {
     fetchData()
   }, [account])
@@ -94,19 +113,28 @@ function CampaignDetail({}) {
         setEnrollLoading(true)
         const res = await enrollCampaign(data.id)
         await fetchData()
-        mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
-        if (res) {
-          toast(`Enroll successful`, {
-            type: 'success',
-            position: toast.POSITION.BOTTOM_RIGHT,
+        refresh()
+        if (res?.errors?.message) {
+          toast(res?.errors?.message, {
+            type: 'error',
+            position: toast.POSITION.TOP_RIGHT,
             hideProgressBar: true,
             autoClose: 3000,
           })
+          console.error(res?.errors?.message)
+          setEnrollLoading(false)
+          return
         }
+        toast(`Enroll successful`, {
+          type: 'success',
+          position: toast.POSITION.BOTTOM_RIGHT,
+          hideProgressBar: true,
+          autoClose: 3000,
+        })
         setEnrollLoading(false)
       }
     } catch (error) {
-      mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
+      refresh()
       setEnrollLoading(false)
       toast(`Enroll failed`, {
         type: 'error',
@@ -121,14 +149,23 @@ function CampaignDetail({}) {
     try {
       setClaimLoading(true)
       const res = await claimCampaignReward(data.id)
-      if (res) {
-        setClaimSuccessModalOpen(true)
+      if (res?.errors?.message) {
+        toast(res?.errors?.message, {
+          type: 'error',
+          position: toast.POSITION.TOP_RIGHT,
+          hideProgressBar: true,
+          autoClose: 3000,
+        })
+        console.error(res?.errors?.message)
+        setClaimLoading(false)
+        return
       }
-      mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
+      setClaimSuccessModalOpen(true)
+      refresh()
       await fetchData()
       setClaimLoading(false)
     } catch (error) {
-      mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
+      refresh()
       await fetchData()
       setClaimLoading(false)
       toast(`Claim failed`, {
@@ -334,7 +371,7 @@ function CampaignDetail({}) {
             </div>
             <div>
               {isEnrolled || isEnded ? (
-                <LeaderBoard data={leaderboardData} />
+                <LeaderBoard data={leaderboardData} userData={userData} />
               ) : (
                 <div className='overflow-auto'>
                   <div className='bg-[#f0f0f0] rounded-[10px] mt-10 min-w-[300px] md:min-w-[400px]'>
@@ -364,7 +401,7 @@ function CampaignDetail({}) {
           </div>
           <div>
             {/* Quest  */}
-            <QuestList quests={authData?.campaign_quests} isEnded={isEnded} />
+            <QuestList quests={authData?.campaign_quests} isEnded={isEnded} refreshCallback={refresh} />
           </div>
         </div>
       </div>

@@ -4,7 +4,6 @@ import IllusImage from 'components/pages/campaigns/assets/illus.svg'
 import NoImage from 'images/no_img.png'
 import moment from 'moment'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
 import { isMobile } from 'react-device-detect'
@@ -14,39 +13,44 @@ import TruncateMarkup from 'react-truncate-markup'
 import { Context } from 'src/context'
 import { Quest } from 'src/models/campaign'
 import { claimQuest } from 'src/services'
-import { useSWRConfig } from 'swr'
 import BasicQuest from './basicQuest'
 import FreeQuest from './freeQuest'
 import QuizQuest from './quizQuest'
 
-export default function QuestItem({
-  quest,
-  refreshCallbackMuatateKey,
-}: {
-  quest: Quest
-  refreshCallbackMuatateKey?: any
-}) {
+export default function QuestItem({ quest, refreshCallback }: { quest: Quest; refreshCallback?: () => void }) {
+  const { getProfile } = useContext(Context)
   const [open, setOpen] = useState(false)
   const [openNFTPreview, setOpenNFTPreview] = useState(false)
   const [openClaimSuccessModal, setClaimSuccessModalOpen] = useState(false)
   const [seeMore, setSeeMore] = useState(undefined)
   const [loading, setLoading] = useState(false)
   const limitChar = isMobile ? 20 : 30
-  const { mutate } = useSWRConfig()
   const claimQuestHandler = async () => {
     try {
       if (loading) return
       setLoading(true)
       const res = await claimQuest(quest.id)
-      mutate(refreshCallbackMuatateKey)
-      if (res) {
-        setClaimSuccessModalOpen(true)
+      if (res?.errors?.message) {
+        toast(res?.errors?.message, {
+          type: 'error',
+          position: toast.POSITION.TOP_RIGHT,
+          hideProgressBar: true,
+          autoClose: 3000,
+        })
+        console.error(res?.errors?.message)
         setOpen(false)
+        setLoading(false)
+        return
       }
+      await getProfile()
+      refreshCallback()
+      setClaimSuccessModalOpen(true)
+      setOpen(false)
       setLoading(false)
     } catch (error) {
       setLoading(false)
-      mutate(refreshCallbackMuatateKey)
+      refreshCallback()
+      await getProfile()
       toast(`Claim failed`, {
         type: 'error',
         position: toast.POSITION.TOP_RIGHT,
@@ -60,8 +64,6 @@ export default function QuestItem({
   useEffect(() => {
     if (open) setSeeMore(undefined)
   }, [open])
-
-  console.log(seeMore)
 
   return (
     <>

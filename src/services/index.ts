@@ -387,6 +387,10 @@ export const getCampaignDetail = async (slug: string) => {
   const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${slug}`)
   return data
 }
+export const getUserRankInCampaign = async (id: string) => {
+  const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${id}/user-rank`)
+  return data
+}
 export const getCampaignAuthorizedData = async (slug: string) => {
   const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${slug}/authorized`)
   const campaignData = data.data.campaign[0]
