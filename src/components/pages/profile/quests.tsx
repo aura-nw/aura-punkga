@@ -10,7 +10,9 @@ import { Grid, Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import useSWR, { useSWRConfig } from 'swr'
 import QuestItem from '../campaigns/questItem'
-
+import Image from 'next/image'
+import EnrollNow from './assets/enroll-now.svg'
+import EnrollNowLarge from './assets/enroll-now_large.svg'
 export default function Quest() {
   const { account } = useContext(Context)
   const { data } = useSWR(
@@ -22,12 +24,8 @@ export default function Quest() {
 
   return (
     <div className='md:mt-10'>
-      <div className='flex items-center gap-5'>
-        <div className='text-base md:text-xl leading-5 md:leading-[25px] font-bold text-[#1C1C1C]'>
-          Available Quests
-        </div>
-      </div>
-      {!!data?.length && (
+      <div className='text-base md:text-xl leading-5 md:leading-[25px] font-bold text-[#1C1C1C]'>Available Quests</div>
+      {!data?.length ? (
         <>
           <div className='w-full relative mt-[47px] hidden xl:block'>
             <div className=' [&_.swiper-button-prev]:text-[#61646B] [&_.swiper-button-next]:text-[#61646B] flex items-center'>
@@ -189,6 +187,13 @@ export default function Quest() {
               </div>
             </div>
           </div>
+        </>
+      ) : (
+        <>
+          <Link href='/campaigns'>
+            <Image src={EnrollNow} alt='' className='w-full mt-[10px] md:hidden xl:block 2xl:hidden' />
+            <Image src={EnrollNowLarge} alt='' className='w-full mt-10 hidden md:block xl:hidden 2xl:block' />
+          </Link>
         </>
       )}
     </div>

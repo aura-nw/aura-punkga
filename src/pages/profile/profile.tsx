@@ -71,7 +71,7 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
         )}
         <div className=''>
           {!!(isSettingUp || curentlyReading.loading || curentlyReading.data?.length) && (
-            <p className='text-sm md:text-2xl leading-6 font-extrabold mb-2 md:mb-10 mt-5 md:mt-10'>
+            <p className='text-base md:text-xl leading-5 md:leading-[25px] font-extrabold mb-2 md:mb-10 mt-5 md:mt-10'>
               {t('Currently reading')}
             </p>
           )}
@@ -98,7 +98,7 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
         </div>
         <div className=''>
           {!!(isSettingUp || subscribeList.loading || subscribeList.data?.length) && (
-            <p className='text-sm md:text-2xl leading-6 font-extrabold mb-2 md:mb-10 mt-5 md:mt-10'>
+            <p className='text-base md:text-xl leading-5 md:leading-[25px] font-extrabold mb-2 md:mb-10 mt-5 md:mt-10'>
               {t('Subscribe list')}
             </p>
           )}

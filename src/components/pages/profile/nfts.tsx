@@ -26,7 +26,7 @@ export default function NFTList() {
   )
   if (!data || !data.length) {
     return (
-      <div className='w-full p-5 rounded-2xl mt-10 bg-[#F2F2F2]'>
+      <div className='w-full p-5 rounded-2xl bg-[#F2F2F2] md:mt-10'>
         <div className='text-[#1C1C1C] font-bold leading-5 md:text-xl md:leading-[25px]'>Your NFTs</div>
         <div className='mt-5 md:mt-[10px] flex justify-between flex-col md:flex-row'>
           <div className='2xl:pt-5 flex flex-col justify-between'>
@@ -46,7 +46,11 @@ export default function NFTList() {
               </Link>
             </div>
           </div>
-          <Image src={Banner} alt='' className='rounded-[10px] md:max-w-[500px] md:w-1/2 aspect-[5/2] object-cover my-[10px] md:my-0 w-full max-w-none' />
+          <Image
+            src={Banner}
+            alt=''
+            className='rounded-[10px] md:max-w-[500px] md:w-1/2 aspect-[5/2] object-cover my-[10px] md:my-0 w-full max-w-none'
+          />
           <div className='md:hidden'>
             <FilledButton
               href='/campaigns'
@@ -59,7 +63,7 @@ export default function NFTList() {
     )
   }
   return (
-    <div className='w-full p-5 rounded-2xl mt-10 bg-[#F2F2F2]'>
+    <div className='w-full p-5 rounded-2xl md:mt-10 bg-[#F2F2F2]'>
       <div className='flex items-center gap-5'>
         <div className='text-[#1C1C1C] font-bold text-xl leading-[25px]'>Your NFTs</div>
         {data.length > 5 && (
