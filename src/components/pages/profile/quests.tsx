@@ -191,8 +191,8 @@ export default function Quest() {
       ) : (
         <>
           <Link href='/campaigns'>
-            <Image src={EnrollNow} alt='' className='w-full mt-[10px] md:hidden xl:block 2xl:hidden' />
-            <Image src={EnrollNowLarge} alt='' className='w-full mt-10 hidden md:block xl:hidden 2xl:block' />
+            <Image src={EnrollNow} alt='' className='w-full mt-[10px] md:hidden ' />
+            <Image src={EnrollNowLarge} alt='' className='w-full mt-10 hidden md:block ' />
           </Link>
         </>
       )}
