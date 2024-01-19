@@ -10,6 +10,7 @@ interface IFilledSelect {
   multiple?: boolean
   onChange?: any
   icon?: JSX.Element
+  leadingIcon?: JSX.Element
   options: ({ key: string; value: string } | { key: number; value: string })[]
   placeholder: string
   className?: string
@@ -20,6 +21,7 @@ interface IFilledSelect {
 export default function FilledSelect({
   onChange,
   icon = <ChevronDownIcon className='h-5 w-5 text-subtle-dark' aria-hidden='true' />,
+  leadingIcon,
   options,
   placeholder,
   selected,
@@ -52,7 +54,8 @@ export default function FilledSelect({
         {({ open }) => (
           <>
             <div className='relative'>
-              <Listbox.Button className='relative w-full cursor-default rounded-[12px] bg-light-gray py-[3px] pl-[13px] pr-[57px] text-left text-gray-900 focus:outline-none'>
+              <Listbox.Button className='relative cursor-pointer w-full rounded-[12px] bg-light-gray py-[3px] px-[13px] text-left text-gray-900 focus:outline-none flex items-center gap-[15px]'>
+                {leadingIcon && <span className=''>{leadingIcon}</span>}
                 <span className='flex items-center text-[16px] leading-[24px]'>
                   {!!selected.length ? (
                     isTooLong ? (
@@ -66,9 +69,7 @@ export default function FilledSelect({
                     <span className='block truncate text-subtle-dark'>{placeholder}</span>
                   )}
                 </span>
-                <span className='pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2'>
-                  {icon}
-                </span>
+                <span className=''>{icon}</span>
               </Listbox.Button>
 
               <Transition
