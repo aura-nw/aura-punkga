@@ -1,5 +1,5 @@
-import Slider from "react-slick"
-export default function Carousel({ children, setting }: any) {
+import Slider from 'react-slick'
+export default function Carousel({ children, setting, className }: any) {
   var settings = {
     dots: true,
     infinite: true,
@@ -34,7 +34,7 @@ export default function Carousel({ children, setting }: any) {
     ...setting,
   }
   return (
-    <div className='w-[100%] pb-5'>
+    <div className={className}>
       <Slider {...settings}>{children}</Slider>
     </div>
   )

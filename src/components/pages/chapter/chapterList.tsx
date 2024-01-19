@@ -1,6 +1,7 @@
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { EyeIcon } from '@heroicons/react/24/outline'
 import FlashAnimation from 'components/AnimationIconHOC/Flash'
+import LazyImage from 'components/Image'
 import TextField from 'components/Input/TextField'
 import StatusLabel from 'components/Label/Status'
 import FilledSelect from 'components/Select/FilledSelect'
@@ -19,7 +20,7 @@ import { useContext, useEffect, useState } from 'react'
 import m6 from 'src/assets/images/mockup6.png'
 import { CHAPTER_STATUS, CHAPTER_TYPE } from 'src/constants/chapter.constant'
 import { Context } from 'src/context'
-import { getBlurUrl } from 'src/utils'
+import { openSignInModal } from 'src/utils'
 
 export default function ChapterList({
   data,
@@ -204,7 +205,7 @@ const Chapter = ({
       }
       setIsLiked(isLike)
     } else {
-      ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+      openSignInModal()
     }
   }
   const unavailable =
@@ -217,10 +218,8 @@ const Chapter = ({
         className={`w-full h-[1px] bg-light-medium-gray first:hidden transition-all duration-500 ${
           expandDetail ? 'my-[0px] opacity-100' : '-my-[10px] opacity-0'
         }`}></div>
-      <div className='flex gap-4 cursor-pointer'>
-        <Image
-          placeholder='blur'
-          blurDataURL={getBlurUrl()}
+      <div className={`flex gap-4 cursor-pointer ${expandDetail ? '' : 'items-center'}`}>
+        <LazyImage
           src={chapter.thumbnail || m6}
           alt=''
           className={`transition-all duration-500 object-cover rounded-xl ${

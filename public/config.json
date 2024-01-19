@@ -1,5 +1,5 @@
 {
-  "REDIRECT_URL": "http://localhost:3000",
+  "REDIRECT_URL": "https://staging.punkga.me",
   "CHAIN_ID": "euphoria-2",
   "CHAIN_INFO": {
     "chainId": "euphoria-2",
@@ -52,8 +52,8 @@
   "AUTHORIZER_URL": "https://auth.staging.punkga.me",
   "AUTHORIZER_CLIENT_ID": "06c9c437-15cd-4240-b435-5d16206b46c6",
   "ADMIN_URL": "https://admin.staging.punkga.me",
-  "SEEKHYPE_URL": "https://staging.seekhype.io",
   "REST_API_URL": "https://api.staging.punkga.me",
   "IN_MAINTENANCE_MODE": false,
-  "GTM_ID": "GTM-MMT4K22K"
+  "GTM_ID": "GTM-MMT4K22K",
+  "SEEKHYPE_URL": "https://staging.seekhype.io/"
 }

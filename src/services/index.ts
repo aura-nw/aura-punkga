@@ -4,6 +4,7 @@ import { COMIC_STATUS, LANGUAGE } from 'src/constants'
 import { IComic } from 'src/models/comic'
 import { privateAxios } from 'src/context'
 import { formatStatus } from 'src/utils'
+import { getItem } from 'src/utils/localStorage'
 
 export const getLatestComic = async (): Promise<IComic[]> => {
   return await axios.get(`${getConfig().API_URL}/api/rest/public/latest`).then((res) =>
@@ -112,18 +113,11 @@ export const setAddress = async (address: string) => {
 
 export const getProfile = async () => {
   const res: any = await privateAxios.get(`${getConfig().API_URL}/api/rest/user/profile`)
+  const rank: any = await privateAxios.get(`${getConfig().API_URL}/api/rest/user/rank`)
   if (res) {
     return {
-      id: res.data.authorizer_users[0].id,
-      email: res.data.authorizer_users[0].email,
-      gender: res.data.authorizer_users[0].gender,
-      nickname: res.data.authorizer_users[0].nickname,
-      picture: res.data.authorizer_users[0].picture,
-      birthdate: res.data.authorizer_users[0].birthdate,
-      bio: res.data.authorizer_users[0].bio,
-      signup_methods: res.data.authorizer_users[0].signup_methods,
-      wallet_address: res.data.authorizer_users[0].wallet_address,
-      email_verified_at: res.data.authorizer_users[0].email_verified_at,
+      ...res?.data?.authorizer_users?.[0],
+      rank: rank?.data?.user_xp_rank?.[0]?.rank || 99999,
     }
   }
 }
@@ -327,4 +321,109 @@ export const subscribe = async (id) => {
 }
 export const unsubscribe = async (id) => {
   await privateAxios.delete(`${getConfig().API_URL}/api/rest/user/manga/${id}/subscribe`)
+}
+export const getCampaigns = async (accountId?: string) => {
+  const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign`, {
+    params: {
+      user_id: accountId,
+    },
+  })
+  return data
+}
+export const getQuestDetail = async (questId: string, accountId?: string) => {
+  const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/quest/${questId}`, {
+    params: {
+      user_id: accountId,
+    },
+  })
+  return data
+}
+export const claimQuest = async (questId: string) => {
+  const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/quest/${questId}/claim`)
+  return data
+}
+export const readChapter = async (chapterId: string) => {
+  try {
+    const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/user/read-chapter/${chapterId}`)
+    return data
+  } catch (error) {
+    return undefined
+  }
+}
+export const getAvailableQuests = async () => {
+  const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/user/available-quests`)
+  return data
+}
+export const getLeaderboard = async () => {
+  const { data } = await axios.get(`${getConfig().API_URL}/api/rest/pubic/leaderboard`)
+  return data
+}
+export const getUserNfts = async (address: string) => {
+  const env = getConfig().CHAIN_ID.includes('xstaxy') ? 'xstaxy' : 'euphoria'
+  const { data } = await axios.post(`${getConfig().CHAIN_INFO.indexerV2}`, {
+    query: `query Query721ByOwner($owner_address: String!) {
+  ${env} {
+    cw721_token(where: {owner: {_eq: $owner_address}}, order_by: {created_at: desc}) {
+      id
+      token_id
+      name: media_info(path: "onchain.metadata.name")
+      image_url: media_info(path: "offchain.image.url")
+      cw721_contract {
+        smart_contract {
+          address
+        }
+      }
+    }
+  }
+}`,
+    variables: {
+      owner_address: address,
+    },
+    operationName: 'Query721ByOwner',
+  })
+  return data?.data?.[env]?.cw721_token || []
+}
+export const getCampaignDetail = async (slug: string) => {
+  const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${slug}`)
+  return data
+}
+export const getUserRankInCampaign = async (id: string) => {
+  const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${id}/user-rank`)
+  return data
+}
+export const getCampaignAuthorizedData = async (slug: string) => {
+  const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${slug}/authorized`)
+  const campaignData = data.data.campaign[0]
+  const quests = data.data.campaign[0].campaign_quests
+  campaignData.campaign_quests = campaignData.campaign_quests?.map((quest) => {
+    if (quest.condition?.quest_id) {
+      const mappedQuest = quest
+      mappedQuest.condition = {
+        ...quest.condition,
+        requiredQuest: quests.find((q) => q.id == quest.condition.quest_id),
+      }
+      return mappedQuest
+    } else {
+      return quest
+    }
+  })
+  return campaignData
+}
+export const enrollCampaign = async (id: string) => {
+  const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/campaign/${id}/enroll`)
+  return data
+}
+export const claimCampaignReward = async (id: string) => {
+  const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/campaign/${id}/claim`)
+  return data
+}
+export const answerQuest = async (questId: string, answer: string) => {
+  const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/quest/${questId}/answer`, {
+    answer,
+  })
+  return data
+}
+export const getCampaignLeaderboard = async (campaignId: string) => {
+  const { data } = await axios.get(`${getConfig().API_URL}/api/rest/public/campaign/${campaignId}/leaderboard`)
+  return data
 }

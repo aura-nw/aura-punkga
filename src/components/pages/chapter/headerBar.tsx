@@ -14,6 +14,7 @@ import { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CHAPTER_STATUS } from 'src/constants/chapter.constant'
 import { Context } from 'src/context'
+import { openSignInModal } from 'src/utils'
 export default function HeaderBar({
   openComments,
   setOpenComments,
@@ -150,7 +151,7 @@ export default function HeaderBar({
                 <span
                   className='text-second-color underline font-bold cursor-pointer'
                   onClick={() => {
-                    ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+                    openSignInModal()
                   }}>
                   {t('sign in')}
                 </span>{' '}

@@ -1,27 +1,28 @@
+import { Tab } from '@headlessui/react'
 import { ArrowRightIcon, BellAlertIcon } from '@heroicons/react/20/solid'
 import { BellAlertIcon as BellAlertIconOutline } from '@heroicons/react/24/outline'
 import FilledButton from 'components/Button/FilledButton'
 import OutlineButton from 'components/Button/OutlineButton'
+import LazyImage from 'components/Image'
 import StatusLabel from 'components/Label/Status'
 import Tag from 'components/Label/Tag'
 import CalendarIcon from 'images/icons/solar_calendar-linear.svg'
+import Ninja from 'images/ninja-2.svg'
 import moment from 'moment'
 import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
+import Link from 'next/link'
 import { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import mockBanner from 'src/assets/images/mockup3.png'
 import mockAvar from 'src/assets/images/mockup4.png'
+import { CHAPTER_STATUS } from 'src/constants/chapter.constant'
 import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
 import { IComicDetail } from 'src/models/comic'
-import { getBlurUrl } from 'src/utils'
-import ChapterList from './chapterList'
-import { Tab } from '@headlessui/react'
-import Ninja from 'images/ninja-2.svg'
-import Link from 'next/link'
-import { CHAPTER_STATUS } from 'src/constants/chapter.constant'
-import NFTList from './nftList'
 import { subscribe, unsubscribe } from 'src/services'
+import ChapterList from './chapterList'
+import NFTList from './nftList'
+import { openSignInModal } from 'src/utils'
 
 export default function ComicDetail({
   data,
@@ -73,7 +74,7 @@ export default function ComicDetail({
       }
       setIsSubscribe(isSub)
     } else {
-      ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+      openSignInModal()
     }
   }
 
@@ -107,10 +108,8 @@ export default function ComicDetail({
           </div>
         </div>
 
-        <Image
+        <LazyImage
           src={data.cover || mockBanner}
-          placeholder='blur'
-          blurDataURL={getBlurUrl()}
           height={280}
           width={1000}
           className={`${expandDetail ? 'h-[280px]' : 'h-[160px]'} duration-500 transition-all object-cover w-full`}
@@ -121,10 +120,8 @@ export default function ComicDetail({
             expandDetail ? 'mt-4' : 'mt-[10px]'
           }`}>
           <div className={` duration-500 transition-all flex gap-5`}>
-            <Image
+            <LazyImage
               src={data.image || mockAvar}
-              placeholder='blur'
-              blurDataURL={getBlurUrl()}
               height={320}
               width={240}
               className={`${expandDetail ? ' w-[240px] h-[320px]' : ' w-[120px] h-[160px]'} ${
@@ -136,8 +133,8 @@ export default function ComicDetail({
               <div
                 className={`font-bold ${
                   expandDetail ? 'text-black' : 'text-second-color'
-                } transition-all text-2xl leading-6 flex items-start gap-[10px]`}>
-                <span className={`${!expandDetail ? 'line-clamp-1 leading-[150%] -mt-[12px]' : ''}`}>
+                } transition-all text-2xl -mb-[7px] flex items-start gap-[10px]`}>
+                <span className={`${!expandDetail ? 'line-clamp-1' : ''}`}>
                   {data[selectedLanguage.shortLang]?.title}
                 </span>
                 {expandDetail && <StatusLabel status={data.status?.type}>{t(data.status?.text)}</StatusLabel>}

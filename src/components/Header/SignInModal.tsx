@@ -1,7 +1,7 @@
 import { Transition } from '@headlessui/react'
 import FilledButton from 'components/Button/FilledButton'
 import OutlineTextField from 'components/Input/TextField/Outline'
-import Facebook from 'images/Facebook.png'
+import Zalo from 'images/Zalo.png'
 import Google from 'images/Google.png'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -137,6 +137,12 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
             <Image src={Facebook} alt='' />
             {t('Continue with Facebook')}
           </button> */}
+          <button
+            className='mt-2 flex gap-[10px] items-center rounded-full bg-light-gray px-4 py-2 leading-5 font-medium w-full'
+            onClick={() => oauth('zalo')}>
+            <Image src={Zalo} alt='' />
+            {t('Continue with Zalo')}
+          </button>
           <button
             className='mt-2 flex gap-[10px] items-center rounded-full bg-light-gray px-4 py-2 leading-5 font-medium w-full'
             onClick={() => oauth('google')}>

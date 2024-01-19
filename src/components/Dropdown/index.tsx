@@ -21,7 +21,7 @@ export default function Dropdown({ children }) {
 }
 export function DropdownToggle({ children }) {
   const { open, setOpen } = useContext(ControlContext)
-  return <div onClick={() => setOpen(true)}>{children}</div>
+  return <div onClick={() => setOpen(!open)}>{children instanceof Function ? children(open) : children}</div>
 }
 
 export function DropdownMenu({

@@ -12,7 +12,7 @@ import { useRouter } from 'next/router'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
-import { validatePassword } from 'src/utils'
+import { openSignInModal, validatePassword } from 'src/utils'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -129,7 +129,7 @@ function ResetPassword() {
               className='mt-2 mx-auto'
               size='lg'
               onClick={() => {
-                ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+                openSignInModal()
               }}>
               {t('Sign in')}
             </FilledButton>

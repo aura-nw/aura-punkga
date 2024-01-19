@@ -10,26 +10,47 @@ import OutlineTextField from 'components/Input/TextField/Outline'
 import Modal from 'components/Modal'
 import ConnectWalletModal from 'components/Modal/ConnectWalletModal'
 import MaintainPage from 'components/pages/maintainPage'
-import Mail from 'images/Mail.svg'
+import Mail from 'src/assets/images/Mail.svg'
 import moment from 'moment'
 import 'moment/locale/vi'
 import { appWithTranslation, useTranslation } from 'next-i18next'
 import { AppProps } from 'next/app'
 import getConfig, { setConfig } from 'next/config'
 import { Plus_Jakarta_Sans, Work_Sans } from 'next/font/google'
+import localFont from 'next/font/local'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
+import { ToastContainer } from 'react-toastify'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 import ContextProvider, { Context } from 'src/context'
 import { wallets as c98Mobile } from 'src/services/c98MobileWallet'
 import 'src/styles/globals.scss'
 import { validateEmail } from 'src/utils'
-
+import 'react-toastify/dist/ReactToastify.css'
 const pjs = Plus_Jakarta_Sans({ subsets: ['latin', 'vietnamese'] })
 const ws = Work_Sans({ subsets: ['latin', 'vietnamese'] })
+const orbitron = localFont({
+  src: [
+    {
+      path: '../assets/fonts/Orbitron_Light.otf',
+      weight: '200',
+      style: 'normal',
+    },
+    {
+      path: '../assets/fonts/Orbitron_Medium.otf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../assets/fonts/Orbitron_Bold.otf',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+})
 function MyApp(props: AppProps) {
   const [isSetting, setIsSetting] = useState(true)
   const { locale } = useRouter()
@@ -83,7 +104,11 @@ function MyApp(props: AppProps) {
         .font-ws {
           font-family: ${ws.style.fontFamily};
         }
+        .font-orbitron {
+          font-family: ${orbitron.style.fontFamily};
+        }
       `}</style>
+      <ToastContainer />
       <ContextProvider>
         <ChainProvider
           chains={chains}
@@ -205,7 +230,6 @@ const App = ({ Component, pageProps }: AppProps) => {
               <div className='p-6 flex flex-col w-[322px]'>
                 <div className='gap-2 flex flex-col'>
                   <div className='text-xl font-semibold leading-6 text-center'>{t('Set a username')}</div>
-
                   <OutlineTextField label={t('Username')} errorMsg={errorMsg} value={name} onChange={setName} />
                   <OutlineTextField label={t('Email')} value={account.email} disabled={true} />
                 </div>

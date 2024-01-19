@@ -1,10 +1,11 @@
 import DummyComicDetail from 'components/DummyComponent/comicDetail'
 import Header from 'components/Header'
+import LazyImage from 'components/Image'
 import ComicDetail from 'components/pages/chapter/comicDetail'
 import CommentSection from 'components/pages/chapter/commentSection'
 import HeaderBar from 'components/pages/chapter/headerBar'
 import ReadingSection from 'components/pages/chapter/readingSection'
-import Image from 'next/image'
+import _ from 'lodash'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { isMobile } from 'react-device-detect'
@@ -15,7 +16,8 @@ import { Context } from 'src/context'
 import { IChapter } from 'src/models/chapter'
 import { IComicDetail } from 'src/models/comic'
 import { IComment } from 'src/models/comment'
-import { getBlurUrl } from 'src/utils'
+import { readChapter } from 'src/services'
+import { openSignInModal } from 'src/utils'
 import { getItem, setItem } from 'src/utils/localStorage'
 const Chapter: React.FC = ({
   comicDetails,
@@ -54,12 +56,19 @@ const Chapter: React.FC = ({
   const [comicLikes, setComicLikes] = useState(0)
   const [chapterLikes, setChapterLikes] = useState(0)
   const { t } = useTranslation()
+  const timerRef = useRef<any>()
 
   useEffect(() => {
     if (chapterDetails.data?.id) {
       setChapterLikes(chapterDetails.data?.likes)
+      timerRef.current = _.delay(() => readChapter(chapterDetails.data?.id), 10000)
     }
   }, [chapterDetails?.data?.id])
+
+  useEffect(() => {
+    return () => (timerRef.current ? clearTimeout(timerRef.current) : null)
+  }, [])
+
   useEffect(() => {
     setLanguage(locale as LanguageType)
   }, [locale])
@@ -141,7 +150,7 @@ const Chapter: React.FC = ({
       }
       setIsLiked(isLike)
     } else {
-      ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+      openSignInModal()
     }
   }
 
@@ -186,16 +195,7 @@ const Chapter: React.FC = ({
             <div>
               {chapterDetails.data[chapterLocale]?.map((page, index) =>
                 isMobile ? (
-                  <Image
-                    src={page}
-                    key={index}
-                    alt=''
-                    width={400}
-                    height={700}
-                    className='mx-auto'
-                    placeholder='blur'
-                    blurDataURL={getBlurUrl()}
-                  />
+                  <LazyImage src={page} key={index} alt='' width={400} height={700} className='mx-auto' />
                 ) : null
               )}
             </div>

@@ -15,6 +15,7 @@ import ArrowSwapIcon from 'images/icons/arrow-swap-light.svg'
 import { IChapter } from 'src/models/chapter'
 import { useTranslation } from 'react-i18next'
 import { CHAPTER_STATUS, CHAPTER_TYPE } from 'src/constants/chapter.constant'
+import { openSignInModal } from 'src/utils'
 
 export default function ChapterList({ list, like, unlike, setComicLikes, hasAccess }) {
   const { t } = useTranslation()
@@ -104,7 +105,7 @@ const Chapter = ({
       }
       setIsLiked(isLike)
     } else {
-      ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+      openSignInModal()
     }
   }
   const unavailable =

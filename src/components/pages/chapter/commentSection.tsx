@@ -6,6 +6,7 @@ import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { IComment } from 'src/models/comment'
+import { openSignInModal } from 'src/utils'
 
 export default function CommentSection({
   postComment,
@@ -54,7 +55,7 @@ export default function CommentSection({
                 <span
                   className='text-second-color underline font-bold cursor-pointer'
                   onClick={() => {
-                    ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+                    openSignInModal()
                   }}>
                   {t('sign in')}
                 </span>{' '}
@@ -88,7 +89,7 @@ export default function CommentSection({
             <span
               className='text-second-color underline font-bold cursor-pointer'
               onClick={() => {
-                ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+                openSignInModal()
               }}>
               {t('sign in')}
             </span>{' '}

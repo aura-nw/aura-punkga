@@ -18,7 +18,7 @@ export default function Comic(props: IComic) {
       <div className='hidden md:flex gap-[20px]'>
         <Link
           href={`/comic/${props.slug}`}
-          className=' xl:hidden shrink-0 block w-[180px] h-fit aspect-[180/240] mx-auto'>
+          className=' xl:hidden w-1/3 block max-w-[180px] min-w-[120px] h-fit aspect-[180/240] mx-auto'>
           <Image
             src={props.image || NoImage}
             alt=''
@@ -29,7 +29,7 @@ export default function Comic(props: IComic) {
         </Link>
         <Link
           href={`/comic/${props.slug}/chapter/1`}
-          className='shrink-0 w-[180px] h-fit aspect-[180/240] hidden xl:block'>
+          className='w-1/3 max-w-[180px] min-w-[120px] h-fit aspect-[180/240] hidden xl:block'>
           <Image
             src={props.image || NoImage}
             alt=''
@@ -102,7 +102,7 @@ export default function Comic(props: IComic) {
           )}
         </div>
       </div>
-      <div className='md:hidden h-full w-fit mx-auto'>
+      <div className='md:hidden h-full max-w-[180px] mx-auto'>
         <div
           onClick={() => {
             props.status.text == 'Upcoming' ? null : router.push(`/comic/${props.slug}`)

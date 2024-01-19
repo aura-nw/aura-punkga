@@ -1,7 +1,7 @@
 import { useChain } from '@cosmos-kit/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/20/solid'
 import FilledButton from 'components/Button/FilledButton'
-import SubFilledButton from 'components/Button/FilledButton/SubFilledButton'
+import SubFilledButton from 'components/core/Button/SubFilledButton'
 import C98 from 'images/c98.png'
 import Keplr from 'images/keplr.png'
 import Image from 'next/image'
@@ -97,15 +97,7 @@ export default function ConnectWalletModal({ isOpen, setOpen, walletRepo, theme 
               </p>
             </div>
             <div className='flex gap-[10px] -mt-[10px]'>
-              <SubFilledButton
-                className='w-full hidden md:block'
-                size='lg'
-                onClick={() => {
-                  setErrorMsg('')
-                  disconnect()
-                }}>
-                {t('Change Wallet')}
-              </SubFilledButton>
+              
               <FilledButton
                 className='w-full hidden md:block'
                 size='lg'

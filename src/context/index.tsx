@@ -7,6 +7,7 @@ import { createContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IUser } from 'src/models/user'
 import { getProfile as getProfileService } from 'src/services'
+import { oauthLogin } from 'src/utils'
 import { getItem, removeItem, setItem } from 'src/utils/localStorage'
 
 export const Context = createContext(null)
@@ -23,7 +24,7 @@ function ContextProvider({ children }) {
   const config = getConfig()
   const authorizerRef = new Authorizer({
     authorizerURL: config.AUTHORIZER_URL,
-    redirectURL: config.REDIRECT_URL,
+    redirectURL: location.href || config.REDIRECT_URL,
     clientID: config.AUTHORIZER_CLIENT_ID,
   })
 
@@ -106,9 +107,9 @@ function ContextProvider({ children }) {
         throw new Error('Unauthorized access token')
       }
       const res = await getProfileService()
-      if (res) {
-        if (res.wallet_address) {
-          setWallet(res.wallet_address)
+      if (res?.id) {
+        if (res.authorizer_users_user_wallet?.address) {
+          setWallet(res.authorizer_users_user_wallet?.address)
         }
         setAccount({
           email: res.email,
@@ -116,14 +117,21 @@ function ContextProvider({ children }) {
           image: res.picture,
           verified: !!res.email_verified_at,
           id: res.id,
-          gender: res.gender,
+          gender: res.gender || '',
           birthdate: res.birthdate,
           bio: res.bio,
           signupMethods: res.signup_methods,
-          walletAddress: res.wallet_address,
+          walletAddress: res.authorizer_users_user_wallet?.address,
+          xp: res.levels?.[0]?.xp || 0,
+          level: res.levels?.[0]?.level || 0,
+          completedQuests: res.user_quests || [],
+          quests: res?.user_quests_aggregate?.aggregate?.count,
+          rank: res.rank || 999999,
         } as IUser)
+        return res
+      } else {
+        removeItem('token')
       }
-      return res
     } catch (error) {
       removeItem('token')
       console.log('getProfile', error)
@@ -152,7 +160,11 @@ function ContextProvider({ children }) {
 
   const oauth = async (provider: string, callback?: (status: string) => void) => {
     try {
-      await authorizerRef.oauthLogin(provider)
+      if (provider == 'zalo') {
+        await oauthLogin('zalo', undefined, location.href || config.REDIRECT_URL)
+      } else {
+        await authorizerRef.oauthLogin(provider)
+      }
     } catch (error) {
       callback && callback('failed')
       console.log('oauth error: ' + error)

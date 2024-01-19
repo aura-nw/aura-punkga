@@ -9,6 +9,8 @@ import Logo from 'assets/images/header-logo.svg'
 import FlashAnimation from 'components/AnimationIconHOC/Flash'
 import FilledButton from 'components/Button/FilledButton'
 import OutlineButton from 'components/Button/OutlineButton'
+import LazyImage from 'components/Image'
+import Popover from 'components/Popover'
 import PageMockup from 'images/comicpage.png'
 import BookFillIcon from 'images/icons/book_fill.svg'
 import BookOutlineIcon from 'images/icons/book_outline.svg'
@@ -33,7 +35,7 @@ import { Context } from 'src/context'
 import { IChapter } from 'src/models/chapter'
 import { IComicDetail } from 'src/models/comic'
 import { subscribe, unsubscribe } from 'src/services'
-import { getBlurUrl } from 'src/utils'
+import { openSignInModal } from 'src/utils'
 import { getItem, setItem } from 'src/utils/localStorage'
 export default function ReadingSection({
   openComments,
@@ -112,12 +114,23 @@ export default function ReadingSection({
       }
       setIsSubscribe(isSub)
     } else {
-      ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+      openSignInModal()
     }
   }
 
   const setReadingModeHandler = (mode: string) => {
-    setReadingMode(mode)
+    if (mode == 'onePage') {
+      setReadingMode(mode)
+      document.querySelector(`#page_${currentPage}`)?.scrollIntoView()
+    } else {
+      for (let index = 0; index < chapterLengthRef.current; index++) {
+        if ((document.querySelector(`#page_${index}`) as any).y > 0) {
+          setCurrentPage(index % 2 == 1 ? index - 1 : index)
+          break
+        }
+      }
+      setReadingMode(mode)
+    }
     setItem('reading_mode', mode)
   }
 
@@ -143,14 +156,24 @@ export default function ReadingSection({
         !ref.current?.matches(':hover')
       )
         return
-      if (event.deltaY < 0 || event.which == 37 || event.which == 38) {
-        setCurrentPage((prevState) => (prevState - 2 < 0 ? 0 : prevState - 2))
-      } else if (event.deltaY > 0 || event.which == 39 || event.which == 40) {
-        setCurrentPage((prevState) => (prevState + 2 >= chapterLengthRef.current ? prevState : prevState + 2))
+      let mode
+      setReadingMode((prevState) => {
+        mode = prevState
+        return prevState
+      })
+      if (mode == 'twoPage') {
+        if (event.deltaY < 0 || event.which == 37 || event.which == 38) {
+          setCurrentPage((prevState) => (prevState - 2 < 0 ? 0 : prevState - 2))
+        } else if (event.deltaY > 0 || event.which == 39 || event.which == 40) {
+          setCurrentPage((prevState) => (prevState + 2 >= chapterLengthRef.current ? prevState : prevState + 2))
+        }
       }
     }
     window.addEventListener('wheel', _.throttle(pageHandler, 500, { trailing: false, leading: true }))
     window.addEventListener('keydown', pageHandler)
+  }, [readingMode])
+
+  useEffect(() => {
     const lsReadingMode = getItem('reading_mode')
     if (lsReadingMode) {
       setReadingMode(lsReadingMode)
@@ -159,7 +182,7 @@ export default function ReadingSection({
 
   useEffect(() => {
     setCurrentPage(0)
-  }, [readingMode, chapterLocale])
+  }, [chapterLocale])
 
   if (typeof chapterData == 'undefined' || typeof data == 'undefined') {
     return <></>
@@ -175,27 +198,6 @@ export default function ReadingSection({
       className={`w-full h-full overflow-hidden ${
         mode == 'minscreen' ? 'relative' : 'fixed bg-black z-20 top-0 bottom-0'
       }`}>
-      <div
-        onMouseEnter={onMouseEnterHandler}
-        onMouseLeave={onMouseLeaveHandler}
-        className={`bg-light-gray absolute top-0 right-0 left-0 flex items-center duration-300 transition-[opacity] ${
-          mode == 'minscreen' ? 'opacity-100 w-0 overflow-hidden' : hovering ? 'w-full opacity-100' : 'w-full opacity-0'
-        }`}>
-        <div className='pk-container py-[5px] flex justify-between items-center'>
-          <div>
-            <Link href='/' className='flex'>
-              <span className='sr-only'>Your Company</span>
-              <Image src={Logo} alt='header logo' className='h-[50px]' />
-            </Link>
-          </div>
-          <div
-            className='px-4 py-1 rounded-xl border-second-color border flex gap-[10px] items-center cursor-pointer'
-            onClick={() => setMode('minscreen')}>
-            <Image className='cursor-pointer h-6 w-6' src={MinscreenIcon} alt='' />
-            <span className='text-second-color font-bold'>{t('Exit Fullscreen')}</span>
-          </div>
-        </div>
-      </div>
       {!account && chapterData.type == CHAPTER_TYPE.ACCOUNT_ONLY ? (
         <div className='h-full w-full flex justify-center items-center'>
           <div>
@@ -211,12 +213,12 @@ export default function ReadingSection({
           </div>
         </div>
       ) : chapterData[chapterLocale] ? (
-        <div className='h-full overflow-auto' onScroll={onScrollHandler}>
+        <div className='h-[calc(100%-60px)] overflow-auto'>
           <div
             ref={ref}
             className={`${mode == 'minscreen' ? '' : ''} ${
               readingMode == 'onePage' ? 'w-[90%] max-w-[940px] mx-auto' : 'flex h-full items-center justify-center'
-            } pb-[60px]`}>
+            }`}>
             {chapterData[chapterLocale]
               ?.slice(
                 readingMode == 'onePage' ? 0 : currentPage,
@@ -228,18 +230,19 @@ export default function ReadingSection({
               )
               ?.map((page, index) =>
                 isMobile ? null : (
-                  <Image
+                  <LazyImage
                     src={page || PageMockup}
                     key={index}
+                    id={`page_${index}`}
                     alt=''
-                    className={`${readingMode == 'onePage' ? 'mx-auto' : 'h-fit max-h-full max-w-[50%] w-auto'} ${
-                      readingMode != 'onePage' && index > 1 && 'hidden'
-                    }`}
+                    className={`${
+                      readingMode == 'onePage'
+                        ? 'mx-auto'
+                        : `h-full w-1/2 [&>img]:!w-fit ${index % 2 == 0 ? '[&>img]:ml-auto' : '[&>img]:mr-auto'}`
+                    } ${readingMode != 'onePage' && index > 1 && 'hidden'}`}
                     width={1900}
                     height={1000}
                     priority={index < 4}
-                    placeholder='blur'
-                    blurDataURL={getBlurUrl()}
                   />
                 )
               )}
@@ -357,7 +360,7 @@ export default function ReadingSection({
           <div className='relative px-[10px] py-[4px] rounded-xl border-second-color border-[1.5px] flex gap-[10px] items-center justify-between cursor-pointer w-[200px]'>
             <span
               onClick={() => setShowChapterList(!showChapterList)}
-              className='text-second-color w-full text-xs leading-5'>{`${t('Chapter')} ${chapterData.number}`}</span>
+              className='text-second-color w-full text-sm leading-5'>{`${t('Chapter')} ${chapterData.number}`}</span>
             <ChevronUpIcon
               onClick={() => setShowChapterList(!showChapterList)}
               className={`h-6 w-6 text-second-color transition-all ${showChapterList ? 'rotate-180' : 'rotate-0'}`}

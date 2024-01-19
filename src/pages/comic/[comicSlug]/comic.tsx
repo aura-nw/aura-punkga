@@ -19,6 +19,7 @@ import mockAvar from 'src/assets/images/mockup4.png'
 import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
 import { subscribe, unsubscribe } from 'src/services'
+import { openSignInModal } from 'src/utils'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -62,7 +63,7 @@ function Comic({ comicDetails, like, unlike }) {
       }
       setIsSubscribe(isSub)
     } else {
-      ;(document.querySelector('#open-sign-in-btn') as any)?.click()
+      openSignInModal()
     }
   }
 
