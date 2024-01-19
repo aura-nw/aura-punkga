@@ -25,7 +25,7 @@ export default function Quest() {
   return (
     <div className='md:mt-10'>
       <div className='text-base md:text-xl leading-5 md:leading-[25px] font-bold text-[#1C1C1C]'>Available Quests</div>
-      {!data?.length ? (
+      {!!data?.length ? (
         <>
           <div className='w-full relative mt-[47px] hidden xl:block'>
             <div className=' [&_.swiper-button-prev]:text-[#61646B] [&_.swiper-button-next]:text-[#61646B] flex items-center'>
@@ -77,7 +77,7 @@ export default function Quest() {
                     </SwiperSlide>
                   )
                 })}
-                {data.length < 2 && <SwiperSlide></SwiperSlide>}
+                {data?.length < 2 && <SwiperSlide></SwiperSlide>}
               </Swiper>
 
               <svg
@@ -136,7 +136,7 @@ export default function Quest() {
                     </SwiperSlide>
                   )
                 })}
-                {data.length < 2 && <SwiperSlide></SwiperSlide>}
+                {data?.length < 2 && <SwiperSlide></SwiperSlide>}
               </Swiper>
               <div className='flex w-full justify-center items-center mt-[10px]'>
                 <svg
