@@ -1,4 +1,3 @@
-import FilledButton from 'components/Button/FilledButton'
 import Footer from 'components/Footer'
 import Header from 'components/Header'
 import StatusLabel from 'components/Label/Status'
@@ -28,6 +27,7 @@ import {
 import { openSignInModal } from 'src/utils'
 import useSWR, { useSWRConfig } from 'swr'
 import QuestList from '../../../components/pages/campaigns/questList'
+import FilledButton from 'components/core/Button/FilledButton'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -266,7 +266,7 @@ function CampaignDetail({}) {
                   </div>
                 ) : isOngoing && !isEnrolled ? (
                   <div>
-                    <FilledButton size='lg' loading={enrollLoading} className='w-full' onClick={enrollHandler}>
+                    <FilledButton loading={enrollLoading} className='w-full' onClick={enrollHandler}>
                       Enroll now
                     </FilledButton>
                   </div>
