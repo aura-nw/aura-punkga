@@ -68,7 +68,7 @@ export const getServerSideProps = async (context) => {
       image: creator.avatar_url,
       title: creator.pen_name,
       description:
-        context?.locale == 'en'
+        context?.locale == 'en' && authorSeo.find((author) => context.params?.artist.includes(author.slug))?.description
           ? authorSeo.find((author) => context.params?.artist.includes(author.slug)).description
           : creator.bio,
       canonical: `https://punkga.me/artist/${context.params?.artist}`,
