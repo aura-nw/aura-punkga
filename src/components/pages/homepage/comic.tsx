@@ -5,7 +5,7 @@ import NoImage from 'images/no_img.png'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Fragment } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IComic } from 'src/models/comic'
 
@@ -13,82 +13,101 @@ export default function Comic(props: IComic) {
   const { locale } = useRouter()
   const router = useRouter()
   const { t } = useTranslation()
+  const infoRef = useRef()
+  const [lineClamp, setLineClamp] = useState(0)
+  useEffect(() => {
+    const height = (infoRef?.current as any)?.getBoundingClientRect()?.height
+    const res = Math.floor((200 - height) / 20)
+    if (res >= 1) {
+      setLineClamp(res > 3 ? 3 : res)
+    }
+  }, [])
   return (
     <div className={`${props.status.text == 'Upcoming' ? '[&_a:not(.author)]:pointer-events-none' : ''}`}>
-      <div className='hidden md:flex gap-[20px]'>
-        <Link
-          href={`/comic/${props.slug}`}
-          className=' xl:hidden w-1/3 block max-w-[180px] min-w-[120px] h-fit aspect-[180/240] mx-auto'>
-          <Image
-            src={props.image || NoImage}
-            alt=''
-            width={180}
-            height={240}
-            className={`w-full h-full ${props.image ? 'object-cover' : 'object-contain bg-light-gray'} rounded-[15px] `}
-          />
-        </Link>
-        <Link
-          href={`/comic/${props.slug}/chapter/1`}
-          className='w-1/3 max-w-[180px] min-w-[120px] h-fit aspect-[180/240] hidden xl:block'>
-          <Image
-            src={props.image || NoImage}
-            alt=''
-            width={180}
-            height={240}
-            className={`w-full h-full ${props.image ? 'object-cover' : 'object-contain bg-light-gray'} rounded-[15px] `}
-          />
-        </Link>
-        <div className='flex-auto w-[calc(100%-200px)] flex flex-col justify-between gap-[10px]'>
+      <div className='hidden md:grid md:grid-cols-[180px_1fr] gap-[20px]'>
+        <div>
+          <Link href={`/comic/${props.slug}`} className=' xl:hidden block w-full h-fit aspect-[180/240] mx-auto'>
+            <Image
+              src={props.image || NoImage}
+              alt=''
+              width={180}
+              height={240}
+              className={`w-full h-full ${
+                props.image ? 'object-cover' : 'object-contain bg-light-gray'
+              } rounded-[15px] `}
+            />
+          </Link>
+          <Link href={`/comic/${props.slug}/chapter/1`} className='w-full h-fit aspect-[180/240] hidden xl:block'>
+            <Image
+              src={props.image || NoImage}
+              alt=''
+              width={180}
+              height={240}
+              className={`w-full h-full ${
+                props.image ? 'object-cover' : 'object-contain bg-light-gray'
+              } rounded-[15px] `}
+            />
+          </Link>
+        </div>
+        <div className='flex-auto flex flex-col justify-between gap-[10px]'>
           <div className='flex flex-col gap-[10px]'>
-            <div>
-              <div className='flex justify-between xl:hidden items-start flex-nowrap'>
-                <Link href={`/comic/${props.slug}`} className=' text-second-color font-bold text-[18px] '>
-                  {props[locale].title}
-                </Link>
-                {props.status.text != 'Ongoing' && (
-                  <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
-                )}
-              </div>
-              <div className='justify-between items-start flex-nowrap hidden xl:flex'>
-                <Link href={`/comic/${props.slug}/chapter/1`} className='text-second-color font-bold text-[18px]'>
-                  {props[locale].title}
-                </Link>
-                {props.status.text != 'Ongoing' && (
-                  <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
-                )}
-              </div>
+            <div ref={infoRef} className='flex flex-col gap-[10px]'>
               <div>
-                {t('by')}{' '}
-                {props.authors.map((author, index) => (
-                  <Fragment key={index}>
-                    <span className='text-second-color font-[600] first:hidden'>, </span>
-                    <span className='text-second-color font-[600]'>
-                      {author.slug ? (
-                        <Link className='author' href={`/artist/${author.slug}`}>
-                          {t(author.name)}
-                        </Link>
-                      ) : (
-                        t(author.name)
-                      )}
-                    </span>
-                  </Fragment>
-                ))}
+                <div className='flex justify-between xl:hidden items-start flex-nowrap'>
+                  <Link
+                    href={`/comic/${props.slug}`}
+                    className=' text-second-color font-bold text-[18px] leading-[23px]'>
+                    {props[locale].title}
+                  </Link>
+                  {props.status.text != 'Ongoing' && (
+                    <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
+                  )}
+                </div>
+                <div className='justify-between items-start flex-nowrap hidden xl:flex'>
+                  <Link
+                    href={`/comic/${props.slug}/chapter/1`}
+                    className='text-second-color font-bold text-[18px] leading-[23px]'>
+                    {props[locale].title}
+                  </Link>
+                  {props.status.text != 'Ongoing' && (
+                    <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
+                  )}
+                </div>
+                <div>
+                  {t('by')}{' '}
+                  {props.authors.map((author, index) => (
+                    <Fragment key={index}>
+                      <span className='text-second-color font-[600] first:hidden'>, </span>
+                      <span className='text-second-color font-[600]'>
+                        {author.slug ? (
+                          <Link className='author' href={`/artist/${author.slug}`}>
+                            {t(author.name)}
+                          </Link>
+                        ) : (
+                          t(author.name)
+                        )}
+                      </span>
+                    </Fragment>
+                  ))}
+                </div>
+              </div>
+              <div className='flex gap-[8px] flex-wrap'>
+                {props.tags.map((tag, index) => {
+                  return <Tag key={index}>{tag[locale]}</Tag>
+                })}
+              </div>
+              <div className='text-[#61646B] flex gap-[24px]'>
+                <strong>
+                  <span>{props.views.toLocaleString('en-US')}</span> {props.views > 1 ? t('views') : t('view')}
+                </strong>
+                <strong>
+                  <span>{props.likes.toLocaleString('en-US')}</span> {props.likes > 1 ? t('likes') : t('like')}
+                </strong>
               </div>
             </div>
-            <div className='flex gap-[8px] flex-wrap'>
-              {props.tags.map((tag, index) => {
-                return <Tag key={index}>{tag[locale]}</Tag>
-              })}
-            </div>
-            <div className=' flex gap-[24px]'>
-              <div>
-                <strong>{props.views.toLocaleString('en-US')}</strong> {props.views > 1 ? t('views') : t('view')}
-              </div>
-              <div>
-                <strong>{props.likes.toLocaleString('en-US')}</strong> {props.likes > 1 ? t('likes') : t('like')}
-              </div>
-            </div>
-            <div className=' text-[16px] leading-[20px] line-clamp-3 break-words'>{props[locale].description}</div>
+            {!!lineClamp && (
+              <div className={`text-[16px] leading-[20px] line-clamp-${lineClamp}`}>{props[locale].description}</div>
+            )}
           </div>
           {!!props.latestChap.number && (
             <div className='leading-[20px]'>

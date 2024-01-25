@@ -82,7 +82,7 @@ function Comic({ comicDetails, like, unlike }) {
           <div className='absolute inset-0 bg-gradient-to-r from-[28%] from-[#000]/80 to-[#00000000]'></div>
         </div>
       </div>
-      <div className='flex flex-col min-h-[calc(100vh-96px)] '>
+      <div className='flex flex-col min-h-[calc(100vh-96px)] -mb-[8vh]'>
         <div className='h-[314px] min-h-[220px] w-full relative'>
           <div className='w-full h-full z-10 relative px-5 py-3 flex flex-col justify-between'>
             <div className='flex gap-2 flex-wrap'>

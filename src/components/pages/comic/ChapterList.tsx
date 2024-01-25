@@ -53,22 +53,24 @@ export default function ChapterList({ list, like, unlike, setComicLikes, hasAcce
           {t('to unlock special chapters')}!
         </p>
       </div>
-      <div className='grid grid-cols-1 divide-y'>
-        {list
-          .filter((chapter) => {
-            return searchChapter ? chapter?.number?.toString()?.includes(searchChapter) : true
-          })
-          .sort(() => (isDesc ? 1 : -1))
-          .map((chapter, index) => (
-            <Chapter
-              chapter={chapter}
-              key={index}
-              like={like}
-              hasAccess={hasAccess}
-              unlike={unlike}
-              setComicLikes={setComicLikes}
-            />
-          ))}
+      <div className='bg-[#292929]/80 min-h-[40vh]'>
+        <div className='grid grid-cols-1 divide-y'>
+          {list
+            .filter((chapter) => {
+              return searchChapter ? chapter?.number?.toString()?.includes(searchChapter) : true
+            })
+            .sort(() => (isDesc ? 1 : -1))
+            .map((chapter, index) => (
+              <Chapter
+                chapter={chapter}
+                key={index}
+                like={like}
+                hasAccess={hasAccess}
+                unlike={unlike}
+                setComicLikes={setComicLikes}
+              />
+            ))}
+        </div>
       </div>
     </div>
   )
@@ -115,7 +117,7 @@ const Chapter = ({
   return (
     <div
       onClick={() => (!unavailable ? router.push(`/comic/${query.comicSlug}/chapter/${chapter.number}`) : null)}
-      className='flex border-bottom border-[#414141] bg-[#292929]/80 text-white relative'>
+      className='flex border-bottom border-[#414141] text-white relative'>
       <Image
         src={chapter.thumbnail || m6}
         alt=''
