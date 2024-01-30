@@ -114,11 +114,12 @@ export const list = [
 ]
 export default function TaskSlider({ sliderNavRef }) {
   const sliderRef = useRef(null)
+  const sliderRefMobile = useRef(null)
   const [slideIndex, setSlideIndex] = useState(0)
   return (
     <>
       <div className='md:hidden h-[460px] mt-[1px] w-screen rounded-b-2xl relative overflow-hidden'>
-        <MobileCarousel setSlideIndex={setSlideIndex} sliderRef={sliderRef}>
+        <MobileCarousel setSlideIndex={setSlideIndex} sliderRef={sliderRefMobile}>
           {list.map((data, index) => (
             <div className='outline-none [&_*]:outline-none' key={index}>
               <Link href={data.comic.href} className='relative'>
@@ -173,7 +174,7 @@ export default function TaskSlider({ sliderNavRef }) {
               viewBox='0 0 38 38'
               fill='none'
               className='cursor-pointer'
-              onClick={() => sliderRef.current.slickGoTo(slideIndex - 1 < 0 ? list.length - 1 : slideIndex - 1)}>
+              onClick={() => sliderRefMobile.current.slickGoTo(slideIndex - 1 < 0 ? list.length - 1 : slideIndex - 1)}>
               <path
                 fillRule='evenodd'
                 clipRule='evenodd'
@@ -188,7 +189,7 @@ export default function TaskSlider({ sliderNavRef }) {
               viewBox='0 0 38 38'
               fill='none'
               className='cursor-pointer'
-              onClick={() => sliderRef.current.slickGoTo(slideIndex + 1 > list.length - 1 ? 0 : slideIndex + 1)}>
+              onClick={() => sliderRefMobile.current.slickGoTo(slideIndex + 1 > list.length - 1 ? 0 : slideIndex + 1)}>
               <path
                 fillRule='evenodd'
                 clipRule='evenodd'
