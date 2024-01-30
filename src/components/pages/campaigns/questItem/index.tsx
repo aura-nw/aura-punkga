@@ -64,7 +64,6 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
   useEffect(() => {
     if (open) setSeeMore(undefined)
   }, [open])
-
   return (
     <>
       <Modal open={open} setOpen={setOpen}>
@@ -156,7 +155,11 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                       <>
                         <div className='w-[1px] h-[26px] bg-light-medium-gray'></div>
                         <div className='flex flex-col items-center text-[10px] leading-[13px] lg:text-xs lg:leading-[15px] whitespace-nowrap'>
-                          <div>{`${quest.quest_reward_claimed}/${quest.reward.slots}`}</div>
+                          <div>{`${
+                            quest.repeat_quests?.[0]?.repeat_quest_reward_claimed == undefined
+                              ? quest.quest_reward_claimed
+                              : quest.repeat_quests?.[0]?.repeat_quest_reward_claimed
+                          }/${quest.reward.slots}`}</div>
                           <div>rewards claimed</div>
                         </div>
                       </>
@@ -176,7 +179,11 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                   <>
                     <div className='w-[160px] h-[1px] bg-light-medium-gray my-[10px]'></div>
                     <div className='flex flex-col items-center text-[10px] leading-[13px] lg:text-xs lg:leading-[15px]'>
-                      <div>{`${quest.quest_reward_claimed}/${quest.reward.slots}`}</div>
+                      <div>{`${
+                        quest.repeat_quests?.[0]?.repeat_quest_reward_claimed == undefined
+                          ? quest.quest_reward_claimed
+                          : quest.repeat_quests?.[0]?.repeat_quest_reward_claimed
+                      }/${quest.reward.slots}`}</div>
                       <div>rewards claimed</div>
                     </div>
                   </>
