@@ -100,7 +100,7 @@ export default function Footer() {
               {isSuccess != undefined || error ? (
                 isSuccess ? (
                   <div className='text-sm px-6 mt-[5px] text-primary-color'>
-                    {t('Thank you for subscribing to our newsletter')}
+                    {t('Email submitted')}
                   </div>
                 ) : (
                   <div className='text-sm px-6 mt-[5px] text-[#F0263C]'>{error || t('Something went wrong')}</div>
