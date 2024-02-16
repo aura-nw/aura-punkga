@@ -12,7 +12,7 @@ import { toast } from 'react-toastify'
 import TruncateMarkup from 'react-truncate-markup'
 import { Context } from 'src/context'
 import { Quest } from 'src/models/campaign'
-import { claimQuest } from 'src/services'
+import { claimQuest, getRequestLog } from 'src/services'
 import BasicQuest from './basicQuest'
 import FreeQuest from './freeQuest'
 import QuizQuest from './quizQuest'
@@ -25,13 +25,32 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
   const [seeMore, setSeeMore] = useState(undefined)
   const [loading, setLoading] = useState(false)
   const limitChar = isMobile ? 20 : 30
+
+  const revealResult = async (id: string) => {
+    const data = await getRequestLog(id)
+    if (data?.status == 'SUCCEEDED') {
+      await getProfile()
+      refreshCallback()
+      setClaimSuccessModalOpen(true)
+      setOpen(false)
+      setLoading(false)
+      return
+    }
+    if (data?.status == 'FAILED') {
+      throw new Error('Claim failed. Please try again later.')
+    }
+    setTimeout(() => revealResult(id), 4000)
+  }
+
   const claimQuestHandler = async () => {
     try {
       if (loading) return
       setLoading(true)
       const res = await claimQuest(quest.id)
-      if (res?.errors?.message) {
-        toast(res?.errors?.message, {
+      if (res?.requestId) {
+        revealResult(res?.requestId)
+      } else {
+        toast(res?.errors?.message || 'Claim failed. Please try again later.', {
           type: 'error',
           position: toast.POSITION.TOP_RIGHT,
           hideProgressBar: true,
@@ -40,18 +59,13 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
         console.error(res?.errors?.message)
         setOpen(false)
         setLoading(false)
-        return
       }
-      await getProfile()
-      refreshCallback()
-      setClaimSuccessModalOpen(true)
+    } catch (error) {
       setOpen(false)
       setLoading(false)
-    } catch (error) {
-      setLoading(false)
       refreshCallback()
       await getProfile()
-      toast(`Claim failed`, {
+      toast(error?.message || 'Claim failed. Please try again later.', {
         type: 'error',
         position: toast.POSITION.TOP_RIGHT,
         hideProgressBar: true,

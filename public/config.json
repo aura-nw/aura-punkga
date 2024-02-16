@@ -1,12 +1,12 @@
 {
-  "REDIRECT_URL": "https://staging.punkga.me",
+  "REDIRECT_URL": "https://dev.punkga.me",
   "CHAIN_ID": "euphoria-2",
   "CHAIN_INFO": {
     "chainId": "euphoria-2",
     "chainName": "Aura Euphoria TestNet",
     "rpc": "https://rpc.euphoria.aura.network",
     "rest": "https://lcd.euphoria.aura.network",
-    "indexerV2": "https://indexer-v2.staging.aurascan.io/api/v2/graphql",
+    "indexerV2": "https://indexer-v2.dev.aurascan.io/api/v2/graphql",
     "bip44": {
       "coinType": 118
     },
@@ -48,12 +48,12 @@
     "logo": "https://i.imgur.com/zi0mTYb.png",
     "explorer": "https://euphoria.aurascan.io/"
   },
-  "API_URL": "https://hasura.staging.punkga.me",
-  "AUTHORIZER_URL": "https://auth.staging.punkga.me",
+  "API_URL": "https://hasura.dev.punkga.me",
+  "AUTHORIZER_URL": "https://auth.dev.punkga.me",
   "AUTHORIZER_CLIENT_ID": "06c9c437-15cd-4240-b435-5d16206b46c6",
-  "ADMIN_URL": "https://admin.staging.punkga.me",
-  "REST_API_URL": "https://api.staging.punkga.me",
+  "ADMIN_URL": "https://admin.dev.punkga.me",
+  "REST_API_URL": "https://api.dev.punkga.me",
   "IN_MAINTENANCE_MODE": false,
   "GTM_ID": "GTM-MMT4K22K",
-  "SEEKHYPE_URL": "https://staging.seekhype.io/"
+  "SEEKHYPE_URL": "https://dev.seekhype.io/"
 }
