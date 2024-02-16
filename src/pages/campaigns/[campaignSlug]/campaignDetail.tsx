@@ -28,6 +28,7 @@ import { openSignInModal } from 'src/utils'
 import useSWR, { useSWRConfig } from 'swr'
 import QuestList from '../../../components/pages/campaigns/questList'
 import FilledButton from 'components/core/Button/FilledButton'
+import Popover from 'components/Popover'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -259,11 +260,17 @@ function CampaignDetail({}) {
               <div className='hidden lg:block'>
                 {/* Enroll button */}
                 {isUpcoming ? (
-                  <div>
+                  <Popover
+                    popoverRender={() => (
+                      <div
+                        className='shadow-[0px_4px_15px_0px_#00000026] rounded-[20px] p-3 m-3 text-sm whitespace-nowrap bg-[#fff]'>
+                        Campaign has not started yet
+                      </div>
+                    )}>
                     <button className='w-full bg-[#ABABAB] text-[#DEDEDE] font-bold leading-[25px] text-xl px-8 text-center pt-3 pb-[14px] rounded-[20px]'>
                       Enroll now
                     </button>
-                  </div>
+                  </Popover>
                 ) : isOngoing && !isEnrolled ? (
                   <div>
                     <FilledButton loading={enrollLoading} className='w-full' onClick={enrollHandler}>

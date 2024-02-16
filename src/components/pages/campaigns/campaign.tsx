@@ -61,8 +61,8 @@ export default function Campaign() {
     }
   }
   return (
-    <div className='pk-container py-5 md:py-16'>
-      <div>
+    <div className='pk-container '>
+      <div className='sticky md:top-12 top-24 bg-white pb-10 pt-5 md:pt-16'>
         <div className='flex items-center justify-between'>
           <div className='text-base leading-5 font-bold md:text-2xl md:leading-[18px] md:font-extrabold'>
             {t('Campaign')} <span className=''>{` (${list.length})`}</span>
@@ -131,7 +131,7 @@ export default function Campaign() {
           </div>
         </div>
       </div>
-      <div className='mt-[39px] grid grid-cols-1 lg:grid-cols-2 gap-5 2xl:gap-10 xl:grid-cols-3'>
+      <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 2xl:gap-10 xl:grid-cols-3'>
         {list?.map((campaign, index) => (
           <div
             key={index}
