@@ -151,7 +151,7 @@ function AboutUs() {
           </svg>
         </div>
       </div>
-      <div className='mt-[50px] lg:hidden w-screen overflow-hidden [&_.slick-center_.slide_.stroke]:stroke-second-color [&_.slick-center_.slide_.fill]:fill-second-color [&_.slick-center_.slide_.fill-gray]:fill-[#DEDEDE]'>
+      <div className='mt-[50px] lg:hidden w-screen overflow-hidden [&_.slick-center_.slide_.stroke]:stroke-second-color [&_.slick-center_.slide_.fill]:fill-second-color [&_.slick-center_.slide_.fill-gray]:fill-[#DEDEDE] [&_.slick-center_.slide_.fill-gray]:stroke-primary-color'>
         <Slider {...settings}>
           {slideData.map((data, index) => (
             <div key={index} className='px-3'>
@@ -161,7 +161,7 @@ function AboutUs() {
         </Slider>
       </div>
       <div className='hidden lg:block pk-container'>
-        <div className='mt-[180px] grid grid-cols-3 gap-10 [&_.slide]:cursor-pointer [&_.slide:hover_.stroke]:stroke-second-color [&_.slide:hover_.fill]:fill-second-color [&_.slide:hover_.fill-gray]:fill-[#DEDEDE]'>
+        <div className='mt-[180px] grid grid-cols-3 gap-10 [&_.slide]:cursor-pointer [&_.slide:hover_.stroke]:stroke-second-color [&_.slide:hover_.fill]:fill-second-color [&_.slide:hover_.fill-gray]:fill-[#DEDEDE] [&_.slide:hover_.fill-gray]:stroke-primary-color'>
           {slideData.map((data, index) => (
             <Slide key={index} data={data} />
           ))}
@@ -184,20 +184,20 @@ function AboutUs() {
             <div className='w-1/2'>
               {authorData[locale].map((data, index) => (
                 <div
-                  className={`flex justify-between items-center border-b cursor-pointer p-5 border-[#DEDEDE] ${
-                    active != index ? '' : 'bg-[#F2F2F2]'
+                  className={`flex justify-between items-center border-b cursor-pointer p-5 rounded-2xl ${
+                    active != index ? 'border-b-[#DEDEDE]' : 'bg-[#F2F2F2] '
                   }`}
                   onClick={() => setActive(index)}>
-                  <div className='flex items-center gap-4'>
+                  <div className='flex items-center gap-5'>
                     <div className=''>
                       {data?.avatar ? (
-                        <Image src={data?.avatar} alt='' className='w-28 h-28 object-cover' />
+                        <Image src={data?.avatar} alt='' className='w-20 h-20 object-cover' />
                       ) : (
-                        <div className='w-12 h-12 rounded-lg bg-second-color'></div>
+                        <div className='w-20 h-20 rounded-lg bg-second-color'></div>
                       )}
                     </div>
                     <div>
-                      <div className='font-semibold leading-[21px] text-[#414141] text-[19px] flex items-center gap-2'>
+                      <div className='font-semibold leading-[23px] text-[#292929] text-[18px] flex items-center gap-2'>
                         {data.nickname}
                         <span>
                           <Image
@@ -207,7 +207,7 @@ function AboutUs() {
                           />
                         </span>
                       </div>
-                      <div className='mt-3 text-[#61646B] text-sm'>{data.name}</div>
+                      <div className='mt-2 text-[#1FAB5E]'>{data.name}</div>
                     </div>
                   </div>
                   <div className='flex items-center gap-3'>
@@ -216,7 +216,7 @@ function AboutUs() {
                         <Image
                           src={FbIcon}
                           alt=''
-                          className='w-[62px] h-[62px]'
+                          className='w-[32px] h-[32px]'
                           onClick={() => window.open(data.socialLink.fb)}
                         />
                       )}
@@ -224,7 +224,7 @@ function AboutUs() {
                         <Image
                           src={BeIcon}
                           alt=''
-                          className='w-[62px] h-[62px]'
+                          className='w-[32px] h-[32px]'
                           onClick={() => window.open(data.socialLink.be)}
                         />
                       )}
@@ -232,7 +232,7 @@ function AboutUs() {
                         <Image
                           src={IgIcon}
                           alt=''
-                          className='w-[62px] h-[62px]'
+                          className='w-[32px] h-[32px]'
                           onClick={() => window.open(data.socialLink.ig)}
                         />
                       )}
@@ -243,48 +243,50 @@ function AboutUs() {
             </div>
             <div className='w-1/2'>
               <div className={`transition-all `}>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  xmlnsXlink='http://www.w3.org/1999/xlink'
-                  width='340'
-                  height='171'
-                  viewBox='0 0 340 171'
-                  className='w-full h-auto'
-                  fill='none'>
-                  <mask id='svgmask'>
-                    <path
-                      d='M85.134 164.633L85.4214 164.633L85.6649 164.481L90.6446 161.361C91.7585 160.663 93.0463 160.293 94.3607 160.293L262.959 160.293C264.273 160.293 265.561 160.663 266.675 161.361L277.5 168.143L278.031 167.295L277.5 168.143C278.933 169.04 280.588 169.516 282.278 169.516L327.907 169.516C329.597 169.516 331.253 169.04 332.685 168.143L332.154 167.295L332.685 168.143L334.778 166.832C337.405 165.186 339 162.304 339 159.205L339 11.8265C339 8.72675 337.405 5.84511 334.778 4.19949L332.685 2.88857C331.253 1.99143 329.597 1.51563 327.907 1.51563L177.495 1.51563C175.805 1.51563 174.149 1.99143 172.717 2.88859L168.819 5.33012C167.705 6.0279 166.418 6.39797 165.103 6.39797L70.9792 6.39798C69.6648 6.39798 68.377 6.02791 67.2631 5.33012L63.3656 2.88859C61.9335 1.99144 60.2777 1.51564 58.5877 1.51564L23.3504 1.51564C21.6604 1.51564 20.0046 1.99144 18.5725 2.88859L11.284 7.45439L11.8148 8.30185L11.284 7.45441C8.65704 9.10001 7.06185 11.9816 7.06185 15.0815L7.06185 90.0764C7.06185 91.9572 6.09396 93.7056 4.50005 94.7041C2.32238 96.0683 0.999997 98.4571 0.999997 101.027L0.999999 153.237C0.999999 156.337 2.59519 159.219 5.22212 160.864L9.04674 163.26C10.4789 164.157 12.1347 164.633 13.8246 164.633L85.134 164.633Z'
-                      stroke='#ABABAB'
-                      fill='#fff'
-                      stroke-width='2'
-                    />
-                  </mask>
-                  <image
-                    className='w-full'
+                <div className='flex gap-8'>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
                     xmlnsXlink='http://www.w3.org/1999/xlink'
-                    xlinkHref={`${authorData[locale].at(active)?.avatar.src}`}
-                    mask='url(#svgmask)'></image>
-                  <path
-                    d='M85.134 164.633L85.4214 164.633L85.6649 164.481L90.6446 161.361C91.7585 160.663 93.0463 160.293 94.3607 160.293L262.959 160.293C264.273 160.293 265.561 160.663 266.675 161.361L277.5 168.143L278.031 167.295L277.5 168.143C278.933 169.04 280.588 169.516 282.278 169.516L327.907 169.516C329.597 169.516 331.253 169.04 332.685 168.143L332.154 167.295L332.685 168.143L334.778 166.832C337.405 165.186 339 162.304 339 159.205L339 11.8265C339 8.72675 337.405 5.84511 334.778 4.19949L332.685 2.88857C331.253 1.99143 329.597 1.51563 327.907 1.51563L177.495 1.51563C175.805 1.51563 174.149 1.99143 172.717 2.88859L168.819 5.33012C167.705 6.0279 166.418 6.39797 165.103 6.39797L70.9792 6.39798C69.6648 6.39798 68.377 6.02791 67.2631 5.33012L63.3656 2.88859C61.9335 1.99144 60.2777 1.51564 58.5877 1.51564L23.3504 1.51564C21.6604 1.51564 20.0046 1.99144 18.5725 2.88859L11.284 7.45439L11.8148 8.30185L11.284 7.45441C8.65704 9.10001 7.06185 11.9816 7.06185 15.0815L7.06185 90.0764C7.06185 91.9572 6.09396 93.7056 4.50005 94.7041C2.32238 96.0683 0.999997 98.4571 0.999997 101.027L0.999999 153.237C0.999999 156.337 2.59519 159.219 5.22212 160.864L9.04674 163.26C10.4789 164.157 12.1347 164.633 13.8246 164.633L85.134 164.633Z'
-                    stroke='#ABABAB'
-                    stroke-width='2'
-                  />
-                </svg>
-                <div className='px-10'>
-                  <div className='flex items-center text-[#292929] text-4xl gap-5 font-semibold'>
-                    {authorData[locale].at(active).name}
-                    <span>
-                      <Image
-                        src={authorData[locale].at(active).gender.toLowerCase() == 'male' ? MaleIcon : FemaleIcon}
-                        alt=''
-                        className='w-[62px]'
+                    width='306'
+                    height='306'
+                    viewBox='0 0 306 306'
+                    className='w-[300px] h-[300px]'
+                    fill='none'>
+                    <mask id='svgmask'>
+                      <path
+                        d='M1.5 283.392L1.5 283.912L1.82221 284.321L10.3274 295.105L10.7778 295.676L11.5052 295.676L77.2268 295.676L77.9542 295.676L78.4046 295.105L84.1397 287.833L237.324 287.833L250.018 303.929L250.469 304.5L251.196 304.5L296.041 304.5L296.769 304.5L297.219 303.929L304.178 295.105L304.5 294.697L304.5 294.176L304.5 11.8235L304.5 11.3032L304.178 10.8946L297.219 2.07112L296.769 1.49999L296.041 1.49999L157.639 1.49999L156.912 1.49999L156.461 2.07113L149.953 10.3235L63.2634 10.3235L56.7551 2.07113L56.3047 1.5L55.5773 1.5L20.0103 1.5L19.2829 1.5L18.8325 2.07114L7.23457 16.777L6.91236 17.1855L6.91236 17.7059L6.91237 167.186L1.82221 173.64L1.49999 174.048L1.49999 174.569L1.5 283.392Z'
+                        stroke='#ABABAB'
+                        strokeWidth='3'
+                        fill='#fff'
                       />
-                    </span>
+                    </mask>
+                    <image
+                      className='w-full'
+                      xmlnsXlink='http://www.w3.org/1999/xlink'
+                      xlinkHref={`${authorData[locale].at(active)?.avatar.src}`}
+                      mask='url(#svgmask)'></image>
+                    <path
+                      d='M1.5 283.392L1.5 283.912L1.82221 284.321L10.3274 295.105L10.7778 295.676L11.5052 295.676L77.2268 295.676L77.9542 295.676L78.4046 295.105L84.1397 287.833L237.324 287.833L250.018 303.929L250.469 304.5L251.196 304.5L296.041 304.5L296.769 304.5L297.219 303.929L304.178 295.105L304.5 294.697L304.5 294.176L304.5 11.8235L304.5 11.3032L304.178 10.8946L297.219 2.07112L296.769 1.49999L296.041 1.49999L157.639 1.49999L156.912 1.49999L156.461 2.07113L149.953 10.3235L63.2634 10.3235L56.7551 2.07113L56.3047 1.5L55.5773 1.5L20.0103 1.5L19.2829 1.5L18.8325 2.07114L7.23457 16.777L6.91236 17.1855L6.91236 17.7059L6.91237 167.186L1.82221 173.64L1.49999 174.048L1.49999 174.569L1.5 283.392Z'
+                      stroke='#ABABAB'
+                      strokeWidth='3'
+                    />
+                  </svg>
+                  <div>
+                    <div className='flex items-center text-[#292929] text-[32px] gap-5 font-bold leading-10'>
+                      {authorData[locale].at(active).name}
+                      <span>
+                        <Image
+                          src={authorData[locale].at(active).gender.toLowerCase() == 'male' ? MaleIcon : FemaleIcon}
+                          alt=''
+                          className='w-[32px]'
+                        />
+                      </span>
+                    </div>
+                    <div className='text-[#61646B] font-semibold left-5'>{authorData[locale].at(active).nickname}</div>
                   </div>
-                  <div className='text-[#61646B] text-[32px] font-bold leading-10'>
-                    {authorData[locale].at(active).nickname}
-                  </div>
-                  <ul className={`list-disc text-base pt-4 mt-8 pl-2 list-inside  border-t border-[#DEDEDE]`}>
+                </div>
+                <div className=''>
+                  <ul className={`list-disc text-base pt-5 mt-5 pl-2 list-inside  border-t border-[#DEDEDE]`}>
                     {authorData[locale].at(active).bio.map((b, i) => (
                       <li key={i}>{b}</li>
                     ))}
@@ -332,7 +334,7 @@ const Slide = ({ data }) => {
             />
           </svg>
         </div>
-        <div className='relative lg:pt-[90px] pt-[48px] mx-auto text-center text-2xl leading-[30px] font-orbitron font-bold uppercase text-[#292929] lg:text-[38px] lg:leading-[47px] whitespace-nowrap'>
+        <div className='relative xl:pt-[90px] pt-[48px] mx-auto text-center text-2xl leading-[30px] font-orbitron font-bold uppercase text-[#292929] xl:text-[38px] xl:leading-[47px] whitespace-nowrap'>
           {t(data.title)}
         </div>
         <div className='relative h-full w-full px-[38px] pb-[36px] lg:pl-[65px] lg:pr-[58px] lg:pb-[84px]'>
@@ -351,7 +353,7 @@ const Slide = ({ data }) => {
             </svg>
             <div className='absolute inset-0 grid place-items-center'>{data.image}</div>
           </div>
-          <div className='text-xs leading-[15px] text-[#292929] lg:text-base'>{t(data.des)}</div>
+          <div className='text-xs leading-[15px] text-[#292929] lg:text-base min-h-[60px]'>{t(data.des)}</div>
         </div>
       </div>
     </div>
@@ -392,16 +394,16 @@ const Author = ({ data, active, setActive, index }) => {
           <ChevronDownIcon className={`w-5 ${active == index ? 'rotate-180' : 'rotate-0'} transition-all`} />
         </div>
       </div>
-      <div className={`transition-all overflow-hidden ${active == index ? 'max-h-[500px] ' : 'max-h-[0px]'}`}>
+      <div className={`transition-all overflow-hidden ${active == index ? 'max-h-[1000px] ' : 'max-h-[0px]'}`}>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           xmlnsXlink='http://www.w3.org/1999/xlink'
           width='340'
           height='171'
           viewBox='0 0 340 171'
-          className='mt-3'
+          className='mt-3 w-full'
           fill='none'>
-          <mask id={`svgmask${index}`}>
+          <mask id={`svgmask${index}`} className='w-full'>
             <path
               d='M85.134 164.633L85.4214 164.633L85.6649 164.481L90.6446 161.361C91.7585 160.663 93.0463 160.293 94.3607 160.293L262.959 160.293C264.273 160.293 265.561 160.663 266.675 161.361L277.5 168.143L278.031 167.295L277.5 168.143C278.933 169.04 280.588 169.516 282.278 169.516L327.907 169.516C329.597 169.516 331.253 169.04 332.685 168.143L332.154 167.295L332.685 168.143L334.778 166.832C337.405 165.186 339 162.304 339 159.205L339 11.8265C339 8.72675 337.405 5.84511 334.778 4.19949L332.685 2.88857C331.253 1.99143 329.597 1.51563 327.907 1.51563L177.495 1.51563C175.805 1.51563 174.149 1.99143 172.717 2.88859L168.819 5.33012C167.705 6.0279 166.418 6.39797 165.103 6.39797L70.9792 6.39798C69.6648 6.39798 68.377 6.02791 67.2631 5.33012L63.3656 2.88859C61.9335 1.99144 60.2777 1.51564 58.5877 1.51564L23.3504 1.51564C21.6604 1.51564 20.0046 1.99144 18.5725 2.88859L11.284 7.45439L11.8148 8.30185L11.284 7.45441C8.65704 9.10001 7.06185 11.9816 7.06185 15.0815L7.06185 90.0764C7.06185 91.9572 6.09396 93.7056 4.50005 94.7041C2.32238 96.0683 0.999997 98.4571 0.999997 101.027L0.999999 153.237C0.999999 156.337 2.59519 159.219 5.22212 160.864L9.04674 163.26C10.4789 164.157 12.1347 164.633 13.8246 164.633L85.134 164.633Z'
               stroke='#ABABAB'
