@@ -78,7 +78,7 @@ export default function Footer() {
           </div>
           <div className='flex flex-col gap-5'>
             <div>
-              <div className='text-2xl leading-[38px] text-[#C8C8C8] font-bold lg:text-5xl lg:leading-[54px]'>
+              <div className='text-[32px] leading-[40px] text-[#C8C8C8] font-bold lg:text-5xl lg:leading-[54px]'>
                 {t('Never miss a drop')}
               </div>
               <div className='text-sm leading-[18px] text-[#ABABAB]'>{t('Subscribe to get fresh news update')}</div>
@@ -99,17 +99,17 @@ export default function Footer() {
               </div>
               {isSuccess != undefined || error ? (
                 isSuccess ? (
-                  <div className='text-sm px-6 mt-[5px] text-primary-color'>
+                  <div className='text-xs mt-[5px] text-primary-color'>
                     {t('Email submitted')}
                   </div>
                 ) : (
-                  <div className='text-sm px-6 mt-[5px] text-[#F0263C]'>{error || t('Something went wrong')}</div>
+                  <div className='text-xs mt-[5px] text-[#F0263C]'>{error || t('Something went wrong')}</div>
                 )
               ) : null}
             </div>
           </div>
         </div>
-        <div className='flex items-center gap-6 md:hidden justify-center pt-7 pb-4'>
+        <div className='flex items-center gap-6 md:hidden justify-center pt-6 pb-4'>
           <Link target='_blank' href='https://www.facebook.com/PunkgaMeManga/'>
             <svg xmlns='http://www.w3.org/2000/svg' width='32' height='33' viewBox='0 0 32 33' fill='none'>
               <circle cx='16' cy='16.8906' r='14' fill='#23FF81' />
