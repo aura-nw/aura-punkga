@@ -181,7 +181,7 @@ function AboutUs() {
         </div>
         <div className='mt-[50px] lg:mt-[160px]'>
           <div className='pk-container px-5'>
-            <div className='uppercase font-masgistral font-bold text-2xl leading-[17px] text-center text-subtle-dark lg:text-[#292929] lg:text-[64px]'>
+            <div className='uppercase font-masgistral font-medium text-2xl leading-[17px] text-center text-subtle-dark lg:text-[#292929] lg:text-[48px]'>
               {t('Authors')}
             </div>
             <div className='text-sm leading-[18px] text-subtle-dark mt-4 text-center lg:text-2xl lg:text-[#ABABAB] lg:mt-8 lg:max-w-[545px] lg:mx-auto'>
