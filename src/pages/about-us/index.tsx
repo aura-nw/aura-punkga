@@ -67,8 +67,8 @@ function AboutUs() {
         <div className='pk-container px-5 lg:px-0'>
           <div className='flex gap-4 lg:gap-16 mt-[50px] lg:mt-24 items-start'>
             <Image src={DecorImg} alt='' className='lg:h-[365px] lg:w-auto' />
-            <div className='font-orbitron font-bold '>
-              <div className='uppercase text-xl leading-[14px] text-second-color lg:mt-10 lg:text-6xl  2xl:mt-20 2xl:text-[72px] 2xl:leading-[90px] whitespace-nowrap'>
+            <div className='font-bold '>
+              <div className='uppercase font-masgistral text-xl leading-[14px] text-second-color lg:mt-10 lg:text-6xl  2xl:mt-20 2xl:text-[72px] 2xl:leading-[90px] whitespace-nowrap'>
                 Punkga Me
               </div>
               <div className='text-2xl leading-[30px] mt-5 lg:text-4xl 2xl:text-[48px] 2xl:leading-[60px] lg:max-w-[45vw]'>
@@ -181,7 +181,7 @@ function AboutUs() {
         </div>
         <div className='mt-[50px] lg:mt-[160px]'>
           <div className='pk-container px-5'>
-            <div className='uppercase font-orbitron font-bold text-2xl leading-[17px] text-center text-subtle-dark lg:text-[#292929] lg:text-[64px]'>
+            <div className='uppercase font-masgistral font-bold text-2xl leading-[17px] text-center text-subtle-dark lg:text-[#292929] lg:text-[64px]'>
               {t('Authors')}
             </div>
             <div className='text-sm leading-[18px] text-subtle-dark mt-4 text-center lg:text-2xl lg:text-[#ABABAB] lg:mt-8 lg:max-w-[545px] lg:mx-auto'>
@@ -348,7 +348,7 @@ const Slide = ({ data }) => {
           />
         </svg>
         <div className='absolute inset-0 flex flex-col justify-center items-center'>
-          <div className='relative xl:pt-[62px] mb-2 pt-[48px] mx-auto text-center text-2xl leading-[30px] font-orbitron font-bold uppercase text-[#292929] xl:text-[38px] xl:leading-[47px] whitespace-nowrap'>
+          <div className='relative xl:pt-[62px] mb-4 pt-[48px] mx-auto text-center text-2xl leading-[30px] font-masgistral font-bold uppercase text-[#292929] xl:text-[38px] xl:leading-[47px] whitespace-nowrap'>
             {t(data.title)}
           </div>
           <div className='relative flex flex-col items-center pb-[36px]'>
