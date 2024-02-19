@@ -348,7 +348,7 @@ const Slide = ({ data }) => {
           />
         </svg>
         <div className='absolute inset-0 flex flex-col justify-center items-center'>
-          <div className='relative xl:pt-[62px] mb-4 pt-[48px] mx-auto text-center text-2xl leading-[30px] font-masgistral font-bold uppercase text-[#292929] xl:text-[38px] xl:leading-[47px] whitespace-nowrap'>
+          <div className='relative xl:pt-[62px] mb-4 pt-[48px] mx-auto text-center text-2xl leading-[30px] font-masgistral font-bold uppercase text-[#292929] xl:text-[38px] xl:leading-[47px]'>
             {t(data.title)}
           </div>
           <div className='relative flex flex-col items-center pb-[36px]'>
