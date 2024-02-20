@@ -99,17 +99,17 @@ export default function Footer() {
               </div>
               {isSuccess != undefined || error ? (
                 isSuccess ? (
-                  <div className='text-xs mt-[5px] text-primary-color'>
-                    {t('Email submitted')}
-                  </div>
+                  <div className='text-xs mt-[5px] text-primary-color'>{t('Email submitted')}</div>
                 ) : (
                   <div className='text-xs mt-[5px] text-[#F0263C]'>{error || t('Something went wrong')}</div>
                 )
-              ) : null}
+              ) : (
+                <div className='h-[16px] mt-[5px]'></div>
+              )}
             </div>
           </div>
         </div>
-        <div className='flex items-center gap-6 md:hidden justify-center pt-6 pb-4'>
+        <div className='flex items-center gap-6 md:hidden justify-center pb-4'>
           <Link target='_blank' href='https://www.facebook.com/PunkgaMeManga/'>
             <svg xmlns='http://www.w3.org/2000/svg' width='32' height='33' viewBox='0 0 32 33' fill='none'>
               <circle cx='16' cy='16.8906' r='14' fill='#23FF81' />
