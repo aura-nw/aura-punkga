@@ -78,10 +78,12 @@ export default function Footer() {
           </div>
           <div className='flex flex-col gap-5'>
             <div>
-              <div className='text-[32px] leading-[40px] text-[#C8C8C8] font-bold lg:text-5xl lg:leading-[54px]'>
+              <div className='text-[32px] leading-[40px] text-[#C8C8C8] font-bold lg:text-5xl lg:leading-[60px]'>
                 {t('Never miss a drop')}
               </div>
-              <div className='text-sm leading-[18px] text-[#ABABAB]'>{t('Subscribe to get fresh news update')}</div>
+              <div className='text-sm leading-[18px] text-[#ABABAB] lg:text-base lg:leading-5 lg:mt-4'>
+                {t('Subscribe to get fresh news update')}
+              </div>
             </div>
             <div>
               <div className='border-[1.5px] py-2 pl-6 pr-2 flex gap-6 rounded-[32px] max-w-md'>
