@@ -76,7 +76,7 @@ export default function Footer() {
               </Link>
             </div>
           </div>
-          <div className='flex flex-col gap-5'>
+          <div className='flex flex-col gap-8'>
             <div>
               <div className='text-[32px] leading-[40px] text-[#C8C8C8] font-bold lg:text-5xl lg:leading-[60px]'>
                 {t('Never miss a drop')}
