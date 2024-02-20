@@ -35,17 +35,17 @@ export default function Page(props) {
 const slideData = [
   {
     title: 'Platform',
-    image: <Image src={SlideImage1} alt='' className='w-[48%] h-auto' />,
+    image: <Image src={SlideImage1} alt='' className='w-[59%] h-auto' />,
     des: 'A professional comic creation platform for comic artists both domestically and internationally on a common theme, which is Cyberpunk',
   },
   {
     title: 'NFTs ',
-    image: <Image src={SlideImage2} alt='' className='w-[55%] h-aut' />,
+    image: <Image src={SlideImage2} alt='' className='w-[69%] h-aut0' />,
     des: 'Opportunity to own limited-edition NFTs created by Manga Creators themselves',
   },
   {
     title: 'Anime debut',
-    image: <Image src={SlideImage3} alt='' className='w-[55%] h-aut' />,
+    image: <Image src={SlideImage3} alt='' className='w-[69%] h-aut0' />,
     des: 'Popular manga series with a large fanbase and community have a higher chance of being adapted into anime',
   },
 ]
@@ -66,10 +66,10 @@ function AboutUs() {
       <div className='mx-auto max-w-[1360px]'>
         <div className='pk-container px-5 lg:px-0'>
           <div className='flex gap-4 lg:gap-16 mt-[50px] lg:mt-24 items-start'>
-            <Image src={DecorImg} alt='' className='lg:h-[365px] lg:w-auto' />
+            <Image src={DecorImg} alt='' className='lg:h-[294px] lg:w-auto' />
             <div className='font-bold '>
-              <div className='uppercase font-masgistral text-xl leading-[14px] text-second-color lg:mt-10 lg:text-6xl  2xl:mt-20 2xl:text-[72px] 2xl:leading-[90px] whitespace-nowrap'>
-                Punkga Me
+              <div className='uppercase font-masgistral text-xl leading-[14px] text-second-color lg:mt-10 lg:text-6xl  2xl:mt-16 2xl:text-[72px] 2xl:leading-[90px] whitespace-nowrap'>
+                Punkga.Me
               </div>
               <div className='text-2xl leading-[30px] mt-5 lg:text-4xl 2xl:text-[48px] 2xl:leading-[60px] lg:max-w-[45vw]'>
                 {locale == 'vn'
@@ -81,9 +81,9 @@ function AboutUs() {
           </div>
           <div
             style={{ backgroundImage: isMobile ? `url(${BgImage.src})` : `url(${BgImage2.src})` }}
-            className={`mt-5 lg:-mt-20 flex pt-[14px] pl-[7px] gap-[7px] items-start relative bg-no-repeat bg-[length:100%_100%] lg:p-[52px] lg:pb-24`}>
+            className={`mt-5 2xl:-mt-28 lg:-mt-7 flex pt-[14px] pl-[7px] gap-[7px] items-start relative bg-no-repeat bg-[length:100%_100%] lg:px-[100px] lg:py-[50px] lg:pb-24`}>
             <div className='relative'>
-              <div className='text-[10px] leading-[13px] text-[#828282] min-h-[137px] lg:text-lg lg:leading-[24px] lg:max-w-[690px] lg:w-[43vw]'>
+              <div className='text-[10px] leading-[13px] text-[#828282] min-h-[137px] lg:text-lg lg:leading-[24px] lg:max-w-[690px] lg:w-[38vw]'>
                 {locale == 'vn'
                   ? 'PUNKGA là một dự án hướng tới việc xây dựng một sân chơi chuyên nghiệp dành cho các họa sĩ truyện tranh với chủ đề Cyberpunk. Dự án mục tiêu không chỉ tạo ra các NFT bởi các họa sĩ Manga, mà còn khích lệ sự tham gia của cộng đồng thông qua việc chia sẻ và tham gia vào câu chuyện theo nhiều cách khác nhau. Người dùng sẽ có cơ hội sở hữu những tác phẩm số hóa độc đáo và tham gia vào quá trình phát triển câu chuyện một cách tích cực.'
                   : "PUNKGA is a project aimed at building a professional playground for comic artists with a Cyberpunk theme. The project's goal is not only to create NFTs by Manga artists but also to encourage community participation through sharing and involvement in the story in various ways. Users will have the opportunity to own unique digital artworks and actively participate in the development of the story."}
@@ -94,7 +94,7 @@ function AboutUs() {
                 height='25'
                 viewBox='0 0 196 25'
                 fill='none'
-                className='mt-3 lg:absolute lg:-top-[5.5rem] lg:w-[470px] lg:h-auto'>
+                className='mt-3 lg:absolute lg:-top-[5.5rem] lg:w-[420px] lg:h-auto'>
                 <path
                   d='M170.878 24.1232H141.092H136.389L150.106 10.4061H159.12L168.526 1H194.001L170.878 24.1232Z'
                   stroke='#292929'
@@ -113,7 +113,7 @@ function AboutUs() {
                 />
               </svg>
             </div>
-            <div className='w-[166px] shrink-0 relative lg:absolute lg:w-[33%] lg:right-16 lg:bottom-[70%] 2xl:bottom-[80%]'>
+            <div className='w-[166px] shrink-0 relative lg:absolute lg:w-[33%] lg:right-24 lg:bottom-[70%]'>
               <Image src={DecorImg2} alt='' className='w-full h-full' />
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -121,7 +121,7 @@ function AboutUs() {
                 height='210'
                 viewBox='0 0 16 210'
                 fill='none'
-                className='hidden lg:block absolute bottom-[58%] -right-12'>
+                className='hidden lg:block absolute bottom-[55%] -right-16'>
                 <path d='M15 0L1 14V85L15 71V0Z' fill='#292929' />
                 <path d='M15 80.5L1 95.0833V115.5L15 100.917V80.5Z' fill='#292929' />
                 <path d='M15 111.5L1 126.083V146.5L15 131.917V111.5Z' fill='#292929' />
@@ -163,7 +163,7 @@ function AboutUs() {
             </div>
           </div>
         </div>
-        <div className='mt-[50px] lg:hidden w-screen overflow-hidden [&_.slick-center_.slide_.stroke]:stroke-second-color [&_.slick-center_.slide_.fill]:fill-second-color [&_.slick-center_.slide_.fill-gray]:fill-[#DEDEDE] [&_.slick-center_.slide_.fill-gray]:stroke-primary-color'>
+        <div className='mt-[50px] xl:hidden w-screen overflow-hidden [&_.slick-center_.slide_.stroke]:stroke-second-color [&_.slick-center_.slide_.fill]:fill-second-color [&_.slick-center_.slide_.fill-gray]:fill-[#DEDEDE] [&_.slick-center_.slide_.fill-gray]:stroke-primary-color'>
           <Slider {...settings}>
             {slideData.map((data, index) => (
               <div key={index} className='px-3'>
@@ -172,7 +172,7 @@ function AboutUs() {
             ))}
           </Slider>
         </div>
-        <div className='hidden lg:block pk-container'>
+        <div className='hidden xl:block pk-container'>
           <div className='mt-[180px] flex justify-between [&_.slide]:cursor-pointer [&_.slide:hover_.stroke]:stroke-second-color [&_.slide:hover_.fill]:fill-second-color [&_.slide:hover_.fill-gray]:fill-[#DEDEDE] [&_.slide:hover_.fill-gray]:stroke-primary-color'>
             {slideData.map((data, index) => (
               <Slide key={index} data={data} />
@@ -204,7 +204,7 @@ function AboutUs() {
                     <div className='flex items-center gap-5'>
                       <div className=''>
                         {data?.avatar ? (
-                          <Image src={data?.avatar} alt='' className='w-20 h-20 object-cover' />
+                          <Image src={data?.avatar} alt='' className='w-20 h-20 object-cover rounded-[10px]' />
                         ) : (
                           <div className='w-20 h-20 rounded-lg bg-second-color'></div>
                         )}
@@ -325,43 +325,45 @@ const Slide = ({ data }) => {
   const { t } = useTranslation()
 
   return (
-    <div className='slide mx-auto'>
-      <div className='relative flex flex-col items-center'>
+    <div className='slide'>
+      <div className='relative w-fit mx-auto'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           width='380'
           height='480'
           viewBox='0 0 380 480'
           fill='none'
-          className='w-full h-full max-w-[380px]'>
+          className='w-full h-full max-w-[320px] xl:max-w-[380px]'>
           <path d='M12.3434 109.15L0 120.95V180.791L12.3434 168.991V109.15Z' fill='#292929' />
           <path d='M12.3434 176.998L0 189.289V206.497L12.3434 194.206V176.998Z' fill='#292929' />
           <path d='M12.3434 203.126L0 215.417V232.625L12.3434 220.334V203.126Z' fill='#292929' />
           <path d='M12.3434 229.255L0 241.546V258.754L12.3434 246.463V229.255Z' fill='#292929' />
           <path d='M12.3434 255.383L0 267.674V284.882L12.3434 272.591V255.383Z' fill='#292929' />
-          <path d='M135.864 13.7143L121.757 0H252.685L238.579 13.7143H135.864Z' fill='#292929' />
+          <path d='M135.864 13.7143L121.757 0H252.685L238.579 13.7143H135.864Z' fill='#292929' className='fill' />
           <path
             d='M0 6.68892V75.2153C0 76.9976 0.711316 78.7062 1.97611 79.962L18.7432 96.6094C20.0079 97.8652 20.7193 99.5738 20.7193 101.356V380.74C20.7193 384.434 17.7245 387.429 14.0303 387.429H6.68892C2.99473 387.429 0 390.423 0 394.117V473.311C0 477.005 2.99474 480 6.68893 480H373.311C377.005 480 380 477.005 380 473.311V329.403C380 325.709 377.005 322.714 373.311 322.714H364.206C360.512 322.714 357.517 319.72 357.517 316.025V130.546C357.517 126.852 360.512 123.857 364.206 123.857H373.311C377.005 123.857 380 120.862 380 117.168V6.68892C380 2.99473 377.005 0 373.311 0H270.051C268.295 0 266.61 0.690244 265.358 1.92179L247.057 19.9354C245.806 21.1669 244.12 21.8571 242.365 21.8571H129.235C127.494 21.8571 125.821 21.1781 124.573 19.9642L105.984 1.8929C104.736 0.679074 103.063 0 101.322 0H6.68892C2.99473 0 0 2.99473 0 6.68892Z'
             fill='#F2F2F2'
             className='fill-gray'
           />
         </svg>
-        <div className='absolute inset-0 flex flex-col justify-center items-center'>
-          <div className='relative xl:pt-[62px] mb-4 pt-[48px] mx-auto text-center text-2xl leading-[30px] font-masgistral font-bold uppercase text-[#292929] xl:text-[38px] xl:leading-[47px]'>
-            {t(data.title)}
-          </div>
-          <div className='relative flex flex-col items-center pb-[36px]'>
-            <div className='relative'>
-              <svg xmlns='http://www.w3.org/2000/svg' width='230' height='230' viewBox='0 0 230 230' fill='none'>
-                <path d='M10 32.0161V10H32.9411' stroke='#ABABAB' className='stroke' strokeWidth='19.6565' />
-                <path d='M220 32.0161V10H197.059' stroke='#ABABAB' className='stroke' strokeWidth='19.6565' />
-                <path d='M10 197.984V220H32.9411' stroke='#ABABAB' className='stroke' strokeWidth='19.6565' />
-                <path d='M220 197.984V220H197.059' stroke='#ABABAB' className='stroke' strokeWidth='19.6565' />
-              </svg>
-              <div className='absolute inset-0 grid place-items-center'>{data.image}</div>
+        <div className='absolute inset-0 grid place-items-center'>
+          <div className=''>
+            <div className='relative xl:pt-5 mb-4 pt-9 mx-auto text-center text-2xl leading-[30px] font-masgistral font-bold uppercase text-[#292929] xl:text-[38px] xl:leading-[47px]'>
+              {t(data.title)}
             </div>
-            <div className='text-xs leading-[15px] text-[#292929] lg:text-sm min-h-[60px] mx-auto max-w-[280px] mt-5'>
-              {t(data.des)}
+            <div className='relative flex flex-col items-center'>
+              <div className='relative h-[50%]'>
+                <svg xmlns='http://www.w3.org/2000/svg' width='230' height='230' viewBox='0 0 230 230' fill='none' className='w-full h-full xl:h-auto xl:w-auto'>
+                  <path d='M10 32.0161V10H32.9411' stroke='#ABABAB' className='stroke' strokeWidth='19.6565' />
+                  <path d='M220 32.0161V10H197.059' stroke='#ABABAB' className='stroke' strokeWidth='19.6565' />
+                  <path d='M10 197.984V220H32.9411' stroke='#ABABAB' className='stroke' strokeWidth='19.6565' />
+                  <path d='M220 197.984V220H197.059' stroke='#ABABAB' className='stroke' strokeWidth='19.6565' />
+                </svg>
+                <div className='absolute inset-0 grid place-items-center'>{data.image}</div>
+              </div>
+              <div className='text-xs leading-[15px] text-[#292929] lg:text-sm min-h-[60px] mx-auto max-w-[250px] mt-5'>
+                {t(data.des)}
+              </div>
             </div>
           </div>
         </div>
