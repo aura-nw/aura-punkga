@@ -83,7 +83,7 @@ function AboutUs() {
             style={{ backgroundImage: isMobile ? `url(${BgImage.src})` : `url(${BgImage2.src})` }}
             className={`mt-5 2xl:-mt-28 lg:-mt-7 flex pt-[14px] pl-[7px] gap-[7px] items-start relative bg-no-repeat bg-[length:100%_100%] lg:px-[100px] lg:py-[50px] lg:pb-24`}>
             <div className='relative'>
-              <div className='text-[10px] leading-[13px] text-[#828282] min-h-[137px] lg:text-lg lg:leading-[24px] lg:max-w-[690px] lg:w-[38vw]'>
+              <div className='text-[8px] min-[425px]:text-[10px] leading-[13px] text-[#828282] min-h-[137px] lg:text-lg lg:leading-[24px] lg:max-w-[690px] lg:w-[38vw]'>
                 {locale == 'vn'
                   ? 'PUNKGA là một dự án hướng tới việc xây dựng một sân chơi chuyên nghiệp dành cho các họa sĩ truyện tranh với chủ đề Cyberpunk. Dự án mục tiêu không chỉ tạo ra các NFT bởi các họa sĩ Manga, mà còn khích lệ sự tham gia của cộng đồng thông qua việc chia sẻ và tham gia vào câu chuyện theo nhiều cách khác nhau. Người dùng sẽ có cơ hội sở hữu những tác phẩm số hóa độc đáo và tham gia vào quá trình phát triển câu chuyện một cách tích cực.'
                   : "PUNKGA is a project aimed at building a professional playground for comic artists with a Cyberpunk theme. The project's goal is not only to create NFTs by Manga artists but also to encourage community participation through sharing and involvement in the story in various ways. Users will have the opportunity to own unique digital artworks and actively participate in the development of the story."}
@@ -94,7 +94,7 @@ function AboutUs() {
                 height='25'
                 viewBox='0 0 196 25'
                 fill='none'
-                className='mt-3 lg:absolute lg:-top-[5.5rem] lg:w-[420px] lg:h-auto'>
+                className='mt-3 lg:absolute lg:-top-[5.5rem] lg:w-[420px] lg:h-auto w-[150px] min-[425px]:w-auto'>
                 <path
                   d='M170.878 24.1232H141.092H136.389L150.106 10.4061H159.12L168.526 1H194.001L170.878 24.1232Z'
                   stroke='#292929'
@@ -352,8 +352,14 @@ const Slide = ({ data }) => {
               {t(data.title)}
             </div>
             <div className='relative flex flex-col items-center'>
-              <div className='relative h-[50%]'>
-                <svg xmlns='http://www.w3.org/2000/svg' width='230' height='230' viewBox='0 0 230 230' fill='none' className='w-full h-full xl:h-auto xl:w-auto'>
+              <div className='relative '>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='230'
+                  height='230'
+                  viewBox='0 0 230 230'
+                  fill='none'
+                  className='w-[100px] h-[100px] min-[425px]:w-[200px] min-[425px]:h-[200px] xl:h-auto xl:w-auto'>
                   <path d='M10 32.0161V10H32.9411' stroke='#ABABAB' className='stroke' strokeWidth='19.6565' />
                   <path d='M220 32.0161V10H197.059' stroke='#ABABAB' className='stroke' strokeWidth='19.6565' />
                   <path d='M10 197.984V220H32.9411' stroke='#ABABAB' className='stroke' strokeWidth='19.6565' />
@@ -361,7 +367,7 @@ const Slide = ({ data }) => {
                 </svg>
                 <div className='absolute inset-0 grid place-items-center'>{data.image}</div>
               </div>
-              <div className='text-xs leading-[15px] text-[#292929] lg:text-sm min-h-[60px] mx-auto max-w-[250px] mt-5'>
+              <div className='text-xs leading-[15px] text-[#292929] lg:text-sm min-h-[60px] mx-auto  min-[425px]:max-w-[250px] max-w-[180px] mt-5'>
                 {t(data.des)}
               </div>
             </div>
