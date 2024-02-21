@@ -85,7 +85,7 @@ function AboutUs() {
             style={{ backgroundImage: isMobile ? `url(${BgImage.src})` : `url(${BgImage2.src})` }}
             className={`mt-5 2xl:-mt-28 lg:-mt-7 flex pt-[14px] pl-[7px] gap-[7px] items-start relative bg-no-repeat bg-[length:100%_100%] lg:px-[100px] lg:py-[50px] lg:pb-24`}>
             <div className='relative'>
-              <div className='text-[8px] min-[425px]:text-[10px] leading-[13px] text-[#828282] min-h-[137px] lg:text-lg lg:leading-[24px] lg:max-w-[690px] lg:w-[38vw]'>
+              <div className='text-[8px] min-[425px]:text-[10px] leading-[13px] text-[#61646B] text-justify min-h-[137px] lg:text-lg lg:leading-[24px] lg:max-w-[690px] lg:w-[38vw]'>
                 {locale == 'vn'
                   ? 'PUNKGA là một dự án hướng tới việc xây dựng một sân chơi chuyên nghiệp dành cho các họa sĩ truyện tranh với chủ đề Cyberpunk. Dự án mục tiêu không chỉ tạo ra các NFT bởi các họa sĩ Manga, mà còn khích lệ sự tham gia của cộng đồng thông qua việc chia sẻ và tham gia vào câu chuyện theo nhiều cách khác nhau. Người dùng sẽ có cơ hội sở hữu những tác phẩm số hóa độc đáo và tham gia vào quá trình phát triển câu chuyện một cách tích cực.'
                   : "PUNKGA is a project aimed at building a professional playground for comic artists with a Cyberpunk theme. The project's goal is not only to create NFTs by Manga artists but also to encourage community participation through sharing and involvement in the story in various ways. Users will have the opportunity to own unique digital artworks and actively participate in the development of the story."}

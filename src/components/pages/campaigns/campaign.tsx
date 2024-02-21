@@ -171,8 +171,8 @@ export default function Campaign() {
                     renderer={({ days, hours, minutes, seconds }) => {
                       if (days > 0) {
                         return (
-                          <span className='inline-flex gap-1 items-center'>
-                            Starts: {moment(campaign.start_date).format('HH:mm')}
+                          <span className='inline-flex gap-1 items-center flex-wrap'>
+                            {t('Starts')}: {moment(campaign.start_date).format('HH:mm')}
                             <svg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5' fill='none'>
                               <circle cx='2' cy='2.5' r='2' fill='#ABABAB' />
                             </svg>
@@ -182,7 +182,7 @@ export default function Campaign() {
                       } else {
                         return (
                           <span>
-                            Starts: {zeroPad(hours)}h : {zeroPad(minutes)}m : {zeroPad(seconds)}s
+                            {t('Starts')}: {zeroPad(hours)}h : {zeroPad(minutes)}m : {zeroPad(seconds)}s
                           </span>
                         )
                       }
@@ -194,8 +194,8 @@ export default function Campaign() {
                     renderer={({ days, hours, minutes, seconds }) => {
                       if (days > 0) {
                         return (
-                          <span className='inline-flex gap-1 items-center'>
-                            Ends: {moment(campaign.end_date).format('HH:mm')}
+                          <span className='inline-flex gap-1 items-center flex-wrap'>
+                            {t('Ends')}: {moment(campaign.end_date).format('HH:mm')}
                             <svg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5' fill='none'>
                               <circle cx='2' cy='2.5' r='2' fill='#ABABAB' />
                             </svg>
@@ -205,7 +205,7 @@ export default function Campaign() {
                       } else {
                         return (
                           <span>
-                            Ends: {zeroPad(hours)}h : {zeroPad(minutes)}m : {zeroPad(seconds)}s
+                            {t('Ends')}: {zeroPad(hours)}h : {zeroPad(minutes)}m : {zeroPad(seconds)}s
                           </span>
                         )
                       }
