@@ -62,22 +62,22 @@ export default function Campaign() {
   }
   return (
     <div className='pk-container '>
-      <div className='sticky md:top-12 top-24 bg-white pb-10 pt-5 md:pt-16'>
-        <div className='flex items-center justify-between'>
-          <div className='text-base leading-5 font-bold md:text-2xl md:leading-[18px] md:font-extrabold'>
+      <div className='sticky md:top-12 top-[95px] bg-white pb-10 pt-5 md:pt-16'>
+        <div className='flex items-center justify-between flex-wrap'>
+          <div className='text-base leading-5 font-bold md:text-2xl md:leading-[18px] md:font-extrabold whitespace-nowrap'>
             {t('Campaign')} <span className=''>{` (${list.length})`}</span>
           </div>
           <div className='flex gap-[10px] items-center md:hidden'>
             <div className='p-1'>
               <Checkbox
-                label={'Reward NFT'}
+                label={t('Reward NFT')}
                 checked={rewardNFTChecked}
                 onClick={() => setRewardNFTChecked(!rewardNFTChecked)}
               />
             </div>
             <div className='p-1'>
               <Checkbox
-                label={'Enrolled'}
+                label={t('Enrolled')}
                 checked={enrolledChecked}
                 onClick={() => {
                   if (account) {
@@ -90,7 +90,7 @@ export default function Campaign() {
             </div>
           </div>
         </div>
-        <div className='flex gap-3 mt-[10px] md:mt-6 items-center'>
+        <div className='flex gap-3 mt-[10px] md:mt-6 items-center flex-wrap'>
           <Tag selected={!statusFilter.length} onClick={() => setStatusFilter([])}>
             {t('All status')}
           </Tag>
@@ -110,14 +110,14 @@ export default function Campaign() {
           <div className='hidden gap-8 items-center md:flex ml-5'>
             <div className='p-1'>
               <Checkbox
-                label={'Reward NFT'}
+                label={t('Reward NFT')}
                 checked={rewardNFTChecked}
                 onClick={() => setRewardNFTChecked(!rewardNFTChecked)}
               />
             </div>
             <div className='p-1'>
               <Checkbox
-                label={'Enrolled'}
+                label={t('Enrolled')}
                 checked={enrolledChecked}
                 onClick={() => {
                   if (account) {
@@ -139,7 +139,7 @@ export default function Campaign() {
             onClick={() => clickHandler(campaign.slug)}>
             <div className='flex flex-col justify-between flex-1'>
               <div className='flex flex-col'>
-                <div className='inline-flex'>
+                <div className='inline-flex flex-wrap'>
                   <StatusLabel
                     status={
                       moment(campaign.start_date).isAfter()
