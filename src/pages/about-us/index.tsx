@@ -23,6 +23,8 @@ import SlideImage2 from './assets/slide-2.svg'
 import SlideImage3 from './assets/slide-3.svg'
 import SPImage from './assets/support.svg'
 import SPImage2 from './assets/support-2.svg'
+import SPImageVN from './assets/support-vn.svg'
+import SPImage2VN from './assets/support-2-vn.svg'
 import Link from 'next/link'
 import { isMobile } from 'react-device-detect'
 export default function Page(props) {
@@ -312,8 +314,16 @@ function AboutUs() {
         </div>
         <Link href='mailto:support@punkga.me'>
           <div className='pk-container px-5'>
-            <Image src={SPImage2} alt='' className='w-full h-auto mt-[50px] lg:mt-40 hidden lg:block' />
-            <Image src={SPImage} alt='' className='w-full h-auto mt-[50px] lg:mt-20 lg:hidden' />
+            <Image
+              src={locale == 'vn' ? SPImage2VN : SPImage2}
+              alt=''
+              className='w-full h-auto mt-[50px] lg:mt-40 hidden lg:block'
+            />
+            <Image
+              src={locale == 'vn' ? SPImageVN : SPImage}
+              alt=''
+              className='w-full h-auto mt-[50px] lg:mt-20 lg:hidden'
+            />
           </div>
         </Link>
       </div>
