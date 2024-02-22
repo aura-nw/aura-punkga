@@ -301,7 +301,7 @@ function AboutUs() {
                     </div>
                   </div>
                   <div className=''>
-                    <ul className={`list-disc text-base pt-5 mt-5 pl-2 list-inside  border-t border-[#DEDEDE]`}>
+                    <ul className={`list-disc text-base pt-5 mt-5 pl-2 list-inside text-[#414141] text-justify border-t border-[#DEDEDE]`}>
                       {authorData[locale].at(active).bio.map((b, i) => (
                         <li key={i}>{b}</li>
                       ))}
