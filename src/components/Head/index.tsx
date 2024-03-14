@@ -24,7 +24,7 @@ export default function HeadComponent({ data }: { data?: any }) {
       <meta itemProp='description' key='ip:description' content={punkgaDescription}></meta>
       <meta itemProp='image' key='ip:image' content={punkgaImage}></meta>
 
-      <meta property='og:url' key='og:url' content='https://punkga.me'></meta>
+      {data?.canonical && <meta property='og:url' key='og:url' content={data?.canonical}></meta>}
       <meta property='og:type' key='og:type' content='website'></meta>
       <meta property='og:title' key='og:title' content={punkgaTitle}></meta>
       <meta property='og:description' key='og:description' content={punkgaDescription}></meta>
@@ -36,7 +36,7 @@ export default function HeadComponent({ data }: { data?: any }) {
       <meta name='twitter:image' key='twitter:image' content={punkgaImage}></meta>
       {data?.canonical && <link rel='canonical' href={data?.canonical} key='canonical' />}
 
-      <meta name="zalo-platform-site-verification" content="FlcZSlNaC71_yvXd-8SAVXA5tYR-ymnzDpCs" />
+      <meta name='zalo-platform-site-verification' content='FlcZSlNaC71_yvXd-8SAVXA5tYR-ymnzDpCs' />
     </Head>
   )
 }
