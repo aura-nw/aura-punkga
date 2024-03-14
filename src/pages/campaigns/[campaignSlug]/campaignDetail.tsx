@@ -22,6 +22,7 @@ import {
   getCampaignAuthorizedData,
   getCampaignDetail,
   getCampaignLeaderboard,
+  getRequestLog,
   getUserRankInCampaign,
 } from 'src/services'
 import { openSignInModal } from 'src/utils'
@@ -146,12 +147,28 @@ function CampaignDetail({}) {
       console.error(error)
     }
   }
+  const revealResult = async (id: string) => {
+    const data = await getRequestLog(id)
+    if (data?.status == 'SUCCEEDED') {
+      setClaimSuccessModalOpen(true)
+      refresh()
+      await fetchData()
+      setClaimLoading(false)
+      return
+    }
+    if (data?.status == 'FAILED') {
+      throw new Error('Claim failed. Please try again later.')
+    }
+    setTimeout(() => revealResult(id), 4000)
+  }
   const claimHandler = async () => {
     try {
       setClaimLoading(true)
       const res = await claimCampaignReward(data.id)
-      if (res?.errors?.message) {
-        toast(res?.errors?.message, {
+      if (res?.requestId) {
+        revealResult(res?.requestId)
+      } else {
+        toast(res?.errors?.message || 'Claim failed. Please try again later.', {
           type: 'error',
           position: toast.POSITION.TOP_RIGHT,
           hideProgressBar: true,
@@ -159,12 +176,7 @@ function CampaignDetail({}) {
         })
         console.error(res?.errors?.message)
         setClaimLoading(false)
-        return
       }
-      setClaimSuccessModalOpen(true)
-      refresh()
-      await fetchData()
-      setClaimLoading(false)
     } catch (error) {
       refresh()
       await fetchData()
@@ -262,8 +274,7 @@ function CampaignDetail({}) {
                 {isUpcoming ? (
                   <Popover
                     popoverRender={() => (
-                      <div
-                        className='shadow-[0px_4px_15px_0px_#00000026] rounded-[20px] p-3 m-3 text-sm whitespace-nowrap bg-[#fff]'>
+                      <div className='shadow-[0px_4px_15px_0px_#00000026] rounded-[20px] p-3 m-3 text-sm whitespace-nowrap bg-[#fff]'>
                         Campaign has not started yet
                       </div>
                     )}>
