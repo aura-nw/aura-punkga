@@ -11,6 +11,23 @@ import { isMobile } from 'react-device-detect'
 import Slider from 'react-slick'
 import Eng from './assets/eng.svg'
 import Vn from './assets/vn.svg'
+import c1 from './assets/comics/hamulage.jpg'
+import c2 from './assets/comics/hero_cyberpunk.jpg'
+import c3 from './assets/comics/heroic.png'
+import c4 from './assets/comics/the_chaos_of_the_past.jpg'
+import c5 from './assets/comics/ultra_v.jpg'
+import c6 from './assets/comics/errant.jpg'
+import c7 from './assets/comics/Do_you_want.png'
+import c8 from './assets/comics/Hoc_vien_phep_thuat.jpg'
+import c9 from './assets/comics/Lost.jpg'
+import c10 from './assets/comics/Normal_day.png'
+import c11 from './assets/comics/Yes_I_do.jpg'
+import c12 from './assets/comics/Yidra.jpg'
+import Avalook from './assets/authors/avalook.webp'
+import DangBao from './assets/authors/DangBao.webp'
+import H3 from './assets/authors/H3.webp'
+import Sherlox from './assets/authors/Sherlox.jpg'
+import DaisyBlue from './assets/authors/DaisyBlue.webp'
 function Carousel({ sliderRef, children, className, setSlideIndex, sliderNavRef }) {
   var settings = {
     infinite: true,
@@ -47,7 +64,7 @@ function MobileCarousel({ children, setSlideIndex, sliderRef }) {
 export const list = [
   {
     comic: {
-      image: '/assets/images/comic-banner/hamulage.jpg',
+      image: c1,
       name: 'Hamulage',
       href: 'https://punkga.me/comic/hamulage_3/chapter/1',
     },
@@ -58,7 +75,7 @@ export const list = [
   },
   {
     comic: {
-      image: '/assets/images/comic-banner/hero_cyberpunk.jpg',
+      image: c2,
       name: 'Hero Cyberpunk',
       href: 'https://punkga.me/comic/hero_cyberpunk_1/chapter/1',
     },
@@ -69,7 +86,7 @@ export const list = [
   },
   {
     comic: {
-      image: '/assets/images/comic-banner/heroic.png',
+      image: c3,
       name: 'Heroic Librarian',
       href: 'https://punkga.me/comic/heroic_librarian_5/chapter/1',
     },
@@ -80,7 +97,7 @@ export const list = [
   },
   {
     comic: {
-      image: '/assets/images/comic-banner/the_chaos_of_the_past.jpg',
+      image: c4,
       name: 'Era Of Chaos',
       href: 'https://punkga.me/comic/era_of_chaos_4/chapter/1',
     },
@@ -91,7 +108,7 @@ export const list = [
   },
   {
     comic: {
-      image: '/assets/images/comic-banner/ultra_v.jpg',
+      image: c5,
       name: 'Neon Force',
       href: 'https://punkga.me/comic/neon_force_2/chapter/1',
     },
@@ -102,13 +119,79 @@ export const list = [
   },
   {
     comic: {
-      image: '/assets/images/comic-banner/errant.jpg',
+      image: c6,
       name: 'Errannt',
       href: 'https://punkga.me/comic/errant_6/chapter/1',
     },
     author: {
       avatar: Uma,
       name: 'UMA',
+    },
+  },
+  {
+    comic: {
+      image: c7,
+      name: 'Do you want',
+      href: 'https://punkga.me/comic/do-you-want-11/chapter/1',
+    },
+    author: {
+      avatar: Avalook,
+      name: 'Avalook',
+    },
+  },
+  {
+    comic: {
+      image: c8,
+      name: 'Học viện phép thuật',
+      href: 'https://punkga.me/comic/alvies-academy-12/chapter/1',
+    },
+    author: {
+      avatar: DangBao,
+      name: 'Đăng Bảo',
+    },
+  },
+  {
+    comic: {
+      image: c9,
+      name: 'Lost',
+      href: 'https://punkga.me/comic/lost-15/chapter/1',
+    },
+    author: {
+      avatar: H3,
+      name: 'H3',
+    },
+  },
+  {
+    comic: {
+      image: c10,
+      name: 'Normal day',
+      href: 'https://punkga.me/comic/oneshot-i-m-not-a-hero-10/chapter/1',
+    },
+    author: {
+      avatar: Sherlox,
+      name: 'Sher lox',
+    },
+  },
+  {
+    comic: {
+      image: c11,
+      name: 'Yes I do',
+      href: 'https://punkga.me/comic/yes-i-do-16/chapter/1',
+    },
+    author: {
+      avatar: H3,
+      name: 'H3',
+    },
+  },
+  {
+    comic: {
+      image: c12,
+      name: 'Yidra',
+      href: 'https://punkga.me/comic/yidra-13/chapter/1',
+    },
+    author: {
+      avatar: DaisyBlue,
+      name: 'Daisy Blue',
     },
   },
 ]
