@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { levelToXp } from 'src/utils'
+import useSWR from 'swr'
 export default function Analytic() {
   const { account, getProfile } = useContext(Context)
   const percentage =
@@ -9,6 +10,9 @@ export default function Analytic() {
       Math.round(levelToXp(account.level + 1) - levelToXp(account.level))) *
     100
   const { t } = useTranslation()
+  useSWR('update_profile', getProfile, {
+    refreshInterval: 60000,
+  })
   return (
     <div className='bg-[#F2F2F2] px-[30px] md:px-10 py-5 rounded-2xl h-[180px] flex flex-col justify-between'>
       <div className='md:text-xl leading-5 md:leading-6 font-bold text-[#1C1C1C]'>Quests Analytic</div>

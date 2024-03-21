@@ -51,6 +51,29 @@ const orbitron = localFont({
     },
   ],
 })
+
+const masgistral = localFont({
+  src: [
+    {
+      path: '../assets/fonts/FS_Magistral-Medium.ttf',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../assets/fonts/FS_Magistral-Book.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../assets/fonts/FS_Magistral-Bold.ttf',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+})
+
+
+
 function MyApp(props: AppProps) {
   const [isSetting, setIsSetting] = useState(true)
   const { locale } = useRouter()
@@ -106,6 +129,9 @@ function MyApp(props: AppProps) {
         }
         .font-orbitron {
           font-family: ${orbitron.style.fontFamily};
+        }
+        .font-masgistral {
+          font-family: ${masgistral.style.fontFamily};
         }
       `}</style>
       <ToastContainer />

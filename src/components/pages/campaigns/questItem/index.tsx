@@ -12,7 +12,7 @@ import { toast } from 'react-toastify'
 import TruncateMarkup from 'react-truncate-markup'
 import { Context } from 'src/context'
 import { Quest } from 'src/models/campaign'
-import { claimQuest } from 'src/services'
+import { claimQuest, getRequestLog } from 'src/services'
 import BasicQuest from './basicQuest'
 import FreeQuest from './freeQuest'
 import QuizQuest from './quizQuest'
@@ -25,13 +25,32 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
   const [seeMore, setSeeMore] = useState(undefined)
   const [loading, setLoading] = useState(false)
   const limitChar = isMobile ? 20 : 30
+
+  const revealResult = async (id: string) => {
+    const data = await getRequestLog(id)
+    if (data?.status == 'SUCCEEDED') {
+      await getProfile()
+      refreshCallback()
+      setClaimSuccessModalOpen(true)
+      setOpen(false)
+      setLoading(false)
+      return
+    }
+    if (data?.status == 'FAILED') {
+      throw new Error('Claim failed. Please try again later.')
+    }
+    setTimeout(() => revealResult(id), 4000)
+  }
+
   const claimQuestHandler = async () => {
     try {
       if (loading) return
       setLoading(true)
       const res = await claimQuest(quest.id)
-      if (res?.errors?.message) {
-        toast(res?.errors?.message, {
+      if (res?.requestId) {
+        revealResult(res?.requestId)
+      } else {
+        toast(res?.errors?.message || 'Claim failed. Please try again later.', {
           type: 'error',
           position: toast.POSITION.TOP_RIGHT,
           hideProgressBar: true,
@@ -40,18 +59,13 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
         console.error(res?.errors?.message)
         setOpen(false)
         setLoading(false)
-        return
       }
-      await getProfile()
-      refreshCallback()
-      setClaimSuccessModalOpen(true)
+    } catch (error) {
       setOpen(false)
       setLoading(false)
-    } catch (error) {
-      setLoading(false)
       refreshCallback()
       await getProfile()
-      toast(`Claim failed`, {
+      toast(error?.message || 'Claim failed. Please try again later.', {
         type: 'error',
         position: toast.POSITION.TOP_RIGHT,
         hideProgressBar: true,
@@ -64,7 +78,6 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
   useEffect(() => {
     if (open) setSeeMore(undefined)
   }, [open])
-
   return (
     <>
       <Modal open={open} setOpen={setOpen}>
@@ -156,7 +169,11 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                       <>
                         <div className='w-[1px] h-[26px] bg-light-medium-gray'></div>
                         <div className='flex flex-col items-center text-[10px] leading-[13px] lg:text-xs lg:leading-[15px] whitespace-nowrap'>
-                          <div>{`${quest.quest_reward_claimed}/${quest.reward.slots}`}</div>
+                          <div>{`${
+                            quest.repeat_quests?.[0]?.repeat_quest_reward_claimed == undefined
+                              ? quest.quest_reward_claimed
+                              : quest.repeat_quests?.[0]?.repeat_quest_reward_claimed
+                          }/${quest.reward.slots}`}</div>
                           <div>rewards claimed</div>
                         </div>
                       </>
@@ -176,7 +193,11 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                   <>
                     <div className='w-[160px] h-[1px] bg-light-medium-gray my-[10px]'></div>
                     <div className='flex flex-col items-center text-[10px] leading-[13px] lg:text-xs lg:leading-[15px]'>
-                      <div>{`${quest.quest_reward_claimed}/${quest.reward.slots}`}</div>
+                      <div>{`${
+                        quest.repeat_quests?.[0]?.repeat_quest_reward_claimed == undefined
+                          ? quest.quest_reward_claimed
+                          : quest.repeat_quests?.[0]?.repeat_quest_reward_claimed
+                      }/${quest.reward.slots}`}</div>
                       <div>rewards claimed</div>
                     </div>
                   </>

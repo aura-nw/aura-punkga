@@ -19,7 +19,7 @@ export default function Checkbox({ checked, onClick, label }) {
           </svg>
         )}
       </div>
-      {label && <span>{label}</span>}
+      {label && <span className='whitespace-nowrap'>{label}</span>}
     </div>
   )
 }

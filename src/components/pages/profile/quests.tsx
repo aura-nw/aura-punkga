@@ -14,7 +14,7 @@ import Image from 'next/image'
 import EnrollNow from './assets/enroll-now.svg'
 import EnrollNowLarge from './assets/enroll-now_large.svg'
 export default function Quest() {
-  const { account } = useContext(Context)
+  const { account, getProfile } = useContext(Context)
   const { data } = useSWR(
     { key: 'get_available_quests', account: account?.id },
     ({ account }) => (account ? getAvailableQuests() : null),
@@ -72,7 +72,13 @@ export default function Quest() {
                     <SwiperSlide key={quest.id}>
                       <QuestItem
                         quest={quest}
-                        refreshCallback={() => mutate({ key: 'get_available_quests', account: account?.id })}
+                        refreshCallback={() =>
+                          setTimeout(() => {
+                            mutate({ key: 'get_available_quests', account: account?.id })
+                            mutate('get_leaderboard')
+                            getProfile()
+                          }, 2000)
+                        }
                       />
                     </SwiperSlide>
                   )
@@ -131,7 +137,13 @@ export default function Quest() {
                     <SwiperSlide key={quest.id}>
                       <QuestItem
                         quest={quest}
-                        refreshCallback={() => mutate({ key: 'get_available_quests', account: account?.id })}
+                        refreshCallback={() =>
+                          setTimeout(() => {
+                            mutate({ key: 'get_available_quests', account: account?.id })
+                            mutate('get_leaderboard')
+                            getProfile()
+                          }, 2000)
+                        }
                       />
                     </SwiperSlide>
                   )

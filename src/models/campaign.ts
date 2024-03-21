@@ -84,4 +84,7 @@ export type Quest = {
     xp: number
     slots?: number
   }
+  repeat_quests?: {
+    repeat_quest_reward_claimed: number
+  }[]
 }

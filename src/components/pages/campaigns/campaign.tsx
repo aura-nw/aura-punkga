@@ -61,23 +61,23 @@ export default function Campaign() {
     }
   }
   return (
-    <div className='pk-container py-5 md:py-16'>
-      <div>
-        <div className='flex items-center justify-between'>
-          <div className='text-base leading-5 font-bold md:text-2xl md:leading-[18px] md:font-extrabold'>
+    <div className='pk-container '>
+      <div className='sticky md:top-12 top-[95px] bg-white pb-10 pt-5 md:pt-16'>
+        <div className='flex items-center justify-between flex-wrap'>
+          <div className='text-base leading-5 font-bold md:text-2xl md:leading-[18px] md:font-extrabold whitespace-nowrap'>
             {t('Campaign')} <span className=''>{` (${list.length})`}</span>
           </div>
           <div className='flex gap-[10px] items-center md:hidden'>
             <div className='p-1'>
               <Checkbox
-                label={'Reward NFT'}
+                label={t('Reward NFT')}
                 checked={rewardNFTChecked}
                 onClick={() => setRewardNFTChecked(!rewardNFTChecked)}
               />
             </div>
             <div className='p-1'>
               <Checkbox
-                label={'Enrolled'}
+                label={t('Enrolled')}
                 checked={enrolledChecked}
                 onClick={() => {
                   if (account) {
@@ -90,7 +90,7 @@ export default function Campaign() {
             </div>
           </div>
         </div>
-        <div className='flex gap-3 mt-[10px] md:mt-6 items-center'>
+        <div className='flex gap-3 mt-[10px] md:mt-6 items-center flex-wrap'>
           <Tag selected={!statusFilter.length} onClick={() => setStatusFilter([])}>
             {t('All status')}
           </Tag>
@@ -110,14 +110,14 @@ export default function Campaign() {
           <div className='hidden gap-8 items-center md:flex ml-5'>
             <div className='p-1'>
               <Checkbox
-                label={'Reward NFT'}
+                label={t('Reward NFT')}
                 checked={rewardNFTChecked}
                 onClick={() => setRewardNFTChecked(!rewardNFTChecked)}
               />
             </div>
             <div className='p-1'>
               <Checkbox
-                label={'Enrolled'}
+                label={t('Enrolled')}
                 checked={enrolledChecked}
                 onClick={() => {
                   if (account) {
@@ -131,7 +131,7 @@ export default function Campaign() {
           </div>
         </div>
       </div>
-      <div className='mt-[39px] grid grid-cols-1 lg:grid-cols-2 gap-5 2xl:gap-10 xl:grid-cols-3'>
+      <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 2xl:gap-10 xl:grid-cols-3'>
         {list?.map((campaign, index) => (
           <div
             key={index}
@@ -139,7 +139,7 @@ export default function Campaign() {
             onClick={() => clickHandler(campaign.slug)}>
             <div className='flex flex-col justify-between flex-1'>
               <div className='flex flex-col'>
-                <div className='inline-flex'>
+                <div className='inline-flex flex-wrap'>
                   <StatusLabel
                     status={
                       moment(campaign.start_date).isAfter()
@@ -171,8 +171,8 @@ export default function Campaign() {
                     renderer={({ days, hours, minutes, seconds }) => {
                       if (days > 0) {
                         return (
-                          <span className='inline-flex gap-1 items-center'>
-                            Starts: {moment(campaign.start_date).format('HH:mm')}
+                          <span className='inline-flex gap-1 items-center flex-wrap'>
+                            {t('Starts')}: {moment(campaign.start_date).format('HH:mm')}
                             <svg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5' fill='none'>
                               <circle cx='2' cy='2.5' r='2' fill='#ABABAB' />
                             </svg>
@@ -182,7 +182,7 @@ export default function Campaign() {
                       } else {
                         return (
                           <span>
-                            Starts: {zeroPad(hours)}h : {zeroPad(minutes)}m : {zeroPad(seconds)}s
+                            {t('Starts')}: {zeroPad(hours)}h : {zeroPad(minutes)}m : {zeroPad(seconds)}s
                           </span>
                         )
                       }
@@ -194,8 +194,8 @@ export default function Campaign() {
                     renderer={({ days, hours, minutes, seconds }) => {
                       if (days > 0) {
                         return (
-                          <span className='inline-flex gap-1 items-center'>
-                            Ends: {moment(campaign.end_date).format('HH:mm')}
+                          <span className='inline-flex gap-1 items-center flex-wrap'>
+                            {t('Ends')}: {moment(campaign.end_date).format('HH:mm')}
                             <svg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5' fill='none'>
                               <circle cx='2' cy='2.5' r='2' fill='#ABABAB' />
                             </svg>
@@ -205,7 +205,7 @@ export default function Campaign() {
                       } else {
                         return (
                           <span>
-                            Ends: {zeroPad(hours)}h : {zeroPad(minutes)}m : {zeroPad(seconds)}s
+                            {t('Ends')}: {zeroPad(hours)}h : {zeroPad(minutes)}m : {zeroPad(seconds)}s
                           </span>
                         )
                       }
