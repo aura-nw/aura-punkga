@@ -64,6 +64,74 @@ function MobileCarousel({ children, setSlideIndex, sliderRef }) {
 export const list = [
   {
     comic: {
+      image: c9,
+      name: 'Lost',
+      href: 'https://punkga.me/comic/lost-15/chapter/1',
+    },
+    author: {
+      avatar: H3,
+      name: 'H3',
+    },
+  },
+  {
+    comic: {
+      image: c11,
+      name: 'Yes I do',
+      href: 'https://punkga.me/comic/yes-i-do-16/chapter/1',
+    },
+    author: {
+      avatar: H3,
+      name: 'H3',
+    },
+  },
+  {
+    comic: {
+      image: c7,
+      name: 'Do you want',
+      href: 'https://punkga.me/comic/do-you-want-11/chapter/1',
+    },
+    author: {
+      avatar: Avalook,
+      name: 'Avalook',
+    },
+  },
+  {
+    comic: {
+      image: c8,
+      name: 'Học viện phép thuật',
+      href: 'https://punkga.me/comic/alvies-academy-12/chapter/1',
+    },
+    author: {
+      avatar: DangBao,
+      name: 'Đăng Bảo',
+    },
+  },
+
+  {
+    comic: {
+      image: c10,
+      name: 'Normal day',
+      href: 'https://punkga.me/comic/oneshot-i-m-not-a-hero-10/chapter/1',
+    },
+    author: {
+      avatar: Sherlox,
+      name: 'Sher lox',
+    },
+  },
+
+  {
+    comic: {
+      image: c12,
+      name: 'Yidra',
+      href: 'https://punkga.me/comic/yidra-13/chapter/1',
+    },
+    author: {
+      avatar: DaisyBlue,
+      name: 'Daisy Blue',
+    },
+  },
+  {
+    comic: {
       image: c1,
       name: 'Hamulage',
       href: 'https://punkga.me/comic/hamulage_3/chapter/1',
@@ -126,72 +194,6 @@ export const list = [
     author: {
       avatar: Uma,
       name: 'UMA',
-    },
-  },
-  {
-    comic: {
-      image: c7,
-      name: 'Do you want',
-      href: 'https://punkga.me/comic/do-you-want-11/chapter/1',
-    },
-    author: {
-      avatar: Avalook,
-      name: 'Avalook',
-    },
-  },
-  {
-    comic: {
-      image: c8,
-      name: 'Học viện phép thuật',
-      href: 'https://punkga.me/comic/alvies-academy-12/chapter/1',
-    },
-    author: {
-      avatar: DangBao,
-      name: 'Đăng Bảo',
-    },
-  },
-  {
-    comic: {
-      image: c9,
-      name: 'Lost',
-      href: 'https://punkga.me/comic/lost-15/chapter/1',
-    },
-    author: {
-      avatar: H3,
-      name: 'H3',
-    },
-  },
-  {
-    comic: {
-      image: c10,
-      name: 'Normal day',
-      href: 'https://punkga.me/comic/oneshot-i-m-not-a-hero-10/chapter/1',
-    },
-    author: {
-      avatar: Sherlox,
-      name: 'Sher lox',
-    },
-  },
-  {
-    comic: {
-      image: c11,
-      name: 'Yes I do',
-      href: 'https://punkga.me/comic/yes-i-do-16/chapter/1',
-    },
-    author: {
-      avatar: H3,
-      name: 'H3',
-    },
-  },
-  {
-    comic: {
-      image: c12,
-      name: 'Yidra',
-      href: 'https://punkga.me/comic/yidra-13/chapter/1',
-    },
-    author: {
-      avatar: DaisyBlue,
-      name: 'Daisy Blue',
     },
   },
 ]
