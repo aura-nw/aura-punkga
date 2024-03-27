@@ -23,9 +23,11 @@ import c9 from './assets/comics/Lost.jpg'
 import c10 from './assets/comics/Normal_day.png'
 import c11 from './assets/comics/Yes_I_do.jpg'
 import c12 from './assets/comics/Yidra.jpg'
+import c13 from './assets/comics/Still_the_same.png'
 import Avalook from './assets/authors/avalook.webp'
 import DangBao from './assets/authors/DangBao.webp'
 import H3 from './assets/authors/H3.webp'
+import MiniPeace from './assets/authors/MiniPeace.webp'
 import Sherlox from './assets/authors/Sherlox.jpg'
 import DaisyBlue from './assets/authors/DaisyBlue.webp'
 function Carousel({ sliderRef, children, className, setSlideIndex, sliderNavRef }) {
@@ -62,6 +64,17 @@ function MobileCarousel({ children, setSlideIndex, sliderRef }) {
   )
 }
 export const list = [
+  {
+    comic: {
+      image: c13,
+      name: 'Still the same',
+      href: 'https://punkga.me/comic/one-shot-still-the-same-17/chapter/1',
+    },
+    author: {
+      avatar: MiniPeace,
+      name: 'Mini Peace',
+    },
+  },
   {
     comic: {
       image: c9,
