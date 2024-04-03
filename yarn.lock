@@ -154,7 +154,7 @@
   dependencies:
     "@babel/runtime" "^7.21.0"
 
-"@chain-registry/types@^0.18.13":
+"@chain-registry/types@^0.18.1", "@chain-registry/types@^0.18.13":
   version "0.18.13"
   resolved "https://registry.yarnpkg.com/@chain-registry/types/-/types-0.18.13.tgz#d25f4c142f910e71d824dc27f85b73ad3726f2a2"
   integrity sha512-E76M+9ldLxjzKYl6XOVqTraI8PpSbxJlmELIRfqubGm1hzaZT4RSFmeYdAILVllx2DUmkx8bjLSKB4CB9o6d/A==
@@ -3291,13 +3291,13 @@ canvas-confetti@^1.9.0:
   resolved "https://registry.yarnpkg.com/canvas-confetti/-/canvas-confetti-1.9.0.tgz#03a9fa528b47bd37a127af216828e67894a60b0a"
   integrity sha512-0UGU/T5Un/Cd4Aj4fu/p/oVQm8Il+brK5xcmY+y77u7PXuyNJD4ODUWe01A5o3GUI9Bb8lOBlQ10VdaDsY1FBA==
 
-chain-registry@^1.33.18:
-  version "1.33.18"
-  resolved "https://registry.yarnpkg.com/chain-registry/-/chain-registry-1.33.18.tgz#a056d5ae714e43709b6536dc44ff99f45966bfda"
-  integrity sha512-6UOntjjmHRDk/+BdvT7Lq3x65p3Av5MHBCOLccXtoO9Pocj+wmkU/qhSTZ5Sg37/jdOK5WVZ5/pkk21yl623Gw==
+chain-registry@1.29.1:
+  version "1.29.1"
+  resolved "https://registry.yarnpkg.com/chain-registry/-/chain-registry-1.29.1.tgz#15b0392af72a95ec6eab5f4c74cb8f28eec1b80f"
+  integrity sha512-1VdBKme094W3NzsQO7rZkCtGVYnxFGtouv6o+qBdwcRsBUqrhD+QCfNhvuQXa10vKnnpByIDlO9Xg10mx/3KWw==
   dependencies:
     "@babel/runtime" "^7.21.0"
-    "@chain-registry/types" "^0.18.13"
+    "@chain-registry/types" "^0.18.1"
 
 chalk@^2.0.0:
   version "2.4.2"
