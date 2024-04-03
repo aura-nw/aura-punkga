@@ -24,12 +24,15 @@ import c10 from './assets/comics/Normal_day.png'
 import c11 from './assets/comics/Yes_I_do.jpg'
 import c12 from './assets/comics/Yidra.jpg'
 import c13 from './assets/comics/Still_the_same.png'
+import c14 from './assets/comics/robots_dogs_time.jpg'
+import c15 from './assets/comics/noah.png'
 import Avalook from './assets/authors/avalook.webp'
 import DangBao from './assets/authors/DangBao.webp'
 import H3 from './assets/authors/H3.webp'
 import MiniPeace from './assets/authors/MiniPeace.webp'
 import Sherlox from './assets/authors/Sherlox.jpg'
 import DaisyBlue from './assets/authors/DaisyBlue.webp'
+import Miroles from './assets/authors/Miroles.webp'
 function Carousel({ sliderRef, children, className, setSlideIndex, sliderNavRef }) {
   var settings = {
     infinite: true,
@@ -66,70 +69,122 @@ function MobileCarousel({ children, setSlideIndex, sliderRef }) {
 export const list = [
   {
     comic: {
+      image: c14,
+      name: '[One Shot] Robots, Dogs & Time',
+      href: 'https://punkga.me/comic/oneshot-robots-dogs-time-19/chapter/1',
+      isOneShot: false,
+      isNewRelease: true,
+    },
+    author: [
+      {
+        avatar: Miroles,
+        name: 'Miroles',
+      },
+    ],
+  },
+  {
+    comic: {
+      image: c15,
+      name: 'The NOAH Game',
+      href: 'https://punkga.me/comic/the-noah-game-18/chapter/1',
+      isOneShot: false,
+      isNewRelease: true,
+    },
+    author: [
+      {
+        avatar: Hanz,
+        name: 'Hanz',
+      },
+      {
+        avatar: Howater,
+        name: 'Howater',
+      },
+    ],
+  },
+  {
+    comic: {
       image: c13,
-      name: 'Still the same',
+      name: '[One Shot] Still the same',
       href: 'https://punkga.me/comic/one-shot-still-the-same-17/chapter/1',
+      isNewRelease: true,
     },
-    author: {
-      avatar: MiniPeace,
-      name: 'Mini Peace',
-    },
+    author: [
+      {
+        avatar: MiniPeace,
+        name: 'Mini Peace',
+      },
+    ],
   },
   {
     comic: {
       image: c9,
-      name: 'Lost',
+      name: '[One Shot] Lost',
       href: 'https://punkga.me/comic/lost-15/chapter/1',
+      isNewRelease: true,
     },
-    author: {
-      avatar: H3,
-      name: 'H3',
-    },
+    author: [
+      {
+        avatar: H3,
+        name: 'H3',
+      },
+    ],
   },
   {
     comic: {
       image: c11,
-      name: 'Yes I do',
+      name: '[One Shot] Yes I do',
       href: 'https://punkga.me/comic/yes-i-do-16/chapter/1',
+      isNewRelease: true,
     },
-    author: {
-      avatar: H3,
-      name: 'H3',
-    },
+    author: [
+      {
+        avatar: H3,
+        name: 'H3',
+      },
+    ],
   },
   {
     comic: {
       image: c7,
       name: 'Do you want',
       href: 'https://punkga.me/comic/do-you-want-11/chapter/1',
+      isNewRelease: true,
     },
-    author: {
-      avatar: Avalook,
-      name: 'Avalook',
-    },
+    author: [
+      {
+        avatar: Avalook,
+        name: 'Avalook',
+      },
+    ],
   },
   {
     comic: {
       image: c8,
       name: 'Học viện phép thuật',
       href: 'https://punkga.me/comic/alvies-academy-12/chapter/1',
+      isNewRelease: true,
     },
-    author: {
-      avatar: DangBao,
-      name: 'Đăng Bảo',
-    },
+    author: [
+      {
+        avatar: DangBao,
+        name: 'Đăng Bảo',
+      },
+    ],
   },
 
   {
     comic: {
       image: c10,
-      name: 'Normal day',
+      name: "[One Shot] I'm Not A Hero",
       href: 'https://punkga.me/comic/oneshot-i-m-not-a-hero-10/chapter/1',
+      isNewRelease: true,
     },
-    author: {
-      avatar: Sherlox,
-      name: 'Sher lox',
-    },
+    author: [
+      {
+        avatar: Sherlox,
+        name: 'Sher lox',
+      },
+    ],
   },
 
   {
@@ -137,77 +192,98 @@ export const list = [
       image: c12,
       name: 'Yidra',
       href: 'https://punkga.me/comic/yidra-13/chapter/1',
+      isNewRelease: true,
     },
-    author: {
-      avatar: DaisyBlue,
-      name: 'Daisy Blue',
-    },
+    author: [
+      {
+        avatar: DaisyBlue,
+        name: 'Daisy Blue',
+      },
+    ],
   },
   {
     comic: {
       image: c1,
       name: 'Hamulage',
       href: 'https://punkga.me/comic/hamulage_3/chapter/1',
+      isNewRelease: true,
     },
-    author: {
-      avatar: TienTranRB,
-      name: 'TIEN TRAN RB',
-    },
+    author: [
+      {
+        avatar: TienTranRB,
+        name: 'TIEN TRAN RB',
+      },
+    ],
   },
   {
     comic: {
       image: c2,
       name: 'Hero Cyberpunk',
       href: 'https://punkga.me/comic/hero_cyberpunk_1/chapter/1',
+      isNewRelease: true,
     },
-    author: {
-      avatar: Hanz,
-      name: 'Hanz',
-    },
+    author: [
+      {
+        avatar: Hanz,
+        name: 'Hanz',
+      },
+    ],
   },
   {
     comic: {
       image: c3,
       name: 'Heroic Librarian',
       href: 'https://punkga.me/comic/heroic_librarian_5/chapter/1',
+      isNewRelease: true,
     },
-    author: {
-      avatar: Howater,
-      name: 'Howater',
-    },
+    author: [
+      {
+        avatar: Howater,
+        name: 'Howater',
+      },
+    ],
   },
   {
     comic: {
       image: c4,
       name: 'Era Of Chaos',
       href: 'https://punkga.me/comic/era_of_chaos_4/chapter/1',
+      isNewRelease: true,
     },
-    author: {
-      avatar: PhatBear,
-      name: 'Phat Bear',
-    },
+    author: [
+      {
+        avatar: PhatBear,
+        name: 'Phat Bear',
+      },
+    ],
   },
   {
     comic: {
       image: c5,
       name: 'Neon Force',
       href: 'https://punkga.me/comic/neon_force_2/chapter/1',
+      isNewRelease: true,
     },
-    author: {
-      avatar: Moffi,
-      name: 'Moffi',
-    },
+    author: [
+      {
+        avatar: Moffi,
+        name: 'Moffi',
+      },
+    ],
   },
   {
     comic: {
       image: c6,
       name: 'Errannt',
       href: 'https://punkga.me/comic/errant_6/chapter/1',
+      isNewRelease: true,
     },
-    author: {
-      avatar: Uma,
-      name: 'UMA',
-    },
+    author: [
+      {
+        avatar: Uma,
+        name: 'UMA',
+      },
+    ],
   },
 ]
 export default function TaskSlider({ sliderNavRef }) {
@@ -229,18 +305,32 @@ export default function TaskSlider({ sliderNavRef }) {
                   src={data.comic.image}
                 />
                 <div className='absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent pointer-events-none px-[20px] py-[40px] flex flex-col justify-start '>
-                  <div className='bg-[#23FF81] rounded-[20px] py-[3px] px-3 text-sm leading-[18px] w-fit font-semibold'>
-                    New Release
+                  <div className='flex gap-2'>
+                    {data.comic.isNewRelease && (
+                      <div className='bg-[#23FF81] rounded-[20px] py-[3px] px-3 text-sm w-fit leading-[18px] font-semibold whitespace-nowrap'>
+                        New Release
+                      </div>
+                    )}
+                    {data.comic.isOneShot && (
+                      <div className='bg-[#8a23ff] text-white rounded-[20px] py-[3px] px-3 text-sm w-fit leading-[18px] font-semibold whitespace-nowrap'>
+                        One Shot
+                      </div>
+                    )}
                   </div>
                   <div className='text-white font-bold text-[32px] leading-[40px]'>{data.comic.name}</div>
                   <div className='flex items-center gap-[10px] mt-[5px]'>
-                    <div className='flex gap-[5px] items-center'>
-                      <Image src={data.author.avatar} alt='' className='w-7 h-7 rounded-full' />
-                      <div className='text-white font-semibold text-sm leading-[18px]'>{data.author.name}</div>
-                    </div>
-                    <svg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4' fill='none'>
-                      <circle cx='2' cy='2' r='2' fill='white' />
-                    </svg>
+                    {data.author.map((author, index) => (
+                      <>
+                        <div className='flex gap-[5px] items-center' key={index}>
+                          <Image src={author.avatar} alt='' className='w-7 h-7 rounded-full' />
+                          <div className='text-white font-semibold text-sm leading-[18px]'>{author.name}</div>
+                        </div>
+                        <svg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4' fill='none'>
+                          <circle cx='2' cy='2' r='2' fill='white' />
+                        </svg>
+                      </>
+                    ))}
+
                     <div className='flex gap-[5px] items-center'>
                       <Image src={Eng} alt='' />
                       <div className='text-white font-semibold text-sm leading-[18px]'>English</div>
@@ -312,18 +402,31 @@ export default function TaskSlider({ sliderNavRef }) {
                   src={data.comic.image}
                 />
                 <div className='absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent pointer-events-none px-[60px] pb-[150px] flex flex-col justify-end'>
-                  <div className='bg-[#23FF81] rounded-[20px] py-[3px] px-3 text-sm leading-[18px] w-fit font-semibold'>
-                    New Release
+                  <div className='flex gap-2'>
+                    {data.comic.isNewRelease && (
+                      <div className='bg-[#23FF81] rounded-[20px] py-[3px] px-3 text-sm w-fit leading-[18px] font-semibold whitespace-nowrap'>
+                        New Release
+                      </div>
+                    )}
+                    {data.comic.isOneShot && (
+                      <div className='bg-[#8a23ff] text-white rounded-[20px] py-[3px] px-3 text-sm w-fit leading-[18px] font-semibold whitespace-nowrap'>
+                        One Shot
+                      </div>
+                    )}
                   </div>
                   <div className='text-white font-bold text-[48px] leading-[60px]'>{data.comic.name}</div>
                   <div className='flex items-center gap-[10px]'>
-                    <div className='flex gap-[5px] items-center'>
-                      <Image src={data.author.avatar} alt='' className='w-7 h-7 rounded-full' />
-                      <div className='text-white font-semibold text-sm leading-[18px]'>{data.author.name}</div>
-                    </div>
-                    <svg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4' fill='none'>
-                      <circle cx='2' cy='2' r='2' fill='white' />
-                    </svg>
+                    {data.author.map((author, index) => (
+                      <>
+                        <div className='flex gap-[5px] items-center' key={index}>
+                          <Image src={author.avatar} alt='' className='w-7 h-7 rounded-full' />
+                          <div className='text-white font-semibold text-sm leading-[18px]'>{author.name}</div>
+                        </div>
+                        <svg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4' fill='none'>
+                          <circle cx='2' cy='2' r='2' fill='white' />
+                        </svg>
+                      </>
+                    ))}
                     <div className='flex gap-[5px] items-center'>
                       <Image src={Eng} alt='' />
                       <div className='text-white font-semibold text-sm leading-[18px]'>English</div>
