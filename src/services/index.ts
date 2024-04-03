@@ -450,3 +450,14 @@ export const getBalances = async (address: string) => {
   })
   return data?.data?.[getEnvKey()]?.account?.[0]?.balances?.amount
 }
+export const linkWallet = async (signedDoc: any, signature: any) => {
+  try {
+    const res = await privateAxios.post(`${getConfig().REST_API_URL}/user/connect`, {
+      signedDoc,
+      signature,
+    })
+    return res
+  } catch (error: any) {
+    return error
+  }
+}

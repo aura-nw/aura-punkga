@@ -31,6 +31,8 @@ import { shorten } from 'src/utils'
 import useSWR from 'swr'
 import { BigNumber } from 'bignumber.js'
 import PunkgaWallet from 'assets/images/punkga.png'
+import MigrateWalletModal from './MigrateWalletModal'
+import getConfig from 'next/config'
 export default function Header({ className }: { className?: string }) {
   const { t } = useTranslation()
   const router = useRouter()
@@ -41,12 +43,13 @@ export default function Header({ className }: { className?: string }) {
   const [openProfile, setOpenProfile] = useState(false)
   const [openNavigation, setOpenNavigation] = useState(false)
   const [hideBalance, setHideBalance] = useState(false)
+  const [migrateWalletOpen, setMigrateWalletOpen] = useState(false)
   const [signUpSuccessOpen, setSignUpSuccessOpen] = useState(false)
   const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false)
   const [searchValue, setSearchValue] = useState('')
   const { account, wallet, logout } = useContext(Context)
   const searchComic = useApi<any[]>(async () => await search(searchValue), !!searchValue, [searchValue])
-  const { connect } = useChain('aura')
+
   const { data: balance } = useSWR(
     { key: 'get_balance', address: wallet || account.walletAddress },
     ({ address }) => (address ? getBalances(address) : undefined),
@@ -143,7 +146,10 @@ export default function Header({ className }: { className?: string }) {
                 {account?.verified && account?.name ? (
                   <div
                     className='flex items-center whitespace-nowrap w-max gap-[5px] bg-[#F0F0F0] rounded-[20px] py-1 px-2'
-                    onClick={() => setOpenProfile(!openProfile)}>
+                    onClick={() => {
+                      setOpenNavigation(false)
+                      setOpenProfile(!openProfile)
+                    }}>
                     <Image
                       src={account.image || Avatar}
                       alt=''
@@ -170,7 +176,7 @@ export default function Header({ className }: { className?: string }) {
                   className='flex justify-between items-center text-second-color text-sm font-medium  relative'
                   onClick={copyAddress}>
                   <div className='flex gap-2 items-center'>
-                    <Image src={PunkgaWallet} alt='' className='w-6 h-6'/>
+                    <Image src={PunkgaWallet} alt='' className='w-6 h-6' />
                     <div>{`${shorten(account.walletAddress || wallet, 8, 8)}`}</div>
                   </div>
                   <span
@@ -246,7 +252,9 @@ export default function Header({ className }: { className?: string }) {
               onClick={() => router.push('/profile')}>
               {t('My profile')}
             </div>
-            <div className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'>
+            <div
+              className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'
+              onClick={() => setMigrateWalletOpen(true)}>
               {t('Migrate your wallet')}{' '}
               <span>
                 <Image src={Stars} alt='' className='inline-block ml-1' />
@@ -372,7 +380,10 @@ export default function Header({ className }: { className?: string }) {
                 viewBox='0 0 24 24'
                 fill='none'
                 className={`absolute inset-0 transition-all ${!openNavigation ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-                onClick={() => setOpenNavigation(true)}>
+                onClick={() => {
+                  setOpenProfile(false)
+                  setOpenNavigation(true)
+                }}>
                 <path d='M20 7L4 7' stroke='#1C274C' strokeWidth='1.5' strokeLinecap='round' />
                 <path d='M20 12L4 12' stroke='#1C274C' strokeWidth='1.5' strokeLinecap='round' />
                 <path d='M20 17L4 17' stroke='#1C274C' strokeWidth='1.5' strokeLinecap='round' />
@@ -540,6 +551,13 @@ export default function Header({ className }: { className?: string }) {
                             <strong>{t('My profile')}</strong>
                           </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0] '></span>
+                          <div className='' onClick={() => setMigrateWalletOpen(true)}>
+                            {t('Migrate your wallet')}{' '}
+                            <span>
+                              <Image src={Stars} alt='' className='inline-block ml-1' />
+                            </span>
+                          </div>
+                          <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0] '></span>
                           <div onClick={logout}>
                             <strong>{t('Log out')}</strong>
                           </div>
@@ -553,10 +571,13 @@ export default function Header({ className }: { className?: string }) {
                           <div onClick={() => router.push('/profile')}>
                             <strong>{t('My profile')}</strong>
                           </div>
-                          {/* <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
-                          <div onClick={() => connect()}>
-                            <strong>{t('Link Wallet')}</strong>
-                          </div> */}
+                          <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
+                          <div className='font-bold' onClick={() => setMigrateWalletOpen(true)}>
+                            {t('Migrate your wallet')}{' '}
+                            <span>
+                              <Image src={Stars} alt='' className='inline-block ml-1' />
+                            </span>
+                          </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
                           <div onClick={logout}>
                             <strong>{t('Log out')}</strong>
@@ -609,6 +630,7 @@ export default function Header({ className }: { className?: string }) {
       <Modal open={signUpSuccessOpen} setOpen={setSignUpSuccessOpen}>
         <SignUpSuccessModal setSignUpOpen={setSignUpOpen} onClose={() => setSignUpSuccessOpen(false)} />
       </Modal>
+      <MigrateWalletModal open={migrateWalletOpen} setOpen={setMigrateWalletOpen} />
     </>
   )
 }
