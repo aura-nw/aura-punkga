@@ -4,4 +4,14 @@ export interface IUser {
   image?: string
   id: string
   verified: boolean
+  gender: string
+  birthdate?: string
+  bio?: string
+  signupMethods: string
+  walletAddress: string
+  xp: number
+  level: number
+  completedQuests: any[]
+  quests: any
+  rank: number
 }

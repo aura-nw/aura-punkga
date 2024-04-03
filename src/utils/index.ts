@@ -94,3 +94,9 @@ const createRandomString = () => {
 export const openSignInModal = () => {
   ;(document.querySelector('#open-sign-in-btn') as any)?.click()
 }
+
+export const shorten = (string: string, preCh?: number, sufCh?: number) => {
+  const pre = string.slice(0, preCh || 5)
+  const suf = string.slice(-(sufCh || 5))
+  return `${pre}...${suf}`
+}

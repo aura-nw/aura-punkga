@@ -14,7 +14,38 @@ import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
 import { createClient } from 'graphql-ws'
 import { getMainDefinition } from '@apollo/client/utilities'
 
-export const Context = createContext(null)
+export const Context = createContext<{
+  account?: IUser
+  wallet?: string
+  login: (email: string, password: string, callback?: (status: string, msg?: string) => void) => Promise<any>
+  oauth: (provider: string, callback?: (status: string) => void) => Promise<any>
+  logout: () => Promise<any>
+  signUp: (
+    username: string,
+    email: string,
+    password: string,
+    callback?: (status: string, msg?: string) => void
+  ) => Promise<any>
+  isSettingUp: boolean
+  updateProfile: (data: any) => Promise<any>
+  resendVerifyEmail: (email: string, identifier?: string) => Promise<any>
+  getProfile: (token?: string) => Promise<any>
+  forgotPassword: (email: string) => Promise<any>
+  resetPassword: (token: string, newPassword: string) => Promise<any>
+}>({
+  account: undefined,
+  wallet: undefined,
+  login: async () => {},
+  oauth: async () => {},
+  logout: async () => {},
+  signUp: async () => {},
+  isSettingUp: true,
+  updateProfile: async () => {},
+  resendVerifyEmail: async () => {},
+  getProfile: async () => {},
+  forgotPassword: async () => {},
+  resetPassword: async () => {},
+})
 export const privateAxios = axios.create()
 function ContextProvider({ children }) {
   const [account, setAccount] = useState<IUser>()
@@ -136,8 +167,8 @@ function ContextProvider({ children }) {
       }
       const res = await getProfileService()
       if (res?.id) {
-        if (res.authorizer_users_user_wallet?.address) {
-          setWallet(res.authorizer_users_user_wallet?.address)
+        if (res.wallet_address) {
+          setWallet(res.wallet_address)
         }
         setAccount({
           email: res.email,
@@ -199,7 +230,7 @@ function ContextProvider({ children }) {
     }
   }
 
-  const logout = async (callback?: () => void) => {
+  const logout = async () => {
     try {
       await authorizerRef.logout()
       removeItem('token')

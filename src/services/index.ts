@@ -5,7 +5,7 @@ import { IComic } from 'src/models/comic'
 import { privateAxios } from 'src/context'
 import { formatStatus } from 'src/utils'
 import { getItem } from 'src/utils/localStorage'
-
+const getEnvKey = () => (getConfig().CHAIN_ID.includes('xstaxy') ? 'xstaxy' : 'euphoria')
 export const getLatestComic = async (): Promise<IComic[]> => {
   return await axios.get(`${getConfig().API_URL}/api/rest/public/latest`).then((res) =>
     res.data?.manga?.map((m: any) => {
@@ -190,14 +190,14 @@ export const getComicDetail = async (comicSlug: string, accountId: string) => {
   })
   const data = d?.data?.data?.manga[0]
   const hasAccess = await getAccess(data.id)
-  const env = getConfig().CHAIN_ID.includes('xstaxy') ? 'xstaxy' : 'euphoria'
   const collections = []
   let collectionsData = []
+
   data?.contract_addresses?.forEach((address) => (collections.includes(address) ? null : collections.push(address)))
   if (collections.length) {
     const { data } = await axios.post(`${getConfig().CHAIN_INFO.indexerV2}`, {
       query: `query QueryCw721Tokens($contract_addresses: [String!]) {
-                    ${env} {
+                    ${getEnvKey()} {
                       smart_contract(where: {address: {_in: $contract_addresses}}) {
                         cw721_contract {
                           name
@@ -219,7 +219,7 @@ export const getComicDetail = async (comicSlug: string, accountId: string) => {
       },
       operationName: 'QueryCw721Tokens',
     })
-    collectionsData = data.data[env].smart_contract.map(({ cw721_contract }) => ({
+    collectionsData = data.data[getEnvKey()].smart_contract.map(({ cw721_contract }) => ({
       name: cw721_contract.name,
       address: cw721_contract.smart_contract.address,
       tokens: cw721_contract.cw721_tokens.slice(0, 10).map((token) => ({
@@ -359,10 +359,9 @@ export const getLeaderboard = async () => {
   return data
 }
 export const getUserNfts = async (address: string) => {
-  const env = getConfig().CHAIN_ID.includes('xstaxy') ? 'xstaxy' : 'euphoria'
   const { data } = await axios.post(`${getConfig().CHAIN_INFO.indexerV2}`, {
     query: `query Query721ByOwner($owner_address: String!) {
-  ${env} {
+  ${getEnvKey()} {
     cw721_token(where: {owner: {_eq: $owner_address}}, order_by: {created_at: desc}) {
       id
       token_id
@@ -381,7 +380,7 @@ export const getUserNfts = async (address: string) => {
     },
     operationName: 'Query721ByOwner',
   })
-  return data?.data?.[env]?.cw721_token || []
+  return data?.data?.[getEnvKey()]?.cw721_token || []
 }
 export const getCampaignDetail = async (slug: string) => {
   const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${slug}`)
@@ -434,4 +433,20 @@ export const answerQuest = async (questId: string, answer: string) => {
 export const getCampaignLeaderboard = async (campaignId: string) => {
   const { data } = await axios.get(`${getConfig().API_URL}/api/rest/public/campaign/${campaignId}/leaderboard`)
   return data
+}
+export const getBalances = async (address: string) => {
+  const { data } = await axios.post(`${getConfig().CHAIN_INFO.indexerV2}`, {
+    query: `query getBalance($address:String!) {
+  ${getEnvKey()} {
+    account(where: {address: {_eq: $address}}) {
+      balances
+    }
+  }
+}`,
+    variables: {
+      address: address,
+    },
+    operationName: 'getBalance',
+  })
+  return data?.data?.[getEnvKey()]?.account?.[0]?.balances?.amount
 }

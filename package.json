@@ -25,6 +25,7 @@
     "@types/react-show-more-text": "^1.4.3",
     "@types/react-truncate": "^2.3.7",
     "axios": "^1.4.0",
+    "bignumber.js": "^9.1.2",
     "canvas-confetti": "^1.9.0",
     "chain-registry": "^1.19.0",
     "cosmos-kit": "^2.4.2",
