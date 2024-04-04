@@ -154,10 +154,17 @@
   dependencies:
     "@babel/runtime" "^7.21.0"
 
-"@chain-registry/types@^0.18.1", "@chain-registry/types@^0.18.13":
+"@chain-registry/types@^0.18.13":
   version "0.18.13"
   resolved "https://registry.yarnpkg.com/@chain-registry/types/-/types-0.18.13.tgz#d25f4c142f910e71d824dc27f85b73ad3726f2a2"
   integrity sha512-E76M+9ldLxjzKYl6XOVqTraI8PpSbxJlmELIRfqubGm1hzaZT4RSFmeYdAILVllx2DUmkx8bjLSKB4CB9o6d/A==
+  dependencies:
+    "@babel/runtime" "^7.21.0"
+
+"@chain-registry/types@^0.18.14":
+  version "0.18.14"
+  resolved "https://registry.yarnpkg.com/@chain-registry/types/-/types-0.18.14.tgz#2ff12c4362c8869705052af36b5327189c4753b0"
+  integrity sha512-/AysalK+L4f1G139C2lhpYnTtC3cHFlmxs6W2iGqdSi7wmMvXk8gavM56gpiy759m3zSD9g2niksyh91eGUq0g==
   dependencies:
     "@babel/runtime" "^7.21.0"
 
@@ -3291,13 +3298,13 @@ canvas-confetti@^1.9.0:
   resolved "https://registry.yarnpkg.com/canvas-confetti/-/canvas-confetti-1.9.0.tgz#03a9fa528b47bd37a127af216828e67894a60b0a"
   integrity sha512-0UGU/T5Un/Cd4Aj4fu/p/oVQm8Il+brK5xcmY+y77u7PXuyNJD4ODUWe01A5o3GUI9Bb8lOBlQ10VdaDsY1FBA==
 
-chain-registry@1.29.1:
-  version "1.29.1"
-  resolved "https://registry.yarnpkg.com/chain-registry/-/chain-registry-1.29.1.tgz#15b0392af72a95ec6eab5f4c74cb8f28eec1b80f"
-  integrity sha512-1VdBKme094W3NzsQO7rZkCtGVYnxFGtouv6o+qBdwcRsBUqrhD+QCfNhvuQXa10vKnnpByIDlO9Xg10mx/3KWw==
+chain-registry@^1.33.19:
+  version "1.33.19"
+  resolved "https://registry.yarnpkg.com/chain-registry/-/chain-registry-1.33.19.tgz#1799e37a8404c1d28b7f3a9ab6aaae57ac2d60c8"
+  integrity sha512-9iFxY/hZrN88Dnhuo4twd9po1mo/28s0IHKwE2kpkPthdescOoupRC9RnprUOs4hmpr6RAntJXf918/txntU2A==
   dependencies:
     "@babel/runtime" "^7.21.0"
-    "@chain-registry/types" "^0.18.1"
+    "@chain-registry/types" "^0.18.14"
 
 chalk@^2.0.0:
   version "2.4.2"
