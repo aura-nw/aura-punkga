@@ -27,7 +27,7 @@
     "axios": "^1.4.0",
     "bignumber.js": "^9.1.2",
     "canvas-confetti": "^1.9.0",
-    "chain-registry": "^1.33.19",
+    "chain-registry": "1.29.1",
     "cosmos-kit": "^2.9.4",
     "dompurify": "^3.0.5",
     "graphql": "^16.8.1",
