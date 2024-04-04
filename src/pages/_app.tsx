@@ -144,7 +144,9 @@ function MyApp(props: AppProps) {
       <ContextProvider>
         <ChainProvider
           chains={chains.filter((chain) => chain.chain_name == 'aura' || chain.chain_name == 'auratestnet')}
-          assetLists={assets.filter((chain) => chain.chain_name == 'aura' || chain.chain_name == 'auratestnet')}
+          assetLists={
+            assets.filter((chain) => chain.chain_name == 'aura' || chain.chain_name == 'auratestnet') as AssetList[]
+          }
           wallets={isMobile ? [...c98Mobile, ...keplrExtension] : [...c98Extension, ...keplrExtension]}
           signerOptions={signerOptions as any}
           endpointOptions={{
