@@ -151,14 +151,14 @@ export default function Header({ className }: { className?: string }) {
                       setOpenProfile(!openProfile)
                     }}>
                     <Image
-                      src={account.image || Avatar}
+                      src={account?.image || Avatar}
                       alt=''
                       width={36}
                       height={36}
                       className='rounded-full object-cover w-[18px] h-[18px] aspect-square'
                     />
                     <span className='md:max-w-[200px] max-w-[140px] truncate text-sm leading-[17.5px] font-bold'>
-                      {account.name}
+                      {account?.name}
                     </span>
                   </div>
                 ) : (
@@ -170,14 +170,14 @@ export default function Header({ className }: { className?: string }) {
             </div>
           </div>
           <div className={`${openProfile ? 'max-h-[280px]' : 'max-h-[0px]'} overflow-hidden transition-all`}>
-            {account.walletAddress || wallet ? (
+            {account?.walletAddress || wallet ? (
               <div className='my-[10px] flex flex-col w-full  gap-3 bg-light-gray rounded-xl p-3'>
                 <div
                   className='flex justify-between items-center text-second-color text-sm font-medium  relative'
                   onClick={copyAddress}>
                   <div className='flex gap-2 items-center'>
                     <Image src={PunkgaWallet} alt='' className='w-6 h-6' />
-                    <div>{`${shorten(account.walletAddress || wallet, 8, 8)}`}</div>
+                    <div>{`${shorten(account?.walletAddress || wallet, 8, 8)}`}</div>
                   </div>
                   <span
                     className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
@@ -252,14 +252,16 @@ export default function Header({ className }: { className?: string }) {
               onClick={() => router.push('/profile')}>
               {t('My profile')}
             </div>
-            <div
-              className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'
-              onClick={() => setMigrateWalletOpen(true)}>
-              {t('Migrate your wallet')}{' '}
-              <span>
-                <Image src={Stars} alt='' className='inline-block ml-1' />
-              </span>
-            </div>
+            {!wallet && (
+              <div
+                className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'
+                onClick={() => setMigrateWalletOpen(true)}>
+                {t('Migrate your wallet')}{' '}
+                <span>
+                  <Image src={Stars} alt='' className='inline-block ml-1' />
+                </span>
+              </div>
+            )}
             <div
               className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'
               onClick={logout}>
@@ -520,13 +522,13 @@ export default function Header({ className }: { className?: string }) {
                     <FilledButton size='lg'>
                       <div className='flex items-center whitespace-nowrap w-max gap-[10px] h-[25px]'>
                         <Image
-                          src={account.image || Avatar}
+                          src={account?.image || Avatar}
                           alt=''
                           width={36}
                           height={36}
                           className='rounded-full object-cover aspect-square w-[36px]'
                         />
-                        <span className='md:max-w-[150px] max-w-[80px] truncate'>{account.name}</span>
+                        <span className='md:max-w-[150px] max-w-[80px] truncate'>{account?.name}</span>
                       </div>
                     </FilledButton>
                   </DropdownToggle>
@@ -549,13 +551,6 @@ export default function Header({ className }: { className?: string }) {
                         <div>
                           <div onClick={() => router.push('/profile')}>
                             <strong>{t('My profile')}</strong>
-                          </div>
-                          <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0] '></span>
-                          <div className='' onClick={() => setMigrateWalletOpen(true)}>
-                            {t('Migrate your wallet')}{' '}
-                            <span>
-                              <Image src={Stars} alt='' className='inline-block ml-1' />
-                            </span>
                           </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0] '></span>
                           <div onClick={logout}>
