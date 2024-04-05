@@ -8,14 +8,14 @@ export default function Modal({ open, setOpen, children, hideClose }: any) {
     <Transition.Root show={open} as={Fragment}>
       <Dialog as='div' className='relative z-50' initialFocus={cancelButtonRef} onClose={setOpen}>
         <Transition.Child
-          as={Fragment}
+          as='div'
           enter='ease-out duration-300'
           enterFrom='opacity-0'
           enterTo='opacity-70'
           leave='ease-in duration-200'
           leaveFrom='opacity-70'
           leaveTo='opacity-0'>
-          <div className='fixed inset-0 bg-white transition-opacity' />
+          <div className='fixed inset-0 bg-white/70 transition-opacity' />
         </Transition.Child>
 
         <div className='fixed inset-0 z-10 overflow-y-auto'>

@@ -252,7 +252,7 @@ const Chapter: React.FC = ({
               )
             ) : !chapterDetails ? (
               <></>
-            ) : window.innerWidth >= 1280 ? (
+            ) : window.innerWidth >= 1280 && mode == 'minscreen' ? (
               <CommentSection
                 reload={() => chapterComments.callApi(true)}
                 postComment={postComment}
@@ -266,6 +266,17 @@ const Chapter: React.FC = ({
               <></>
             )}
           </div>
+          {mode == 'fullscreen' && (
+            <CommentSection
+              reload={() => chapterComments.callApi(true)}
+              postComment={postComment}
+              comments={chapterComments.data}
+              chapterId={chapterDetails.data.id}
+              mode={mode}
+              setOpenComments={setOpenComments}
+              openComments={openComments}
+            />
+          )}
         </div>
       </div>
     </>
