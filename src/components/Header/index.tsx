@@ -51,7 +51,7 @@ export default function Header({ className }: { className?: string }) {
   const searchComic = useApi<any[]>(async () => await search(searchValue), !!searchValue, [searchValue])
 
   const { data: balance } = useSWR(
-    { key: 'get_balance', address: wallet || account.walletAddress },
+    { key: 'get_balance', address: wallet || account?.walletAddress },
     ({ address }) => (address ? getBalances(address) : undefined),
     {
       refreshInterval: 60000,

@@ -1,5 +1,4 @@
 import Comment from 'components/Comment'
-import SignInModal from 'components/Header/SignInModal'
 import ChatInput from 'components/Input/ChatInput'
 import Modal from 'components/Modal'
 import { useRouter } from 'next/router'
