@@ -3,7 +3,7 @@ import { buttonClasses } from '..'
 
 interface IFilledButton {
   children: JSX.Element | string
-  size?: 'sm' | 'md' | 'lg' | 'xs'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   onClick?: (event: any) => void
   disabled?: boolean
   loading?: boolean
