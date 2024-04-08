@@ -127,7 +127,7 @@ export default function Header({ className }: { className?: string }) {
           isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
         }`}></div>
       <header
-        className={`border-b-2 border-light-gray border-solid sticky w-full top-0 z-50 transition-all duration-300 backdrop-blur-[15px] !bg-transparent ${className}`}>
+        className={`border-b-2 border-light-gray border-solid sticky w-full top-0 z-50 transition-all duration-300 bg-white ${className}`}>
         <nav className='lg:hidden pk-container py-[10px] px-5'>
           <div className='flex justify-between items-center gap-2'>
             <div onClick={() => router.push('/')}>
@@ -170,7 +170,7 @@ export default function Header({ className }: { className?: string }) {
             </div>
           </div>
           <div className={`${openProfile ? 'max-h-[280px]' : 'max-h-[0px]'} overflow-hidden transition-all`}>
-            {account.walletAddress || wallet ? (
+            {account?.walletAddress || wallet ? (
               <div className='my-[10px] flex flex-col w-full  gap-3 bg-light-gray rounded-xl p-3'>
                 <div
                   className='flex justify-between items-center text-second-color text-sm font-medium  relative'

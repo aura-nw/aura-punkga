@@ -51,8 +51,8 @@ export default function Comment({
   }
 
   return (
-    <div className='flex flex-col gap-[10px]'>
-      <div className='bg-white px-3 md:px-6 py-2 md:py-4 rounded-xl'>
+    <div className='flex flex-col gap-[10px] mb-4'>
+      <div className='bg-light-gray px-3 md:px-6 py-2 md:py-4 rounded-xl'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center'>
             {data.author?.nickname ? (
@@ -89,7 +89,7 @@ export default function Comment({
           </div>
           {account && (
             <strong
-              className='flex items-center text-second-color cursor-pointer  text-xs md:text-base'
+              className='flex items-center text-second-color cursor-pointer  text-xs md:text-sm'
               onClick={() => setShowInput(!showInput)}>
               <Image src={RepIcon} alt='' className='mr-2' />
               {t('Reply')}
@@ -103,7 +103,7 @@ export default function Comment({
           dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.content || t('Deleted comment')) }}></div>
       </div>
       {showInput && account && (
-        <div className='bg-white rounded-xl ml-16'>
+        <div className='bg-light-gray rounded-xl ml-16'>
           <ChatInput onSubmit={reply} />
         </div>
       )}
