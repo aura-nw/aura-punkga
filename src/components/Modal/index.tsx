@@ -15,7 +15,7 @@ export default function Modal({ open, setOpen, children, hideClose }: any) {
           leave='ease-in duration-200'
           leaveFrom='opacity-70'
           leaveTo='opacity-0'>
-          <div className='fixed inset-0 bg-white/70 transition-opacity' />
+          <div className='fixed inset-0 bg-transparent transition-opacity' />
         </Transition.Child>
 
         <div className='fixed inset-0 z-10 overflow-y-auto'>

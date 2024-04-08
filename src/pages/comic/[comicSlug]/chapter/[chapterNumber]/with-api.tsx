@@ -36,6 +36,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       id: data.id,
       views: data.views || 0,
       likes: data.chapters_likes_aggregate?.aggregate?.count || 0,
+      subscriptions: data.manga_subscribers_aggregate?.aggregate?.count || 0,
       comments: data.comments?.aggregate?.count || 0,
       type: data.chapter_type,
       name: data.chapter_name,
