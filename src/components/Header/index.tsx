@@ -532,7 +532,7 @@ export default function Header({ className }: { className?: string }) {
                       </div>
                     </FilledButton>
                   </DropdownToggle>
-                  {wallet ? (
+                  {!wallet ? (
                     <DropdownMenu customClass='right-0 !w-[405px] max-w-[405px] !overflow-visible mt-[26px]'>
                       <div className='p-5 flex flex-col gap-5'>
                         <div
@@ -567,7 +567,7 @@ export default function Header({ className }: { className?: string }) {
                             <strong>{t('My profile')}</strong>
                           </div>
                           <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
-                          <div className='font-bold' onClick={() => setMigrateWalletOpen(true)}>
+                          <div className='font-bold w-max' onClick={() => setMigrateWalletOpen(true)}>
                             {t('Migrate your wallet')}{' '}
                             <span>
                               <Image src={Stars} alt='' className='inline-block ml-1' />
