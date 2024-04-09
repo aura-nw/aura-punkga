@@ -18,17 +18,15 @@ import { CHAPTER_STATUS, CHAPTER_TYPE } from 'src/constants/chapter.constant'
 import { openSignInModal } from 'src/utils'
 
 export default function ChapterList({ list, like, unlike, setComicLikes, hasAccess }) {
+  const { account } = useContext(Context);
   const { t } = useTranslation()
   const [isDesc, setIsDesc] = useState(true)
   const [searchChapter, setSearchChapter] = useState('')
   const { locale } = useRouter()
   return (
     <div>
-      <div className='w-full bg-[#414141] text-medium-gray py-2 px-5 flex items-center justify-between'>
+      <div className='w-full bg-[#414141] text-medium-gray py-2 px-6 flex items-center justify-between'>
         <div className='flex gap-5 items-center whitespace-nowrap'>
-          <div className='text-[14px] font-semibold'>
-            {locale == 'en' ? `${list.length} chapter${list.length > 1 ? 's' : ''}` : `${list.length} chương`}
-          </div>
           <TextField
             onChange={setSearchChapter}
             value={searchChapter}
@@ -43,16 +41,18 @@ export default function ChapterList({ list, like, unlike, setComicLikes, hasAcce
           <Image alt='' src={ArrowSwapIcon} onClick={() => setIsDesc(!isDesc)} className='cursor-pointer w-5 h-w-5' />
         </div>
       </div>
-      <div className='px-5 bg-black/60'>
-        <p className='italic text-subtle-dark text-xs leading-8'>
-          <a
-            className='text-second-color underline font-semibold cursor-pointer'
-            onClick={() => (document.querySelector('#open-sign-in-btn') as any)?.click()}>
-            {t('Sign in')}
-          </a>{' '}
-          {t('to unlock special chapters')}!
-        </p>
-      </div>
+      {!account && (
+        <div className='px-5 bg-black/60'>
+          <p className='italic text-subtle-dark text-xs leading-8'>
+            <a
+              className='text-second-color underline font-semibold cursor-pointer'
+              onClick={() => (document.querySelector('#open-sign-in-btn') as any)?.click()}>
+              {t('Sign in')}
+            </a>{' '}
+            {t('to unlock special chapters')}!
+          </p>
+        </div>
+      )}
       <div className='bg-[#292929]/80 min-h-[40vh]'>
         <div className='grid grid-cols-1 divide-y'>
           {list

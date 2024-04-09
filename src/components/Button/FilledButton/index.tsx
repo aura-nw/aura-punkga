@@ -3,7 +3,7 @@ import { buttonClasses } from '..'
 
 interface IFilledButton {
   children: JSX.Element | string
-  size?: 'sm' | 'md' | 'lg' | 'xs'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   onClick?: (event: any) => void
   disabled?: boolean
   loading?: boolean
@@ -22,7 +22,7 @@ export default function FilledButton({
   buttonRef,
 }: IFilledButton) {
   const classes = {
-    xs: `${buttonClasses} text-[12px] leading-[15px] font-medium px-[8px] pt-[2px] pb-[2px] bg-primary-color rounded-[5px]  whitespace-nowrap`,
+    xs: `${buttonClasses} text-[12px] leading-[15px] font-medium px-[8px] py-[1px] bg-primary-color rounded-[5px]  whitespace-nowrap`,
     sm: `${buttonClasses} text-[14px] leading-[17.5px] font-bold px-[18px] pt-[4px] pb-[4px] bg-primary-color rounded-[12px]  whitespace-nowrap`,
     md: `${buttonClasses} text-[16px] md:[&>span]:min-h-[24px] [&>span]:min-h-[20px] leading-[20px] font-bold px-6 md:px-[16px] md:pt-[5px] pt-[8px] md:pb-[5px] pb-[10px] bg-primary-color rounded-[20px] md:rounded-[12px]  whitespace-nowrap`,
     lg: `${buttonClasses} text-[20px] h-[48px] leading-[25px] font-bold px-[32px] pt-[10px] pb-[13px] bg-primary-color rounded-[20px]  whitespace-nowrap`,

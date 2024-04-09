@@ -11,6 +11,7 @@ export interface IChapter {
   pages: IMultiLanguageContent<string[] | null>
   views: number
   likes: number
+  subscriptions: number
   comments: number
   isLiked: boolean
   date: Date

@@ -28,8 +28,9 @@ import 'slick-carousel/slick/slick.css'
 import ContextProvider, { Context } from 'src/context'
 import { wallets as c98Mobile } from 'src/services/c98MobileWallet'
 import 'src/styles/globals.scss'
-import { validateEmail } from 'src/utils'
+import { getGasPriceByChain, validateEmail } from 'src/utils'
 import 'react-toastify/dist/ReactToastify.css'
+import { AssetList, Chain } from '@chain-registry/types'
 const pjs = Plus_Jakarta_Sans({ subsets: ['latin', 'vietnamese'] })
 const ws = Work_Sans({ subsets: ['latin', 'vietnamese'] })
 const orbitron = localFont({
@@ -72,8 +73,13 @@ const masgistral = localFont({
   ],
 })
 
-
-
+const signerOptions = {
+  preferredSignType: (chain: Chain) => {
+    return 'direct'
+  },
+  signingStargate: (chain: Chain) => ({ gasPrice: getGasPriceByChain(chain) }),
+  signingCosmwasm: (chain: Chain) => ({ gasPrice: getGasPriceByChain(chain) }),
+}
 function MyApp(props: AppProps) {
   const [isSetting, setIsSetting] = useState(true)
   const { locale } = useRouter()
@@ -137,9 +143,23 @@ function MyApp(props: AppProps) {
       <ToastContainer />
       <ContextProvider>
         <ChainProvider
-          chains={chains}
-          assetLists={assets}
+          chains={chains.filter((chain) => chain.chain_name == 'aura' || chain.chain_name == 'auratestnet')}
+          assetLists={
+            assets.filter((chain) => chain.chain_name == 'aura' || chain.chain_name == 'auratestnet') as AssetList[]
+          }
           wallets={isMobile ? [...c98Mobile, ...keplrExtension] : [...c98Extension, ...keplrExtension]}
+          signerOptions={signerOptions as any}
+          endpointOptions={{
+            isLazy: true,
+            endpoints: {
+              auradevnet: {
+                rpc: ['https://rpc.dev.aura.network'],
+              },
+              aura: {
+                rpc: ['https://rpc.aura.network'],
+              },
+            },
+          }}
           walletConnectOptions={
             isMobile
               ? {
