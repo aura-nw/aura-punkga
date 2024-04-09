@@ -25,11 +25,8 @@ export default function ChapterList({ list, like, unlike, setComicLikes, hasAcce
   const { locale } = useRouter()
   return (
     <div>
-      <div className='w-full bg-[#414141] text-medium-gray py-2 px-5 flex items-center justify-between'>
+      <div className='w-full bg-[#414141] text-medium-gray py-2 px-6 flex items-center justify-between'>
         <div className='flex gap-5 items-center whitespace-nowrap'>
-          <div className='text-[14px] font-semibold'>
-            {locale == 'en' ? `${list.length} chapter${list.length > 1 ? 's' : ''}` : `${list.length} chương`}
-          </div>
           <TextField
             onChange={setSearchChapter}
             value={searchChapter}
