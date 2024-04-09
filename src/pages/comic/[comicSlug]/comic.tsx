@@ -76,12 +76,12 @@ function Comic({ comicDetails, like, unlike }) {
     <>
       <Header />
       <div className="bg-black fixed top-[96px] left-0 right-0 bottom-0">
-        <div className="fixed top-[105px] left-0 right-0">
+        <div className="fixed top-[100px] left-0 right-0">
           <Image
             src={data.image || mockAvar}
             height={221}
             width={240}
-            className="h-[245px] w-full object-cover"
+            className="h-[265px] w-full object-cover"
             alt=""
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[28%] from-[#000]/80 to-[#00000000]"></div>
@@ -158,10 +158,10 @@ function Comic({ comicDetails, like, unlike }) {
               </div>
               <div className="mb-4">
                 {isSubscribe ? (
-                  <FilledButton size="sm">
+                  <FilledButton size="xs">
                     <div
                       onClick={() => subscribeHandler(false)}
-                      className="flex items-center my-[6px]"
+                      className="flex items-center"
                     >
                       <BellAlertIcon className="w-[14px] h-[14px] mr-2 inline-block animate-[bell-ring_1s_ease-in-out]" />
                       {t('Subscribed')}
