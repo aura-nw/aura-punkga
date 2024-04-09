@@ -532,13 +532,13 @@ export default function Header({ className }: { className?: string }) {
                       </div>
                     </FilledButton>
                   </DropdownToggle>
-                  {!wallet ? (
+                  {wallet ? (
                     <DropdownMenu customClass='right-0 !w-[405px] max-w-[405px] !overflow-visible mt-[26px]'>
                       <div className='p-5 flex flex-col gap-5'>
                         <div
                           className='flex font-medium justify-between items-center text-second-color bg-light-gray p-[10px] rounded-xl relative min'
                           onClick={copyAddress}>
-                          {`${wallet.substr(0, 8)}...${wallet.substr(-8)}`}
+                          {`${shorten(wallet)}`}
                           <span
                             className={`transition-all w-fit mr-2 absolute bottom-[110%] left-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
                               isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
