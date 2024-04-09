@@ -54,13 +54,8 @@ export default function ChapterList({
   }, [t('All status')])
   return (
     <>
-      <div className='w-full bg-[#DEDEDE] px-[16px] 2xl:px-[60px] py-[16px] flex items-center justify-between'>
+      <div className='w-full bg-[#DEDEDE] px-[16px] 2xl:px-[40px] py-[16px] flex items-center justify-between'>
         <div className='flex gap-5 items-center whitespace-nowrap'>
-          <strong className='text-[16px]'>
-            {locale == 'en'
-              ? `${data.chapters.length} chapter${data.chapters.length > 1 ? 's' : ''}`
-              : `${data.chapters.length} chương`}
-          </strong>
           <div className='flex gap-3 2xl:gap-5'>
             <span title={t('Only digits')}>
               <TextField
@@ -138,7 +133,7 @@ export default function ChapterList({
           )}
         </div>
       </div>
-      <div className='px-[16px] 2xl:px-[60px] py-[20px] flex flex-col gap-5'>
+      <div className='px-[16px] 2xl:px-[40px] py-[20px] flex flex-col gap-5'>
         {data.chapters
           .filter((chapter) => {
             return searchChapter ? chapter?.number?.toString()?.includes(searchChapter) : true
@@ -222,7 +217,7 @@ const Chapter = ({
         <LazyImage
           src={chapter.thumbnail || m6}
           alt=''
-          className={`transition-all duration-500 object-cover rounded-xl ${
+          className={`transition-all duration-500 object-cover rounded-md overflow-hidden ${
             expandDetail ? 'w-[120px] h-[120px]' : 'w-[60px] h-[60px]'
           }`}
           width={60}
@@ -235,8 +230,8 @@ const Chapter = ({
         />
         <div className='flex flex-col justify-center flex-1'>
           <div>
-            <div className='flex items-center gap-5'>
-              <p>{`${t('Chapter')} ${chapter.number}`}</p>
+            <div className='flex items-center'>
+              <p className='mr-5'>{`${t('Chapter')} ${chapter.number}`}</p>
               {(function () {
                 switch (chapter.type) {
                   case CHAPTER_TYPE.ACCOUNT_ONLY:
@@ -310,7 +305,7 @@ const Chapter = ({
                 <EyeIcon className='w-5 h-5 text-gray-600' />
               </div>
               <div className='flex items-center'>
-                <span className='mr-2'>{likes}</span>
+                <span className='mr-2 text-[#1FAB5E]'>{likes}</span>
                 <FlashAnimation
                   InactiveComponent={(props: any) => (
                     <Image
@@ -351,7 +346,7 @@ const Chapter = ({
             expandDetail ? 'h-[0%] max-h-0 opacity-0 pointer-events-none' : 'h-full opacity-100  max-h-[100px]'
           }`}>
           <div className='flex items-center'>
-            <span className='mr-2'>{likes}</span>
+            <span className='mr-2 text-[#1FAB5E]'>{likes}</span>
             <FlashAnimation
               InactiveComponent={(props: any) => (
                 <Image

@@ -121,29 +121,29 @@ export default function ComicDetail({
         </div>
         <div className="relative">
           <div className="h-[180px]">
-            <LazyImage
-              width={1000}
-              height={260}
-              src={data.cover || mockBanner}
-              className={`w-full h-full ${expandDetail ? 'h-[280px]' : 'h-[160px]'} duration-500 transition-all object-cover w-full`}
-              alt=""
-            />
+              <LazyImage
+                width={1000}
+                height={260}
+                src={data.cover || mockBanner}
+                className={`w-full h-full ${expandDetail ? 'h-[280px]' : 'h-[160px]'} duration-500 transition-all object-cover w-full`}
+                alt=""
+              />
           </div>
-          <div className="absolute right-2 bottom-2 flex items-center justify-center text-white">
+          <div className="absolute right-0 bottom-0 p-2 flex items-end justify-end text-white w-full bg-gradient-to-b from-transparent to-gray-500 h-full">
             <div className="flex gap-3 items-center text-xs mt-3 font-semibold">
-              <div className="flex items-center gap-1">
-                <BellIcon className="w-4 h-4" />
+              <div className="flex items-end gap-1">
                 <span>{data.subscriptions.toLocaleString('en-US')}</span>
+                <BellIcon className="w-5 h-5" />
               </div>
               •
-              <div className="flex items-center gap-1">
-                <EyeIcon className="w-4 h-4" />
+              <div className="flex items-end gap-1">
                 <span>{data.views.toLocaleString('en-US')}</span>
+                <EyeIcon className="w-5 h-5" />
               </div>
               •
-              <div className="flex items-center gap-1">
-                <HeartIcon className="w-4 h-4" />
+              <div className="flex items-end gap-1">
                 <span>{comicLikes.toLocaleString('en-US')}</span>
+                <HeartIcon className="w-5 h-5" />
               </div>
             </div>
           </div>
@@ -334,14 +334,14 @@ export default function ComicDetail({
             >
               <Tab
                 ref={tabRef}
-                className="ui-selected:text-second-color w-[150px] text-medium-gray z-10 relative ui-selected:font-extrabold ui-selected:border-b-[2px] border-second-color py-[5px] text-lg leading-6 font-medium"
+                className="ui-selected:text-second-color w-1/3 text-medium-gray z-10 relative ui-selected:font-extrabold ui-selected:border-b-[2px] border-second-color py-[5px] text-lg leading-6 font-medium"
               >
                 <div className="">{t('Chapters')}</div>
               </Tab>
-              <Tab className="ui-selected:text-second-color w-[150px] text-medium-gray z-10 relative ui-selected:font-extrabold ui-selected:border-b-[2px] border-second-color py-[5px] text-lg leading-6 font-medium">
+              <Tab className="ui-selected:text-second-color w-1/3 text-medium-gray z-10 relative ui-selected:font-extrabold ui-selected:border-b-[2px] border-second-color py-[5px] text-lg leading-6 font-medium">
                 <div className="">NFTs</div>
               </Tab>
-              <Tab className="ui-selected:text-second-color w-[150px] text-medium-gray z-10 relative ui-selected:font-extrabold ui-selected:border-b-[2px] border-second-color py-[5px] text-lg leading-6 font-medium">
+              <Tab className="ui-selected:text-second-color w-1/3 text-medium-gray z-10 relative ui-selected:font-extrabold ui-selected:border-b-[2px] border-second-color py-[5px] text-lg leading-6 font-medium">
                 <div className="">{t('Introduction')}</div>
               </Tab>
             </Tab.List>
