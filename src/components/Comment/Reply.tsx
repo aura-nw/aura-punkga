@@ -28,7 +28,7 @@ export default function Reply({ data }: { data: IReply }) {
     return <ProfileCard data={userData} />
   }
   return (
-    <div className='bg-white px-3 md:px-6 py-2 md:py-4 rounded-xl ml-16'>
+    <div className='bg-light-gray px-3 md:px-6 py-2 md:py-4 rounded-xl ml-16'>
       <div className='flex items-center'>
         {data.author?.nickname ? (
           <Popover popoverRender={popoverRender}>

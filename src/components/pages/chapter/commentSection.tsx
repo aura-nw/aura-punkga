@@ -37,9 +37,9 @@ export default function CommentSection({
       <Modal open={openComments} setOpen={setOpenComments}>
         <div className='h-[80vh] w-[50vw] flex flex-col'>
           <div className='w-full bg-light-medium-gray px-10 py-[16px] font-bold'>
-            {locale == 'en' ? `${length} comment${length > 1 ? 's' : ''}` : `${length} bình luận`}
+            {locale == 'en' ? `Comment${length > 1 ? 's' : ''} (${length})` : `Bình luận (${length})`}
           </div>
-          <div className='bg-light-gray py-10 px-10 flex flex-col gap-6 overflow-auto flex-auto'>
+          <div className='bg-white py-6 px-10 flex flex-col gap-6 overflow-auto flex-auto'>
             {comments.map((comment, index) => (
               <Comment reload={reload} key={index} data={comment} chapterId={chapterId} />
             ))}
@@ -73,7 +73,7 @@ export default function CommentSection({
       <div className='w-full bg-light-medium-gray px-[60px] py-[16px] font-bold'>
         {locale == 'en' ? `${length} comment${length > 1 ? 's' : ''}` : `${length} bình luận`}
       </div>
-      <div className='bg-light-gray h-full py-10 px-10 flex flex-col gap-6 overflow-auto flex-auto'>
+      <div className='bg-white h-full py-6 px-10 flex flex-col gap-2 overflow-auto flex-auto'>
         {comments.map((comment, index) => (
           <Comment reload={reload} key={index} data={comment} chapterId={chapterId} />
         ))}
