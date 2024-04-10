@@ -75,6 +75,11 @@ ${Date.now()}`
           setRequestId(res?.data?.requestId)
           setSuccess(true)
         }
+      } else {
+        if (!mainWallet?.client?.signArbitrary)
+          toast(t('Something wrong with your wallet client. Please reload and try again!'), {
+            type: 'error',
+          })
       }
     } catch (error: any) {
       toast(error.message || t('Migration failed'), {
@@ -97,7 +102,8 @@ ${Date.now()}`
       return
     }
     if (data?.status == 'FAILED') {
-      toast('Migration failed', { type: 'success' })
+      toast('Migration failed', { type: 'error' })
+      console.log(data)
       setRequestId(undefined)
       return
     }
