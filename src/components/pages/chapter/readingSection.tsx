@@ -169,9 +169,8 @@ export default function ReadingSection({
   chapterLengthRef.current = chapterData[chapterLocale]?.length
   return (
     <div
-      className={`w-full h-full overflow-hidden ${
-        mode == 'minscreen' ? 'relative' : 'fixed bg-black z-20 top-0 bottom-0'
-      }`}>
+      className={`w-full h-full overflow-hidden ${mode == 'minscreen' ? 'relative' : 'fixed bg-black z-20 top-0 bottom-0'
+        }`}>
       {!account && chapterData.type == CHAPTER_TYPE.ACCOUNT_ONLY ? (
         <div className='h-full w-full flex justify-center items-center'>
           <div>
@@ -190,17 +189,16 @@ export default function ReadingSection({
         <div className='h-[calc(100%-60px)] overflow-auto'>
           <div
             ref={ref}
-            className={`${mode == 'minscreen' ? '' : ''} ${
-              readingMode == 'onePage' ? 'w-[90%] max-w-[940px] mx-auto' : 'flex h-full items-center justify-center'
-            }`}>
+            className={`${mode == 'minscreen' ? '' : ''} ${readingMode == 'onePage' ? 'w-[90%] max-w-[940px] mx-auto' : 'flex h-full items-center justify-center'
+              }`}>
             {chapterData[chapterLocale]
               ?.slice(
                 readingMode == 'onePage' ? 0 : currentPage,
                 readingMode == 'onePage'
                   ? chapterLengthRef.current
                   : currentPage + 2 > chapterLengthRef.current
-                  ? chapterLengthRef.current
-                  : currentPage + 4
+                    ? chapterLengthRef.current
+                    : currentPage + 4
               )
               ?.map((page, index) =>
                 isMobile ? null : (
@@ -209,11 +207,10 @@ export default function ReadingSection({
                     key={index}
                     id={`page_${index}`}
                     alt=''
-                    className={`${
-                      readingMode == 'onePage'
+                    className={`${readingMode == 'onePage'
                         ? 'mx-auto'
                         : `h-full w-1/2 [&>img]:!w-fit ${index % 2 == 0 ? '[&>img]:ml-auto' : '[&>img]:mr-auto'}`
-                    } ${readingMode != 'onePage' && index > 1 && 'hidden'}`}
+                      } ${readingMode != 'onePage' && index > 1 && 'hidden'}`}
                     width={1900}
                     height={1000}
                     priority={index < 4}
@@ -228,9 +225,8 @@ export default function ReadingSection({
         </div>
       )}
       <div
-        className={`peer bg-light-gray absolute bottom-0 right-0 left-0 w-full flex items-center px-[40px] py-[6px] ${
-          mode == 'minscreen' ? 'visible' : 'invisible -z-10'
-        }`}>
+        className={`peer bg-[#F0F0F0] absolute bottom-0 right-0 left-0 w-full flex items-center px-[40px] py-[6px] ${mode == 'minscreen' ? 'visible' : 'invisible -z-10'
+          }`}>
         <div className='flex-auto w-1/3 self-center'>
           <div className='text-ellipsis max-w-[90%] overflow-hidden whitespace-nowrap'>
             <div className='font-bold truncate'>{`Chapter ${chapterData.number} • ${chapterData.name}`}</div>
@@ -311,9 +307,8 @@ export default function ReadingSection({
         </div>
       </div>
       <div
-        className={`peer bg-light-gray absolute bottom-0 right-0 left-0 w-full flex items-center px-[40px] py-[6px] duration-300 transition-opacity ${
-          mode != 'minscreen' ? 'visible' : 'invisible -z-10'
-        } opacity-100`}>
+        className={`peer bg-[#F0F0F0] absolute bottom-0 right-0 left-0 w-full flex items-center px-[40px] py-[6px] duration-300 transition-opacity ${mode != 'minscreen' ? 'visible' : 'invisible -z-10'
+          } opacity-100`}>
         <div className='flex-auto w-1/3 self-center'>
           <div className='text-ellipsis max-w-[90%] overflow-hidden whitespace-nowrap'>
             <strong className='font-bold'>{`${t('Chapter')} ${chapterData.number} • ${chapterData.name}`}</strong>
@@ -342,9 +337,8 @@ export default function ReadingSection({
           )}
 
           <Image
-            className={`cursor-pointer ${
-              currentChapIndex == data.chapters.length - 1 ? 'opacity-60 cursor-not-allowed pointer-events-none' : ''
-            }`}
+            className={`cursor-pointer ${currentChapIndex == data.chapters.length - 1 ? 'opacity-60 cursor-not-allowed pointer-events-none' : ''
+              }`}
             onClick={() => goToChap('Prev')}
             src={SquareArrowLeftIcon}
             alt=''
@@ -358,11 +352,10 @@ export default function ReadingSection({
               className={`h-6 w-6 text-second-color transition-all ${showChapterList ? 'rotate-180' : 'rotate-0'}`}
             />
             <div
-              className={`absolute bg-light-gray bottom-[120%] left-0 px-[10px] py-[6px] border-[1.5px] border-second-color rounded-xl w-full flex gap-[10px] flex-col-reverse transition-all ${
-                showChapterList
+              className={`absolute bg-light-gray bottom-[120%] left-0 px-[10px] py-[6px] border-[1.5px] border-second-color rounded-xl w-full flex gap-[10px] flex-col-reverse transition-all ${showChapterList
                   ? 'max-h-[135px] overflow-auto opacity-100'
                   : 'max-h-[0px] overflow-hidden opacity-0 pointer-events-none'
-              }`}>
+                }`}>
               {data?.chapters
                 ?.filter((chapter) => chapter.status == 'Published')
                 ?.map((chapter, index) => {
@@ -370,9 +363,8 @@ export default function ReadingSection({
                     <div
                       onClick={() => router.push(`/comic/${data.slug}/chapter/${chapter?.number}`)}
                       key={index}
-                      className={`cursor-pointer text-xs hover:bg-light-medium-gray ${
-                        currentChapIndex == index ? 'text-second-color' : ''
-                      }`}>
+                      className={`cursor-pointer text-xs hover:bg-light-medium-gray ${currentChapIndex == index ? 'text-second-color' : ''
+                        }`}>
                       {t('Chapter')} {chapter.number}
                     </div>
                   )
@@ -380,11 +372,10 @@ export default function ReadingSection({
             </div>
           </div>
           <Image
-            className={`cursor-pointer ${
-              currentChapIndex == 0 || data.chapters?.[currentChapIndex - 1]?.status == CHAPTER_STATUS.UPCOMING
+            className={`cursor-pointer ${currentChapIndex == 0 || data.chapters?.[currentChapIndex - 1]?.status == CHAPTER_STATUS.UPCOMING
                 ? 'opacity-60 cursor-not-allowed pointer-events-none'
                 : ''
-            }`}
+              }`}
             onClick={() => goToChap('Next')}
             src={SquareArrowRightIcon}
             alt=''

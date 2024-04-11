@@ -121,13 +121,13 @@ export default function ComicDetail({
         </div>
         <div className="relative">
           <div className="h-[180px]">
-              <LazyImage
-                width={1000}
-                height={260}
-                src={data.cover || mockBanner}
-                className={`w-full h-full ${expandDetail ? 'h-[280px]' : 'h-[160px]'} duration-500 transition-all object-cover w-full`}
-                alt=""
-              />
+            <LazyImage
+              width={1000}
+              height={260}
+              src={data.cover || mockBanner}
+              className={`w-full h-full ${expandDetail ? 'h-[280px]' : 'h-[160px]'} duration-500 transition-all object-cover w-full`}
+              alt=""
+            />
           </div>
           <div className="absolute right-0 bottom-0 p-2 flex items-end justify-end text-white w-full bg-gradient-to-b from-transparent to-gray-500 h-full">
             <div className="flex gap-3 items-center text-xs mt-3 font-semibold">
@@ -205,7 +205,26 @@ export default function ComicDetail({
                   </Fragment>
                 ))}
               </p>
-              <p className="text-subtle-dark items-center">
+              <div className="text-base font-semibold leading-5">
+                {data.authors.map((author, index) => (
+                  <Fragment key={index}>
+                    by{' '}
+                    <span className="text-second-color font-[600]">
+                      {author.slug ? (
+                        <Link
+                          className="author"
+                          href={`/artist/${author.slug}`}
+                        >
+                          {t(author.name)}
+                        </Link>
+                      ) : (
+                        t(author.name)
+                      )}
+                    </span>
+                  </Fragment>
+                ))}
+              </div>
+              {/* <p className="text-subtle-dark items-center">
                 <strong>{data.views?.toLocaleString('en-US')}</strong>{' '}
                 {data.views > 1 ? t('views') : t('view')}
                 <svg
@@ -220,7 +239,7 @@ export default function ComicDetail({
                 </svg>
                 <strong>{comicLikes?.toLocaleString('en-US')}</strong>{' '}
                 {comicLikes > 1 ? t('likes') : t('like')}
-              </p>
+              </p> */}
               <div
                 className={`${expandDetail ? '' : 'flex-col 2xl:flex-row'
                   } 2xl:items-start  flex gap-[10px]`}
