@@ -121,7 +121,7 @@
   "Unsubscribe": "Hủy đăng ký",
   "Set a username": "Chọn tên tài khoản",
   "This email will also be used to receive updates of new chapter when you subscribe a manga.": "Email này cũng được dùng để nhận thông tin về chương mới khi bạn đăng ký theo dõi truyện",
-  "Artist Composing": "Sắp ra mắt",
+  "Artist Composing": "Tác giả đang thiết kế",
   "Select a gender": "Chọn giới tính",
   "Write something about yourself": "Mô tả một chút về bản thân",
   "New password and old password is same": "Mật khẩu mới và mật khẩu cũ giống nhau",
@@ -219,5 +219,9 @@
   "You currently use a custodial wallet which only valid on Punkga. Migrating your own wallet allows you to:": "Bạn hiện đang sử dụng ví lưu ký mà chỉ có giá trị trên Punkga. Chuyển đổi sang ví của riêng bạn sẽ cho phép bạn:",
   "Using your wallet to log in": "Sử dụng ví riêng của bạn để đăng nhập",
   "Access special content without transferring NFTs to the Punkga wallet": "Truy cập nội dung đặc biệt mà không cần chuyển NFT vào ví lưu ký Punkga",
-  "Trade NFTs on marketplaces": "Giao dịch NFT trên các sàn giao dịch"
+  "Trade NFTs on marketplaces": "Giao dịch NFT trên các sàn giao dịch",
+  "Introduction": "Giới thiệu",
+  "This chapter requires NFT to read": "Chương này yêu cầu NFT để đọc",
+  "Get NFT": "Sở hữu NFT"
+
 }
