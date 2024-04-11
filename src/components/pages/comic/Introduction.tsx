@@ -13,7 +13,7 @@ const Introduction: React.FC<IntroductionProps> = ({ data, language }) => {
     data.languages.find((l) => l.isMainLanguage);
   return (
     <div className="p-6 w-full flex flex-col gap-3">
-      <div>
+      <div className='flex gap-2'>
         {data.tags.map((tag, index) => {
           return <Tag key={index}>{tag[selectedLanguage.shortLang]}</Tag>;
         })}
