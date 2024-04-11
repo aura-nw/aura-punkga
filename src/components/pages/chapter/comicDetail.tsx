@@ -69,15 +69,18 @@ export default function ComicDetail({
       tabRef.current?.click();
     }
   }, [expandDetail]);
-
+  const [subChange, setSubChange] = useState(0);
   const subscribeHandler = (isSub: boolean) => {
     if (account?.verified && account?.name) {
       if (isSub) {
         subscribe(data.id);
+        setSubChange(subChange + 1);
       } else {
         unsubscribe(data.id);
+        setSubChange(subChange - 1);
       }
       setIsSubscribe(isSub);
+      //refetch data
     } else {
       openSignInModal();
     }
@@ -132,7 +135,7 @@ export default function ComicDetail({
           <div className="absolute right-0 bottom-0 p-2 flex items-end justify-end text-white w-full bg-gradient-to-b from-transparent to-gray-500 h-full">
             <div className="flex gap-3 items-center text-xs mt-3 font-semibold">
               <div className="flex items-end gap-1">
-                <span>{data.subscriptions.toLocaleString('en-US')}</span>
+                <span>{(data.subscriptions + subChange).toLocaleString('en-US')}</span>
                 <BellIcon className="w-5 h-5" />
               </div>
               •
@@ -392,7 +395,7 @@ export default function ComicDetail({
                     className="h-[260px] aspect-square mx-auto"
                   />
                   <div className="font-extrabold text-xl leading-6 mt-[10px]">
-                    Artist Composing
+                    {t('Artist Composing')}
                   </div>
                 </div>
                 {/* )} */}

@@ -37,6 +37,7 @@ import { IComicDetail } from 'src/models/comic'
 import { subscribe, unsubscribe } from 'src/services'
 import { openSignInModal } from 'src/utils'
 import { getItem, setItem } from 'src/utils/localStorage'
+import Ninja3 from 'images/ninja-3.svg';
 export default function ReadingSection({
   openComments,
   setOpenComments,
@@ -163,7 +164,26 @@ export default function ReadingSection({
   }
 
   if (!data || !chapterData) {
-    return <div>{t('No data to show')}</div>
+    return <>{chapterData.type == CHAPTER_TYPE.NFTS_ONLY ? (
+      <div className='flex flex-col gap-3 items-center'>
+        <Image src={Ninja3} alt='' width={256} height={256} />
+        <div className='text-center font-bold text-md'>
+          {t('This chapter requires NFT to read')}
+        </div>
+        <div>
+          <OutlineButton
+            size='md'
+            className='w-full'>
+            {t('Get NFT')}
+          </OutlineButton>
+        </div>
+      </div>
+
+    ) :
+      (<div>
+        {t('No data to show')}
+      </div>)
+    }</>
   }
   const currentChapIndex = data.chapters.findIndex((chap) => chap.id == chapterData.id)
   chapterLengthRef.current = chapterData[chapterLocale]?.length
@@ -208,8 +228,8 @@ export default function ReadingSection({
                     id={`page_${index}`}
                     alt=''
                     className={`${readingMode == 'onePage'
-                        ? 'mx-auto'
-                        : `h-full w-1/2 [&>img]:!w-fit ${index % 2 == 0 ? '[&>img]:ml-auto' : '[&>img]:mr-auto'}`
+                      ? 'mx-auto'
+                      : `h-full w-1/2 [&>img]:!w-fit ${index % 2 == 0 ? '[&>img]:ml-auto' : '[&>img]:mr-auto'}`
                       } ${readingMode != 'onePage' && index > 1 && 'hidden'}`}
                     width={1900}
                     height={1000}
@@ -221,15 +241,37 @@ export default function ReadingSection({
         </div>
       ) : (
         <div className='h-full w-full flex justify-center items-center'>
-          <div>{t('No data to show')}</div>
+          <div>
+            {chapterData.type == CHAPTER_TYPE.NFTS_ONLY ? (
+              <div className='flex flex-col gap-3 items-center'>
+                <Image src={Ninja3} alt='' width={256} height={256} />
+                <div className='text-center font-bold text-md'>
+                  {t('This chapter requires NFT to read')}
+                </div>
+                <div>
+                  <OutlineButton
+                    size='md'
+                    className='w-full'>
+                    {t('Get NFT')}
+                  </OutlineButton>
+                </div>
+              </div>
+
+            ) :
+              (<div>
+                {t('No data to show')}
+              </div>)
+            }
+          </div>
         </div>
-      )}
+      )
+      }
       <div
         className={`peer bg-[#F0F0F0] absolute bottom-0 right-0 left-0 w-full flex items-center px-[40px] py-[6px] ${mode == 'minscreen' ? 'visible' : 'invisible -z-10'
           }`}>
         <div className='flex-auto w-1/3 self-center'>
           <div className='text-ellipsis max-w-[90%] overflow-hidden whitespace-nowrap'>
-            <div className='font-bold truncate'>{`Chapter ${chapterData.number} • ${chapterData.name}`}</div>
+            <div className='font-bold truncate'>{`${t('Chapter')} ${chapterData.number} • ${chapterData.name}`}</div>
             <p className='text-subtle-dark truncate'>
               {(chapterLikes || 0).toLocaleString('en-US')} {chapterLikes > 1 ? t('likes') : t('like')} •{' '}
               {(chapterData.views || 0).toLocaleString('en-US')} {chapterData.views > 1 ? t('views') : t('view')} •{' '}
@@ -353,8 +395,8 @@ export default function ReadingSection({
             />
             <div
               className={`absolute bg-light-gray bottom-[120%] left-0 px-[10px] py-[6px] border-[1.5px] border-second-color rounded-xl w-full flex gap-[10px] flex-col-reverse transition-all ${showChapterList
-                  ? 'max-h-[135px] overflow-auto opacity-100'
-                  : 'max-h-[0px] overflow-hidden opacity-0 pointer-events-none'
+                ? 'max-h-[135px] overflow-auto opacity-100'
+                : 'max-h-[0px] overflow-hidden opacity-0 pointer-events-none'
                 }`}>
               {data?.chapters
                 ?.filter((chapter) => chapter.status == 'Published')
@@ -373,8 +415,8 @@ export default function ReadingSection({
           </div>
           <Image
             className={`cursor-pointer ${currentChapIndex == 0 || data.chapters?.[currentChapIndex - 1]?.status == CHAPTER_STATUS.UPCOMING
-                ? 'opacity-60 cursor-not-allowed pointer-events-none'
-                : ''
+              ? 'opacity-60 cursor-not-allowed pointer-events-none'
+              : ''
               }`}
             onClick={() => goToChap('Next')}
             src={SquareArrowRightIcon}
@@ -430,6 +472,6 @@ export default function ReadingSection({
         </div>
         <div className={`flex-auto w-1/3 self-center flex gap-2 justify-end`}></div>
       </div>
-    </div>
+    </div >
   )
 }

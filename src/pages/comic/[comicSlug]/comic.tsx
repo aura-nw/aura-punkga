@@ -219,15 +219,15 @@ function Comic({ comicDetails, like, unlike }) {
                     className="h-[260px] aspect-square mx-auto opacity-60"
                   />
                   <div className="font-extrabold text-2xl leading-6 text-subtle-dark mt-[10px]">
-                    Artist Composing
+                    {t('Artist Composing')}
                   </div>
                 </div>
                 {/* )} */}
               </Tab.Panel>
               <Tab.Panel className="h-full flex-1 flex flex-col">
-              <div className="flex-1 w-full flex">
+                <div className="flex-1 w-full flex">
                   <Introduction data={data} language={language} />
-                  </div>
+                </div>
               </Tab.Panel>
             </Tab.Panels>
           </Tab.Group>
