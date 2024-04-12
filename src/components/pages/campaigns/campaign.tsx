@@ -69,7 +69,7 @@ export default function Campaign() {
           <div className='text-base leading-5 font-bold md:text-2xl md:leading-[18px] md:font-extrabold whitespace-nowrap'>
             {t('Campaign')} <span className=''>{` (${list.length})`}</span>
           </div>
-          <div className='flex gap-[10px] items-center md:hidden'>
+          {list.length > 0 && <div className='flex gap-[10px] items-center md:hidden'>
             <div className='p-1'>
               <Checkbox
                 label={t('Reward NFT')}
@@ -90,9 +90,9 @@ export default function Campaign() {
                 }}
               />
             </div>
-          </div>
+          </div>}
         </div>
-        {list.length > 0 ? (
+        {list.length > 0 && (
           <div className='flex gap-3 mt-[10px] md:mt-6 items-center flex-wrap'>
             <Tag selected={!statusFilter.length} onClick={() => setStatusFilter([])}>
               {t('All status')}
@@ -133,7 +133,7 @@ export default function Campaign() {
               </div>
             </div>
           </div>
-        ) : <></>}
+        )}
 
       </div>
       {list.length > 0 ? (<div className='grid grid-cols-1 lg:grid-cols-2 gap-5 2xl:gap-10 xl:grid-cols-3'>
@@ -252,7 +252,7 @@ export default function Campaign() {
           </div>
         ))}
       </div>) : (
-        <div className='mt-5 p-6 lg:mt-0 lg:p-6 flex flex-col items-center w-full'>
+        <div className='p-6 flex flex-col items-center w-full'>
           <Image src={Mascot3} alt='' className='w-[240px] h-[240px] lg:w-[320px] lg:h-[320px]' />
           <div className='text-sm leading-[18px] lg:text-base lg:leading-base font-semibold mt-5 text-center'>
             Coming soon
