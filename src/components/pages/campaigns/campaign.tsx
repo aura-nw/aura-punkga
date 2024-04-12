@@ -15,6 +15,8 @@ import { getCampaigns } from 'src/services'
 import useSWR from 'swr'
 import IllusImage from './assets/illus.svg'
 import { openSignInModal } from 'src/utils'
+import Mascot3 from 'components/pages/campaigns/assets/Mascot3.svg'
+
 export default function Campaign() {
   const { account } = useContext(Context)
   const router = useRouter()
@@ -36,8 +38,8 @@ export default function Campaign() {
         const campaignStatus = moment(campaign.start_date).isAfter()
           ? 'Upcoming'
           : moment(campaign.end_date).isAfter()
-          ? 'Ongoing'
-          : 'Ended'
+            ? 'Ongoing'
+            : 'Ended'
         return (
           ((statusFilter.length && statusFilter.includes(campaignStatus)) || !statusFilter.length) &&
           (!rewardNFTChecked || campaign.reward?.nft?.nft_name) &&
@@ -90,48 +92,51 @@ export default function Campaign() {
             </div>
           </div>
         </div>
-        <div className='flex gap-3 mt-[10px] md:mt-6 items-center flex-wrap'>
-          <Tag selected={!statusFilter.length} onClick={() => setStatusFilter([])}>
-            {t('All status')}
-          </Tag>
-          <span className='inline-block w-[1px] self-stretch bg-[#DEDEDE]'></span>
-          {['Upcoming', 'Ongoing', 'Ended'].map((status, index) => (
-            <Tag
-              key={index}
-              selected={statusFilter.includes(status)}
-              onClick={() => {
-                statusFilter.includes(status)
-                  ? setStatusFilter(statusFilter.filter((s) => s != status))
-                  : setStatusFilter([...statusFilter, status])
-              }}>
-              {t(status)}
+        {list.length > 0 ? (
+          <div className='flex gap-3 mt-[10px] md:mt-6 items-center flex-wrap'>
+            <Tag selected={!statusFilter.length} onClick={() => setStatusFilter([])}>
+              {t('All status')}
             </Tag>
-          ))}
-          <div className='hidden gap-8 items-center md:flex ml-5'>
-            <div className='p-1'>
-              <Checkbox
-                label={t('Reward NFT')}
-                checked={rewardNFTChecked}
-                onClick={() => setRewardNFTChecked(!rewardNFTChecked)}
-              />
-            </div>
-            <div className='p-1'>
-              <Checkbox
-                label={t('Enrolled')}
-                checked={enrolledChecked}
+            <span className='inline-block w-[1px] self-stretch bg-[#DEDEDE]'></span>
+            {['Upcoming', 'Ongoing', 'Ended'].map((status, index) => (
+              <Tag
+                key={index}
+                selected={statusFilter.includes(status)}
                 onClick={() => {
-                  if (account) {
-                    setEnrolledChecked(!enrolledChecked)
-                  } else {
-                    openSignInModal()
-                  }
-                }}
-              />
+                  statusFilter.includes(status)
+                    ? setStatusFilter(statusFilter.filter((s) => s != status))
+                    : setStatusFilter([...statusFilter, status])
+                }}>
+                {t(status)}
+              </Tag>
+            ))}
+            <div className='hidden gap-8 items-center md:flex ml-5'>
+              <div className='p-1'>
+                <Checkbox
+                  label={t('Reward NFT')}
+                  checked={rewardNFTChecked}
+                  onClick={() => setRewardNFTChecked(!rewardNFTChecked)}
+                />
+              </div>
+              <div className='p-1'>
+                <Checkbox
+                  label={t('Enrolled')}
+                  checked={enrolledChecked}
+                  onClick={() => {
+                    if (account) {
+                      setEnrolledChecked(!enrolledChecked)
+                    } else {
+                      openSignInModal()
+                    }
+                  }}
+                />
+              </div>
             </div>
           </div>
-        </div>
+        ) : <></>}
+
       </div>
-      <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 2xl:gap-10 xl:grid-cols-3'>
+      {list.length > 0 ? (<div className='grid grid-cols-1 lg:grid-cols-2 gap-5 2xl:gap-10 xl:grid-cols-3'>
         {list?.map((campaign, index) => (
           <div
             key={index}
@@ -145,15 +150,15 @@ export default function Campaign() {
                       moment(campaign.start_date).isAfter()
                         ? 'warning'
                         : moment(campaign.end_date).isAfter()
-                        ? 'success'
-                        : 'default'
+                          ? 'success'
+                          : 'default'
                     }>
                     {t(
                       moment(campaign.start_date).isAfter()
                         ? 'Upcoming'
                         : moment(campaign.end_date).isAfter()
-                        ? 'Ongoing'
-                        : 'Ended'
+                          ? 'Ongoing'
+                          : 'Ended'
                     )}
                   </StatusLabel>
                 </div>
@@ -246,7 +251,15 @@ export default function Campaign() {
             </div>
           </div>
         ))}
-      </div>
+      </div>) : (
+        <div className='mt-5 p-6 lg:mt-0 lg:p-6 flex flex-col items-center w-full'>
+          <Image src={Mascot3} alt='' className='w-[240px] h-[240px] lg:w-[320px] lg:h-[320px]' />
+          <div className='text-sm leading-[18px] lg:text-base lg:leading-base font-semibold mt-5 text-center'>
+            Coming soon
+          </div>
+        </div>
+      )}
+
     </div>
   )
 }
