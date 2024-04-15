@@ -123,12 +123,12 @@ export default function ComicDetail({
           </div>
         </div>
         <div className="relative">
-          <div className="h-[180px]">
+          <div className="max-h-[180px] aspect-[16/5]">
             <LazyImage
-              width={1000}
-              height={260}
+              width={576}
+              height={180}x
               src={data.cover || mockBanner}
-              className={`w-full h-full ${expandDetail ? 'h-[280px]' : 'h-[160px]'} duration-500 transition-all object-cover w-full`}
+              className={`h-full duration-500 transition-all object-fit w-full`}
               alt=""
             />
           </div>
