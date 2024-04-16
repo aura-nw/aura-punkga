@@ -125,7 +125,7 @@ ${Date.now()}`
               <Image src={Mascot} alt='' />
             </div>
             <FilledButton className='w-fit mx-auto' onClick={() => setOpen(false)}>
-              Done
+              {t('Done')}
             </FilledButton>
           </div>
         ) : address ? (
