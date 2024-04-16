@@ -111,7 +111,7 @@ export default function Header({ className }: { className?: string }) {
   }, [])
 
   const copyAddress = async () => {
-    navigator.clipboard.writeText(wallet)
+    navigator.clipboard.writeText(wallet || account?.walletAddress)
     setIsCopied(true)
     _.debounce(() => {
       _.delay(() => setIsCopied(false), 3000)
