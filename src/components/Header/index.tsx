@@ -174,7 +174,7 @@ export default function Header({ className }: { className?: string }) {
                   className='flex justify-between items-center text-second-color text-sm font-medium  relative'
                   onClick={copyAddress}>
                   <div className='flex gap-2 items-center'>
-                    <Image src={PunkgaWallet} alt='' className='w-6 h-6' />
+                    {wallet ? <></> : <Image src={PunkgaWallet} alt='' className='w-6 h-6' />}
                     <div>{`${shorten(wallet || account?.walletAddress, 8, 8)}`}</div>
                   </div>
                   <span
@@ -535,14 +535,16 @@ export default function Header({ className }: { className?: string }) {
                     <div className='p-5 flex flex-col gap-5'>
                       <div className='bg-light-gray p-[10px] rounded-xl '>
                         <div
-                          className='flex font-medium justify-between items-center text-second-color  relative min'
+                          className='flex justify-between items-center text-second-color text-lg font-semibold  relative'
                           onClick={copyAddress}>
-                          {`${shorten(wallet || account?.walletAddress, 8, 8)}`}
+                          <div className='flex gap-2 items-center'>
+                            {wallet ? <></> : <Image src={PunkgaWallet} alt='' className='w-8 h-8' />}
+                            <div>{`${shorten(wallet || account?.walletAddress, 8, 8)}`}</div>
+                          </div>
                           <span
-                            className={`transition-all w-fit mr-2 absolute bottom-[110%] left-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
+                            className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
                               isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
                             }`}>
-                            <span className='absolute border-[5px] border-light-gray border-r-transparent border-b-transparent border-l-transparent top-full left-1/2 -translate-x-1/2'></span>
                             {t('Copied')}
                           </span>
                           <Image src={CopySvg} alt='' />
