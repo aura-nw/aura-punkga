@@ -540,7 +540,7 @@ export const getBalances = async (address: string) => {
     },
     operationName: 'getBalance',
   });
-  return data?.data?.[getEnvKey()]?.account?.[0]?.balances?.amount;
+  return data?.data?.[getEnvKey()]?.account?.[0]?.balances?.[0]?.amount;
 };
 export const linkWallet = async (signedDoc: any, signature: any) => {
   try {
