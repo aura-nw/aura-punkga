@@ -1,9 +1,11 @@
-import { useChain } from '@cosmos-kit/react'
+import Stars from 'assets/images/Stars.svg'
 import Avatar from 'assets/images/avatar.svg'
 import EN from 'assets/images/en.svg'
 import Logo from 'assets/images/header-logo.svg'
 import SearchIcon from 'assets/images/icons/search.svg'
+import PunkgaWallet from 'assets/images/punkga.png'
 import VN from 'assets/images/vn.svg'
+import { BigNumber } from 'bignumber.js'
 import Button from 'components/Button'
 import FilledButton from 'components/Button/FilledButton'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
@@ -22,17 +24,13 @@ import { Context } from 'src/context'
 import useApi from 'src/hooks/useApi'
 import { useClickOutside } from 'src/hooks/useClickOutside'
 import { getBalances, search } from 'src/services'
+import { shorten } from 'src/utils'
+import useSWR from 'swr'
 import ForgotPasswordModal from './ForgotPasswordModal'
+import MigrateWalletModal from './MigrateWalletModal'
 import SignInModal from './SignInModal'
 import SignUpModal from './SignUpModal'
 import SignUpSuccessModal from './SignUpSuccessModal'
-import Stars from 'assets/images/Stars.svg'
-import { shorten } from 'src/utils'
-import useSWR from 'swr'
-import { BigNumber } from 'bignumber.js'
-import PunkgaWallet from 'assets/images/punkga.png'
-import MigrateWalletModal from './MigrateWalletModal'
-import getConfig from 'next/config'
 export default function Header({ className }: { className?: string }) {
   const { t } = useTranslation()
   const router = useRouter()
@@ -672,7 +670,7 @@ export default function Header({ className }: { className?: string }) {
       <Modal open={signUpSuccessOpen} setOpen={setSignUpSuccessOpen}>
         <SignUpSuccessModal setSignUpOpen={setSignUpOpen} onClose={() => setSignUpSuccessOpen(false)} />
       </Modal>
-      <MigrateWalletModal open={migrateWalletOpen} setOpen={setMigrateWalletOpen} />
+      {!wallet && <MigrateWalletModal open={migrateWalletOpen} setOpen={setMigrateWalletOpen} />}
     </>
   )
 }
