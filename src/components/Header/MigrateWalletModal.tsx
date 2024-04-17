@@ -136,7 +136,7 @@ ${Date.now()}`
             <p className='text-center text-base leading-6 font-semibold md:text-lg md:leading-[23px]'>
               {t('Wallet connection failed')}
             </p>
-            <p className='text-center text-sm leading-[18px] -mt-1'>
+            <p className='text-center text-sm leading-[18px] my-4'>
               {t('This wallet has been linked to another account.')}
             </p>
             <FilledButton

@@ -191,7 +191,7 @@ export default function Header({ className }: { className?: string }) {
                     {hideBalance
                       ? '********'
                       : `${BigNumber(balance || 0)
-                          .div(BigNumber(10).pow(8))
+                          .div(BigNumber(10).pow(6))
                           .toFixed(3)}`}{' '}
                     <span className='inline-block'>
                       {
@@ -555,7 +555,7 @@ export default function Header({ className }: { className?: string }) {
                             {hideBalance
                               ? '********'
                               : `${BigNumber(balance || 0)
-                                  .div(BigNumber(10).pow(8))
+                                  .div(BigNumber(10).pow(6))
                                   .toFixed(3)}`}{' '}
                             <span className='inline-block'>
                               {
