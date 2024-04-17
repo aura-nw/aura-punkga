@@ -23,7 +23,7 @@ import { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import { Context } from 'src/context'
 import useApi from 'src/hooks/useApi'
 import { useClickOutside } from 'src/hooks/useClickOutside'
-import { getBalances, search } from 'src/services'
+import { getBalances, getEnvKey, search } from 'src/services'
 import { formatNumber, shorten } from 'src/utils'
 import useSWR from 'swr'
 import ForgotPasswordModal from './ForgotPasswordModal'
@@ -189,11 +189,10 @@ export default function Header({ className }: { className?: string }) {
                   <div className='flex items-center'>
                     {hideBalance
                       ? '********'
-                      : `${formatNumber(
-                          BigNumber(balance || 0)
-                            .div(BigNumber(10).pow(6))
-                            .toFixed(4)
-                        )} AURA`}
+                      : `${+BigNumber(balance || 0)
+                          .div(BigNumber(10).pow(6))
+                          .toFixed(4)
+                          .toLocaleString()} ${getEnvKey() == 'euphoria' ? 'EAURA' : 'AURA'}`}
                     <span className='inline-block'>
                       {
                         <div className='ml-2 w-6 h-6 relative'>
@@ -555,11 +554,10 @@ export default function Header({ className }: { className?: string }) {
                           <div className='flex items-center'>
                             {hideBalance
                               ? '********'
-                              : `${formatNumber(
-                                  BigNumber(balance || 0)
-                                    .div(BigNumber(10).pow(6))
-                                    .toFixed(4)
-                                )} AURA`}
+                              : `${+BigNumber(balance || 0)
+                                  .div(BigNumber(10).pow(6))
+                                  .toFixed(4)
+                                  .toLocaleString()} ${getEnvKey() == 'euphoria' ? 'EAURA' : 'AURA'}`}
                             <span className='inline-block'>
                               {
                                 <div className='ml-2 w-6 h-6 relative'>
