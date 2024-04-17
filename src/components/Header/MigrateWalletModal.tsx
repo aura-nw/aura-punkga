@@ -21,7 +21,7 @@ export default function MigrateWalletModal({ open, setOpen }) {
   const chainName = getConfig().CHAIN_ID.includes('xstaxy') ? 'aura' : 'auratestnet'
   const { connect, walletRepo, address, disconnect, chain } = useChain(chainName)
   const { status: globalStatus, mainWallet } = useWallet()
-  const [success, setSuccess] = useState(false)
+  const [success, setSuccess] = useState(undefined)
   const [requestId, setRequestId] = useLocalStorage('request_id', undefined)
   const [step, setStep] = useState(1)
   useEffect(() => {
@@ -74,6 +74,9 @@ ${Date.now()}`
           getProfile()
           setRequestId(res?.data?.requestId)
           setSuccess(true)
+        } else {
+          getProfile()
+          setSuccess(false)
         }
       } else {
         if (!mainWallet?.client?.signArbitrary)
@@ -126,6 +129,24 @@ ${Date.now()}`
             </div>
             <FilledButton className='w-fit mx-auto' onClick={() => setOpen(false)}>
               {t('Done')}
+            </FilledButton>
+          </div>
+        ) : success === false ? (
+          <div className='flex flex-col gap-2 max-w-[452px]'>
+            <p className='text-center text-base leading-6 font-semibold md:text-lg md:leading-[23px]'>
+              {t('Wallet connection failed')}
+            </p>
+            <p className='text-center text-sm leading-[18px] -mt-1'>
+              {t('This wallet has been linked to another account.')}
+            </p>
+            <FilledButton
+              className='w-fit mx-auto'
+              onClick={() => {
+                setOpen(false)
+                setTimeout(() => setSuccess(undefined), 300)
+                setStep(1)
+              }}>
+              {t('Close')}
             </FilledButton>
           </div>
         ) : address ? (
