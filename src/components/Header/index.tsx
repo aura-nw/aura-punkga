@@ -47,7 +47,6 @@ export default function Header({ className }: { className?: string }) {
   const [searchValue, setSearchValue] = useState('')
   const { account, wallet, logout } = useContext(Context)
   const searchComic = useApi<any[]>(async () => await search(searchValue), !!searchValue, [searchValue])
-
   const { data: balance } = useSWR(
     { key: 'get_balance', address: wallet || account?.walletAddress },
     ({ address }) => (address ? getBalances(address) : undefined),
@@ -672,7 +671,7 @@ export default function Header({ className }: { className?: string }) {
       <Modal open={signUpSuccessOpen} setOpen={setSignUpSuccessOpen}>
         <SignUpSuccessModal setSignUpOpen={setSignUpOpen} onClose={() => setSignUpSuccessOpen(false)} />
       </Modal>
-      {!wallet && <MigrateWalletModal open={migrateWalletOpen} setOpen={setMigrateWalletOpen} />}
+      {migrateWalletOpen && <MigrateWalletModal open={migrateWalletOpen} setOpen={setMigrateWalletOpen} />}
     </>
   )
 }
