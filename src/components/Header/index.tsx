@@ -24,7 +24,7 @@ import { Context } from 'src/context'
 import useApi from 'src/hooks/useApi'
 import { useClickOutside } from 'src/hooks/useClickOutside'
 import { getBalances, search } from 'src/services'
-import { shorten } from 'src/utils'
+import { formatNumber, shorten } from 'src/utils'
 import useSWR from 'swr'
 import ForgotPasswordModal from './ForgotPasswordModal'
 import MigrateWalletModal from './MigrateWalletModal'
@@ -189,9 +189,11 @@ export default function Header({ className }: { className?: string }) {
                   <div className='flex items-center'>
                     {hideBalance
                       ? '********'
-                      : `${BigNumber(balance || 0)
-                          .div(BigNumber(10).pow(6))
-                          .toFixed(3)}`}{' '}
+                      : `${formatNumber(
+                          BigNumber(balance || 0)
+                            .div(BigNumber(10).pow(6))
+                            .toFixed(4)
+                        )} AURA`}
                     <span className='inline-block'>
                       {
                         <div className='ml-2 w-6 h-6 relative'>
@@ -553,9 +555,11 @@ export default function Header({ className }: { className?: string }) {
                           <div className='flex items-center'>
                             {hideBalance
                               ? '********'
-                              : `${BigNumber(balance || 0)
-                                  .div(BigNumber(10).pow(6))
-                                  .toFixed(3)}`}{' '}
+                              : `${formatNumber(
+                                  BigNumber(balance || 0)
+                                    .div(BigNumber(10).pow(6))
+                                    .toFixed(4)
+                                )} AURA`}
                             <span className='inline-block'>
                               {
                                 <div className='ml-2 w-6 h-6 relative'>

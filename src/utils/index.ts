@@ -115,3 +115,7 @@ export const getGasPriceByChain = (chain: Chain) => {
 
   return new GasPrice(Decimal.fromAtomics(gasStep.toString(), pow) as any, data?.denom as string)
 }
+export function formatNumber(x: any) {
+  if (!x) return '0'
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}
