@@ -54,7 +54,7 @@ function ContextProvider({ children }) {
   const router = useRouter()
   const { t } = useTranslation()
   const searchParams = useSearchParams()
-  const accessTokenParam = searchParams.get('access_token')
+  const accessTokenParam = searchParams.get('access_token') || searchParams.get('token')
   const expiresInParam = searchParams.get('expires_in')
   const config = getConfig()
   const authorizerRef = new Authorizer({
@@ -103,7 +103,7 @@ function ContextProvider({ children }) {
   }, [])
 
   useEffect(() => {
-    if (location.search.includes('access_token')) {
+    if (location.search.includes('access_token') || location.search.includes('token')) {
       if (accessTokenParam) {
         console.log('Setting up punkga with access token')
         setUp()

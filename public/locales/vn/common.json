@@ -204,6 +204,7 @@
   "Starts": "Bắt đầu",
   "Migrate your wallet": "Chuyển đổi ví",
   "Connect wallet": "Kết nối ví",
+  "Connect Wallet": "Kết nối ví",
   "If you don’t have a wallet yet, you can select a provider and create one now.": "Nếu bạn chưa có ví, bạn có thể chọn một nhà cung cấp và tạo một cái ngay bây giờ.",
   "Wallet connection failed": "Kết nối ví thất bại",
   "This wallet has been linked to another account.": "Địa chỉ ví này đã được kết nối với một tài khoản khác.",
@@ -222,6 +223,6 @@
   "Trade NFTs on marketplaces": "Giao dịch NFT trên các sàn giao dịch",
   "Introduction": "Giới thiệu",
   "This chapter requires NFT to read": "Chương này yêu cầu NFT để đọc",
-  "Get NFT": "Sở hữu NFT"
-
+  "Get NFT": "Sở hữu NFT",
+  "Balance": "Số dư"
 }

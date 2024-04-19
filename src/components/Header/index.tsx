@@ -185,7 +185,7 @@ export default function Header({ className }: { className?: string }) {
                   <Image src={CopySvg} alt='' />
                 </div>
                 <div className='flex justify-between items-center text-sm font-semibold  leading-[18px]'>
-                  <div className=''>Balance:</div>
+                  <div className=''>{`${t('Balance')}:`}</div>
                   <div className='flex items-center'>
                     {hideBalance
                       ? '********'
@@ -550,7 +550,7 @@ export default function Header({ className }: { className?: string }) {
                           <Image src={CopySvg} alt='' />
                         </div>
                         <div className='flex justify-between items-center text-sm font-semibold  leading-[18px] mt-3'>
-                          <div className=''>Balance:</div>
+                          <div className=''>{`${t('Balance')}:`}</div>
                           <div className='flex items-center'>
                             {hideBalance
                               ? '********'

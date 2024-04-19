@@ -208,7 +208,7 @@ ${Date.now()}`
                         ? 'cursor-not-allowed opacity-60 pointer-events-none'
                         : 'cursor-pointer'
                     }`}
-                    onClick={() => wallet.connect()}>
+                    onClick={() => wallet.connect(true)}>
                     {wallet.walletStatus == 'Connecting' ? (
                       <svg
                         xmlns='http://www.w3.org/2000/svg'
@@ -232,7 +232,7 @@ ${Date.now()}`
                         ? 'cursor-not-allowed opacity-60 pointer-events-none'
                         : 'cursor-pointer'
                     }`}
-                    onClick={() => wallet.connect()}>
+                    onClick={() => wallet.connect(true)}>
                     {wallet.walletStatus == 'Connecting' ? (
                       <svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none'>
                         <circle cx='16' cy='16' r='4' fill='#1FAB5E' />

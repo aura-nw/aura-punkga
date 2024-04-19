@@ -98,6 +98,7 @@ export const openSignInModal = () => {
 }
 
 export const shorten = (string: string, preCh?: number, sufCh?: number) => {
+  if (!string) return ''
   const pre = string.slice(0, preCh || 5)
   const suf = string.slice(-(sufCh || 5))
   return `${pre}...${suf}`
