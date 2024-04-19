@@ -318,27 +318,25 @@ export default function TaskSlider({ sliderNavRef }) {
                     )}
                   </div>
                   <div className='text-white font-bold text-[20px] sm:text-[32px] leading-[40px]'>{data.comic.name}</div>
-                  {data.author.length > 1 ?
-                    <>
-                      <div className='flex flex-col items-start gap-[10px] mt-[5px]'>
-                        <div className='flex gap-[5px] items-center'>
-                          {data.author.map((author, index) => {
-                            const isLastAuthor = index === data.author.length - 1;
+                  <div className='flex flex-col items-start gap-[10px] mt-[5px]'>
+                    <div className='flex gap-[5px] items-center'>
+                      {data.author.map((author, index) => {
+                        const isLastAuthor = index === data.author.length - 1;
 
-                            return (
-                              <div className="flex gap-[5px] items-center" key={index}>
-                                <Image src={author.avatar} alt="" className="w-7 h-7 rounded-full" />
-                                <div className="text-white font-semibold text-sm leading-[18px]">{author.name}</div>
-                                {!isLastAuthor && (
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4" fill="none">
-                                    <circle cx="2" cy="2" r="2" fill="white" />
-                                  </svg>
-                                )}
-                              </div>
-                            );
-                          })}
-                        </div>
-                        {/* <div className='flex gap-[5px] items-center'>
+                        return (
+                          <div className="flex gap-[5px] items-center" key={index}>
+                            <Image src={author.avatar} alt="" className="w-7 h-7 rounded-full" />
+                            <div className="text-white font-semibold text-sm leading-[18px]">{author.name}</div>
+                            {!isLastAuthor && (
+                              <svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4" fill="none">
+                                <circle cx="2" cy="2" r="2" fill="white" />
+                              </svg>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                    {/* <div className='flex gap-[5px] items-center'>
                           <div className='flex gap-[5px] items-center'>
                             <Image src={Eng} alt='' />
                             <div className='text-white font-semibold text-sm leading-[18px]'>English</div>
@@ -351,39 +349,7 @@ export default function TaskSlider({ sliderNavRef }) {
                             <div className='text-white font-semibold text-sm leading-[18px]'>Vietnamese</div>
                           </div>
                         </div> */}
-                      </div>
-                    </>
-                    :
-                    <>
-                      <div className='flex items-center gap-[10px] mt-[5px]'>
-                        {data.author.map((author, index) => (
-                          <>
-                            <div className='flex gap-[5px] items-center' key={index}>
-                              <Image src={author.avatar} alt='' className='w-7 h-7 rounded-full' />
-                              <div className='text-white font-semibold text-sm leading-[18px]'>{author.name}</div>
-                            </div>
-                            <svg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4' fill='none'>
-                              <circle cx='2' cy='2' r='2' fill='white' />
-                            </svg>
-                          </>
-                        ))}
-                        {/* <div className='flex gap-[5px] items-center'>
-                          <Image src={Eng} alt='' />
-                          <div className='text-white font-semibold text-sm leading-[18px]'>English</div>
-                        </div>
-                        <svg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4' fill='none'>
-                          <circle cx='2' cy='2' r='2' fill='white' />
-                        </svg>
-                        <div className='flex gap-[5px] items-center'>
-                          <Image src={Vn} alt='' />
-                          <div className='text-white font-semibold text-sm leading-[18px]'>Vietnamese</div>
-                        </div> */}
-                      </div>
-                    </>
-                  }
-
-
-
+                  </div>
                 </div>
               </Link>
             </div>
