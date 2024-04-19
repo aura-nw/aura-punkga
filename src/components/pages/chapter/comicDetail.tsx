@@ -209,23 +209,23 @@ export default function ComicDetail({
                 ))}
               </p>
               <div className="text-base font-semibold leading-5">
-                {data.authors.map((author, index) => (
-                  <Fragment key={index}>
-                    by{' '}
-                    <span className="text-second-color font-[600]">
-                      {author.slug ? (
-                        <Link
-                          className="author"
-                          href={`/artist/${author.slug}`}
-                        >
-                          {t(author.name)}
-                        </Link>
-                      ) : (
-                        t(author.name)
-                      )}
-                    </span>
-                  </Fragment>
-                ))}
+                <span>
+                  by{' '}
+                  {data.authors.map((author, index) => (
+                    <Fragment key={index}>
+                      <span className="text-second-color font-[600]">
+                        {author.slug ? (
+                          <Link className="author" href={`/artist/${author.slug}`}>
+                            {t(author.name)}
+                          </Link>
+                        ) : (
+                          t(author.name)
+                        )}
+                      </span>
+                      {index !== data.authors.length - 1 && ', '}
+                    </Fragment>
+                  ))}
+                </span>
               </div>
               {/* <p className="text-subtle-dark items-center">
                 <strong>{data.views?.toLocaleString('en-US')}</strong>{' '}
