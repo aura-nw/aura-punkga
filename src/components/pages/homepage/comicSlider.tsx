@@ -12,7 +12,7 @@ import Slider from 'react-slick'
 import Eng from './assets/eng.svg'
 import Vn from './assets/vn.svg'
 import c1 from './assets/comics/hamulage.jpg'
-import c2 from './assets/comics/hero_cyberpunk.jpg'
+import c2 from './assets/comics/hero_cyberpunk.png'
 import c3 from './assets/comics/heroic.png'
 import c4 from './assets/comics/the_chaos_of_the_past.jpg'
 import c5 from './assets/comics/ultra_v.jpg'
@@ -70,6 +70,20 @@ function MobileCarousel({ children, setSlideIndex, sliderRef }) {
   )
 }
 export const list = [
+  {
+    comic: {
+      image: c2,
+      name: 'Hero Cyberpunk',
+      href: 'https://punkga.me/comic/hero_cyberpunk_1/chapter/3',
+      isNewRelease: true,
+    },
+    author: [
+      {
+        avatar: Hanz,
+        name: 'Hanz',
+      },
+    ],
+  },
   {
     comic: {
       image: c17,
@@ -248,20 +262,7 @@ export const list = [
       },
     ],
   },
-  {
-    comic: {
-      image: c2,
-      name: 'Hero Cyberpunk',
-      href: 'https://punkga.me/comic/hero_cyberpunk_1/chapter/1',
-      isNewRelease: true,
-    },
-    author: [
-      {
-        avatar: Hanz,
-        name: 'Hanz',
-      },
-    ],
-  },
+
   {
     comic: {
       image: c3,
