@@ -251,15 +251,16 @@ const App = ({ Component, pageProps }: AppProps) => {
       setOpen(false)
       setOpenSuccessModal(true)
     } catch (error) {
-      if (error.message?.includes('authorizer_users_nickname_key')) setErrorMsg(t('Name already taken'))
-      if (error.message?.includes('email address already exists'))
-        setEmailErrorMsg(t('This email address already exists'))
-      if (
-        !error.message?.includes('authorizer_users_nickname_key') ||
-        error.message?.includes('email address already exists')
-      )
-        setErrorMsg(t('Something went wrong'))
       setLoading(false)
+      if (error.message?.includes('authorizer_users_nickname_key')) {
+        setErrorMsg(t('Name already taken'))
+        return
+      }
+      if (error.message?.includes('email address already exists')) {
+        setEmailErrorMsg(t('Email has been registered'))
+        return
+      }
+      setErrorMsg(t('Something went wrong'))
     }
   }
 
