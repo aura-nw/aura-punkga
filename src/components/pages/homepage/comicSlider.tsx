@@ -292,7 +292,7 @@ export default function TaskSlider({ sliderNavRef }) {
   const [slideIndex, setSlideIndex] = useState(0)
   return (
     <>
-      <div className='md:hidden mt-[1px] w-screen rounded-b-2xl relative overflow-hidden'>
+      <div className='md:hidden mt-[1px] w-screen relative overflow-hidden aspect-[9/4]'>
         <MobileCarousel setSlideIndex={setSlideIndex} sliderRef={sliderRefMobile}>
           {list.map((data, index) => (
             <div className='outline-none [&_*]:outline-none' key={index}>
@@ -355,17 +355,17 @@ export default function TaskSlider({ sliderNavRef }) {
             </div>
           ))}
         </MobileCarousel>
-        <div className='absolute inset-x-5 bottom-10 flex justify-between'>
+        <div className='absolute inset-x-5 bottom-2 flex justify-between'>
           <Link
             href={list[slideIndex].comic.href}
-            className=' bg-[#23FF81] rounded-[20px] pt-2 pb-[10px] px-6 leading-[20px] w-fit font-bold'>
+            className='bg-[#23FF81] rounded-[20px] py-1 px-4 text-sm leading-[12px] w-fit font-bold'>
             Read now
           </Link>
           <div className='flex gap-6'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
-              width='38'
-              height='38'
+              width='24'
+              height='24'
               viewBox='0 0 38 38'
               fill='none'
               className='cursor-pointer'
@@ -379,8 +379,8 @@ export default function TaskSlider({ sliderNavRef }) {
             </svg>
             <svg
               xmlns='http://www.w3.org/2000/svg'
-              width='38'
-              height='38'
+              width='24'
+              height='24'
               viewBox='0 0 38 38'
               fill='none'
               className='cursor-pointer'
@@ -451,7 +451,7 @@ export default function TaskSlider({ sliderNavRef }) {
             </div>
           ))}
         </Carousel>
-        <div className='absolute inset-x-[60px] bottom-[62px] flex justify-between'>
+        <div className='absolute inset-x-[40px] bottom-[32px] flex justify-between'>
           <Link
             href={list[slideIndex].comic.href}
             className=' bg-[#23FF81] rounded-[20px] py-3 px-8 leading-[25px] w-fit font-bold text-xl'>

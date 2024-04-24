@@ -4,6 +4,7 @@ import ProfileCard from 'components/Card/ProfileCard'
 import Popover from 'components/Popover'
 import Image from 'next/image'
 import { useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { getLeaderboard } from 'src/services'
 import useSWR from 'swr'
@@ -17,13 +18,14 @@ export default function LeaderBoard() {
     },
     { refreshInterval: 10000 }
   )
+  const { t } = useTranslation()
   return (
     <div className='overflow-auto'>
       <div className='bg-[#f0f0f0] rounded-[10px] mt-10 min-w-[300px] md:min-w-[400px] lg:min-h-[426px]'>
         <div className='py-3 md:py-4 px-4 md:px-[32px] w-full h-full flex flex-col'>
           <div
             className={`leading-5 md:text-xl md:leading-[25px] cursor-pointer font-bold w-full text-center pb-[2px] mb-2 md:mb-3 text-[#414141] border-[#414141] border-b-[3px]`}>
-            Leaderboard
+            {t('Leaderboard')}
           </div>
           {data?.length > 0 ? (
             <>
@@ -63,10 +65,10 @@ export default function LeaderBoard() {
               {account && (
                 <div className='flex justify-between py-2 md:py-0 md:pt-5 px-3 md:px-[10px] border-t-[1px] border-medium-gray text-subtle-dark text-xs leading-[15px] md:text-sm md:leading-[18px]'>
                   <div>
-                    Your rank: <strong>#{account.rank}</strong>
+                    {t('Your rank')}: <strong>#{account.rank}</strong>
                   </div>
                   <div>
-                    Your level: <strong>{account.level}</strong>
+                    {t('Your level')}: <strong>{account.level}</strong>
                   </div>
                   <div>
                     XP: <strong>{account.xp}</strong>

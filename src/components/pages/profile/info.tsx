@@ -132,7 +132,7 @@ export default function Info({ updateProfile }) {
                   <div
                     onClick={() => setOpen(true)}
                     className='py-[5px] px-[10px] text-center font-semibold leading-5 border-b border-[#ABABAB] text-[#ABABAB] hover:bg-primary-color hover:text-[#414141]'>
-                    Edit profile
+                    {t('Edit profile')}
                   </div>
                   <div
                     className='py-[5px] px-[10px] text-center font-semibold leading-5 text-[#ABABAB] hover:bg-primary-color hover:text-[#414141]'
@@ -141,7 +141,7 @@ export default function Info({ updateProfile }) {
                         ? setChangingPasswordModalOpen(true)
                         : setSettingPasswordModalOpen(true)
                     }>
-                    {account?.signupMethods?.includes('basic_auth') ? 'Change password' : 'Set password'}
+                    {t(account?.signupMethods?.includes('basic_auth') ? 'Change password' : 'Set password')}
                   </div>
                 </div>
                 <svg xmlns='http://www.w3.org/2000/svg' width='33' height='34' viewBox='0 0 33 34' fill='none'>
@@ -375,8 +375,8 @@ export default function Info({ updateProfile }) {
                             account.gender.toLowerCase() == 'male'
                               ? MaleIcon
                               : account.gender.toLowerCase() == 'female'
-                              ? FemaleIcon
-                              : OtherIcon
+                                ? FemaleIcon
+                                : OtherIcon
                           }
                           alt=''
                         />
