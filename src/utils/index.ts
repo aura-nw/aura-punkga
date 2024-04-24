@@ -98,6 +98,7 @@ export const openSignInModal = () => {
 }
 
 export const shorten = (string: string, preCh?: number, sufCh?: number) => {
+  if (!string) return ''
   const pre = string.slice(0, preCh || 5)
   const suf = string.slice(-(sufCh || 5))
   return `${pre}...${suf}`
@@ -114,4 +115,8 @@ export const getGasPriceByChain = (chain: Chain) => {
   }
 
   return new GasPrice(Decimal.fromAtomics(gasStep.toString(), pow) as any, data?.denom as string)
+}
+export function formatNumber(x: any) {
+  if (!x) return '0'
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }

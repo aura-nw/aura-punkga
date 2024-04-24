@@ -160,7 +160,7 @@
   "Change Wallet": "Thay đổi ví",
   "Other": "Khác",
   "Enter username": "Nhập tên tài khoản",
-  "This email address already exists": "Email đã tồn tại trên hệ thống",
+  "Email has been registered": "Email đã tồn tại trên hệ thống",
   "Please install Coin98 wallet extension": "Vui lòng cài đặt ví Coin98",
   "Please install Keplr wallet extension": "Vui lòng cài đặt ví Keplr",
   "Link wallet failed": "Kết nối ví thất bại",
@@ -205,9 +205,10 @@
   "Starts": "Bắt đầu",
   "Migrate your wallet": "Chuyển đổi ví",
   "Connect wallet": "Kết nối ví",
+  "Connect Wallet": "Kết nối ví",
   "If you don’t have a wallet yet, you can select a provider and create one now.": "Nếu bạn chưa có ví, bạn có thể chọn một nhà cung cấp và tạo một cái ngay bây giờ.",
   "Wallet connection failed": "Kết nối ví thất bại",
-  "This wallet has been linked to another account": "Địa chỉ ví này đã được kết nối với một tài khoản khác",
+  "This wallet has been linked to another account.": "Địa chỉ ví này đã được kết nối với một tài khoản khác.",
   "Close": "Đóng",
   "Confirm to migrate assets": "Xác nhận chuyển đổi ví",
   "All of your assets on Punkga will be transferred to your wallet": "Tất cả tài sản trên ví lưu ký sẽ được chuyển vào ví riêng của bạn",
@@ -248,5 +249,6 @@
   "User": "Tên",
   "Leaderboard": "Bảng xếp hạng",
   "Completed quests": "Nhiệm vụ hoàn thành",
-  "Your level": "Cấp của bạn"
+  "Your level": "Cấp của bạn",
+  "Balance": "Số dư"
 }

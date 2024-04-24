@@ -1,3 +1,4 @@
+import { AssetList, Chain } from '@chain-registry/types'
 import { wallets as c98Extension } from '@cosmos-kit/coin98-extension'
 import { wallets as keplrExtension } from '@cosmos-kit/keplr-extension'
 import { ChainProvider } from '@cosmos-kit/react'
@@ -8,9 +9,7 @@ import FilledButton from 'components/Button/FilledButton'
 import HeadComponent from 'components/Head'
 import OutlineTextField from 'components/Input/TextField/Outline'
 import Modal from 'components/Modal'
-import ConnectWalletModal from 'components/Modal/ConnectWalletModal'
 import MaintainPage from 'components/pages/maintainPage'
-import Mail from 'src/assets/images/Mail.svg'
 import moment from 'moment'
 import 'moment/locale/vi'
 import { appWithTranslation, useTranslation } from 'next-i18next'
@@ -23,14 +22,14 @@ import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
+import Mail from 'src/assets/images/Mail.svg'
 import ContextProvider, { Context } from 'src/context'
 import { wallets as c98Mobile } from 'src/services/c98MobileWallet'
 import 'src/styles/globals.scss'
 import { getGasPriceByChain, validateEmail } from 'src/utils'
-import 'react-toastify/dist/ReactToastify.css'
-import { AssetList, Chain } from '@chain-registry/types'
 const pjs = Plus_Jakarta_Sans({ subsets: ['latin', 'vietnamese'] })
 const ws = Work_Sans({ subsets: ['latin', 'vietnamese'] })
 const orbitron = localFont({
@@ -175,8 +174,7 @@ function MyApp(props: AppProps) {
                   },
                 }
               : undefined
-          }
-          walletModal={ConnectWalletModal}>
+          }>
           <App {...props} />
         </ChainProvider>
       </ContextProvider>
@@ -253,15 +251,16 @@ const App = ({ Component, pageProps }: AppProps) => {
       setOpen(false)
       setOpenSuccessModal(true)
     } catch (error) {
-      if (error.message?.includes('authorizer_users_nickname_key')) setErrorMsg(t('Name already taken'))
-      if (error.message?.includes('email address already exists'))
-        setEmailErrorMsg(t('This email address already exists'))
-      if (
-        !error.message?.includes('authorizer_users_nickname_key') ||
-        error.message?.includes('email address already exists')
-      )
-        setErrorMsg(t('Something went wrong'))
       setLoading(false)
+      if (error.message?.includes('authorizer_users_nickname_key')) {
+        setErrorMsg(t('Name already taken'))
+        return
+      }
+      if (error.message?.includes('email address already exists')) {
+        setEmailErrorMsg(t('Email has been registered'))
+        return
+      }
+      setErrorMsg(t('Something went wrong'))
     }
   }
 

@@ -12,7 +12,7 @@ import Slider from 'react-slick'
 import Eng from './assets/eng.svg'
 import Vn from './assets/vn.svg'
 import c1 from './assets/comics/hamulage.jpg'
-import c2 from './assets/comics/hero_cyberpunk.jpg'
+import c2 from './assets/comics/hero_cyberpunk.png'
 import c3 from './assets/comics/heroic.png'
 import c4 from './assets/comics/the_chaos_of_the_past.jpg'
 import c5 from './assets/comics/ultra_v.jpg'
@@ -26,6 +26,8 @@ import c12 from './assets/comics/Yidra.jpg'
 import c13 from './assets/comics/Still_the_same.png'
 import c14 from './assets/comics/robots_dogs_time.jpg'
 import c15 from './assets/comics/noah.png'
+import c16 from './assets/comics/la_thu_cuoi_cung.jpeg'
+import c17 from './assets/comics/gio_thoi.jpeg'
 import Avalook from './assets/authors/avalook.webp'
 import DangBao from './assets/authors/DangBao.webp'
 import H3 from './assets/authors/H3.webp'
@@ -33,6 +35,7 @@ import MiniPeace from './assets/authors/MiniPeace.webp'
 import Sherlox from './assets/authors/Sherlox.jpg'
 import DaisyBlue from './assets/authors/DaisyBlue.webp'
 import Miroles from './assets/authors/Miroles.webp'
+import NgocBe from './assets/authors/ngoc_be.jpg'
 function Carousel({ sliderRef, children, className, setSlideIndex, sliderNavRef }) {
   var settings = {
     infinite: true,
@@ -67,6 +70,50 @@ function MobileCarousel({ children, setSlideIndex, sliderRef }) {
   )
 }
 export const list = [
+  {
+    comic: {
+      image: c2,
+      name: 'Hero Cyberpunk',
+      href: 'https://punkga.me/comic/hero_cyberpunk_1/chapter/3',
+      isNewRelease: true,
+    },
+    author: [
+      {
+        avatar: Hanz,
+        name: 'Hanz',
+      },
+    ],
+  },
+  {
+    comic: {
+      image: c17,
+      name: 'The wind blows',
+      href: 'https://punkga.me/comic/the-wind-blows-21/chapter/1',
+      isOneShot: false,
+      isNewRelease: true,
+    },
+    author: [
+      {
+        avatar: NgocBe,
+        name: 'Ngọc Bé',
+      },
+    ],
+  },
+  {
+    comic: {
+      image: c16,
+      name: '[OneShot] The last letter',
+      href: 'https://punkga.me/comic/the-last-letter-20/chapter/1',
+      isOneShot: false,
+      isNewRelease: true,
+    },
+    author: [
+      {
+        avatar: NgocBe,
+        name: 'Ngọc Bé',
+      },
+    ],
+  },
   {
     comic: {
       image: c14,
@@ -215,20 +262,7 @@ export const list = [
       },
     ],
   },
-  {
-    comic: {
-      image: c2,
-      name: 'Hero Cyberpunk',
-      href: 'https://punkga.me/comic/hero_cyberpunk_1/chapter/1',
-      isNewRelease: true,
-    },
-    author: [
-      {
-        avatar: Hanz,
-        name: 'Hanz',
-      },
-    ],
-  },
+
   {
     comic: {
       image: c3,

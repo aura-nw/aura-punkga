@@ -17,12 +17,12 @@ import { useRouter } from 'next/router'
 export default function NFTList() {
   const { locale } = useRouter()
   const { t } = useTranslation()
-  const { wallet } = useContext(Context)
+  const { account } = useContext(Context)
   const [seeAll, setSeeAll] = useState(false)
   const { data } = useSWR(
     {
       key: 'pooling nfts',
-      wallet,
+      wallet: account.activeWalletAddress,
     },
     ({ wallet }) => (wallet ? getUserNfts(wallet) : null),
     { refreshInterval: 10000 }
@@ -89,8 +89,9 @@ export default function NFTList() {
         {data?.map((token, index) => (
           <Link
             target='_blank'
-            href={`${getConfig()['CHAIN_INFO'].explorer}/tokens/token-nft/${token.cw721_contract.smart_contract.address
-              }/${token.token_id}`}
+            href={`${getConfig()['CHAIN_INFO'].explorer}/token/cw721/${
+              token.cw721_contract.smart_contract.address
+            }/${token.token_id}`}
             className='p-5 [&:hover_.view-on-seekhype]:translate-y-0'
             key={index}>
             <div className={`bg-white rounded-[20px] p-[10px]`}>
@@ -126,8 +127,9 @@ export default function NFTList() {
           {data?.reverse()?.map((token, index) => (
             <Link
               target='_blank'
-              href={`${getConfig()['CHAIN_INFO'].explorer}/tokens/token-nft/${token.cw721_contract.smart_contract.address
-                }/${token.token_id}`}
+              href={`${getConfig()['CHAIN_INFO'].explorer}/token/cw721/${
+                token.cw721_contract.smart_contract.address
+              }/${token.token_id}`}
               className='p-[5px] lg:p-5 [&:hover_.view-on-seekhype]:translate-y-0'
               key={index}>
               <div className={`bg-white rounded-[20px] p-[10px]`}>

@@ -10,6 +10,7 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { validateEmail } from 'src/utils'
+import Facebook from 'images/Facebook.png'
 
 export default function SignInModal({ show, openSignUpModal, setSignInOpen, setForgotPasswordOpen }) {
   const [email, setEmail] = useState('')
@@ -131,12 +132,12 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
             </a>
           </div>
           <div className='text-xs font-medium leading-6 min-h-[24px] text-gray-600'>{t('or')}</div>
-          {/* <button
+          <button
             className='mt-2 flex gap-[10px] items-center rounded-full bg-light-gray px-4 py-2 leading-5 font-medium w-full'
             onClick={() => oauth('facebook')}>
             <Image src={Facebook} alt='' />
             {t('Continue with Facebook')}
-          </button> */}
+          </button>
           <button
             className='mt-2 flex gap-[10px] items-center rounded-full bg-light-gray px-4 py-2 leading-5 font-medium w-full'
             onClick={() => oauth('zalo')}>

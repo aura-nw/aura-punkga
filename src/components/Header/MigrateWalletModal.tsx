@@ -21,7 +21,7 @@ export default function MigrateWalletModal({ open, setOpen }) {
   const chainName = getConfig().CHAIN_ID.includes('xstaxy') ? 'aura' : 'auratestnet'
   const { connect, walletRepo, address, disconnect, chain } = useChain(chainName)
   const { status: globalStatus, mainWallet } = useWallet()
-  const [success, setSuccess] = useState(false)
+  const [success, setSuccess] = useState(undefined)
   const [requestId, setRequestId] = useLocalStorage('request_id', undefined)
   const [step, setStep] = useState(1)
   useEffect(() => {
@@ -74,7 +74,15 @@ ${Date.now()}`
           getProfile()
           setRequestId(res?.data?.requestId)
           setSuccess(true)
+        } else {
+          getProfile()
+          setSuccess(false)
         }
+      } else {
+        if (!mainWallet?.client?.signArbitrary)
+          toast(t('Something wrong with your wallet client. Please reload and try again!'), {
+            type: 'error',
+          })
       }
     } catch (error: any) {
       toast(error.message || t('Migration failed'), {
@@ -97,7 +105,8 @@ ${Date.now()}`
       return
     }
     if (data?.status == 'FAILED') {
-      toast('Migration failed', { type: 'success' })
+      toast('Migration failed', { type: 'error' })
+      console.log(data)
       setRequestId(undefined)
       return
     }
@@ -119,7 +128,25 @@ ${Date.now()}`
               <Image src={Mascot} alt='' />
             </div>
             <FilledButton className='w-fit mx-auto' onClick={() => setOpen(false)}>
-              Done
+              {t('Done')}
+            </FilledButton>
+          </div>
+        ) : success === false ? (
+          <div className='flex flex-col gap-2 max-w-[452px]'>
+            <p className='text-center text-base leading-6 font-semibold md:text-lg md:leading-[23px]'>
+              {t('Wallet connection failed')}
+            </p>
+            <p className='text-center text-sm leading-[18px] my-4'>
+              {t('This wallet has been linked to another account.')}
+            </p>
+            <FilledButton
+              className='w-fit mx-auto'
+              onClick={() => {
+                setOpen(false)
+                setTimeout(() => setSuccess(undefined), 300)
+                setStep(1)
+              }}>
+              {t('Close')}
             </FilledButton>
           </div>
         ) : address ? (
@@ -181,7 +208,7 @@ ${Date.now()}`
                         ? 'cursor-not-allowed opacity-60 pointer-events-none'
                         : 'cursor-pointer'
                     }`}
-                    onClick={() => wallet.connect()}>
+                    onClick={() => wallet.connect(true)}>
                     {wallet.walletStatus == 'Connecting' ? (
                       <svg
                         xmlns='http://www.w3.org/2000/svg'
@@ -205,7 +232,7 @@ ${Date.now()}`
                         ? 'cursor-not-allowed opacity-60 pointer-events-none'
                         : 'cursor-pointer'
                     }`}
-                    onClick={() => wallet.connect()}>
+                    onClick={() => wallet.connect(true)}>
                     {wallet.walletStatus == 'Connecting' ? (
                       <svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none'>
                         <circle cx='16' cy='16' r='4' fill='#1FAB5E' />

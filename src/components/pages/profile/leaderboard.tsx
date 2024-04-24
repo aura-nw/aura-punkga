@@ -78,7 +78,7 @@ const TabCompletedQuest = () => {
                   className='object-contain w-full h-full'
                 />
               </div>
-            ) : 1112}
+            ) : null}
             <div className='border border-second-color px-2 py-[2px] bg-[#1FAB5E]/10 rounded text-sm leading-[16px] text-center whitespace-nowrap h-fit shrink-0'>
               <div className='text-second-color font-bold'>{data.quest.reward.xp}</div>
               <div className='font-medium'>XP</div>
