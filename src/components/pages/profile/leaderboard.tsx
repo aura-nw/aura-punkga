@@ -12,10 +12,11 @@ import { getLeaderboard } from 'src/services'
 import useSWR from 'swr'
 import Nft from './assets/nft.svg'
 import Xp from './assets/xp.svg'
+import { useTranslation } from 'react-i18next'
 
 export default function LeaderBoard() {
   const [active, setActive] = useState(2)
-
+  const { t } = useTranslation();
   return (
     <div className='overflow-auto'>
       <div className='bg-[#f0f0f0] rounded-[10px] mt-10 min-w-[320px]'>
@@ -27,7 +28,7 @@ export default function LeaderBoard() {
                 : 'text-[#ABABAB] border-[#ABABAB] border-b-2'
                 }`}
               onClick={() => setActive(1)}>
-              Completed Quests
+              {t('Completed Quests')}
             </div>
             <div
               className={`leading-5 md:text-xl md:leading-[25px] cursor-pointer font-bold w-full text-center  pb-[2px] mb-2 md:mb-3 ${active == 2
@@ -35,7 +36,7 @@ export default function LeaderBoard() {
                 : 'text-[#ABABAB] border-[#ABABAB] border-b-2'
                 }`}
               onClick={() => setActive(2)}>
-              Leaderboard
+              {t('Leaderboard')}
             </div>
           </div>
           {active == 1 ? (
@@ -51,6 +52,7 @@ export default function LeaderBoard() {
 
 const TabCompletedQuest = () => {
   const { account } = useContext(Context)
+  const { t } = useTranslation();
 
   return (
     <div className='h-[405px] md:h-[430px] flex flex-col relative gap-2 md:gap-3 overflow-auto'>
@@ -86,7 +88,7 @@ const TabCompletedQuest = () => {
       ) : (
         <div className='flex flex-col items-center'>
           <Image src={Mascot_1} alt='mascot' />
-          <div className='text-[#414141] font-bold text-xl mt-5'>No campaigns yet</div>
+          <div className='text-[#414141] font-bold text-xl mt-5'>{t('No campaigns yet')}</div>
         </div>
       )}
     </div>
@@ -104,14 +106,15 @@ const TabLeaderBoard = () => {
     { refreshInterval: 10000 }
   )
 
+  const { t } = useTranslation();
   return (
     <>
       {data?.length > 0 ? (
         <>
           <div className='flex px-[6px] py-2 md:px-[18px] md:py-[11px] border-b-[1px] border-medium-gray text-subtle-dark font-bold text-xs leading-[15px] md:text-sm md:leading-[18px]'>
-            <div className='mr-14 md:mr-[70px]'>Rank</div>
-            <div className='w-full'>User</div>
-            <div className='w-[98px] md:w-[88px] shrink-0 text-center'>Level</div>
+            <div className='mr-14 md:mr-[70px]'>{t('Rank')}</div>
+            <div className='w-full'>{t('User')}</div>
+            <div className='w-[98px] md:w-[88px] shrink-0 text-center'>{t('Level')}</div>
             <div className='w-12 shrink-0 text-center'>XP</div>
           </div>
           <div className='h-[405px] md:h-[484px] flex flex-col relative'>
@@ -142,10 +145,10 @@ const TabLeaderBoard = () => {
           {account && (
             <div className='flex justify-between py-2 md:py-0 md:pt-5 px-3 md:px-[10px] border-t-[1px] border-medium-gray text-subtle-dark text-xs leading-[15px] md:text-sm md:leading-[18px]'>
               <div>
-                Your rank: <strong>#{account.rank}</strong>
+                {t('Your rank')}: <strong>#{account.rank}</strong>
               </div>
               <div>
-                Your level: <strong>{account.level}</strong>
+                {t('Your level')}: <strong>{account.level}</strong>
               </div>
               <div>
                 XP: <strong>{account.xp}</strong>

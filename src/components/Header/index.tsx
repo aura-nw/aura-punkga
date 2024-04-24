@@ -508,7 +508,7 @@ export default function Header({ className }: { className?: string }) {
               {t('aboutUs')}
             </Button>
             <div className='flex gap-[20px] items-center cursor-pointer'>
-              <div className='flex gap-[4px] font-bold' onClick={switchLanguage}>
+              <div className='' onClick={switchLanguage}>
                 {locale == 'en' ? (
                   <Image className='w-[24px] h-[24px] border-black border rounded-full' src={EN} alt='' />
                 ) : (
@@ -519,16 +519,16 @@ export default function Header({ className }: { className?: string }) {
               {account?.verified && account?.name ? (
                 <Dropdown>
                   <DropdownToggle>
-                    <FilledButton size='lg'>
-                      <div className='flex items-center whitespace-nowrap w-max gap-[10px] h-[25px]'>
+                    <FilledButton size='lg' isGray={true}>
+                      <div className='flex items-center whitespace-nowrap w-max gap-[10px] h-[25px] lg:min-w-[120px]'>
                         <Image
                           src={account?.image || Avatar}
                           alt=''
-                          width={36}
-                          height={36}
-                          className='rounded-full object-cover aspect-square w-[36px]'
+                          width={24}
+                          height={24}
+                          className='rounded-full object-cover aspect-square w-[24px]'
                         />
-                        <span className='md:max-w-[150px] max-w-[80px] truncate'>{account?.name}</span>
+                        <span className='md:max-w-[150px] max-w-[80px] truncate '>{account?.name}</span>
                       </div>
                     </FilledButton>
                   </DropdownToggle>
