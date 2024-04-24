@@ -81,7 +81,7 @@ export default function NFTList() {
         {data?.map((token, index) => (
           <Link
             target='_blank'
-            href={`${getConfig()['CHAIN_INFO'].explorer}/token/token-nft/${
+            href={`${getConfig()['CHAIN_INFO'].explorer}/token/cw721/${
               token.cw721_contract.smart_contract.address
             }/${token.token_id}`}
             className='p-5 [&:hover_.view-on-seekhype]:translate-y-0'
@@ -119,7 +119,7 @@ export default function NFTList() {
           {data?.reverse()?.map((token, index) => (
             <Link
               target='_blank'
-              href={`${getConfig()['CHAIN_INFO'].explorer}/token/token-nft/${
+              href={`${getConfig()['CHAIN_INFO'].explorer}/token/cw721/${
                 token.cw721_contract.smart_contract.address
               }/${token.token_id}`}
               className='p-[5px] lg:p-5 [&:hover_.view-on-seekhype]:translate-y-0'
