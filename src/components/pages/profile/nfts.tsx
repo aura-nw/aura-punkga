@@ -14,12 +14,12 @@ import FilledButton from 'components/core/Button/FilledButton'
 
 export default function NFTList() {
   const { t } = useTranslation()
-  const { wallet } = useContext(Context)
+  const { account } = useContext(Context)
   const [seeAll, setSeeAll] = useState(false)
   const { data } = useSWR(
     {
       key: 'pooling nfts',
-      wallet,
+      wallet: account.activeWalletAddress,
     },
     ({ wallet }) => (wallet ? getUserNfts(wallet) : null),
     { refreshInterval: 10000 }

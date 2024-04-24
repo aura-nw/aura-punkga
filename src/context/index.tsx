@@ -186,6 +186,7 @@ function ContextProvider({ children }) {
           completedQuests: res.user_quests || [],
           quests: res?.user_quests_aggregate?.aggregate?.count,
           rank: res.rank || 999999,
+          activeWalletAddress: res.active_wallet_address,
         } as IUser)
         return res
       } else {
