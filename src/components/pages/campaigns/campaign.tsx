@@ -17,7 +17,7 @@ import IllusImage from './assets/illus.svg'
 import { openSignInModal } from 'src/utils'
 import Mascot3 from 'components/pages/campaigns/assets/Mascot3.svg'
 
-export default function Campaign() {
+export default function CampaignPage() {
   const { account } = useContext(Context)
   const router = useRouter()
   const { t } = useTranslation()
@@ -259,7 +259,6 @@ export default function Campaign() {
           </div>
         </div>
       )}
-
     </div>
   )
 }
