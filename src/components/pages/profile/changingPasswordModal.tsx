@@ -4,14 +4,21 @@ import Modal from 'components/Modal'
 import Image from 'next/image'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { Context } from 'src/context'
-import SuccessImg from 'images/ninja.svg'
-import { validatePassword } from 'src/utils'
+import SuccessImg from 'images/Mascot2.png'
+import { convertStringToDot, validatePassword } from 'src/utils'
 import CheckSquare from 'images/icons/check_square_fill.svg'
 import { useTranslation } from 'react-i18next'
 import _ from 'lodash'
+import Eye from 'assets/images/icons/Eye.svg'
+import EyeClosed from 'assets/images/icons/eye_closed.svg'
 export default function ChangingPasswordModal({ open, setOpen }) {
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [inputVisiblity, setInputVisiblity] = useState({
+    oldPassword: false,
+    newPassword: false,
+    confirmNewPassword: false,
+  })
   const [currentPassword, setCurrentPassword] = useState('')
   const [currentPasswordError, setCurrentPasswordError] = useState('')
   const [newPassword, setNewPassword] = useState('')
@@ -56,7 +63,7 @@ export default function ChangingPasswordModal({ open, setOpen }) {
         return
       }
       if (newPassword == currentPassword) {
-        setRePasswordError(t('New password and old password is same'))
+        setRePasswordError(t('New and old passwords must not match'))
         return
       }
       if (!validatePassword(newPassword)) {
@@ -90,15 +97,14 @@ export default function ChangingPasswordModal({ open, setOpen }) {
   }
 
   return (
-    <Modal open={open} setOpen={setOpen} hideClose={success}>
-      <div className={`p-6 w-[322px] relative transition-all duration-300 ${success ? 'h-[400px]' : ''}`}>
-        <div className={` flex flex-col gap-3 transition-all duration-300 ${success ? 'opacity-0' : 'opacity-100'}`}>
+    <Modal open={open} setOpen={setOpen} hideClose={success} preventClickOutsideToClose>
+      <div className={`p-6 w-[322px] relative transition-all duration-300 ${success ? 'h-[412px]' : ''}`}>
+        <div className={` flex flex-col gap-6 transition-all duration-300 ${success ? 'opacity-0' : 'opacity-100'}`}>
           <p className='text-center text-xl leading-6 font-semibold'>{t('Change password')}</p>
           <OutlineTextField
             label={t('Old password')}
             value={currentPassword}
             onChange={setCurrentPassword}
-            type='password'
             placeholder={t('Enter current password')}
             errorMsg={currentPasswordError}
             onKeyDown={(e) => {
@@ -106,56 +112,113 @@ export default function ChangingPasswordModal({ open, setOpen }) {
                 r1.current?.focus()
               }
             }}
+            type={inputVisiblity.oldPassword ? 'text' : 'password'}
+            trailingComponent={
+              inputVisiblity.oldPassword ? (
+                <Image
+                  src={Eye}
+                  alt=''
+                  onClick={() => setInputVisiblity((prev) => ({ ...prev, oldPassword: false }))}
+                  className='cursor-pointer'
+                />
+              ) : (
+                <Image
+                  src={EyeClosed}
+                  alt=''
+                  onClick={() => setInputVisiblity((prev) => ({ ...prev, oldPassword: true }))}
+                  className='cursor-pointer'
+                />
+              )
+            }
           />
-          <OutlineTextField
-            label={t('New password')}
-            value={newPassword}
-            onChange={setNewPassword}
-            type='password'
-            placeholder={t('Enter new password')}
-            inputRef={r1}
-            onKeyDown={(e) => {
-              if (e.which == 13) {
-                r2.current?.focus()
+          <div>
+            <OutlineTextField
+              label={t('New password')}
+              value={newPassword}
+              onChange={setNewPassword}
+              type={inputVisiblity.newPassword ? 'text' : 'password'}
+              trailingComponent={
+                inputVisiblity.newPassword ? (
+                  <Image
+                    src={Eye}
+                    alt=''
+                    onClick={() => setInputVisiblity((prev) => ({ ...prev, newPassword: false }))}
+                    className='cursor-pointer'
+                  />
+                ) : (
+                  <Image
+                    src={EyeClosed}
+                    alt=''
+                    onClick={() => setInputVisiblity((prev) => ({ ...prev, newPassword: true }))}
+                    className='cursor-pointer'
+                  />
+                )
               }
-            }}
-          />
-          <OutlineTextField
-            label={t('Confirm new password')}
-            value={rePassword}
-            onChange={setRePassword}
-            type='password'
-            errorMsg={rePasswordError}
-            inputRef={r2}
-            placeholder={t('Re-Enter new password')}
-            trailingComponent={repasswordValidateSuccess ? <Image src={CheckSquare} alt='' /> : null}
-          />
+              placeholder={t('Enter new password')}
+              inputRef={r1}
+              onKeyDown={(e) => {
+                if (e.which == 13) {
+                  r2.current?.focus()
+                }
+              }}
+            />
+            <OutlineTextField
+              label={t('Confirm new password')}
+              value={rePassword}
+              onChange={setRePassword}
+              type={inputVisiblity.confirmNewPassword ? 'text' : 'password'}
+              trailingComponent={
+                <div className='flex items-center gap-[10px]'>
+                  {repasswordValidateSuccess ? <Image src={CheckSquare} alt='' /> : null}
+                  {inputVisiblity.confirmNewPassword ? (
+                    <Image
+                      src={Eye}
+                      alt=''
+                      onClick={() => setInputVisiblity((prev) => ({ ...prev, confirmNewPassword: false }))}
+                      className='cursor-pointer'
+                    />
+                  ) : (
+                    <Image
+                      src={EyeClosed}
+                      alt=''
+                      onClick={() => setInputVisiblity((prev) => ({ ...prev, confirmNewPassword: true }))}
+                      className='cursor-pointer'
+                    />
+                  )}
+                </div>
+              }
+              errorMsg={rePasswordError}
+              inputRef={r2}
+              placeholder={t('Re-Enter new password')}
+            />
+          </div>
           <FilledButton
-            disabled={!newPassword || !rePassword || !repasswordValidateSuccess || !currentPassword}
-            className='mt-2 mx-auto'
-            size='lg'
+            disabled={!newPassword || !rePassword || !currentPassword}
+            className=''
             loading={loading}
             onClick={changePasswordHandler}>
             {t('Confirm')}
           </FilledButton>
         </div>
         <div
-          className={`absolute inset-0 py-6 px-4 flex flex-col gap-4 transition-all duration-300 ${
+          className={`absolute inset-0 py-6 px-4 flex flex-col gap-6 transition-all duration-300 ${
             success ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}>
-          <p className='text-center text-xl leading-6 font-semibold'>{t('Successful password change')}!</p>
+          <p className='text-center text-xl leading-6 font-bold'>{t('Successful password change')}!</p>
           <Image src={SuccessImg} alt='' className='mx-auto h-[188px]' />
-          <p className='text-sm leading-6 font-medium text-center w-[246px] mx-auto'>
+          <div className='flex flex-col gap-2'>
+
+          <p className='text-sm leading-[18px] font-semibold text-center w-[246px] mx-auto'>
             {t('You can now use the new password to sign in to your account')}
           </p>
           <FilledButton
-            className='-mt-1 mx-auto'
-            size='lg'
+            className=''
             onClick={() => {
               setOpen(false)
             }}>
             {t('Continue')}
           </FilledButton>
+          </div>
         </div>
       </div>
     </Modal>

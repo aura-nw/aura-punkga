@@ -254,3 +254,8 @@ input[type='number'] {
     left: unset!important;
   }
 }
+input[type=password]::-ms-reveal,
+input[type=password]::-ms-clear
+{
+    display: none;
+}
