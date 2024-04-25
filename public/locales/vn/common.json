@@ -160,7 +160,6 @@
   "Change Wallet": "Thay đổi ví",
   "Other": "Khác",
   "Enter username": "Nhập tên tài khoản",
-  "Email has been registered": "Email đã tồn tại trên hệ thống",
   "Please install Coin98 wallet extension": "Vui lòng cài đặt ví Coin98",
   "Please install Keplr wallet extension": "Vui lòng cài đặt ví Keplr",
   "Link wallet failed": "Kết nối ví thất bại",
@@ -250,5 +249,6 @@
   "Leaderboard": "Bảng xếp hạng",
   "Completed quests": "Nhiệm vụ hoàn thành",
   "Your level": "Cấp của bạn",
-  "Balance": "Số dư"
+  "Balance": "Số dư",
+  "You can use the new password to log in Punkga now":"Bạn đã có thể sử dụng mật khẩu mới để đăng nhập vào Punkga"
 }
