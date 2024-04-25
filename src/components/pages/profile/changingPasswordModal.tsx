@@ -9,7 +9,7 @@ import { convertStringToDot, validatePassword } from 'src/utils'
 import CheckSquare from 'images/icons/check_square_fill.svg'
 import { useTranslation } from 'react-i18next'
 import _ from 'lodash'
-import Eye from 'assets/images/icons/Eye.svg'
+import Eye from 'assets/images/icons/eye.svg'
 import EyeClosed from 'assets/images/icons/eye_closed.svg'
 export default function ChangingPasswordModal({ open, setOpen }) {
   const [success, setSuccess] = useState(false)

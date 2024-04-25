@@ -30,21 +30,21 @@ export default function ForgotPasswordModal({ onClose }) {
   }
   return (
     <div
-      className={`flex flex-col p-6 gap-3 transition-all duration-300 ${
-        isFirstStep ? ' w-[400px] h-[280px]' : ' w-[670px] h-[230px]'
+      className={`flex flex-col p-6 transition-all duration-300 ${
+        isFirstStep ? ' w-[400px] h-[250px]' : ' w-[670px] h-[230px] pt-9'
       }`}>
-      <p className='text-2xl leading-6 font-semibold text-center '>{t('Forgot password')}?</p>
+      <p className='text-2xl leading-6 font-bold text-center'>{t('Forgot password')}?</p>
       <div className='h-full relative'>
         <Transition
-          className='absolute inset-0 flex flex-col gap-3'
+          className='absolute inset-0 flex flex-col'
           as='div'
           show={isFirstStep}
           leave=' transition-all duration-300'
           leaveFrom='opacity-100'
           leaveTo='opacity-0'>
-          <div>
-            <p className='text-xs leading-[14px] text-center'>{t('Kindly enter the email linked to your account')},</p>
-            <p className='text-xs leading-[14px] text-center'>{t('we’ll send you a link to reset password')}</p>
+          <div className='mt-1 mb-3'>
+            <p className='text-xs leading-[15px] text-center'>{t('Kindly enter the email linked to your account')},</p>
+            <p className='text-xs leading-[15px] text-center'>{t('we’ll send you a link to reset password')}</p>
           </div>
           <OutlineTextField
             label={t('Email')}
@@ -53,37 +53,32 @@ export default function ForgotPasswordModal({ onClose }) {
             value={email}
             onChange={setEmail}
           />
-          <FilledButton
-            disabled={!email || !validateEmail(email)}
-            loading={loading}
-            size='lg'
-            className='mx-auto'
-            onClick={submit}>
+          <FilledButton disabled={!email || !validateEmail(email)} loading={loading} className='mt-3' onClick={submit}>
             {t('Continue')}
           </FilledButton>
         </Transition>
         <Transition
           as='div'
-          className='flex flex-col gap-3 justify-between items-center'
+          className='flex flex-col justify-between items-center'
           show={!isFirstStep}
           enter=' transition-all duration-150 delay-150'
           enterFrom='opacity-0'
           enterTo='opacity-100'>
-          <Image src={Mail} alt='' />
-          <div>
-            <p className='text-base leading-5 text-center line-clamp-1'>
+          <Image src={Mail} alt='' className='mt-3' />
+          <div className='mt-3 text-subtle-dark'>
+            <p className='text-sm leading-[18px] text-center line-clamp-1'>
               {t('A password reset link has been sent to')}{' '}
-              <span className='text-second-color font-semibold cursor-pointer'>{email}</span>.
+              <span className='text-second-color cursor-pointer'>{email}</span>.
             </p>
-            <p className='text-base leading-5 text-center line-clamp-1'>
+            <p className='text-sm leading-[18px] text-center line-clamp-1'>
               {t('Please click on the link to change your password.')}
             </p>
           </div>
-          <div className='flex flex-col text-center text-xs leading-[14px]'>
+          <div className='flex flex-col text-center text-sm leading-[18px] text-subtle-dark mt-3'>
             <p className='line-clamp-1'>
               {t('Have not received any email')}?{' '}
-              <span className='text-second-color font-semibold cursor-pointer' onClick={() => setIsFirstStep(true)}>
-                {t('Click here')}
+              <span className='text-second-color cursor-pointer' onClick={() => setIsFirstStep(true)}>
+                {t('Resend')}
               </span>
             </p>
           </div>
