@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { validateEmail } from 'src/utils'
 import Facebook from 'images/Facebook.png'
+import MainButton from 'components/Button/MainButton'
 
 export default function SignInModal({ show, openSignUpModal, setSignInOpen, setForgotPasswordOpen }) {
   const [email, setEmail] = useState('')
@@ -116,14 +117,13 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
           {t('Forgot password')}?
         </div>
         <div className='mt-4 flex flex-col items-center w-full max-w-[300px] mx-auto'>
-          <FilledButton
+          <MainButton
+            size='large'
             buttonRef={buttonRef}
-            size='lg'
             disabled={!(email && password)}
-            onClick={loginHandler}
-            loading={loginLoading}>
+            onClick={loginHandler}>
             {t('Sign in')}
-          </FilledButton>
+          </MainButton>
           <div className='text-xs font-medium leading-6 text-red-600 min-h-[24px]'>{loginErrorMsg}</div>
           <div className='text-xs font-medium leading-6 min-h-[24px] mt-2 text-gray-600'>
             {t('Don’t have an account')}?{' '}

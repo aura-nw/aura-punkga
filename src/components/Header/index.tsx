@@ -141,27 +141,20 @@ export default function Header({ className }: { className?: string }) {
                   <button>{t('switchLanguage')}</button>
                 </div>
                 {account?.verified && account?.name ? (
-                  <div
-                    className='flex items-center whitespace-nowrap w-max gap-[5px] bg-[#F0F0F0] rounded-[20px] py-1 px-2'
+                  <MainButton
+                    style='secondary'
                     onClick={() => {
                       setOpenNavigation(false)
                       setOpenProfile(!openProfile)
-                    }}>
-                    <Image
-                      src={account?.image || Avatar}
-                      alt=''
-                      width={36}
-                      height={36}
-                      className='rounded-full object-cover w-[18px] h-[18px] aspect-square'
-                    />
-                    <span className='md:max-w-[200px] max-w-[140px] truncate text-sm leading-[17.5px] font-bold'>
-                      {account?.name}
-                    </span>
-                  </div>
+                    }}
+                    leadingIcon={account?.image || Avatar}
+                  >
+                    {account?.name}
+                  </MainButton>
                 ) : (
-                  <FilledButton id='open-sign-in-btn' size='sm' onClick={() => setSignInOpen(true)}>
+                  <MainButton onClick={() => setSignInOpen(true)}>
                     {t('Sign in')}
-                  </FilledButton>
+                  </MainButton>
                 )}
               </div>
             </div>
@@ -499,7 +492,7 @@ export default function Header({ className }: { className?: string }) {
             </Button>
             <div className='flex gap-[20px] items-center cursor-pointer'>
               <MainButton style='outline' leadingIcon={CopySvg}>test</MainButton>
-              <div className='' onClick={switchLanguage}>
+              <div className='flex gap-1' onClick={switchLanguage}>
                 {locale == 'en' ? (
                   <Image className='w-[24px] h-[24px] border-black border rounded-full' src={EN} alt='' />
                 ) : (
@@ -510,18 +503,7 @@ export default function Header({ className }: { className?: string }) {
               {account?.verified && account?.name ? (
                 <Dropdown>
                   <DropdownToggle>
-                    <FilledButton size='lg' isGray={true}>
-                      <div className='flex items-center whitespace-nowrap w-max gap-[10px] h-[25px] lg:min-w-[120px]'>
-                        <Image
-                          src={account?.image || Avatar}
-                          alt=''
-                          width={24}
-                          height={24}
-                          className='rounded-full object-cover aspect-square w-[24px]'
-                        />
-                        <span className='md:max-w-[150px] max-w-[80px] truncate '>{account?.name}</span>
-                      </div>
-                    </FilledButton>
+                    <MainButton hasAvatar style='secondary' leadingIcon={account?.image || Avatar}>{account?.name}</MainButton>
                   </DropdownToggle>
 
                   <DropdownMenu customClass='right-0 !w-[405px] max-w-[405px] !overflow-visible mt-[26px]'>
@@ -621,9 +603,9 @@ export default function Header({ className }: { className?: string }) {
                   </DropdownMenu>
                 </Dropdown>
               ) : (
-                <FilledButton id='open-sign-in-btn' size='lg' onClick={() => setSignInOpen(true)}>
+                <MainButton onClick={() => setSignInOpen(true)}>
                   {t('Sign in')}
-                </FilledButton>
+                </MainButton>
               )}
             </div>
           </div>

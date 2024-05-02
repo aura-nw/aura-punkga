@@ -15,6 +15,7 @@ import { toast } from 'react-toastify'
 import { getRequestLog, linkWallet } from 'src/services'
 import useLocalStorage from 'src/hooks/useLocalStorage'
 import Mascot from 'assets/images/Mascot_5_1.png'
+import MainButton from 'components/Button/MainButton'
 export default function MigrateWalletModal({ open, setOpen }) {
   const { account, getProfile } = useContext(Context)
   const { t } = useTranslation()
@@ -127,9 +128,9 @@ ${Date.now()}`
             <div className='my-4 grid place-items-center w-full'>
               <Image src={Mascot} alt='' />
             </div>
-            <FilledButton className='w-fit mx-auto' onClick={() => setOpen(false)}>
+            <MainButton className='w-fit mx-auto' onClick={() => setOpen(false)}>
               {t('Done')}
-            </FilledButton>
+            </MainButton>
           </div>
         ) : success === false ? (
           <div className='flex flex-col gap-2 max-w-[452px]'>
@@ -139,7 +140,7 @@ ${Date.now()}`
             <p className='text-center text-sm leading-[18px] my-4'>
               {t('This wallet has been linked to another account.')}
             </p>
-            <FilledButton
+            <MainButton
               className='w-fit mx-auto'
               onClick={() => {
                 setOpen(false)
@@ -147,7 +148,7 @@ ${Date.now()}`
                 setStep(1)
               }}>
               {t('Close')}
-            </FilledButton>
+            </MainButton>
           </div>
         ) : address ? (
           <div className='flex flex-col gap-3'>
@@ -161,14 +162,15 @@ ${Date.now()}`
               {address}
             </div>
             <div className='flex justify-center gap-6 items-center'>
-              <OutlineButton
+              <MainButton
+                style='secondary'
                 onClick={() => {
                   setOpen(false)
                   setTimeout(disconnect, 400)
                 }}>
                 {t('Cancel')}
-              </OutlineButton>
-              <FilledButton onClick={linkWalletHandler}>{t('Confirm')}</FilledButton>
+              </MainButton>
+              <MainButton onClick={linkWalletHandler}>{t('Confirm')}</MainButton>
             </div>
           </div>
         ) : step == 1 ? (
@@ -188,9 +190,9 @@ ${Date.now()}`
                 <li>{t('Trade NFTs on marketplaces')}</li>
               </ul>
             </div>
-            <FilledButton className='w-fit mx-auto' onClick={() => setStep(2)}>
+            <MainButton className='w-fit mx-auto' onClick={() => setStep(2)}>
               {t('Connect Wallet')}
-            </FilledButton>
+            </MainButton>
           </div>
         ) : step == 2 ? (
           <div className='max-w-[354px] flex flex-col gap-3'>
@@ -203,11 +205,10 @@ ${Date.now()}`
                 return wallet.walletName.includes('keplr') ? (
                   <div
                     key={index}
-                    className={`py-3 flex gap-2 items-center ${
-                      wallet.walletStatus == 'NotExist'
+                    className={`py-3 flex gap-2 items-center ${wallet.walletStatus == 'NotExist'
                         ? 'cursor-not-allowed opacity-60 pointer-events-none'
                         : 'cursor-pointer'
-                    }`}
+                      }`}
                     onClick={() => wallet.connect(true)}>
                     {wallet.walletStatus == 'Connecting' ? (
                       <svg
@@ -227,11 +228,10 @@ ${Date.now()}`
                 ) : (
                   <div
                     key={index}
-                    className={`py-3 flex gap-2 items-center ${
-                      wallet.walletStatus == 'NotExist'
+                    className={`py-3 flex gap-2 items-center ${wallet.walletStatus == 'NotExist'
                         ? 'cursor-not-allowed opacity-60 pointer-events-none'
                         : 'cursor-pointer'
-                    }`}
+                      }`}
                     onClick={() => wallet.connect(true)}>
                     {wallet.walletStatus == 'Connecting' ? (
                       <svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none'>
