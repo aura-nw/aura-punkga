@@ -62,11 +62,11 @@ const MainButton: React.FC<MainButtonProps> = ({
             case'primary':
                 return `${hasAvatar ? 'rounded-full object-cover aspect-square' : ''}`;
             case'secondary':
-                return ``;
+                return `${hasAvatar ? 'rounded-full object-cover aspect-square' : ''}`;
             case 'outline':
-                return ``;
+                return `${hasAvatar ? 'rounded-full object-cover aspect-square' : ''}`;
             default:
-                return ``;
+                return `${hasAvatar ? 'rounded-full object-cover aspect-square' : ''}`;
         }
     };
 

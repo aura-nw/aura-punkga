@@ -7,7 +7,6 @@ import PunkgaWallet from 'assets/images/punkga.png'
 import VN from 'assets/images/vn.svg'
 import { BigNumber } from 'bignumber.js'
 import Button from 'components/Button'
-import FilledButton from 'components/Button/FilledButton'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import TextField from 'components/Input/TextField'
 import Modal from 'components/Modal'
@@ -26,11 +25,11 @@ import { useClickOutside } from 'src/hooks/useClickOutside'
 import { getBalances, getEnvKey, search } from 'src/services'
 import { formatNumber, shorten } from 'src/utils'
 import useSWR from 'swr'
-import ForgotPasswordModal from './ForgotPasswordModal'
-import MigrateWalletModal from './MigrateWalletModal'
-import SignInModal from './SignInModal'
-import SignUpModal from './SignUpModal'
-import SignUpSuccessModal from './SignUpSuccessModal'
+import ForgotPasswordModal from '../Modal/ForgotPasswordModal'
+import MigrateWalletModal from '../Modal/MigrateWalletModal'
+import SignInModal from '../Modal/SignInModal'
+import SignUpModal from '../Modal/SignUpModal'
+import SignUpSuccessModal from '../Modal/SignUpSuccessModal'
 import MainButton from 'components/Button/MainButton'
 export default function Header({ className }: { className?: string }) {
   const { t } = useTranslation()
@@ -491,7 +490,6 @@ export default function Header({ className }: { className?: string }) {
               {t('aboutUs')}
             </Button>
             <div className='flex gap-[20px] items-center cursor-pointer'>
-              <MainButton style='outline' leadingIcon={CopySvg}>test</MainButton>
               <div className='flex gap-1' onClick={switchLanguage}>
                 {locale == 'en' ? (
                   <Image className='w-[24px] h-[24px] border-black border rounded-full' src={EN} alt='' />
@@ -612,6 +610,7 @@ export default function Header({ className }: { className?: string }) {
         </nav>
       </header>
       <Modal
+        preventClickOutsideToClose
         open={signInOpen || signUpOpen}
         setOpen={() => {
           setSignInOpen(false)

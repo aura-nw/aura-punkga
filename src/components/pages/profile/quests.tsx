@@ -17,7 +17,7 @@ import EnrollNowVN from './assets/enroll-now_vn.svg'
 import EnrollNowLargeVN from './assets/enroll-now_large_vn.svg'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/router'
-export default function Quest() {
+export default function QuestSection() {
   const { locale } = useRouter()
   const { t } = useTranslation()
   const { account, getProfile } = useContext(Context)
@@ -74,7 +74,7 @@ export default function Quest() {
                 modules={[Navigation]}>
                 {data?.map((quest: Quest) => {
                   return (
-                    <SwiperSlide key={quest.id}>
+                    <SwiperSlide key={`${quest.id}`}>
                       <QuestItem
                         quest={quest}
                         refreshCallback={() =>
@@ -88,7 +88,6 @@ export default function Quest() {
                     </SwiperSlide>
                   )
                 })}
-                {data?.length < 2 && <SwiperSlide></SwiperSlide>}
               </Swiper>
 
               <svg
@@ -127,8 +126,8 @@ export default function Quest() {
                 }}
                 loop
                 navigation={{
-                  nextEl: '.swiper-next',
-                  prevEl: '.swiper-prev',
+                  nextEl: '.m-swiper-next',
+                  prevEl: '.m-swiper-prev',
                 }}
                 grid={{
                   rows: 2,
@@ -139,7 +138,7 @@ export default function Quest() {
                 modules={[Navigation, Grid]}>
                 {data?.map((quest: Quest) => {
                   return (
-                    <SwiperSlide key={quest.id}>
+                    <SwiperSlide key={`m-${quest.id}`}>
                       <QuestItem
                         quest={quest}
                         refreshCallback={() =>
@@ -162,7 +161,7 @@ export default function Quest() {
                   height='36'
                   viewBox='0 0 37 36'
                   fill='none'
-                  className='shrink-0 cursor-pointer swiper-prev'>
+                  className='shrink-0 cursor-pointer m-swiper-prev'>
                   <path
                     fillRule='evenodd'
                     clipRule='evenodd'
@@ -186,7 +185,7 @@ export default function Quest() {
                   height='36'
                   viewBox='0 0 37 36'
                   fill='none'
-                  className='shrink-0 cursor-pointer swiper-next'>
+                  className='shrink-0 cursor-pointer m-swiper-next'>
                   <path
                     fillRule='evenodd'
                     clipRule='evenodd'

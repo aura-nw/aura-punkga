@@ -85,24 +85,7 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
               label={t('Password')}
               value={newPassword}
               onChange={setNewPassword}
-              type={inputVisiblity.newPassword ? 'text' : 'password'}
-              trailingComponent={
-                inputVisiblity.newPassword ? (
-                  <Image
-                    src={Eye}
-                    alt=''
-                    onClick={() => setInputVisiblity((prev) => ({ ...prev, newPassword: false }))}
-                    className='cursor-pointer'
-                  />
-                ) : (
-                  <Image
-                    src={EyeClosed}
-                    alt=''
-                    onClick={() => setInputVisiblity((prev) => ({ ...prev, newPassword: true }))}
-                    className='cursor-pointer'
-                  />
-                )
-              }
+              type='password'
               placeholder={t('Enter new password')}
               onKeyDown={(e) => {
                 if (e.which == 13) {
@@ -114,25 +97,10 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
               label={t('Confirm password')}
               value={rePassword}
               onChange={setRePassword}
-              type={inputVisiblity.confirmNewPassword ? 'text' : 'password'}
+              type='password'
               trailingComponent={
                 <div className='flex items-center gap-[10px]'>
                   {repasswordValidateSuccess ? <Image src={CheckSquare} alt='' /> : null}
-                  {inputVisiblity.confirmNewPassword ? (
-                    <Image
-                      src={Eye}
-                      alt=''
-                      onClick={() => setInputVisiblity((prev) => ({ ...prev, confirmNewPassword: false }))}
-                      className='cursor-pointer'
-                    />
-                  ) : (
-                    <Image
-                      src={EyeClosed}
-                      alt=''
-                      onClick={() => setInputVisiblity((prev) => ({ ...prev, confirmNewPassword: true }))}
-                      className='cursor-pointer'
-                    />
-                  )}
                 </div>
               }
               errorMsg={rePasswordError}
