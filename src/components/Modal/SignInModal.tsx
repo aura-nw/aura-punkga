@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { validateEmail } from 'src/utils'
 import Facebook from 'images/Facebook.png'
+import MainButton from 'components/Button/MainButton'
 export default function SignInModal({ show, openSignUpModal, setSignInOpen, setForgotPasswordOpen }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -111,17 +112,16 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
           }}>
           {t('Forgot password')}
         </div>
-        <div className='mt-4 flex flex-col items-center w-full'>
-          <FilledButton
+        <div className='mt-4 flex flex-col items-center w-full max-w-[300px] mx-auto'>
+          <MainButton
+            size='large'
             buttonRef={buttonRef}
             disabled={!(email && password)}
-            onClick={loginHandler}
-            className='min-w-[128px]'
-            loading={loginLoading}>
+            onClick={loginHandler}>
             {t('Sign in')}
-          </FilledButton>
-          <div className='mt-1 text-sm leading-[18px] text-[#F0263C] min-h-[18px]'>{loginErrorMsg}</div>
-          <div className='mt-1 text-sm leading-[18px] min-h-[18px] text-[#414141]'>
+          </MainButton>
+          <div className='text-xs font-medium leading-6 text-red-600 min-h-[24px]'>{loginErrorMsg}</div>
+          <div className='text-xs font-medium leading-6 min-h-[24px] mt-2 text-gray-600'>
             {t('Don’t have an account')}?{' '}
             <a className='text-[#2684FC] cursor-pointer' onClick={openSignUpModal}>
               {t('Sign up')}
