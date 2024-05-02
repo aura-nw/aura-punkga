@@ -28,6 +28,7 @@ import c14 from './assets/comics/robots_dogs_time.jpg'
 import c15 from './assets/comics/noah.png'
 import c16 from './assets/comics/la_thu_cuoi_cung.jpeg'
 import c17 from './assets/comics/gio_thoi.jpeg'
+import c18 from './assets/comics/the_darkness_secret.png'
 import Avalook from './assets/authors/avalook.webp'
 import DangBao from './assets/authors/DangBao.webp'
 import H3 from './assets/authors/H3.webp'
@@ -36,6 +37,7 @@ import Sherlox from './assets/authors/Sherlox.jpg'
 import DaisyBlue from './assets/authors/DaisyBlue.webp'
 import Miroles from './assets/authors/Miroles.webp'
 import NgocBe from './assets/authors/ngoc_be.jpg'
+import Miyuki from './assets/authors/miyuki.webp'
 function Carousel({ sliderRef, children, className, setSlideIndex, sliderNavRef }) {
   var settings = {
     infinite: true,
@@ -70,6 +72,20 @@ function MobileCarousel({ children, setSlideIndex, sliderRef }) {
   )
 }
 export const list = [
+  {
+    comic: {
+      image: c18,
+      name: 'The Darkness Secret',
+      href: 'https://punkga.me/comic/the-darkness-secret-22/chapter/1',
+      isNewRelease: true,
+    },
+    author: [
+      {
+        avatar: Miyuki,
+        name: 'Miyuki',
+      },
+    ],
+  },
   {
     comic: {
       image: c2,
