@@ -26,11 +26,11 @@ import { useClickOutside } from 'src/hooks/useClickOutside'
 import { getBalances, getEnvKey, search } from 'src/services'
 import { formatNumber, shorten } from 'src/utils'
 import useSWR from 'swr'
-import ForgotPasswordModal from './ForgotPasswordModal'
-import MigrateWalletModal from './MigrateWalletModal'
-import SignInModal from './SignInModal'
-import SignUpModal from './SignUpModal'
-import SignUpSuccessModal from './SignUpSuccessModal'
+import ForgotPasswordModal from '../Modal/ForgotPasswordModal'
+import MigrateWalletModal from '../Modal/MigrateWalletModal'
+import SignInModal from '../Modal/SignInModal'
+import SignUpModal from '../Modal/SignUpModal'
+import SignUpSuccessModal from '../Modal/SignUpSuccessModal'
 export default function Header({ className }: { className?: string }) {
   const { t } = useTranslation()
   const router = useRouter()
@@ -640,6 +640,7 @@ export default function Header({ className }: { className?: string }) {
         </nav>
       </header>
       <Modal
+        preventClickOutsideToClose
         open={signInOpen || signUpOpen}
         setOpen={() => {
           setSignInOpen(false)
