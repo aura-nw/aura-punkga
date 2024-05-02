@@ -112,12 +112,8 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
           }}>
           {t('Forgot password')}
         </div>
-        <div className='mt-4 flex flex-col items-center w-full max-w-[300px] mx-auto'>
-          <MainButton
-            size='large'
-            buttonRef={buttonRef}
-            disabled={!(email && password)}
-            onClick={loginHandler}>
+        <div className='mt-4 flex flex-col items-center w-full'>
+          <MainButton size='large' buttonRef={buttonRef} disabled={!(email && password)} onClick={loginHandler}>
             {t('Sign in')}
           </MainButton>
           <div className='text-xs font-medium leading-6 text-red-600 min-h-[24px]'>{loginErrorMsg}</div>
@@ -128,25 +124,23 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
             </a>
           </div>
           <div className='my-4 text-sm leading-[18px] text-[#414141]'>{t('or')}</div>
-          <div className='flex justify-center items-center'></div>
-          <button
-            className='mt-2 flex gap-[10px] items-center rounded-full bg-light-gray px-4 py-2 leading-5 font-medium w-full'
-            onClick={() => oauth('facebook')}>
-            <Image src={Facebook} alt='' />
-            {t('Continue with Facebook')}
-          </button>
-          <button
-            className='mt-2 flex gap-[10px] items-center rounded-full bg-light-gray px-4 py-2 leading-5 font-medium w-full'
-            onClick={() => oauth('zalo')}>
-            <Image src={Zalo} alt='' />
-            {t('Continue with Zalo')}
-          </button>
-          <button
-            className='mt-2 flex gap-[10px] items-center rounded-full bg-light-gray px-4 py-2 leading-5 font-medium w-full'
-            onClick={() => oauth('google')}>
-            <Image src={Google} alt='' />
-            {t('Continue with Google')}
-          </button>
+          <div className='flex gap-4 w-full items-center'>
+            <MainButton
+              iconOnly={Facebook}
+              onClick={() => oauth('facebook')}
+              style='outline'
+              size='small'
+              className='w-full'
+            />
+            <MainButton iconOnly={Zalo} onClick={() => oauth('zalo')} style='outline' size='small' className='w-full' />
+            <MainButton
+              iconOnly={Google}
+              onClick={() => oauth('google')}
+              style='outline'
+              size='small'
+              className='w-full'
+            />
+          </div>
           <div className='mt-4 text-sm leading-[18px] text-[#414141] text-center'>
             {t('By continuing, you agree to our')}
             <br />
