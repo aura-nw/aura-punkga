@@ -116,8 +116,8 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
           <MainButton size='large' buttonRef={buttonRef} disabled={!(email && password)} onClick={loginHandler}>
             {t('Sign in')}
           </MainButton>
-          <div className='text-sm leading-[18px] text-[#F0263C] min-h-[24px] mt-1'>{loginErrorMsg}</div>
-          <div className='text-sm leading-[18px] min-h-[24px] mt-1 text-[#414141]'>
+          <div className='text-sm leading-[18px] text-[#F0263C] mt-1'>{loginErrorMsg}</div>
+          <div className='text-sm leading-[18px] mt-1 text-[#414141]'>
             {t('Don’t have an account')}?{' '}
             <a className='text-[#2684FC] cursor-pointer' onClick={openSignUpModal}>
               {t('Sign up')}
