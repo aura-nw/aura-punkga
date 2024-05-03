@@ -15,6 +15,7 @@ interface MainButtonProps {
   iconOnly?: string | StaticImageData
   className?: string
   hasAvatar?: boolean
+  loading?: boolean
 }
 
 const MainButton: React.FC<MainButtonProps> = ({
@@ -29,6 +30,7 @@ const MainButton: React.FC<MainButtonProps> = ({
   iconOnly,
   className,
   hasAvatar = false,
+  loading,
 }) => {
   const getButtonStyleClasses = (): string => {
     switch (style) {

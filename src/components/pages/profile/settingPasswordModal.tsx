@@ -1,4 +1,5 @@
 import FilledButton from 'components/Button/FilledButton'
+import MainButton from 'components/Button/MainButton'
 import OutlineTextField from 'components/Input/TextField/Outline'
 import Modal from 'components/Modal'
 import SuccessImg from 'images/Mascot2.png'
@@ -102,9 +103,9 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
               inputRef={r1}
             />
           </div>
-          <FilledButton disabled={!newPassword || !rePassword} loading={loading} onClick={setPasswordHandler}>
+          <MainButton disabled={!newPassword || !rePassword} loading={loading} onClick={setPasswordHandler}>
             {t('Confirm')}
-          </FilledButton>
+          </MainButton>
         </div>
         <div
           className={`absolute inset-0 py-6 px-4 flex flex-col gap-4 transition-all duration-300 ${
@@ -115,12 +116,12 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
           <p className='text-sm leading-[18px] font-semibold text-center w-[274px] mx-auto text-[#414141]'>
             {t('You can use the new password to log in Punkga now')}
           </p>
-          <FilledButton
+          <MainButton
             onClick={() => {
               setOpen(false)
             }}>
             {t('Confirm')}
-          </FilledButton>
+          </MainButton>
         </div>
       </div>
     </Modal>

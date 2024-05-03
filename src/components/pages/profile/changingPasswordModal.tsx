@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next'
 import _ from 'lodash'
 import Eye from 'assets/images/icons/eye.svg'
 import EyeClosed from 'assets/images/icons/eye_closed.svg'
+import MainButton from 'components/Button/MainButton'
 export default function ChangingPasswordModal({ open, setOpen }) {
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -138,13 +139,13 @@ export default function ChangingPasswordModal({ open, setOpen }) {
               placeholder={t('Re-enter new password')}
             />
           </div>
-          <FilledButton
+          <MainButton
             disabled={!newPassword || !rePassword || !currentPassword}
             className=''
             loading={loading}
             onClick={changePasswordHandler}>
             {t('Confirm')}
-          </FilledButton>
+          </MainButton>
         </div>
         <div
           className={`absolute inset-0 py-6 px-4 flex flex-col gap-6 transition-all duration-300 ${

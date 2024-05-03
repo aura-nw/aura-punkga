@@ -1,5 +1,5 @@
 import { Transition } from '@headlessui/react'
-import FilledButton from 'components/Button/FilledButton'
+import MainButton from 'components/Button/MainButton'
 import OutlineTextField from 'components/Input/TextField/Outline'
 import Mail from 'images/Mail.svg'
 import Image from 'next/image'
@@ -53,9 +53,9 @@ export default function ForgotPasswordModal({ onClose }) {
             value={email}
             onChange={setEmail}
           />
-          <FilledButton disabled={!email || !validateEmail(email)} loading={loading} className='mt-3' onClick={submit}>
+          <MainButton disabled={!email || !validateEmail(email)} loading={loading} className='mt-3' onClick={submit}>
             {t('Continue')}
-          </FilledButton>
+          </MainButton>
         </Transition>
         <Transition
           as='div'

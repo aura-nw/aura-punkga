@@ -108,14 +108,13 @@ function ResetPassword() {
               inputRef={r}
               trailingComponent={repasswordValidateSuccess ? <Image src={CheckSquare} alt='' /> : null}
             />
-            <FilledButton
+            <MainButton
               disabled={!newPassword || !rePassword}
               className='mt-2 mx-auto'
-              size='lg'
               loading={loading}
               onClick={setPasswordHandler}>
-              {t('Reset my password')}
-            </FilledButton>
+              {t('Reset password')}
+            </MainButton>
           </div>
           <div
             className={`absolute inset-0 py-6 px-4 flex flex-col gap-3 transition-all duration-300 ${
@@ -128,7 +127,6 @@ function ResetPassword() {
             </p>
             <MainButton
               className='mt-2 mx-auto'
-              size='large'
               onClick={() => {
                 openSignInModal()
               }}>
