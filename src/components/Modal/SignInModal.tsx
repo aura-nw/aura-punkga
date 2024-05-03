@@ -1,17 +1,15 @@
 import { Transition } from '@headlessui/react'
-import FilledButton from 'components/Button/FilledButton'
+import MainButton from 'components/Button/MainButton'
 import OutlineTextField from 'components/Input/TextField/Outline'
-import Zalo from 'images/Zalo.png'
+import Facebook from 'images/Facebook.png'
 import Google from 'images/Google.png'
-import Image from 'next/image'
+import Zalo from 'images/Zalo.png'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { validateEmail } from 'src/utils'
-import Facebook from 'images/Facebook.png'
-import MainButton from 'components/Button/MainButton'
 export default function SignInModal({ show, openSignUpModal, setSignInOpen, setForgotPasswordOpen }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -73,7 +71,7 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
       leaveFrom='max-h-screen opacity-100'
       leaveTo='max-h-[0vh] opacity-0'>
       <div className='p-6 md:w-[400px]'>
-        <p className='text-center text-lg font-semibold leading-6 text-[#414141]'>{t('Sign in to Punkga.me')}</p>
+        <p className='text-center text-lg font-semibold leading-6 text-[#414141]'>{t('Sign in to Punkga')}</p>
         <div className='mt-6'>
           <OutlineTextField
             placeholder={t('Enter your email')}
@@ -113,7 +111,7 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
           {t('Forgot password')}
         </div>
         <div className='mt-4 flex flex-col items-center w-full'>
-          <MainButton size='large' buttonRef={buttonRef} disabled={!(email && password)} onClick={loginHandler}>
+          <MainButton buttonRef={buttonRef} disabled={!(email && password)} onClick={loginHandler}>
             {t('Sign in')}
           </MainButton>
           <div className='text-sm leading-[18px] text-[#F0263C] mt-1'>{loginErrorMsg}</div>
