@@ -71,9 +71,9 @@ export default function OutlineTextField({
         {type == 'password' ? (
           <div className='absolute inset-y-0 right-0 flex items-center justify-center p-[10px]'>
             {!inputVisiblity ? (
-              <Image src={Eye} alt='' onClick={() => setInputVisiblity(false)} className='cursor-pointer' />
+              <Image src={Eye} alt='' onClick={() => setInputVisiblity(true)} className='cursor-pointer' />
             ) : (
-              <Image src={EyeClosed} alt='' onClick={() => setInputVisiblity(true)} className='cursor-pointer' />
+              <Image src={EyeClosed} alt='' onClick={() => setInputVisiblity(false)} className='cursor-pointer' />
             )}
           </div>
         ) : null}

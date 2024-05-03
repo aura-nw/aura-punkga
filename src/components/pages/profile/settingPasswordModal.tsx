@@ -76,7 +76,7 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
           <p className='text-center text-xl leading-6 font-bold'>{t('Set password')}</p>
           <div>
             <OutlineTextField
-              label={t('Password')}
+              label={t('New password')}
               value={newPassword}
               onChange={setNewPassword}
               type='password'
@@ -88,7 +88,7 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
               }}
             />
             <OutlineTextField
-              label={t('Confirm password')}
+              label={t('Confirm new password')}
               value={rePassword}
               onChange={setRePassword}
               type='password'
