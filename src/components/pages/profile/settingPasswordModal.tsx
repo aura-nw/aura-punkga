@@ -104,7 +104,7 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
                 </div>
               }
               errorMsg={rePasswordError}
-              placeholder={t('Re-Enter new password')}
+              placeholder={t('Re-enter new password')}
               inputRef={r1}
             />
           </div>

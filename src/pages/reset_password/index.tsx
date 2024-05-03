@@ -104,7 +104,7 @@ function ResetPassword() {
               onChange={setRePassword}
               type='password'
               errorMsg={rePasswordError}
-              placeholder={t('Re-Enter new password')}
+              placeholder={t('Re-enter new password')}
               inputRef={r}
               trailingComponent={repasswordValidateSuccess ? <Image src={CheckSquare} alt='' /> : null}
             />
@@ -118,8 +118,9 @@ function ResetPassword() {
             </FilledButton>
           </div>
           <div
-            className={`absolute inset-0 py-6 px-4 flex flex-col gap-3 transition-all duration-300 ${success ? 'opacity-100' : 'opacity-0 pointer-events-none'
-              }`}>
+            className={`absolute inset-0 py-6 px-4 flex flex-col gap-3 transition-all duration-300 ${
+              success ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            }`}>
             <p className='text-center text-xl leading-6 font-semibold'>{t('Successful password reset')}!</p>
             <Image src={SuccessImg} alt='' className='mx-auto' />
             <p className='text-sm leading-6 font-medium text-center w-[246px] mx-auto'>

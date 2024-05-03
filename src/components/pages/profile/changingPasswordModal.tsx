@@ -14,11 +14,6 @@ import EyeClosed from 'assets/images/icons/eye_closed.svg'
 export default function ChangingPasswordModal({ open, setOpen }) {
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [inputVisiblity, setInputVisiblity] = useState({
-    oldPassword: false,
-    newPassword: false,
-    confirmNewPassword: false,
-  })
   const [currentPassword, setCurrentPassword] = useState('')
   const [currentPasswordError, setCurrentPasswordError] = useState('')
   const [newPassword, setNewPassword] = useState('')
@@ -100,7 +95,7 @@ export default function ChangingPasswordModal({ open, setOpen }) {
     <Modal open={open} setOpen={setOpen} hideClose={success} preventClickOutsideToClose>
       <div className={`p-6 w-[322px] relative transition-all duration-300 ${success ? 'h-[412px]' : ''}`}>
         <div className={` flex flex-col gap-6 transition-all duration-300 ${success ? 'opacity-0' : 'opacity-100'}`}>
-          <p className='text-center text-xl leading-6 font-semibold'>{t('Change password')}</p>
+          <p className='text-center text-xl leading-6 font-bold'>{t('Change password')}</p>
           <OutlineTextField
             label={t('Old password')}
             value={currentPassword}
@@ -135,12 +130,12 @@ export default function ChangingPasswordModal({ open, setOpen }) {
               type='password'
               trailingComponent={
                 <div className='flex items-center gap-[10px]'>
-                  {true ? <Image src={CheckSquare} alt='' /> : null}
+                  {repasswordValidateSuccess ? <Image src={CheckSquare} alt='' /> : null}
                 </div>
               }
               errorMsg={rePasswordError}
               inputRef={r2}
-              placeholder={t('Re-Enter new password')}
+              placeholder={t('Re-enter new password')}
             />
           </div>
           <FilledButton
