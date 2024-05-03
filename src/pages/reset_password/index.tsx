@@ -62,8 +62,13 @@ function ResetPassword() {
       if (res) {
         setSuccess(true)
         return
+      } else {
+        if (res?.message) {
+          setRePasswordError(t(res?.message))
+        } else {
+          setRePasswordError(t('Something went wrong'))
+        }
       }
-      setRePasswordError(t('Something went wrong'))
     } catch (error) {
       setLoading(false)
     }
@@ -84,8 +89,8 @@ function ResetPassword() {
       <Header />
       <div className='flex justify-center md:items-center min-h-[80vh]'>
         <div className={`p-6 w-[322px] relative transition-all duration-300 ${success ? 'h-[400px]' : ''}`}>
-          <div className={` flex flex-col gap-3 transition-all duration-300 ${success ? 'opacity-0' : 'opacity-100'}`}>
-            <p className='text-center text-xl leading-6 font-bold'>{t('Reset password')}</p>
+          <div className={` flex flex-col transition-all gap-3 duration-300 ${success ? 'opacity-0' : 'opacity-100'}`}>
+            <p className='text-center text-xl leading-6 font-bold mb-7'>{t('Reset password')}</p>
             <OutlineTextField
               label={t('New password')}
               value={newPassword}
@@ -109,8 +114,8 @@ function ResetPassword() {
               trailingComponent={repasswordValidateSuccess ? <Image src={CheckSquare} alt='' /> : null}
             />
             <MainButton
+              className='w-full'
               disabled={!newPassword || !rePassword}
-              className='mt-2 mx-auto'
               loading={loading}
               onClick={setPasswordHandler}>
               {t('Reset password')}

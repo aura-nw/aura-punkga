@@ -19,10 +19,14 @@ export default function ForgotPasswordModal({ onClose }) {
       setLoading(true)
       const r = await forgotPassword(email)
       setLoading(false)
-      if (r.message.includes('We have sent a password reset')) {
+      if (r?.message?.includes('We have sent a password reset')) {
         setIsFirstStep(false)
       } else {
-        setEmailErrorMsg(t('Something went wrong'))
+        if (r?.message) {
+          setEmailErrorMsg(t(r?.message))
+        } else {
+          setEmailErrorMsg(t('Something went wrong'))
+        }
       }
     } else {
       setEmailErrorMsg(t('Invalid email format'))
@@ -51,9 +55,12 @@ export default function ForgotPasswordModal({ onClose }) {
             placeholder={t('Enter email address')}
             errorMsg={emailErrorMsg}
             value={email}
-            onChange={setEmail}
+            onChange={(e) => {
+              setEmail(e)
+              setEmailErrorMsg('')
+            }}
           />
-          <MainButton disabled={!email || !validateEmail(email)} loading={loading} className='mt-3' onClick={submit}>
+          <MainButton disabled={!email} loading={loading} className='mt-3' onClick={submit}>
             {t('Continue')}
           </MainButton>
         </Transition>

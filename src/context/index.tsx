@@ -298,7 +298,7 @@ function ContextProvider({ children }) {
       return res
     } catch (error) {
       console.log('forgotPassword', error)
-      return null
+      return error
     }
   }
   const resetPassword = async (token: string, newPassword: string) => {
@@ -311,7 +311,7 @@ function ContextProvider({ children }) {
       return res
     } catch (error) {
       console.log('resetPassword', error)
-      return null
+      return error
     }
   }
   async function resendVerifyEmail(email: string, identifier?: string) {

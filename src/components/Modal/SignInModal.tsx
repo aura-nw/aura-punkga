@@ -111,7 +111,11 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
           {t('Forgot password')}
         </div>
         <div className='mt-4 flex flex-col items-center w-full'>
-          <MainButton buttonRef={buttonRef} disabled={!(email && password)} onClick={loginHandler}>
+          <MainButton
+            buttonRef={buttonRef}
+            disabled={!(email && password)}
+            onClick={loginHandler}
+            className='min-w-[128px]'>
             {t('Sign in')}
           </MainButton>
           <div className='text-sm leading-[18px] text-[#F0263C] mt-1'>{loginErrorMsg}</div>
