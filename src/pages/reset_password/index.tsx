@@ -85,7 +85,7 @@ function ResetPassword() {
       <div className='flex justify-center md:items-center min-h-[80vh]'>
         <div className={`p-6 w-[322px] relative transition-all duration-300 ${success ? 'h-[400px]' : ''}`}>
           <div className={` flex flex-col gap-3 transition-all duration-300 ${success ? 'opacity-0' : 'opacity-100'}`}>
-            <p className='text-center text-xl leading-6 font-semibold'>{t('Reset password')}</p>
+            <p className='text-center text-xl leading-6 font-bold'>{t('Reset password')}</p>
             <OutlineTextField
               label={t('New password')}
               value={newPassword}
@@ -121,7 +121,7 @@ function ResetPassword() {
             className={`absolute inset-0 py-6 px-4 flex flex-col gap-3 transition-all duration-300 ${
               success ? 'opacity-100' : 'opacity-0 pointer-events-none'
             }`}>
-            <p className='text-center text-xl leading-6 font-semibold'>{t('Successful password reset')}!</p>
+            <p className='text-center text-xl leading-6 font-bold'>{t('Successful password reset')}!</p>
             <Image src={SuccessImg} alt='' className='mx-auto' />
             <p className='text-sm leading-6 font-medium text-center w-[246px] mx-auto'>
               {t('You can now use the new password to sign in to your account')}

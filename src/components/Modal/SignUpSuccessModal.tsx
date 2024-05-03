@@ -8,7 +8,7 @@ export default function SignUpSuccessModal({ setSignUpOpen, onClose }) {
   const { t } = useTranslation()
   return (
     <div className={` py-6 px-[60px] flex flex-col gap-4 w-full max-w-[670px]`}>
-      <p className='text-center text-xl leading-6 font-semibold'>{t('Email verification')}</p>
+      <p className='text-center text-xl leading-6 font-bold'>{t('Email verification')}</p>
       <Image src={Mail} alt='' className='mx-auto' />
       <p className=' font-medium text-center w-full max-w-[500px] mx-auto'>
         {t('A verification link has been sent to')}{' '}
