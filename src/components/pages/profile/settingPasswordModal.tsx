@@ -1,23 +1,17 @@
 import FilledButton from 'components/Button/FilledButton'
 import OutlineTextField from 'components/Input/TextField/Outline'
 import Modal from 'components/Modal'
+import SuccessImg from 'images/Mascot2.png'
+import CheckSquare from 'images/icons/check_square_fill.svg'
+import _ from 'lodash'
 import Image from 'next/image'
 import { useContext, useEffect, useRef, useState } from 'react'
-import { Context } from 'src/context'
-import SuccessImg from 'images/Mascot2.png'
-import { validatePassword } from 'src/utils'
-import CheckSquare from 'images/icons/check_square_fill.svg'
 import { useTranslation } from 'react-i18next'
-import _ from 'lodash'
-import Eye from 'assets/images/icons/eye.svg'
-import EyeClosed from 'assets/images/icons/eye_closed.svg'
+import { Context } from 'src/context'
+import { validatePassword } from 'src/utils'
 export default function SettingPasswordModal({ open, setOpen, profile }) {
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [inputVisiblity, setInputVisiblity] = useState({
-    newPassword: false,
-    confirmNewPassword: false,
-  })
   const [newPassword, setNewPassword] = useState('')
   const [rePassword, setRePassword] = useState('')
   const [rePasswordError, setRePasswordError] = useState('')
@@ -118,7 +112,7 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
           }`}>
           <p className='text-center text-xl leading-6 font-bold'>{t('Password set')}!</p>
           <Image src={SuccessImg} alt='' className='mx-auto h-[188px]' />
-          <p className='text-sm leading-[18px] font-medium text-center w-[274px] mx-auto text-[#414141]'>
+          <p className='text-sm leading-[18px] font-semibold text-center w-[274px] mx-auto text-[#414141]'>
             {t('You can use the new password to log in Punkga now')}
           </p>
           <FilledButton
