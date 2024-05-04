@@ -12,7 +12,7 @@ export default function SignUpSuccessModal({ setSignUpOpen, onClose, email }) {
       <Image src={Mail} alt='' className='mx-auto' />
       <p className=' font-medium text-center w-full max-w-[500px] mx-auto'>
         {t('A verification link has been sent to')} <span className='text-second-color font-bold'>{email}</span>.
-        {t('Please click on the link to verify your email account.')}
+        {t('Please check your email.')}
       </p>
       <div className='flex flex-col text-center text-xs leading-[14px]'>
         <p className=' font-medium text-center w-full max-w-[500px] mx-auto'>
