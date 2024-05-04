@@ -1,4 +1,3 @@
-import FilledButton from 'components/Button/FilledButton'
 import MainButton from 'components/Button/MainButton'
 import Footer from 'components/Footer'
 import Header from 'components/Header'
@@ -13,7 +12,8 @@ import { useRouter } from 'next/router'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
-import { openSignInModal, validatePassword } from 'src/utils'
+import { ModalContext } from 'src/context/modals'
+import { validatePassword } from 'src/utils'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -30,6 +30,7 @@ function ResetPassword() {
   const [rePassword, setRePassword] = useState('')
   const [rePasswordError, setRePasswordError] = useState('')
   const { resetPassword } = useContext(Context)
+  const { setSignInOpen } = useContext(ModalContext)
   const r = useRef<any>()
   const [repasswordValidateSuccess, setRepasswordValidateSuccess] = useState(false)
   const router = useRouter()
@@ -133,7 +134,7 @@ function ResetPassword() {
             <MainButton
               className='mt-2 mx-auto'
               onClick={() => {
-                openSignInModal()
+                setSignInOpen(true)
               }}>
               {t('Sign in')}
             </MainButton>

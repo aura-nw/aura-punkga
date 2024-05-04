@@ -25,11 +25,11 @@ import {
   getRequestLog,
   getUserRankInCampaign,
 } from 'src/services'
-import { openSignInModal } from 'src/utils'
 import useSWR, { useSWRConfig } from 'swr'
 import QuestList from '../../../components/pages/campaigns/questList'
 import FilledButton from 'components/core/Button/FilledButton'
 import Popover from 'components/Popover'
+import { ModalContext } from 'src/context/modals'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -38,6 +38,7 @@ export default function Page(props) {
 }
 function CampaignDetail({}) {
   const { account } = useContext(Context)
+  const {setSignInOpen} = useContext(ModalContext)
   const [openClaimSuccessModal, setClaimSuccessModalOpen] = useState(false)
   const [openNFTPreview, setOpenNFTPreview] = useState(false)
   const [data, setData] = useState<Campaign>(undefined)
@@ -91,7 +92,7 @@ function CampaignDetail({}) {
   }, [account])
   useEffect(() => {
     if (data && !account) {
-      openSignInModal()
+      setSignInOpen(true)
     }
   }, [account, data])
   const fetchData = async () => {
@@ -110,7 +111,7 @@ function CampaignDetail({}) {
   const enrollHandler = async () => {
     try {
       if (!account) {
-        openSignInModal()
+        setSignInOpen(true)
       } else {
         setEnrollLoading(true)
         const res = await enrollCampaign(data.id)

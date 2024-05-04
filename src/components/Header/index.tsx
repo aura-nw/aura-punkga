@@ -7,9 +7,9 @@ import PunkgaWallet from 'assets/images/punkga.png'
 import VN from 'assets/images/vn.svg'
 import { BigNumber } from 'bignumber.js'
 import Button from 'components/Button'
+import MainButton from 'components/Button/MainButton'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import TextField from 'components/Input/TextField'
-import Modal from 'components/Modal'
 import Spinner from 'components/Spinner'
 import CopySvg from 'images/icons/copy.svg'
 import NoImage from 'images/no_img.png'
@@ -20,30 +20,21 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import { Context } from 'src/context'
+import { ModalContext } from 'src/context/modals'
 import useApi from 'src/hooks/useApi'
 import { useClickOutside } from 'src/hooks/useClickOutside'
 import { getBalances, getEnvKey, search } from 'src/services'
-import { formatNumber, shorten } from 'src/utils'
+import { shorten } from 'src/utils'
 import useSWR from 'swr'
-import ForgotPasswordModal from '../Modal/ForgotPasswordModal'
-import MigrateWalletModal from '../Modal/MigrateWalletModal'
-import SignInModal from '../Modal/SignInModal'
-import SignUpModal from '../Modal/SignUpModal'
-import SignUpSuccessModal from '../Modal/SignUpSuccessModal'
-import MainButton from 'components/Button/MainButton'
 export default function Header({ className }: { className?: string }) {
   const { t } = useTranslation()
   const router = useRouter()
+  const { setSignInOpen, setMigrateWalletOpen } = useContext(ModalContext)
   const [isSearchFocused, setIsSearchFocused] = useState(false)
-  const [signInOpen, setSignInOpen] = useState(false)
-  const [signUpOpen, setSignUpOpen] = useState(false)
   const [isCopied, setIsCopied] = useState(false)
   const [openProfile, setOpenProfile] = useState(false)
   const [openNavigation, setOpenNavigation] = useState(false)
   const [hideBalance, setHideBalance] = useState(false)
-  const [migrateWalletOpen, setMigrateWalletOpen] = useState(false)
-  const [signUpSuccessOpen, setSignUpSuccessOpen] = useState(false)
-  const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false)
   const [searchValue, setSearchValue] = useState('')
   const { account, wallet, logout } = useContext(Context)
   const searchComic = useApi<any[]>(async () => await search(searchValue), !!searchValue, [searchValue])
@@ -75,7 +66,7 @@ export default function Header({ className }: { className?: string }) {
   }
 
   useEffect(() => {
-    ; (window as any).isSearchFocused = isSearchFocused
+    ;(window as any).isSearchFocused = isSearchFocused
   }, [isSearchFocused])
 
   useEffect(() => {
@@ -120,8 +111,9 @@ export default function Header({ className }: { className?: string }) {
   return (
     <>
       <div
-        className={` fixed inset-0 transition-opacity duration-500 bg-[#000] ${isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
-          }`}></div>
+        className={` fixed inset-0 transition-opacity duration-500 bg-[#000] ${
+          isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
+        }`}></div>
       <header
         className={`border-b-2 border-light-gray border-solid sticky w-full top-0 z-50 transition-all duration-300 bg-white ${className}`}>
         <nav className='lg:hidden pk-container py-[10px] px-5'>
@@ -146,14 +138,11 @@ export default function Header({ className }: { className?: string }) {
                       setOpenNavigation(false)
                       setOpenProfile(!openProfile)
                     }}
-                    leadingIcon={account?.image || Avatar}
-                  >
+                    leadingIcon={account?.image || Avatar}>
                     {account?.name}
                   </MainButton>
                 ) : (
-                  <MainButton onClick={() => setSignInOpen(true)}>
-                    {t('Sign in')}
-                  </MainButton>
+                  <MainButton onClick={() => setSignInOpen(true)}>{t('Sign in')}</MainButton>
                 )}
               </div>
             </div>
@@ -169,8 +158,9 @@ export default function Header({ className }: { className?: string }) {
                     <div>{`${shorten(wallet || account?.walletAddress, 8, 8)}`}</div>
                   </div>
                   <span
-                    className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                      }`}>
+                    className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
+                      isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                    }`}>
                     {t('Copied')}
                   </span>
                   <Image src={CopySvg} alt='' />
@@ -181,9 +171,9 @@ export default function Header({ className }: { className?: string }) {
                     {hideBalance
                       ? '********'
                       : `${+BigNumber(balance || 0)
-                        .div(BigNumber(10).pow(6))
-                        .toFixed(4)
-                        .toLocaleString()} ${getEnvKey() == 'euphoria' ? 'EAURA' : 'AURA'}`}
+                          .div(BigNumber(10).pow(6))
+                          .toFixed(4)
+                          .toLocaleString()} ${getEnvKey() == 'euphoria' ? 'EAURA' : 'AURA'}`}
                     <span className='inline-block'>
                       {
                         <div className='ml-2 w-6 h-6 relative'>
@@ -193,8 +183,9 @@ export default function Header({ className }: { className?: string }) {
                             height='24'
                             viewBox='0 0 24 24'
                             fill='none'
-                            className={`absolute inset-0 transition-all ${hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                              }`}
+                            className={`absolute inset-0 transition-all ${
+                              hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                            }`}
                             onClick={() => setHideBalance(false)}>
                             <path
                               fillRule='evenodd'
@@ -209,8 +200,9 @@ export default function Header({ className }: { className?: string }) {
                             height='24'
                             viewBox='0 0 24 24'
                             fill='none'
-                            className={`absolute inset-0 transition-all ${!hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                              }`}
+                            className={`absolute inset-0 transition-all ${
+                              !hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                            }`}
                             onClick={() => setHideBalance(true)}>
                             <path
                               fillRule='evenodd'
@@ -283,14 +275,16 @@ export default function Header({ className }: { className?: string }) {
               />
               {!!searchComic.data?.length && (
                 <div
-                  className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[10px] max-h-[40vh] overflow-hidden ${isSearchFocused ? 'opacity-100 w-full max-w-sm' : 'pointer-events-none opacity-0 w-full'
-                    }`}>
+                  className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[10px] max-h-[40vh] overflow-hidden ${
+                    isSearchFocused ? 'opacity-100 w-full max-w-sm' : 'pointer-events-none opacity-0 w-full'
+                  }`}>
                   <div className={`max-h-[40vh] overflow-auto flex flex-col gap-3 p-2`}>
                     {searchComic.data?.map((manga, index) => (
                       <div
                         key={index}
-                        className={`flex gap-2 cursor-pointer ${manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
-                          }`}
+                        className={`flex gap-2 cursor-pointer ${
+                          manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
+                        }`}
                         onClick={() => router.push(`/comic/${manga.slug}/chapter/1`)}>
                         <Image
                           src={manga.image || NoImage}
@@ -401,8 +395,9 @@ export default function Header({ className }: { className?: string }) {
           </div>
           <div
             ref={divRef}
-            className={`${isSearchFocused ? 'z-30' : ''
-              } w-full md:max-w-[170px] lg:max-w-[200px] xl:max-w-[300px] 2xl:max-w-[500px] relative`}>
+            className={`${
+              isSearchFocused ? 'z-30' : ''
+            } w-full md:max-w-[170px] lg:max-w-[200px] xl:max-w-[300px] 2xl:max-w-[500px] relative`}>
             <TextField
               inputref={ref}
               onChange={_.debounce(setSearchValue, 500)}
@@ -426,14 +421,16 @@ export default function Header({ className }: { className?: string }) {
             />
             {!!searchComic.data?.length && (
               <div
-                className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[20px] max-h-[40vh] overflow-hidden ${isSearchFocused ? 'opacity-100 w-[160%]' : 'pointer-events-none opacity-0 w-full'
-                  }`}>
+                className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[20px] max-h-[40vh] overflow-hidden ${
+                  isSearchFocused ? 'opacity-100 w-[160%]' : 'pointer-events-none opacity-0 w-full'
+                }`}>
                 <div className={`max-h-[40vh] overflow-auto  flex flex-col gap-7  p-5`}>
                   {searchComic.data?.map((manga, index) => (
                     <div
                       key={index}
-                      className={`flex gap-2 ${manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
-                        }`}
+                      className={`flex gap-2 ${
+                        manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
+                      }`}
                       onClick={() => router.push(`/comic/${manga.slug}/chapter/1`)}>
                       <Image
                         src={manga.image || NoImage}
@@ -501,7 +498,9 @@ export default function Header({ className }: { className?: string }) {
               {account?.verified && account?.name ? (
                 <Dropdown>
                   <DropdownToggle>
-                    <MainButton hasAvatar style='secondary' leadingIcon={account?.image || Avatar}>{account?.name}</MainButton>
+                    <MainButton hasAvatar style='secondary' leadingIcon={account?.image || Avatar}>
+                      {account?.name}
+                    </MainButton>
                   </DropdownToggle>
 
                   <DropdownMenu customClass='right-0 !w-[405px] max-w-[405px] !overflow-visible mt-[26px]'>
@@ -515,8 +514,9 @@ export default function Header({ className }: { className?: string }) {
                             <div>{`${shorten(wallet || account?.walletAddress, 8, 8)}`}</div>
                           </div>
                           <span
-                            className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                              }`}>
+                            className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
+                              isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                            }`}>
                             {t('Copied')}
                           </span>
                           <Image src={CopySvg} alt='' />
@@ -527,9 +527,9 @@ export default function Header({ className }: { className?: string }) {
                             {hideBalance
                               ? '********'
                               : `${+BigNumber(balance || 0)
-                                .div(BigNumber(10).pow(6))
-                                .toFixed(4)
-                                .toLocaleString()} ${getEnvKey() == 'euphoria' ? 'EAURA' : 'AURA'}`}
+                                  .div(BigNumber(10).pow(6))
+                                  .toFixed(4)
+                                  .toLocaleString()} ${getEnvKey() == 'euphoria' ? 'EAURA' : 'AURA'}`}
                             <span className='inline-block'>
                               {
                                 <div className='ml-2 w-6 h-6 relative'>
@@ -539,8 +539,9 @@ export default function Header({ className }: { className?: string }) {
                                     height='24'
                                     viewBox='0 0 24 24'
                                     fill='none'
-                                    className={`absolute inset-0 transition-all ${hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                                      }`}
+                                    className={`absolute inset-0 transition-all ${
+                                      hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                                    }`}
                                     onClick={() => setHideBalance(false)}>
                                     <path
                                       fillRule='evenodd'
@@ -555,8 +556,9 @@ export default function Header({ className }: { className?: string }) {
                                     height='24'
                                     viewBox='0 0 24 24'
                                     fill='none'
-                                    className={`absolute inset-0 transition-all ${!hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                                      }`}
+                                    className={`absolute inset-0 transition-all ${
+                                      !hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                                    }`}
                                     onClick={() => setHideBalance(true)}>
                                     <path
                                       fillRule='evenodd'
@@ -601,50 +603,12 @@ export default function Header({ className }: { className?: string }) {
                   </DropdownMenu>
                 </Dropdown>
               ) : (
-                <MainButton onClick={() => setSignInOpen(true)}>
-                  {t('Sign in')}
-                </MainButton>
+                <MainButton onClick={() => setSignInOpen(true)}>{t('Sign in')}</MainButton>
               )}
             </div>
           </div>
         </nav>
       </header>
-      <Modal
-        preventClickOutsideToClose
-        open={signInOpen || signUpOpen}
-        setOpen={() => {
-          setSignInOpen(false)
-          setSignUpOpen(false)
-        }}>
-        <div className='relative min-h-[40vh]'>
-          <SignInModal
-            show={signInOpen}
-            openSignUpModal={() => {
-              setSignUpOpen(true)
-              setSignInOpen(false)
-            }}
-            setSignInOpen={setSignInOpen}
-            setForgotPasswordOpen={setForgotPasswordOpen}
-          />
-          <SignUpModal
-            show={signUpOpen}
-            openSignInModal={() => {
-              setSignInOpen(true)
-              setSignUpOpen(false)
-            }}
-            setSignUpOpen={setSignUpOpen}
-            setSignUpSuccessOpen={setSignUpSuccessOpen}
-          />
-        </div>
-      </Modal>
-
-      <Modal open={forgotPasswordOpen} setOpen={setForgotPasswordOpen}>
-        <ForgotPasswordModal onClose={() => setForgotPasswordOpen(false)} />
-      </Modal>
-      <Modal open={signUpSuccessOpen} setOpen={setSignUpSuccessOpen}>
-        <SignUpSuccessModal setSignUpOpen={setSignUpOpen} onClose={() => setSignUpSuccessOpen(false)} />
-      </Modal>
-      {migrateWalletOpen && <MigrateWalletModal open={migrateWalletOpen} setOpen={setMigrateWalletOpen} />}
     </>
   )
 }

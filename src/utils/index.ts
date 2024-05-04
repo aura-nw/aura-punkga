@@ -93,9 +93,6 @@ const createRandomString = () => {
   }
   return random
 }
-export const openSignInModal = () => {
-  ;(document.querySelector('#open-sign-in-btn') as any)?.click()
-}
 
 export const shorten = (string: string, preCh?: number, sufCh?: number) => {
   if (!string) return ''

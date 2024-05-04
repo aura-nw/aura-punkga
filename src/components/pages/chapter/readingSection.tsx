@@ -5,7 +5,6 @@ import {
   ChevronRightIcon,
   ChevronUpIcon,
 } from '@heroicons/react/24/outline'
-import Logo from 'assets/images/header-logo.svg'
 import FlashAnimation from 'components/AnimationIconHOC/Flash'
 import FilledButton from 'components/Button/FilledButton'
 import OutlineButton from 'components/Button/OutlineButton'
@@ -22,9 +21,9 @@ import HeartOutlineIcon from 'images/icons/heart_outline.svg'
 import MinscreenIcon from 'images/icons/minscreen.svg'
 import SquareArrowLeftIcon from 'images/icons/square_arrow_left_outline.svg'
 import SquareArrowRightIcon from 'images/icons/square_arrow_right_outline.svg'
+import Ninja3 from 'images/ninja-3.svg'
 import _ from 'lodash'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { isMobile } from 'react-device-detect'
@@ -32,12 +31,11 @@ import { useTranslation } from 'react-i18next'
 import { CHAPTER_STATUS, CHAPTER_TYPE } from 'src/constants/chapter.constant'
 import { LanguageType } from 'src/constants/global.types'
 import { Context } from 'src/context'
+import { ModalContext } from 'src/context/modals'
 import { IChapter } from 'src/models/chapter'
 import { IComicDetail } from 'src/models/comic'
 import { subscribe, unsubscribe } from 'src/services'
-import { openSignInModal } from 'src/utils'
 import { getItem, setItem } from 'src/utils/localStorage'
-import Ninja3 from 'images/ninja-3.svg';
 export default function ReadingSection({
   openComments,
   setOpenComments,
@@ -79,7 +77,7 @@ export default function ReadingSection({
   const { account } = useContext(Context)
   const { t } = useTranslation()
   const router = useRouter()
-
+  const { setSignInOpen } = useContext(ModalContext)
   const subscribeHandler = (isSub: boolean) => {
     if (account?.verified && account?.name) {
       if (isSub) {
@@ -89,7 +87,7 @@ export default function ReadingSection({
       }
       setIsSubscribe(isSub)
     } else {
-      openSignInModal()
+      setSignInOpen(true)
     }
   }
 
@@ -198,7 +196,7 @@ export default function ReadingSection({
               {t('This is account only chapter')}. {t('Please')}{' '}
               <a
                 className='text-second-color underline font-semibold cursor-pointer'
-                onClick={() => (document.querySelector('#open-sign-in-btn') as any)?.click()}>
+                onClick={() => setSignInOpen(true)}>
                 {t('sign in')}
               </a>{' '}
               {t('to countinue reading')}!

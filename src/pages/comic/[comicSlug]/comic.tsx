@@ -1,12 +1,11 @@
 import { Tab } from '@headlessui/react';
-import { BellAlertIcon, EyeIcon, HeartIcon, BellIcon } from '@heroicons/react/20/solid';
+import { BellAlertIcon, BellIcon, EyeIcon, HeartIcon } from '@heroicons/react/20/solid';
 import { BellAlertIcon as BellAlertIconOutline } from '@heroicons/react/24/outline';
 import FilledButton from 'components/Button/FilledButton';
 import OutlineButton from 'components/Button/OutlineButton';
 import Footer from 'components/Footer';
 import Header from 'components/Header';
 import Tag from 'components/Label/Tag';
-import NFTList from 'components/pages/chapter/nftList';
 import ChapterList from 'components/pages/comic/ChapterList';
 import Introduction from 'components/pages/comic/Introduction';
 import Ninja from 'images/ninja-2.svg';
@@ -19,8 +18,8 @@ import { useTranslation } from 'react-i18next';
 import mockAvar from 'src/assets/images/mockup4.png';
 import { LanguageType } from 'src/constants/global.types';
 import { Context } from 'src/context';
+import { ModalContext } from 'src/context/modals';
 import { subscribe, unsubscribe } from 'src/services';
-import { openSignInModal } from 'src/utils';
 export default function Page(props) {
   if (props.justHead) {
     return <></>;
@@ -28,6 +27,7 @@ export default function Page(props) {
   return <Comic {...props} />;
 }
 function Comic({ comicDetails, like, unlike }) {
+  const {setSignInOpen} = useContext(ModalContext)
   const { t } = useTranslation();
   const { locale } = useRouter();
   const [language, setLanguage] = useState<LanguageType>(
@@ -69,7 +69,7 @@ function Comic({ comicDetails, like, unlike }) {
       }
       setIsSubscribe(isSub);
     } else {
-      openSignInModal();
+      setSignInOpen(true);
     }
   };
   return (

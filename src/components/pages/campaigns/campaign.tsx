@@ -14,11 +14,12 @@ import { Campaign } from 'src/models/campaign'
 import { getCampaigns } from 'src/services'
 import useSWR from 'swr'
 import IllusImage from './assets/illus.svg'
-import { openSignInModal } from 'src/utils'
 import Mascot3 from 'components/pages/campaigns/assets/Mascot3.svg'
+import { ModalContext } from 'src/context/modals'
 
 export default function CampaignPage() {
   const { account } = useContext(Context)
+  const { setSignInOpen } = useContext(ModalContext)
   const router = useRouter()
   const { t } = useTranslation()
   const { data } = useSWR(
@@ -56,7 +57,7 @@ export default function CampaignPage() {
       if (account) {
         router.push(`/campaigns/${slug}`)
       } else {
-        openSignInModal()
+        setSignInOpen(true)
       }
     } catch (error) {
       console.log(error)
@@ -85,7 +86,7 @@ export default function CampaignPage() {
                   if (account) {
                     setEnrolledChecked(!enrolledChecked)
                   } else {
-                    openSignInModal()
+                    setSignInOpen(true)
                   }
                 }}
               />
@@ -126,7 +127,7 @@ export default function CampaignPage() {
                     if (account) {
                       setEnrolledChecked(!enrolledChecked)
                     } else {
-                      openSignInModal()
+                      setSignInOpen(true)
                     }
                   }}
                 />

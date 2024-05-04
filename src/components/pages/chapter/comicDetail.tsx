@@ -1,7 +1,6 @@
 import { Tab } from '@headlessui/react';
-import { ArrowRightIcon, BellAlertIcon } from '@heroicons/react/20/solid';
+import { ArrowRightIcon, BellAlertIcon, BellIcon, EyeIcon, HeartIcon } from '@heroicons/react/20/solid';
 import { BellAlertIcon as BellAlertIconOutline } from '@heroicons/react/24/outline';
-import { BellIcon, EyeIcon, HeartIcon } from '@heroicons/react/20/solid';
 import FilledButton from 'components/Button/FilledButton';
 import OutlineButton from 'components/Button/OutlineButton';
 import LazyImage from 'components/Image';
@@ -19,13 +18,12 @@ import mockAvar from 'src/assets/images/mockup4.png';
 import { CHAPTER_STATUS } from 'src/constants/chapter.constant';
 import { LanguageType } from 'src/constants/global.types';
 import { Context } from 'src/context';
+import { ModalContext } from 'src/context/modals';
 import { IComicDetail } from 'src/models/comic';
 import { subscribe, unsubscribe } from 'src/services';
-import ChapterList from './chapterList';
-import NFTList from './nftList';
-import { openSignInModal } from 'src/utils';
 import Introduction from '../comic/Introduction';
 import NFTsList from '../comic/NFTsList';
+import ChapterList from './chapterList';
 
 export default function ComicDetail({
   data,
@@ -60,6 +58,7 @@ export default function ComicDetail({
 }) {
   const [expandDetail, setExpandDetail] = useState(false);
   const [expandDescription, setExpandDescription] = useState(false);
+  const {setSignInOpen} = useContext(ModalContext)
   const { t } = useTranslation();
   const { account } = useContext(Context);
   const tabRef = useRef<any>();
@@ -82,7 +81,7 @@ export default function ComicDetail({
       setIsSubscribe(isSub);
       //refetch data
     } else {
-      openSignInModal();
+      setSignInOpen(true)
     }
   };
 
@@ -292,9 +291,7 @@ export default function ComicDetail({
                 <a
                   className="text-second-color underline font-semibold cursor-pointer"
                   onClick={() =>
-                    (
-                      document.querySelector('#open-sign-in-btn') as any
-                    )?.click()
+                    setSignInOpen(true)
                   }
                 >
                   {t('Sign in')}

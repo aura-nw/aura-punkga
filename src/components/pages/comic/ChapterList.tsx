@@ -1,28 +1,28 @@
-import { ArrowsUpDownIcon, DocumentTextIcon, EyeIcon } from '@heroicons/react/20/solid'
+import { EyeIcon } from '@heroicons/react/20/solid'
+import TextField from 'components/Input/TextField'
 import StatusLabel from 'components/Label/Status'
 import LockIcon from 'images/icons/Lock.svg'
+import ArrowSwapIcon from 'images/icons/arrow-swap-light.svg'
+import HeartFillIcon from 'images/icons/heart_fill_primary.svg'
+import HeartOutlineIcon from 'images/icons/heart_outline.svg'
+import NoteIcon from 'images/icons/ic_note.svg'
 import moment from 'moment'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import m6 from 'src/assets/images/mockup6.png'
-import TextField from 'components/Input/TextField'
-import HeartFillIcon from 'images/icons/heart_fill_primary.svg'
-import HeartOutlineIcon from 'images/icons/heart_outline.svg'
 import { useContext, useState } from 'react'
-import { Context } from 'src/context'
-import NoteIcon from 'images/icons/ic_note.svg'
-import ArrowSwapIcon from 'images/icons/arrow-swap-light.svg'
-import { IChapter } from 'src/models/chapter'
 import { useTranslation } from 'react-i18next'
+import m6 from 'src/assets/images/mockup6.png'
 import { CHAPTER_STATUS, CHAPTER_TYPE } from 'src/constants/chapter.constant'
-import { openSignInModal } from 'src/utils'
+import { Context } from 'src/context'
+import { ModalContext } from 'src/context/modals'
+import { IChapter } from 'src/models/chapter'
 
 export default function ChapterList({ list, like, unlike, setComicLikes, hasAccess }) {
   const { account } = useContext(Context);
   const { t } = useTranslation()
   const [isDesc, setIsDesc] = useState(true)
   const [searchChapter, setSearchChapter] = useState('')
-  const { locale } = useRouter()
+  const { setSignInOpen } = useContext(ModalContext)
   return (
     <div>
       <div className='w-full bg-[#414141] text-medium-gray py-2 px-6 flex items-center justify-between'>
@@ -46,7 +46,7 @@ export default function ChapterList({ list, like, unlike, setComicLikes, hasAcce
           <p className='italic text-subtle-dark text-xs leading-8'>
             <a
               className='text-second-color underline font-semibold cursor-pointer'
-              onClick={() => (document.querySelector('#open-sign-in-btn') as any)?.click()}>
+              onClick={() => setSignInOpen(true)}>
               {t('Sign in')}
             </a>{' '}
             {t('to unlock special chapters')}!
@@ -94,6 +94,7 @@ const Chapter = ({
   const { t } = useTranslation()
   const [isLiked, setIsLiked] = useState(chapter.isLiked)
   const [likes, setLikes] = useState(chapter.likes)
+  const {setSignInOpen} = useContext(ModalContext)
   const likeHandler = (isLike: boolean) => {
     if (account?.verified && account?.name) {
       if (isLike) {
@@ -107,7 +108,7 @@ const Chapter = ({
       }
       setIsLiked(isLike)
     } else {
-      openSignInModal()
+      setSignInOpen(true)
     }
   }
   const unavailable =

@@ -20,7 +20,7 @@ import { useContext, useEffect, useState } from 'react'
 import m6 from 'src/assets/images/mockup6.png'
 import { CHAPTER_STATUS, CHAPTER_TYPE } from 'src/constants/chapter.constant'
 import { Context } from 'src/context'
-import { openSignInModal } from 'src/utils'
+import { ModalContext } from 'src/context/modals'
 
 export default function ChapterList({
   data,
@@ -179,6 +179,7 @@ const Chapter = ({
   const [isLiked, setIsLiked] = useState(defaultIsLiked || chapter.isLiked || false)
   const [likes, setLikes] = useState(defaultLike || chapter.likes || 0)
   const { t } = useTranslation()
+  const { setSignInOpen } = useContext(ModalContext)
   const router = useRouter()
   useEffect(() => {
     setLikes(defaultLike || 0)
@@ -200,7 +201,7 @@ const Chapter = ({
       }
       setIsLiked(isLike)
     } else {
-      openSignInModal()
+      setSignInOpen(true)
     }
   }
   const unavailable =

@@ -9,8 +9,9 @@ import { useRouter } from 'next/router'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
+import { ModalContext } from 'src/context/modals'
 import { validateEmail } from 'src/utils'
-export default function SignInModal({ show, openSignUpModal, setSignInOpen, setForgotPasswordOpen }) {
+export default function SignInModal({ show, openSignUpModal, setForgotPasswordOpen }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const emailRef = useRef<any>()
@@ -23,6 +24,7 @@ export default function SignInModal({ show, openSignUpModal, setSignInOpen, setF
   const [loginLoading, setLoginLoading] = useState(false)
   const router = useRouter()
   const { login, oauth } = useContext(Context)
+  const { setSignInOpen } = useContext(ModalContext)
 
   useEffect(() => {
     setEmailValidateErrorMsg('')

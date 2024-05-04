@@ -13,6 +13,7 @@ import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache, split } from '@a
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
 import { createClient } from 'graphql-ws'
 import { getMainDefinition } from '@apollo/client/utilities'
+import ModalProvider from './modals'
 
 export const Context = createContext<{
   account?: IUser
@@ -348,7 +349,9 @@ function ContextProvider({ children }) {
         forgotPassword,
         resetPassword,
       }}>
-      <ApolloProvider client={client}>{children}</ApolloProvider>
+      <ApolloProvider client={client}>
+        <ModalProvider>{children}</ModalProvider>
+      </ApolloProvider>
     </Context.Provider>
   )
 }
