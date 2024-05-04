@@ -57,7 +57,7 @@ export default function OutlineTextField({
           className={`leading-[18px] text-sm rounded-[8px] w-full p-[10px] placeholder-medium-gray focus:outline-none border border-solid border-light-medium-gray ${
             leadingComponent ? 'pl-[45px]' : ''
           } ${trailingComponent ? (type == 'password' ? 'pr-20' : 'pr-[45px]') : ''} ${
-            disabled ? 'bg-light-medium-gray cursor-not-allowed' : 'bg-white'
+            disabled ? 'bg-[#414141] cursor-not-allowed' : 'bg-white'
           } ${className}`}
           placeholder={placeholder}></input>
         {trailingComponent && (

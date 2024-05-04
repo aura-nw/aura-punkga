@@ -41,8 +41,8 @@ export default function Modal({ open, setOpen, children, hideClose, preventClick
                       <path
                         d='M18 6.00005L6 18M5.99995 6L17.9999 18'
                         stroke='#ABABAB'
-                        stroke-width='2'
-                        stroke-linecap='round'
+                        strokeWidth='2'
+                        strokeLinecap='round'
                       />
                     </svg>
                   </div>

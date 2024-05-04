@@ -172,7 +172,7 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, show
         {/* <div className='text-xs font-medium leading-6 text-red-600 min-h-[24px] text-center'>{signUpErrorMsg}</div> */}
         <div className='mt-1 text-[#61646B] text-xs text-center leading-[15px]'>
           {t('Already have an account?')}{' '}
-          <a className='text-second-color' onClick={openSignInModal}>
+          <a className='text-[#2684FC]' onClick={openSignInModal}>
             {t('Sign in')}
           </a>
         </div>

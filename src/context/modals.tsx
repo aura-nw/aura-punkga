@@ -188,7 +188,7 @@ function ModalProvider({ children }) {
                 <p className='text-xs mt-1 text-center'>
                   {t('Or')}{' '}
                   <a
-                    className='text-second-color'
+                    className='text-[#2684FC]'
                     onClick={() => {
                       setOpen(false)
                       setSignInOpen(true)
@@ -231,7 +231,7 @@ function ModalProvider({ children }) {
               <p className='text-xs mt-1 text-center'>
                 {t('Or')}{' '}
                 <a
-                  className='text-second-color '
+                  className='text-[#2684FC] '
                   onClick={() => {
                     setOpen(false)
                     setSignInOpen(true)
