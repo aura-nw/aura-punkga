@@ -8,7 +8,7 @@ import { validateEmail, validatePassword } from 'src/utils'
 import CheckSquare from 'images/icons/check_square_fill.svg'
 import { useTranslation } from 'react-i18next'
 import MainButton from 'components/Button/MainButton'
-export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setSignUpSuccessOpen }) {
+export default function SignUpModal({ show, openSignInModal, setSignUpOpen, showEmailVerification }) {
   const [email, setEmail] = useState('')
   const [emailValidateErrorMsg, setEmailValidateErrorMsg] = useState('')
   const [username, setUsername] = useState('')
@@ -80,7 +80,7 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
   const signUpCallBack = (status, msg: string) => {
     if (status === 'success') {
       setSignUpOpen(false)
-      setSignUpSuccessOpen(true)
+      showEmailVerification(email)
     } else {
       if (msg.includes('has already signed up')) setEmailValidateErrorMsg(t('Email has been registered'))
       else if (msg.includes('authorizer_users_nickname_key')) setUsernameValidateErrorMsg(t('Name already taken'))

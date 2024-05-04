@@ -261,13 +261,6 @@ function ContextProvider({ children }) {
       })
       if (res) {
         callback && callback('success')
-        setAccount({
-          email: res.user.email,
-          name: res.user.nickname,
-          image: res.user.picture,
-          id: res.user.id,
-          verified: res.user.email_verified,
-        } as IUser)
       }
     } catch (error) {
       callback && callback('failed', error.message)
