@@ -134,7 +134,7 @@
   "Re-enter new password": "Nhập lại mật khẩu mới",
   "Confirm": "Xác nhận",
   "Successful password set up": "Thiết lập mật khẩu thành công",
-  "You can now use the new password to sign in to your account": "Bạn đã có thể sử dụng mật khẩu mới để đăng nhập vào tài khoản của mình",
+  "You can use the new password to log in Punkga now": "Bạn đã có thể sử dụng mật khẩu mới để đăng nhập vào tài khoản của mình",
   "Explore": "Khám phá",
   "Write a comment": "Bình luận",
   "about-us-general": "PUNKGA là một dự án nhằm xây dựng một nền tảng truyện tranh chuyên nghiệp dành cho các họa sĩ truyện tranh với chủ đề Cyberpunk. Dự án mục tiêu thương mại hóa thông qua giao dịch các NFT được tạo ra bởi các họa sĩ Manga. Người dùng không chỉ sở hữu NFT mà còn có thể đóng góp để trở thành một phần của câu chuyện theo nhiều cách khác nhau.",
@@ -251,5 +251,6 @@
   "Your level": "Cấp của bạn",
   "Balance": "Số dư",
   "Resend": "Gửi lại",
+  "Please check your email.": "Vui lòng kiểm tra email của bạn.",
   "You can use the new password to log in Punkga now": "Bạn đã có thể sử dụng mật khẩu mới để đăng nhập vào Punkga"
 }

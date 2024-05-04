@@ -155,7 +155,7 @@ export default function ChangingPasswordModal({ open, setOpen }) {
           <Image src={SuccessImg} alt='' className='mx-auto h-[188px]' />
           <div className='flex flex-col gap-2'>
             <p className='text-sm leading-[18px] font-semibold text-center w-[246px] mx-auto'>
-              {t('You can now use the new password to sign in to your account')}
+              {t('You can use the new password to log in Punkga now')}
             </p>
             <FilledButton
               className=''

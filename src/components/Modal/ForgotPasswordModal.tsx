@@ -78,7 +78,7 @@ export default function ForgotPasswordModal({ onClose }) {
               <span className='text-second-color cursor-pointer'>{email}</span>.
             </p>
             <p className='text-sm leading-[18px] text-center line-clamp-1'>
-              {t('Please click on the link to change your password.')}
+              {t('Please check your email.')}
             </p>
           </div>
           <div className='flex flex-col text-center text-sm leading-[18px] text-subtle-dark mt-3'>
