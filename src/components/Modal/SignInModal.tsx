@@ -129,14 +129,14 @@ export default function SignInModal({ show, openSignUpModal, setForgotPasswordOp
           </div>
           <div className='my-4 text-sm leading-[18px] text-[#414141]'>{t('or')}</div>
           <div className='flex gap-4 w-full items-center'>
-            <MainButton
+            {/* <MainButton
               iconOnly={Facebook}
               onClick={() => oauth('facebook')}
               style='outline'
               size='small'
               className='w-full'
             />
-            <MainButton iconOnly={Zalo} onClick={() => oauth('zalo')} style='outline' size='small' className='w-full' />
+            <MainButton iconOnly={Zalo} onClick={() => oauth('zalo')} style='outline' size='small' className='w-full' /> */}
             <MainButton
               iconOnly={Google}
               onClick={() => oauth('google')}
