@@ -170,7 +170,7 @@ function ModalProvider({ children }) {
           account?.name ? (
             <></>
           ) : (
-            <Modal open={true} setOpen={setOpen}>
+            <Modal open={open} setOpen={setOpen}>
               <div className='p-6 flex flex-col w-[322px]'>
                 <div className='text-xl font-bold leading-6 text-center'>{t('Set a username')}</div>
                 <div className='mt-6'>
