@@ -47,19 +47,19 @@ export default function TrendingComic(props: IComic) {
           <div>
             <Link
               href={`/comic/${props.slug}`}
-              className='font-extrabold text-sm leading-[18px] text-second-color md:text-base md:leading-5 xl:hidden'>
+              className='font-semibold text-xs leading-[18px] text-second-color md:text-sm md:leading-5 xl:hidden'>
               {props[locale].title}
             </Link>
             <Link
               href={`/comic/${props.slug}/chapter/1`}
-              className='font-extrabold text-second-color text-base leading-5 hidden xl:block'>
+              className='font-semibold text-second-color text-sm leading-5 hidden xl:block'>
               {props[locale].title}
             </Link>
-            <div className='text-sm leading-4 md:text-base text-subtle-dark '>
+            <div className='text-xs leading-4 md:text-xs text-white mt-[10px]'>
               <span>{t('by')} </span>
               {props.authors.map((author, index) => (
                 <Fragment key={index}>
-                  <span className='font-semibold text-second-color'>
+                  <span className='text-second-color text-xs'>
                     {author.slug ? (
                       <Link className='author' href={`/artist/${author.slug}`}>
                         {t(author.name)}
@@ -75,13 +75,13 @@ export default function TrendingComic(props: IComic) {
           </div>
         </div>
         <div>
-          <div className='text-subtle-dark md:text-medium-gray flex gap-[10px]'>
-            <div className='flex items-center text-sm leading-4 md:leading-5 font-medium text-subtle-dark'>
+          <div className='text-white md:text-medium-gray flex gap-[10px]'>
+            <div className='flex items-center text-xs leading-4 md:leading-5 font-medium text-white'>
               <span className='inline mr-1'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
-                  width='14'
-                  height='14'
+                  width='12'
+                  height='12'
                   viewBox='0 0 24 24'
                   fill='none'
                   className='w-[14px] aspect-square'>
@@ -100,8 +100,8 @@ export default function TrendingComic(props: IComic) {
               {props.views.toLocaleString('en-US')}
             </div>
           </div>
-          {!!props.latestChap.number && (
-            <div className='text-sm md:text-base text-subtle-dark'>
+          {/* {!!props.latestChap.number && (
+            <div className='text-sm md:text-base text-white'>
               {t('Latest')}:{' '}
               <Link
                 href={`/comic/${props.slug}/chapter/${props.latestChap.number}`}
@@ -109,7 +109,7 @@ export default function TrendingComic(props: IComic) {
                 {t('Chap')} #{props.latestChap.number}
               </Link>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>
