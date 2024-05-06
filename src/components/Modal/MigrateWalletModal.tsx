@@ -1,27 +1,26 @@
+import { makeSignDoc } from '@cosmjs/amino'
 import { useChain, useWallet } from '@cosmos-kit/react'
+import Mascot from 'assets/images/Mascot_5_1.png'
+import C98WalletImage from 'assets/images/c98.png'
+import KeplrWalletImage from 'assets/images/keplr.png'
+import MainButton from 'components/Button/MainButton'
 import Modal from 'components/Modal'
-import FilledButton from 'components/core/Button/FilledButton'
-import Mail from 'images/Mail.svg'
 import getConfig from 'next/config'
 import Image from 'next/image'
 import { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Context } from 'src/context'
-import KeplrWalletImage from 'assets/images/keplr.png'
-import C98WalletImage from 'assets/images/c98.png'
-import OutlineButton from 'components/core/Button/OutlinedButton'
-import { makeSignDoc } from '@cosmjs/amino'
 import { toast } from 'react-toastify'
-import { getRequestLog, linkWallet } from 'src/services'
+import { Context } from 'src/context'
+import { ModalContext } from 'src/context/modals'
 import useLocalStorage from 'src/hooks/useLocalStorage'
-import Mascot from 'assets/images/Mascot_5_1.png'
-import MainButton from 'components/Button/MainButton'
-export default function MigrateWalletModal({ open, setOpen }) {
-  const { account, getProfile } = useContext(Context)
+import { getRequestLog, linkWallet } from 'src/services'
+export default function MigrateWalletModal() {
+  const { getProfile } = useContext(Context)
+  const { migrateWalletOpen: open, setMigrateWalletOpen: setOpen } = useContext(ModalContext)
   const { t } = useTranslation()
-  const chainName = getConfig().CHAIN_ID.includes('xstaxy') ? 'aura' : 'auratestnet'
-  const { connect, walletRepo, address, disconnect, chain } = useChain(chainName)
-  const { status: globalStatus, mainWallet } = useWallet()
+  const chainName = getConfig().CHAIN_ID.includes('xstaxy') ? 'aura' : 'aura_6321-3'
+  const { walletRepo, address, disconnect, chain } = useChain(chainName)
+  const { mainWallet } = useWallet()
   const [success, setSuccess] = useState(undefined)
   const [requestId, setRequestId] = useLocalStorage('request_id', undefined)
   const [step, setStep] = useState(1)
@@ -205,10 +204,11 @@ ${Date.now()}`
                 return wallet.walletName.includes('keplr') ? (
                   <div
                     key={index}
-                    className={`py-3 flex gap-2 items-center ${wallet.walletStatus == 'NotExist'
+                    className={`py-3 flex gap-2 items-center ${
+                      wallet.walletStatus == 'NotExist'
                         ? 'cursor-not-allowed opacity-60 pointer-events-none'
                         : 'cursor-pointer'
-                      }`}
+                    }`}
                     onClick={() => wallet.connect(true)}>
                     {wallet.walletStatus == 'Connecting' ? (
                       <svg
@@ -228,10 +228,11 @@ ${Date.now()}`
                 ) : (
                   <div
                     key={index}
-                    className={`py-3 flex gap-2 items-center ${wallet.walletStatus == 'NotExist'
+                    className={`py-3 flex gap-2 items-center ${
+                      wallet.walletStatus == 'NotExist'
                         ? 'cursor-not-allowed opacity-60 pointer-events-none'
                         : 'cursor-pointer'
-                      }`}
+                    }`}
                     onClick={() => wallet.connect(true)}>
                     {wallet.walletStatus == 'Connecting' ? (
                       <svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none'>

@@ -3,8 +3,10 @@ import Image from 'next/image'
 import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
-export default function SignUpSuccessModal({ setSignUpOpen, onClose, email }) {
+import { ModalContext } from 'src/context/modals'
+export default function SignUpSuccessModal({ email }) {
   const { resendVerifyEmail } = useContext(Context)
+  const { setSignUpOpen, setSignUpSuccessOpen } = useContext(ModalContext)
   const { t } = useTranslation()
   return (
     <div className={` py-6 px-[60px] flex flex-col gap-4 w-full max-w-[670px]`}>
@@ -27,7 +29,7 @@ export default function SignUpSuccessModal({ setSignUpOpen, onClose, email }) {
           <span
             className='text-second-color font-bold cursor-pointer'
             onClick={() => {
-              onClose()
+              setSignUpSuccessOpen(false)
               setSignUpOpen(true)
             }}>
             {t('sign up')}
