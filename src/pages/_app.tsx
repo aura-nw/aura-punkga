@@ -172,8 +172,8 @@ function MyApp(props: AppProps) {
       <ToastContainer />
       <ContextProvider>
         <ChainProvider
-          chains={[...testnetChains, ...chains.filter((chain) => chain.chain_name == 'aura')]}
-          assetLists={[...testnetAssets, ...networkAssets.filter((chain) => chain.chain_name == 'aura')]}
+          chains={[...testnetChains, ...chains.filter((chain) => chain.chain_name == 'aura')] as any}
+          assetLists={[...testnetAssets, ...networkAssets.filter((chain) => chain.chain_name == 'aura')] as any}
           signerOptions={signerOptions as any}
           endpointOptions={{
             isLazy: true,
