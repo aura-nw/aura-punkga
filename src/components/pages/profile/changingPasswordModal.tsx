@@ -152,7 +152,7 @@ export default function ChangingPasswordModal({ open, setOpen }) {
             success ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}>
           <p className='text-center text-xl leading-6 font-bold'>{t('Successful password change')}!</p>
-          <Image src={SuccessImg} alt='' className='mx-auto h-[188px] w-auto' />
+          <Image src={SuccessImg} alt='' className='w-[188px] mx-auto max-h-[188px]' />
           <div className='flex flex-col gap-2'>
             <p className='text-sm leading-[18px] font-semibold text-center w-[246px] mx-auto'>
               {t('You can use the new password to log in Punkga now')}
