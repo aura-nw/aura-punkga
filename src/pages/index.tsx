@@ -191,9 +191,9 @@ function Home() {
               <SlideSection sliderNavRef={sliderNavRef} />
               {/* <LeaderBoard /> */}
             </div>
-            <div className='flex flex-col p-6 bg-[#f0f0f0] rounded-[10px] mt-10'>
-              <div className='md:text-xl text-sm md:leading-[25px] font-[800]'>
-                {t('Trending')}
+            <div className='flex flex-col p-6 bg-[#292929] text-white rounded-[10px] mt-10'>
+              <div className='md:text-xl text-sm md:leading-[25px] font-[800] mb-4 md:mb-6'>
+              🔥{t('Trending')}
               </div>
               <div className='flex flex-col gap-10 mt-2 md:mt-6'>
                 {trendingComic.loading
