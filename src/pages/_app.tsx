@@ -4,7 +4,7 @@ import { wallets as keplrExtension } from '@cosmos-kit/keplr-extension'
 import { ChainProvider } from '@cosmos-kit/react'
 import '@interchain-ui/react/styles'
 import axios from 'axios'
-import { assets, chains } from 'chain-registry'
+import { chains, assets as networkAssets } from 'chain-registry'
 import HeadComponent from 'components/Head'
 import MaintainPage from 'components/pages/maintainPage'
 import moment from 'moment'
@@ -66,7 +66,42 @@ const masgistral = localFont({
     },
   ],
 })
-
+const testnetChains: Chain[] = [
+  {
+    bech32_prefix: 'aura',
+    chain_id: 'aura_6321-3',
+    chain_name: 'aura_6321-3',
+    network_type: 'testnet',
+    pretty_name: 'Aura Euphoria Network',
+    slip44: 118,
+    status: 'live',
+    explorers: [
+      {
+        url: 'https://rpc.euphoria.aura.network',
+      },
+      {
+        url: 'https://lcd.euphoria.aura.network',
+      },
+    ],
+  },
+]
+const testnetAssets: AssetList[] = [
+  {
+    assets: [
+      {
+        base: 'ueaura',
+        denom_units: [
+          { denom: 'ueaura', exponent: 0 },
+          { denom: 'eaura', exponent: 6 },
+        ],
+        display: 'eaura',
+        name: 'Aura',
+        symbol: 'EAURA',
+      },
+    ],
+    chain_name: 'aura_6321-3',
+  },
+]
 const signerOptions = {
   preferredSignType: (chain: Chain) => {
     return 'direct'
@@ -137,23 +172,21 @@ function MyApp(props: AppProps) {
       <ToastContainer />
       <ContextProvider>
         <ChainProvider
-          chains={chains.filter((chain) => chain.chain_name == 'aura' || chain.chain_name == 'auratestnet')}
-          assetLists={
-            assets.filter((chain) => chain.chain_name == 'aura' || chain.chain_name == 'auratestnet') as AssetList[]
-          }
-          wallets={isMobile ? [...c98Mobile, ...keplrExtension] : [...c98Extension, ...keplrExtension]}
+          chains={[...testnetChains, ...chains.filter((chain) => chain.chain_name == 'aura')] as any}
+          assetLists={[...testnetAssets, ...networkAssets.filter((chain) => chain.chain_name == 'aura')] as any}
           signerOptions={signerOptions as any}
           endpointOptions={{
             isLazy: true,
             endpoints: {
-              auradevnet: {
-                rpc: ['https://rpc.dev.aura.network'],
+              aura_euphoria_evm: {
+                rpc: ['https://rpc.euphoria.aura.network'],
               },
               aura: {
                 rpc: ['https://rpc.aura.network'],
               },
             },
           }}
+          wallets={isMobile ? [...c98Mobile, ...keplrExtension] : [...c98Extension, ...keplrExtension]}
           walletConnectOptions={
             isMobile
               ? {

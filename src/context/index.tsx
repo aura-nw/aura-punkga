@@ -189,10 +189,11 @@ function ContextProvider({ children }) {
           rank: res.rank || 999999,
           activeWalletAddress: res.active_wallet_address,
         } as IUser)
-        return res
-      } else {
+      }
+      if (!res.email_verified_at) {
         removeItem('token')
       }
+      return res
     } catch (error) {
       removeItem('token')
       console.log('getProfile', error)
