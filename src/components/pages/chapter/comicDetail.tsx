@@ -1,7 +1,6 @@
 import { Tab } from '@headlessui/react';
-import { ArrowRightIcon, BellAlertIcon } from '@heroicons/react/20/solid';
+import { ArrowRightIcon, BellAlertIcon, BellIcon, EyeIcon, HeartIcon } from '@heroicons/react/20/solid';
 import { BellAlertIcon as BellAlertIconOutline } from '@heroicons/react/24/outline';
-import { BellIcon, EyeIcon, HeartIcon } from '@heroicons/react/20/solid';
 import FilledButton from 'components/Button/FilledButton';
 import OutlineButton from 'components/Button/OutlineButton';
 import LazyImage from 'components/Image';
@@ -19,13 +18,12 @@ import mockAvar from 'src/assets/images/mockup4.png';
 import { CHAPTER_STATUS } from 'src/constants/chapter.constant';
 import { LanguageType } from 'src/constants/global.types';
 import { Context } from 'src/context';
+import { ModalContext } from 'src/context/modals';
 import { IComicDetail } from 'src/models/comic';
 import { subscribe, unsubscribe } from 'src/services';
-import ChapterList from './chapterList';
-import NFTList from './nftList';
-import { openSignInModal } from 'src/utils';
 import Introduction from '../comic/Introduction';
 import NFTsList from '../comic/NFTsList';
+import ChapterList from './chapterList';
 
 export default function ComicDetail({
   data,
@@ -60,6 +58,7 @@ export default function ComicDetail({
 }) {
   const [expandDetail, setExpandDetail] = useState(false);
   const [expandDescription, setExpandDescription] = useState(false);
+  const {setSignInOpen} = useContext(ModalContext)
   const { t } = useTranslation();
   const { account } = useContext(Context);
   const tabRef = useRef<any>();
@@ -69,17 +68,20 @@ export default function ComicDetail({
       tabRef.current?.click();
     }
   }, [expandDetail]);
-
+  const [subChange, setSubChange] = useState(0);
   const subscribeHandler = (isSub: boolean) => {
     if (account?.verified && account?.name) {
       if (isSub) {
         subscribe(data.id);
+        setSubChange(subChange + 1);
       } else {
         unsubscribe(data.id);
+        setSubChange(subChange - 1);
       }
       setIsSubscribe(isSub);
+      //refetch data
     } else {
-      openSignInModal();
+      setSignInOpen(true)
     }
   };
 
@@ -120,19 +122,19 @@ export default function ComicDetail({
           </div>
         </div>
         <div className="relative">
-          <div className="h-[180px]">
+          <div className="max-h-[180px] aspect-[16/5]">
             <LazyImage
-              width={1000}
-              height={260}
+              width={576}
+              height={180}x
               src={data.cover || mockBanner}
-              className={`w-full h-full ${expandDetail ? 'h-[280px]' : 'h-[160px]'} duration-500 transition-all object-cover w-full`}
+              className={`h-full duration-500 transition-all object-fit w-full`}
               alt=""
             />
           </div>
           <div className="absolute right-0 bottom-0 p-2 flex items-end justify-end text-white w-full bg-gradient-to-b from-transparent to-gray-500 h-full">
             <div className="flex gap-3 items-center text-xs mt-3 font-semibold">
               <div className="flex items-end gap-1">
-                <span>{data.subscriptions.toLocaleString('en-US')}</span>
+                <span>{(data.subscriptions + subChange).toLocaleString('en-US')}</span>
                 <BellIcon className="w-5 h-5" />
               </div>
               •
@@ -206,23 +208,23 @@ export default function ComicDetail({
                 ))}
               </p>
               <div className="text-base font-semibold leading-5">
-                {data.authors.map((author, index) => (
-                  <Fragment key={index}>
-                    by{' '}
-                    <span className="text-second-color font-[600]">
-                      {author.slug ? (
-                        <Link
-                          className="author"
-                          href={`/artist/${author.slug}`}
-                        >
-                          {t(author.name)}
-                        </Link>
-                      ) : (
-                        t(author.name)
-                      )}
-                    </span>
-                  </Fragment>
-                ))}
+                <span>
+                  by{' '}
+                  {data.authors.map((author, index) => (
+                    <Fragment key={index}>
+                      <span className="text-second-color font-[600]">
+                        {author.slug ? (
+                          <Link className="author" href={`/artist/${author.slug}`}>
+                            {t(author.name)}
+                          </Link>
+                        ) : (
+                          t(author.name)
+                        )}
+                      </span>
+                      {index !== data.authors.length - 1 && ', '}
+                    </Fragment>
+                  ))}
+                </span>
               </div>
               {/* <p className="text-subtle-dark items-center">
                 <strong>{data.views?.toLocaleString('en-US')}</strong>{' '}
@@ -289,9 +291,7 @@ export default function ComicDetail({
                 <a
                   className="text-second-color underline font-semibold cursor-pointer"
                   onClick={() =>
-                    (
-                      document.querySelector('#open-sign-in-btn') as any
-                    )?.click()
+                    setSignInOpen(true)
                   }
                 >
                   {t('Sign in')}
@@ -382,7 +382,6 @@ export default function ComicDetail({
               <Tab.Panel className="flex-1 flex flex-col">
                 {/* {!!data.collections.length ? (
                   <NFTList theme={undefined} collections={data.collections} />
-
                   <NFTsList />
                 ) : ( */}
                 <div className="flex-1 w-full flex flex-col items-center justify-center my-[64px]">
@@ -392,10 +391,10 @@ export default function ComicDetail({
                     className="h-[260px] aspect-square mx-auto"
                   />
                   <div className="font-extrabold text-xl leading-6 mt-[10px]">
-                    Artist Composing
+                    {t('Artist Composing')}
                   </div>
                 </div>
-                {/* )} */}
+               {/* )}  */}
               </Tab.Panel>
               <Tab.Panel className="mt-5">
                 <Introduction data={data} language={language} />

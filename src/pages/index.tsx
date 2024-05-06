@@ -63,9 +63,9 @@ function Home() {
         prev.map((v) =>
           v.key == 'All genres'
             ? {
-                key: v.key,
-                value: t(v.key),
-              }
+              key: v.key,
+              value: t(v.key),
+            }
             : v
         )
       )
@@ -84,7 +84,7 @@ function Home() {
             <div className='hidden md:block'>
               <TaskSlider sliderNavRef={sliderNavRef} />
             </div>
-            <div className='mt-10 md:mt-[60px] flex flex-col gap-5 px-2'>
+            <div className='mt-10 md:mt-6 flex flex-col gap-5 px-2'>
               <div className='md:text-xl text-sm md:leading-[25px] font-[800]'>{t('Latest update')}</div>
               <div className='md:flex hidden gap-[20px] items-center'>
                 <FilledSelect
@@ -106,21 +106,21 @@ function Home() {
                   options={
                     allTags?.data
                       ? [
-                          {
-                            key: 'All genres',
-                            value: t('All genres'),
-                          },
-                          ...allTags?.data?.map((tag) => ({
-                            key: tag[locale],
-                            value: tag[locale],
-                          })),
-                        ]
+                        {
+                          key: 'All genres',
+                          value: t('All genres'),
+                        },
+                        ...allTags?.data?.map((tag) => ({
+                          key: tag[locale],
+                          value: tag[locale],
+                        })),
+                      ]
                       : [
-                          {
-                            key: 'All genres',
-                            value: t('All genres'),
-                          },
-                        ]
+                        {
+                          key: 'All genres',
+                          value: t('All genres'),
+                        },
+                      ]
                   }
                   placeholder={t('All genres')}
                 />
@@ -166,10 +166,10 @@ function Home() {
             <div className='grid md:grid-cols-1 grid-cols-2 2xl:grid-cols-2 gap-10 mt-2 md:mt-10'>
               {latestComic.loading
                 ? Array.apply(null, Array(2)).map((d, index) => {
-                    return <DummyComic key={index} />
-                  })
+                  return <DummyComic key={index} />
+                })
                 : latestComic.data?.length
-                ? latestComic.data
+                  ? latestComic.data
                     .filter((data) =>
                       statusFilter.length && !statusFilter.some((s) => s.key == 'All status')
                         ? statusFilter.some((filter) => data.status.text == filter?.key)
@@ -183,27 +183,32 @@ function Home() {
                     .map((data, index) => {
                       return <Comic key={index} {...data} />
                     })
-                : null}
+                  : null}
             </div>
           </div>
           <div className='lg:flex-auto lg:w-[32%] mt-6 lg:mt-0 '>
             <div className='hidden md:block'>
               <SlideSection sliderNavRef={sliderNavRef} />
-              <LeaderBoard />
+              {/* <LeaderBoard /> */}
             </div>
-            <div className='md:text-xl text-sm md:leading-[25px] font-[800] mt-10'>{t('Trending')}</div>
-            <div className='flex flex-col gap-10 mt-2 md:mt-10'>
-              {trendingComic.loading
-                ? Array.apply(null, Array(2)).map((d, index) => {
+            <div className='flex flex-col p-6 bg-[#f0f0f0] rounded-[10px] mt-10'>
+              <div className='md:text-xl text-sm md:leading-[25px] font-[800]'>
+                {t('Trending')}
+              </div>
+              <div className='flex flex-col gap-10 mt-2 md:mt-6'>
+                {trendingComic.loading
+                  ? Array.apply(null, Array(5)).map((d, index) => {
                     return <DummyComic key={index} />
                   })
-                : trendingComic.data.slice(0, 2).map((data, index) => {
+                  : trendingComic.data.slice(0, 5).map((data, index) => {
                     return <TrendingComic key={index} {...data} />
                   })}
+              </div>
             </div>
-            <div className='md:hidden'>
+
+            {/* <div className='md:hidden'>
               <LeaderBoard />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

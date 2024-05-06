@@ -7,7 +7,8 @@ import { Context } from 'src/context'
 import { validateEmail, validatePassword } from 'src/utils'
 import CheckSquare from 'images/icons/check_square_fill.svg'
 import { useTranslation } from 'react-i18next'
-export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setSignUpSuccessOpen }) {
+import MainButton from 'components/Button/MainButton'
+export default function SignUpModal({ show, openSignInModal, setSignUpOpen, showEmailVerification }) {
   const [email, setEmail] = useState('')
   const [emailValidateErrorMsg, setEmailValidateErrorMsg] = useState('')
   const [username, setUsername] = useState('')
@@ -79,7 +80,7 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
   const signUpCallBack = (status, msg: string) => {
     if (status === 'success') {
       setSignUpOpen(false)
-      setSignUpSuccessOpen(true)
+      showEmailVerification(email)
     } else {
       if (msg.includes('has already signed up')) setEmailValidateErrorMsg(t('Email has been registered'))
       else if (msg.includes('authorizer_users_nickname_key')) setUsernameValidateErrorMsg(t('Name already taken'))
@@ -98,11 +99,11 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
       leaveFrom='max-h-screen opacity-100'
       leaveTo='max-h-[0vh] opacity-0'>
       <div className='p-6 md:w-[400px]'>
-        <p className='text-center text-xl font-semibold leading-6'>{t('Sign up to Punkga.me')}</p>
-        <p className='text-center font-medium mt-2 text-gray-600'>
+        <p className='text-center text-xl font-bold leading-6'>{t('Sign up to Punkga.me')}</p>
+        <p className='text-center text-xs leading-[15px] max-w-[226px] mx-auto mt-1 text-[#61646B'>
           {t('Subscribe, receive notifications and unlock special chapters')}
         </p>
-        <div className='mt-[10px]'>
+        <div className='mt-3'>
           <OutlineTextField
             placeholder={t('Choose a username')}
             label={t('Username')}
@@ -160,22 +161,20 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, setS
             }}
           />
         </div>
-        <FilledButton
+        <MainButton
           buttonRef={buttonRef}
           loading={signUpLoading}
-          className='mx-auto mt-4'
-          size='lg'
+          className='w-full mt-3'
           disabled={!(username && email && password && repassword)}
           onClick={signUpHandler}>
           {t('Sign up')}
-        </FilledButton>
-        <div className='text-xs font-medium leading-6 text-red-600 min-h-[24px] text-center'>{signUpErrorMsg}</div>
-        <div className=' text-xs font-medium text-center leading-6'>
-          {t('Or')}{' '}
-          <a className='text-second-color font-semibold' onClick={openSignInModal}>
-            {t('sign in')}
-          </a>{' '}
-          {t('with another account')}
+        </MainButton>
+        {/* <div className='text-xs font-medium leading-6 text-red-600 min-h-[24px] text-center'>{signUpErrorMsg}</div> */}
+        <div className='mt-1 text-[#61646B] text-xs text-center leading-[15px]'>
+          {t('Already have an account?')}{' '}
+          <a className='text-[#2684FC]' onClick={openSignInModal}>
+            {t('Sign in')}
+          </a>
         </div>
       </div>
     </Transition>

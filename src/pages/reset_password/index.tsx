@@ -1,9 +1,9 @@
-import FilledButton from 'components/Button/FilledButton'
+import MainButton from 'components/Button/MainButton'
 import Footer from 'components/Footer'
 import Header from 'components/Header'
 import OutlineTextField from 'components/Input/TextField/Outline'
 import CheckSquare from 'images/icons/check_square_fill.svg'
-import SuccessImg from 'images/ninja.svg'
+import SuccessImg from 'images/Mascot2.png'
 import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Image from 'next/image'
@@ -12,7 +12,8 @@ import { useRouter } from 'next/router'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
-import { openSignInModal, validatePassword } from 'src/utils'
+import { ModalContext } from 'src/context/modals'
+import { validatePassword } from 'src/utils'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -29,6 +30,7 @@ function ResetPassword() {
   const [rePassword, setRePassword] = useState('')
   const [rePasswordError, setRePasswordError] = useState('')
   const { resetPassword } = useContext(Context)
+  const { setSignInOpen } = useContext(ModalContext)
   const r = useRef<any>()
   const [repasswordValidateSuccess, setRepasswordValidateSuccess] = useState(false)
   const router = useRouter()
@@ -61,8 +63,13 @@ function ResetPassword() {
       if (res) {
         setSuccess(true)
         return
+      } else {
+        if (res?.message) {
+          setRePasswordError(t(res?.message))
+        } else {
+          setRePasswordError(t('Something went wrong'))
+        }
       }
-      setRePasswordError(t('Something went wrong'))
     } catch (error) {
       setLoading(false)
     }
@@ -81,61 +88,55 @@ function ResetPassword() {
   return (
     <>
       <Header />
-      <div className='flex justify-center md:items-center min-h-[80vh]'>
-        <div className={`p-6 w-[322px] relative transition-all duration-300 ${success ? 'h-[400px]' : ''}`}>
-          <div className={` flex flex-col gap-3 transition-all duration-300 ${success ? 'opacity-0' : 'opacity-100'}`}>
-            <p className='text-center text-xl leading-6 font-semibold'>{t('Reset password')}</p>
-            <OutlineTextField
-              label={t('New password')}
-              value={newPassword}
-              onChange={setNewPassword}
-              type='password'
-              placeholder={t('Enter new password')}
-              onKeyDown={(e) => {
-                if (e.which == 13) {
-                  r.current?.focus()
-                }
-              }}
-            />
-            <OutlineTextField
-              label={t('Confirm new password')}
-              value={rePassword}
-              onChange={setRePassword}
-              type='password'
-              errorMsg={rePasswordError}
-              placeholder={t('Re-Enter new password')}
-              inputRef={r}
-              trailingComponent={repasswordValidateSuccess ? <Image src={CheckSquare} alt='' /> : null}
-            />
-            <FilledButton
-              disabled={!newPassword || !rePassword}
-              className='mt-2 mx-auto'
-              size='lg'
-              loading={loading}
-              onClick={setPasswordHandler}>
-              {t('Reset my password')}
-            </FilledButton>
-          </div>
-          <div
-            className={`absolute inset-0 py-6 px-4 flex flex-col gap-3 transition-all duration-300 ${
-              success ? 'opacity-100' : 'opacity-0 pointer-events-none'
-            }`}>
-            <p className='text-center text-xl leading-6 font-semibold'>{t('Successful password reset')}!</p>
-            <Image src={SuccessImg} alt='' className='mx-auto' />
-            <p className='text-sm leading-6 font-medium text-center w-[246px] mx-auto'>
-              {t('You can now use the new password to sign in to your account')}
-            </p>
-            <FilledButton
-              className='mt-2 mx-auto'
-              size='lg'
-              onClick={() => {
-                openSignInModal()
-              }}>
-              {t('Sign in')}
-            </FilledButton>
-          </div>
+      {!success ? (
+        <div className='flex justify-center md:items-center py-[120px] flex-col w-full max-w-[398px] mx-auto'>
+          <p className='text-center text-xl leading-6 font-bold mb-10'>{t('Reset password')}</p>
+          <OutlineTextField
+            label={t('New password')}
+            value={newPassword}
+            onChange={setNewPassword}
+            type='password'
+            placeholder={t('Enter new password')}
+            onKeyDown={(e) => {
+              if (e.which == 13) {
+                r.current?.focus()
+              }
+            }}
+          />
+          <OutlineTextField
+            label={t('Confirm new password')}
+            value={rePassword}
+            onChange={setRePassword}
+            type='password'
+            errorMsg={rePasswordError}
+            placeholder={t('Re-enter new password')}
+            inputRef={r}
+            trailingComponent={repasswordValidateSuccess ? <Image src={CheckSquare} alt='' /> : null}
+          />
+          <MainButton
+            className='w-full mt-3'
+            disabled={!newPassword || !rePassword}
+            loading={loading}
+            onClick={setPasswordHandler}>
+            {t('Reset password')}
+          </MainButton>
         </div>
-      </div>
+      ) : (
+        <div className='flex justify-center md:items-center my-[30px] flex-col w-full max-w-[393px] mx-auto p-6'>
+          <p className='text-center text-xl leading-6 font-bold'>{t('Successful password reset')}!</p>
+          <Image src={SuccessImg} alt='' className='mx-auto my-5 w-[320px] h-[320px]' />
+          <p className='text-sm leading-6 font-semibold text-center mx-auto text-[#414141]'>
+            {t('You can use the new password to log in Punkga now')}
+          </p>
+          <MainButton
+            className='mt-2 mx-auto w-full'
+            onClick={() => {
+              setSignInOpen(true)
+            }}>
+            {t('Sign in')}
+          </MainButton>
+        </div>
+      )}
       <Footer />
     </>
   )

@@ -13,6 +13,7 @@ import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache, split } from '@a
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
 import { createClient } from 'graphql-ws'
 import { getMainDefinition } from '@apollo/client/utilities'
+import ModalProvider from './modals'
 
 export const Context = createContext<{
   account?: IUser
@@ -54,7 +55,7 @@ function ContextProvider({ children }) {
   const router = useRouter()
   const { t } = useTranslation()
   const searchParams = useSearchParams()
-  const accessTokenParam = searchParams.get('access_token')
+  const accessTokenParam = searchParams.get('access_token') || searchParams.get('token')
   const expiresInParam = searchParams.get('expires_in')
   const config = getConfig()
   const authorizerRef = new Authorizer({
@@ -103,7 +104,7 @@ function ContextProvider({ children }) {
   }, [])
 
   useEffect(() => {
-    if (location.search.includes('access_token')) {
+    if (location.search.includes('access_token') || location.search.includes('token')) {
       if (accessTokenParam) {
         console.log('Setting up punkga with access token')
         setUp()
@@ -186,6 +187,7 @@ function ContextProvider({ children }) {
           completedQuests: res.user_quests || [],
           quests: res?.user_quests_aggregate?.aggregate?.count,
           rank: res.rank || 999999,
+          activeWalletAddress: res.active_wallet_address,
         } as IUser)
         return res
       } else {
@@ -259,13 +261,6 @@ function ContextProvider({ children }) {
       })
       if (res) {
         callback && callback('success')
-        setAccount({
-          email: res.user.email,
-          name: res.user.nickname,
-          image: res.user.picture,
-          id: res.user.id,
-          verified: res.user.email_verified,
-        } as IUser)
       }
     } catch (error) {
       callback && callback('failed', error.message)
@@ -297,7 +292,7 @@ function ContextProvider({ children }) {
       return res
     } catch (error) {
       console.log('forgotPassword', error)
-      return null
+      return error
     }
   }
   const resetPassword = async (token: string, newPassword: string) => {
@@ -310,7 +305,7 @@ function ContextProvider({ children }) {
       return res
     } catch (error) {
       console.log('resetPassword', error)
-      return null
+      return error
     }
   }
   async function resendVerifyEmail(email: string, identifier?: string) {
@@ -347,7 +342,9 @@ function ContextProvider({ children }) {
         forgotPassword,
         resetPassword,
       }}>
-      <ApolloProvider client={client}>{children}</ApolloProvider>
+      <ApolloProvider client={client}>
+        <ModalProvider>{children}</ModalProvider>
+      </ApolloProvider>
     </Context.Provider>
   )
 }

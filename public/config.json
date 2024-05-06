@@ -46,7 +46,7 @@
     "features": ["ibc-transfer"],
     "walletUrlForStaking": "https://euphoria.aurascan.io/validators",
     "logo": "https://i.imgur.com/zi0mTYb.png",
-    "explorer": "https://euphoria.aurascan.io/"
+    "explorer": "https://euphoria.aurascan.io"
   },
   "API_URL": "https://hasura.dev.punkga.me",
   "AUTHORIZER_URL": "https://auth.dev.punkga.me",

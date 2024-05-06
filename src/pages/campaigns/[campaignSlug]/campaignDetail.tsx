@@ -25,11 +25,11 @@ import {
   getRequestLog,
   getUserRankInCampaign,
 } from 'src/services'
-import { openSignInModal } from 'src/utils'
 import useSWR, { useSWRConfig } from 'swr'
 import QuestList from '../../../components/pages/campaigns/questList'
 import FilledButton from 'components/core/Button/FilledButton'
 import Popover from 'components/Popover'
+import { ModalContext } from 'src/context/modals'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -38,6 +38,7 @@ export default function Page(props) {
 }
 function CampaignDetail({}) {
   const { account } = useContext(Context)
+  const {setSignInOpen} = useContext(ModalContext)
   const [openClaimSuccessModal, setClaimSuccessModalOpen] = useState(false)
   const [openNFTPreview, setOpenNFTPreview] = useState(false)
   const [data, setData] = useState<Campaign>(undefined)
@@ -91,7 +92,7 @@ function CampaignDetail({}) {
   }, [account])
   useEffect(() => {
     if (data && !account) {
-      openSignInModal()
+      setSignInOpen(true)
     }
   }, [account, data])
   const fetchData = async () => {
@@ -110,7 +111,7 @@ function CampaignDetail({}) {
   const enrollHandler = async () => {
     try {
       if (!account) {
-        openSignInModal()
+        setSignInOpen(true)
       } else {
         setEnrollLoading(true)
         const res = await enrollCampaign(data.id)
@@ -275,17 +276,17 @@ function CampaignDetail({}) {
                   <Popover
                     popoverRender={() => (
                       <div className='shadow-[0px_4px_15px_0px_#00000026] rounded-[20px] p-3 m-3 text-sm whitespace-nowrap bg-[#fff]'>
-                        Campaign has not started yet
+                        {t('Campaign has not started yet')}
                       </div>
                     )}>
                     <button className='w-full bg-[#ABABAB] text-[#DEDEDE] font-bold leading-[25px] text-xl px-8 text-center pt-3 pb-[14px] rounded-[20px]'>
-                      Enroll now
+                      {t('Enroll now')}
                     </button>
                   </Popover>
                 ) : isOngoing && !isEnrolled ? (
                   <div>
                     <FilledButton loading={enrollLoading} className='w-full' onClick={enrollHandler}>
-                      Enroll now
+                      {t('Enroll now')}
                     </FilledButton>
                   </div>
                 ) : null}
@@ -293,9 +294,9 @@ function CampaignDetail({}) {
             </div>
             <div className='my-5 flex justify-between items-start text-sm leading-[18px] lg:text-base lg:leading-5'>
               <div className='flex flex-col gap-[5px] lg:flex-row lg:gap-5 lg:flex-wrap'>
-                <div>Starts: {moment(data.start_date).format('HH:mm DD/MM/yyyy')}</div>
+                <div>{t('Starts')}: {moment(data.start_date).format('HH:mm DD/MM/yyyy')}</div>
                 <span className='h-5 w-[1px] hidden lg:inline-block bg-[#F0F0F0]'></span>
-                <div>Ends: {moment(data.end_date).format('HH:mm DD/MM/yyyy')}</div>
+                <div>{t('Ends')}: {moment(data.end_date).format('HH:mm DD/MM/yyyy')}</div>
                 <span className='h-5 w-[1px] hidden lg:inline-block bg-[#F0F0F0]'></span>
                 <div className='lg:block hidden'>{`${data?.participants?.aggregate?.count} ${
                   data?.participants?.aggregate?.count < 2 ? 'participant' : 'participants'
@@ -326,13 +327,13 @@ function CampaignDetail({}) {
             {isUpcoming ? (
               <div className='mt-10 lg:hidden'>
                 <button className='w-full bg-[#ABABAB] text-[#DEDEDE] font-bold leading-5 text-center pt-2 pb-[10px] rounded-full'>
-                  Enroll now
+                  {t('Enroll now')}
                 </button>
               </div>
             ) : isOngoing && !isEnrolled ? (
               <div className='mt-10 lg:hidden'>
                 <FilledButton loading={enrollLoading} className='w-full' onClick={enrollHandler}>
-                  Enroll now
+                  {t('Enroll now')}
                 </FilledButton>
               </div>
             ) : null}
@@ -341,7 +342,7 @@ function CampaignDetail({}) {
             {/* Claim section */}
             <div className='p-5 w-full flex flex-col gap-5 bg-[#F0F0F0] rounded-[10px] mt-10 lg:mt-0'>
               <p className='text-center w-full text-lg lg:text-2xl lg:leading-[30px] leading-[23px] font-bold'>
-                Bonus to 👑 1st place
+                {t('Bonus to')} 👑 {t('1st place')}
               </p>
               <div className='flex gap-[30px] justify-center items-start'>
                 {data?.reward?.nft?.nft_name && (

@@ -14,11 +14,12 @@ import { Campaign } from 'src/models/campaign'
 import { getCampaigns } from 'src/services'
 import useSWR from 'swr'
 import IllusImage from './assets/illus.svg'
-import { openSignInModal } from 'src/utils'
 import Mascot3 from 'components/pages/campaigns/assets/Mascot3.svg'
+import { ModalContext } from 'src/context/modals'
 
-export default function Campaign() {
+export default function CampaignPage() {
   const { account } = useContext(Context)
+  const { setSignInOpen } = useContext(ModalContext)
   const router = useRouter()
   const { t } = useTranslation()
   const { data } = useSWR(
@@ -56,7 +57,7 @@ export default function Campaign() {
       if (account) {
         router.push(`/campaigns/${slug}`)
       } else {
-        openSignInModal()
+        setSignInOpen(true)
       }
     } catch (error) {
       console.log(error)
@@ -85,7 +86,7 @@ export default function Campaign() {
                   if (account) {
                     setEnrolledChecked(!enrolledChecked)
                   } else {
-                    openSignInModal()
+                    setSignInOpen(true)
                   }
                 }}
               />
@@ -126,7 +127,7 @@ export default function Campaign() {
                     if (account) {
                       setEnrolledChecked(!enrolledChecked)
                     } else {
-                      openSignInModal()
+                      setSignInOpen(true)
                     }
                   }}
                 />
@@ -223,7 +224,7 @@ export default function Campaign() {
             </div>
             <div className='reward rounded-lg bg-white lg:bg-[#F0F0F0] pt-[6px] px-[10px] pb-2 min-w-[140px] shrink-0 h-fit flex flex-col'>
               <div className='text-xs text-[#61646B] text-center md:leading-[15px]'>
-                Bonus to <br className='md:block hidden' /> 👑 1st place
+                {t('Bonus to')} <br className='md:block hidden' /> 👑 {t("1st place")}
               </div>
               {campaign?.reward?.nft?.nft_name ? (
                 <div className='flex flex-col items-center'>
@@ -255,7 +256,7 @@ export default function Campaign() {
         <div className='p-6 flex flex-col items-center w-full'>
           <Image src={Mascot3} alt='' className='w-[240px] h-[240px] lg:w-[320px] lg:h-[320px]' />
           <div className='text-sm leading-[18px] lg:text-base lg:leading-base font-semibold mt-5 text-center'>
-            Coming soon
+            {t('Coming soon')}
           </div>
         </div>
       )}

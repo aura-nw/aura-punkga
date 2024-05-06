@@ -7,17 +7,17 @@ import HeaderBar from 'components/pages/chapter/headerBar';
 import ReadingSection from 'components/pages/chapter/readingSection';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
-import React, { use, useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'react-i18next';
 import { CHAPTER_TYPE } from 'src/constants/chapter.constant';
 import { LanguageType } from 'src/constants/global.types';
 import { Context } from 'src/context';
+import { ModalContext } from 'src/context/modals';
 import { IChapter } from 'src/models/chapter';
 import { IComicDetail } from 'src/models/comic';
 import { IComment } from 'src/models/comment';
 import { readChapter } from 'src/services';
-import { openSignInModal } from 'src/utils';
 import { getItem, setItem } from 'src/utils/localStorage';
 const Chapter: React.FC = ({
   comicDetails,
@@ -60,7 +60,7 @@ const Chapter: React.FC = ({
   const [subscriptions, setSubscriptions] = useState(0);
   const { t } = useTranslation();
   const timerRef = useRef<any>();
-
+  const { setSignInOpen } = useContext(ModalContext)
   useEffect(() => {
     if (chapterDetails.data?.id) {
       setChapterLikes(chapterDetails.data?.likes);
@@ -185,7 +185,7 @@ const Chapter: React.FC = ({
       }
       setIsLiked(isLike);
     } else {
-      openSignInModal();
+      setSignInOpen(true)
     }
   };
 
@@ -219,9 +219,7 @@ const Chapter: React.FC = ({
                   <a
                     className="text-second-color underline font-semibold cursor-pointer"
                     onClick={() =>
-                      (
-                        document.querySelector('#open-sign-in-btn') as any
-                      )?.click()
+                      setSignInOpen(true)
                     }
                   >
                     {t('sign in')}

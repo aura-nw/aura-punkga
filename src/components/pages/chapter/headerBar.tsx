@@ -14,7 +14,7 @@ import { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CHAPTER_STATUS } from 'src/constants/chapter.constant'
 import { Context } from 'src/context'
-import { openSignInModal } from 'src/utils'
+import { ModalContext } from 'src/context/modals'
 export default function HeaderBar({
   openComments,
   setOpenComments,
@@ -31,6 +31,7 @@ export default function HeaderBar({
   const { t } = useTranslation()
   const router = useRouter()
   const { account } = useContext(Context)
+  const {setSignInOpen} = useContext(ModalContext)
 
   return (
     <div className={`sticky top-[-1px] z-10 w-full`}>
@@ -151,7 +152,7 @@ export default function HeaderBar({
                 <span
                   className='text-second-color underline font-bold cursor-pointer'
                   onClick={() => {
-                    openSignInModal()
+                    setSignInOpen(true)
                   }}>
                   {t('sign in')}
                 </span>{' '}

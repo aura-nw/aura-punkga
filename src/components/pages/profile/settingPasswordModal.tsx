@@ -1,14 +1,15 @@
 import FilledButton from 'components/Button/FilledButton'
+import MainButton from 'components/Button/MainButton'
 import OutlineTextField from 'components/Input/TextField/Outline'
 import Modal from 'components/Modal'
+import SuccessImg from 'images/Mascot2.png'
+import CheckSquare from 'images/icons/check_square_fill.svg'
+import _ from 'lodash'
 import Image from 'next/image'
 import { useContext, useEffect, useRef, useState } from 'react'
-import { Context } from 'src/context'
-import SuccessImg from 'images/ninja.svg'
-import { validatePassword } from 'src/utils'
-import CheckSquare from 'images/icons/check_square_fill.svg'
 import { useTranslation } from 'react-i18next'
-import _ from 'lodash'
+import { Context } from 'src/context'
+import { validatePassword } from 'src/utils'
 export default function SettingPasswordModal({ open, setOpen, profile }) {
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -70,58 +71,57 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
   }
 
   return (
-    <Modal open={open} setOpen={setOpen} hideClose={success}>
-      <div className={`p-6 w-[322px] relative transition-all duration-300 ${success ? 'h-[400px]' : ''}`}>
-        <div className={` flex flex-col gap-3 transition-all duration-300 ${success ? 'opacity-0' : 'opacity-100'}`}>
-          <p className='text-center text-xl leading-6 font-semibold'>{t('Set password')}</p>
-          <OutlineTextField
-            label={t('Password')}
-            value={newPassword}
-            onChange={setNewPassword}
-            type='password'
-            placeholder={t('Enter new password')}
-            onKeyDown={(e) => {
-              if (e.which == 13) {
-                r1.current?.focus()
+    <Modal open={open} setOpen={setOpen} hideClose={success} preventClickOutsideToClose>
+      <div className={`p-6 w-[322px] relative transition-all duration-300 ${success ? 'h-[380px]' : ''}`}>
+        <div className={` flex flex-col gap-6 transition-all duration-300 ${success ? 'opacity-0' : 'opacity-100'}`}>
+          <p className='text-center text-xl leading-6 font-bold'>{t('Set password')}</p>
+          <div>
+            <OutlineTextField
+              label={t('New password')}
+              value={newPassword}
+              onChange={setNewPassword}
+              type='password'
+              placeholder={t('Enter new password')}
+              onKeyDown={(e) => {
+                if (e.which == 13) {
+                  r1.current?.focus()
+                }
+              }}
+            />
+            <OutlineTextField
+              label={t('Confirm new password')}
+              value={rePassword}
+              onChange={setRePassword}
+              type='password'
+              trailingComponent={
+                <div className='flex items-center gap-[10px]'>
+                  {repasswordValidateSuccess ? <Image src={CheckSquare} alt='' /> : null}
+                </div>
               }
-            }}
-          />
-          <OutlineTextField
-            label={t('Confirm password')}
-            value={rePassword}
-            onChange={setRePassword}
-            type='password'
-            errorMsg={rePasswordError}
-            placeholder={t('Re-Enter new password')}
-            inputRef={r1}
-            trailingComponent={repasswordValidateSuccess ? <Image src={CheckSquare} alt='' /> : null}
-          />
-          <FilledButton
-            disabled={!newPassword || !rePassword}
-            className='mt-2 mx-auto'
-            size='lg'
-            loading={loading}
-            onClick={setPasswordHandler}>
+              errorMsg={rePasswordError}
+              placeholder={t('Re-enter new password')}
+              inputRef={r1}
+            />
+          </div>
+          <MainButton disabled={!newPassword || !rePassword} loading={loading} onClick={setPasswordHandler}>
             {t('Confirm')}
-          </FilledButton>
+          </MainButton>
         </div>
         <div
           className={`absolute inset-0 py-6 px-4 flex flex-col gap-4 transition-all duration-300 ${
             success ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}>
-          <p className='text-center text-xl leading-6 font-semibold'>{t('Password set')}!</p>
+          <p className='text-center text-xl leading-6 font-bold'>{t('Password set')}!</p>
           <Image src={SuccessImg} alt='' className='mx-auto h-[188px]' />
-          <p className='text-sm leading-6 font-medium text-center w-[246px] mx-auto'>
-            {t('You can now use the new password to sign in to your account')}
+          <p className='text-sm leading-[18px] font-semibold text-center w-[274px] mx-auto text-[#414141]'>
+            {t('You can use the new password to log in Punkga now')}
           </p>
-          <FilledButton
-            className='-mt-1 mx-auto'
-            size='lg'
+          <MainButton
             onClick={() => {
               setOpen(false)
             }}>
-            {t('Continue')}
-          </FilledButton>
+            {t('Confirm')}
+          </MainButton>
         </div>
       </div>
     </Modal>

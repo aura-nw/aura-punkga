@@ -2,7 +2,9 @@ import Avatar from 'assets/images/avatar.svg'
 import ProfileCard from 'components/Card/ProfileCard'
 import Popover from 'components/Popover'
 import Image from 'next/image'
+import { useTranslation } from 'react-i18next';
 export default function LeaderBoard({ data, userData }: { data: any[]; userData?: any }) {
+  const { t } = useTranslation();
   return (
     <div className='overflow-auto'>
       <div className='bg-[#f0f0f0] rounded-[10px] mt-10 min-w-[300px] md:min-w-[400px]'>
@@ -52,7 +54,7 @@ export default function LeaderBoard({ data, userData }: { data: any[]; userData?
           {userData && (
             <div className='flex justify-between py-2 md:py-0 md:pt-5 px-3 md:px-[10px] border-t-[1px] border-medium-gray text-subtle-dark text-xs leading-[15px] md:text-sm md:leading-[18px]'>
               <div>
-                Your rank: <strong>{userData ? '#' + userData?.user_campaign_rank : '--'}</strong>
+                {t('Your rank')}: <strong>{userData ? '#' + userData?.user_campaign_rank : '--'}</strong>
               </div>
               <div>
                 Your level:{' '}

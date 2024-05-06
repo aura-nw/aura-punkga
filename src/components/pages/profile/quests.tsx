@@ -13,7 +13,13 @@ import QuestItem from '../campaigns/questItem'
 import Image from 'next/image'
 import EnrollNow from './assets/enroll-now.svg'
 import EnrollNowLarge from './assets/enroll-now_large.svg'
-export default function Quest() {
+import EnrollNowVN from './assets/enroll-now_vn.svg'
+import EnrollNowLargeVN from './assets/enroll-now_large_vn.svg'
+import { useTranslation } from 'react-i18next'
+import { useRouter } from 'next/router'
+export default function QuestSection() {
+  const { locale } = useRouter()
+  const { t } = useTranslation()
   const { account, getProfile } = useContext(Context)
   const { data } = useSWR(
     { key: 'get_available_quests', account: account?.id },
@@ -21,10 +27,9 @@ export default function Quest() {
     { refreshInterval: 30000 }
   )
   const { mutate } = useSWRConfig()
-
   return (
     <div className='md:mt-10'>
-      <div className='text-base md:text-xl leading-5 md:leading-[25px] font-bold text-[#1C1C1C]'>Available Quests</div>
+      <div className='text-base md:text-xl leading-5 md:leading-[25px] font-bold text-[#1C1C1C]'>{t('Available quests')}</div>
       {!!data?.length ? (
         <>
           <div className='w-full relative mt-[47px] hidden xl:block'>
@@ -69,7 +74,7 @@ export default function Quest() {
                 modules={[Navigation]}>
                 {data?.map((quest: Quest) => {
                   return (
-                    <SwiperSlide key={quest.id}>
+                    <SwiperSlide key={`${quest.id}`}>
                       <QuestItem
                         quest={quest}
                         refreshCallback={() =>
@@ -83,7 +88,6 @@ export default function Quest() {
                     </SwiperSlide>
                   )
                 })}
-                {data?.length < 2 && <SwiperSlide></SwiperSlide>}
               </Swiper>
 
               <svg
@@ -111,7 +115,7 @@ export default function Quest() {
             <Link
               className='text-second-color underline font-bold px-6 w-full text-center block mt-[10px]'
               href='/campaigns'>
-              See all
+              {t('See all')}
             </Link>
           </div>
           <div className='w-full relative mt-[10px] xl:hidden'>
@@ -122,8 +126,8 @@ export default function Quest() {
                 }}
                 loop
                 navigation={{
-                  nextEl: '.swiper-next',
-                  prevEl: '.swiper-prev',
+                  nextEl: '.m-swiper-next',
+                  prevEl: '.m-swiper-prev',
                 }}
                 grid={{
                   rows: 2,
@@ -134,7 +138,7 @@ export default function Quest() {
                 modules={[Navigation, Grid]}>
                 {data?.map((quest: Quest) => {
                   return (
-                    <SwiperSlide key={quest.id}>
+                    <SwiperSlide key={`m-${quest.id}`}>
                       <QuestItem
                         quest={quest}
                         refreshCallback={() =>
@@ -157,7 +161,7 @@ export default function Quest() {
                   height='36'
                   viewBox='0 0 37 36'
                   fill='none'
-                  className='shrink-0 cursor-pointer swiper-prev'>
+                  className='shrink-0 cursor-pointer m-swiper-prev'>
                   <path
                     fillRule='evenodd'
                     clipRule='evenodd'
@@ -173,7 +177,7 @@ export default function Quest() {
                   />
                 </svg>
                 <Link className='text-second-color underline font-bold px-6' href='/campaigns'>
-                  See all
+                  {t('See all')}
                 </Link>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
@@ -181,7 +185,7 @@ export default function Quest() {
                   height='36'
                   viewBox='0 0 37 36'
                   fill='none'
-                  className='shrink-0 cursor-pointer swiper-next'>
+                  className='shrink-0 cursor-pointer m-swiper-next'>
                   <path
                     fillRule='evenodd'
                     clipRule='evenodd'
@@ -203,11 +207,17 @@ export default function Quest() {
       ) : (
         <>
           <Link href='/campaigns'>
-            <Image src={EnrollNow} alt='' className='w-full mt-[10px] md:hidden ' />
-            <Image src={EnrollNowLarge} alt='' className='w-full mt-10 hidden md:block ' />
+            {locale === 'vn' ? (
+              <Image src={EnrollNowVN} alt='' className='w-full mt-[10px] md:hidden ' />) : (
+              <Image src={EnrollNow} alt='' className='w-full mt-[10px] md:hidden ' />)
+            }
+            {locale === 'vn' ? (<Image src={EnrollNowLargeVN} alt='' className='w-full mt-10 hidden md:block' />) : (
+              <Image src={EnrollNowLarge} alt='' className='w-full mt-10 hidden md:block' />
+            )}
           </Link>
         </>
-      )}
-    </div>
+      )
+      }
+    </div >
   )
 }

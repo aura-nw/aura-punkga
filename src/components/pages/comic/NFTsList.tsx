@@ -12,7 +12,7 @@ import 'swiper/css/navigation';
 
 export default function NFTsList() {
   return (
-    <div className="w-full px-6 container relative">
+    <div className="w-full px-6 container relative bg-black">
       <div className="flex justify-between items-center"></div>
       <div className="swiper_container h-auto min-h-[400px] py-8 px-6 relative z-5">
         <Swiper
