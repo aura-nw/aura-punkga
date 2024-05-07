@@ -4,7 +4,7 @@ import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
-export default function SignUpSuccessModal({ email }) {
+export default function SignUpSuccessModal({ email,identifier }) {
   const { resendVerifyEmail } = useContext(Context)
   const { setSignUpOpen, setSignUpSuccessOpen } = useContext(ModalContext)
   const { t } = useTranslation()
@@ -19,7 +19,7 @@ export default function SignUpSuccessModal({ email }) {
       <div className='flex flex-col text-center text-xs leading-[14px]'>
         <p className=' font-medium text-center w-full max-w-[500px] mx-auto'>
           {t('Have not received any email')}?{' '}
-          <span className='text-second-color font-bold cursor-pointer' onClick={() => resendVerifyEmail(email)}>
+          <span className='text-second-color font-bold cursor-pointer' onClick={() => resendVerifyEmail(email,identifier)}>
             {t('Click here')}
           </span>{' '}
           {t('to resend verification link')}

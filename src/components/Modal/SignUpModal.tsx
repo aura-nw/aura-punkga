@@ -82,7 +82,7 @@ export default function SignUpModal() {
   const signUpCallBack = (status, msg: string) => {
     if (status === 'success') {
       setSignUpOpen(false)
-      showEmailVerification(email)
+      showEmailVerification(email,'basic_auth_signup')
     } else {
       if (msg.includes('has already signed up')) setEmailValidateErrorMsg(t('Email has been registered'))
       else if (msg.includes('authorizer_users_nickname_key')) setUsernameValidateErrorMsg(t('Name already taken'))
