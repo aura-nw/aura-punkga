@@ -39,7 +39,7 @@ export default function SlideSection({ sliderNavRef }) {
       </div>
       <div className='px-5 md:px-0'>
         <div className='mt-5 rounded-2xl flex flex-col gap-[10px]'>
-          <Link href='/campaigns'>
+          <Link href='https://docs.google.com/forms/d/e/1FAIpQLSelARRDM8YVrEHRycSfpA1J95_f2PmrvSRqXGVSKXusXla-5A/viewform' target='_blank'>
             <Image src={Banner} alt='' className='rounded-[10px] w-full aspect-[5/2] object-cover' />
           </Link>
         </div>
