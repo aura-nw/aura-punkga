@@ -190,7 +190,7 @@ function ContextProvider({ children }) {
           activeWalletAddress: res.active_wallet_address,
         } as IUser)
       }
-      if (!res.email_verified_at) {
+      if (!res.email_verified_at && res.email && res.nickname) {
         removeItem('token')
       }
       return res
