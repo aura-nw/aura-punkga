@@ -21,7 +21,7 @@ export const ModalContext = createContext<{
   setSignUpOpen: Dispatch<SetStateAction<boolean>>
   setSignInOpen: Dispatch<SetStateAction<boolean>>
   setMigrateWalletOpen: Dispatch<SetStateAction<boolean>>
-  showEmailVerification: (email: string) => void
+  showEmailVerification: (email: string, identifier: string) => void
 }>({
   signUpSuccessOpen: false,
   forgotPasswordOpen: false,
@@ -49,6 +49,7 @@ function ModalProvider({ children }) {
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(true)
   const [emailNeedVerify, setEmailNeedVerify] = useState('')
+  const [identifier, setIdentifier] = useState('')
   const { t } = useTranslation()
 
   useEffect(() => {
@@ -90,7 +91,7 @@ function ModalProvider({ children }) {
       })
       setLoading(false)
       setOpen(false)
-      showEmailVerification(email)
+      showEmailVerification(email, 'update_email')
     } catch (error) {
       setLoading(false)
       if (error.message?.includes('authorizer_users_nickname_key')) {
@@ -105,8 +106,9 @@ function ModalProvider({ children }) {
     }
   }
 
-  const showEmailVerification = (email: string) => {
+  const showEmailVerification = (email: string, identifier: string) => {
     setEmailNeedVerify(email)
+    setIdentifier(identifier)
     setSignUpSuccessOpen(true)
   }
 
@@ -142,7 +144,7 @@ function ModalProvider({ children }) {
         <ForgotPasswordModal />
       </Modal>
       <Modal open={signUpSuccessOpen} setOpen={setSignUpSuccessOpen}>
-        <SignUpSuccessModal email={emailNeedVerify} />
+        <SignUpSuccessModal email={emailNeedVerify} identifier={identifier} />
       </Modal>
       {migrateWalletOpen && <MigrateWalletModal />}
 
@@ -184,7 +186,10 @@ function ModalProvider({ children }) {
             )
           ) : (
             <Modal open={open} setOpen={setOpen}>
-              <SignUpSuccessModal email={account?.email} />
+              <SignUpSuccessModal
+                email={account?.email}
+                identifier={account.signupMethods.includes('basic_auth') ? 'basic_auth_signup' : 'update_email'}
+              />
             </Modal>
           )
         ) : (
