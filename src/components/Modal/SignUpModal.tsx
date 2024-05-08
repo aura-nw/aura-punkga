@@ -8,7 +8,8 @@ import { validateEmail, validatePassword } from 'src/utils'
 import CheckSquare from 'images/icons/check_square_fill.svg'
 import { useTranslation } from 'react-i18next'
 import MainButton from 'components/Button/MainButton'
-export default function SignUpModal({ show, openSignInModal, setSignUpOpen, showEmailVerification }) {
+import { ModalContext } from 'src/context/modals'
+export default function SignUpModal() {
   const [email, setEmail] = useState('')
   const [emailValidateErrorMsg, setEmailValidateErrorMsg] = useState('')
   const [username, setUsername] = useState('')
@@ -29,6 +30,7 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, show
   const buttonRef = useRef<any>()
   const { t } = useTranslation()
   const { signUp } = useContext(Context)
+  const { setSignUpOpen, setSignInOpen, showEmailVerification, signUpOpen: show } = useContext(ModalContext)
 
   useEffect(() => {
     setSignUpErrorMsg('')
@@ -80,7 +82,7 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, show
   const signUpCallBack = (status, msg: string) => {
     if (status === 'success') {
       setSignUpOpen(false)
-      showEmailVerification(email)
+      showEmailVerification(email,'basic_auth_signup')
     } else {
       if (msg.includes('has already signed up')) setEmailValidateErrorMsg(t('Email has been registered'))
       else if (msg.includes('authorizer_users_nickname_key')) setUsernameValidateErrorMsg(t('Name already taken'))
@@ -172,7 +174,12 @@ export default function SignUpModal({ show, openSignInModal, setSignUpOpen, show
         {/* <div className='text-xs font-medium leading-6 text-red-600 min-h-[24px] text-center'>{signUpErrorMsg}</div> */}
         <div className='mt-1 text-[#61646B] text-xs text-center leading-[15px]'>
           {t('Already have an account?')}{' '}
-          <a className='text-[#2684FC]' onClick={openSignInModal}>
+          <a
+            className='text-[#2684FC]'
+            onClick={() => {
+              setSignInOpen(true)
+              setSignUpOpen(false)
+            }}>
             {t('Sign in')}
           </a>
         </div>

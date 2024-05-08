@@ -7,7 +7,7 @@ import { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { validateEmail } from 'src/utils'
-export default function ForgotPasswordModal({ onClose }) {
+export default function ForgotPasswordModal() {
   const [email, setEmail] = useState('')
   const [emailErrorMsg, setEmailErrorMsg] = useState('')
   const [loading, setLoading] = useState(false)
@@ -77,9 +77,7 @@ export default function ForgotPasswordModal({ onClose }) {
               {t('A password reset link has been sent to')}{' '}
               <span className='text-second-color cursor-pointer'>{email}</span>.
             </p>
-            <p className='text-sm leading-[18px] text-center line-clamp-1'>
-              {t('Please check your email.')}
-            </p>
+            <p className='text-sm leading-[18px] text-center line-clamp-1'>{t('Please check your email.')}</p>
           </div>
           <div className='flex flex-col text-center text-sm leading-[18px] text-subtle-dark mt-3'>
             <p className='line-clamp-1'>

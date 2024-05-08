@@ -21,7 +21,7 @@ export const ModalContext = createContext<{
   setSignUpOpen: Dispatch<SetStateAction<boolean>>
   setSignInOpen: Dispatch<SetStateAction<boolean>>
   setMigrateWalletOpen: Dispatch<SetStateAction<boolean>>
-  showEmailVerification: (email: string) => void
+  showEmailVerification: (email: string, identifier: string) => void
 }>({
   signUpSuccessOpen: false,
   forgotPasswordOpen: false,
@@ -49,6 +49,7 @@ function ModalProvider({ children }) {
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(true)
   const [emailNeedVerify, setEmailNeedVerify] = useState('')
+  const [identifier, setIdentifier] = useState('')
   const { t } = useTranslation()
 
   useEffect(() => {
@@ -90,7 +91,7 @@ function ModalProvider({ children }) {
       })
       setLoading(false)
       setOpen(false)
-      showEmailVerification(email)
+      showEmailVerification(email, 'update_email')
     } catch (error) {
       setLoading(false)
       if (error.message?.includes('authorizer_users_nickname_key')) {
@@ -105,8 +106,9 @@ function ModalProvider({ children }) {
     }
   }
 
-  const showEmailVerification = (email: string) => {
+  const showEmailVerification = (email: string, identifier: string) => {
     setEmailNeedVerify(email)
+    setIdentifier(identifier)
     setSignUpSuccessOpen(true)
   }
 
@@ -133,71 +135,61 @@ function ModalProvider({ children }) {
           setSignUpOpen(false)
         }}>
         <div className='relative min-h-[40vh]'>
-          <SignInModal
-            show={signInOpen}
-            openSignUpModal={() => {
-              setSignUpOpen(true)
-              setSignInOpen(false)
-            }}
-            setForgotPasswordOpen={setForgotPasswordOpen}
-          />
-          <SignUpModal
-            show={signUpOpen}
-            openSignInModal={() => {
-              setSignInOpen(true)
-              setSignUpOpen(false)
-            }}
-            setSignUpOpen={setSignUpOpen}
-            showEmailVerification={showEmailVerification}
-          />
+          <SignInModal />
+          <SignUpModal />
         </div>
       </Modal>
 
       <Modal open={forgotPasswordOpen} setOpen={setForgotPasswordOpen}>
-        <ForgotPasswordModal onClose={() => setForgotPasswordOpen(false)} />
+        <ForgotPasswordModal />
       </Modal>
       <Modal open={signUpSuccessOpen} setOpen={setSignUpSuccessOpen}>
-        <SignUpSuccessModal
-          setSignUpOpen={setSignUpOpen}
-          onClose={() => setSignUpSuccessOpen(false)}
-          email={emailNeedVerify}
-        />
+        <SignUpSuccessModal email={emailNeedVerify} identifier={identifier} />
       </Modal>
-      {migrateWalletOpen && <MigrateWalletModal open={migrateWalletOpen} setOpen={setMigrateWalletOpen} />}
+      {migrateWalletOpen && <MigrateWalletModal />}
 
       {account ? (
         validateEmail(account?.email) ? (
-          account?.name ? (
-            <></>
+          account?.verified ? (
+            account?.name ? (
+              <></>
+            ) : (
+              <Modal open={open} setOpen={setOpen}>
+                <div className='p-6 flex flex-col w-[322px]'>
+                  <div className='text-xl font-bold leading-6 text-center'>{t('Set a username')}</div>
+                  <div className='mt-6'>
+                    <OutlineTextField label={t('Username')} errorMsg={errorMsg} value={name} onChange={setName} />
+                    <OutlineTextField label={t('Email')} value={account?.email} disabled={true} />
+                  </div>
+                  <p className='text-[10px] -mt-4'>
+                    {t('This email will also be used to receive updates of new chapter when you subscribe a manga.')}
+                  </p>
+                  <div className='mt-4'>
+                    <MainButton className='w-full' disabled={!name} loading={loading} onClick={setUName}>
+                      {t('Continue')}
+                    </MainButton>
+                  </div>
+                  <p className='text-xs mt-1 text-center'>
+                    {t('Or')}{' '}
+                    <a
+                      className='text-[#2684FC]'
+                      onClick={() => {
+                        setOpen(false)
+                        setSignInOpen(true)
+                      }}>
+                      {t('sign in')}
+                    </a>{' '}
+                    {t('with another account')}
+                  </p>
+                </div>
+              </Modal>
+            )
           ) : (
             <Modal open={open} setOpen={setOpen}>
-              <div className='p-6 flex flex-col w-[322px]'>
-                <div className='text-xl font-bold leading-6 text-center'>{t('Set a username')}</div>
-                <div className='mt-6'>
-                  <OutlineTextField label={t('Username')} errorMsg={errorMsg} value={name} onChange={setName} />
-                  <OutlineTextField label={t('Email')} value={account?.email} disabled={true} />
-                </div>
-                <p className='text-[10px] -mt-4'>
-                  {t('This email will also be used to receive updates of new chapter when you subscribe a manga.')}
-                </p>
-                <div className='mt-4'>
-                  <MainButton className='w-full' disabled={!name} loading={loading} onClick={setUName}>
-                    {t('Continue')}
-                  </MainButton>
-                </div>
-                <p className='text-xs mt-1 text-center'>
-                  {t('Or')}{' '}
-                  <a
-                    className='text-[#2684FC]'
-                    onClick={() => {
-                      setOpen(false)
-                      setSignInOpen(true)
-                    }}>
-                    {t('sign in')}
-                  </a>{' '}
-                  {t('with another account')}
-                </p>
-              </div>
+              <SignUpSuccessModal
+                email={account?.email}
+                identifier={account.signupMethods.includes('basic_auth') ? 'basic_auth_signup' : 'update_email'}
+              />
             </Modal>
           )
         ) : (

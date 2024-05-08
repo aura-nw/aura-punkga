@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
 import { validateEmail } from 'src/utils'
-export default function SignInModal({ show, openSignUpModal, setForgotPasswordOpen }) {
+export default function SignInModal() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const emailRef = useRef<any>()
@@ -24,7 +24,7 @@ export default function SignInModal({ show, openSignUpModal, setForgotPasswordOp
   const [loginLoading, setLoginLoading] = useState(false)
   const router = useRouter()
   const { login, oauth } = useContext(Context)
-  const { setSignInOpen } = useContext(ModalContext)
+  const { setSignInOpen, setSignUpOpen, setForgotPasswordOpen, signInOpen: show } = useContext(ModalContext)
 
   useEffect(() => {
     setEmailValidateErrorMsg('')
@@ -123,7 +123,12 @@ export default function SignInModal({ show, openSignUpModal, setForgotPasswordOp
           <div className='text-sm leading-[18px] text-[#F0263C] mt-1'>{loginErrorMsg}</div>
           <div className='text-sm leading-[18px] mt-1 text-[#414141]'>
             {t('Don’t have an account')}?{' '}
-            <a className='text-[#2684FC] cursor-pointer' onClick={openSignUpModal}>
+            <a
+              className='text-[#2684FC] cursor-pointer'
+              onClick={() => {
+                setSignUpOpen(true)
+                setSignInOpen(false)
+              }}>
               {t('Sign up')}
             </a>
           </div>

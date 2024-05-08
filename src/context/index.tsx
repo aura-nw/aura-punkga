@@ -1,20 +1,69 @@
+import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache, split } from '@apollo/client'
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
+import { getMainDefinition } from '@apollo/client/utilities'
 import { Authorizer } from '@authorizerdev/authorizer-js'
+import { AssetList, Chain } from '@chain-registry/types'
+import { wallets as c98Extension } from '@cosmos-kit/coin98-extension'
+import { wallets as keplrExtension } from '@cosmos-kit/keplr-extension'
+import { ChainProvider } from '@cosmos-kit/react'
 import axios from 'axios'
+import { chains, assets as networkAssets } from 'chain-registry'
+import { createClient } from 'graphql-ws'
 import getConfig from 'next/config'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 import { createContext, useEffect, useState } from 'react'
+import { isMobile } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
 import { IUser } from 'src/models/user'
 import { getProfile as getProfileService } from 'src/services'
-import { oauthLogin } from 'src/utils'
+import { wallets as c98Mobile } from 'src/services/c98MobileWallet'
+import { getGasPriceByChain, oauthLogin } from 'src/utils'
 import { getItem, removeItem, setItem } from 'src/utils/localStorage'
-import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache, split } from '@apollo/client'
-import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
-import { createClient } from 'graphql-ws'
-import { getMainDefinition } from '@apollo/client/utilities'
 import ModalProvider from './modals'
-
+const testnetChains: Chain[] = [
+  {
+    bech32_prefix: 'aura',
+    chain_id: 'aura_6321-3',
+    chain_name: 'aura_6321-3',
+    network_type: 'testnet',
+    pretty_name: 'Aura Euphoria Network',
+    slip44: 118,
+    status: 'live',
+    explorers: [
+      {
+        url: 'https://rpc.euphoria.aura.network',
+      },
+      {
+        url: 'https://lcd.euphoria.aura.network',
+      },
+    ],
+  },
+]
+const testnetAssets: AssetList[] = [
+  {
+    assets: [
+      {
+        base: 'ueaura',
+        denom_units: [
+          { denom: 'ueaura', exponent: 0 },
+          { denom: 'eaura', exponent: 6 },
+        ],
+        display: 'eaura',
+        name: 'Aura',
+        symbol: 'EAURA',
+      },
+    ],
+    chain_name: 'aura_6321-3',
+  },
+]
+const signerOptions = {
+  preferredSignType: (chain: Chain) => {
+    return 'direct'
+  },
+  signingStargate: (chain: Chain) => ({ gasPrice: getGasPriceByChain(chain) }),
+  signingCosmwasm: (chain: Chain) => ({ gasPrice: getGasPriceByChain(chain) }),
+}
 export const Context = createContext<{
   account?: IUser
   wallet?: string
@@ -189,10 +238,11 @@ function ContextProvider({ children }) {
           rank: res.rank || 999999,
           activeWalletAddress: res.active_wallet_address,
         } as IUser)
-        return res
-      } else {
+      }
+      if (!res.email_verified_at && res.email && res.nickname) {
         removeItem('token')
       }
+      return res
     } catch (error) {
       removeItem('token')
       console.log('getProfile', error)
@@ -342,9 +392,42 @@ function ContextProvider({ children }) {
         forgotPassword,
         resetPassword,
       }}>
-      <ApolloProvider client={client}>
-        <ModalProvider>{children}</ModalProvider>
-      </ApolloProvider>
+      <ChainProvider
+        chains={[...testnetChains, ...chains.filter((chain) => chain.chain_name == 'aura')] as any}
+        assetLists={[...testnetAssets, ...networkAssets.filter((chain) => chain.chain_name == 'aura')] as any}
+        signerOptions={signerOptions as any}
+        endpointOptions={{
+          isLazy: true,
+          endpoints: {
+            aura_euphoria_evm: {
+              rpc: ['https://rpc.euphoria.aura.network'],
+            },
+            aura: {
+              rpc: ['https://rpc.aura.network'],
+            },
+          },
+        }}
+        wallets={isMobile ? [...c98Mobile, ...keplrExtension] : [...c98Extension, ...keplrExtension]}
+        walletConnectOptions={
+          isMobile
+            ? {
+                signClient: {
+                  projectId: '2dbe4db7e11c1057cc45b368eeb34319',
+                  relayUrl: 'wss://relay.walletconnect.org',
+                  metadata: {
+                    name: 'Punkga',
+                    description: 'Punkga.me comic website',
+                    url: 'https://punkga.me/',
+                    icons: ['https://punkga.me/logo.png'],
+                  },
+                },
+              }
+            : undefined
+        }>
+        <ApolloProvider client={client}>
+          <ModalProvider>{children}</ModalProvider>
+        </ApolloProvider>
+      </ChainProvider>
     </Context.Provider>
   )
 }

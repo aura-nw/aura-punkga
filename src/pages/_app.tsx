@@ -4,7 +4,7 @@ import { wallets as keplrExtension } from '@cosmos-kit/keplr-extension'
 import { ChainProvider } from '@cosmos-kit/react'
 import '@interchain-ui/react/styles'
 import axios from 'axios'
-import { assets, chains } from 'chain-registry'
+import { chains, assets as networkAssets } from 'chain-registry'
 import HeadComponent from 'components/Head'
 import MaintainPage from 'components/pages/maintainPage'
 import moment from 'moment'
@@ -66,14 +66,6 @@ const masgistral = localFont({
     },
   ],
 })
-
-const signerOptions = {
-  preferredSignType: (chain: Chain) => {
-    return 'direct'
-  },
-  signingStargate: (chain: Chain) => ({ gasPrice: getGasPriceByChain(chain) }),
-  signingCosmwasm: (chain: Chain) => ({ gasPrice: getGasPriceByChain(chain) }),
-}
 function MyApp(props: AppProps) {
   const [isSetting, setIsSetting] = useState(true)
   const { locale } = useRouter()
@@ -136,42 +128,7 @@ function MyApp(props: AppProps) {
       `}</style>
       <ToastContainer />
       <ContextProvider>
-        <ChainProvider
-          chains={chains.filter((chain) => chain.chain_name == 'aura' || chain.chain_name == 'auratestnet')}
-          assetLists={
-            assets.filter((chain) => chain.chain_name == 'aura' || chain.chain_name == 'auratestnet') as AssetList[]
-          }
-          wallets={isMobile ? [...c98Mobile, ...keplrExtension] : [...c98Extension, ...keplrExtension]}
-          signerOptions={signerOptions as any}
-          endpointOptions={{
-            isLazy: true,
-            endpoints: {
-              auradevnet: {
-                rpc: ['https://rpc.dev.aura.network'],
-              },
-              aura: {
-                rpc: ['https://rpc.aura.network'],
-              },
-            },
-          }}
-          walletConnectOptions={
-            isMobile
-              ? {
-                  signClient: {
-                    projectId: '2dbe4db7e11c1057cc45b368eeb34319',
-                    relayUrl: 'wss://relay.walletconnect.org',
-                    metadata: {
-                      name: 'Punkga',
-                      description: 'Punkga.me comic website',
-                      url: 'https://punkga.me/',
-                      icons: ['https://punkga.me/logo.png'],
-                    },
-                  },
-                }
-              : undefined
-          }>
-          <App {...props} />
-        </ChainProvider>
+        <App {...props} />
       </ContextProvider>
     </>
   )

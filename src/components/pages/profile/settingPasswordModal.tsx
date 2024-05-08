@@ -112,7 +112,7 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
             success ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}>
           <p className='text-center text-xl leading-6 font-bold'>{t('Password set')}!</p>
-          <Image src={SuccessImg} alt='' className='mx-auto h-[188px]' />
+          <Image src={SuccessImg} alt='' className='mx-auto max-h-[188px] w-[188px]' />
           <p className='text-sm leading-[18px] font-semibold text-center w-[274px] mx-auto text-[#414141]'>
             {t('You can use the new password to log in Punkga now')}
           </p>

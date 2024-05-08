@@ -3,8 +3,10 @@ import Image from 'next/image'
 import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
-export default function SignUpSuccessModal({ setSignUpOpen, onClose, email }) {
+import { ModalContext } from 'src/context/modals'
+export default function SignUpSuccessModal({ email,identifier }) {
   const { resendVerifyEmail } = useContext(Context)
+  const { setSignUpOpen, setSignUpSuccessOpen } = useContext(ModalContext)
   const { t } = useTranslation()
   return (
     <div className={` py-6 px-[60px] flex flex-col gap-4 w-full max-w-[670px]`}>
@@ -17,7 +19,7 @@ export default function SignUpSuccessModal({ setSignUpOpen, onClose, email }) {
       <div className='flex flex-col text-center text-xs leading-[14px]'>
         <p className=' font-medium text-center w-full max-w-[500px] mx-auto'>
           {t('Have not received any email')}?{' '}
-          <span className='text-second-color font-bold cursor-pointer' onClick={() => resendVerifyEmail(email)}>
+          <span className='text-second-color font-bold cursor-pointer' onClick={() => resendVerifyEmail(email,identifier)}>
             {t('Click here')}
           </span>{' '}
           {t('to resend verification link')}
@@ -27,7 +29,7 @@ export default function SignUpSuccessModal({ setSignUpOpen, onClose, email }) {
           <span
             className='text-second-color font-bold cursor-pointer'
             onClick={() => {
-              onClose()
+              setSignUpSuccessOpen(false)
               setSignUpOpen(true)
             }}>
             {t('sign up')}

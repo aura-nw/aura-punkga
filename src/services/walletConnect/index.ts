@@ -1,7 +1,7 @@
 import { Chain, AssetList } from '@chain-registry/types'
 export const euphoria: Chain = {
   bech32_prefix: 'aura',
-  chain_id: 'euphoria-2',
+  chain_id: 'aura_6321-3',
   chain_name: 'euphoria-aura',
   network_type: 'testnet',
   pretty_name: 'Aura Network Euphoria Testnet',
