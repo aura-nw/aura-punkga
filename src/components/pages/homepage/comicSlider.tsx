@@ -30,6 +30,7 @@ import c16 from './assets/comics/la_thu_cuoi_cung.jpeg'
 import c17 from './assets/comics/gio_thoi.jpeg'
 import c18 from './assets/comics/the_darkness_secret.png'
 import c19 from './assets/comics/htx.png'
+import c20 from './assets/comics/we_trainers_we_fight.jpg'
 import Avalook from './assets/authors/avalook.webp'
 import DangBao from './assets/authors/DangBao.webp'
 import H3 from './assets/authors/H3.webp'
@@ -74,6 +75,20 @@ function MobileCarousel({ children, setSlideIndex, sliderRef }) {
   )
 }
 export const list = [
+  {
+    comic: {
+      image: c20,
+      name: 'We Trainers We Fight!',
+      href: 'https://punkga.me/comic/we-trainers-we-fight-24/chapter/1',
+      isNewRelease: true,
+    },
+    author: [
+      {
+        avatar: Grey,
+        name: 'Grey',
+      },
+    ],
+  },
   {
     comic: {
       image: c19,
