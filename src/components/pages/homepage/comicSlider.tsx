@@ -31,6 +31,7 @@ import c17 from './assets/comics/gio_thoi.jpeg'
 import c18 from './assets/comics/the_darkness_secret.png'
 import c19 from './assets/comics/htx.png'
 import c20 from './assets/comics/we_trainers_we_fight.jpg'
+import c21 from './assets/comics/normal_days.png'
 import Avalook from './assets/authors/avalook.webp'
 import DangBao from './assets/authors/DangBao.webp'
 import H3 from './assets/authors/H3.webp'
@@ -75,6 +76,20 @@ function MobileCarousel({ children, setSlideIndex, sliderRef }) {
   )
 }
 export const list = [
+  {
+    comic: {
+      image: c21,
+      name: 'Normal Days',
+      href: 'https://punkga.me/comic/normal-days-25/chapter/1',
+      isNewRelease: true,
+    },
+    author: [
+      {
+        avatar: Sherlox,
+        name: 'Sherlox',
+      },
+    ],
+  },
   {
     comic: {
       image: c20,
