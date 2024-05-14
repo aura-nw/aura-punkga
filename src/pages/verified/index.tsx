@@ -27,7 +27,7 @@ function EmailVerified() {
         <div className='flex flex-col justify-center items-center h-[calc(80vh-80px)]'>
           <p className='text-xl font-semibold mb-5'>{t('Something went wrong. Your email has not been verified.')}</p>
           <p className='text-xl font-semibold mb-5'>{t('Try agian or contact us.')}</p>
-          <Image src={Mascot2} alt='' />
+          <Image src={Mascot2} alt='' width={320} height={320} />
           <MainButton className='mt-5' size='large' onClick={() => r.push('/')}>
             {t('Explore Punkga')}
           </MainButton>
@@ -41,7 +41,7 @@ function EmailVerified() {
       <Header />
       <div className='flex flex-col justify-center items-center h-[calc(80vh-80px)]'>
         <p className='text-xl font-semibold mb-5'>{t('s been verified')}</p>
-        <Image src={Mascot2} alt='' />
+        <Image src={Mascot2} alt='' width={320} height={320} />
         <MainButton className='mt-5' size='large' onClick={() => r.push('/')}>
           {t('Explore Punkga')}
         </MainButton>
