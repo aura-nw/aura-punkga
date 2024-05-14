@@ -2,68 +2,24 @@ import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache, split } from '@a
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { Authorizer } from '@authorizerdev/authorizer-js'
-import { AssetList, Chain } from '@chain-registry/types'
-import { wallets as c98Extension } from '@cosmos-kit/coin98-extension'
-import { wallets as keplrExtension } from '@cosmos-kit/keplr-extension'
-import { ChainProvider } from '@cosmos-kit/react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import axios from 'axios'
-import { chains, assets as networkAssets } from 'chain-registry'
 import { createClient } from 'graphql-ws'
 import getConfig from 'next/config'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 import { createContext, useEffect, useState } from 'react'
-import { isMobile } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
 import { IUser } from 'src/models/user'
 import { getProfile as getProfileService } from 'src/services'
-import { wallets as c98Mobile } from 'src/services/c98MobileWallet'
-import { getGasPriceByChain, oauthLogin } from 'src/utils'
+import { oauthLogin } from 'src/utils'
 import { getItem, removeItem, setItem } from 'src/utils/localStorage'
 import ModalProvider from './modals'
-const testnetChains: Chain[] = [
-  {
-    bech32_prefix: 'aura',
-    chain_id: 'aura_6321-3',
-    chain_name: 'aura_6321-3',
-    network_type: 'testnet',
-    pretty_name: 'Aura Euphoria Network',
-    slip44: 118,
-    status: 'live',
-    explorers: [
-      {
-        url: 'https://rpc.euphoria.aura.network',
-      },
-      {
-        url: 'https://lcd.euphoria.aura.network',
-      },
-    ],
-  },
-]
-const testnetAssets: AssetList[] = [
-  {
-    assets: [
-      {
-        base: 'ueaura',
-        denom_units: [
-          { denom: 'ueaura', exponent: 0 },
-          { denom: 'eaura', exponent: 6 },
-        ],
-        display: 'eaura',
-        name: 'Aura',
-        symbol: 'EAURA',
-      },
-    ],
-    chain_name: 'aura_6321-3',
-  },
-]
-const signerOptions = {
-  preferredSignType: (chain: Chain) => {
-    return 'direct'
-  },
-  signingStargate: (chain: Chain) => ({ gasPrice: getGasPriceByChain(chain) }),
-  signingCosmwasm: (chain: Chain) => ({ gasPrice: getGasPriceByChain(chain) }),
-}
+import { useAccount, useChainId, useSignMessage } from 'wagmi'
+import { SiweMessage } from 'siwe'
+import { BrowserProvider } from 'ethers'
+const queryClient = new QueryClient()
+
 export const Context = createContext<{
   account?: IUser
   wallet?: string
@@ -97,7 +53,10 @@ export const Context = createContext<{
   resetPassword: async () => {},
 })
 export const privateAxios = axios.create()
-function ContextProvider({ children }) {
+function ContextProvider({ children }: any) {
+  const { address, isConnected } = useAccount()
+  const chainId = useChainId()
+  const { signMessage } = useSignMessage()
   const [account, setAccount] = useState<IUser>()
   const [wallet, setWallet] = useState<string>()
   const [isSettingUp, setIsSettingUp] = useState(true)
@@ -164,13 +123,69 @@ function ContextProvider({ children }) {
     }
   }, [accessTokenParam])
 
+  useEffect(() => {
+    if (address && isConnected) {
+      const scheme = window.location.protocol.slice(0, -1)
+      const domain = window.location.host
+      const origin = window.location.origin
+      const statement = 'Sign in with Ethereum to the app.'
+      const siweMessage = new SiweMessage({
+        scheme,
+        domain,
+        address,
+        statement,
+        uri: origin,
+        version: '1',
+        chainId,
+        nonce: new Date().getTime().toString(),
+      })
+      const message = siweMessage.prepareMessage()
+      const res = signMessage(
+        { message, account: address },
+        {
+          onSuccess: (data) =>
+            getAccessToken({
+              message,
+              signature: data,
+            }),
+        }
+      )
+    }
+  }, [address, isConnected])
+
+  const getAccessToken = async ({ message, signature }) => {
+    try {
+      const res = await authorizerRef.graphqlQuery({
+        query: `mutation Siwe {
+          siwe(
+              params: {
+                  message: "${message}"
+                  signature: "${signature}"
+              }
+          ) {
+              message
+              should_show_otp_screen
+              access_token
+              id_token
+              refresh_token
+              expires_in
+          }
+      }`,
+      })
+      console.log(res)
+    } catch (error) {
+      console.log('resendVerifyEmail', error)
+      return null
+    }
+  }
+
   const setLogoutTimeout = (timeout: any) => {
     if (window.logoutTimeoutId) {
       clearTimeout(window.logoutTimeoutId)
     }
     window.logoutTimeoutId = setTimeout(
       () => {
-        setAccount(null)
+        setAccount(undefined)
       },
       timeout > 86400000 ? 86400000 : timeout
     )
@@ -183,7 +198,7 @@ function ContextProvider({ children }) {
         await authorizerRef.logout()
         removeItem('token')
         removeItem('current_reading_manga')
-        setAccount(null)
+        setAccount(undefined)
       } else {
         if (accessTokenParam) {
           setItem(
@@ -196,7 +211,7 @@ function ContextProvider({ children }) {
         } else {
           const token = getItem('token')
           if (token) {
-            const t = localStorage.getItem('token')
+            const t = localStorage.getItem('token') as string
             setLogoutTimeout(new Date(JSON.parse(t).exprire).getTime() - Date.now())
             await getProfile(token)
           }
@@ -263,7 +278,7 @@ function ContextProvider({ children }) {
       } else {
         callback && callback('failed', 'Admin account cannot be used for user purposes')
       }
-    } catch (error) {
+    } catch (error: any) {
       callback && callback('failed', error.message.includes('credentials') ? 'Wrong email or password' : error.message)
       console.log('login error: ' + error)
     }
@@ -287,7 +302,7 @@ function ContextProvider({ children }) {
       await authorizerRef.logout()
       removeItem('token')
       removeItem('current_reading_manga')
-      setAccount(null)
+      setAccount(undefined)
       router.push(location.origin + location.pathname)
     } catch (error) {
       console.log('logout', error)
@@ -312,7 +327,7 @@ function ContextProvider({ children }) {
       if (res) {
         callback && callback('success')
       }
-    } catch (error) {
+    } catch (error: any) {
       callback && callback('failed', error.message)
       console.log('sign up error: ' + error)
     }
@@ -328,7 +343,7 @@ function ContextProvider({ children }) {
         await getProfile()
       }
       return res
-    } catch (error) {
+    } catch (error: any) {
       console.log('update profile error: ' + error)
       throw new Error(error)
     }
@@ -392,42 +407,11 @@ function ContextProvider({ children }) {
         forgotPassword,
         resetPassword,
       }}>
-      <ChainProvider
-        chains={[...testnetChains, ...chains.filter((chain) => chain.chain_name == 'aura')] as any}
-        assetLists={[...testnetAssets, ...networkAssets.filter((chain) => chain.chain_name == 'aura')] as any}
-        signerOptions={signerOptions as any}
-        endpointOptions={{
-          isLazy: true,
-          endpoints: {
-            aura_euphoria_evm: {
-              rpc: ['https://rpc.euphoria.aura.network'],
-            },
-            aura: {
-              rpc: ['https://rpc.aura.network'],
-            },
-          },
-        }}
-        wallets={isMobile ? [...c98Mobile, ...keplrExtension] : [...c98Extension, ...keplrExtension]}
-        walletConnectOptions={
-          isMobile
-            ? {
-                signClient: {
-                  projectId: '2dbe4db7e11c1057cc45b368eeb34319',
-                  relayUrl: 'wss://relay.walletconnect.org',
-                  metadata: {
-                    name: 'Punkga',
-                    description: 'Punkga.me comic website',
-                    url: 'https://punkga.me/',
-                    icons: ['https://punkga.me/logo.png'],
-                  },
-                },
-              }
-            : undefined
-        }>
+      <QueryClientProvider client={queryClient}>
         <ApolloProvider client={client}>
           <ModalProvider>{children}</ModalProvider>
         </ApolloProvider>
-      </ChainProvider>
+      </QueryClientProvider>
     </Context.Provider>
   )
 }

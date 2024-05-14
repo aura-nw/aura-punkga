@@ -1,10 +1,6 @@
-import { AssetList, Chain } from '@chain-registry/types'
-import { wallets as c98Extension } from '@cosmos-kit/coin98-extension'
-import { wallets as keplrExtension } from '@cosmos-kit/keplr-extension'
-import { ChainProvider } from '@cosmos-kit/react'
 import '@interchain-ui/react/styles'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import axios from 'axios'
-import { chains, assets as networkAssets } from 'chain-registry'
 import HeadComponent from 'components/Head'
 import MaintainPage from 'components/pages/maintainPage'
 import moment from 'moment'
@@ -16,15 +12,14 @@ import { Plus_Jakarta_Sans, Work_Sans } from 'next/font/google'
 import localFont from 'next/font/local'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
-import { isMobile } from 'react-device-detect'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 import ContextProvider, { Context } from 'src/context'
-import { wallets as c98Mobile } from 'src/services/c98MobileWallet'
+import { getWagmiConfig } from 'src/services/wagmi/config'
 import 'src/styles/globals.scss'
-import { getGasPriceByChain } from 'src/utils'
+import { WagmiProvider } from 'wagmi'
 const pjs = Plus_Jakarta_Sans({ subsets: ['latin', 'vietnamese'] })
 const ws = Work_Sans({ subsets: ['latin', 'vietnamese'] })
 const orbitron = localFont({
@@ -127,9 +122,14 @@ function MyApp(props: AppProps) {
         }
       `}</style>
       <ToastContainer />
-      <ContextProvider>
-        <App {...props} />
-      </ContextProvider>
+
+      <WagmiProvider config={getWagmiConfig()}>
+        <QueryClientProvider client={new QueryClient()}>
+          <ContextProvider>
+            <App {...props} />
+          </ContextProvider>
+        </QueryClientProvider>
+      </WagmiProvider>
     </>
   )
 }

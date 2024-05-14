@@ -11,6 +11,9 @@ import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
 import { validateEmail } from 'src/utils'
+import { useConnect } from 'wagmi'
+import MetaMaskIcon from 'src/assets/images/metamask.png'
+import Image from 'next/image'
 export default function SignInModal() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -25,6 +28,7 @@ export default function SignInModal() {
   const router = useRouter()
   const { login, oauth } = useContext(Context)
   const { setSignInOpen, setSignUpOpen, setForgotPasswordOpen, signInOpen: show } = useContext(ModalContext)
+  const { connectors, connect } = useConnect()
 
   useEffect(() => {
     setEmailValidateErrorMsg('')
@@ -63,6 +67,8 @@ export default function SignInModal() {
     setLoginLoading(false)
   }
 
+  const metamask = connectors.find((c) => c.id == 'io.metamask')
+
   return (
     <Transition
       show={show}
@@ -72,92 +78,19 @@ export default function SignInModal() {
       leave='transition-all duration-500'
       leaveFrom='max-h-screen opacity-100'
       leaveTo='max-h-[0vh] opacity-0'>
-      <div className='p-6 md:w-[400px]'>
-        <p className='text-center text-lg font-semibold leading-6 text-[#414141]'>{t('Sign in to Punkga')}</p>
-        <div className='mt-6'>
-          <OutlineTextField
-            placeholder={t('Enter your email')}
-            label={t('Email')}
-            type='email'
-            errorMsg={emailValidateErrorMsg}
-            value={email}
-            onChange={setEmail}
-            inputRef={emailRef}
-            onKeyDown={(e) => {
-              if (e.which == 13) {
-                passwordRef.current?.focus()
-              }
-            }}
-          />
-          <OutlineTextField
-            placeholder={t('Enter your password')}
-            label={t('Password')}
-            type='password'
-            value={password}
-            onChange={setPassword}
-            inputRef={passwordRef}
-            onKeyDown={(e) => {
-              if (e.which == 13) {
-                emailRef.current?.focus()
-                buttonRef.current?.click()
-              }
-            }}
-          />
-        </div>
-        <div
-          className='text-[#2684FC] text-sm leading-[18px] text-right cursor-pointer -mt-[18px]'
-          onClick={() => {
-            setSignInOpen(false)
-            setForgotPasswordOpen(true)
-          }}>
-          {t('Forgot password')}
-        </div>
-        <div className='mt-4 flex flex-col items-center w-full'>
-          <MainButton
-            buttonRef={buttonRef}
-            disabled={!(email && password)}
-            onClick={loginHandler}
-            className='min-w-[128px]'>
-            {t('Sign in')}
-          </MainButton>
-          <div className='text-sm leading-[18px] text-[#F0263C] mt-1'>{loginErrorMsg}</div>
-          <div className='text-sm leading-[18px] mt-1 text-[#414141]'>
-            {t('Don’t have an account')}?{' '}
-            <a
-              className='text-[#2684FC] cursor-pointer'
-              onClick={() => {
-                setSignUpOpen(true)
-                setSignInOpen(false)
-              }}>
-              {t('Sign up')}
-            </a>
-          </div>
-          <div className='my-4 text-sm leading-[18px] text-[#414141]'>{t('or')}</div>
-          <div className='flex gap-4 w-full items-center'>
-            <MainButton
-              iconOnly={Facebook}
-              onClick={() => oauth('facebook')}
-              style='outline'
-              size='small'
-              className='w-full'
-            />
-            <MainButton iconOnly={Zalo} onClick={() => oauth('zalo')} style='outline' size='small' className='w-full' />
-            <MainButton
-              iconOnly={Google}
-              onClick={() => oauth('google')}
-              style='outline'
-              size='small'
-              className='w-full'
-            />
-          </div>
-          <div className='mt-4 text-sm leading-[18px] text-[#414141] text-center'>
-            {t('By continuing, you agree to our')}
-            <br />
-            <Link href='/policy' target='_blank' className='text-[#2684FC]'>
-              {t('Terms of Use')}
-            </Link>{' '}
-            {locale == 'vn' && 'của chúng tôi'}
-          </div>
+      <div className='w-[354px] flex flex-col gap-3 p-5'>
+        <p className='text-center text-base leading-6 font-semibold md:text-lg md:leading-[23px]'>
+          {t('Connect your wallet')}
+        </p>
+        <div className='mt-3'>
+          <button
+            onClick={metamask ? () => connect({ connector: metamask }) : null}
+            className={`${
+              metamask ? 'opacity-100' : 'opacity-40'
+            } flex items-center gap-5 hover:bg-[#f5f5f5] p-3 w-full rounded-lg`}>
+            <Image src={MetaMaskIcon} alt='' className='w-8 h-8' />
+            <div className='font-semibold'>Metamask</div>
+          </button>
         </div>
       </div>
     </Transition>

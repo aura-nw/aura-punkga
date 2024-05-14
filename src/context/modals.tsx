@@ -134,7 +134,7 @@ function ModalProvider({ children }) {
           setSignInOpen(false)
           setSignUpOpen(false)
         }}>
-        <div className='relative min-h-[40vh]'>
+        <div className='relative'>
           <SignInModal />
           <SignUpModal />
         </div>

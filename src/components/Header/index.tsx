@@ -142,7 +142,7 @@ export default function Header({ className }: { className?: string }) {
                     {account?.name}
                   </MainButton>
                 ) : (
-                  <MainButton onClick={() => setSignInOpen(true)}>{t('Sign in')}</MainButton>
+                  <MainButton onClick={() => setSignInOpen(true)}>{t('Connect Wallet')}</MainButton>
                 )}
               </div>
             </div>
@@ -603,7 +603,7 @@ export default function Header({ className }: { className?: string }) {
                   </DropdownMenu>
                 </Dropdown>
               ) : (
-                <MainButton onClick={() => setSignInOpen(true)}>{t('Sign in')}</MainButton>
+                <MainButton onClick={() => setSignInOpen(true)}>{t('Connect Wallet')}</MainButton>
               )}
             </div>
           </div>
