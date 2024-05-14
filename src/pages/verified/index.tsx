@@ -40,7 +40,7 @@ function EmailVerified() {
     <>
       <Header />
       <div className='flex flex-col justify-center items-center h-[calc(80vh-80px)]'>
-        <p className='text-xl font-semibold mb-5'>{t('s been verified')}</p>
+        <p className='text-2xl font-semibold mb-5'>{t('Your email has been verified')}</p>
         <Image src={Mascot2} alt='' width={320} height={320} />
         <MainButton className='mt-5' size='large' onClick={() => r.push('/')}>
           {t('Explore Punkga')}
