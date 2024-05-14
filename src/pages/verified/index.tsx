@@ -1,7 +1,8 @@
 import FilledButton from 'components/Button/FilledButton'
+import MainButton from 'components/Button/MainButton'
 import Footer from 'components/Footer'
 import Header from 'components/Header'
-import Ninja from 'images/ninja.svg'
+import Mascot2 from 'images/Mascot2.png'
 import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Image from 'next/image'
@@ -26,10 +27,10 @@ function EmailVerified() {
         <div className='flex flex-col justify-center items-center h-[calc(80vh-80px)]'>
           <p className='text-xl font-semibold mb-5'>{t('Something went wrong. Your email has not been verified.')}</p>
           <p className='text-xl font-semibold mb-5'>{t('Try agian or contact us.')}</p>
-          <Image src={Ninja} alt='' />
-          <FilledButton className='mt-5' size='lg' onClick={() => r.push('/')}>
+          <Image src={Mascot2} alt='' />
+          <MainButton className='mt-5' size='large' onClick={() => r.push('/')}>
             {t('Explore Punkga')}
-          </FilledButton>
+          </MainButton>
         </div>
         <Footer />
       </>
@@ -39,11 +40,11 @@ function EmailVerified() {
     <>
       <Header />
       <div className='flex flex-col justify-center items-center h-[calc(80vh-80px)]'>
-        <p className='text-xl font-semibold mb-5'>{t('Your email has been verified')}</p>
-        <Image src={Ninja} alt='' />
-        <FilledButton className='mt-5' size='lg' onClick={() => r.push('/')}>
+        <p className='text-xl font-semibold mb-5'>{t('s been verified')}</p>
+        <Image src={Mascot2} alt='' />
+        <MainButton className='mt-5' size='large' onClick={() => r.push('/')}>
           {t('Explore Punkga')}
-        </FilledButton>
+        </MainButton>
       </div>
       <Footer />
     </>
