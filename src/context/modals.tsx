@@ -66,6 +66,13 @@ function ModalProvider({ children }) {
     }
   }, [signUpSuccessOpen])
 
+  useEffect(() => {
+    if (account) {
+      setSignInOpen(false)
+      setSignUpOpen(false)
+    }
+  }, [account])
+
   const setUName = async () => {
     try {
       setLoading(true)

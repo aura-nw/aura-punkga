@@ -26,6 +26,7 @@ import { useClickOutside } from 'src/hooks/useClickOutside'
 import { getBalances, getEnvKey, search } from 'src/services'
 import { shorten } from 'src/utils'
 import useSWR from 'swr'
+import { useAccount, useBalance } from 'wagmi'
 export default function Header({ className }: { className?: string }) {
   const { t } = useTranslation()
   const router = useRouter()
@@ -45,6 +46,11 @@ export default function Header({ className }: { className?: string }) {
       refreshInterval: 60000,
     }
   )
+  const { address } = useAccount()
+  const walletBalance = useBalance({
+    address,
+  })
+  console.log(walletBalance)
   const ref = useRef<any>()
   const divRef = useRef<any>()
   const mref = useRef<any>()
@@ -524,12 +530,13 @@ export default function Header({ className }: { className?: string }) {
                         <div className='flex justify-between items-center text-sm font-semibold  leading-[18px] mt-3'>
                           <div className=''>{`${t('Balance')}:`}</div>
                           <div className='flex items-center'>
-                            {hideBalance
+                            {hideBalance ? '********' : `${walletBalance?.data?.formatted} ${walletBalance?.data?.symbol}`}
+                            {/* {hideBalance
                               ? '********'
                               : `${+BigNumber(balance || 0)
                                   .div(BigNumber(10).pow(6))
                                   .toFixed(4)
-                                  .toLocaleString()} ${getEnvKey() == 'euphoria' ? 'EAURA' : 'AURA'}`}
+                                  .toLocaleString()} ${getEnvKey() == 'euphoria' ? 'EAURA' : 'AURA'}`} */}
                             <span className='inline-block'>
                               {
                                 <div className='ml-2 w-6 h-6 relative'>

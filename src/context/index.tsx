@@ -15,8 +15,8 @@ import { getProfile as getProfileService } from 'src/services'
 import { oauthLogin } from 'src/utils'
 import { getItem, removeItem, setItem } from 'src/utils/localStorage'
 import ModalProvider from './modals'
-import { useAccount, useChainId, useSignMessage } from 'wagmi'
-import { SiweMessage } from 'siwe'
+import { useAccount, useChainId, useDisconnect, useSignMessage } from 'wagmi'
+import { SiweMessage, generateNonce } from 'siwe'
 import { BrowserProvider } from 'ethers'
 const queryClient = new QueryClient()
 
@@ -57,6 +57,7 @@ function ContextProvider({ children }: any) {
   const { address, isConnected } = useAccount()
   const chainId = useChainId()
   const { signMessage } = useSignMessage()
+  const { disconnect } = useDisconnect()
   const [account, setAccount] = useState<IUser>()
   const [wallet, setWallet] = useState<string>()
   const [isSettingUp, setIsSettingUp] = useState(true)
@@ -125,22 +126,21 @@ function ContextProvider({ children }: any) {
 
   useEffect(() => {
     if (address && isConnected) {
-      const scheme = window.location.protocol.slice(0, -1)
       const domain = window.location.host
       const origin = window.location.origin
       const statement = 'Sign in with Ethereum to the app.'
       const siweMessage = new SiweMessage({
-        scheme,
+        scheme: undefined,
         domain,
         address,
         statement,
         uri: origin,
         version: '1',
         chainId,
-        nonce: new Date().getTime().toString(),
+        nonce: generateNonce(),
       })
       const message = siweMessage.prepareMessage()
-      const res = signMessage(
+      signMessage(
         { message, account: address },
         {
           onSuccess: (data) =>
@@ -159,7 +159,7 @@ function ContextProvider({ children }: any) {
         query: `mutation Siwe {
           siwe(
               params: {
-                  message: "${message}"
+                  message: "${message.replace(/(?:\r\n|\r|\n)/g, '\\n')}"
                   signature: "${signature}"
               }
           ) {
@@ -172,7 +172,12 @@ function ContextProvider({ children }: any) {
           }
       }`,
       })
-      console.log(res)
+      if (res?.siwe?.access_token) {
+        const token = res?.siwe?.access_token
+        setItem('token', res?.siwe?.access_token)
+        setLogoutTimeout(res?.siwe?.expires_in)
+        await getProfile(token)
+      }
     } catch (error) {
       console.log('resendVerifyEmail', error)
       return null
@@ -300,6 +305,7 @@ function ContextProvider({ children }: any) {
   const logout = async () => {
     try {
       await authorizerRef.logout()
+      disconnect()
       removeItem('token')
       removeItem('current_reading_manga')
       setAccount(undefined)

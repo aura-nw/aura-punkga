@@ -490,15 +490,15 @@ export default function TaskSlider({ sliderNavRef }) {
                   <div className='text-white font-bold text-[48px] leading-[60px]'>{data.comic.name}</div>
                   <div className='flex items-center gap-[10px]'>
                     {data.author.map((author, index) => (
-                      <>
-                        <div className='flex gap-[5px] items-center' key={index}>
+                      <div key={index}>
+                        <div className='flex gap-[5px] items-center'>
                           <Image src={author.avatar} alt='' className='w-7 h-7 rounded-full' />
                           <div className='text-white font-semibold text-sm leading-[18px]'>{author.name}</div>
                         </div>
                         <svg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4' fill='none'>
                           <circle cx='2' cy='2' r='2' fill='white' />
                         </svg>
-                      </>
+                      </div>
                     ))}
                     <div className='flex gap-[5px] items-center'>
                       <Image src={Eng} alt='' />
