@@ -18,6 +18,7 @@ import ModalProvider from './modals'
 import { useAccount, useChainId, useDisconnect, useSignMessage } from 'wagmi'
 import { SiweMessage, generateNonce } from 'siwe'
 import { BrowserProvider } from 'ethers'
+import StoryProvider from './story'
 const queryClient = new QueryClient()
 
 export const Context = createContext<{
@@ -415,7 +416,9 @@ function ContextProvider({ children }: any) {
       }}>
       <QueryClientProvider client={queryClient}>
         <ApolloProvider client={client}>
-          <ModalProvider>{children}</ModalProvider>
+          <StoryProvider>
+            <ModalProvider>{children}</ModalProvider>
+          </StoryProvider>
         </ApolloProvider>
       </QueryClientProvider>
     </Context.Provider>

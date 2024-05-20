@@ -17,6 +17,9 @@ import { useTranslation } from 'react-i18next'
 import useApi from 'src/hooks/useApi'
 import { IComic } from 'src/models/comic'
 import { getAllTags, getLatestComic, getTrendingComic } from 'src/services'
+import { custom, Address } from 'viem'
+import { StoryClient, StoryConfig } from '@story-protocol/core-sdk'
+import { useStory } from 'src/context/story'
 
 declare global {
   interface Window {
@@ -49,6 +52,8 @@ function Home() {
     },
   ])
 
+  const { client, walletAddress, mintNFT, setTxHash, setTxLoading, setTxName, addTransaction } = useStory()
+
   useEffect(() => {
     setStatusFilter((prev) => {
       return _.cloneDeep(
@@ -63,14 +68,35 @@ function Home() {
         prev.map((v) =>
           v.key == 'All genres'
             ? {
-              key: v.key,
-              value: t(v.key),
-            }
+                key: v.key,
+                value: t(v.key),
+              }
             : v
         )
       )
     })
   }, [t('All status')])
+
+  useEffect(() => {
+    registerExistingNFT('12', '0xe8E8dd120b067ba86cf82B711cC4Ca9F22C89EDc')
+  }, [])
+  const registerExistingNFT = async (tokenId: string, nftContract: Address) => {
+    if (!client) return
+    setTxLoading(true)
+    setTxName('Registering an NFT as an IP Asset...')
+    const response = await (client.ipAsset as any).register({
+      nftContract,
+      tokenId,
+      txOptions: { waitForTransaction: true },
+    })
+    console.log(`Root IPA created at tx hash ${response.txHash}, IPA ID: ${response.ipId}`)
+    setTxLoading(false)
+    setTxHash(response.txHash as string)
+    addTransaction(response.txHash as string, 'Register IPA', {
+      ipId: response.ipId,
+    })
+  }
+
   return (
     <>
       <Header />
@@ -106,21 +132,21 @@ function Home() {
                   options={
                     allTags?.data
                       ? [
-                        {
-                          key: 'All genres',
-                          value: t('All genres'),
-                        },
-                        ...allTags?.data?.map((tag) => ({
-                          key: tag[locale],
-                          value: tag[locale],
-                        })),
-                      ]
+                          {
+                            key: 'All genres',
+                            value: t('All genres'),
+                          },
+                          ...allTags?.data?.map((tag) => ({
+                            key: tag[locale],
+                            value: tag[locale],
+                          })),
+                        ]
                       : [
-                        {
-                          key: 'All genres',
-                          value: t('All genres'),
-                        },
-                      ]
+                          {
+                            key: 'All genres',
+                            value: t('All genres'),
+                          },
+                        ]
                   }
                   placeholder={t('All genres')}
                 />
@@ -166,10 +192,10 @@ function Home() {
             <div className='grid md:grid-cols-1 grid-cols-2 2xl:grid-cols-2 gap-10 mt-2 md:mt-10'>
               {latestComic.loading
                 ? Array.apply(null, Array(2)).map((d, index) => {
-                  return <DummyComic key={index} />
-                })
+                    return <DummyComic key={index} />
+                  })
                 : latestComic.data?.length
-                  ? latestComic.data
+                ? latestComic.data
                     .filter((data) =>
                       statusFilter.length && !statusFilter.some((s) => s.key == 'All status')
                         ? statusFilter.some((filter) => data.status.text == filter?.key)
@@ -183,7 +209,7 @@ function Home() {
                     .map((data, index) => {
                       return <Comic key={index} {...data} />
                     })
-                  : null}
+                : null}
             </div>
           </div>
           <div className='lg:flex-auto lg:w-[32%] mt-6 lg:mt-0 '>
@@ -192,17 +218,15 @@ function Home() {
               {/* <LeaderBoard /> */}
             </div>
             <div className='flex flex-col p-6 bg-[#292929] text-white rounded-[10px] mt-10'>
-              <div className='md:text-xl text-sm md:leading-[25px] font-[800] mb-4 md:mb-6'>
-              🔥{t('Trending')}
-              </div>
+              <div className='md:text-xl text-sm md:leading-[25px] font-[800] mb-4 md:mb-6'>🔥{t('Trending')}</div>
               <div className='flex flex-col gap-10 mt-2 md:mt-6'>
                 {trendingComic.loading
                   ? Array.apply(null, Array(5)).map((d, index) => {
-                    return <DummyComic key={index} />
-                  })
+                      return <DummyComic key={index} />
+                    })
                   : trendingComic.data.slice(0, 5).map((data, index) => {
-                    return <TrendingComic key={index} {...data} />
-                  })}
+                      return <TrendingComic key={index} {...data} />
+                    })}
               </div>
             </div>
 
