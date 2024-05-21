@@ -1,6 +1,5 @@
 import DummyComic from 'components/DummyComponent/comic'
-import Footer from 'components/Footer'
-import Header from 'components/Header'
+import Layout from 'components/Layout'
 import Comic from 'components/pages/homepage/comic'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useSearchParams } from 'next/navigation'
@@ -15,6 +14,9 @@ export default function Page(props) {
   }
   return <Search />
 }
+Page.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>
+}
 function Search() {
   const r = useRouter()
   const params = useSearchParams()
@@ -23,7 +25,6 @@ function Search() {
   const searchComic = useApi<any[]>(async () => await search(keyword), !!keyword, [keyword])
   return (
     <>
-      <Header />
       <div className='pk-container px-5 md:px-0 min-h-[calc(100vh-601px)] lg:min-h-[calc(100vh-623px)]'>
         <p className='md:text-2xl font-extrabold leading-6 mt-2 md:mt-10'>{`${searchComic.data?.length} ${t(
           'results for'
@@ -38,7 +39,6 @@ function Search() {
               })}
         </div>
       </div>
-      <Footer />
     </>
   )
 }

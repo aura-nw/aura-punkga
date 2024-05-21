@@ -1,8 +1,9 @@
 import DummyComic from 'components/DummyComponent/comic'
-import Footer from 'components/Footer'
-import Header from 'components/Header'
 import MComic from 'components/pages/homepage/comic'
+import Analytic from 'components/pages/profile/analytic'
 import Comic from 'components/pages/profile/comic'
+import NFTList from 'components/pages/profile/nfts'
+import { useRouter } from 'next/router'
 import { Fragment, useContext, useEffect } from 'react'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useTranslation } from 'react-i18next'
@@ -11,9 +12,6 @@ import { subscribe, unsubscribe } from 'src/services'
 import Info from '../../components/pages/profile/info'
 import LeaderBoard from '../../components/pages/profile/leaderboard'
 import Quest from '../../components/pages/profile/quests'
-import NFTList from 'components/pages/profile/nfts'
-import Analytic from 'components/pages/profile/analytic'
-import { useRouter } from 'next/router'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -31,7 +29,6 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
   if (!account) return <></>
   return (
     <>
-      <Header />
       <div className='pk-container py-5 px-5 md:px-0 md:py-10'>
         {isSettingUp ? (
           <div className='flex gap-[60px]'>
@@ -134,7 +131,6 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
       <div className='pk-container xl:hidden'>
         <LeaderBoard />
       </div>
-      <Footer />
     </>
   )
 }

@@ -1,7 +1,5 @@
-import FilledButton from 'components/Button/FilledButton'
 import MainButton from 'components/Button/MainButton'
-import Footer from 'components/Footer'
-import Header from 'components/Header'
+import Layout from 'components/Layout'
 import Mascot2 from 'images/Mascot2.png'
 import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -15,6 +13,9 @@ export default function Page(props) {
   }
   return <EmailVerified />
 }
+Page.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>
+}
 function EmailVerified() {
   const r = useRouter()
   const searchParams = useSearchParams()
@@ -23,7 +24,6 @@ function EmailVerified() {
   if (error) {
     return (
       <>
-        <Header />
         <div className='flex flex-col justify-center items-center h-[calc(80vh-80px)]'>
           <p className='text-xl font-semibold mb-5'>{t('Something went wrong. Your email has not been verified.')}</p>
           <p className='text-xl font-semibold mb-5'>{t('Try agian or contact us.')}</p>
@@ -32,13 +32,11 @@ function EmailVerified() {
             {t('Explore Punkga')}
           </MainButton>
         </div>
-        <Footer />
       </>
     )
   }
   return (
     <>
-      <Header />
       <div className='flex flex-col justify-center items-center h-[calc(80vh-80px)]'>
         <p className='text-2xl font-semibold mb-5'>{t('Your email has been verified')}</p>
         <Image src={Mascot2} alt='' width={320} height={320} />
@@ -46,7 +44,6 @@ function EmailVerified() {
           {t('Explore Punkga')}
         </MainButton>
       </div>
-      <Footer />
     </>
   )
 }

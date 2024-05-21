@@ -3,6 +3,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { compose } from 'ramda'
 import Comic from './comic'
 import withApi from './with-api'
+import Layout from 'components/Layout'
 const ComposedComic = compose(withApi)(Comic)
 
 export default function Page(props) {
@@ -16,7 +17,9 @@ export default function Page(props) {
     </>
   )
 }
-
+Page.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>
+}
 export const getServerSideProps = async (context) => {
   if (context.params?.comicSlug) {
     const res = await fetch(`https://api.punkga.me/manga/${context.params?.comicSlug}`)

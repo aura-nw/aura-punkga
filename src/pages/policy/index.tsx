@@ -1,5 +1,4 @@
-import Footer from 'components/Footer'
-import Header from 'components/Header'
+import Layout from 'components/Layout'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
 
@@ -9,12 +8,14 @@ export default function Page(props) {
   }
   return <Policy />
 }
+Page.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>
+}
 function Policy() {
   const { locale } = useRouter()
   if (locale == 'vn') {
     return (
       <>
-        <Header />
         <div className='pk-container py-5 px-3 md:px-0 text-sm [&_p]:mb-2 [&>h1]:font-bold [&>h1]:text-4xl [&>h1]:mb-3 [&>h1]:mt-7 [&>h2]:font-bold [&>h2]:text-2xl [&>h2]:mb-3 [&>h2]:mt-5 [&>ul]:pl-6 [&>ul]:list-disc [&>ul>*]:mb-2'>
           <h1>Chính sách Bảo mật</h1>
           <p>Cập nhật lần cuối: 06 tháng 4 năm 2023</p>
@@ -407,13 +408,11 @@ function Policy() {
             <li>Email: support@aura.network</li>
           </ul>
         </div>
-        <Footer />
       </>
     )
   }
   return (
     <>
-      <Header />
       <div className='pk-container py-5 px-3 md:px-0 text-sm [&_p]:mb-2 [&>h1]:font-bold [&>h1]:text-4xl [&>h1]:mb-3 [&>h1]:mt-7 [&>h2]:font-bold [&>h2]:text-2xl [&>h2]:mb-3 [&>h2]:mt-5 [&>ul]:pl-6 [&>ul]:list-disc [&>ul>*]:mb-2'>
         <h1>Privacy Policy</h1>
         <p>Last updated: April 06, 2023</p>
@@ -797,7 +796,6 @@ function Policy() {
           <li>By email: support@aura.network</li>
         </ul>
       </div>
-      <Footer />
     </>
   )
 }
