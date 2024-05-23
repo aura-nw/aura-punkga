@@ -17,9 +17,6 @@ import { useTranslation } from 'react-i18next'
 import useApi from 'src/hooks/useApi'
 import { IComic } from 'src/models/comic'
 import { getAllTags, getLatestComic, getTrendingComic } from 'src/services'
-import { custom, Address } from 'viem'
-import { StoryClient, StoryConfig } from '@story-protocol/core-sdk'
-import { useStory } from 'src/context/story'
 
 declare global {
   interface Window {
@@ -52,8 +49,6 @@ function Home() {
     },
   ])
 
-  const { client, walletAddress, mintNFT, setTxHash, setTxLoading, setTxName, addTransaction } = useStory()
-
   useEffect(() => {
     setStatusFilter((prev) => {
       return _.cloneDeep(
@@ -76,26 +71,6 @@ function Home() {
       )
     })
   }, [t('All status')])
-
-  useEffect(() => {
-    registerExistingNFT('12', '0xe8E8dd120b067ba86cf82B711cC4Ca9F22C89EDc')
-  }, [])
-  const registerExistingNFT = async (tokenId: string, nftContract: Address) => {
-    if (!client) return
-    setTxLoading(true)
-    setTxName('Registering an NFT as an IP Asset...')
-    const response = await (client.ipAsset as any).register({
-      nftContract,
-      tokenId,
-      txOptions: { waitForTransaction: true },
-    })
-    console.log(`Root IPA created at tx hash ${response.txHash}, IPA ID: ${response.ipId}`)
-    setTxLoading(false)
-    setTxHash(response.txHash as string)
-    addTransaction(response.txHash as string, 'Register IPA', {
-      ipId: response.ipId,
-    })
-  }
 
   return (
     <>

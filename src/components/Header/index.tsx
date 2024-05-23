@@ -591,6 +591,10 @@ export default function Header({ className }: { className?: string }) {
                           <strong>{t('My profile')}</strong>
                         </div>
                         <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0] '></span>
+                        <div onClick={() => router.push('/ipassets')}>
+                          <strong>{t('IPAsset')}</strong>
+                        </div>
+                        <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0] '></span>
                         {!wallet ? (
                           <>
                             <div className='font-bold w-max' onClick={() => setMigrateWalletOpen(true)}>

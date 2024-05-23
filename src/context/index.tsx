@@ -39,6 +39,8 @@ export const Context = createContext<{
   getProfile: (token?: string) => Promise<any>
   forgotPassword: (email: string) => Promise<any>
   resetPassword: (token: string, newPassword: string) => Promise<any>
+  getIPAsset: (user_id: string) => Promise<any>
+  registerIPAsset: (user_id: string, nft_token_id: string, nft_contract_address: string, ip_asset_id: string) => Promise<any>
 }>({
   account: undefined,
   wallet: undefined,
@@ -51,7 +53,9 @@ export const Context = createContext<{
   resendVerifyEmail: async () => {},
   getProfile: async () => {},
   forgotPassword: async () => {},
-  resetPassword: async () => {},
+  resetPassword: async () => { },
+  getIPAsset: async () => { },
+  registerIPAsset: async () => { },
 })
 export const privateAxios = axios.create()
 function ContextProvider({ children }: any) {
@@ -398,6 +402,32 @@ function ContextProvider({ children }: any) {
       return null
     }
   }
+  const getIPAsset = async (user_id: string) => {
+    try {
+      const res = await privateAxios.get(`${config.API_URL}/api/rest/public/ip-assets?user_id=${user_id}`)
+      return res
+    } catch (error) {
+      console.log('getIPAsset', error)
+      return null
+    }
+   }
+
+  const registerIPAsset = async (user_id: string, nft_token_id: string, nft_contract_address: string, ip_asset_id: string) => {
+    try {
+      const res = await privateAxios.post(`${config.API_URL}/api/rest/users/ip-assets`, {
+        object: {
+          user_id,
+          nft_token_id,
+          nft_contract_address,
+          ip_asset_id
+        }
+      })
+      return res
+    } catch (error) {
+      console.log('RegisterIPAsset', error)
+      return null
+    }
+   }
   return (
     <Context.Provider
       value={{
@@ -413,6 +443,8 @@ function ContextProvider({ children }: any) {
         getProfile,
         forgotPassword,
         resetPassword,
+        getIPAsset,
+        registerIPAsset,
       }}>
       <QueryClientProvider client={queryClient}>
         <ApolloProvider client={client}>
