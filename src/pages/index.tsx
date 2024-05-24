@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next'
 import useApi from 'src/hooks/useApi'
 import { IComic } from 'src/models/comic'
 import { getAllTags, getLatestComic, getTrendingComic } from 'src/services'
+import Layout from 'components/Layout'
 
 declare global {
   interface Window {
@@ -73,7 +74,6 @@ function Home() {
   }, [t('All status')])
   return (
     <>
-      <Header />
       <div className='md:hidden'>
         <TaskSlider sliderNavRef={sliderNavRef} />
         <SlideSection sliderNavRef={sliderNavRef} />
@@ -212,7 +212,6 @@ function Home() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   )
 }
@@ -222,6 +221,9 @@ export default function Page(props) {
     return <></>
   }
   return <Home />
+}
+Page.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>
 }
 export const getStaticProps = async ({ locale }) => {
   if (process.env.NODE_ENV === 'development') {
