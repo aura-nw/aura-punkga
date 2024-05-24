@@ -1,6 +1,7 @@
 
-FROM node:18-alpine AS deps
+FROM node:20-alpine AS deps
 RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache python3 py3-pip
 WORKDIR /app
 
 COPY package.json yarn.lock ./
