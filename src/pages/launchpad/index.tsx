@@ -1,6 +1,10 @@
 import { useRouter } from 'next/router'
 import Layout from './components/layout'
+import useSWR from 'swr'
+import { getAllLaunchPad } from 'src/services'
 export default function LaunchPad(props) {
+  const {data} = useSWR('get_all_launchpad', () => getAllLaunchPad())
+  console.log(data)
   if (props.justHead) return <></>
   return (
     <>

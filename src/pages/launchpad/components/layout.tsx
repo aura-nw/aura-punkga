@@ -18,6 +18,10 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ModalContext } from 'src/context/modals'
 import { createContext, useContext, useState } from 'react'
+import { useAccount, useBalance } from 'wagmi'
+import AddressBackdrop from '../assets/address-backdrop.png'
+import BalanceBackdrop from '../assets/balance-backdrop.png'
+import { shorten } from 'src/utils'
 export const LayoutContext = createContext<{ data: any }>({
   data: undefined,
 })
@@ -25,12 +29,20 @@ export default function Layout({ children }: any) {
   const router = useRouter()
   const { setSignInOpen, setMigrateWalletOpen } = useContext(ModalContext)
   const [data, setData] = useState<any>()
+  const { address } = useAccount()
+  const walletBalance = useBalance({
+    address,
+  })
+  const usdtBalance = useBalance({
+    address,
+    token: '0xaA8E23Fb1079EA71e0a56F48a2aA51851D8433D0',
+  })
   return (
     <LayoutContext.Provider value={{ data }}>
       <Head>
         <meta name='viewport' content='width=1440px, initial-scale=1'></meta>
       </Head>
-      <div className='relative h-screen w-screen grid place-items-center font-atlantis'>
+      <div className='relative h-screen w-screen grid place-items-center font-atlantis text-white'>
         <Image src={Backdrop} alt='' className='absolute inset-0 w-screen h-screen' />
         <div className='flex relative'>
           <div>
@@ -39,13 +51,47 @@ export default function Layout({ children }: any) {
               className='px-[26px] pt-[18px] pb-[16px] flex gap-3'>
               <Image src={Logo} alt='' className='w-[148px] h-auto' />
               <div className='flex flex-col gap-[4px]'>
-                <Image
-                  src={ConnectWalletButton}
-                  alt=''
-                  className='w-[200px] h-auto cursor-pointer'
-                  onClick={() => setSignInOpen(true)}
-                />
-                <Image src={DummyImage} alt='' className='w-[200px] h-auto' />
+                {address ? (
+                  <div
+                    style={{
+                      backgroundImage: `url(${AddressBackdrop.src})`,
+                      backgroundSize: '100% 100%',
+                      textShadow: '1px 1.5px 0px #FFF',
+                    }}
+                    className='w-[200px] h-[37px] grid place-items-center text-black text-2xl pb-1'>
+                    {shorten(address, 4, 4)}
+                  </div>
+                ) : (
+                  <Image
+                    src={ConnectWalletButton}
+                    alt=''
+                    className='w-[200px] h-auto cursor-pointer'
+                    onClick={() => setSignInOpen(true)}
+                  />
+                )}
+                {walletBalance.data || usdtBalance.data ? (
+                  <div
+                    style={{
+                      backgroundImage: `url(${BalanceBackdrop.src})`,
+                      backgroundSize: '100% 100%',
+                    }}
+                    className='w-[200px] h-[61px] text-2xl leading-[22px] px-3 flex flex-col justify-center items-center'>
+                    {walletBalance.data && (
+                      <div className='flex justify-between w-full'>
+                        <div>ETH:</div>
+                        <div className='text-primary-color'>{`${walletBalance.data.formatted}`}</div>
+                      </div>
+                    )}
+                    {usdtBalance.data && (
+                      <div className='flex justify-between w-full'>
+                        <div>USDT:</div>
+                        <div className='text-primary-color'>{`${usdtBalance.data.formatted}`}</div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <Image src={DummyImage} alt='' className='w-[200px] h-auto' />
+                )}
               </div>
             </div>
             <div

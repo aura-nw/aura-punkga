@@ -61,6 +61,12 @@ function ModalProvider({ children }) {
   }, [email])
 
   useEffect(() => {
+    if (account) {
+      setSignInOpen(false)
+    }
+  }, [account])
+
+  useEffect(() => {
     if (!signUpSuccessOpen) {
       setTimeout(() => setEmailNeedVerify(''), 1000)
     }
