@@ -46,7 +46,7 @@ export function DropdownMenu({
       enterTo='opacity-100'>
       <div
         onClick={() => (closeOnClick ? setOpen(false) : null)}
-        className={`${customClass} absolute z-50 mt-1 w-full min-w-fit whitespace-nowrap max-w-[200px] truncate rounded-[12px] overflow-auto bg-white shadow-[0px_10px_50px_rgba(0,0,0,0.15)]`}>
+        className={`${customClass} absolute z-50 mt-1 w-full min-w-fit whitespace-nowrap max-w-[300px] truncate rounded-[12px] overflow-auto bg-white shadow-[0px_10px_50px_rgba(0,0,0,0.15)]`}>
         {children}
       </div>
     </Transition>
