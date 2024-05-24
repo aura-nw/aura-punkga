@@ -1,14 +1,16 @@
 import BigNumber from 'bignumber.js'
+import moment from 'moment'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import Countdown from 'react-countdown'
 import { getLaunchPadDetail } from 'src/services'
 import { abi } from 'src/services/abi'
 import { abi as usdtAbi } from 'src/services/abi/usdt'
 import { shorten } from 'src/utils'
 import 'swiper/css'
 import { Navigation } from 'swiper/modules'
-import Backdrop3 from '../assets/backdrop-3.png'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import useSWR from 'swr'
 import {
@@ -16,32 +18,28 @@ import {
   useBalance,
   useConnect,
   useReadContract,
-  useWaitForTransactionReceipt,
-  useWriteContract,
+  useWriteContract
 } from 'wagmi'
-import BackButton from '../assets/back-button.png'
-import ViewTransactionButton from '../assets/view-transaction.png'
-import ConfirmButton from '../assets/confirm.png'
-import Backdrop7 from '../assets/backdrop-7.png'
-import Backdrop8 from '../assets/backdrop-8.png'
-import BlueBlock from '../assets/blue-block.svg'
-import DummyImage from '../assets/dummy-image-2.png'
-import GrayBar from '../assets/gray-bar.png'
-import GreenBlock from '../assets/green-block.svg'
-import LiveChip from '../assets/live-chip.png'
-import EndedChip from '../assets/ended-chip.png'
-import UpcomingChip from '../assets/upcoming-chip.png'
-import MintAmount from '../assets/mint-amount.svg'
-import MintButton from '../assets/mint-button.svg'
-import RedBlock from '../assets/red-block.svg'
-import SwiperNav from '../assets/swiper-nav.svg'
-import YellowBlock from '../assets/yellow-block.svg'
-import Layout, { LayoutContext } from '../components/layout'
-import Modal from '../components/modal'
-import Link from 'next/link'
-import moment from 'moment'
-import Countdown from 'react-countdown'
-export default function Page(props) {
+import BackButton from 'src/components/pages/launchpad/assets/back-button.png'
+import Backdrop3 from 'src/components/pages/launchpad/assets/backdrop-3.png'
+import Backdrop7 from 'src/components/pages/launchpad/assets/backdrop-7.png'
+import Backdrop8 from 'src/components/pages/launchpad/assets/backdrop-8.png'
+import BlueBlock from 'src/components/pages/launchpad/assets/blue-block.svg'
+import ConfirmButton from 'src/components/pages/launchpad/assets/confirm.png'
+import EndedChip from 'src/components/pages/launchpad/assets/ended-chip.png'
+import GrayBar from 'src/components/pages/launchpad/assets/gray-bar.png'
+import GreenBlock from 'src/components/pages/launchpad/assets/green-block.svg'
+import LiveChip from 'src/components/pages/launchpad/assets/live-chip.png'
+import MintAmount from 'src/components/pages/launchpad/assets/mint-amount.svg'
+import MintButton from 'src/components/pages/launchpad/assets/mint-button.svg'
+import RedBlock from 'src/components/pages/launchpad/assets/red-block.svg'
+import SwiperNav from 'src/components/pages/launchpad/assets/swiper-nav.svg'
+import UpcomingChip from 'src/components/pages/launchpad/assets/upcoming-chip.png'
+import ViewTransactionButton from 'src/components/pages/launchpad/assets/view-transaction.png'
+import YellowBlock from 'src/components/pages/launchpad/assets/yellow-block.svg'
+import Layout, { LayoutContext } from 'src/components/pages/launchpad/components/layout'
+import Modal from 'src/components/pages/launchpad/components/modal'
+export default function Page (props){
   if (props.justHead) return <></>
   return <LaunchPadDetail />
 }

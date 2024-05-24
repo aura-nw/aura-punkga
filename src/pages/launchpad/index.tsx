@@ -1,12 +1,19 @@
-import { useRouter } from 'next/router'
-import Layout from './components/layout'
-import useSWR from 'swr'
-import { getAllLaunchPad } from 'src/services'
 import Image from 'next/image'
 import Link from 'next/link'
-export default function LaunchPad(props) {
+import { getAllLaunchPad } from 'src/services'
+import useSWR from 'swr'
+import Layout from 'src/components/pages/launchpad/components/layout'
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <LaunchPad />
+}
+Page.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>
+}
+function LaunchPad() {
   const { data } = useSWR('get_all_launchpad', () => getAllLaunchPad())
-  if (props.justHead) return <></>
   return (
     <>
       <div className='text-[#23FF81] text-5xl uppercase'>All launchpad</div>
@@ -46,6 +53,4 @@ export default function LaunchPad(props) {
     </>
   )
 }
-LaunchPad.getLayout = function getLayout(page) {
-  return <Layout>{page}</Layout>
-}
+
