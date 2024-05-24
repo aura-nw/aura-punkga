@@ -168,6 +168,8 @@ const App = ({ Component, pageProps }: AppProps) => {
   }
   const getLayout = (Component as any).getLayout ?? ((page) => page)
 
+  if (pageProps.justHead) return <Component {...pageProps} />
+
   return getLayout(<Component {...pageProps} />)
 }
 export default appWithTranslation(MyApp)

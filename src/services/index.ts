@@ -476,5 +476,5 @@ export const getAllLaunchPad = async () => {
 }
 export const getLaunchPadDetail = async (id: string) => {
   const { data } = await axios.get(`https://hasura.hackathon.punkga.me/api/rest/public/launchpad/${id}`)
-  return data
+  return data?.launchpad_by_pk
 }

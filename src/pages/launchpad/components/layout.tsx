@@ -2,7 +2,6 @@ import Image from 'next/image'
 import Backdrop from '../assets/backdrop.png'
 import Backdrop1 from '../assets/backdrop-1.png'
 import Backdrop2 from '../assets/backdrop-2.png'
-import Backdrop3 from '../assets/backdrop-3.png'
 import Backdrop4 from '../assets/backdrop-4.png'
 import Backdrop5 from '../assets/backdrop-5.png'
 import Backdrop6 from '../assets/backdrop-6.png'
@@ -21,9 +20,9 @@ import { createContext, useContext, useState } from 'react'
 import { useAccount, useBalance } from 'wagmi'
 import AddressBackdrop from '../assets/address-backdrop.png'
 import BalanceBackdrop from '../assets/balance-backdrop.png'
-import { shorten } from 'src/utils'
-export const LayoutContext = createContext<{ data: any }>({
-  data: undefined,
+import { formatNumber, shorten } from 'src/utils'
+export const LayoutContext = createContext<{ setData: any }>({
+  setData: undefined,
 })
 export default function Layout({ children }: any) {
   const router = useRouter()
@@ -35,10 +34,10 @@ export default function Layout({ children }: any) {
   })
   const usdtBalance = useBalance({
     address,
-    token: '0xaA8E23Fb1079EA71e0a56F48a2aA51851D8433D0',
+    token: '0x3C93715FdCd6E0B043BD1ae7e1e437cA6dc391C6',
   })
   return (
-    <LayoutContext.Provider value={{ data }}>
+    <LayoutContext.Provider value={{ setData }}>
       <Head>
         <meta name='viewport' content='width=1440px, initial-scale=1'></meta>
       </Head>
@@ -79,13 +78,17 @@ export default function Layout({ children }: any) {
                     {walletBalance.data && (
                       <div className='flex justify-between w-full'>
                         <div>ETH:</div>
-                        <div className='text-primary-color'>{`${walletBalance.data.formatted}`}</div>
+                        <div className='text-primary-color'>{`${formatNumber(
+                          (+walletBalance.data.formatted).toFixed(3)
+                        )}`}</div>
                       </div>
                     )}
                     {usdtBalance.data && (
                       <div className='flex justify-between w-full'>
                         <div>USDT:</div>
-                        <div className='text-primary-color'>{`${usdtBalance.data.formatted}`}</div>
+                        <div className='text-primary-color'>{`${formatNumber(
+                          (+usdtBalance.data.formatted).toFixed(3)
+                        )}`}</div>
                       </div>
                     )}
                   </div>
@@ -96,18 +99,8 @@ export default function Layout({ children }: any) {
             </div>
             <div
               style={{ backgroundImage: `url(${Backdrop2.src})`, backgroundSize: '100% 100%' }}
-              className='px-[26px] py-[51px]'>
-              <Image src={DummyImage2} alt='' className='w-[360px] h-[270px]' />
-              <div
-                style={{ backgroundImage: `url(${Backdrop3.src})`, backgroundSize: '100% 100%' }}
-                className='px-[13px] py-[18px] w-[360px] h-[104px]'>
-                abd
-              </div>
-              <Image src={ViewLaunchPadButton} alt='' className='w-[360px] h-auto' />
-              <div className='flex mt-3'>
-                <Image src={Left} alt='' className='w-[180px] h-auto cursor-pointer' />
-                <Image src={Right} alt='' className='w-[180px] h-auto cursor-pointer' />
-              </div>
+              className='px-[26px] py-[51px] h-[522px]'>
+              {data}
             </div>
           </div>
           <div
