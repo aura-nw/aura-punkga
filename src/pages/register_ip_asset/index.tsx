@@ -61,7 +61,6 @@ function RegisterIPAssets() {
           setTxLoading(false)
           console.error('Error registering NFT as IP asset:', error)
         }
-        router.push('/ipassets')
     }
 
     return (

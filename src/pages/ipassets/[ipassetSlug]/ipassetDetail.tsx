@@ -69,7 +69,7 @@ function IPAssetDetail({ }) {
     const [isViewLicense, setIsViewLicense] = useState(true)
     const [ipAssetData, setIPAssetData] = useState<any>({});
     const [ipAssetImage, setIPAssetImage] = useState<any>({});
-    const [licenseList, setLicenseList] = useState<any>([])
+    const [licenseList, setLicenseList] = useState([])
     const [nftInfo, setNftInfo] = useState<any>({});
     const [selectedOption, setSelectedOption] = useState<Option>(options[1]);
     const handleOptionSelect = (option: Option) => {
@@ -78,7 +78,6 @@ function IPAssetDetail({ }) {
     const [registerTermResponse, setRegisterTermResponse] = useState<any>({})
     const [uriLicenseTerms, setUriLicenseTerms] = useState('')
     const [licenseAmount, setLicenseAmount] = useState<number>()
-    const [attributionLink, setAttributionLink] = useState('')
     const [commercialRevenueShare, setCommercialRevenueShare] = useState<number>()
 
     const fetchIPAsset = async () => {
@@ -110,91 +109,108 @@ function IPAssetDetail({ }) {
         }
         if (ipAssetData) {
             getLicense(slug).then((data) => {
-                console.log('data', data)
+                setLicenseList(data.data.license)
+                console.log('dataLicense', data)
                 // setLicenseList()
             });
         }
-    }, [account, ipAssetData]);
+    }, [account, ipAssetData, isViewLicense]);
 
     const handleMintLicense = async () => {
         if (!client) return;
-        // Register an IP Asset
-        setTxLoading(true);
-        setTxName("Register IP Asset");
-        switch (selectedOption.value) {
-            case 'CommercialUse':
-                const commercialUseParams = {
-                    currency: CurrencyAddress,
-                    mintingFee: '0',
-                }
-                const commercialUseResponse = await client.license.registerCommercialUsePIL({
-                    ...commercialUseParams,
-                    txOptions: { waitForTransaction: true },
-                })
-                setRegisterTermResponse(commercialUseResponse);
-                console.log(
-                    `PIL Terms registered at transaction hash ${commercialUseResponse.txHash}, License Terms ID: ${commercialUseResponse.licenseTermsId}`
-                );
 
-            case 'NonComSocialRemixing':
-                const nonComSocialRemixingParams = {}
+        try {
+            // Register PIL term
+            setTxLoading(true);
+            setTxName("Register IP Asset");
 
-                const nonComSocialRemixingResponse = await client.license.registerNonComSocialRemixingPIL({
-                    ...nonComSocialRemixingParams,
-                    txOptions: { waitForTransaction: true }
-                });
-                setRegisterTermResponse(nonComSocialRemixingResponse);
-                console.log(`PIL Terms registered at transaction hash ${nonComSocialRemixingResponse.txHash}, License Terms ID: ${nonComSocialRemixingResponse.licenseTermsId}`)
-            case 'CommercialRemix':
-                const commercialRemixParams = {
-                    currency: CurrencyAddress,
-                    mintingFee: '10',
-                    commercialRevShare: 10 // 10 = 1%
-                }
+            let registerTermResponse;
+            switch (selectedOption.value) {
+                case 'CommercialUse':
+                    const commercialUseParams = {
+                        currency: CurrencyAddress,
+                        mintingFee: '0',
+                    };
+                    registerTermResponse = await client.license.registerCommercialUsePIL({
+                        ...commercialUseParams,
+                        txOptions: { waitForTransaction: true },
+                    });
+                    console.log(
+                        `PIL Terms registered at transaction hash ${registerTermResponse.txHash}, License Terms ID: ${registerTermResponse.licenseTermsId}`
+                    );
+                    break;
+                case 'NonComSocialRemixing':
+                    const nonComSocialRemixingParams = {};
+                    registerTermResponse = await client.license.registerNonComSocialRemixingPIL({
+                        ...nonComSocialRemixingParams,
+                        txOptions: { waitForTransaction: true },
+                    });
+                    console.log(
+                        `PIL Terms registered at transaction hash ${registerTermResponse.txHash}, License Terms ID: ${registerTermResponse.licenseTermsId}`
+                    );
+                    break;
+                case 'CommercialRemix':
+                    const commercialRemixParams = {
+                        currency: CurrencyAddress,
+                        mintingFee: '0',
+                        commercialRevShare: licenseAmount,
+                    };
+                    registerTermResponse = await client.license.registerCommercialRemixPIL({
+                        ...commercialRemixParams,
+                        txOptions: { waitForTransaction: true },
+                    });
+                    console.log(
+                        `PIL Terms registered at transaction hash ${registerTermResponse.txHash}, License Terms ID: ${registerTermResponse.licenseTermsId}`
+                    );
+                    break;
+            }
+            setRegisterTermResponse(registerTermResponse);
 
-                const commercialRemixResponse = await client.license.registerCommercialRemixPIL({
-                    ...commercialRemixParams,
-                    txOptions: { waitForTransaction: true }
-                });
-                setRegisterTermResponse(commercialRemixResponse)
-                console.log(`PIL Terms registered at transaction hash ${commercialRemixResponse.txHash}, License Terms ID: ${commercialRemixResponse.licenseTermsId}`)
+            // Attach License Terms to IP
+            setTxLoading(true);
+            setTxName("Attaching terms to an IP Asset...");
+            const attachLicenseresponse = await client.license.attachLicenseTerms({
+                licenseTermsId: selectedOption.termId,
+                ipId: slug as Address,
+                txOptions: { waitForTransaction: true },
+            });
+            console.log(`Attached License Terms to IP at tx hash ${attachLicenseresponse.txHash}`);
+            setTxLoading(false);
+            setTxHash(attachLicenseresponse.txHash);
+            addTransaction(attachLicenseresponse.txHash, "Attach Terms", {});
+
+            // Mint License
+            setTxLoading(true);
+            setTxName("Minting a License Token from an IP Asset...");
+            const mintLicenseresponse = await client.license.mintLicenseTokens({
+                licensorIpId: slug as Address,
+                licenseTermsId: selectedOption.termId,
+                amount: licenseAmount,
+                receiver: account.walletAddress as Address,
+                txOptions: { waitForTransaction: true },
+            });
+            console.log('res', mintLicenseresponse);
+            console.log(
+                `License minted at tx hash ${mintLicenseresponse.txHash}, License ID: ${mintLicenseresponse.licenseTokenId}`
+            );
+            setTxLoading(false);
+            setTxHash(mintLicenseresponse.txHash as string);
+            addTransaction(mintLicenseresponse.txHash as string, "Mint License", {
+                licenseTokenId: mintLicenseresponse.licenseTokenId,
+            });
+            await mintLicense(
+                slug,
+                mintLicenseresponse.licenseTokenId,
+                '0x260B6CB6284c89dbE660c0004233f7bB99B5edE7',
+                account.walletAddress,
+                selectedOption.termId
+            );
+            setIsViewLicense(true);
+        } catch (error) {
+            console.error('Error minting license:', error);
+            setTxLoading(false);
         }
-        console.log('registerTermResponse',registerTermResponse)
-        //  Attach License Terms to IP
-        setTxLoading(true);
-        setTxName("Attaching terms to an IP Asset...");
-        const attachLicenseresponse = await client.license.attachLicenseTerms({
-            licenseTermsId: selectedOption.termId,
-            ipId: slug as Address,
-            txOptions: { waitForTransaction: true },
-        });
-        console.log(`Attached License Terms to IP at tx hash ${attachLicenseresponse.txHash}`);
-        setTxLoading(false);
-        setTxHash(attachLicenseresponse.txHash);
-        addTransaction(attachLicenseresponse.txHash, "Attach Terms", {});
-
-        // Mint License
-        setTxLoading(true);
-        setTxName("Minting a License Token from an IP Asset...");
-        const mintLicenseresponse = await client.license.mintLicenseTokens({
-            licensorIpId: slug as Address,
-            licenseTermsId: selectedOption.termId,
-            amount: licenseAmount,
-            receiver: account.walletAddress as Address,
-            txOptions: { waitForTransaction: true },
-        });
-        console.log('res', mintLicenseresponse)
-        console.log(
-            `License minted at tx hash ${mintLicenseresponse.txHash}, License ID: ${mintLicenseresponse.licenseTokenId}`
-        );
-        setTxLoading(false);
-        setTxHash(mintLicenseresponse.txHash as string);
-        addTransaction(mintLicenseresponse.txHash as string, "Mint License", {
-            licenseTokenId: mintLicenseresponse.licenseTokenId,
-        });
-        //set setTxLoading false if error
-
-    }
+    };
 
     useEffect(() => {
         if (slug) {
@@ -242,7 +258,7 @@ function IPAssetDetail({ }) {
                                 <div className='flex gap-10'>
                                     <div className='rounded-2xl p-6 border-[#DEDEDE] border-[1px] flex flex-col gap-5 w-[calc(100%/8*5)] h-fit'>
                                         <div className='font-bold text-[#1C1C1C]'>
-                                            Minted Licenses {licenseList ? licenseList.lenght : ''}
+                                            Minted Licenses 
                                         </div>
                                         <span className='w-full block border-[1px] border-solid border-[#F0F0F0] '></span>
                                         <div className='grid grid-cols-3'>
@@ -258,7 +274,7 @@ function IPAssetDetail({ }) {
                                             </div>
                                             <div className='pl-[15px]'>
                                                 <div className='text-xs'>Number of Licenses Token:</div>
-                                                <div className='text-sm font-bold'>{licenseList.lenght}</div>
+                                                <div className='text-sm font-bold'>{licenseList ? licenseList.length : '0'}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -289,10 +305,10 @@ function IPAssetDetail({ }) {
                                 </div>
                                 <>
                                     {isViewLicense ? <div className='flex flex-col gap-6 mt-16'>
-                                        <span className='font-bold text-[20px]'>IP Asset ({rows.length})</span>
+                                        <span className='font-bold text-[20px]'>Minted Licenses {licenseList ? `(${licenseList.length})` : ''}</span>
                                         <div className='flex justify-start items-center gap-4'>
 
-                                            {rows && <MainButton className='' onClick={() => setIsViewLicense(false)}>
+                                            {licenseList && <MainButton className='' onClick={() => setIsViewLicense(false)}>
                                                 {t('Create License')}
                                             </MainButton>}
 
@@ -308,10 +324,10 @@ function IPAssetDetail({ }) {
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
-                                                    {rows ?
-                                                        <> {rows.map((row) => (
+                                                    {licenseList ?
+                                                        <> {licenseList.map((license) => (
                                                             <TableRow
-                                                                key={row.licenseID}
+                                                                key={license.licenseID}
                                                                 sx={{
                                                                     '&:last-child td, &:last-child th': { border: 0 }, background: 'white', margin: '12px', borderRadius: '6px', "&:hover": {
                                                                         background: "#f7f7f7"
@@ -319,11 +335,11 @@ function IPAssetDetail({ }) {
                                                                 }}
                                                             >
                                                                 <TableCell style={{ width: '25%' }} component="th" scope="row">
-                                                                    {row.licenseID}
+                                                                    {license.license_id}
                                                                 </TableCell>
-                                                                <TableCell style={{ width: '25%' }}>{shorten(row.licenseTemplateAddress)}</TableCell>
-                                                                <TableCell style={{ width: '25%' }}>{row.licenseTermId}</TableCell>
-                                                                <TableCell style={{ width: '25%' }} align="right">{moment(row.mintDate).format('HH:mm - DD/MM/YYYY')}</TableCell>
+                                                                <TableCell style={{ width: '25%' }}>{shorten(license.license_template_address)}</TableCell>
+                                                                <TableCell style={{ width: '25%' }}>{license.term_id}</TableCell>
+                                                                <TableCell style={{ width: '25%' }} align="right">{moment(license.mintDate).format('HH:mm - DD/MM/YYYY')}</TableCell>
                                                             </TableRow>
                                                         ))}
                                                         </>
@@ -423,7 +439,7 @@ function IPAssetDetail({ }) {
                                             <div className='grid grid-cols-2 gap-6'>
                                                 {selectedOption.termId === '3' && (
                                                     <OutlineTextField
-                                                        label={t('License amount')}
+                                                        label={t('Commercial Revenue Share (%)')}
                                                         value={commercialRevenueShare ? commercialRevenueShare.toString() : ''}
                                                         onChange={(e) => setCommercialRevenueShare(Number(e))}
                                                         type='text'
