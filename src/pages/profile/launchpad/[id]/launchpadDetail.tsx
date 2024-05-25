@@ -20,8 +20,8 @@ import UploadImage from '../../../../components/pages/launchpad/uploadImage';
 import { LaunchpadStatus } from '../../../../constants/constants';
 import useApi from '../../../../hooks/useApi';
 import { shorten } from "../../../../utils";
-import { abi } from './abi';
 import { getLaunchpad } from './with-api';
+import { abi } from 'components/pages/launchpad/abi';
 
 export function getFileNameFromURL(url: string) {
     let parts = url.split('/');
@@ -62,7 +62,7 @@ function LaunchpadDetail({ preDeploy, postDeploy, publish, unpublish }:
         const data = await preDeploy(id)
         try {
             const hash = await writeContractAsync({
-                abi,
+                abi: abi,
                 address: '0x2f6646dad93454f681f7c0edc2df82931473ddb5',
                 functionName: 'createNFTSale',
                 args: [
