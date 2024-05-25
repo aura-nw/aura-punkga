@@ -205,7 +205,8 @@ function IPAssetDetail({ }) {
                     );
 
                 } catch (error) { console.log(error); }
-
+                // wait for 1s before continuing
+                await new Promise((resolve) => setTimeout(resolve, 1000));
                 setIsViewLicense(true);
             }
         } catch (error) {
