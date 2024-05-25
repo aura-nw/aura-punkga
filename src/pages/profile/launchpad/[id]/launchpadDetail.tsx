@@ -23,6 +23,13 @@ import { shorten } from "../../../../utils";
 import { getLaunchpad } from './with-api';
 import { abi } from 'components/pages/launchpad/abi';
 
+export default function Page(props) {
+    if (props.justHead) {
+        return <></>
+    }
+    return <LaunchpadDetail {...props} />
+}
+
 export function getFileNameFromURL(url: string) {
     let parts = url.split('/');
     let fileName = parts[parts.length - 1];
@@ -314,8 +321,6 @@ function LaunchpadDetail({ preDeploy, postDeploy, publish, unpublish }:
                                 {genButtons(launchpad.data?.status)}
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -323,5 +328,3 @@ function LaunchpadDetail({ preDeploy, postDeploy, publish, unpublish }:
         </>
     );
 }
-
-export default LaunchpadDetail;
