@@ -8,6 +8,13 @@ type UpdateLaunchpadType = {
     updateLaunchpadUnpublish: (launchpad: any) => any
 }
 
+export default function Page(props) {
+    if (props.justHead) {
+        return <></>;
+    }
+    return <EditLaunchpad {...props} />;
+}
+
 function EditLaunchpad({ updateLaunchpadDraft, updateLaunchpadUnpublish }: UpdateLaunchpadType) {
     const router = useRouter()
     const { id } = router.query
@@ -15,5 +22,3 @@ function EditLaunchpad({ updateLaunchpadDraft, updateLaunchpadUnpublish }: Updat
     return <LaunchpadForm launchpad={launchpad?.data} updateLaunchpadDraft={updateLaunchpadDraft} updateLaunchpadUnpublish={updateLaunchpadUnpublish} />
 
 }
-
-export default EditLaunchpad;
