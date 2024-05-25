@@ -186,7 +186,6 @@ function IPAssetDetail({ }) {
                 receiver: account.walletAddress as Address,
                 txOptions: { waitForTransaction: true },
             });
-            console.log('res', mintLicenseresponse);
             console.log(
                 `License minted at tx hash ${mintLicenseresponse.txHash}, License ID: ${mintLicenseresponse.licenseTokenId}`
             );
