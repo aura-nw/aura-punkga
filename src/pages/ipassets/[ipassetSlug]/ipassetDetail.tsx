@@ -75,7 +75,6 @@ function IPAssetDetail({ }) {
     const handleOptionSelect = (option: Option) => {
         setSelectedOption(option);
     };
-    const [registerTermResponse, setRegisterTermResponse] = useState<any>({})
     const [uriLicenseTerms, setUriLicenseTerms] = useState('')
     const [licenseAmount, setLicenseAmount] = useState<number>()
     const [commercialRevenueShare, setCommercialRevenueShare] = useState<number>()
@@ -107,13 +106,9 @@ function IPAssetDetail({ }) {
                 setNftInfo(filteredAssets[0])
             });
         }
-        if (ipAssetData) {
-            getLicense(slug).then((data) => {
-                setLicenseList(data.data.license)
-                console.log('dataLicense', data)
-                // setLicenseList()
-            });
-        }
+        getLicense(slug).then((data) => {
+            setLicenseList(data.data.license_tokens)
+        });
     }, [account, ipAssetData, isViewLicense]);
 
     const handleMintLicense = async () => {
@@ -164,27 +159,29 @@ function IPAssetDetail({ }) {
                     );
                     break;
             }
-            setRegisterTermResponse(registerTermResponse);
-
+            
             // Attach License Terms to IP
-            setTxLoading(true);
-            setTxName("Attaching terms to an IP Asset...");
-            const attachLicenseresponse = await client.license.attachLicenseTerms({
-                licenseTermsId: selectedOption.termId,
-                ipId: slug as Address,
-                txOptions: { waitForTransaction: true },
-            });
-            console.log(`Attached License Terms to IP at tx hash ${attachLicenseresponse.txHash}`);
-            setTxLoading(false);
-            setTxHash(attachLicenseresponse.txHash);
-            addTransaction(attachLicenseresponse.txHash, "Attach Terms", {});
+            if (!licenseList.every(item => item.term_id !== registerTermResponse.licenseTermsId)) {
+                setTxLoading(true);
+                setTxName("Attaching terms to an IP Asset...");
+                const attachLicenseresponse = await client.license.attachLicenseTerms({
+                    licenseTermsId: registerTermResponse.licenseTermsId,
+                    ipId: slug as Address,
+                    txOptions: { waitForTransaction: true },
+                });
+                console.log(`Attached License Terms to IP at tx hash ${attachLicenseresponse.txHash}`);
+                setTxLoading(false);
+                setTxHash(attachLicenseresponse.txHash);
+                addTransaction(attachLicenseresponse.txHash, "Attach Terms", {});
+            }
+
 
             // Mint License
             setTxLoading(true);
             setTxName("Minting a License Token from an IP Asset...");
             const mintLicenseresponse = await client.license.mintLicenseTokens({
                 licensorIpId: slug as Address,
-                licenseTermsId: selectedOption.termId,
+                licenseTermsId: registerTermResponse.licenseTermsId,
                 amount: licenseAmount,
                 receiver: account.walletAddress as Address,
                 txOptions: { waitForTransaction: true },
@@ -198,14 +195,20 @@ function IPAssetDetail({ }) {
             addTransaction(mintLicenseresponse.txHash as string, "Mint License", {
                 licenseTokenId: mintLicenseresponse.licenseTokenId,
             });
-            await mintLicense(
-                slug,
-                mintLicenseresponse.licenseTokenId,
-                '0x260B6CB6284c89dbE660c0004233f7bB99B5edE7',
-                account.walletAddress,
-                selectedOption.termId
-            );
-            setIsViewLicense(true);
+            if (mintLicenseresponse.txHash) {
+                try {
+                    mintLicense(
+                        slug,
+                        mintLicenseresponse.licenseTokenId.toString(),
+                        '0x260B6CB6284c89dbE660c0004233f7bB99B5edE7',
+                        account.id,
+                        registerTermResponse.licenseTermsId.toString(),
+                    );
+
+                } catch (error) { console.log(error); }
+
+                setIsViewLicense(true);
+            }
         } catch (error) {
             console.error('Error minting license:', error);
             setTxLoading(false);
@@ -258,7 +261,7 @@ function IPAssetDetail({ }) {
                                 <div className='flex gap-10'>
                                     <div className='rounded-2xl p-6 border-[#DEDEDE] border-[1px] flex flex-col gap-5 w-[calc(100%/8*5)] h-fit'>
                                         <div className='font-bold text-[#1C1C1C]'>
-                                            Minted Licenses 
+                                            Minted Licenses
                                         </div>
                                         <span className='w-full block border-[1px] border-solid border-[#F0F0F0] '></span>
                                         <div className='grid grid-cols-3'>
@@ -339,7 +342,7 @@ function IPAssetDetail({ }) {
                                                                 </TableCell>
                                                                 <TableCell style={{ width: '25%' }}>{shorten(license.license_template_address)}</TableCell>
                                                                 <TableCell style={{ width: '25%' }}>{license.term_id}</TableCell>
-                                                                <TableCell style={{ width: '25%' }} align="right">{moment(license.mintDate).format('HH:mm - DD/MM/YYYY')}</TableCell>
+                                                                <TableCell style={{ width: '25%' }} align="right">{moment(license.created_at).format('HH:mm - DD/MM/YYYY')}</TableCell>
                                                             </TableRow>
                                                         ))}
                                                         </>
