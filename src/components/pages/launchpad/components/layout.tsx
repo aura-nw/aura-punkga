@@ -28,7 +28,7 @@ import ConnectWalletButton from '../assets/connect-wallet-button.png'
 import DummyImage from '../assets/dummy-image.png'
 import Logo from '../assets/logo.png'
 import { Navigation } from 'swiper/modules'
-
+import Mewo from '../assets/mewo.png'
 export const LayoutContext = createContext<{ setData: any }>({
   setData: undefined,
 })
@@ -45,6 +45,16 @@ export default function Layout({ children }: any) {
     address,
     token: '0x3C93715FdCd6E0B043BD1ae7e1e437cA6dc391C6',
   })
+  if (window.innerWidth < 1400) {
+    return (
+      <div className='w-screen h-screen flex flex-col justify-center items-center gap-5 font-atlantis bg-[#26335C]'>
+        <Image src={Mewo} alt='' />
+        <div className='text-primary-color text-3xl'>
+          Require 1400px screen or higher. Please use another compatible device
+        </div>
+      </div>
+    )
+  }
   return (
     <LayoutContext.Provider value={{ setData }}>
       <Head>

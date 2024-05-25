@@ -398,7 +398,7 @@ const LaunchPadDetail = () => {
           <>
             <div className='flex flex-col justify-center items-center'>
               <div className='text-primary-color text-[32px] leading-[29px]'>{`You have owned ${quantity} NFTs`}</div>
-              {/* <Image src={} alt='' width={256} height={192} className='border-2 border-[#2F639F] w-[256px] h-[192px] object-cover' /> */}
+              <Image src={data.featured_images[0]} alt='' width={256} height={192} className='border-2 border-[#2F639F] w-[256px] h-[192px] object-cover mt-2' />
             </div>
           </>
         ) : (
