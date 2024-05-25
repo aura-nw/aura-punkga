@@ -1,9 +1,19 @@
+import moment from 'moment'
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useState } from 'react'
+import Backdrop3 from 'src/components/pages/launchpad/assets/backdrop-3.png'
+import LeftButton from 'src/components/pages/launchpad/assets/left.png'
+import RightButton from 'src/components/pages/launchpad/assets/right.png'
+import ViewLaunchPadButton from 'src/components/pages/launchpad/assets/view-launchpad.png'
 import { ModalContext } from 'src/context/modals'
+import { getAllLaunchPad } from 'src/services'
 import { formatNumber, shorten } from 'src/utils'
+import 'swiper/css'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import useSWR from 'swr'
 import { useAccount, useBalance } from 'wagmi'
 import AboutusButton from '../assets/about-us.png'
 import AddressBackdrop from '../assets/address-backdrop.png'
@@ -17,11 +27,14 @@ import BalanceBackdrop from '../assets/balance-backdrop.png'
 import ConnectWalletButton from '../assets/connect-wallet-button.png'
 import DummyImage from '../assets/dummy-image.png'
 import Logo from '../assets/logo.png'
+import { Navigation } from 'swiper/modules'
+
 export const LayoutContext = createContext<{ setData: any }>({
   setData: undefined,
 })
 export default function Layout({ children }: any) {
   const router = useRouter()
+  const { data: allLaunchPad } = useSWR('get_all_launchpad', () => getAllLaunchPad())
   const { setSignInOpen, setMigrateWalletOpen } = useContext(ModalContext)
   const [data, setData] = useState<any>()
   const { address } = useAccount()
@@ -95,23 +108,73 @@ export default function Layout({ children }: any) {
             </div>
             <div
               style={{ backgroundImage: `url(${Backdrop2.src})`, backgroundSize: '100% 100%' }}
-              className='px-[26px] py-[51px] h-[522px]'>
-              {data}
+              className='px-[26px] py-[51px] h-[560px]'>
+              {data ? (
+                data
+              ) : (
+                <div>
+                  <div className='w-[360px] relative -mb-10'>
+                    <Swiper
+                      slidesPerView={1}
+                      loop={true}
+                      modules={[Navigation]}
+                      onSlideChange={(swiper) => console.log(swiper.activeIndex)}
+                      navigation={{
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                      }}>
+                      {allLaunchPad?.launchpad?.map((launchpad, index) => (
+                        <SwiperSlide key={index}>
+                          <Link href={`/launchpad/${launchpad.id}`} className='w-[360px]'>
+                            <Image
+                              src={launchpad.thumbnail_url}
+                              width={360}
+                              height={270}
+                              alt=''
+                              className='w-[360px] h-[270px] object-cover'
+                            />
+                            <div
+                              style={{ backgroundImage: `url(${Backdrop3.src})`, backgroundSize: '100% 100%' }}
+                              className='px-[13px] py-[14px] w-[360px] h-[104px] flex flex-col gap-1 text-2xl leading-[22px]'>
+                              <div className='text-primary-color'>{launchpad.name}</div>
+                              <div className=' flex justify-between'>
+                                <div>Start:</div>
+                                <div className='text-primary-color'>
+                                  {moment(launchpad.start_date).format('DD MMM yyyy')}
+                                </div>
+                              </div>
+                              <div className=' flex justify-between'>
+                                <div>End:</div>
+                                <div className='text-primary-color'>
+                                  {moment(launchpad.end_date).format('DD MMM yyyy')}
+                                </div>
+                              </div>
+                            </div>
+                            <div className='w-full h-10'></div>
+                          </Link>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </div>
+                  <Image src={ViewLaunchPadButton} alt='' className='cursor-pointer relative' />
+                  <div className='flex mt-2'>
+                    <Image src={LeftButton} alt='' className='cursor-pointer swiper-button-prev' />
+                    <Image src={RightButton} alt='' className='cursor-pointer swiper-button-next' />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <div
             style={{ backgroundImage: `url(${Backdrop5.src})`, backgroundSize: '100% 100%' }}
             className='px-[26px] py-[18px] flex flex-col gap-4 w-[1000px]'>
-            <div
+            <Link
+              href='https://launch.punkga.me/'
+              target='_blank'
               style={{ backgroundImage: `url(${Backdrop4.src})`, backgroundSize: '100% 100%' }}
               className='px-[28px] pt-[8px] pb-[8px] w-[910px]'>
-              <Image
-                src={AboutusButton}
-                alt=''
-                className='w-[156px] h-auto cursor-pointer'
-                onClick={() => router.push('/about-us')}
-              />
-            </div>
+              <Image src={AboutusButton} alt='' className='w-[156px] h-auto cursor-pointer' />
+            </Link>
             <div
               style={{ backgroundImage: `url(${Backdrop6.src})`, backgroundSize: '100% 100%' }}
               className='w-[910px] h-[544px] py-6 px-7 flex flex-col gap-4'>

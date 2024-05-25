@@ -1,8 +1,11 @@
+import BigNumber from 'bignumber.js'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useContext, useEffect } from 'react'
+import Layout, { LayoutContext } from 'src/components/pages/launchpad/components/layout'
 import { getAllLaunchPad } from 'src/services'
 import useSWR from 'swr'
-import Layout from 'src/components/pages/launchpad/components/layout'
+
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -14,6 +17,10 @@ Page.getLayout = function getLayout(page) {
 }
 function LaunchPad() {
   const { data } = useSWR('get_all_launchpad', () => getAllLaunchPad())
+  const { setData } = useContext(LayoutContext)
+  useEffect(() => {
+    setData(undefined)
+  }, [])
   return (
     <>
       <div className='text-[#23FF81] text-5xl uppercase'>All launchpad</div>
@@ -44,7 +51,9 @@ function LaunchPad() {
               </div>
               <div className='mt-1 flex justify-between text-[24px] leading-[22px]'>
                 <div>Price</div>
-                <div className='text-[#00FFFF]'>{item.mint_price} USDT</div>
+                <div className='text-[#00FFFF]'>
+                  {+BigNumber(item.mint_price).dividedBy(BigNumber(10).pow(18).toFixed(3))} USDT
+                </div>
               </div>
             </Link>
           )
@@ -53,4 +62,3 @@ function LaunchPad() {
     </>
   )
 }
-
