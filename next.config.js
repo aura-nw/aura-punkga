@@ -1,7 +1,7 @@
 const { i18n } = require('./next-i18next.config')
 
 module.exports = {
-  basePath: '/app',
+  basePath: '/',
   i18n,
   eslint: {
     ignoreDuringBuilds: true,
