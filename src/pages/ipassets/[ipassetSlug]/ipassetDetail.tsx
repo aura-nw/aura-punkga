@@ -333,11 +333,17 @@ function IPAssetDetail({ }) {
                                                                     },
                                                                 }}
                                                             >
-                                                                <TableCell style={{ width: '25%' }} component="th" scope="row">
+                                                                <TableCell style={{ width: '25%', color: '#2684FC' }} component="th" scope="row">
                                                                     {license.license_id}
                                                                 </TableCell>
-                                                                <TableCell style={{ width: '25%' }}>{shorten(license.license_template_address)}</TableCell>
-                                                                <TableCell style={{ width: '25%' }}>{license.term_id}</TableCell>
+                                                                <TableCell style={{ width: '25%', color: '#2684FC' }}>
+                                                                <Tooltip title={license.license_template_address} placement="top">
+                                                            <div className='truncate'>
+                                                                
+                                                            {shorten(license.license_template_address)}
+                                                            </div>
+                                                        </Tooltip></TableCell>
+                                                                <TableCell style={{ width: '25%', color: '#2684FC' }}>{license.term_id}</TableCell>
                                                                 <TableCell style={{ width: '25%' }} align="right">{moment(license.created_at).format('HH:mm - DD/MM/YYYY')}</TableCell>
                                                             </TableRow>
                                                         ))}
