@@ -68,6 +68,7 @@ function IPAssetDetail({ }) {
     const { client, walletAddress, txLoading, mintNFT, setTxHash, setTxLoading, setTxName, addTransaction } = useStory()
     const [isViewLicense, setIsViewLicense] = useState(true)
     const [ipAssetImage, setIPAssetImage] = useState<string>('');
+    const [processText, setProcessText] = useState<string>('');
     const [licenseList, setLicenseList] = useState([])
     const [nftInfo, setNftInfo] = useState<any>({});
     const [selectedOption, setSelectedOption] = useState<Option>(options[1]);
@@ -114,8 +115,8 @@ function IPAssetDetail({ }) {
         try {
             // Register PIL term
             setTxLoading(true);
-            setTxName("Register IP Asset");
-
+            setTxName("Register PIL Terms");
+            setProcessText("Register IP Asset in process...");
             let registerTermResponse;
             switch (selectedOption.value) {
                 case 'CommercialUse':
@@ -156,11 +157,11 @@ function IPAssetDetail({ }) {
                     );
                     break;
             }
-            
             // Attach License Terms to IP
-            if (!licenseList.every(item => item.term_id !== registerTermResponse.licenseTermsId)) {
+            if (licenseList.every(item => item.term_id !== registerTermResponse.licenseTermsId.toString())) {
                 setTxLoading(true);
                 setTxName("Attaching terms to an IP Asset...");
+                setProcessText("Attaching terms to IP Asset...");
                 const attachLicenseresponse = await client.license.attachLicenseTerms({
                     licenseTermsId: registerTermResponse.licenseTermsId,
                     ipId: slug as Address,
@@ -176,6 +177,7 @@ function IPAssetDetail({ }) {
             // Mint License
             setTxLoading(true);
             setTxName("Minting a License Token from an IP Asset...");
+            setProcessText("Minting a License Token from IP Asset...");
             const mintLicenseresponse = await client.license.mintLicenseTokens({
                 licensorIpId: slug as Address,
                 licenseTermsId: registerTermResponse.licenseTermsId,
@@ -193,6 +195,7 @@ function IPAssetDetail({ }) {
             });
             if (mintLicenseresponse.txHash) {
                 try {
+                    setProcessText("Minted License Successfully ✔️");
                     mintLicense(
                         slug,
                         mintLicenseresponse.licenseTokenId.toString(),
@@ -204,6 +207,7 @@ function IPAssetDetail({ }) {
                 } catch (error) { console.log(error); }
                 // wait for 1s before continuing
                 await new Promise((resolve) => setTimeout(resolve, 1000));
+                setProcessText("");
                 setIsViewLicense(true);
             }
         } catch (error) {
@@ -337,12 +341,12 @@ function IPAssetDetail({ }) {
                                                                     {license.license_id}
                                                                 </TableCell>
                                                                 <TableCell style={{ width: '25%', color: '#2684FC' }}>
-                                                                <Tooltip title={license.license_template_address} placement="top">
-                                                            <div className='truncate'>
-                                                                
-                                                            {shorten(license.license_template_address)}
-                                                            </div>
-                                                        </Tooltip></TableCell>
+                                                                    <Tooltip title={license.license_template_address} placement="top">
+                                                                        <div className='truncate'>
+
+                                                                            {shorten(license.license_template_address)}
+                                                                        </div>
+                                                                    </Tooltip></TableCell>
                                                                 <TableCell style={{ width: '25%', color: '#2684FC' }}>{license.term_id}</TableCell>
                                                                 <TableCell style={{ width: '25%' }} align="right">{moment(license.created_at).format('HH:mm - DD/MM/YYYY')}</TableCell>
                                                             </TableRow>
@@ -450,6 +454,9 @@ function IPAssetDetail({ }) {
                                                         type='text'
                                                         placeholder={t('Enter an amountD')}
                                                     />)}
+                                            </div>
+                                            <div className='text-[#1FAB5E] font-semibold w-full justify-center text-center mt-2 mb-3'>
+                                                {processText}
                                             </div>
                                             <div className='flex justify-center gap-6 items-center w-full'>
                                                 <MainButton disabled={txLoading} style='outline' className='w-[129px]' onClick={() => setIsViewLicense(true)}>
