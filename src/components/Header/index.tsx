@@ -72,7 +72,7 @@ export default function Header({ className }: { className?: string }) {
   }
 
   useEffect(() => {
-    ;(window as any).isSearchFocused = isSearchFocused
+    ; (window as any).isSearchFocused = isSearchFocused
   }, [isSearchFocused])
 
   useEffect(() => {
@@ -117,9 +117,8 @@ export default function Header({ className }: { className?: string }) {
   return (
     <>
       <div
-        className={` fixed inset-0 transition-opacity duration-500 bg-[#000] ${
-          isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
-        }`}></div>
+        className={` fixed inset-0 transition-opacity duration-500 bg-[#000] ${isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
+          }`}></div>
       <header
         className={`border-b-2 border-light-gray border-solid sticky w-full top-0 z-50 transition-all duration-300 bg-white ${className}`}>
         <nav className='lg:hidden pk-container py-[10px] px-5'>
@@ -164,9 +163,8 @@ export default function Header({ className }: { className?: string }) {
                     <div>{`${shorten(wallet || account?.walletAddress, 8, 8)}`}</div>
                   </div>
                   <span
-                    className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
-                      isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                    }`}>
+                    className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                      }`}>
                     {t('Copied')}
                   </span>
                   <Image src={CopySvg} alt='' />
@@ -177,9 +175,9 @@ export default function Header({ className }: { className?: string }) {
                     {hideBalance
                       ? '********'
                       : `${+BigNumber(balance || 0)
-                          .div(BigNumber(10).pow(6))
-                          .toFixed(4)
-                          .toLocaleString()} ${getEnvKey() == 'euphoria' ? 'EAURA' : 'AURA'}`}
+                        .div(BigNumber(10).pow(6))
+                        .toFixed(4)
+                        .toLocaleString()} ${getEnvKey() == 'euphoria' ? 'EAURA' : 'AURA'}`}
                     <span className='inline-block'>
                       {
                         <div className='ml-2 w-6 h-6 relative'>
@@ -189,9 +187,8 @@ export default function Header({ className }: { className?: string }) {
                             height='24'
                             viewBox='0 0 24 24'
                             fill='none'
-                            className={`absolute inset-0 transition-all ${
-                              hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                            }`}
+                            className={`absolute inset-0 transition-all ${hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                              }`}
                             onClick={() => setHideBalance(false)}>
                             <path
                               fillRule='evenodd'
@@ -206,9 +203,8 @@ export default function Header({ className }: { className?: string }) {
                             height='24'
                             viewBox='0 0 24 24'
                             fill='none'
-                            className={`absolute inset-0 transition-all ${
-                              !hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                            }`}
+                            className={`absolute inset-0 transition-all ${!hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                              }`}
                             onClick={() => setHideBalance(true)}>
                             <path
                               fillRule='evenodd'
@@ -237,6 +233,13 @@ export default function Header({ className }: { className?: string }) {
               onClick={() => router.push('/profile')}>
               {t('My profile')}
             </div>
+            {wallet && (
+              <div
+                className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'
+                onClick={() => router.push('/ipassets')}>
+                {t('IPAsset')}
+              </div>
+            )}
             {!wallet && (
               <div
                 className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'
@@ -281,16 +284,14 @@ export default function Header({ className }: { className?: string }) {
               />
               {!!searchComic.data?.length && (
                 <div
-                  className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[10px] max-h-[40vh] overflow-hidden ${
-                    isSearchFocused ? 'opacity-100 w-full max-w-sm' : 'pointer-events-none opacity-0 w-full'
-                  }`}>
+                  className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[10px] max-h-[40vh] overflow-hidden ${isSearchFocused ? 'opacity-100 w-full max-w-sm' : 'pointer-events-none opacity-0 w-full'
+                    }`}>
                   <div className={`max-h-[40vh] overflow-auto flex flex-col gap-3 p-2`}>
                     {searchComic.data?.map((manga, index) => (
                       <div
                         key={index}
-                        className={`flex gap-2 cursor-pointer ${
-                          manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
-                        }`}
+                        className={`flex gap-2 cursor-pointer ${manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
+                          }`}
                         onClick={() => router.push(`/comic/${manga.slug}/chapter/1`)}>
                         <Image
                           src={manga.image || NoImage}
@@ -401,9 +402,8 @@ export default function Header({ className }: { className?: string }) {
           </div>
           <div
             ref={divRef}
-            className={`${
-              isSearchFocused ? 'z-30' : ''
-            } w-full md:max-w-[170px] lg:max-w-[200px] xl:max-w-[300px] 2xl:max-w-[500px] relative`}>
+            className={`${isSearchFocused ? 'z-30' : ''
+              } w-full md:max-w-[170px] lg:max-w-[200px] xl:max-w-[300px] 2xl:max-w-[500px] relative`}>
             <TextField
               inputref={ref}
               onChange={_.debounce(setSearchValue, 500)}
@@ -427,16 +427,14 @@ export default function Header({ className }: { className?: string }) {
             />
             {!!searchComic.data?.length && (
               <div
-                className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[20px] max-h-[40vh] overflow-hidden ${
-                  isSearchFocused ? 'opacity-100 w-[160%]' : 'pointer-events-none opacity-0 w-full'
-                }`}>
+                className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[20px] max-h-[40vh] overflow-hidden ${isSearchFocused ? 'opacity-100 w-[160%]' : 'pointer-events-none opacity-0 w-full'
+                  }`}>
                 <div className={`max-h-[40vh] overflow-auto  flex flex-col gap-7  p-5`}>
                   {searchComic.data?.map((manga, index) => (
                     <div
                       key={index}
-                      className={`flex gap-2 ${
-                        manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
-                      }`}
+                      className={`flex gap-2 ${manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
+                        }`}
                       onClick={() => router.push(`/comic/${manga.slug}/chapter/1`)}>
                       <Image
                         src={manga.image || NoImage}
@@ -520,9 +518,8 @@ export default function Header({ className }: { className?: string }) {
                             <div>{`${shorten(wallet || account?.walletAddress, 8, 8)}`}</div>
                           </div>
                           <span
-                            className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
-                              isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                            }`}>
+                            className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                              }`}>
                             {t('Copied')}
                           </span>
                           <Image src={CopySvg} alt='' />
@@ -546,9 +543,8 @@ export default function Header({ className }: { className?: string }) {
                                     height='24'
                                     viewBox='0 0 24 24'
                                     fill='none'
-                                    className={`absolute inset-0 transition-all ${
-                                      hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                                    }`}
+                                    className={`absolute inset-0 transition-all ${hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                                      }`}
                                     onClick={() => setHideBalance(false)}>
                                     <path
                                       fillRule='evenodd'
@@ -563,9 +559,8 @@ export default function Header({ className }: { className?: string }) {
                                     height='24'
                                     viewBox='0 0 24 24'
                                     fill='none'
-                                    className={`absolute inset-0 transition-all ${
-                                      !hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                                    }`}
+                                    className={`absolute inset-0 transition-all ${!hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                                      }`}
                                     onClick={() => setHideBalance(true)}>
                                     <path
                                       fillRule='evenodd'

@@ -67,8 +67,7 @@ function IPAssetDetail({ }) {
     const { t } = useTranslation()
     const { client, walletAddress, txLoading, mintNFT, setTxHash, setTxLoading, setTxName, addTransaction } = useStory()
     const [isViewLicense, setIsViewLicense] = useState(true)
-    const [ipAssetData, setIPAssetData] = useState<any>({});
-    const [ipAssetImage, setIPAssetImage] = useState<any>({});
+    const [ipAssetImage, setIPAssetImage] = useState<string>('');
     const [licenseList, setLicenseList] = useState([])
     const [nftInfo, setNftInfo] = useState<any>({});
     const [selectedOption, setSelectedOption] = useState<Option>(options[1]);
@@ -89,7 +88,6 @@ function IPAssetDetail({ }) {
                 },
             });
             const data = await res.json();
-            setIPAssetData(data.data.nftMetadata);
             const tokenUriData = JSON.parse(data.data.nftMetadata.tokenUri);
             setIPAssetImage(tokenUriData.image)
         } catch (error) {
@@ -98,10 +96,10 @@ function IPAssetDetail({ }) {
     };
     useEffect(() => {
         const userId = account?.id;
-        if (userId && ipAssetData) {
+        if (userId) {
             getIPAsset(userId).then((data) => {
                 const filteredAssets = data.data.ip_asset.filter((asset) =>
-                    asset.nft_contract_address.toString().includes(ipAssetData?.tokenContract?.toLowerCase())
+                    asset.ip_asset_id.toString().toLowerCase().includes(slug?.toLowerCase())
                 );
                 setNftInfo(filteredAssets[0])
             });
@@ -109,8 +107,7 @@ function IPAssetDetail({ }) {
         getLicense(slug).then((data) => {
             setLicenseList(data.data.license_tokens)
         });
-    }, [account, ipAssetData, isViewLicense]);
-
+    }, [account, isViewLicense]);
     const handleMintLicense = async () => {
         if (!client) return;
 
@@ -220,7 +217,6 @@ function IPAssetDetail({ }) {
             fetchIPAsset();
         }
     }, [slug]);
-
     return (
         <>
             <Header />
@@ -231,7 +227,7 @@ function IPAssetDetail({ }) {
                         <div className='flex gap-10'>
                             <div className='w-[290px] flex flex-col gap-6'>
                                 <Image className='rounded-2xl bg-light-gray object-cover'
-                                    src={ipAssetImage ? ipAssetImage : "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"}
+                                    src={!!ipAssetImage ? ipAssetImage : "https://static.vecteezy.com/system/resources/thumbnails/004/141/669/small/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg"}
                                     alt=""
                                     width={290}
                                     height={290}
@@ -273,7 +269,7 @@ function IPAssetDetail({ }) {
                                             </div>
                                             <div className='border-r-[1px] border-[#F0F0F0] pl-[15px]'>
                                                 <div className='text-xs'>IPAsset ID:</div>
-                                                <div className='text-sm text-[#2684FC]'>{ipAssetData.tokenId}</div>
+                                                <div className='text-sm text-[#2684FC]'>{nftInfo.nft_token_id}</div>
                                             </div>
                                             <div className='pl-[15px]'>
                                                 <div className='text-xs'>Number of Licenses Token:</div>
