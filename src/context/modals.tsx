@@ -10,6 +10,7 @@ import { Dispatch, SetStateAction, createContext, useContext, useEffect, useStat
 import { useTranslation } from 'react-i18next'
 import { validateEmail } from 'src/utils'
 import { Context } from '.'
+import { useAccount, useConnect } from 'wagmi'
 export const ModalContext = createContext<{
   signUpSuccessOpen: boolean
   forgotPasswordOpen: boolean
@@ -42,6 +43,7 @@ function ModalProvider({ children }) {
   const [signInOpen, setSignInOpen] = useState(false)
   const [migrateWalletOpen, setMigrateWalletOpen] = useState(false)
   const { account, updateProfile } = useContext(Context)
+  const { isConnected } = useAccount()
   const [errorMsg, setErrorMsg] = useState('')
   const [emailErrorMsg, setEmailErrorMsg] = useState('')
   const [name, setName] = useState('')
@@ -59,6 +61,12 @@ function ModalProvider({ children }) {
   useEffect(() => {
     setEmailErrorMsg('')
   }, [email])
+
+  useEffect(() => {
+    if (account && isConnected) {
+      setSignInOpen(false)
+    }
+  }, [account, isConnected])
 
   useEffect(() => {
     if (!signUpSuccessOpen) {

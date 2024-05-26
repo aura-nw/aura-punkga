@@ -33,3 +33,10 @@ export const MAX_DECIMAL_INPUT_CHARACTER = 20;
 export const AURA_LINK = 'https://aura.network';
 export const AUDIT_LINK = 'https://github.com/halotrade-zone/audit-report';
 export const CONTRACT_QUERY_SIZE = 10;
+
+export const LaunchpadStatus = {
+  ALL_STATUS: 'All status',
+  DRAFT: 'Draft',
+  READY_TO_MINT: 'Ready to mint',
+  PUBLISHED: 'Published'
+}

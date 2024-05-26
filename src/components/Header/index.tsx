@@ -50,7 +50,6 @@ export default function Header({ className }: { className?: string }) {
   const walletBalance = useBalance({
     address,
   })
-  console.log(walletBalance)
   const ref = useRef<any>()
   const divRef = useRef<any>()
   const mref = useRef<any>()

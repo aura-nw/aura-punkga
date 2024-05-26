@@ -61,6 +61,15 @@ const masgistral = localFont({
     },
   ],
 })
+const atlantis = localFont({
+  src: [
+    {
+      path: '../assets/fonts/AtlantisInternational.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+})
 function MyApp(props: AppProps) {
   const [isSetting, setIsSetting] = useState(true)
   const { locale } = useRouter()
@@ -120,6 +129,9 @@ function MyApp(props: AppProps) {
         .font-masgistral {
           font-family: ${masgistral.style.fontFamily};
         }
+        .font-atlantis {
+          font-family: ${atlantis.style.fontFamily};
+        }
       `}</style>
       <ToastContainer />
 
@@ -154,7 +166,10 @@ const App = ({ Component, pageProps }: AppProps) => {
   if (isSettingUp) {
     return <></>
   }
+  const getLayout = (Component as any).getLayout ?? ((page) => page)
 
-  return <Component {...pageProps} />
+  if (pageProps.justHead) return <Component {...pageProps} />
+
+  return getLayout(<Component {...pageProps} />)
 }
 export default appWithTranslation(MyApp)

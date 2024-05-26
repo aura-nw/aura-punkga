@@ -3,6 +3,7 @@ import { compose } from 'ramda'
 import Artist from './artist'
 import withApi from './with-api'
 import HeadComponent from 'components/Head'
+import Layout from 'components/Layout'
 const ComposedArtist = compose(withApi)(Artist)
 
 export default function Page(props) {
@@ -15,6 +16,9 @@ export default function Page(props) {
       <ComposedArtist data={props.pageProps?.metadata || props.metadata} />
     </>
   )
+}
+Page.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>
 }
 const authorSeo = [
   {

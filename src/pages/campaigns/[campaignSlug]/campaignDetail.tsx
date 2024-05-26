@@ -1,7 +1,7 @@
-import Footer from 'components/Footer'
-import Header from 'components/Header'
 import StatusLabel from 'components/Label/Status'
 import Modal from 'components/Modal'
+import Popover from 'components/Popover'
+import FilledButton from 'components/core/Button/FilledButton'
 import IllusImage from 'components/pages/campaigns/assets/illus.svg'
 import LeaderBoard from 'components/pages/campaigns/leaderboard'
 import NoImage from 'images/no_img.png'
@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import TruncateMarkup from 'react-truncate-markup'
 import { Context } from 'src/context'
+import { ModalContext } from 'src/context/modals'
 import { Campaign } from 'src/models/campaign'
 import NotFound from 'src/pages/404'
 import {
@@ -27,9 +28,6 @@ import {
 } from 'src/services'
 import useSWR, { useSWRConfig } from 'swr'
 import QuestList from '../../../components/pages/campaigns/questList'
-import FilledButton from 'components/core/Button/FilledButton'
-import Popover from 'components/Popover'
-import { ModalContext } from 'src/context/modals'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -200,7 +198,6 @@ function CampaignDetail({}) {
   const isEnrolled = !!authData?.campaign_quests
   return (
     <>
-      <Header />
       <Modal open={openNFTPreview} setOpen={() => setOpenNFTPreview(false)}>
         <div className=' p-10 flex flex-col items-center'>
           <Image
@@ -424,7 +421,6 @@ function CampaignDetail({}) {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   )
 }

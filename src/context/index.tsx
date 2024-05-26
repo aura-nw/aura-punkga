@@ -134,7 +134,7 @@ function ContextProvider({ children }: any) {
   }, [accessTokenParam])
 
   useEffect(() => {
-    if (address && isConnected) {
+    if (address && isConnected && !account) {
       const domain = window.location.host
       const origin = window.location.origin
       const statement = 'Sign in with Ethereum to the app.'
@@ -160,7 +160,7 @@ function ContextProvider({ children }: any) {
         }
       )
     }
-  }, [address, isConnected])
+  }, [address, isConnected, account])
 
   const getAccessToken = async ({ message, signature }) => {
     try {

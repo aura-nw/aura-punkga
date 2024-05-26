@@ -3,8 +3,6 @@ import { BellAlertIcon, BellIcon, EyeIcon, HeartIcon } from '@heroicons/react/20
 import { BellAlertIcon as BellAlertIconOutline } from '@heroicons/react/24/outline';
 import FilledButton from 'components/Button/FilledButton';
 import OutlineButton from 'components/Button/OutlineButton';
-import Footer from 'components/Footer';
-import Header from 'components/Header';
 import Tag from 'components/Label/Tag';
 import ChapterList from 'components/pages/comic/ChapterList';
 import Introduction from 'components/pages/comic/Introduction';
@@ -74,7 +72,6 @@ function Comic({ comicDetails, like, unlike }) {
   };
   return (
     <>
-      <Header />
       <div className="bg-black fixed top-[96px] left-0 right-0 bottom-0">
         <div className="fixed top-[100px] left-0 right-0">
           <Image
@@ -233,7 +230,6 @@ function Comic({ comicDetails, like, unlike }) {
           </Tab.Group>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

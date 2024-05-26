@@ -1,6 +1,4 @@
 import Card, { SubCard } from 'components/Card'
-import Footer from 'components/Footer'
-import Header from 'components/Header'
 import Pagination from 'components/pages/artist/Pagination'
 import Comic from 'components/pages/homepage/comic'
 import MobileComic from 'components/pages/homepage/trendingComic'
@@ -38,7 +36,6 @@ function Artist({ artistDetail, data }) {
   if (!artist) return <></>
   return (
     <>
-      <Header />
       <div className='px-[10px] lg:px-0 lg:py-[47px] py-[17px] pk-container'>
         <div className='flex gap-[10px] lg:gap-[60px] px-[10px] lg:px-0'>
           <div className='p-[5px] lg:px-0'>
@@ -224,7 +221,6 @@ function Artist({ artistDetail, data }) {
           </div>
         )}
       </div>
-      <Footer />
     </>
   )
 }
