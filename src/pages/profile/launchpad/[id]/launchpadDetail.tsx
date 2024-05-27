@@ -1,17 +1,18 @@
 import { Tooltip } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import BigNumber from 'bignumber.js';
+import { abi } from 'components/pages/launchpad/abi';
 import CopySvg from 'images/icons/copy.svg';
 import _ from 'lodash';
 import moment from 'moment';
 import Image from "next/image";
 import { useRouter } from 'next/router';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from 'react-toastify';
 import ic_question_circle from "src/assets/images/icons/ic_question_circle.svg";
 import ic_trash from "src/assets/images/icons/ic_trash.svg";
-import { useAccount, useConnect, useWriteContract } from 'wagmi';
+import { useAccount, useConnect, useReadContract, useWriteContract } from 'wagmi';
 import MainButton from '../../../../components/Button/MainButton';
 import Footer from "../../../../components/Footer";
 import Header from "../../../../components/Header";
@@ -21,7 +22,6 @@ import { LaunchpadStatus } from '../../../../constants/constants';
 import useApi from '../../../../hooks/useApi';
 import { shorten } from "../../../../utils";
 import { getLaunchpad } from './with-api';
-import { abi } from 'components/pages/launchpad/abi';
 
 export default function Page(props) {
     if (props.justHead) {
@@ -60,9 +60,23 @@ function LaunchpadDetail({ preDeploy, postDeploy, publish, unpublish }:
     const [openDelete, setOpenDelete] = useState(false)
     const [openPublish, setOpenPublish] = useState(false)
     const [openUnpublish, setOpenUnpublish] = useState(false)
+    const [nftContractAddress, setNftContractAddress] = useState<string>()
+
+    const { data } = useReadContract({
+        abi,
+        address: '0x2f6646dad93454f681f7c0edc2df82931473ddb5',
+        functionName: 'licenseSalePhase',
+        args: [launchpad.data?.license_token_address, launchpad.data?.license_token_id],
+    })
+
+    const rs = useReadContract({
+        abi,
+        address: '0x2f6646dad93454f681f7c0edc2df82931473ddb5',
+        functionName: 'LaunchpadInfors',
+        args: [launchpad.data?.license_token_address, launchpad.data?.license_token_id, data],
+    })
 
     const handleDeploy = async (id: string) => {
-        console.log(address);
         if (!address) {
             await connectAsync({ connector: connectors.find((c) => c.id == 'io.metamask') })
         }
@@ -214,12 +228,16 @@ function LaunchpadDetail({ preDeploy, postDeploy, publish, unpublish }:
     }
 
     const copyAddress = async () => {
-        navigator.clipboard.writeText(launchpad.data?.creator_address)
+        navigator.clipboard.writeText(nftContractAddress)
         setIsCopied(true)
         _.debounce(() => {
             _.delay(() => setIsCopied(false), 3000)
         }, 1000)()
     }
+
+    useEffect(() => {
+        setNftContractAddress(rs.data?.[0])
+    }, [rs])
 
     return (
         <>
@@ -230,13 +248,13 @@ function LaunchpadDetail({ preDeploy, postDeploy, publish, unpublish }:
                         <div className='text-base leading-5 font-bold md:text-2xl md:leading-[18px] md:font-extrabold whitespace-nowrap'>
                             {launchpad.data?.name}
                         </div>
-                        {launchpad.data?.contract_address && (<div className="flex gap-2">
+                        {launchpad.data?.status !== 'DRAFT' && (<div className="flex gap-2">
                             <p className="text-[#414141] text-sm">Launchpad contract address:</p>
                             <div
                                 className='flex gap-2 cursor-pointer justify-between items-center text-second-color text-sm font-medium  relative'
                                 onClick={copyAddress}
                             >
-                                <div>{`${shorten(launchpad.data?.contract_address, 8, 8)}`}</div>
+                                <div>{`${shorten(nftContractAddress, 8, 8)}`}</div>
                                 <span
                                     className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                                     {t('Copied')}
