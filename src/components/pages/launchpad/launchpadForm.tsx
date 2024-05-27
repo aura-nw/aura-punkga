@@ -14,7 +14,7 @@ import { toast } from 'react-toastify';
 import ic_close from "src/assets/images/icons/ic_close.svg";
 import ic_calendar from "src/assets/images/icons/ic_gray_calendar.svg";
 import ic_question_circle from "src/assets/images/icons/ic_question_circle.svg";
-import { useAccount } from 'wagmi';
+import { useAccount, useConnect } from 'wagmi';
 import { LaunchpadStatus } from '../../../constants/constants';
 import { getFileNameFromURL } from '../../../pages/profile/launchpad/[id]/launchpadDetail';
 import Button from '../../Button';
@@ -31,6 +31,10 @@ type LaunchpadFormType = {
     updateLaunchpadUnpublish?: (id: string, launchpad: any) => any
 }
 
+let defaultFeatureImgs = []
+let newFeatureImgs = []
+let defaultNftImgs = []
+
 const minStartDate = new Date();
 minStartDate.setDate(minStartDate.getDate() + 1);
 
@@ -41,10 +45,10 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
     const isPublished = LaunchpadStatus[launchpad?.status] === LaunchpadStatus[LaunchpadStatus.PUBLISHED]
 
     const { address } = useAccount()
-    console.log(address);
 
     const { t } = useTranslation()
     const router = useRouter()
+    const { connectors, connectAsync } = useConnect()
     const { control, setValue, getValues, handleSubmit, clearErrors, watch } = useForm();
     const [endDate, setEndDate] = useState('')
     const [startDate, setStartDate] = useState('')
@@ -57,7 +61,11 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
 
     const featuredImgsValues = watch(Array.from({ length: 5 }, (_, index) => `featured-images-${index + 1}`));
 
-    const handleSubmitForm = () => {
+    const handleSubmitForm = async () => {
+        if (!address) {
+            await connectAsync({ connector: connectors.find((c) => c.id == 'io.metamask') })
+        }
+
         if (startDate && endDate) {
             if (isBefore(new Date(endDate), new Date(getValues("starting")))) {
                 setValidateEndDate("The end date must be after the start date")
@@ -89,16 +97,7 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
                 formData.append("thumbnail", values.thumbnail as File, values.thumbnail?.name);
             }
 
-            for (let i = 0; i < nftImages.length; i++) {
-                if (nftImages[i].file instanceof File) {
-                    formData.append('nft_images', nftImages[i].file as File, nftImages[i].file.name);
-                }
-            }
-            for (let i = 0; i < featuredImgsValues.length; i++) {
-                if (featuredImgsValues[i] instanceof File) {
-                    formData.append(launchpad ? 'featured_images_url' : 'featured_images', featuredImgsValues[i] as File, featuredImgsValues[i].name);
-                }
-            }
+            formData.append("creator_address", address);
             formData.append("name", values.launchpadName);
             formData.append("license_token_address", values.licenseAddress);
             formData.append("license_token_id", values.licenseId);
@@ -110,15 +109,27 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
             formData.append("description", values.description);
             try {
                 if (!launchpad) {
-                    formData.append("creator_address", address);
+                    for (let i = 0; i < nftImages.length; i++) {
+                        if (nftImages[i].file instanceof File) {
+                            formData.append('nft_images', nftImages[i].file as File, nftImages[i].file.name);
+                        }
+                    }
+                    for (let i = 0; i < featuredImgsValues.length; i++) {
+                        if (featuredImgsValues[i] instanceof File) {
+                            formData.append('featured_images', featuredImgsValues[i] as File, featuredImgsValues[i].name);
+                        }
+                    }
                     await createLaunchpad(formData)
                 } else {
                     formData.append("thumbnail_url", values.thumbnail);
-                    nftImages.forEach((img) => {
-                        formData.append('nft_images_url', img.imgUrl);
+
+                    formData.append('featured_images_url', defaultFeatureImgs.map((e) => e.imgUrl).join(','));
+                    newFeatureImgs.forEach((e, index) => {
+                        formData.append('featured_images', e.file);
                     })
-                    featuredImgsValues.forEach((imgUrl, index) => {
-                        formData.append('featured_images_url', imgUrl);
+                    formData.append('nft_images_url', defaultNftImgs.map((e) => e.imgUrl).join(','));
+                    nftImages.filter((e) => !e.imgUrl).forEach((e, index) => {
+                        formData.append('nft_images', e.file);
                     })
                     if (launchpad?.status === 'DRAFT') {
                         await updateLaunchpadDraft(launchpad?.id, formData)
@@ -127,11 +138,20 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
                     }
                 }
                 toast(launchpad ? 'Saved' : 'Created', { type: 'success' })
-                router.push('/profile/launchpad')
+                // router.push('/profile/launchpad')
             } catch (error) {
                 toast('An error ocurred, please try again', { type: 'error' })
             }
         })()
+    };
+
+    const handleFeatureFileChange = (file, id) => {
+        const existingImgIndex = newFeatureImgs.findIndex(img => img.id === id);
+        if (existingImgIndex !== -1) {
+            newFeatureImgs[existingImgIndex].file = file;
+        } else {
+            newFeatureImgs.push({ id, file });
+        }
     };
 
     useEffect(() => {
@@ -160,30 +180,32 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
     }, [nftImages]);
 
     useEffect(() => {
-        const data = launchpad?.nft_images?.map((e, idx) => ({
-            id: idx + 1,
-            imgUrl: e,
-            name: getFileNameFromURL(e),
-            file: null
-        })) ?? []
-        setNftImages(data)
-    }, [launchpad?.nft_images]);
-
-    useEffect(() => {
         if (launchpad) {
             setValue('launchpadName', launchpad?.name)
             setValue('licenseAddress', launchpad?.license_token_address)
             setValue('licenseId', launchpad?.license_token_id)
-            setValue('mintPrice', launchpad?.mint_price)
+            setValue('mintPrice', BigNumber(launchpad.mint_price || 0).div(BigNumber(10).pow(18)))
             setValue('maxSupply', launchpad?.max_supply)
             setValue('maxMintPrice', launchpad?.max_mint_per_address)
             setValue('starting', launchpad?.start_date)
             setValue('ending', launchpad?.end_date)
             setValue('description', launchpad?.description)
             setValue('thumbnail', launchpad?.thumbnail_url)
+            defaultFeatureImgs = launchpad?.featured_images.map((e, i) => ({
+                id: i,
+                imgUrl: e
+            }))
             launchpad?.featured_images.forEach((img, index) => {
                 setValue(`featured-images-${index + 1}`, img)
             })
+
+            defaultNftImgs = launchpad?.nft_images?.map((e, idx) => ({
+                id: idx,
+                imgUrl: e,
+                name: getFileNameFromURL(e),
+                file: null
+            })) ?? []
+            setNftImages(defaultNftImgs)
         }
     }, [launchpad])
 
@@ -393,7 +415,7 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
                                                     }}
                                                     customInput={<CustomInput className={`${!isCreate && !isDraft ? 'bg-[#ABABAB]' : 'bg-white'}`} />}
                                                     minDate={minEndDate}
-                                                    disabled={!isCreate && (!isDraft)}
+                                                    disabled={!isCreate && !isDraft}
                                                 />
                                                 <FormHelperText>{validateEndDate}</FormHelperText>
                                             </FormControl>
@@ -453,6 +475,7 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
                                                         <p className='text-[#61646B] font-normal text-sm'>{nft.name}</p>
                                                         <Button onClick={() => {
                                                             setNftImages((nftImages) => nftImages.filter((item) => item.id !== nft.id))
+                                                            defaultNftImgs = defaultNftImgs.filter((e) => e.id !== idx)
                                                         }}>
                                                             <Image src={ic_close} alt='ic_close' />
                                                         </Button>
@@ -463,7 +486,7 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
                                     </div>
                                     <FormHelperText error={!!validateNFTImgs}>{validateNFTImgs}</FormHelperText>
                                     <ButtonAddNFTImage
-                                        disabled={!isCreate && isPublished}
+                                        disabled={!isCreate && !isDraft}
                                         onChange={(file) => setNftImages([...nftImages, { id: nftImages[nftImages.length - 1]?.id ? nftImages[nftImages.length - 1]?.id + 1 : 1, file, name: file.name }])}
                                     />
                                 </div>
@@ -504,7 +527,13 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
                                                     key={idx}
                                                     name={`featured-images-${idx + 1}`}
                                                     control={control}
-                                                    render={() => (<UploadImage id={`featured-images-${idx + 1}`} imgUrl={imgUrl} disabled={!isCreate && isPublished} onChange={(file) => setValue(`featured-images-${idx + 1}`, file)} />)}
+                                                    render={() => (<UploadImage id={`featured-images-${idx + 1}`} imgUrl={imgUrl} disabled={!isCreate && isPublished}
+                                                        onChange={(file) => {
+                                                            setValue(`featured-images-${idx + 1}`, file)
+                                                            defaultFeatureImgs = defaultFeatureImgs.filter((e, imgIdx) => e.id !== idx);
+                                                            handleFeatureFileChange(file, idx + 1);
+                                                        }
+                                                        } />)}
                                                 />
                                             )}
                                         </div>
