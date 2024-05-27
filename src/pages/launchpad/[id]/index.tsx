@@ -115,7 +115,10 @@ const LaunchPadDetail = () => {
     functionName: 'toJson',
     args: [data?.license?.term_id],
   })
-  console.log(license?.data as string)
+  const licenseData = JSON.parse(`[${(license?.data as string).substring(0, (license?.data as string).length - 1)}]`)
+  const isRemix = licenseData.find((d) => (d.trait_type = 'Derivatives Reciprocal')).value == 'true'
+  const isCommercial = licenseData.find((d) => (d.trait_type = 'Commercial Use')).value == 'true'
+
   const mintNFT = async () => {
     try {
       const hash = await writeContractAsync({
@@ -373,7 +376,16 @@ const LaunchPadDetail = () => {
             ) : tab == 2 ? (
               <>
                 <div>
-                  License term: <span className='text-primary-color'>{shorten(launchpadInfors?.data?.[0])}</span>
+                  License term:{' '}
+                  <span className='text-primary-color'>
+                    {isRemix && isCommercial
+                      ? 'Commercial remix'
+                      : !isRemix && isCommercial
+                      ? 'Commercial use'
+                      : isRemix && !isCommercial
+                      ? 'Non - commercial social remix'
+                      : 'Non - commercial social use'}
+                  </span>
                 </div>
                 <div>
                   License token ID: <span className='text-primary-color'>{shorten(data?.license_token_id)}</span>
