@@ -109,6 +109,7 @@ function IPAssetDetail({ }) {
             setLicenseList(data.data.license_tokens)
         });
     }, [account, isViewLicense]);
+    
     const handleMintLicense = async () => {
         if (!client) return;
 
@@ -182,7 +183,7 @@ function IPAssetDetail({ }) {
                 licensorIpId: slug as Address,
                 licenseTermsId: registerTermResponse.licenseTermsId,
                 amount: licenseAmount,
-                receiver: account.walletAddress as Address,
+                receiver: walletAddress as Address,
                 txOptions: { waitForTransaction: true },
             });
             console.log(
