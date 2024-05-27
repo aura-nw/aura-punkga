@@ -273,7 +273,11 @@ function IPAssetDetail({ }) {
                                             </div>
                                             <div className='border-r-[1px] border-[#F0F0F0] pl-[15px]'>
                                                 <div className='text-xs'>IPAsset ID:</div>
-                                                <div className='text-sm text-[#2684FC]'>{nftInfo.nft_token_id}</div>
+                                                <div className='text-sm text-[#2684FC]'>
+                                                    <Tooltip title={slug} placement="top">
+                                                    <div className='text-sm text-[#2684FC]'>{shorten(slug)}</div>
+                                                    </Tooltip>
+                                                </div>
                                             </div>
                                             <div className='pl-[15px]'>
                                                 <div className='text-xs'>Number of Licenses Token:</div>
