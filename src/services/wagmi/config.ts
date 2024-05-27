@@ -7,7 +7,7 @@ export const getWagmiConfig = () => {
   const projectId = getConfig().WALLET_CONNECT_PROJECT_ID
   return createConfig({
     chains: [sepolia],
-    connectors: [walletConnect({ projectId }), metaMask(), injected()],
+    connectors: [walletConnect({ showQrModal: false, projectId }), metaMask(), injected()],
     transports: {
       [sepolia.id]: http(),
     },
