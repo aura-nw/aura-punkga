@@ -5,7 +5,7 @@ import vi from 'date-fns/locale/vi';
 import moment from "moment";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { ChangeEvent, forwardRef, useEffect, useRef, useState } from "react";
+import { ChangeEvent, forwardRef, useContext, useEffect, useRef, useState } from "react";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { Controller, useForm } from "react-hook-form";
@@ -14,7 +14,7 @@ import { toast } from 'react-toastify';
 import ic_close from "src/assets/images/icons/ic_close.svg";
 import ic_calendar from "src/assets/images/icons/ic_gray_calendar.svg";
 import ic_question_circle from "src/assets/images/icons/ic_question_circle.svg";
-import { useAccount, useConnect } from 'wagmi';
+import { Context } from 'src/context';
 import { LaunchpadStatus } from '../../../constants/constants';
 import { getFileNameFromURL } from '../../../pages/profile/launchpad/[id]/launchpadDetail';
 import Button from '../../Button';
@@ -43,12 +43,10 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
     const isCreate = !launchpad;
     const isDraft = LaunchpadStatus[launchpad?.status] === LaunchpadStatus.DRAFT
     const isPublished = LaunchpadStatus[launchpad?.status] === LaunchpadStatus[LaunchpadStatus.PUBLISHED]
-
-    const { address } = useAccount()
+    const { account } = useContext(Context)
 
     const { t } = useTranslation()
     const router = useRouter()
-    const { connectors, connectAsync } = useConnect()
     const { control, setValue, getValues, handleSubmit, clearErrors, watch } = useForm();
     const [endDate, setEndDate] = useState('')
     const [startDate, setStartDate] = useState('')
@@ -60,12 +58,7 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
     const [minEndDate, setMinEndDate] = useState<Date | null>();
 
     const featuredImgsValues = watch(Array.from({ length: 5 }, (_, index) => `featured-images-${index + 1}`));
-
     const handleSubmitForm = async () => {
-        if (!address) {
-            await connectAsync({ connector: connectors.find((c) => c.id == 'io.metamask') })
-        }
-
         if (startDate && endDate) {
             if (isBefore(new Date(endDate), new Date(getValues("starting")))) {
                 setValidateEndDate("The end date must be after the start date")
@@ -97,7 +90,7 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
                 formData.append("thumbnail", values.thumbnail as File, values.thumbnail?.name);
             }
 
-            formData.append("creator_address", address);
+            formData.append("creator_address", account?.walletAddress);
             formData.append("name", values.launchpadName);
             formData.append("license_token_address", values.licenseAddress);
             formData.append("license_token_id", values.licenseId);
@@ -122,8 +115,8 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
                     await createLaunchpad(formData)
                 } else {
                     formData.append("thumbnail_url", values.thumbnail);
-
                     formData.append('featured_images_url', defaultFeatureImgs.map((e) => e.imgUrl).join(','));
+
                     newFeatureImgs.forEach((e, index) => {
                         formData.append('featured_images', e.file);
                     })
@@ -138,7 +131,7 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
                     }
                 }
                 toast(launchpad ? 'Saved' : 'Created', { type: 'success' })
-                // router.push('/profile/launchpad')
+                router.push('/profile/launchpad')
             } catch (error) {
                 toast('An error ocurred, please try again', { type: 'error' })
             }
@@ -152,6 +145,18 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
         } else {
             newFeatureImgs.push({ id, file });
         }
+    };
+
+    const handleNftFileChange = (files) => {
+        setNftImages((prevNftImages) => {
+            const updateData = files.map((file) => ({
+                id: prevNftImages.length > 0 ? prevNftImages[prevNftImages.length - 1].id + 1 : 1,
+                file,
+                name: file.name
+            }));
+
+            return [...prevNftImages, ...updateData];
+        });
     };
 
     useEffect(() => {
@@ -208,6 +213,14 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
             setNftImages(defaultNftImgs)
         }
     }, [launchpad])
+
+    useEffect(() => {
+        return () => {
+            defaultFeatureImgs = []
+            newFeatureImgs = []
+            defaultNftImgs = []
+        }
+    }, [])
 
     return (
         <>
@@ -487,7 +500,7 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
                                     <FormHelperText error={!!validateNFTImgs}>{validateNFTImgs}</FormHelperText>
                                     <ButtonAddNFTImage
                                         disabled={!isCreate && !isDraft}
-                                        onChange={(file) => setNftImages([...nftImages, { id: nftImages[nftImages.length - 1]?.id ? nftImages[nftImages.length - 1]?.id + 1 : 1, file, name: file.name }])}
+                                        onChange={(files) => handleNftFileChange(files)}
                                     />
                                 </div>
                             </div>
@@ -572,9 +585,9 @@ const CustomInput = forwardRef(({ value, onClick, className }: any, ref: any) =>
 const ButtonAddNFTImage = forwardRef(({ onChange, disabled }: any, ref: any) => {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files && event.target.files[0];
-        if (file) {
-            onChange?.(file);
+        const files = event.target.files;
+        if (files && files.length > 0) {
+            onChange?.(Array.from(files));
             if (fileInputRef.current) {
                 fileInputRef.current.value = '';
             }
@@ -594,6 +607,7 @@ const ButtonAddNFTImage = forwardRef(({ onChange, disabled }: any, ref: any) => 
                 accept="image/*"
                 style={{ display: "none", width: "150px" }}
                 type="file"
+                multiple
                 onChange={handleFileChange}
                 disabled={disabled}
             />
