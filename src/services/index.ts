@@ -478,3 +478,7 @@ export const getLaunchPadDetail = async (id: string) => {
   const { data } = await axios.get(`https://hasura.hackathon.punkga.me/api/rest/public/launchpad/${id}`)
   return data?.launchpad_by_pk
 }
+export const getLicenseTerm = async (id: string) => {
+  const { data } = await axios.get(`https://edge.stg.storyprotocol.net/api/v1/licenses/terms/${id}`)
+  return data?.launchpad_by_pk
+}

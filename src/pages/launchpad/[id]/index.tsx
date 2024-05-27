@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import Countdown from 'react-countdown'
-import { getLaunchPadDetail } from 'src/services'
+import { getLaunchPadDetail, getLicenseTerm } from 'src/services'
 import { abi } from 'src/services/abi'
 import { abi as usdtAbi } from 'src/services/abi/usdt'
 import { shorten } from 'src/utils'
@@ -13,13 +13,7 @@ import 'swiper/css'
 import { Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import useSWR from 'swr'
-import {
-  useAccount,
-  useBalance,
-  useConnect,
-  useReadContract,
-  useWriteContract
-} from 'wagmi'
+import { useAccount, useBalance, useConnect, useReadContract, useWriteContract } from 'wagmi'
 import BackButton from 'src/components/pages/launchpad/assets/back-button.png'
 import Backdrop3 from 'src/components/pages/launchpad/assets/backdrop-3.png'
 import Backdrop7 from 'src/components/pages/launchpad/assets/backdrop-7.png'
@@ -39,7 +33,9 @@ import ViewTransactionButton from 'src/components/pages/launchpad/assets/view-tr
 import YellowBlock from 'src/components/pages/launchpad/assets/yellow-block.svg'
 import Layout, { LayoutContext } from 'src/components/pages/launchpad/components/layout'
 import Modal from 'src/components/pages/launchpad/components/modal'
-export default function Page (props){
+import { storyLaunchpadAbi } from 'src/services/abi/storyLaunchpad'
+import { PILicenseTemplateAbi } from 'src/services/abi/PILicenseTemplate'
+export default function Page(props) {
   if (props.justHead) return <></>
   return <LaunchPadDetail />
 }
@@ -51,7 +47,6 @@ const LaunchPadDetail = () => {
   const { data } = useSWR({ key: 'fetch_launchpad', id: query.id }, ({ id }) => getLaunchPadDetail(id as string), {
     refreshInterval: 60000,
   })
-  console.log(data)
   const { setData } = useContext(LayoutContext)
   const [quantity, setQuantity] = useState(1)
   const { writeContractAsync } = useWriteContract()
@@ -91,7 +86,7 @@ const LaunchPadDetail = () => {
     token: '0x3C93715FdCd6E0B043BD1ae7e1e437cA6dc391C6',
   })
   const minted = useReadContract({
-    abi,
+    abi: storyLaunchpadAbi,
     address: '0x2f6646dad93454f681f7c0edc2df82931473ddb5',
     functionName: 'numberOfNftSold',
     args: [data?.license_token_address, data?.license_token_id, 1],
@@ -102,6 +97,25 @@ const LaunchPadDetail = () => {
     functionName: 'allowance',
     args: [address, '0x2f6646dad93454f681f7c0edc2df82931473ddb5'],
   })
+  const licenseSalePhase = useReadContract({
+    abi: storyLaunchpadAbi,
+    address: '0x2f6646daD93454f681f7C0EdC2Df82931473ddB5',
+    functionName: 'licenseSalePhase',
+    args: [data?.license_token_address, data?.license_token_id],
+  })
+  const launchpadInfors = useReadContract({
+    abi: storyLaunchpadAbi,
+    address: '0x2f6646daD93454f681f7C0EdC2Df82931473ddB5',
+    functionName: 'LaunchpadInfors',
+    args: [data?.license_token_address, data?.license_token_id, licenseSalePhase?.data],
+  })
+  const license = useReadContract({
+    abi: PILicenseTemplateAbi,
+    address: '0x889A7921c302Ebb3fb4E49Dd808bA50838ce574f',
+    functionName: 'toJson',
+    args: [data?.license?.term_id],
+  })
+  console.log(license?.data as string)
   const mintNFT = async () => {
     try {
       const hash = await writeContractAsync({
@@ -169,21 +183,42 @@ const LaunchPadDetail = () => {
             style={{ backgroundImage: `url(${Backdrop7.src})`, backgroundSize: '100% 100%' }}
             className='w-[667px] h-[214px] pt-3 px-6 pb-[18px] flex flex-col gap-[22px]'>
             <div className='flex flex-col gap-2'>
-              <div className='flex justify-between'>
-                <div className=''>End in:</div>
-                <div className=''>
-                  <Countdown
-                    date={new Date(data.end_date)}
-                    renderer={({ hours, minutes, seconds, days }) => {
-                      return (
-                        <span>
-                          {days}d - {hours}h : {minutes}m : {seconds}s
-                        </span>
-                      )
-                    }}
-                  />
+              {moment().isAfter(data.start_date) && moment().isBefore(data.end_date) ? (
+                <div className='flex justify-between'>
+                  <div className=''>End in:</div>
+                  <div className=''>
+                    <Countdown
+                      date={new Date(data.end_date)}
+                      renderer={({ hours, minutes, seconds, days }) => {
+                        return (
+                          <span>
+                            {days}d - {hours}h : {minutes}m : {seconds}s
+                          </span>
+                        )
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
+              ) : moment().isBefore(data.start_date) ? (
+                <div className='flex justify-between'>
+                  <div className=''>Start in:</div>
+                  <div className=''>
+                    <Countdown
+                      date={new Date(data.start_date)}
+                      renderer={({ hours, minutes, seconds, days }) => {
+                        return (
+                          <span>
+                            {days}d - {hours}h : {minutes}m : {seconds}s
+                          </span>
+                        )
+                      }}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <></>
+              )}
+
               <div className='flex justify-between'>
                 <div className=''>Minted:</div>
                 <div className=''>
@@ -324,8 +359,36 @@ const LaunchPadDetail = () => {
           </div>
           <div
             style={{ backgroundImage: `url(${Backdrop8.src})`, backgroundSize: '100% 100%' }}
-            className='h-[110px] w-[856px] px-6 py-3 text-2xl overflow-hidden'>
-            {tab == 1 ? data.description : <></>}
+            className='h-[110px] w-[856px] px-6 py-3 text-2xl leading-[22px] overflow-hidden'>
+            {tab == 1 ? (
+              <>
+                <div>
+                  Launchpad contract: <span className='text-primary-color'>{shorten(launchpadInfors?.data?.[0])}</span>
+                </div>
+                <div>
+                  Creator: <span className='text-primary-color'>{shorten(data?.creator_address)}</span>
+                </div>
+                <div className='mt-2'>{data?.description}</div>
+              </>
+            ) : tab == 2 ? (
+              <>
+                <div>
+                  License term: <span className='text-primary-color'>{shorten(launchpadInfors?.data?.[0])}</span>
+                </div>
+                <div>
+                  License token ID: <span className='text-primary-color'>{shorten(data?.license_token_id)}</span>
+                </div>
+                <div>
+                  License contract: <span className='text-primary-color'>{shorten(data?.license_token_address)}</span>
+                </div>
+              </>
+            ) : (
+              <>
+                <div>
+                  IP Licensor: <span className='text-primary-color'>{shorten(data?.license?.ip_asset_id)}</span>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -398,7 +461,13 @@ const LaunchPadDetail = () => {
           <>
             <div className='flex flex-col justify-center items-center'>
               <div className='text-primary-color text-[32px] leading-[29px]'>{`You have owned ${quantity} NFTs`}</div>
-              <Image src={data.featured_images[0]} alt='' width={256} height={192} className='border-2 border-[#2F639F] w-[256px] h-[192px] object-cover mt-2' />
+              <Image
+                src={data.featured_images[0]}
+                alt=''
+                width={256}
+                height={192}
+                className='border-2 border-[#2F639F] w-[256px] h-[192px] object-cover mt-2'
+              />
             </div>
           </>
         ) : (
