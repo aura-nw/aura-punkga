@@ -7,12 +7,11 @@ import _ from 'lodash';
 import moment from 'moment';
 import Image from "next/image";
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from 'react-toastify';
 import ic_question_circle from "src/assets/images/icons/ic_question_circle.svg";
 import ic_trash from "src/assets/images/icons/ic_trash.svg";
-import { Context } from 'src/context';
 import { useAccount, useConnect, useReadContract, useWriteContract } from 'wagmi';
 import MainButton from '../../../../components/Button/MainButton';
 import Footer from "../../../../components/Footer";
@@ -51,7 +50,6 @@ function LaunchpadDetail({ preDeploy, postDeploy, publish, unpublish }:
     const router = useRouter()
     const { id } = router.query
     const { address } = useAccount()
-    const { account } = useContext(Context)
     const { connectors, connectAsync } = useConnect()
     const launchpad = useApi<any>(() => getLaunchpad(id as string), true, [])
 
@@ -90,7 +88,7 @@ function LaunchpadDetail({ preDeploy, postDeploy, publish, unpublish }:
                 functionName: 'createNFTSale',
                 args: [
                     [
-                        account?.walletAddress,
+                        address,
                         launchpad.data?.license_token_address, // licenseAddress
                         launchpad.data?.license_token_id, // license token id
                         launchpad.data?.name,
@@ -106,7 +104,7 @@ function LaunchpadDetail({ preDeploy, postDeploy, publish, unpublish }:
                         `${data?.metadataContractURI}/`,
                         `${data?.metadataURIBase}/`,
                         0,
-                        account?.walletAddress
+                        address
                     ]
                 ],
             })
