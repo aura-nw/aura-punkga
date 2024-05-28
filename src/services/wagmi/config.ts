@@ -1,11 +1,8 @@
-import getConfig from 'next/config'
 import { createConfig, http } from 'wagmi'
 import { sepolia } from 'wagmi/chains'
 import { injected, metaMask, walletConnect } from 'wagmi/connectors'
 
-export const getWagmiConfig = () => {
-  console.log('abc')
-  const projectId = getConfig().WALLET_CONNECT_PROJECT_ID
+export const getWagmiConfig = (projectId:string) => {
   return createConfig({
     chains: [sepolia],
     connectors: [walletConnect({ showQrModal: false, projectId }), metaMask(), injected()],

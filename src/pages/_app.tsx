@@ -11,7 +11,7 @@ import getConfig, { setConfig } from 'next/config'
 import { Plus_Jakarta_Sans, Work_Sans } from 'next/font/google'
 import localFont from 'next/font/local'
 import { useRouter } from 'next/router'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -73,12 +73,14 @@ const atlantis = localFont({
 function MyApp(props: AppProps) {
   const [isSetting, setIsSetting] = useState(true)
   const { locale } = useRouter()
+  const [wagmiConfig, setWagmiConfig] = useState<any>()
   useEffect(() => {
     init()
   }, [])
   const init = async () => {
     const { data: config } = await axios.get('/config.json')
     setConfig(config)
+    setWagmiConfig(getWagmiConfig(config.WALLET_CONNECT_PROJECT_ID))
     setIsSetting(false)
   }
   useEffect(() => {
@@ -88,7 +90,6 @@ function MyApp(props: AppProps) {
       moment.locale('en')
     }
   }, [locale])
-  const wagmiConfig = useMemo(getWagmiConfig, [])
   if (isSetting) {
     const Component = props.Component
     return (
