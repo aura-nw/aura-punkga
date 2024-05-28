@@ -92,7 +92,7 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
             if (values.thumbnail instanceof File) {
                 formData.append("thumbnail", values.thumbnail as File, values.thumbnail?.name);
             }
-        
+
             formData.append("creator_address", account?.activeWalletAddress);
             formData.append("name", values.launchpadName);
             formData.append("license_token_address", licenseAddress);
@@ -317,6 +317,9 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
                                         defaultValue={""}
                                         rules={{
                                             required: "Do not leave blank",
+                                            validate: (value) => {
+                                                if (value > nftImages.length) return "Max supply quantity can not greater than NFT image files"
+                                            }
                                         }}
                                         render={({ field, fieldState: { error } }) => (
                                             <FormControl error={!!error}>
