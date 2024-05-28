@@ -46,6 +46,15 @@ const unpublish = async (id: string) => {
   }
 }
 
+const deleteLaunchpad = async (id: string) => {
+  try {
+    const { data } = await privateAxios.delete(`${getConfig().API_URL}/api/rest/users/launchpad/${id}`)
+    return data
+  } catch (error) {
+    return false
+  }
+}
+
 const withApi = (Component: React.FC<any>) => (props: any) => {
 
   return (
@@ -55,6 +64,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       postDeploy={postDeploy}
       publish={publish}
       unpublish={unpublish}
+      deleteLaunchpad={deleteLaunchpad}
     />
   )
 }
