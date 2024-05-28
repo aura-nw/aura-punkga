@@ -115,9 +115,11 @@ const LaunchPadDetail = () => {
     functionName: 'toJson',
     args: [data?.license?.term_id],
   })
-  const licenseData = JSON.parse(`[${(license?.data as string).substring(0, (license?.data as string).length - 1)}]`)
-  const isRemix = licenseData.find((d) => (d.trait_type = 'Derivatives Reciprocal')).value == 'true'
-  const isCommercial = licenseData.find((d) => (d.trait_type = 'Commercial Use')).value == 'true'
+  const licenseData = license?.data
+    ? JSON.parse(`[${(license?.data as string)?.substring(0, (license?.data as string).length - 1)}]`)
+    : undefined
+  const isRemix = licenseData?.find((d) => (d.trait_type = 'Derivatives Reciprocal')).value == 'true'
+  const isCommercial = licenseData?.find((d) => (d.trait_type = 'Commercial Use')).value == 'true'
 
   const mintNFT = async () => {
     try {
