@@ -43,26 +43,31 @@ export default function StoryProvider({ children }: PropsWithChildren) {
   const [transactions, setTransactions] = useState<{ txHash: string; action: string; data: any }[]>([])
 
   const initializeStoryClient = async () => {
-    if (!window.ethereum) return
-    if (!client || !walletAddress) {
-      const [account]: [Address] = await window.ethereum.request({
-        method: 'eth_requestAccounts',
-      })
-      const config = {
-        account: account,
-        transport: custom(window.ethereum),
-        chainId: 'sepolia',
-      } as any
-      const client = StoryClient.newClient(config)
-      setWalletAddress(account)
-      setClient(client)
-    }
-    const chainId = await window.ethereum.request({ method: 'eth_chainId' })
-    if (chainId !== sepoliaChainId) {
-      await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: sepoliaChainId }],
-      })
+    try {
+      
+      if (!window.ethereum) return
+      if (!client || !walletAddress) {
+        const [account]: [Address] = await window.ethereum.request({
+          method: 'eth_requestAccounts',
+        })
+        const config = {
+          account: account,
+          transport: custom(window.ethereum),
+          chainId: 'sepolia',
+        } as any
+        const client = StoryClient.newClient(config)
+        setWalletAddress(account)
+        setClient(client)
+      }
+      const chainId = await window.ethereum.request({ method: 'eth_chainId' })
+      if (chainId !== sepoliaChainId) {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: sepoliaChainId }],
+        })
+      }
+    } catch (error) {
+     console.error(error) 
     }
   }
 
