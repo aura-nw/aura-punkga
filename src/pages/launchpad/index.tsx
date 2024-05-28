@@ -41,11 +41,11 @@ function LaunchPad() {
                 />
                 <div className='border-2 border-[#2F639F] rounded overflow-hidden shadow-[4px_-4px_0px_0px_#FFF_inset] w-[240px] absolute inset-0 h-[180px]'></div>
               </div>
-              <div className='text-[32px] text-primary-color leading-[14px] mt-3'>{item.name}</div>
+              <div className='text-[32px] text-primary-color leading-[22px] mt-3 whitespace-normal overflow-hidden text-ellipsis'>{item.name}</div>
               <div className='text-[24px] leading-[22px] mt-1'>
                 By: <span className='text-primary-color'>{item.creator || ''}</span>
               </div>
-              <div className='mt-3 flex justify-between text-[24px] leading-[22px]'>
+              <div className='mt-2 flex justify-between text-[24px] leading-[22px]'>
                 <div>Item</div>
                 <div className='text-[#00FFFF]'>{item.max_supply}</div>
               </div>
