@@ -4,6 +4,7 @@ import { sepolia } from 'wagmi/chains'
 import { injected, metaMask, walletConnect } from 'wagmi/connectors'
 
 export const getWagmiConfig = () => {
+  console.log('abc')
   const projectId = getConfig().WALLET_CONNECT_PROJECT_ID
   return createConfig({
     chains: [sepolia],

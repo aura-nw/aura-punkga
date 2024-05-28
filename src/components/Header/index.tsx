@@ -46,9 +46,9 @@ export default function Header({ className }: { className?: string }) {
       refreshInterval: 60000,
     }
   )
-  const { address, isConnected } = useAccount()
+  const { isConnected } = useAccount()
   const walletBalance = useBalance({
-    address,
+    address: wallet as any,
   })
   const ref = useRef<any>()
   const divRef = useRef<any>()
@@ -507,7 +507,7 @@ export default function Header({ className }: { className?: string }) {
                 )}
                 <button>{t('switchLanguage')}</button>
               </div>
-              {account?.verified && account?.name && isConnected ? (
+              {account?.verified && account?.name ? (
                 <Dropdown>
                   <DropdownToggle>
                     <MainButton hasAvatar style='secondary' leadingIcon={account?.image || Avatar}>

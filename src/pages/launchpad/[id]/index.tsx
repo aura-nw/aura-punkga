@@ -52,7 +52,7 @@ const LaunchPadDetail = () => {
   const { setData } = useContext(LayoutContext)
   const [quantity, setQuantity] = useState(1)
   const { writeContractAsync } = useWriteContract()
-  const { connectAsync, connectors } = useConnect()
+  const { connectAsync } = useConnect()
   const [screen, setScreen] = useState('confirm')
   const { isConnected, address } = useAccount()
   useEffect(() => {
@@ -305,7 +305,7 @@ const LaunchPadDetail = () => {
                 className='w-[465px] shrink-0 h-[39px] grid place-items-center uppercase text-primary-color pb-2 cursor-pointer'
                 onClick={async () => {
                   if (!isConnected) {
-                    await connectAsync({ connector: connectors.find((c) => c.id == 'io.metamask') })
+                    await connectAsync()
                   }
                   setScreen('confirm')
                   setOpen(true)
