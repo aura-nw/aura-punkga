@@ -37,7 +37,6 @@ let defaultNftImgs = []
 const licenseAddress = "0x1333c78A821c9a576209B01a16dDCEF881cAb6f2"
 
 const minStartDate = new Date();
-minStartDate.setDate(minStartDate.getDate() + 1);
 
 function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updateLaunchpadUnpublish }: LaunchpadFormType) {
     const featuredImgs = launchpad?.featured_images ?? Array.from({ length: 5 });
