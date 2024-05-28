@@ -377,7 +377,7 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
                                                         setStartDate(date)
                                                     }}
                                                     customInput={<CustomInput value={startDate} className={`${!isCreate && !isDraft ? 'bg-[#ABABAB]' : 'bg-white'}`} />}
-                                                    // minDate={minStartDate}
+                                                    minDate={minStartDate}
                                                     disabled={!isCreate && !isDraft}
                                                 />
                                                 <FormHelperText>{validateStartDate}</FormHelperText>

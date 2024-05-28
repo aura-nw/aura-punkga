@@ -40,16 +40,17 @@ export function getFileNameFromURL(url: string) {
     return fileName;
 }
 
-function LaunchpadDetail({ preDeploy, postDeploy, publish, unpublish }:
+function LaunchpadDetail({ preDeploy, postDeploy, publish, unpublish, deleteLaunchpad }:
     {
         preDeploy: (id: string) => any,
         postDeploy: (id: string, txHash: string) => any,
         publish: (id: string) => any,
         unpublish: (id: string) => any,
+        deleteLaunchpad: (id: string) => any,
     }) {
     const router = useRouter()
     const { id } = router.query
-    const { address } = useAccount()
+    const { isConnected, address } = useAccount()
     const { connectors, connectAsync } = useConnect()
     const launchpad = useApi<any>(() => getLaunchpad(id as string), true, [])
 
@@ -76,10 +77,14 @@ function LaunchpadDetail({ preDeploy, postDeploy, publish, unpublish }:
         args: [launchpad.data?.license_token_address, launchpad.data?.license_token_id, data],
     })
 
-    const handleDeploy = async (id: string) => {
-        if (!address) {
+    const handlePreDeploy = async () => {
+        if (!isConnected) {
             await connectAsync({ connector: connectors.find((c) => c.id == 'io.metamask') })
         }
+        setOpenDeploy(true)
+    }
+
+    const handleDeploy = async (id: string) => {
         const data = await preDeploy(id)
         try {
             const hash = await writeContractAsync({
@@ -108,6 +113,7 @@ function LaunchpadDetail({ preDeploy, postDeploy, publish, unpublish }:
                     ]
                 ],
             })
+
             if (hash) {
                 await postDeploy(id, hash)
                 setOpenDeploy(false)
@@ -116,21 +122,35 @@ function LaunchpadDetail({ preDeploy, postDeploy, publish, unpublish }:
             }
         } catch (error) {
             console.log(error);
+            toast(error?.message?.includes('last nft sale should be end') ? 'This license is being used for an ongoing launchpad' : 'Something went wrong', { type: 'error' })
         }
     }
 
     const handlePublish = async (id: string) => {
-        await publish(id)
-        setOpenPublish(false)
-        toast('Published', { type: 'success' })
-        router.push('/profile/launchpad')
+        const res = await publish(id)
+        if (res) {
+            setOpenPublish(false)
+            toast('Published', { type: 'success' })
+            router.push('/profile/launchpad')
+        }
     }
 
     const handleUnpublish = async (id: string) => {
-        unpublish(id)
-        setOpenUnpublish(false)
-        toast('Unpublished', { type: 'success' })
-        router.push('/profile/launchpad')
+        const res = await unpublish(id)
+        if (res) {
+            setOpenUnpublish(false)
+            toast('Unpublished', { type: 'success' })
+            router.push('/profile/launchpad')
+        }
+    }
+
+    const handleDelete = async (id: string) => {
+        const res = await deleteLaunchpad(id)
+        if (res) {
+            setOpenDelete(false)
+            toast('Deleted', { type: 'success' })
+            router.push('/profile/launchpad')
+        }
     }
 
     const genButtons = (status: string) => {
@@ -138,7 +158,9 @@ function LaunchpadDetail({ preDeploy, postDeploy, publish, unpublish }:
             case LaunchpadStatus.DRAFT:
                 return (
                     <>
-                        <MainButton className='flex-1' onClick={() => setOpenDeploy(true)}>{t('Deploy')}</MainButton>
+                        <MainButton className='flex-1' onClick={() => {
+                            handlePreDeploy()
+                        }}>{t('Deploy')}</MainButton>
                         <MainButton className='flex-1' onClick={() => router.push(`/profile/launchpad/${launchpad.data?.id}/edit`)}>{t('Edit')}</MainButton>
                         <MainButton
                             style='secondary'
@@ -156,7 +178,7 @@ function LaunchpadDetail({ preDeploy, postDeploy, publish, unpublish }:
                                     </div>
                                     <p className='text-sm font-normal'>After deploying, only the description and images can be edited</p>
                                 </div>
-                                <MainButton className='px-8' onClick={() => handleDeploy(id as string)}>{t('Confirm')}</MainButton>
+                                <MainButton className='px-8' loading={isPending} onClick={() => handleDeploy(id as string)}>{t('Confirm')}</MainButton>
                             </div>
                         </Modal>
                         <Modal open={openDelete} setOpen={() => setOpenDelete(false)}>
@@ -169,7 +191,7 @@ function LaunchpadDetail({ preDeploy, postDeploy, publish, unpublish }:
                                     </div>
                                     <p className='text-sm font-normal'>This process is irreversible.</p>
                                 </div>
-                                <MainButton className='px-8' onClick={() => { console.log(123) }}>{t('Confirm')}</MainButton>
+                                <MainButton className='px-8' onClick={() => handleDelete(id as string)}>{t('Confirm')}</MainButton>
                             </div>
                         </Modal>
                     </>
