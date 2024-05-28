@@ -33,10 +33,12 @@ function RegisterIPAssets() {
     const { client, walletAddress, txLoading, mintNFT, setTxHash, setTxLoading, setTxName, addTransaction } = useStory()
 
     const registerExistingNFT = async (tokenId: string, nftContract: Address) => {
+      console.log(client)
         if (!client) return
         setTxLoading(true)
         setTxName('Registering an NFT as an IP Asset...')
         try {
+          console.log(client.ipAsset)
         const response = await (client.ipAsset as any).register({
             nftContract,
             tokenId,
