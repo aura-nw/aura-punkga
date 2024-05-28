@@ -441,7 +441,6 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
                                         <FormControl error={!!error}>
                                             <textarea
                                                 {...field}
-                                                value={launchpad?.description}
                                                 placeholder={t('Enter a description')}
                                                 rows={4}
                                                 disabled={!isCreate && isPublished}
