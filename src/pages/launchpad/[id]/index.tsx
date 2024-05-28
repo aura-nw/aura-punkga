@@ -15,6 +15,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import useSWR from 'swr'
 import { useAccount, useBalance, useConnect, useReadContract, useWriteContract } from 'wagmi'
 import BackButton from 'src/components/pages/launchpad/assets/back-button.png'
+import BackButton2 from 'src/components/pages/launchpad/assets/back-button-2.png'
 import Backdrop3 from 'src/components/pages/launchpad/assets/backdrop-3.png'
 import Backdrop7 from 'src/components/pages/launchpad/assets/backdrop-7.png'
 import Backdrop8 from 'src/components/pages/launchpad/assets/backdrop-8.png'
@@ -40,6 +41,7 @@ export default function Page(props) {
   return <LaunchPadDetail />
 }
 const LaunchPadDetail = () => {
+  const router = useRouter()
   const [tab, setTab] = useState(1)
   const [open, setOpen] = useState(false)
   const [hash, setHash] = useState('')
@@ -167,6 +169,7 @@ const LaunchPadDetail = () => {
   return (
     <>
       <div className='flex flex-col gap-[18px] text-2xl leading-[22px]'>
+        <Image src={BackButton2} alt='' onClick={() => router.back()} className='cursor-pointer -mb-5'/>
         <div>
           <div className='flex items-center gap-4'>
             <div className='text-5xl text-primary-color leading-[43px] uppercase'>{data.name}</div>
