@@ -34,6 +34,7 @@ type LaunchpadFormType = {
 let defaultFeatureImgs = []
 let newFeatureImgs = []
 let defaultNftImgs = []
+const licenseAddress = "0x1333c78A821c9a576209B01a16dDCEF881cAb6f2"
 
 const minStartDate = new Date();
 minStartDate.setDate(minStartDate.getDate() + 1);
@@ -56,6 +57,8 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
     const [validateFeatImg, setValidateFeatImg] = useState('')
     const [validateNFTImgs, setValidateNFTImgs] = useState('')
     const [minEndDate, setMinEndDate] = useState<Date | null>();
+    const [isLoading, setIsLoading] = useState<boolean>()
+
 
     const featuredImgsValues = watch(Array.from({ length: 5 }, (_, index) => `featured-images-${index + 1}`));
     const handleSubmitForm = async () => {
@@ -84,15 +87,15 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
             if (isInvalid) {
                 return
             }
-
+            setIsLoading(true)
             const formData = new FormData();
             if (values.thumbnail instanceof File) {
                 formData.append("thumbnail", values.thumbnail as File, values.thumbnail?.name);
             }
-
-            formData.append("creator_address", account?.walletAddress);
+        
+            formData.append("creator_address", account?.activeWalletAddress);
             formData.append("name", values.launchpadName);
-            formData.append("license_token_address", values.licenseAddress);
+            formData.append("license_token_address", licenseAddress);
             formData.append("license_token_id", values.licenseId);
             formData.append("mint_price", BigNumber(values.mintPrice || 0).multipliedBy(BigNumber(10).pow(18)).toString());
             formData.append("max_supply", values.maxSupply);
@@ -130,6 +133,7 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
                         await updateLaunchpadUnpublish(launchpad?.id, formData)
                     }
                 }
+                setIsLoading(false)
                 toast(launchpad ? 'Saved' : 'Created', { type: 'success' })
                 router.push('/profile/launchpad')
             } catch (error) {
@@ -187,7 +191,6 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
     useEffect(() => {
         if (launchpad) {
             setValue('launchpadName', launchpad?.name)
-            setValue('licenseAddress', launchpad?.license_token_address)
             setValue('licenseId', launchpad?.license_token_id)
             setValue('mintPrice', BigNumber(launchpad.mint_price || 0).div(BigNumber(10).pow(18)))
             setValue('maxSupply', launchpad?.max_supply)
@@ -252,29 +255,6 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
                                                     disabled={!isCreate && !isDraft}
                                                     size='sm'
                                                     placeholder={t('Enter collection name')}
-                                                />
-                                                <FormHelperText>{error?.message}</FormHelperText>
-                                            </FormControl>
-                                        )}
-                                    />
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <LabelInput>License address</LabelInput>
-                                    <Controller
-                                        name="licenseAddress"
-                                        control={control}
-                                        defaultValue={""}
-                                        rules={{
-                                            required: "Do not leave blank",
-                                        }}
-                                        render={({ field, fieldState: { error } }) => (
-                                            <FormControl error={!!error}>
-                                                <TextField
-                                                    {...field}
-                                                    className={`h-10 ${!isCreate && !isDraft ? 'bg-[#ABABAB]' : ''}`}
-                                                    disabled={!isCreate && !isDraft}
-                                                    size='sm'
-                                                    placeholder={t('Enter an address')}
                                                 />
                                                 <FormHelperText>{error?.message}</FormHelperText>
                                             </FormControl>
@@ -443,10 +423,9 @@ function LaunchpadForm({ launchpad, createLaunchpad, updateLaunchpadDraft, updat
                                     onClick={() => router.push('/profile/launchpad')}>
                                     {t('Cancel')}
                                 </MainButton>
-                                <MainButton className='flex-1' onClick={handleSubmitForm}>{t(`${isCreate ? 'Create' : 'Save'}`)}</MainButton>
+                                <MainButton className='flex-1' loading={isLoading} onClick={handleSubmitForm}>{t(`${isCreate ? 'Create' : 'Save'}`)}</MainButton>
                             </div>
                         </div>
-
 
                         <div className='flex flex-col flex-1 gap-10'>
                             <div className="flex flex-col gap-2">
