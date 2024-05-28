@@ -2,7 +2,6 @@ import moment from 'moment'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { createContext, useContext, useState } from 'react'
 import Backdrop3 from 'src/components/pages/launchpad/assets/backdrop-3.png'
 import LeftButton from 'src/components/pages/launchpad/assets/left.png'
@@ -12,6 +11,7 @@ import { ModalContext } from 'src/context/modals'
 import { getAllLaunchPad } from 'src/services'
 import { formatNumber, shorten } from 'src/utils'
 import 'swiper/css'
+import { Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import useSWR from 'swr'
 import { useAccount, useBalance } from 'wagmi'
@@ -27,15 +27,14 @@ import BalanceBackdrop from '../assets/balance-backdrop.png'
 import ConnectWalletButton from '../assets/connect-wallet-button.png'
 import DummyImage from '../assets/dummy-image.png'
 import Logo from '../assets/logo.png'
-import { Navigation } from 'swiper/modules'
 import Mewo from '../assets/mewo.png'
+import { Context } from 'src/context'
 export const LayoutContext = createContext<{ setData: any }>({
   setData: undefined,
 })
 export default function Layout({ children }: any) {
-  const router = useRouter()
   const { data: allLaunchPad } = useSWR('get_all_launchpad', () => getAllLaunchPad())
-  const { setSignInOpen, setMigrateWalletOpen } = useContext(ModalContext)
+  const { setSignInOpen } = useContext(ModalContext)
   const [data, setData] = useState<any>()
   const { address } = useAccount()
   const walletBalance = useBalance({
