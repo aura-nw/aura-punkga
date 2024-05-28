@@ -69,7 +69,7 @@ const LaunchPadDetail = () => {
           <div
             style={{ backgroundImage: `url(${Backdrop3.src})`, backgroundSize: '100% 100%' }}
             className='px-[13px] py-[14px] w-[360px] h-[104px] flex flex-col gap-1 text-2xl leading-[22px]'>
-            <div className='text-primary-color'>{data.name}</div>
+            <div className='text-primary-color whitespace-normal overflow-hidden text-ellipsis'>{data.name}</div>
             <div className=' flex justify-between'>
               <div>Start:</div>
               <div className='text-primary-color'>{moment(data.start_date).format('DD MMM yyyy')}</div>
@@ -169,10 +169,12 @@ const LaunchPadDetail = () => {
   return (
     <>
       <div className='flex flex-col gap-[18px] text-2xl leading-[22px]'>
-        <Image src={BackButton2} alt='' onClick={() => router.back()} className='cursor-pointer -mb-5'/>
+        <Image src={BackButton2} alt='' onClick={() => router.back()} className='cursor-pointer -mb-5' />
         <div>
           <div className='flex items-center gap-4'>
-            <div className='text-5xl text-primary-color leading-[43px] uppercase'>{data.name}</div>
+            <div className='text-5xl text-primary-color leading-[43px] uppercase whitespace-normal overflow-hidden text-ellipsis'>
+              {data.name}
+            </div>
             {moment().isAfter(data.start_date) && moment().isBefore(data.end_date) ? (
               <Image src={LiveChip} alt='' />
             ) : moment().isBefore(data.start_date) ? (
