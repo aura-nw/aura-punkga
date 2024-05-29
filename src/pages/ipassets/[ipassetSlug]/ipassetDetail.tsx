@@ -22,10 +22,7 @@ import moment from 'moment'
 import { Context } from 'src/context'
 import { useStory } from 'src/context/story'
 import { Address } from 'viem/accounts'
-import { http, createWalletClient, createPublicClient } from 'viem';
-import { useReadContract, useReadContracts } from 'wagmi'
-import { licenseContractAbi } from '../contract-abi'
-const contractAddress = '0x1333c78A821c9a576209B01a16dDCEF881cAb6f2';
+import { http} from 'viem';
 import { waitForTransactionReceipt } from '@wagmi/core'
 import { sepolia, mainnet } from 'viem/chains'
 import { createConfig } from '@wagmi/core'
@@ -163,20 +160,20 @@ function IPAssetDetail({ }) {
                     break;
             }
             // Attach License Terms to IP
-            if (licenseList.every(item => item.term_id !== registerTermResponse.licenseTermsId.toString())) {
-                setTxLoading(true);
-                setTxName("Attaching terms to an IP Asset...");
-                setProcessText("Attaching terms to IP Asset...");
-                const attachLicenseresponse = await client.license.attachLicenseTerms({
-                    licenseTermsId: registerTermResponse.licenseTermsId,
-                    ipId: slug as Address,
-                    txOptions: { waitForTransaction: true },
-                });
-                console.log(`Attached License Terms to IP at tx hash ${attachLicenseresponse.txHash}`);
-                setTxLoading(false);
-                setTxHash(attachLicenseresponse.txHash);
-                addTransaction(attachLicenseresponse.txHash, "Attach Terms", {});
-            }
+            // if (licenseList.every(item => item.term_id !== registerTermResponse.licenseTermsId.toString())) {
+            //     setTxLoading(true);
+            //     setTxName("Attaching terms to an IP Asset...");
+            //     setProcessText("Attaching terms to IP Asset...");
+            //     const attachLicenseresponse = await client.license.attachLicenseTerms({
+            //         licenseTermsId: registerTermResponse.licenseTermsId,
+            //         ipId: slug as Address,
+            //         txOptions: { waitForTransaction: true },
+            //     });
+            //     console.log(`Attached License Terms to IP at tx hash ${attachLicenseresponse.txHash}`);
+            //     setTxLoading(false);
+            //     setTxHash(attachLicenseresponse.txHash);
+            //     addTransaction(attachLicenseresponse.txHash, "Attach Terms", {});
+            // }
 
 
             // Mint License
