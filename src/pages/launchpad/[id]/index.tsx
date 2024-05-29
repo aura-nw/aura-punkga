@@ -176,6 +176,7 @@ const LaunchPadDetail = () => {
   if (!data) return <></>
   const isSoldOut = (+(minted.data as BigInt)?.toString() || 0) >= +data.max_supply
   const isOutOfQuota = (+(userBuyCount.data as BigInt)?.toString() || 0) >= +data.max_mint_per_address
+  const remaining = data?.max_mint_per_address - +(userBuyCount.data as BigInt)?.toString()
   return (
     <>
       <div className='flex flex-col gap-[18px] text-2xl leading-[22px]'>
@@ -301,9 +302,9 @@ const LaunchPadDetail = () => {
                   className='w-full grid place-items-center pb-1 cursor-pointer'
                   onClick={() =>
                     setQuantity((prev) =>
-                      prev < data.max_mint_per_address && prev < +userBuyCount.data.toString()
+                      prev < data.max_mint_per_address && prev < remaining
                         ? prev + 1
-                        : Math.min(data.max_mint_per_address, +userBuyCount.data.toString())
+                        : Math.min(data.max_mint_per_address || 1, remaining || 1)
                     )
                   }>
                   <svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18' fill='none'>
