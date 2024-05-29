@@ -151,8 +151,8 @@ const LaunchPadDetail = () => {
           BigInt(quantity * data.mint_price),
         ],
       })
-      await minted.refetch()
       await userBuyCount.refetch()
+      await minted.refetch()
       setHash(hash)
       setScreen('success')
       setLoading(false)
