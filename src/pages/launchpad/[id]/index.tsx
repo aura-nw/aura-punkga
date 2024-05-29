@@ -121,13 +121,13 @@ const LaunchPadDetail = () => {
   })
   const licenseTemplate = useReadContract({
     abi: PILicenseTemplateAbi,
-    address: '0x889A7921c302Ebb3fb4E49Dd808bA50838ce574f',
+    address: '0x260B6CB6284c89dbE660c0004233f7bB99B5edE7',
     functionName: 'toJson',
     args: [data?.license?.term_id],
   })
   const licenseToken = useReadContract({
     abi: licenseTokenAbi,
-    address: '0xE6B149Bde9CFA2FE4C1684e53e652408B474EA9A',
+    address: '0x1333c78A821c9a576209B01a16dDCEF881cAb6f2',
     functionName: 'getLicensorIpId',
     args: [data?.license_token_id],
   })
