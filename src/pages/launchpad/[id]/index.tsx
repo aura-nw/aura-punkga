@@ -12,7 +12,7 @@ import { shorten } from 'src/utils'
 import 'swiper/css'
 import { Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import { useAccount, useBalance, useConnect, useReadContract, useWriteContract } from 'wagmi'
 import BackButton from 'src/components/pages/launchpad/assets/back-button.png'
 import BackButton2 from 'src/components/pages/launchpad/assets/back-button-2.png'
@@ -27,6 +27,7 @@ import GreenBlock from 'src/components/pages/launchpad/assets/green-block.svg'
 import LiveChip from 'src/components/pages/launchpad/assets/live-chip.png'
 import MintAmount from 'src/components/pages/launchpad/assets/mint-amount.svg'
 import MintButton from 'src/components/pages/launchpad/assets/mint-button.svg'
+import MintSoldOutButton from 'src/components/pages/launchpad/assets/mint-sold-out-button.png'
 import RedBlock from 'src/components/pages/launchpad/assets/red-block.svg'
 import SwiperNav from 'src/components/pages/launchpad/assets/swiper-nav.svg'
 import UpcomingChip from 'src/components/pages/launchpad/assets/upcoming-chip.png'
@@ -105,6 +106,12 @@ const LaunchPadDetail = () => {
     functionName: 'licenseSalePhase',
     args: [data?.license_token_address, data?.license_token_id],
   })
+  const userBuyCount = useReadContract({
+    abi: storyLaunchpadAbi,
+    address: '0x2f6646daD93454f681f7C0EdC2Df82931473ddB5',
+    functionName: 'userBuyCount',
+    args: [address, data?.license_token_address, data?.license_token_id, licenseSalePhase?.data],
+  })
   const launchpadInfors = useReadContract({
     abi: storyLaunchpadAbi,
     address: '0x2f6646daD93454f681f7C0EdC2Df82931473ddB5',
@@ -139,6 +146,7 @@ const LaunchPadDetail = () => {
       })
       setHash(hash)
       setScreen('success')
+      mutate({ key: 'fetch_launchpad', id: query.id })
     } catch (error) {
       setScreen('error')
       console.log(error)
@@ -166,6 +174,8 @@ const LaunchPadDetail = () => {
     }
   }
   if (!data) return <></>
+  const isSoldOut = (+(minted.data as BigInt)?.toString() || 0) >= +data.max_supply
+  const isOutOfQuota = (+(userBuyCount.data as BigInt)?.toString() || 0) >= +data.max_mint_per_address
   return (
     <>
       <div className='flex flex-col gap-[18px] text-2xl leading-[22px]'>
@@ -273,25 +283,34 @@ const LaunchPadDetail = () => {
               }`}>
               <div
                 style={{ backgroundImage: `url(${MintAmount.src})`, backgroundSize: '100% 100%' }}
-                className='flex text-primary-color w-full'>
+                className={`flex ${
+                  isSoldOut || isOutOfQuota ? 'text-[#ababab] pointer-events-none' : 'text-primary-color'
+                } w-full`}>
                 <div
                   className='w-full h-full grid place-items-center pb-1 cursor-pointer'
                   onClick={() => setQuantity((prev) => (prev > 1 ? prev - 1 : 1))}>
                   <svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18' fill='none'>
-                    <path d='M17.25 8.25H0.75V9.75H17.25V8.25Z' fill='#23FF81' />
+                    <path
+                      d='M17.25 8.25H0.75V9.75H17.25V8.25Z'
+                      fill={isSoldOut || isOutOfQuota ? '#ababab' : '#23FF81'}
+                    />
                   </svg>
                 </div>
                 <div className='w-[72px] shrink-0 grid place-items-center pb-[6px]'>{quantity}</div>
                 <div
                   className='w-full grid place-items-center pb-1 cursor-pointer'
                   onClick={() =>
-                    setQuantity((prev) => (prev < data.max_mint_per_address ? prev + 1 : data.max_mint_per_address))
+                    setQuantity((prev) =>
+                      prev < data.max_mint_per_address && prev < +userBuyCount.data.toString()
+                        ? prev + 1
+                        : Math.min(data.max_mint_per_address, +userBuyCount.data.toString())
+                    )
                   }>
                   <svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18' fill='none'>
                     <g clipPath='url(#clip0_8468_142518)'>
                       <path
                         d='M17.25 8.25V9.75H9.75V17.25H8.25V9.75H0.75V8.25H8.25V0.75H9.75V8.25H17.25Z'
-                        fill='#23FF81'
+                        fill={isSoldOut || isOutOfQuota ? '#ababab' : '#23FF81'}
                       />
                     </g>
                     <defs>
@@ -304,15 +323,18 @@ const LaunchPadDetail = () => {
               </div>
               <div
                 style={{ backgroundImage: `url(${MintButton.src})`, backgroundSize: '100% 100%' }}
-                className='w-[465px] shrink-0 h-[39px] grid place-items-center uppercase text-primary-color pb-2 cursor-pointer'
+                className={`w-[465px] shrink-0 h-[39px] grid place-items-center uppercase ${
+                  isSoldOut || isOutOfQuota ? 'text-[#ABABAB]' : 'text-primary-color'
+                } pb-2 cursor-pointer`}
                 onClick={async () => {
+                  if (isSoldOut || isOutOfQuota) return
                   if (!isConnected) {
                     await connectAsync()
                   }
                   setScreen('confirm')
                   setOpen(true)
                 }}>
-                Mint
+                {isSoldOut ? 'Mint sold out' : isOutOfQuota ? 'Minted' : 'Mint'}
               </div>
             </div>
           </div>
