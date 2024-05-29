@@ -151,9 +151,10 @@ const LaunchPadDetail = () => {
           BigInt(quantity * data.mint_price),
         ],
       })
+      await minted.refetch()
+      await userBuyCount.refetch()
       setHash(hash)
       setScreen('success')
-      mutate({ key: 'fetch_launchpad', id: query.id })
       setLoading(false)
     } catch (error) {
       setLoading(false)
