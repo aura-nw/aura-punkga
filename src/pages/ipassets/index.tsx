@@ -134,7 +134,7 @@ function IPAssets() {
                                                             </div>
                                                         </Tooltip>
                                                     </TableCell>
-                                                    <TableCell style={{ width: '25%' }} align="right">{moment(row.created_at).format('HH:MM - DD/MM/YYYY')}</TableCell>
+                                                    <TableCell style={{ width: '25%' }} align="right">{moment(row.created_at).format('HH:mm - DD/MM/YYYY')}</TableCell>
                                                 </TableRow>
                                             ))
                                         ) : (
