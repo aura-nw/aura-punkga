@@ -159,7 +159,7 @@ export default function Layout({ children }: any) {
                             <div
                               style={{ backgroundImage: `url(${Backdrop3.src})`, backgroundSize: '100% 100%' }}
                               className='px-[13px] py-[14px] w-[360px] h-[104px] flex flex-col gap-1 text-2xl leading-[22px]'>
-                              <div className='text-primary-color'>{launchpad.name}</div>
+                              <div className='text-primary-color overflow-hidden text-ellipsis whitespace-nowrap'>{launchpad.name}</div>
                               <div className=' flex justify-between'>
                                 <div>Start:</div>
                                 <div className='text-primary-color'>
