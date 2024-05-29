@@ -42,7 +42,7 @@ export const Context = createContext<{
   getIPAsset: (user_id: string) => Promise<any>
   registerIPAsset: (user_id: string, nft_token_id: string, nft_contract_address: string, ip_asset_id: string) => Promise<any>
   getLicense: (ip_asset_id: string) => Promise<any>
-  mintLicense: (ip_asset_id: string, license_id: string, license_template_address: string, owner: string, term_id: string) => Promise<any>
+  mintLicense: (licenseData: Array<{ ip_asset_id: string; license_id: string; license_template_address: string; owner: string; term_id: string }>) => Promise<any>
 }>({
   account: undefined,
   wallet: undefined,
@@ -443,24 +443,23 @@ function ContextProvider({ children }: any) {
     }
   }
 
-  const mintLicense = async (ip_asset_id: string, license_id: string, license_template_address: string, owner: string, term_id: string) => {
+  const mintLicense = async (licenseData: Array<{
+    ip_asset_id: string;
+    license_id: string;
+    license_template_address: string;
+    owner: string;
+    term_id: string;
+  }>): Promise<any> => {
     try {
       const res = await privateAxios.post(`${config.API_URL}/api/rest/user/license-token`, {
-        object: {
-          ip_asset_id,
-          license_id,
-          license_template_address,
-          owner,
-          term_id
-        }
-      })
-      return res
-
+        objects: licenseData,
+      });
+      return res;
     } catch (error) {
-      console.log('MintLicense', error)
-      return null
+      console.log('MintLicense', error);
+      return null;
     }
-  }
+  };
   return (
     <Context.Provider
       value={{

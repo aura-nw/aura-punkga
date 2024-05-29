@@ -17,11 +17,18 @@ import OutlineTextField from 'components/Input/TextField/Outline'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { shorten } from 'src/utils'
+import { convertIPFStoHTTP, shorten } from 'src/utils'
 import moment from 'moment'
 import { Context } from 'src/context'
 import { useStory } from 'src/context/story'
 import { Address } from 'viem/accounts'
+import { http, createWalletClient, createPublicClient } from 'viem';
+import { useReadContract, useReadContracts } from 'wagmi'
+import { licenseContractAbi } from '../contract-abi'
+const contractAddress = '0x1333c78A821c9a576209B01a16dDCEF881cAb6f2';
+import { waitForTransactionReceipt } from '@wagmi/core'
+import { sepolia, mainnet } from 'viem/chains'
+import { createConfig } from '@wagmi/core'
 
 export default function Page(props) {
     if (props.justHead) {
@@ -30,22 +37,13 @@ export default function Page(props) {
     return <IPAssetDetail {...props} />
 }
 
-function createData(
-    licenseID: string,
-    licenseTemplateAddress: string,
-    licenseTermId: number,
-    mintDate: number,
-) {
-    return { licenseID, licenseTemplateAddress, licenseTermId, mintDate };
-}
-
-const rows = [
-    createData('ABC123', '0x9bf13fc917BE1fB3220beb5Bb2a0dc58B7a787C7', 12, 1620000000),
-    createData('ABC123', '0x9bf13fc917BE1fB3220beb5Bb2a0dc58B7a787C7', 12, 1620000000),
-    createData('ABC123', '0x9bf13fc917BE1fB3220beb5Bb2a0dc58B7a787C7', 12, 1620000000),
-    createData('ABC123', '0x9bf13fc917BE1fB3220beb5Bb2a0dc58B7a787C7', 12, 1620000000),
-    createData('ABC123', '0x9bf13fc917BE1fB3220beb5Bb2a0dc58B7a787C7', 12, 1620000000),
-];
+const config = createConfig({
+    chains: [mainnet, sepolia],
+    transports: {
+        [mainnet.id]: http(),
+        [sepolia.id]: http(),
+    },
+})
 
 interface Option {
     value: string;
@@ -60,24 +58,29 @@ const options: Option[] = [
 const CurrencyAddress: Address = '0xB132A6B7AE652c974EE1557A3521D53d18F6739f'
 
 function IPAssetDetail({ }) {
+    // const publicClient = createPublicClient({
+    //     chain: 'sepolia',
+    //     transport: http('https://sepolia.infura.io/v3/')
+    // })
     const { account, getIPAsset, mintLicense, getLicense } = useContext(Context)
     const { query } = useRouter()
     const slug = query.ipassetSlug as string
     const router = useRouter()
     const { t } = useTranslation()
-    const { client, walletAddress, txLoading, mintNFT, setTxHash, setTxLoading, setTxName, addTransaction } = useStory()
+    const { client, walletAddress, txLoading, mintNFT, setTxHash, setTxLoading, setTxName, addTransaction, initializeStoryClient } = useStory()
     const [isViewLicense, setIsViewLicense] = useState(true)
     const [ipAssetImage, setIPAssetImage] = useState<string>('');
     const [processText, setProcessText] = useState<string>('');
-    const [licenseList, setLicenseList] = useState([])
+    const [licenseList, setLicenseList] = useState([]);
     const [nftInfo, setNftInfo] = useState<any>({});
     const [selectedOption, setSelectedOption] = useState<Option>(options[1]);
     const handleOptionSelect = (option: Option) => {
         setSelectedOption(option);
     };
     const [uriLicenseTerms, setUriLicenseTerms] = useState('')
-    const [licenseAmount, setLicenseAmount] = useState<number>()
+    const [licenseAmount, setLicenseAmount] = useState<number>(0)
     const [commercialRevenueShare, setCommercialRevenueShare] = useState<number>()
+    const [tokenIds, setTokenIds] = useState<any>()
 
     const fetchIPAsset = async () => {
         try {
@@ -89,8 +92,9 @@ function IPAssetDetail({ }) {
                 },
             });
             const data = await res.json();
-            const tokenUriData = JSON.parse(data.data.nftMetadata.tokenUri);
-            setIPAssetImage(tokenUriData.image)
+            const nftImg = data.data.nftMetadata.imageUrl ? JSON.parse(data.data.nftMetadata.imageUrl) : data.data.nftMetadata.tokenUri;
+            const nftImgUrl = convertIPFStoHTTP(nftImg)
+            setIPAssetImage(nftImgUrl)
         } catch (error) {
             console.error('Error fetching IP Asset:', error);
         }
@@ -109,7 +113,7 @@ function IPAssetDetail({ }) {
             setLicenseList(data.data.license_tokens)
         });
     }, [account, isViewLicense]);
-    
+
     const handleMintLicense = async () => {
         if (!client) return;
 
@@ -196,20 +200,58 @@ function IPAssetDetail({ }) {
             });
             if (mintLicenseresponse.txHash) {
                 try {
-                    setProcessText("Minted License Successfully ✔️");
-                    mintLicense(
-                        slug,
-                        mintLicenseresponse.licenseTokenId.toString(),
-                        '0x260B6CB6284c89dbE660c0004233f7bB99B5edE7',
-                        account.id,
-                        registerTermResponse.licenseTermsId.toString(),
-                    );
+                    // Wait for the transaction receipt
+                    const receipt = await waitForTransactionReceipt(config, {
+                        chainId: sepolia.id,
+                        hash: mintLicenseresponse.txHash as `0x${string}`,
+                    });
 
-                } catch (error) { console.log(error); }
-                // wait for 1s before continuing
-                await new Promise((resolve) => setTimeout(resolve, 1000));
-                setProcessText("");
-                setIsViewLicense(true);
+                    // Extract the token IDs from the logs
+                    const tokenIds = receipt?.logs
+                        ?.filter(
+                            (log) =>
+                                log.topics[0] ===
+                                '0x14fc68fa3d99c92bb4159f5ae1ddd4bbf7b874931534c08ac40467d7ece273d6'
+                        )
+                        .map((log) => Number(log.topics[3]?.toString()));
+
+                    const outputArray = tokenIds.map((num) => ({ term_id: num }));
+                    setTokenIds(outputArray);
+
+                    // Set the process text
+                    setProcessText("Minted License Successfully ✔️");
+
+                    // Prepare the licenseInfo object
+                    const licenseInfo = [
+                        {
+                            ip_asset_id: slug,
+                            license_template_address: '0x260B6CB6284c89dbE660c0004233f7bB99B5edE7',
+                            owner: account.id,
+                            term_id: registerTermResponse.licenseTermsId.toString(),
+                        },
+                    ];
+
+                    // Prepare the mintLicenseParam array
+                    const mintLicenseParam = [];
+                    for (const termIdObj of tokenIds) {
+                        mintLicenseParam.push({
+                            ip_asset_id: licenseInfo[0].ip_asset_id,
+                            license_id: termIdObj.toString(),
+                            license_template_address: licenseInfo[0].license_template_address,
+                            owner: licenseInfo[0].owner,
+                            term_id: licenseInfo[0].term_id,
+                        });
+                    }
+
+                    // Wait for 5 seconds before calling mintLicense
+                    await new Promise((resolve) => setTimeout(resolve, 5000));
+                    await mintLicense(mintLicenseParam)
+
+                    // Set the isViewLicense flag
+                    setIsViewLicense(true);
+                } catch (error) {
+                    console.error('Error:', error);
+                }
             }
         } catch (error) {
             console.error('Error minting license:', error);
@@ -276,7 +318,7 @@ function IPAssetDetail({ }) {
                                                 <div className='text-xs'>IPAsset ID:</div>
                                                 <div className='text-sm text-[#2684FC]'>
                                                     <Tooltip title={slug} placement="top">
-                                                    <div className='text-sm text-[#2684FC]'>{shorten(slug)}</div>
+                                                        <div className='text-sm text-[#2684FC]'>{shorten(slug)}</div>
                                                     </Tooltip>
                                                 </div>
                                             </div>
