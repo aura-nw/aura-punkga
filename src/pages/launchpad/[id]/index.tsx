@@ -5,17 +5,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import Countdown from 'react-countdown'
-import { getLaunchPadDetail, getLicenseTerm } from 'src/services'
-import { abi } from 'src/services/abi'
-import { abi as usdtAbi } from 'src/services/abi/usdt'
-import { shorten } from 'src/utils'
-import 'swiper/css'
-import { Navigation } from 'swiper/modules'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import useSWR, { mutate } from 'swr'
-import { useAccount, useBalance, useConnect, useReadContract, useWriteContract } from 'wagmi'
-import BackButton from 'src/components/pages/launchpad/assets/back-button.png'
 import BackButton2 from 'src/components/pages/launchpad/assets/back-button-2.png'
+import BackButton from 'src/components/pages/launchpad/assets/back-button.png'
 import Backdrop3 from 'src/components/pages/launchpad/assets/backdrop-3.png'
 import Backdrop7 from 'src/components/pages/launchpad/assets/backdrop-7.png'
 import Backdrop8 from 'src/components/pages/launchpad/assets/backdrop-8.png'
@@ -27,7 +18,6 @@ import GreenBlock from 'src/components/pages/launchpad/assets/green-block.svg'
 import LiveChip from 'src/components/pages/launchpad/assets/live-chip.png'
 import MintAmount from 'src/components/pages/launchpad/assets/mint-amount.svg'
 import MintButton from 'src/components/pages/launchpad/assets/mint-button.svg'
-import MintSoldOutButton from 'src/components/pages/launchpad/assets/mint-sold-out-button.png'
 import RedBlock from 'src/components/pages/launchpad/assets/red-block.svg'
 import SwiperNav from 'src/components/pages/launchpad/assets/swiper-nav.svg'
 import UpcomingChip from 'src/components/pages/launchpad/assets/upcoming-chip.png'
@@ -35,8 +25,18 @@ import ViewTransactionButton from 'src/components/pages/launchpad/assets/view-tr
 import YellowBlock from 'src/components/pages/launchpad/assets/yellow-block.svg'
 import Layout, { LayoutContext } from 'src/components/pages/launchpad/components/layout'
 import Modal from 'src/components/pages/launchpad/components/modal'
-import { storyLaunchpadAbi } from 'src/services/abi/storyLaunchpad'
+import { getLaunchPadDetail } from 'src/services'
+import { abi } from 'src/services/abi'
 import { PILicenseTemplateAbi } from 'src/services/abi/PILicenseTemplate'
+import { licenseTokenAbi } from 'src/services/abi/licenseToken'
+import { storyLaunchpadAbi } from 'src/services/abi/storyLaunchpad'
+import { abi as usdtAbi } from 'src/services/abi/usdt'
+import { shorten } from 'src/utils'
+import 'swiper/css'
+import { Navigation } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import useSWR, { mutate } from 'swr'
+import { useAccount, useBalance, useConnect, useReadContract, useWriteContract } from 'wagmi'
 export default function Page(props) {
   if (props.justHead) return <></>
   return <LaunchPadDetail />
@@ -118,14 +118,20 @@ const LaunchPadDetail = () => {
     functionName: 'LaunchpadInfors',
     args: [data?.license_token_address, data?.license_token_id, licenseSalePhase?.data],
   })
-  const license = useReadContract({
+  const licenseTemplate = useReadContract({
     abi: PILicenseTemplateAbi,
     address: '0x889A7921c302Ebb3fb4E49Dd808bA50838ce574f',
     functionName: 'toJson',
     args: [data?.license?.term_id],
   })
-  const licenseData = license?.data
-    ? JSON.parse(`[${(license?.data as string)?.substring(0, (license?.data as string).length - 1)}]`)
+  const licenseToken = useReadContract({
+    abi: licenseTokenAbi,
+    address: '0xE6B149Bde9CFA2FE4C1684e53e652408B474EA9A',
+    functionName: 'getLicensorIpId',
+    args: [data?.license_token_id],
+  })
+  const licenseData = licenseTemplate?.data
+    ? JSON.parse(`[${(licenseTemplate?.data as string)?.substring(0, (licenseTemplate?.data as string).length - 1)}]`)
     : undefined
   const isRemix = licenseData?.find((d) => (d.trait_type = 'Derivatives Reciprocal')).value == 'true'
   const isCommercial = licenseData?.find((d) => (d.trait_type = 'Commercial Use')).value == 'true'
@@ -418,7 +424,7 @@ const LaunchPadDetail = () => {
                   </span>
                 </div>
                 <div>
-                  License token ID: <span className='text-primary-color'>{shorten(data?.license_token_id)}</span>
+                  License token ID: <span className='text-primary-color'>{data?.license_token_id}</span>
                 </div>
                 <div>
                   License contract: <span className='text-primary-color'>{shorten(data?.license_token_address)}</span>
@@ -427,7 +433,7 @@ const LaunchPadDetail = () => {
             ) : (
               <>
                 <div>
-                  IP Licensor: <span className='text-primary-color'>{shorten(data?.license?.ip_asset_id)}</span>
+                  IP Licensor: <span className='text-primary-color'>{shorten(licenseToken?.data as string)}</span>
                 </div>
               </>
             )}
