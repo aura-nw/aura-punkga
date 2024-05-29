@@ -52,6 +52,7 @@ const LaunchPadDetail = () => {
   })
   const { setData } = useContext(LayoutContext)
   const [quantity, setQuantity] = useState(1)
+  const [loading, setLoading] = useState(false)
   const { writeContractAsync } = useWriteContract()
   const { connectAsync } = useConnect()
   const [screen, setScreen] = useState('confirm')
@@ -153,13 +154,17 @@ const LaunchPadDetail = () => {
       setHash(hash)
       setScreen('success')
       mutate({ key: 'fetch_launchpad', id: query.id })
+      setLoading(false)
     } catch (error) {
+      setLoading(false)
       setScreen('error')
       console.log(error)
     }
   }
   const mintHandler = async () => {
     try {
+      if (loading) return
+      setLoading(true)
       if ((allowance.data as any) < quantity * data.mint_price) {
         await writeContractAsync({
           address: '0x3C93715FdCd6E0B043BD1ae7e1e437cA6dc391C6',
@@ -175,6 +180,7 @@ const LaunchPadDetail = () => {
         mintNFT()
       }
     } catch (error) {
+      setLoading(false)
       setScreen('error')
       console.log(error)
     }

@@ -159,7 +159,9 @@ export default function Layout({ children }: any) {
                             <div
                               style={{ backgroundImage: `url(${Backdrop3.src})`, backgroundSize: '100% 100%' }}
                               className='px-[13px] py-[14px] w-[360px] h-[104px] flex flex-col gap-1 text-2xl leading-[22px]'>
-                              <div className='text-primary-color overflow-hidden text-ellipsis whitespace-nowrap'>{launchpad.name}</div>
+                              <div className='text-primary-color overflow-hidden text-ellipsis whitespace-nowrap'>
+                                {launchpad.name}
+                              </div>
                               <div className=' flex justify-between'>
                                 <div>Start:</div>
                                 <div className='text-primary-color'>
@@ -191,13 +193,13 @@ export default function Layout({ children }: any) {
           <div
             style={{ backgroundImage: `url(${Backdrop5.src})`, backgroundSize: '100% 100%' }}
             className='px-[26px] py-[18px] flex flex-col gap-4 w-[1000px]'>
-            <Link
-              href='https://launch.punkga.me/'
-              target='_blank'
+            <div
               style={{ backgroundImage: `url(${Backdrop4.src})`, backgroundSize: '100% 100%' }}
               className='px-[28px] pt-[8px] pb-[8px] w-[910px]'>
-              <Image src={AboutusButton} alt='' className='w-[156px] h-auto cursor-pointer' />
-            </Link>
+              <Link href='https://launch.punkga.me/' target='_blank' className='w-fit block'>
+                <Image src={AboutusButton} alt='' className='w-[156px] h-auto cursor-pointer' />
+              </Link>
+            </div>
             <div
               style={{ backgroundImage: `url(${Backdrop6.src})`, backgroundSize: '100% 100%' }}
               className='w-[910px] h-[544px] py-6 px-7 flex flex-col gap-4'>
