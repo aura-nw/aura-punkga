@@ -14,7 +14,7 @@ import 'swiper/css'
 import { Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import useSWR from 'swr'
-import { useAccount, useBalance } from 'wagmi'
+import { useAccount, useBalance, useDisconnect } from 'wagmi'
 import AboutusButton from '../assets/about-us.png'
 import AddressBackdrop from '../assets/address-backdrop.png'
 import Backdrop1 from '../assets/backdrop-1.png'
@@ -23,6 +23,7 @@ import Backdrop4 from '../assets/backdrop-4.png'
 import Backdrop5 from '../assets/backdrop-5.png'
 import Backdrop6 from '../assets/backdrop-6.png'
 import Backdrop from '../assets/backdrop.png'
+import DisconnectButton from '../assets/disconnect-button.png'
 import BalanceBackdrop from '../assets/balance-backdrop.png'
 import ConnectWalletButton from '../assets/connect-wallet-button.png'
 import DummyImage from '../assets/dummy-image.png'
@@ -36,7 +37,9 @@ export default function Layout({ children }: any) {
   const { data: allLaunchPad } = useSWR('get_all_launchpad', () => getAllLaunchPad())
   const { setSignInOpen } = useContext(ModalContext)
   const [data, setData] = useState<any>()
+  const [open, setOpen] = useState<boolean>(false)
   const { address } = useAccount()
+  const { disconnect } = useDisconnect()
   const walletBalance = useBalance({
     address,
   })
@@ -66,18 +69,31 @@ export default function Layout({ children }: any) {
             <div
               style={{ backgroundImage: `url(${Backdrop1.src})`, backgroundSize: '100% 100%' }}
               className='px-[26px] pt-[18px] pb-[16px] flex gap-3'>
-              <Image src={Logo} alt='' className='w-[148px] h-auto' />
+              <Link href='/launchpad'>
+                <Image src={Logo} alt='' className='w-[148px] h-auto' />
+              </Link>
               <div className='flex flex-col gap-[4px]'>
                 {address ? (
-                  <div
-                    style={{
-                      backgroundImage: `url(${AddressBackdrop.src})`,
-                      backgroundSize: '100% 100%',
-                      textShadow: '1px 1.5px 0px #FFF',
-                    }}
-                    className='w-[200px] h-[37px] grid place-items-center text-black text-2xl pb-1'>
-                    {shorten(address, 4, 4)}
-                  </div>
+                  <>
+                    <div
+                      onClick={() => setOpen(!open)}
+                      style={{
+                        backgroundImage: `url(${AddressBackdrop.src})`,
+                        backgroundSize: '100% 100%',
+                        textShadow: '1px 1.5px 0px #FFF',
+                      }}
+                      className='w-[200px] h-[37px] grid place-items-center text-black text-2xl pb-1 relative cursor-pointer'>
+                      {shorten(address, 4, 4)}
+                      {open && (
+                        <Image
+                          src={DisconnectButton}
+                          alt=''
+                          className='w-[200px] h-auto cursor-pointer absolute top-full -mt-1'
+                          onClick={() => disconnect()}
+                        />
+                      )}
+                    </div>
+                  </>
                 ) : (
                   <Image
                     src={ConnectWalletButton}
@@ -145,7 +161,9 @@ export default function Layout({ children }: any) {
                             <div
                               style={{ backgroundImage: `url(${Backdrop3.src})`, backgroundSize: '100% 100%' }}
                               className='px-[13px] py-[14px] w-[360px] h-[104px] flex flex-col gap-1 text-2xl leading-[22px]'>
-                              <div className='text-primary-color'>{launchpad.name}</div>
+                              <div className='text-primary-color overflow-hidden text-ellipsis whitespace-nowrap'>
+                                {launchpad.name}
+                              </div>
                               <div className=' flex justify-between'>
                                 <div>Start:</div>
                                 <div className='text-primary-color'>
@@ -177,13 +195,13 @@ export default function Layout({ children }: any) {
           <div
             style={{ backgroundImage: `url(${Backdrop5.src})`, backgroundSize: '100% 100%' }}
             className='px-[26px] py-[18px] flex flex-col gap-4 w-[1000px]'>
-            <Link
-              href='https://launch.punkga.me/'
-              target='_blank'
+            <div
               style={{ backgroundImage: `url(${Backdrop4.src})`, backgroundSize: '100% 100%' }}
               className='px-[28px] pt-[8px] pb-[8px] w-[910px]'>
-              <Image src={AboutusButton} alt='' className='w-[156px] h-auto cursor-pointer' />
-            </Link>
+              <Link href='https://launch.punkga.me/' target='_blank' className='w-fit block'>
+                <Image src={AboutusButton} alt='' className='w-[156px] h-auto cursor-pointer' />
+              </Link>
+            </div>
             <div
               style={{ backgroundImage: `url(${Backdrop6.src})`, backgroundSize: '100% 100%' }}
               className='w-[910px] h-[544px] py-6 px-7 flex flex-col gap-4'>

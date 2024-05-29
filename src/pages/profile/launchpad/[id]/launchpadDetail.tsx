@@ -22,6 +22,7 @@ import { LaunchpadStatus } from '../../../../constants/constants';
 import useApi from '../../../../hooks/useApi';
 import { shorten } from "../../../../utils";
 import { getLaunchpad } from './with-api';
+import Link from 'next/link';
 
 export default function Page(props) {
     if (props.justHead) {
@@ -229,6 +230,11 @@ function LaunchpadDetail({ preDeploy, postDeploy, publish, unpublish, deleteLaun
                             onClick={() => setOpenUnpublish(true)}>
                             {t('Unpublish')}
                         </MainButton>
+                        <Link
+                            href={`/launchpad/${launchpad.data?.id}`}
+                            className='flex items-center justify-center bg-primary-color hover:bg-[#74EFA9] !focus:bg-medium-green border-second-color border-b-4 focus:border-b-0 focus:border-t-4 text-[#414141] font-bold rounded-lg gap-2 py-2 px-4'>
+                            View launchpad
+                        </Link>
                         <Modal open={openUnpublish} setOpen={() => setOpenUnpublish(false)}>
                             <div className='p-6 flex flex-col items-center gap-6'>
                                 <p className='text-xl font-bold text-[#414141]'>Unpublish launchpad</p>

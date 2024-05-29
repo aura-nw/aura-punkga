@@ -5,17 +5,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import Countdown from 'react-countdown'
-import { getLaunchPadDetail, getLicenseTerm } from 'src/services'
-import { abi } from 'src/services/abi'
-import { abi as usdtAbi } from 'src/services/abi/usdt'
-import { shorten } from 'src/utils'
-import 'swiper/css'
-import { Navigation } from 'swiper/modules'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import useSWR from 'swr'
-import { useAccount, useBalance, useConnect, useReadContract, useWriteContract } from 'wagmi'
-import BackButton from 'src/components/pages/launchpad/assets/back-button.png'
 import BackButton2 from 'src/components/pages/launchpad/assets/back-button-2.png'
+import BackButton from 'src/components/pages/launchpad/assets/back-button.png'
 import Backdrop3 from 'src/components/pages/launchpad/assets/backdrop-3.png'
 import Backdrop7 from 'src/components/pages/launchpad/assets/backdrop-7.png'
 import Backdrop8 from 'src/components/pages/launchpad/assets/backdrop-8.png'
@@ -34,8 +25,18 @@ import ViewTransactionButton from 'src/components/pages/launchpad/assets/view-tr
 import YellowBlock from 'src/components/pages/launchpad/assets/yellow-block.svg'
 import Layout, { LayoutContext } from 'src/components/pages/launchpad/components/layout'
 import Modal from 'src/components/pages/launchpad/components/modal'
-import { storyLaunchpadAbi } from 'src/services/abi/storyLaunchpad'
+import { getLaunchPadDetail } from 'src/services'
+import { abi } from 'src/services/abi'
 import { PILicenseTemplateAbi } from 'src/services/abi/PILicenseTemplate'
+import { licenseTokenAbi } from 'src/services/abi/licenseToken'
+import { storyLaunchpadAbi } from 'src/services/abi/storyLaunchpad'
+import { abi as usdtAbi } from 'src/services/abi/usdt'
+import { shorten } from 'src/utils'
+import 'swiper/css'
+import { Navigation } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import useSWR, { mutate } from 'swr'
+import { useAccount, useBalance, useConnect, useReadContract, useWriteContract } from 'wagmi'
 export default function Page(props) {
   if (props.justHead) return <></>
   return <LaunchPadDetail />
@@ -51,6 +52,7 @@ const LaunchPadDetail = () => {
   })
   const { setData } = useContext(LayoutContext)
   const [quantity, setQuantity] = useState(1)
+  const [loading, setLoading] = useState(false)
   const { writeContractAsync } = useWriteContract()
   const { connectAsync } = useConnect()
   const [screen, setScreen] = useState('confirm')
@@ -105,20 +107,32 @@ const LaunchPadDetail = () => {
     functionName: 'licenseSalePhase',
     args: [data?.license_token_address, data?.license_token_id],
   })
+  const userBuyCount = useReadContract({
+    abi: storyLaunchpadAbi,
+    address: '0x2f6646daD93454f681f7C0EdC2Df82931473ddB5',
+    functionName: 'userBuyCount',
+    args: [address, data?.license_token_address, data?.license_token_id, licenseSalePhase?.data],
+  })
   const launchpadInfors = useReadContract({
     abi: storyLaunchpadAbi,
     address: '0x2f6646daD93454f681f7C0EdC2Df82931473ddB5',
     functionName: 'LaunchpadInfors',
     args: [data?.license_token_address, data?.license_token_id, licenseSalePhase?.data],
   })
-  const license = useReadContract({
+  const licenseTemplate = useReadContract({
     abi: PILicenseTemplateAbi,
-    address: '0x889A7921c302Ebb3fb4E49Dd808bA50838ce574f',
+    address: '0x260B6CB6284c89dbE660c0004233f7bB99B5edE7',
     functionName: 'toJson',
     args: [data?.license?.term_id],
   })
-  const licenseData = license?.data
-    ? JSON.parse(`[${(license?.data as string)?.substring(0, (license?.data as string).length - 1)}]`)
+  const licenseToken = useReadContract({
+    abi: licenseTokenAbi,
+    address: '0x1333c78A821c9a576209B01a16dDCEF881cAb6f2',
+    functionName: 'getLicensorIpId',
+    args: [data?.license_token_id],
+  })
+  const licenseData = licenseTemplate?.data
+    ? JSON.parse(`[${(licenseTemplate?.data as string)?.substring(0, (licenseTemplate?.data as string).length - 1)}]`)
     : undefined
   const isRemix = licenseData?.find((d) => (d.trait_type = 'Derivatives Reciprocal')).value == 'true'
   const isCommercial = licenseData?.find((d) => (d.trait_type = 'Commercial Use')).value == 'true'
@@ -137,15 +151,23 @@ const LaunchPadDetail = () => {
           BigInt(quantity * data.mint_price),
         ],
       })
+      setTimeout(() => {
+        userBuyCount.refetch()
+        minted.refetch()
+      }, 5000)
       setHash(hash)
       setScreen('success')
+      setLoading(false)
     } catch (error) {
+      setLoading(false)
       setScreen('error')
       console.log(error)
     }
   }
   const mintHandler = async () => {
     try {
+      if (loading) return
+      setLoading(true)
       if ((allowance.data as any) < quantity * data.mint_price) {
         await writeContractAsync({
           address: '0x3C93715FdCd6E0B043BD1ae7e1e437cA6dc391C6',
@@ -161,11 +183,15 @@ const LaunchPadDetail = () => {
         mintNFT()
       }
     } catch (error) {
+      setLoading(false)
       setScreen('error')
       console.log(error)
     }
   }
   if (!data) return <></>
+  const isSoldOut = (+(minted.data as BigInt)?.toString() || 0) >= +data.max_supply
+  const isOutOfQuota = (+(userBuyCount.data as BigInt)?.toString() || 0) >= +data.max_mint_per_address
+  const remaining = data?.max_mint_per_address - +(userBuyCount.data as BigInt)?.toString()
   return (
     <>
       <div className='flex flex-col gap-[18px] text-2xl leading-[22px]'>
@@ -273,25 +299,34 @@ const LaunchPadDetail = () => {
               }`}>
               <div
                 style={{ backgroundImage: `url(${MintAmount.src})`, backgroundSize: '100% 100%' }}
-                className='flex text-primary-color w-full'>
+                className={`flex ${
+                  isSoldOut || isOutOfQuota ? 'text-[#ababab] pointer-events-none' : 'text-primary-color'
+                } w-full`}>
                 <div
                   className='w-full h-full grid place-items-center pb-1 cursor-pointer'
                   onClick={() => setQuantity((prev) => (prev > 1 ? prev - 1 : 1))}>
                   <svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18' fill='none'>
-                    <path d='M17.25 8.25H0.75V9.75H17.25V8.25Z' fill='#23FF81' />
+                    <path
+                      d='M17.25 8.25H0.75V9.75H17.25V8.25Z'
+                      fill={isSoldOut || isOutOfQuota ? '#ababab' : '#23FF81'}
+                    />
                   </svg>
                 </div>
                 <div className='w-[72px] shrink-0 grid place-items-center pb-[6px]'>{quantity}</div>
                 <div
                   className='w-full grid place-items-center pb-1 cursor-pointer'
                   onClick={() =>
-                    setQuantity((prev) => (prev < data.max_mint_per_address ? prev + 1 : data.max_mint_per_address))
+                    setQuantity((prev) =>
+                      prev < data.max_mint_per_address && prev < remaining
+                        ? prev + 1
+                        : Math.min(data.max_mint_per_address || 1, remaining || 1)
+                    )
                   }>
                   <svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18' fill='none'>
                     <g clipPath='url(#clip0_8468_142518)'>
                       <path
                         d='M17.25 8.25V9.75H9.75V17.25H8.25V9.75H0.75V8.25H8.25V0.75H9.75V8.25H17.25Z'
-                        fill='#23FF81'
+                        fill={isSoldOut || isOutOfQuota ? '#ababab' : '#23FF81'}
                       />
                     </g>
                     <defs>
@@ -304,15 +339,18 @@ const LaunchPadDetail = () => {
               </div>
               <div
                 style={{ backgroundImage: `url(${MintButton.src})`, backgroundSize: '100% 100%' }}
-                className='w-[465px] shrink-0 h-[39px] grid place-items-center uppercase text-primary-color pb-2 cursor-pointer'
+                className={`w-[465px] shrink-0 h-[39px] grid place-items-center uppercase ${
+                  isSoldOut || isOutOfQuota ? 'text-[#ABABAB]' : 'text-primary-color'
+                } pb-2 cursor-pointer`}
                 onClick={async () => {
+                  if (isSoldOut || isOutOfQuota) return
                   if (!isConnected) {
                     await connectAsync()
                   }
                   setScreen('confirm')
                   setOpen(true)
                 }}>
-                Mint
+                {isSoldOut ? 'Mint sold out' : isOutOfQuota ? 'Minted' : 'Mint'}
               </div>
             </div>
           </div>
@@ -395,7 +433,7 @@ const LaunchPadDetail = () => {
                   </span>
                 </div>
                 <div>
-                  License token ID: <span className='text-primary-color'>{shorten(data?.license_token_id)}</span>
+                  License token ID: <span className='text-primary-color'>{data?.license_token_id}</span>
                 </div>
                 <div>
                   License contract: <span className='text-primary-color'>{shorten(data?.license_token_address)}</span>
@@ -404,7 +442,7 @@ const LaunchPadDetail = () => {
             ) : (
               <>
                 <div>
-                  IP Licensor: <span className='text-primary-color'>{shorten(data?.license?.ip_asset_id)}</span>
+                  IP Licensor: <span className='text-primary-color'>{shorten(licenseToken?.data as string)}</span>
                 </div>
               </>
             )}
