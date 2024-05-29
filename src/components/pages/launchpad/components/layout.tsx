@@ -69,7 +69,9 @@ export default function Layout({ children }: any) {
             <div
               style={{ backgroundImage: `url(${Backdrop1.src})`, backgroundSize: '100% 100%' }}
               className='px-[26px] pt-[18px] pb-[16px] flex gap-3'>
-              <Image src={Logo} alt='' className='w-[148px] h-auto' />
+              <Link href='/launchpad'>
+                <Image src={Logo} alt='' className='w-[148px] h-auto' />
+              </Link>
               <div className='flex flex-col gap-[4px]'>
                 {address ? (
                   <>
