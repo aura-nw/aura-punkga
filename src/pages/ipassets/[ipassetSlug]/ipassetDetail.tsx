@@ -22,7 +22,7 @@ import moment from 'moment'
 import { Context } from 'src/context'
 import { useStory } from 'src/context/story'
 import { Address } from 'viem/accounts'
-import { http} from 'viem';
+import { http } from 'viem';
 import { waitForTransactionReceipt } from '@wagmi/core'
 import { sepolia, mainnet } from 'viem/chains'
 import { createConfig } from '@wagmi/core'
@@ -79,6 +79,11 @@ function IPAssetDetail({ }) {
     const [licenseAmount, setLicenseAmount] = useState<number>(0)
     const [commercialRevenueShare, setCommercialRevenueShare] = useState<number>()
     const [tokenIds, setTokenIds] = useState<any>()
+
+    useEffect(() => {
+        if (!account) router.push('/')
+      }, [account])
+    
 
     const fetchIPAsset = async () => {
         try {
@@ -151,7 +156,7 @@ function IPAssetDetail({ }) {
                     const commercialRemixParams = {
                         currency: CurrencyAddress,
                         mintingFee: '0',
-                        commercialRevShare: licenseAmount,
+                        commercialRevShare: commercialRevenueShare,
                     };
                     registerTermResponse = await client.license.registerCommercialRemixPIL({
                         ...commercialRemixParams,
@@ -182,7 +187,6 @@ function IPAssetDetail({ }) {
             } catch (error) {
               
             }
-
 
             // Mint License
             setTxLoading(true);
@@ -253,14 +257,16 @@ function IPAssetDetail({ }) {
                     // Wait for 5 seconds before calling mintLicense
                     await new Promise((resolve) => setTimeout(resolve, 5000));
                     await mintLicense(mintLicenseParam)
-                    setProcessText("");
+                    setProcessText('');
                     // Set the isViewLicense flag
                     setIsViewLicense(true);
                 } catch (error) {
+                    setProcessText('');
                     console.error('Error:', error);
                 }
             }
         } catch (error) {
+            setProcessText('');
             console.error('Error minting license:', error);
             setTxLoading(false);
         }

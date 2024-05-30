@@ -48,6 +48,10 @@ function IPAssets() {
     const mref = useRef<any>()
     const [searchValue, setSearchValue] = useState('')
     useEffect(() => {
+        if (!account) router.push('/')
+      }, [account])
+    
+    useEffect(() => {
         const userId = account?.id;
         if (userId) {
             getIPAsset(userId).then((data) => {

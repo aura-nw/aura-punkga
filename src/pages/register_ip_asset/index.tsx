@@ -32,6 +32,11 @@ function RegisterIPAssets() {
     const [nftToken, setNftToken] = useState('')
     const { client, walletAddress, txLoading, mintNFT, setTxHash, setTxLoading, setTxName, addTransaction } = useStory()
 
+    useEffect(() => {
+        if (!account) router.push('/')
+      }, [account])
+    
+
     const registerExistingNFT = async (tokenId: string, nftContract: Address) => {
       console.log(client)
         if (!client) return
