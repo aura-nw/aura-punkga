@@ -247,15 +247,16 @@ function IPAssetDetail({ }) {
                     // Wait for 5 seconds before calling mintLicense
                     await new Promise((resolve) => setTimeout(resolve, 5000));
                     await mintLicense(mintLicenseParam)
-                    setProcessText("");
+                    setProcessText('');
                     // Set the isViewLicense flag
                     setIsViewLicense(true);
                 } catch (error) {
-                    setProcessText("");
+                    setProcessText('');
                     console.error('Error:', error);
                 }
             }
         } catch (error) {
+            setProcessText('');
             console.error('Error minting license:', error);
             setTxLoading(false);
         }
