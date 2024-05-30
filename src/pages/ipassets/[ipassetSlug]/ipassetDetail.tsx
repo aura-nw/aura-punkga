@@ -148,7 +148,7 @@ function IPAssetDetail({ }) {
                     const commercialRemixParams = {
                         currency: CurrencyAddress,
                         mintingFee: '0',
-                        commercialRevShare: licenseAmount,
+                        commercialRevShare: commercialRevenueShare,
                     };
                     registerTermResponse = await client.license.registerCommercialRemixPIL({
                         ...commercialRemixParams,
