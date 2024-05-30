@@ -14,9 +14,10 @@ import MainButton from '../../../components/Button/MainButton'
 import TextField from '../../../components/Input/TextField'
 import FilledSelect from '../../../components/Select/FilledSelect'
 import { LaunchpadStatus } from '../../../constants/constants'
+import { Context } from '../../../context'
 import useApi from '../../../hooks/useApi'
 import { LaunchpadType, getListLaunchpads } from './with-api'
-import { Context } from '../../../context'
+import SearchIcon from 'assets/images/icons/search.svg'
 
 export default function Page(props) {
     if (props.justHead) {
@@ -39,22 +40,19 @@ function Launchpad() {
     })
 
     useEffect(() => {
-        const newData = listLaunchpads?.data?.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase())) ?? [];
+        const newData = listLaunchpads?.data?.filter((item) => {
+            if (status.key === 'All status') {
+                return item.name.toLowerCase().includes(searchValue.toLowerCase())
+            } else {
+                return item.name.toLowerCase().includes(searchValue.toLowerCase()) && LaunchpadStatus[item.status] === status.value
+            }
+        }) ?? [];
         setListLaunchpadData(newData);
-    }, [searchValue]);
+    }, [searchValue, status]);
 
     useEffect(() => {
         setListLaunchpadData(listLaunchpads?.data ?? [])
     }, [listLaunchpads?.data]);
-
-    useEffect(() => {
-        if (status.key === 'All status') {
-            setListLaunchpadData(listLaunchpads?.data)
-        } else {
-            const newData = listLaunchpads?.data?.filter((item) => LaunchpadStatus[item.status] === status.value) ?? [];
-            setListLaunchpadData(newData);
-        }
-    }, [status]);
 
     useEffect(() => {
         if (!account) router.push('/')
@@ -81,9 +79,16 @@ function Launchpad() {
                                 <TextField
                                     inputref={ref}
                                     onChange={_.debounce(setSearchValue, 500)}
-                                    className="w-[290px] bg-light-gray"
+                                    className="!w-[290px] bg-light-gray"
                                     size='lg'
-                                    placeholder={t('Search by launchpad names')}
+                                    placeholder={t('Search by launchpad name')}
+                                    leadingComponent={
+                                        <Image
+                                            src={SearchIcon}
+                                            className='w-[22px] h-[22px]'
+                                            alt=''
+                                        />
+                                    }
                                 />
                                 <FilledSelect
                                     label=''
