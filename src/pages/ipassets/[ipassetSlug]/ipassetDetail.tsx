@@ -79,6 +79,11 @@ function IPAssetDetail({ }) {
     const [commercialRevenueShare, setCommercialRevenueShare] = useState<number>()
     const [tokenIds, setTokenIds] = useState<any>()
 
+    useEffect(() => {
+        if (!account) router.push('/')
+      }, [account])
+    
+
     const fetchIPAsset = async () => {
         try {
             const res = await fetch(`https://edge.stg.storyprotocol.net/api/v1/assets/${slug}`, {
