@@ -247,6 +247,7 @@ function IPAssetDetail({ }) {
                     // Set the isViewLicense flag
                     setIsViewLicense(true);
                 } catch (error) {
+                    setProcessText("");
                     console.error('Error:', error);
                 }
             }
