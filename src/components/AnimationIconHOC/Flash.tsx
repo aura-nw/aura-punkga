@@ -1,19 +1,23 @@
-import React, { memo, useMemo } from "react"
+import React, { memo, useMemo } from 'react'
 
-const withFlashAnimation = (InactiveComponent: any, ActiveComponent: any) => (props: any) => {
+const withFlashAnimation = (InactiveComponent: any, ActiveComponent: any, className?: any) => (props: any) => {
   if (props.active) {
     return (
-      <span className="relative">
+      <span className={`relative ${className}`}>
         <ActiveComponent className={`animate-flash absolute h-full w-full`} />
         <ActiveComponent />
       </span>
     )
   }
-  return <InactiveComponent />
+  return (
+    <span className={`relative ${className}`}>
+      <InactiveComponent />
+    </span>
+  )
 }
 
-function FlashAnimationElement({ ActiveComponent, InactiveComponent, active }: any) {
-  const Element = withFlashAnimation(InactiveComponent, ActiveComponent)
+function FlashAnimationElement({ ActiveComponent, InactiveComponent, active, className }: any) {
+  const Element = withFlashAnimation(InactiveComponent, ActiveComponent, className)
   return <Element active={active} />
 }
 export default function FlashAnimation(props: any) {
