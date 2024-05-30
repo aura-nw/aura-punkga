@@ -61,6 +61,7 @@ function IPAssetDetail({ }) {
     // })
     const { account, getIPAsset, mintLicense, getLicense } = useContext(Context)
     const { query } = useRouter()
+    const idRef = useRef<any>()
     const slug = query.ipassetSlug as string
     const router = useRouter()
     const { t } = useTranslation()
@@ -115,6 +116,8 @@ function IPAssetDetail({ }) {
         if (!client) return;
 
         try {
+            idRef.current && clearTimeout(idRef.current)
+            idRef.current = setTimeout(handleMintLicense, 60000)
             // Register PIL term
             setTxLoading(true);
             setTxName("Register PIL Terms");
@@ -160,19 +163,24 @@ function IPAssetDetail({ }) {
                     break;
             }
             // Attach License Terms to IP
-            if (licenseList.every(item => item.term_id !== registerTermResponse.licenseTermsId.toString())) {
-                setTxLoading(true);
-                setTxName("Attaching terms to an IP Asset...");
-                setProcessText("Attaching terms to IP Asset...");
-                const attachLicenseresponse = await client.license.attachLicenseTerms({
-                    licenseTermsId: registerTermResponse.licenseTermsId,
-                    ipId: slug as Address,
-                    txOptions: { waitForTransaction: true },
-                });
-                console.log(`Attached License Terms to IP at tx hash ${attachLicenseresponse.txHash}`);
-                setTxLoading(false);
-                setTxHash(attachLicenseresponse.txHash);
-                addTransaction(attachLicenseresponse.txHash, "Attach Terms", {});
+            
+            try {
+              if (registerTermResponse.licenseTermsId) {
+                  setTxLoading(true);
+                  setTxName("Attaching terms to an IP Asset...");
+                  setProcessText("Attaching terms to IP Asset...");
+                  const attachLicenseresponse = await client.license.attachLicenseTerms({
+                      licenseTermsId: registerTermResponse.licenseTermsId,
+                      ipId: slug as Address,
+                      txOptions: { waitForTransaction: true },
+                  });
+                  console.log(`Attached License Terms to IP at tx hash ${attachLicenseresponse.txHash}`);
+                  setTxLoading(false);
+                  setTxHash(attachLicenseresponse.txHash);
+                  addTransaction(attachLicenseresponse.txHash, "Attach Terms", {});
+              }
+            } catch (error) {
+              
             }
 
 
@@ -180,6 +188,8 @@ function IPAssetDetail({ }) {
             setTxLoading(true);
             setTxName("Minting a License Token from an IP Asset...");
             setProcessText("Minting a License Token from IP Asset...");
+            idRef.current && clearTimeout(idRef.current)
+            console.log('mint license')
             const mintLicenseresponse = await client.license.mintLicenseTokens({
                 licensorIpId: slug as Address,
                 licenseTermsId: registerTermResponse.licenseTermsId,

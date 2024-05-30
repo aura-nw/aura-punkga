@@ -22,7 +22,7 @@ export default function Page(props) {
 function RegisterIPAssets() {
     const { account, registerIPAsset } = useContext(Context)
     const router = useRouter()
-    const mref = useRef<any>()
+    const idRef = useRef<any>()
     const r = useRouter()
     const searchParams = useSearchParams()
     const error = searchParams.get('error')
@@ -35,6 +35,8 @@ function RegisterIPAssets() {
     const registerExistingNFT = async (tokenId: string, nftContract: Address) => {
       console.log(client)
         if (!client) return
+        idRef.current && clearTimeout(idRef.current)
+        idRef.current = setTimeout(() => registerExistingNFT(tokenId, nftContract),60000)
         setTxLoading(true)
         setTxName('Registering an NFT as an IP Asset...')
         try {
@@ -48,6 +50,7 @@ function RegisterIPAssets() {
             setTxLoading(false)
             return
         }
+        idRef.current && clearTimeout(idRef.current)
 
         console.log(`Root IPA created at tx hash ${response.txHash}, IPA ID: ${response.ipId}`)
         setTxLoading(false)
