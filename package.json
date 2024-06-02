@@ -73,7 +73,7 @@
     "@types/react-html-parser": "^2.0.6",
     "@types/react-slick": "^0.23.12",
     "autoprefixer": "^10.4.14",
-    "postcss": "^8.4.24",
+    "postcss": "^8.4.31",
     "sass": "^1.63.4",
     "tailwindcss": "^3.3.2",
     "typescript": "5.1.3"
