@@ -231,7 +231,7 @@ const Chapter: React.FC = ({
           ) : (
             <div>
               {chapterDetails.data[chapterLocale]?.map((page, index) =>
-                isMobile ? (
+                window.innerWidth < 1280 ? (
                   <LazyImage
                     src={page}
                     key={index}
