@@ -42,6 +42,7 @@ import Miroles from './assets/authors/Miroles.webp'
 import NgocBe from './assets/authors/ngoc_be.jpg'
 import Miyuki from './assets/authors/miyuki.webp'
 import Grey from './assets/authors/grey.webp'
+import EventBanner from './assets/event-banner.png'
 function Carousel({ sliderRef, children, className, setSlideIndex, sliderNavRef }) {
   var settings = {
     infinite: true,
@@ -387,19 +388,23 @@ export default function TaskSlider({ sliderNavRef }) {
   const sliderRefMobile = useRef(null)
   const [slideIndex, setSlideIndex] = useState(0)
   return (
+    <Link
+      href='https://www.facebook.com/PunkgaMeManga/posts/pfbid0DSbBV83x5J94cMiPSjknY3NCWekJ9nKVMdSTJnzrBHFEJr3texFbMRwyhvQ7browl'
+      target='_blank'>
+      <div className='md:hidden px-5 pt-5'>
+        <Image src={EventBanner} alt='' className='w-full object-cover aspect-[75/32] rounded-2xl' />
+      </div>
+      <Image src={EventBanner} alt='' className='hidden md:block w-full object-cover aspect-[75/32] rounded-2xl' />
+    </Link>
+  )
+  return (
     <>
       <div className='md:hidden mt-[1px] w-screen relative overflow-hidden aspect-[9/4]'>
         <MobileCarousel setSlideIndex={setSlideIndex} sliderRef={sliderRefMobile}>
           {list.map((data, index) => (
             <div className='outline-none [&_*]:outline-none' key={index}>
               <Link href={data.comic.href} className='relative'>
-                <Image
-                  alt=''
-                  width={1920}
-                  height={1080}
-                  className='w-full object-contain'
-                  src={data.comic.image}
-                />
+                <Image alt='' width={1920} height={1080} className='w-full object-contain' src={data.comic.image} />
                 <div className='absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent pointer-events-none px-[20px] py-4 sm:py-[40px] flex flex-col justify-start '>
                   <div className='flex gap-2'>
                     {data.comic.isNewRelease && (
@@ -413,23 +418,30 @@ export default function TaskSlider({ sliderNavRef }) {
                       </div>
                     )}
                   </div>
-                  <div className='text-white font-bold text-[20px] sm:text-[32px] leading-[40px]'>{data.comic.name}</div>
+                  <div className='text-white font-bold text-[20px] sm:text-[32px] leading-[40px]'>
+                    {data.comic.name}
+                  </div>
                   <div className='flex flex-col items-start gap-[10px] mt-[5px]'>
                     <div className='flex gap-[5px] items-center'>
                       {data.author.map((author, index) => {
-                        const isLastAuthor = index === data.author.length - 1;
+                        const isLastAuthor = index === data.author.length - 1
 
                         return (
-                          <div className="flex gap-[5px] items-center" key={index}>
-                            <Image src={author.avatar} alt="" className="w-7 h-7 rounded-full" />
-                            <div className="text-white font-semibold text-sm leading-[18px]">{author.name}</div>
+                          <div className='flex gap-[5px] items-center' key={index}>
+                            <Image src={author.avatar} alt='' className='w-7 h-7 rounded-full' />
+                            <div className='text-white font-semibold text-sm leading-[18px]'>{author.name}</div>
                             {!isLastAuthor && (
-                              <svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4" fill="none">
-                                <circle cx="2" cy="2" r="2" fill="white" />
+                              <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                width='4'
+                                height='4'
+                                viewBox='0 0 4 4'
+                                fill='none'>
+                                <circle cx='2' cy='2' r='2' fill='white' />
                               </svg>
                             )}
                           </div>
-                        );
+                        )
                       })}
                     </div>
                     {/* <div className='flex gap-[5px] items-center'>
