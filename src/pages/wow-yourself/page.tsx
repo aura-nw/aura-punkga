@@ -99,7 +99,7 @@ export default function WowYourSelf() {
         </div>
         <div className='flex flex-col items-center w-full mt-10 lg:mt-8 lg:flex-row'>
           <div
-            className={`lg:min-h-[138px] w-full rounded-2xl py-3 px-4 flex flex-col gap-3 border-2 ${
+            className={`lg:min-h-[138px] max-w-[400px] w-full rounded-2xl py-3 px-4 flex flex-col gap-3 border-2 ${
               moment().isAfter(moment('2024-06-03'))
                 ? moment().isBefore(moment('2024-06-10'))
                   ? 'border-[#1FAB5E] shadow-[0px_0px_0px_2px_#23FF81]'
@@ -125,9 +125,9 @@ export default function WowYourSelf() {
               View on facebook
             </Link>
           </div>
-          <div className='w-[1px] h-[32px] lg:w-[40px] lg:h-[1px] lg:shrink-0 bg-[#1C1C1C1A]'></div>
+          <div className='w-[1px] h-[32px] lg:flex-1 lg:h-[1px] lg:shrink-0 bg-[#1C1C1C1A]'></div>
           <div
-            className={`lg:min-h-[138px] w-full rounded-2xl py-3 px-4 flex flex-col gap-3 border-2 ${
+            className={`lg:min-h-[138px] max-w-[400px] w-full rounded-2xl py-3 px-4 flex flex-col gap-3 border-2 ${
               moment().isAfter(moment('2024-06-11'))
                 ? moment().isBefore(moment('2024-06-17'))
                   ? 'border-[#1FAB5E] shadow-[0px_0px_0px_2px_#23FF81]'
@@ -147,9 +147,9 @@ export default function WowYourSelf() {
               </div>
             </div>
           </div>
-          <div className='w-[1px] h-[32px] lg:w-[40px] lg:h-[1px] lg:shrink-0 bg-[#1C1C1C1A]'></div>
+          <div className='w-[1px] h-[32px] lg:flex-1 lg:h-[1px] lg:shrink-0 bg-[#1C1C1C1A]'></div>
           <div
-            className={`lg:min-h-[138px] w-full rounded-2xl py-3 px-4 flex flex-col gap-3 border-2 ${
+            className={`lg:min-h-[138px] max-w-[400px] w-full rounded-2xl py-3 px-4 flex flex-col gap-3 border-2 ${
               moment().isAfter(moment('2024-06-18'))
                 ? moment().isBefore(moment('2024-06-30'))
                   ? 'border-[#1FAB5E] shadow-[0px_0px_0px_2px_#23FF81]'
