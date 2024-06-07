@@ -92,9 +92,9 @@ export default function WowYourSelf() {
                 </div>
               </div>
             </div>
-            <Link href=''>
+            {/* <Link href=''>
               <Image src={Banner} alt='' className='w-full' />
-            </Link>
+            </Link> */}
           </div>
         </div>
         <div className='flex flex-col items-center w-full mt-10 lg:mt-8 lg:flex-row'>
@@ -183,7 +183,7 @@ function ViewRule() {
         View Rule
       </MainButton>
       <Modal open={open} setOpen={setOpen}>
-        <div className=' w-[90vw] p-5 max-w-[1000px] h-[90vh] overflow-auto'>
+        <div className=' w-[90vw] p-5 lg:p-10 max-w-[1000px] h-[90vh] overflow-auto'>
           <div className='w-full text-center text-xl font-bold'>Thể lệ chi tiết cuộc thi WoW Yourself</div>
           <br />
           <strong className='text-md'>VÒNG 1: Show YOURSELF</strong>
