@@ -13,13 +13,13 @@ import Modal from 'components/Modal'
 export default function WowYourSelf() {
   return (
     <div className=''>
-      <Image src={BannerMobile} className='w-full lg:hidden' alt='' />
+      <Image src={BannerMobile} className='w-full lg:hidden h-auto' alt='' />
       <div className='pk-container hidden lg:block'>
-        <Image src={BannerDesktop} className='w-full mt-3' alt='' />
+        <Image src={BannerDesktop} className='w-full mt-3 h-auto' alt='' />
       </div>
       <div className='pk-container'>
-        <div className='flex flex-col gap-4 lg:gap-5 mt-5 lg:mt-8 lg:flex-row'>
-          <div className='lg:w-full'>
+        <div className='flex flex-col gap-4 lg:gap-5 mt-5 lg:mt-8 lg:flex-row lg:justify-between'>
+          <div className='lg:w-full lg:max-w-[840px]'>
             <h1 className='text-base font-bold leading-5 flex items-center gap-2 lg:text-xl'>
               Wow yourself - Final round{' '}
               <Link
@@ -97,7 +97,7 @@ export default function WowYourSelf() {
             </Link> */}
           </div>
         </div>
-        <div className='flex flex-col items-center w-full mt-10 lg:mt-8 lg:flex-row lg:max-w-[1280px] mx-auto'>
+        <div className='flex flex-col items-center w-full mt-10 xl:mt-8 xl:flex-row xl:max-w-[1280px] mx-auto'>
           <div
             className={`lg:min-h-[138px] max-w-[400px] w-full rounded-2xl py-3 px-4 flex flex-col gap-3 border-2 ${
               moment().isAfter(moment('2024-06-03'))
@@ -125,9 +125,9 @@ export default function WowYourSelf() {
               View on facebook
             </Link>
           </div>
-          <div className='w-[1px] h-[32px] lg:flex-1 lg:h-[1px] lg:min-w-5 lg:shrink-0 bg-[#1C1C1C1A]'></div>
+          <div className='w-[1px] h-[32px] xl:flex-1 xl:h-[1px] xl:min-w-5 xl:shrink-0 bg-[#1C1C1C1A]'></div>
           <div
-            className={`lg:min-h-[138px] max-w-[400px] w-full rounded-2xl py-3 px-4 flex flex-col gap-3 border-2 ${
+            className={`xl:min-h-[138px] max-w-[400px] w-full rounded-2xl py-3 px-4 flex flex-col gap-3 border-2 ${
               moment().isAfter(moment('2024-06-11'))
                 ? moment().isBefore(moment('2024-06-17'))
                   ? 'border-[#1FAB5E] shadow-[0px_0px_0px_2px_#23FF81]'
@@ -147,9 +147,9 @@ export default function WowYourSelf() {
               </div>
             </div>
           </div>
-          <div className='w-[1px] h-[32px] lg:flex-1 lg:h-[1px] lg:min-w-5 lg:shrink-0 bg-[#1C1C1C1A]'></div>
+          <div className='w-[1px] h-[32px] xl:flex-1 xl:h-[1px] xl:min-w-5 xl:shrink-0 bg-[#1C1C1C1A]'></div>
           <div
-            className={`lg:min-h-[138px] max-w-[400px] w-full rounded-2xl py-3 px-4 flex flex-col gap-3 border-2 ${
+            className={`xl:min-h-[138px] max-w-[400px] w-full rounded-2xl py-3 px-4 flex flex-col gap-3 border-2 ${
               moment().isAfter(moment('2024-06-18'))
                 ? moment().isBefore(moment('2024-06-30'))
                   ? 'border-[#1FAB5E] shadow-[0px_0px_0px_2px_#23FF81]'
