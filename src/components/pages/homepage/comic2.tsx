@@ -22,21 +22,23 @@ export default function Comic2(props: IComic) {
     }, [])
     return (
         <div className={`${props.status.text == 'Upcoming' ? '[&_a:not(.author)]:pointer-events-none' : ''}`}>
-            <div className='h-[230px]'>
-                <Link href={`/comic/${props.slug}`} className='relative w-full h-full aspect-[160/230] mx-auto'>
+            <div className='h-[230px] w-[160px]'>
+                <Link
+                    href={`/comic/${props.slug}`}
+                    className='relative w-full h-full aspect-[160/230] mx-auto group'
+                >
                     <div className='block h-full'>
                         <Image
                             src={props.image || NoImage}
                             alt=''
                             width={180}
                             height={240}
-                            className={`w-full h-full ${props.image ? 'object-cover' : 'object-contain bg-light-gray'
-                                } rounded-t `}
+                            className={`w-full h-full ${props.image ? 'object-cover' : 'object-contain bg-light-gray'} rounded-t`}
                         />
                     </div>
-                    <div className="absolute overflow-hidden bottom-0 w-full h-[50px] p-2  transition-all duration-300 ease-in-out hover:h-full hover:bg-gradient-to-t from-black to-transparent"
-                        style={{ background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.75) 13.66%)' }}>
-
+                    <div
+                        className="absolute overflow-hidden bottom-0 w-full h-[50px] p-2 transition-all duration-300 ease-in-out group-hover:h-full bg-gradient-to-b from-transparent to-[rgba(0,0,0,1)] group-hover:bg-[rgba(0,0,0,0.75)]"
+                    >
                         <p className='text-second-color whitespace-nowrap text-ellipsis overflow-hidden text-base font-bold leading-5'>{props[locale].title}</p>
                         <div className='flex text-white gap-1 whitespace-nowrap text-ellipsis overflow-hidden text-sm font-semibold leading-[17px]'>
                             {t('by')}{' '}
@@ -45,9 +47,7 @@ export default function Comic2(props: IComic) {
                                     <span className='text-second-color font-[600] first:hidden'>, </span>
                                     <span className='text-second-color font-[600]'>
                                         {author.slug ? (
-                                            <div className='author'>
-                                                {t(author.name)}
-                                            </div>
+                                            <div className='author'>{t(author.name)}</div>
                                         ) : (
                                             t(author.name)
                                         )}
@@ -66,8 +66,7 @@ export default function Comic2(props: IComic) {
                                     <HeartIcon className="w-5 h-5" />
                                 </div>
                             </div>
-                                <div className='text-xs leading-4 mt-3 text-white'>{props[locale].description}</div>
-                
+                            <div className='text-xs leading-4 mt-3 text-white'>{props[locale].description}</div>
                         </div>
                     </div>
                 </Link>
