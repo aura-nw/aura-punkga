@@ -8,6 +8,8 @@ import X from 'assets/images/x.png'
 import Facebook from 'assets/images/Facebook.png'
 import moment from 'moment'
 import JudgeBoard from 'components/pages/event/wow-yourself/JudgeBoard'
+import { useState } from 'react'
+import Modal from 'components/Modal'
 export default function WowYourSelf() {
   return (
     <div className=''>
@@ -72,9 +74,7 @@ export default function WowYourSelf() {
           </div>
           <div className='flex flex-col gap-4 lg:w-1/2 lg:max-w-[400px] lg:shrink-0'>
             <div className='flex gap-5'>
-              <MainButton style='secondary' className='w-full'>
-                View Rule
-              </MainButton>
+              <ViewRule />
               <MainButton disabled={!moment().isAfter(moment('2024-06-11'))} className='w-full'>
                 Submit my artwork
               </MainButton>
@@ -173,5 +173,171 @@ export default function WowYourSelf() {
         <JudgeBoard />
       </div>
     </div>
+  )
+}
+function ViewRule() {
+  const [open, setOpen] = useState(false)
+  return (
+    <>
+      <MainButton style='secondary' className='w-full' onClick={() => setOpen(true)}>
+        View Rule
+      </MainButton>
+      <Modal open={open} setOpen={setOpen}>
+        <div className=' w-[90vw] p-5 max-w-[1000px] h-[90vh] overflow-auto'>
+          <div className='w-full text-center text-xl font-bold'>Thể lệ chi tiết cuộc thi WoW Yourself</div>
+          <br />
+          <strong className='text-md'>VÒNG 1: Show YOURSELF</strong>
+          <ol className='list-decimal list-inside pl-5 [&>li]:mt-2 text-sm leading-6'>
+            <li className='font-bold'>
+              Sáng tạo:
+              <ul className='list-disc list-inside pl-5 font-normal'>
+                <li>Hoàn thiện hoặc phác thảo 1 trang truyện giới thiệu hoặc chia sẻ về câu chuyện của bản thân bạn</li>
+              </ul>
+            </li>
+            <li className='font-bold'>
+              Bài đăng đính kèm:
+              <ul className='list-disc list-inside pl-5 font-normal'>
+                <li>Tên/Nickname: [Tên của bạn]</li>
+                <li>Hashtag: #PunkgaMe #Wowyourself #Showyourself</li>
+              </ul>
+            </li>
+            <li className='font-bold'>
+              Địa điểm:
+              <ul className='list-disc list-inside pl-5 font-normal'>
+                <li>Group Facebook Punkga Me - Hội họa sĩ truyện tranh 🇻🇳</li>
+              </ul>
+            </li>
+            <li className='font-bold'>Thời gian:</li>
+            <li className='font-bold'>
+              Giải thưởng:
+              <ul className='list-disc list-inside pl-5 font-normal'>
+                <li>Top 2: Do Ban Giám Khảo bình chọn - nhận ngay 2 cuốn artbook cực xịn</li>
+                <li>Top 5: Bài đăng có nhiều lượt react và share nhất - nhận 5 điểm cộng vào kết quả chung cuộc</li>
+              </ul>
+            </li>
+            <li className='font-bold'>
+              Lưu ý:
+              <ul className='list-disc list-inside pl-5 font-normal'>
+                <li>
+                  Tác phẩm không yêu cầu quá hoàn thiện về chất lượng nhưng cần đảm bảo có hình ảnh, chia khung và có
+                  thoại
+                </li>
+                <li>
+                  Vòng đầu tiên sẽ không có họa sĩ bị loại. Tất cả thí sinh nộp bài thi đúng yêu cầu sẽ đủ điều kiện
+                  tham gia vòng tiếp theo
+                </li>
+                <li>
+                  Tác phẩm của họa sĩ tham gia có thể được vẽ bằng tay hoặc bằng máy, đảm bảo tác phẩm dễ đọc, sạch sẽ
+                  và gọn gàng.
+                </li>
+              </ul>
+            </li>
+          </ol>
+          <br />
+          <strong className='text-md'>VÒNG 2: Know YOURSELF</strong>
+          <ol className="ist-decimal list-inside pl-5 [&>li]:mt-2 nested-counter text-sm [counter-reset:item] [&_ol]:[counter-reset:item] [&>li]:[counter-increment:item] [&>li::marker]:[content:counters(item,'.')_'._'] [&_ol>li]:[counter-increment:item] [&_ol>li::marker]:[content:counters(item,'.')_'._']">
+            <li className='font-bold'>Chủ đề: Summer Spirit - Linh Hồn Mùa Hạ</li>
+            <li className='[&::marker]:font-bold'>
+              <strong>Yêu cầu:</strong>
+              <ol className='list-decimal list-inside pl-5 [&>li]:mt-2'>
+                <li>
+                  Sáng tạo:
+                  <ul className='list-disc list-inside pl-5'>
+                    <li>Vẽ phác thảo ý tưởng kèm thoại từ 3-5 trang truyện về chủ đề</li>
+                    <li> Hashtag: #PunkgaMe #Wowyourself #Knowyourself</li>
+                  </ul>
+                </li>
+                <li>
+                  Bài đăng đính kèm:
+                  <ul className='list-disc list-inside pl-5'>
+                    <li>Tên/Nickname: [Tên của bạn]</li>
+                    <li>Có thể vẽ bằng tay hoặc máy</li>
+                    <li>
+                      Các hoạ sĩ tham gia khi kết hợp thêm yếu tố <strong>"FALLING STAR - SAO BĂNG"</strong> để nhận 10
+                      điểm Bonus từ Ban giám khảo.
+                    </li>
+                  </ul>
+                </li>
+                <li>Địa điểm: Group Facebook Punkga ME - Hội họa sĩ truyện tranh Việt Nam 🇻🇳</li>
+                <li>Thời gian nhận tác phẩm: 9h00 ngày 11/6 - 24h00 ngày 17/6</li>
+              </ol>
+            </li>
+            <li className='font-bold'>
+              Giải thưởng Vòng 2:
+              <ul className='list-disc list-inside pl-5 font-normal'>
+                <li>
+                  TOP 10: Do Ban Giám Khảo và ban cố vấn bình chọn - Nhận 10 điểm cộng trên mỗi hoạ sĩ và được cộng vào
+                  kết quả chung cuộc!
+                </li>
+                <li>TOP 2: Do Ban Giám Khảo bình chọn - Nhận 1 cuốn artbook trên mỗi hoạ sĩ</li>
+              </ul>
+            </li>
+            <li className='[&::marker]:font-bold'>
+              <strong>Lưu ý:</strong>
+              <ol className='list-decimal list-inside pl-5 [&>li]:mt-2'>
+                <li>Điểm bonus sẽ là điểm tích luỹ cho đến kết quả cuối cùng</li>
+                <li>
+                  Thí sinh chỉ cần hoàn thành tác phẩm dưới dạng bản thảo thô kèm thoại (NAME). Một thành viên bất kì
+                  trong ban cố vấn sẽ feedback và đưa ý kiến để các thí sinh tiếp tục hoàn thiện bài thi ở vòng sau với
+                  chất lượng tốt nhất.
+                </li>
+                <li>
+                  Tất cả các tác phẩm đều nhận được sự đánh giá của các cố vấn là những họa sĩ truyện tranh chuyên
+                  nghiệp.
+                </li>
+                <li>Mỗi tác phẩm sẽ nhận được feedback từ 1 vị cố vấn trong 48H.</li>
+                <li>
+                  Vòng 2 sẽ không có hoạ sĩ bị loại và tất cả thí sinh nộp bài thi đúng yêu cầu sẽ đủ điều kiện tham gia
+                  vòng tiếp theo.
+                </li>
+              </ol>
+            </li>
+          </ol>
+          <br />
+          <strong className='text-md'>VÒNG 3: Grow YOURSELF</strong>
+          <ol className="ist-decimal list-inside pl-5 [&>li]:mt-2 nested-counter text-sm [counter-reset:item] [&_ol]:[counter-reset:item] [&>li]:[counter-increment:item] [&>li::marker]:[content:counters(item,'.')_'._'] [&_ol>li]:[counter-increment:item] [&_ol>li::marker]:[content:counters(item,'.')_'._']">
+            <li className='[&::marker]:font-bold'>
+              <strong>Yêu cầu:</strong>
+              <ul className='list-disc list-inside pl-5 [&>li]:mt-2'>
+                <li>
+                  Hoàn thiện chỉn chu 5 trang bản thảo thô trước đó dựa trên feedback của Ban giám khảo từ vòng 2.
+                </li>
+              </ul>
+            </li>
+            <li className='[&::marker]:font-bold'>
+              <strong>Địa điểm:</strong>
+              <ol className='list-decimal list-inside pl-5 [&>li]:mt-2'>
+                <li>Website của Punkga Me (link nộp bài sẽ được thông báo vào ngày 18/6)</li>
+                <li>
+                  Group Facebook Punkga Me - Hội họa sĩ truyện tranh Việt Nam 🇻🇳 và đính kèm:
+                  <ul className='list-disc list-inside pl-5'>
+                    <li>Tên/Nickname: [Tên của bạn]</li>
+                    <li>Hashtag: #PunkgaMe #Wowyourself #Growyourself</li>
+                  </ul>
+                </li>
+              </ol>
+            </li>
+            <li className='font-bold'>
+              Thời gian nhận tác phẩm trên website và group Facebook:
+              <ul className='list-disc list-inside pl-5 [&>li]:mt-2 font-normal'>
+                <li>9h00 ngày 18/6 - 24h00 ngày 30/6</li>
+              </ul>
+            </li>
+            <li className='[&::marker]:font-bold'>
+              <strong>Lưu ý:</strong>
+              <ul className='list-disc list-inside pl-5 [&>li]:mt-2'>
+                <li>Thời gian chấm điểm diễn ra từ ngày 1/7 - 8/7.</li>
+                <li>Thời gian bình chọn tính từ lúc nộp bài đến khi vòng 3 kết thúc vào ngày 30/6.</li>
+                <li>
+                  Số lượng tương tác trên website và group Facebook được tính độc lập với barem chấm điểm của Ban Giám
+                  Khảo và Ban Cố Vấn
+                </li>
+              </ul>
+            </li>
+          </ol>
+          <strong className='text-md mt-5 block'>Kết quả sẽ được công bố vào ngày 09/07</strong>
+        </div>
+      </Modal>
+    </>
   )
 }
