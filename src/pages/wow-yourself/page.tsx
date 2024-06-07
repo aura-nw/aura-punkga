@@ -97,7 +97,7 @@ export default function WowYourSelf() {
             </Link> */}
           </div>
         </div>
-        <div className='flex flex-col items-center w-full mt-10 lg:mt-8 lg:flex-row'>
+        <div className='flex flex-col items-center w-full mt-10 lg:mt-8 lg:flex-row lg:max-w-[1280px] mx-auto'>
           <div
             className={`lg:min-h-[138px] max-w-[400px] w-full rounded-2xl py-3 px-4 flex flex-col gap-3 border-2 ${
               moment().isAfter(moment('2024-06-03'))
@@ -125,7 +125,7 @@ export default function WowYourSelf() {
               View on facebook
             </Link>
           </div>
-          <div className='w-[1px] h-[32px] lg:flex-1 lg:h-[1px] lg:shrink-0 bg-[#1C1C1C1A]'></div>
+          <div className='w-[1px] h-[32px] lg:flex-1 lg:h-[1px] lg:min-w-5 lg:shrink-0 bg-[#1C1C1C1A]'></div>
           <div
             className={`lg:min-h-[138px] max-w-[400px] w-full rounded-2xl py-3 px-4 flex flex-col gap-3 border-2 ${
               moment().isAfter(moment('2024-06-11'))
@@ -147,7 +147,7 @@ export default function WowYourSelf() {
               </div>
             </div>
           </div>
-          <div className='w-[1px] h-[32px] lg:flex-1 lg:h-[1px] lg:shrink-0 bg-[#1C1C1C1A]'></div>
+          <div className='w-[1px] h-[32px] lg:flex-1 lg:h-[1px] lg:min-w-5 lg:shrink-0 bg-[#1C1C1C1A]'></div>
           <div
             className={`lg:min-h-[138px] max-w-[400px] w-full rounded-2xl py-3 px-4 flex flex-col gap-3 border-2 ${
               moment().isAfter(moment('2024-06-18'))
