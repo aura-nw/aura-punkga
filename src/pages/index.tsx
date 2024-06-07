@@ -3,6 +3,7 @@ import DummyComic from 'components/DummyComponent/comic'
 import Footer from 'components/Footer'
 import Header from 'components/Header'
 import FilledSelect from 'components/Select/FilledSelect'
+import Comic2 from 'components/pages/homepage/comic2'
 import Comic from 'components/pages/homepage/comic'
 import LeaderBoard from 'components/pages/homepage/leaderboard'
 import SlideSection from 'components/pages/homepage/slideSection'
@@ -163,7 +164,7 @@ function Home() {
                 />
               </div>
             </div>
-            <div className='grid md:grid-cols-1 grid-cols-2 2xl:grid-cols-2 gap-10 mt-2 md:mt-10'>
+            <div className='grid md:grid-cols-4 grid-cols-2 2xl:grid-cols-5 gap-[10px] mt-2 md:mt-10 gap-y-5'>
               {latestComic.loading
                 ? Array.apply(null, Array(2)).map((d, index) => {
                   return <DummyComic key={index} />
@@ -181,7 +182,7 @@ function Home() {
                         : true
                     )
                     .map((data, index) => {
-                      return <Comic key={index} {...data} />
+                      return <Comic2 key={index} {...data} />
                     })
                   : null}
             </div>
@@ -193,7 +194,7 @@ function Home() {
             </div>
             <div className='flex flex-col p-6 bg-[#292929] text-white rounded-[10px] mt-10'>
               <div className='md:text-xl text-sm md:leading-[25px] font-[800] mb-4 md:mb-6'>
-              🔥{t('Trending')}
+                🔥{t('Trending')}
               </div>
               <div className='flex flex-col gap-10 mt-2 md:mt-6'>
                 {trendingComic.loading
