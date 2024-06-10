@@ -164,7 +164,7 @@ function Home() {
                 />
               </div>
             </div>
-            <div className='grid sm:grid-cols-3 xl:grid-cols-4 grid-cols-2 2xl:grid-cols-5 gap-[10px] mt-2 md:mt-10 gap-y-5'>
+            <div className='grid auto-fit sm:grid-cols-3 xl:grid-cols-4 grid-cols-2 2xl:grid-cols-5 gap-[10px] mt-2 md:mt-10 gap-y-5'>
               {latestComic.loading
                 ? Array.apply(null, Array(2)).map((d, index) => {
                   return <DummyComic key={index} />
