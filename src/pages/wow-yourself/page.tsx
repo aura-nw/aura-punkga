@@ -10,6 +10,8 @@ import moment from 'moment'
 import JudgeBoard from 'components/pages/event/wow-yourself/JudgeBoard'
 import { useState } from 'react'
 import Modal from 'components/Modal'
+import Popover from 'components/Popover'
+import Tooltip from 'components/Tooltip'
 export default function WowYourSelf() {
   return (
     <div className=''>
@@ -21,41 +23,51 @@ export default function WowYourSelf() {
         <div className='flex flex-col gap-4 lg:gap-5 mt-5 lg:mt-8 lg:flex-row lg:justify-between'>
           <div className='lg:w-full lg:max-w-[840px]'>
             <h1 className='text-base font-bold leading-5 flex items-center gap-2 lg:text-xl'>
-              Wow yourself - Final round{' '}
-              <Link
-                target='_blank'
-                href='https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.facebook.com%2FPunkgaMeManga%2Fposts%2Fpfbid02H7stNei37BqvRZD5ygKW1WdJsdWad7TYgwhHMSFMY6deWh3NVzWjXXBByc5rC2nml&amp;src=sdkpreparse'
-                className='cursor-pointer'>
-                <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                  <path
-                    d='M9 12C9 13.3807 7.88071 14.5 6.5 14.5C5.11929 14.5 4 13.3807 4 12C4 10.6193 5.11929 9.5 6.5 9.5C7.88071 9.5 9 10.6193 9 12Z'
-                    stroke='#1FAB5E'
-                    strokeWidth='1.5'
-                  />
-                  <path d='M14 6.5L9 10' stroke='#1FAB5E' strokeWidth='1.5' strokeLinecap='round' />
-                  <path d='M14 17.5L9 14' stroke='#1FAB5E' strokeWidth='1.5' strokeLinecap='round' />
-                  <path
-                    d='M19 18.5C19 19.8807 17.8807 21 16.5 21C15.1193 21 14 19.8807 14 18.5C14 17.1193 15.1193 16 16.5 16C17.8807 16 19 17.1193 19 18.5Z'
-                    stroke='#1FAB5E'
-                    strokeWidth='1.5'
-                  />
-                  <path
-                    d='M19 5.5C19 6.88071 17.8807 8 16.5 8C15.1193 8 14 6.88071 14 5.5C14 4.11929 15.1193 3 16.5 3C17.8807 3 19 4.11929 19 5.5Z'
-                    stroke='#1FAB5E'
-                    strokeWidth='1.5'
-                  />
-                </svg>
-              </Link>
+              {moment().isAfter(moment('2024-06-18'))
+                ? 'Wow yourself - Final round'
+                : moment().isAfter(moment('2024-06-11'))
+                ? 'Wow yourself - Round 2: Know YOURSELF'
+                : 'Wow yourself - Round 1: Show YOURSELF'}
+              <Tooltip label='Share on Facebook'>
+                <Link
+                  target='_blank'
+                  href='https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.facebook.com%2FPunkgaMeManga%2Fposts%2Fpfbid02H7stNei37BqvRZD5ygKW1WdJsdWad7TYgwhHMSFMY6deWh3NVzWjXXBByc5rC2nml&amp;src=sdkpreparse'
+                  className='cursor-pointer'>
+                  <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                    <path
+                      d='M9 12C9 13.3807 7.88071 14.5 6.5 14.5C5.11929 14.5 4 13.3807 4 12C4 10.6193 5.11929 9.5 6.5 9.5C7.88071 9.5 9 10.6193 9 12Z'
+                      stroke='#1FAB5E'
+                      strokeWidth='1.5'
+                    />
+                    <path d='M14 6.5L9 10' stroke='#1FAB5E' strokeWidth='1.5' strokeLinecap='round' />
+                    <path d='M14 17.5L9 14' stroke='#1FAB5E' strokeWidth='1.5' strokeLinecap='round' />
+                    <path
+                      d='M19 18.5C19 19.8807 17.8807 21 16.5 21C15.1193 21 14 19.8807 14 18.5C14 17.1193 15.1193 16 16.5 16C17.8807 16 19 17.1193 19 18.5Z'
+                      stroke='#1FAB5E'
+                      strokeWidth='1.5'
+                    />
+                    <path
+                      d='M19 5.5C19 6.88071 17.8807 8 16.5 8C15.1193 8 14 6.88071 14 5.5C14 4.11929 15.1193 3 16.5 3C17.8807 3 19 4.11929 19 5.5Z'
+                      stroke='#1FAB5E'
+                      strokeWidth='1.5'
+                    />
+                  </svg>
+                </Link>
+              </Tooltip>
             </h1>
             <div className='mt-1 flex gap-3 items-center lg:mt-3'>
-              <Link target='_blank' href='https://x.com/PunkgaMeManga/status/1796810762088018331'>
-                <Image src={X} alt='' className='w-8 h-8' />
-              </Link>
-              <Link
-                target='_blank'
-                href='https://www.facebook.com/PunkgaMeManga/posts/pfbid02H7stNei37BqvRZD5ygKW1WdJsdWad7TYgwhHMSFMY6deWh3NVzWjXXBByc5rC2nml'>
-                <Image src={Facebook} alt='' className='w-8 h-8' />
-              </Link>
+              <Tooltip label='View on Twitter'>
+                <Link target='_blank' href='https://x.com/PunkgaMeManga/status/1796810762088018331'>
+                  <Image src={X} alt='' className='w-8 h-8' />
+                </Link>
+              </Tooltip>
+              <Tooltip label='View on Facebook'>
+                <Link
+                  target='_blank'
+                  href='https://www.facebook.com/PunkgaMeManga/posts/pfbid02H7stNei37BqvRZD5ygKW1WdJsdWad7TYgwhHMSFMY6deWh3NVzWjXXBByc5rC2nml'>
+                  <Image src={Facebook} alt='' className='w-8 h-8' />
+                </Link>
+              </Tooltip>
             </div>
             <p className='text-xs leading-5 mt-4 lg:mt-3 lg:text-sm lg:leading-6'>
               WoW YOURSELF - CUỘC THI VẼ TRUYỆN HOT NHẤT MÙA HÈ CHỈ CÓ TẠI PUNKGA ME!
@@ -67,15 +79,17 @@ export default function WowYourSelf() {
               những trải nghiệm thú vị và cơ hội phát triển bản thân cho tất cả các hoạ sĩ.
               <br />
               Tham gia group cuộc thi của Punkga tại đây:{' '}
-              <Link href='http://www.facebook.com/group/punkga.me' className='text-[#2684FC] underline'>
-                http://www.facebook.com/group/punkga.me
+              <Link href='https://www.facebook.com/groups/punkga.me' className='text-[#2684FC] underline'>
+                https://www.facebook.com/groups/punkga.me
               </Link>
             </p>
           </div>
           <div className='flex flex-col gap-4 lg:w-1/2 lg:max-w-[400px] lg:shrink-0'>
             <div className='flex gap-5'>
               <ViewRule />
-              <MainButton disabled={!moment().isAfter(moment('2024-06-11'))} className='w-full'>
+              <MainButton
+                disabled={!(moment().isAfter(moment('2024-06-18')) && moment().isBefore(moment('2024-06-30')))}
+                className='w-full'>
                 Submit my artwork
               </MainButton>
             </div>
@@ -83,12 +97,12 @@ export default function WowYourSelf() {
               <div className='flex gap-6 justify-between'>
                 <div className='flex flex-col gap-1 w-[40%]'>
                   <div className='text-xs leading-[15px] lg:text-sm lg:leading-[18px]'>Participants</div>
-                  <div className='font-semibold lg:text-lg'>12</div>
+                  <div className='font-semibold lg:text-lg'>140</div>
                 </div>
                 <div className='w-[1px] h-[43px] bg-[#1C1C1C1A]'></div>
                 <div className='flex flex-col gap-1 w-[40%]'>
                   <div className='text-xs leading-[15px] lg:text-sm lg:leading-[18px]'>Submitted artworks</div>
-                  <div className='font-semibold lg:text-lg'>2048</div>
+                  <div className='font-semibold lg:text-lg'>140</div>
                 </div>
               </div>
             </div>
@@ -115,7 +129,7 @@ export default function WowYourSelf() {
               <div className='w-[1px] h-[43px] bg-[#1C1C1C1A]'></div>
               <div className='flex flex-col gap-1 w-[40%]'>
                 <div className='text-sm leading-[18px]'>Participants:</div>
-                <div className='font-semibold'>2048</div>
+                <div className='font-semibold'>140</div>
               </div>
             </div>
             <Link

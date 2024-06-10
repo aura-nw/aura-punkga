@@ -1,15 +1,28 @@
 import Image from 'next/image'
+import A7 from '../assets/artist/Ruzatori.jpg'
+import A8 from '../assets/artist/do-dinh-cuong.png'
 import A1 from '../assets/artist/luong-minh-quang.jpg'
 import A2 from '../assets/artist/tuong-pham.jpg'
 import A3 from '../assets/artist/manh-ho.png'
 import A4 from '../assets/artist/miroles.jpg'
 import A5 from '../assets/artist/Phyllocactus.png'
 import A6 from '../assets/artist/that-long-gia.jpg'
+import A9 from '../assets/artist/linh-rab-nguyen.jpg'
 const artistData = [
+  {
+    image: A7,
+    name: 'Ruzatori',
+    des: 'This is the artist of the X famous manga.',
+  },
   {
     image: A1,
     name: 'Lương Minh Quang',
     des: 'This is the artist of the X famous manga.',
+  },
+  {
+    image: A8,
+    name: 'Đỗ Đình Cương',
+    des: 'This is the artist of the X famous manga. This is the artist of the X famous manga.',
   },
   {
     image: A2,
@@ -34,6 +47,11 @@ const artistData = [
   {
     image: A6,
     name: 'Thất Long Gia',
+    des: 'This is the artist of the X famous manga.',
+  },
+  {
+    image: A9,
+    name: 'Linh Rab Nguyen',
     des: 'This is the artist of the X famous manga.',
   },
 ]

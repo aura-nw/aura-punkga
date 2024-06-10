@@ -166,7 +166,7 @@ function Home() {
             </div>
             <div className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-[10px] mt-2 md:mt-10'>
               {latestComic.loading
-                ? Array.apply(null, Array(2)).map((d, index) => {
+                ? Array.apply(null, Array(20)).map((d, index) => {
                   return <DummyComic key={index} />
                 })
                 : latestComic.data?.length
@@ -187,7 +187,7 @@ function Home() {
                   : null}
             </div>
           </div>
-          <div className='lg:flex-auto lg:w-1/3 lg:max-w-[400px] mt-6 lg:mt-0 '>
+          <div className='lg:flex-auto lg:w-[calc(33.9%-40px)] mt-6 lg:mt-0 '>
             <div className='hidden md:block'>
               <SlideSection sliderNavRef={sliderNavRef} />
               {/* <LeaderBoard /> */}
