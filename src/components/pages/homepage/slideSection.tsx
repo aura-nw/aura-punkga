@@ -29,7 +29,7 @@ export default function SlideSection({ sliderNavRef }) {
                   alt=''
                   width={1920}
                   height={1080}
-                  className='w-full aspect-[52/22]  object-cover'
+                  className='w-full aspect-[40/15] max-h-[150px]  object-cover'
                   src={data.comic.image}
                 />
               </Link>
@@ -39,8 +39,10 @@ export default function SlideSection({ sliderNavRef }) {
       </div>
       <div className='px-5 md:px-0'>
         <div className='mt-5 rounded-2xl flex flex-col gap-[10px]'>
-          <Link href='https://docs.google.com/forms/d/e/1FAIpQLSelARRDM8YVrEHRycSfpA1J95_f2PmrvSRqXGVSKXusXla-5A/viewform' target='_blank'>
-            <Image src={Banner} alt='' className='rounded-[10px] w-full aspect-[5/2] object-cover' />
+          <Link
+            href='https://docs.google.com/forms/d/e/1FAIpQLSelARRDM8YVrEHRycSfpA1J95_f2PmrvSRqXGVSKXusXla-5A/viewform'
+            target='_blank'>
+            <Image src={Banner} alt='' className='rounded-[10px] w-full aspect-[40/15] max-h-[150px] object-cover' />
           </Link>
         </div>
       </div>
