@@ -392,9 +392,13 @@ export default function TaskSlider({ sliderNavRef }) {
       href='https://www.facebook.com/PunkgaMeManga/posts/pfbid0DSbBV83x5J94cMiPSjknY3NCWekJ9nKVMdSTJnzrBHFEJr3texFbMRwyhvQ7browl'
       target='_blank'>
       <div className='md:hidden px-5 pt-5'>
-        <Image src={EventBanner} alt='' className='w-full object-cover aspect-[75/32] rounded-2xl' />
+        <Image src={EventBanner} alt='' className='w-full object-cover aspect-[75/32] max-h-[320px] rounded-2xl' />
       </div>
-      <Image src={EventBanner} alt='' className='hidden md:block w-full object-cover aspect-[75/32] rounded-2xl' />
+      <Image
+        src={EventBanner}
+        alt=''
+        className='hidden md:block w-full object-cover aspect-[75/32] max-h-[320px] rounded-2xl'
+      />
     </Link>
   )
   return (

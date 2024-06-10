@@ -22,7 +22,7 @@ export default function Comic2(props: IComic) {
     }, [])
     return (
         <div className={`${props.status.text == 'Upcoming' ? '[&_a:not(.author)]:pointer-events-none' : ''}`}>
-            <div className='aspect-[160/230]'>
+            <div className='w-full aspect-[16/23] rounded overflow-hidden'>
                 <Link
                     href={`/comic/${props.slug}`}
                     className='relative w-full h-full aspect-[160/230] mx-auto group'
@@ -37,7 +37,7 @@ export default function Comic2(props: IComic) {
                         />
                     </div>
                     <div
-                        className="absolute overflow-hidden bottom-0 w-full h-[50px] p-2 transition-all duration-300 ease-in-out group-hover:h-full bg-gradient-to-b from-transparent to-[rgba(0,0,0,0.75)] to-[56.66%] group-hover:bg-[rgba(0,0,0,0.75)]"
+                        className="absolute overflow-hidden bottom-0 w-full h-[50px] p-2 transition-all duration-300 ease-in-out group-hover:h-full bg-gradient-to-b from-transparent to-[rgba(0,0,0,.75)] to-[60%] group-hover:bg-[rgba(0,0,0,0.75)]"
                     >
                         <p className='text-primary-color whitespace-nowrap text-ellipsis overflow-hidden text-base font-bold leading-5'>{props[locale].title}</p>
                         <div className='flex text-white gap-1 whitespace-nowrap text-ellipsis overflow-hidden text-sm font-semibold leading-[17px]'>
