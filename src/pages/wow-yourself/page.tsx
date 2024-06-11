@@ -1,18 +1,24 @@
+import Facebook from 'assets/images/Facebook.png'
+import X from 'assets/images/x.png'
 import MainButton from 'components/Button/MainButton'
+import Modal from 'components/Modal'
+import Tooltip from 'components/Tooltip'
 import BannerDesktop from 'components/pages/event/assets/banner-desktop.png'
 import BannerMobile from 'components/pages/event/assets/banner-mobile.png'
 import Banner from 'components/pages/event/assets/banner.png'
+import BannerEn from 'components/pages/event/assets/banner_en.png'
+import ComicList from 'components/pages/event/wow-yourself/ComicList'
+import JudgeBoard from 'components/pages/event/wow-yourself/JudgeBoard'
+import Timeline from 'components/pages/event/wow-yourself/TimeLine'
+import moment from 'moment'
 import Image from 'next/image'
 import Link from 'next/link'
-import X from 'assets/images/x.png'
-import Facebook from 'assets/images/Facebook.png'
-import moment from 'moment'
-import JudgeBoard from 'components/pages/event/wow-yourself/JudgeBoard'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
-import Modal from 'components/Modal'
-import Popover from 'components/Popover'
-import Tooltip from 'components/Tooltip'
+import { useTranslation } from 'react-i18next'
 export default function WowYourSelf() {
+  const { locale } = useRouter()
+  const { t } = useTranslation()
   return (
     <div className=''>
       <Image src={BannerMobile} className='w-full lg:hidden h-auto' alt='' />
@@ -24,11 +30,11 @@ export default function WowYourSelf() {
           <div className='lg:w-full lg:max-w-[840px]'>
             <h1 className='text-base font-bold leading-5 flex items-center gap-2 lg:text-xl'>
               {moment().isAfter(moment('2024-06-18'))
-                ? 'Wow yourself - Final round'
+                ? t('WoW YOURSELF - Round 3: Grow YOURSELF')
                 : moment().isAfter(moment('2024-06-11'))
-                ? 'Wow yourself - Round 2: Know YOURSELF'
-                : 'Wow yourself - Round 1: Show YOURSELF'}
-              <Tooltip label='Share on Facebook'>
+                ? t('WoW YOURSELF - Round 2: Know YOURSELF')
+                : t('WoW YOURSELF - Round 1: Show YOURSELF')}
+              <Tooltip label={t('Share on Facebook')}>
                 <Link
                   target='_blank'
                   href='https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.facebook.com%2FPunkgaMeManga%2Fposts%2Fpfbid02H7stNei37BqvRZD5ygKW1WdJsdWad7TYgwhHMSFMY6deWh3NVzWjXXBByc5rC2nml&amp;src=sdkpreparse'
@@ -56,12 +62,12 @@ export default function WowYourSelf() {
               </Tooltip>
             </h1>
             <div className='mt-1 flex gap-3 items-center lg:mt-3'>
-              <Tooltip label='View on Twitter'>
+              <Tooltip label={t('View on Twitter')}>
                 <Link target='_blank' href='https://x.com/PunkgaMeManga/status/1796810762088018331'>
                   <Image src={X} alt='' className='w-8 h-8' />
                 </Link>
               </Tooltip>
-              <Tooltip label='View on Facebook'>
+              <Tooltip label={t('View on Facebook')}>
                 <Link
                   target='_blank'
                   href='https://www.facebook.com/PunkgaMeManga/posts/pfbid02H7stNei37BqvRZD5ygKW1WdJsdWad7TYgwhHMSFMY6deWh3NVzWjXXBByc5rC2nml'>
@@ -69,20 +75,43 @@ export default function WowYourSelf() {
                 </Link>
               </Tooltip>
             </div>
-            <p className='text-xs leading-5 mt-4 lg:mt-3 lg:text-sm lg:leading-6'>
-              WoW YOURSELF - CUỘC THI VẼ TRUYỆN HOT NHẤT MÙA HÈ CHỈ CÓ TẠI PUNKGA ME!
-              <br />
-              Bạn có đam mê vẽ truyện? Bạn muốn thể hiện cá tính và tài năng của mình? Vậy thì đừng bỏ lỡ cơ hội tỏa
-              sáng cùng cuộc thi WoW YOURSELF do Punkga ME tổ chức!
-              <br />
-              Tổng giải thưởng lên đến 8.000.000+ VNĐ cùng nhiều phần quà hấp dẫn khác, WoW YOURSELF hứa hẹn sẽ mang đến
-              những trải nghiệm thú vị và cơ hội phát triển bản thân cho tất cả các hoạ sĩ.
-              <br />
-              Tham gia group cuộc thi của Punkga tại đây:{' '}
-              <Link href='https://www.facebook.com/groups/punkga.me' target='_blank' className='text-[#2684FC] underline'>
-                https://www.facebook.com/groups/punkga.me
-              </Link>
-            </p>
+            {locale == 'vn' ? (
+              <p className='text-xs leading-5 mt-4 lg:mt-3 lg:text-sm lg:leading-6'>
+                WoW YOURSELF - CUỘC THI VẼ TRUYỆN HOT NHẤT MÙA HÈ CHỈ CÓ TẠI PUNKGA ME!
+                <br />
+                Bạn có đam mê vẽ truyện? Bạn muốn thể hiện cá tính và tài năng của mình? Vậy thì đừng bỏ lỡ cơ hội tỏa
+                sáng cùng cuộc thi WoW YOURSELF do Punkga ME tổ chức!
+                <br />
+                Tổng giải thưởng lên đến 8.000.000+ VNĐ cùng nhiều phần quà hấp dẫn khác, WoW YOURSELF hứa hẹn sẽ mang
+                đến những trải nghiệm thú vị và cơ hội phát triển bản thân cho tất cả các hoạ sĩ.
+                <br />
+                Tham gia group cuộc thi của Punkga tại đây:{' '}
+                <Link
+                  href='https://www.facebook.com/groups/punkga.me'
+                  target='_blank'
+                  className='text-[#2684FC] underline'>
+                  https://www.facebook.com/groups/punkga.me
+                </Link>
+              </p>
+            ) : (
+              <p className='text-xs leading-5 mt-4 lg:mt-3 lg:text-sm lg:leading-6'>
+                WoW YOURSELF - THE HOTTEST COMIC DRAWING CONTEST OF THE SUMMER ONLY AT PUNKGA ME!
+                <br />
+                Do you have a passion for drawing comics? Do you want to showcase your personality and talent? Then
+                don't miss the chance to shine in the WoW YOURSELF contest organized by Punkga ME!
+                <br />
+                With a total prize pool of over 8,000,000+ VND and many other attractive rewards, WoW YOURSELF promises
+                to bring exciting experiences and personal development opportunities for all artists.
+                <br />
+                Join the Punkga contest group here:{' '}
+                <Link
+                  href='https://www.facebook.com/groups/punkga.me'
+                  target='_blank'
+                  className='text-[#2684FC] underline'>
+                  https://www.facebook.com/groups/punkga.me
+                </Link>
+              </p>
+            )}
           </div>
           <div className='flex flex-col gap-4 lg:w-1/2 lg:max-w-[400px] lg:shrink-0'>
             <div className='flex gap-5'>
@@ -90,111 +119,42 @@ export default function WowYourSelf() {
               <MainButton
                 disabled={!(moment().isAfter(moment('2024-06-18')) && moment().isBefore(moment('2024-06-30')))}
                 className='w-full'>
-                Submit my artwork
+                {t('Submit my artwork')}
               </MainButton>
             </div>
             <div className='bg-[#F2F2F2] rounded-2xl py-5 px-4 flex flex-col gap-5 text-[#1C1C1C]'>
               <div className='flex gap-6 justify-between'>
                 <div className='flex flex-col gap-1 w-[40%]'>
-                  <div className='text-xs leading-[15px] lg:text-sm lg:leading-[18px]'>Participants</div>
+                  <div className='text-xs leading-[15px] lg:text-sm lg:leading-[18px]'>{t('Participants')}</div>
                   <div className='font-semibold lg:text-lg'>140</div>
                 </div>
                 <div className='w-[1px] h-[43px] bg-[#1C1C1C1A]'></div>
                 <div className='flex flex-col gap-1 w-[40%]'>
-                  <div className='text-xs leading-[15px] lg:text-sm lg:leading-[18px]'>Submitted artworks</div>
+                  <div className='text-xs leading-[15px] lg:text-sm lg:leading-[18px]'>{t('Submitted artworks')}</div>
                   <div className='font-semibold lg:text-lg'>140</div>
                 </div>
               </div>
             </div>
-            {/* <Link href=''>
-              <Image src={Banner} alt='' className='w-full' />
-            </Link> */}
-          </div>
-        </div>
-        <div className='flex flex-col items-center w-full mt-10 xl:mt-8 xl:flex-row xl:max-w-[1280px] mx-auto'>
-          <div
-            className={`lg:min-h-[138px] max-w-[400px] w-full rounded-2xl py-3 px-4 flex flex-col gap-3 border-2 ${
-              moment().isAfter(moment('2024-06-03'))
-                ? moment().isBefore(moment('2024-06-10'))
-                  ? 'border-[#1FAB5E] shadow-[0px_0px_0px_2px_#23FF81]'
-                  : 'shadow-[0px_0px_0px_2px_#23FF81] bg-[#F6FEF9]'
-                : 'border-[#DEDEDE]'
-            }`}>
-            <div className='font-semibold leading-5'>Round 1: Show YOURSELF</div>
-            <div className='flex gap-6 justify-between'>
-              <div className='flex flex-col gap-1 w-[40%]'>
-                <div className='text-sm leading-[18px]'>Start</div>
-                <div className='font-semibold'>03/06 - 10/06</div>
-              </div>
-              <div className='w-[1px] h-[43px] bg-[#1C1C1C1A]'></div>
-              <div className='flex flex-col gap-1 w-[40%]'>
-                <div className='text-sm leading-[18px]'>Participants:</div>
-                <div className='font-semibold'>140</div>
-              </div>
-            </div>
-            <Link
-              href='https://www.facebook.com/PunkgaMeManga/posts/pfbid02fm2AemHFfMWPaZxPceJHyQbj1PsPUkfXCoJbLZJGAJuXCfpc49apQknwdkdEfkhbl?rdid=2Ew6QNhR0hxgSi2o'
-              target='_blank'
-              className='text-[#2684FC] text-sm'>
-              View on facebook
+            <Link href=''>
+              <Image src={locale == 'vn' ? Banner : BannerEn} alt='' className='w-full' />
             </Link>
           </div>
-          <div className='w-[1px] h-[32px] xl:flex-1 xl:h-[1px] xl:min-w-5 xl:shrink-0 bg-[#1C1C1C1A]'></div>
-          <div
-            className={`xl:min-h-[138px] max-w-[400px] w-full rounded-2xl py-3 px-4 flex flex-col gap-3 border-2 ${
-              moment().isAfter(moment('2024-06-11'))
-                ? moment().isBefore(moment('2024-06-17'))
-                  ? 'border-[#1FAB5E] shadow-[0px_0px_0px_2px_#23FF81]'
-                  : 'shadow-[0px_0px_0px_2px_#23FF81] bg-[#F6FEF9]'
-                : 'border-[#DEDEDE]'
-            }`}>
-            <div className='font-semibold leading-5'>Round 2: Know YOURSELF</div>
-            <div className='flex gap-6 justify-between'>
-              <div className='flex flex-col gap-1 w-[40%]'>
-                <div className='text-sm leading-[18px]'>Start</div>
-                <div className='font-semibold'>11/06 - 17/06</div>
-              </div>
-              <div className='w-[1px] h-[43px] bg-[#1C1C1C1A]'></div>
-              <div className='flex flex-col gap-1 w-[40%]'>
-                <div className='text-sm leading-[18px]'>Participants:</div>
-                <div className='font-semibold'>---</div>
-              </div>
-            </div>
-          </div>
-          <div className='w-[1px] h-[32px] xl:flex-1 xl:h-[1px] xl:min-w-5 xl:shrink-0 bg-[#1C1C1C1A]'></div>
-          <div
-            className={`xl:min-h-[138px] max-w-[400px] w-full rounded-2xl py-3 px-4 flex flex-col gap-3 border-2 ${
-              moment().isAfter(moment('2024-06-18'))
-                ? moment().isBefore(moment('2024-06-30'))
-                  ? 'border-[#1FAB5E] shadow-[0px_0px_0px_2px_#23FF81]'
-                  : 'shadow-[0px_0px_0px_2px_#23FF81] bg-[#F6FEF9]'
-                : 'border-[#DEDEDE]'
-            }`}>
-            <div className='font-semibold leading-5'>Round 3: Grow YOURSELF</div>
-            <div className='flex gap-6 justify-between'>
-              <div className='flex flex-col gap-1 w-[40%]'>
-                <div className='text-sm leading-[18px]'>Start</div>
-                <div className='font-semibold'>18/06 - 30/06</div>
-              </div>
-              <div className='w-[1px] h-[43px] bg-[#1C1C1C1A]'></div>
-              <div className='flex flex-col gap-1 w-[40%]'>
-                <div className='text-sm leading-[18px]'>Participants:</div>
-                <div className='font-semibold'>---</div>
-              </div>
-            </div>
-          </div>
         </div>
+        {!(moment().isAfter(moment('2024-06-18')) && moment().isBefore(moment('2024-06-30'))) && <Timeline />}
+        {moment().isAfter(moment('2024-06-18')) && moment().isBefore(moment('2024-06-30')) && <ComicList />}
         <JudgeBoard />
+        {moment().isAfter(moment('2024-06-18')) && moment().isBefore(moment('2024-06-30')) && <Timeline />}
       </div>
     </div>
   )
 }
 function ViewRule() {
   const [open, setOpen] = useState(false)
+  const { t } = useTranslation()
   return (
     <>
       <MainButton style='secondary' className='w-full' onClick={() => setOpen(true)}>
-        View Rule
+        {t('View Rule')}
       </MainButton>
       <Modal open={open} setOpen={setOpen}>
         <div className=' w-[90vw] p-5 lg:p-10 max-w-[1000px] h-[90vh] overflow-auto'>
