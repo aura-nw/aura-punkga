@@ -8,54 +8,56 @@ import A4 from '../assets/artist/miroles.jpg'
 import A5 from '../assets/artist/Phyllocactus.png'
 import A6 from '../assets/artist/that-long-gia.jpg'
 import A9 from '../assets/artist/linh-rab-nguyen.jpg'
+import { useTranslation } from 'react-i18next'
 const artistData = [
   {
     image: A7,
-    name: 'Ruzatori',
-    des: 'This is the artist of the X famous manga.',
+    name: 'Hoang Trong Thien',
+    des: 'To pursue dreams, go to sleep',
   },
   {
     image: A1,
-    name: 'Lương Minh Quang',
-    des: 'This is the artist of the X famous manga.',
+    name: 'Luong Minh Quang',
+    des: 'Enjoys part-time drawing',
   },
   {
     image: A8,
-    name: 'Đỗ Đình Cương',
-    des: 'This is the artist of the X famous manga. This is the artist of the X famous manga.',
+    name: 'Do Dinh Cuong',
+    des: 'The author is the first reader who needs to be satisfied',
   },
   {
     image: A2,
     name: 'Tuong Pham',
-    des: 'This is the artist of the X famous manga. This is the artist of the X famous manga.',
+    des: 'A storyteller who became an artist because of poor writing skills',
   },
   {
     image: A3,
     name: 'Manh Ho',
-    des: 'This is the artist of the X famous manga.',
+    des: 'Happiness is simply cat memes and having people read my comics',
   },
   {
     image: A4,
     name: 'Miroles Wilson',
-    des: 'This is the artist of the X famous manga.',
+    des: 'Speed is the key to opening doors, balance keeps the lock steady, and optimization makes everything run smoothly',
   },
   {
     image: A5,
     name: 'Phyllocactus',
-    des: 'This is the artist of the X famous manga.',
+    des: 'The most persistent comic artist in Vietnam',
   },
   {
     image: A6,
-    name: 'Thất Long Gia',
-    des: 'This is the artist of the X famous manga.',
+    name: 'That Long Gia',
+    des: 'Living and working to bring beauty to the world',
   },
   {
     image: A9,
     name: 'Linh Rab Nguyen',
-    des: 'This is the artist of the X famous manga.',
+    des: 'A wandering comic artist, an urban poor, and occasionally a teacher',
   },
 ]
 export default function JudgeBoard() {
+  const {t} = useTranslation()
   return (
     <div className='mt-10 lg:mt-16'>
       <h1 className='font-bold lg:text-xl'>Judge board</h1>
@@ -66,9 +68,9 @@ export default function JudgeBoard() {
               <Image src={data.image} alt='' className='w-full aspect-square object-cover rounded-lg' />
               <div className='mt-[10px] '>
                 <div className='w-full text-center font-semibold overflow-hidden text-ellipsis whitespace-nowrap text-sm leading-[18px] lg:text-base lg:leading-5'>
-                  {data.name}
+                  {t(data.name)}
                 </div>
-                <div className='w-full leading-[15px] text-xs lg:text-sm lg:leading-[18px]'>{data.des}</div>
+                <div className='w-full leading-[15px] text-xs lg:text-sm lg:leading-[18px]'>{t(data.des)}</div>
               </div>
             </div>
           )

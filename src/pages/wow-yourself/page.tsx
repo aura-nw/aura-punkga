@@ -79,7 +79,7 @@ export default function WowYourSelf() {
               những trải nghiệm thú vị và cơ hội phát triển bản thân cho tất cả các hoạ sĩ.
               <br />
               Tham gia group cuộc thi của Punkga tại đây:{' '}
-              <Link href='https://www.facebook.com/groups/punkga.me' className='text-[#2684FC] underline'>
+              <Link href='https://www.facebook.com/groups/punkga.me' target='_blank' className='text-[#2684FC] underline'>
                 https://www.facebook.com/groups/punkga.me
               </Link>
             </p>
