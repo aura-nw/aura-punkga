@@ -67,7 +67,7 @@ export default function JudgeBoard() {
             <div key={i} className='p-2 bg-[#F0F0F0] rounded-xl'>
               <Image src={data.image} alt='' className='w-full aspect-square object-cover rounded-lg' />
               <div className='mt-[10px] '>
-                <div className='w-full text-center font-semibold overflow-hidden text-ellipsis whitespace-nowrap text-sm leading-[18px] lg:text-base lg:leading-5'>
+                <div className='w-full font-semibold overflow-hidden text-ellipsis whitespace-nowrap text-sm leading-[18px] lg:text-base lg:leading-5'>
                   {t(data.name)}
                 </div>
                 <div className='w-full leading-[15px] text-xs lg:text-sm lg:leading-[18px]'>{t(data.des)}</div>
