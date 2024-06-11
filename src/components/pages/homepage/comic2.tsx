@@ -24,11 +24,11 @@ export default function Comic2(props: IComic) {
         }
     }, [])
     return (
-        <div className={`${props.status.text == 'Upcoming' ? '[&_a:not(.author)]:pointer-events-none' : ''}`}>
-            <div className='w-full aspect-[16/23] rounded overflow-hidden'>
+        <div>
+            <div className='w-full aspect-[16/23] rounded overflow-hidden group'>
                 <Link
                     href={`/comic/${props.slug}`}
-                    className='relative w-full h-full aspect-[160/230] mx-auto group'
+                    className={`relative w-full h-full aspect-[160/230] mx-auto ${props.status.text == 'Upcoming' ? 'pointer-events-none' : 'pointer-events-auto'}`}
                 >
                     <div className='block h-full'>
                         <Image
@@ -86,7 +86,16 @@ export default function Comic2(props: IComic) {
                                     <HeartIcon className="w-5 h-5" />
                                 </div>
                             </div>
-                            <div className='text-xs leading-4 mt-3 text-white'>{props[locale].description}</div>
+                            <div className='text-xs leading-4 mt-3 text-white'
+                                style={{
+                                    textOverflow: 'ellipsis',
+                                    overflow: 'hidden',
+                                    display: '-webkit-box',
+                                    WebkitLineClamp: 8,
+                                    WebkitBoxOrient: 'vertical',
+                                    whiteSpace: 'normal'
+                                }}
+                            >{props[locale].description}</div>
                             <div
                                 className='mt-[6px] mb-1'
                             >
