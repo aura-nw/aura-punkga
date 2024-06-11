@@ -27,9 +27,8 @@ export default function Comic2(props: IComic) {
         <div>
             <div className='w-full aspect-[16/23] rounded overflow-hidden group'>
                 <Link
-                    
                     href={`/comic/${props.slug}`}
-                    className={`relative w-full h-full aspect-[160/230] mx-auto ${props.status.text == 'Upcoming' ? 'pointer-events-none': 'pointer-events-auto'}`}
+                    className={`relative w-full h-full aspect-[160/230] mx-auto ${props.status.text == 'Upcoming' ? 'pointer-events-none' : 'pointer-events-auto'}`}
                 >
                     <div className='block h-full'>
                         <Image
@@ -87,6 +86,33 @@ export default function Comic2(props: IComic) {
                                     <HeartIcon className="w-5 h-5" />
                                 </div>
                             </div>
+                            <div className='text-xs leading-4 mt-3 text-white'
+                                style={{
+                                    textOverflow: 'ellipsis',
+                                    overflow: 'hidden',
+                                    display: '-webkit-box',
+                                    WebkitLineClamp: 8,
+                                    WebkitBoxOrient: 'vertical',
+                                    whiteSpace: 'normal'
+                                }}
+                            >{props[locale].description}</div>
+                            <div
+                                className='mt-[6px] mb-1'
+                            >
+                                {props.status.text != 'Ongoing' && (
+                                    <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
+                                )}
+                            </div>
+                            {!!props.latestChap.number && (
+                                <div className='leading-[20px] text-white text-sm'>
+                                    {t('Latest')}:{' '}
+                                    <Link
+                                        href={`/comic/${props.slug}/chapter/${props.latestChap.number}`}
+                                        className='text-primary-color font-[600]'>
+                                        {t('Chap')} #{props.latestChap.number}
+                                    </Link>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </Link>
