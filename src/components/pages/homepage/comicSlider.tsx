@@ -389,7 +389,7 @@ export default function TaskSlider({ sliderNavRef }) {
   const [slideIndex, setSlideIndex] = useState(0)
   return (
     <Link
-      href='https://www.facebook.com/PunkgaMeManga/posts/pfbid0DSbBV83x5J94cMiPSjknY3NCWekJ9nKVMdSTJnzrBHFEJr3texFbMRwyhvQ7browl'
+      href='/wow-yourself'
       target='_blank'>
       <div className='md:hidden px-5 pt-5'>
         <Image src={EventBanner} alt='' className='w-full object-cover aspect-[84/32] rounded-2xl' />
