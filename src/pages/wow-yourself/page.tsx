@@ -135,7 +135,7 @@ export default function WowYourSelf() {
                 </div>
               </div>
             </div>
-            <Link href=''>
+            <Link href='/campaigns'>
               <Image src={locale == 'vn' ? Banner : BannerEn} alt='' className='w-full rounded-2xl overflow-hidden' />
             </Link>
           </div>

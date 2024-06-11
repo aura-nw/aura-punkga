@@ -8,17 +8,13 @@ import A4 from '../assets/artist/miroles.jpg'
 import A5 from '../assets/artist/Phyllocactus.png'
 import A6 from '../assets/artist/that-long-gia.jpg'
 import A9 from '../assets/artist/linh-rab-nguyen.jpg'
+import A10 from '../assets/artist/punkga.jpg'
 import { useTranslation } from 'react-i18next'
 const artistData = [
   {
-    image: A7,
-    name: 'Hoang Trong Thien',
-    des: 'To pursue dreams, go to sleep',
-  },
-  {
-    image: A1,
-    name: 'Luong Minh Quang',
-    des: 'Enjoys part-time drawing',
+    image: A10,
+    name: 'Brand Spokesperson Punkga',
+    des: 'A good story is defined by how we tell it',
   },
   {
     image: A8,
@@ -26,9 +22,19 @@ const artistData = [
     des: 'The author is the first reader who needs to be satisfied',
   },
   {
-    image: A2,
-    name: 'Tuong Pham',
-    des: 'A storyteller who became an artist because of poor writing skills',
+    image: A7,
+    name: 'Hoang Trong Thien',
+    des: 'To pursue dreams, go to sleep',
+  },
+  {
+    image: A9,
+    name: 'Linh Rab Nguyen',
+    des: 'A wandering comic artist, an urban poor, and occasionally a teacher',
+  },
+  {
+    image: A1,
+    name: 'Luong Minh Quang',
+    des: 'Enjoys part-time drawing',
   },
   {
     image: A3,
@@ -46,18 +52,18 @@ const artistData = [
     des: 'The most persistent comic artist in Vietnam',
   },
   {
+    image: A2,
+    name: 'Tuong Pham',
+    des: 'A storyteller who became an artist because of poor writing skills',
+  },
+  {
     image: A6,
     name: 'That Long Gia',
     des: 'Living and working to bring beauty to the world',
   },
-  {
-    image: A9,
-    name: 'Linh Rab Nguyen',
-    des: 'A wandering comic artist, an urban poor, and occasionally a teacher',
-  },
 ]
 export default function JudgeBoard() {
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   return (
     <div className='mt-9 lg:mt-16'>
       <h1 className='font-bold lg:text-xl'>{t('Judge board')}</h1>
