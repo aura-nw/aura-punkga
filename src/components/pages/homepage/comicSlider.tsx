@@ -389,8 +389,7 @@ export default function TaskSlider({ sliderNavRef }) {
   const [slideIndex, setSlideIndex] = useState(0)
   return (
     <Link
-      href='/wow-yourself'
-      target='_blank'>
+      href='/wow-yourself'>
       <div className='md:hidden px-5 pt-5'>
         <Image src={EventBanner} alt='' className='w-full object-cover aspect-[84/32] rounded-2xl' />
       </div>
