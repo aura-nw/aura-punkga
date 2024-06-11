@@ -81,7 +81,7 @@ export default function FilledSelect({
                 enter='transition ease-in duration-100'
                 enterFrom='opacity-0'
                 enterTo='opacity-100'>
-                <Listbox.Options className='top-9 right-0 absolute z-10 mt-1 max-h-56 w-fit max-w-[300px] whitespace-nowrap rounded-[12px] overflow-auto bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
+                <Listbox.Options className='top-9 left-0 absolute z-10 mt-1 max-h-56 w-fit max-w-[300px] whitespace-nowrap rounded-[12px] overflow-auto bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
                   {options.map((option) => {
                     return (
                       <Listbox.Option

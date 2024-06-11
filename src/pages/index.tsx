@@ -3,6 +3,7 @@ import DummyComic from 'components/DummyComponent/comic'
 import Footer from 'components/Footer'
 import Header from 'components/Header'
 import FilledSelect from 'components/Select/FilledSelect'
+import Comic2 from 'components/pages/homepage/comic2'
 import Comic from 'components/pages/homepage/comic'
 import LeaderBoard from 'components/pages/homepage/leaderboard'
 import SlideSection from 'components/pages/homepage/slideSection'
@@ -17,6 +18,7 @@ import { useTranslation } from 'react-i18next'
 import useApi from 'src/hooks/useApi'
 import { IComic } from 'src/models/comic'
 import { getAllTags, getLatestComic, getTrendingComic } from 'src/services'
+import Layout from 'components/Layout'
 
 declare global {
   interface Window {
@@ -73,14 +75,13 @@ function Home() {
   }, [t('All status')])
   return (
     <>
-      <Header />
       <div className='md:hidden'>
         <TaskSlider sliderNavRef={sliderNavRef} />
         <SlideSection sliderNavRef={sliderNavRef} />
       </div>
       <div className='pk-container'>
         <div className='md:my-[50px] lg:flex gap-10'>
-          <div className='lg:flex-auto lg:w-[65%]  relative'>
+          <div className='lg:flex-auto lg:w-[65%] relative'>
             <div className='hidden md:block'>
               <TaskSlider sliderNavRef={sliderNavRef} />
             </div>
@@ -163,9 +164,9 @@ function Home() {
                 />
               </div>
             </div>
-            <div className='grid md:grid-cols-1 grid-cols-2 2xl:grid-cols-2 gap-10 mt-2 md:mt-10'>
+            <div className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-[10px] mt-2 md:mt-10'>
               {latestComic.loading
-                ? Array.apply(null, Array(2)).map((d, index) => {
+                ? Array.apply(null, Array(20)).map((d, index) => {
                   return <DummyComic key={index} />
                 })
                 : latestComic.data?.length
@@ -181,19 +182,19 @@ function Home() {
                         : true
                     )
                     .map((data, index) => {
-                      return <Comic key={index} {...data} />
+                      return <Comic2 key={index} {...data} />
                     })
                   : null}
             </div>
           </div>
-          <div className='lg:flex-auto lg:w-[32%] mt-6 lg:mt-0 '>
+          <div className='lg:flex-auto lg:w-[calc(33.9%-40px)] mt-6 lg:mt-0 '>
             <div className='hidden md:block'>
               <SlideSection sliderNavRef={sliderNavRef} />
               {/* <LeaderBoard /> */}
             </div>
             <div className='flex flex-col p-6 bg-[#292929] text-white rounded-[10px] mt-10'>
               <div className='md:text-xl text-sm md:leading-[25px] font-[800] mb-4 md:mb-6'>
-              🔥{t('Trending')}
+                🔥{t('Trending')}
               </div>
               <div className='flex flex-col gap-10 mt-2 md:mt-6'>
                 {trendingComic.loading
@@ -212,7 +213,6 @@ function Home() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   )
 }
@@ -222,6 +222,9 @@ export default function Page(props) {
     return <></>
   }
   return <Home />
+}
+Page.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>
 }
 export const getStaticProps = async ({ locale }) => {
   if (process.env.NODE_ENV === 'development') {

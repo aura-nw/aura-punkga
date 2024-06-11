@@ -1,6 +1,5 @@
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import Footer from 'components/Footer'
-import Header from 'components/Header'
+import Layout from 'components/Layout'
 import FbIcon from 'images/Facebook.svg'
 import BeIcon from 'images/behance.svg'
 import FemaleIcon from 'images/icons/female.svg'
@@ -9,24 +8,24 @@ import IgIcon from 'images/instagram.svg'
 import { i18n, useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { isMobile } from 'react-device-detect'
 import Slider from 'react-slick'
 import { authorData } from '../../utils/authorData'
-import BgImage from './assets/bg.png'
 import BgImage2 from './assets/bg-2.png'
+import BgImage from './assets/bg.png'
 import DecorImg2 from './assets/decor-2.svg'
 import DecorImg3 from './assets/decor-3.png'
 import DecorImg from './assets/decor.svg'
 import SlideImage1 from './assets/slide-1.svg'
 import SlideImage2 from './assets/slide-2.svg'
 import SlideImage3 from './assets/slide-3.svg'
-import SPImage from './assets/support.svg'
+import SPImage2VN from './assets/support-2-vn.svg'
 import SPImage2 from './assets/support-2.svg'
 import SPImageVN from './assets/support-vn.svg'
-import SPImage2VN from './assets/support-2-vn.svg'
-import Link from 'next/link'
-import { isMobile } from 'react-device-detect'
+import SPImage from './assets/support.svg'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -64,7 +63,6 @@ function AboutUs() {
   }
   return (
     <>
-      <Header />
       <div className='mx-auto max-w-[1360px]'>
         <div className='pk-container px-5 lg:px-0'>
           <div className='flex gap-4 lg:gap-16 mt-[50px] lg:mt-24 items-start'>
@@ -327,7 +325,6 @@ function AboutUs() {
           </div>
         </Link>
       </div>
-      <Footer />
     </>
   )
 }
@@ -458,6 +455,9 @@ const Author = ({ data, active, setActive, index }) => {
       </div>
     </div>
   )
+}
+Page.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>
 }
 export const getStaticProps = async ({ locale }) => {
   if (process.env.NODE_ENV === 'development') {

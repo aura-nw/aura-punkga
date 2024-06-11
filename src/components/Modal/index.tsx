@@ -1,8 +1,20 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { Fragment, useRef } from 'react'
+import { Fragment, ReactNode, useRef } from 'react'
 
-export default function Modal({ open, setOpen, children, hideClose, preventClickOutsideToClose }: any) {
+export default function Modal({
+  open,
+  setOpen,
+  children,
+  hideClose,
+  preventClickOutsideToClose = true,
+}: {
+  open: boolean
+  setOpen: (open: boolean) => void
+  children: ReactNode | JSX.Element
+  hideClose?: boolean
+  preventClickOutsideToClose?: boolean
+}) {
   const cancelButtonRef = useRef(null)
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -19,7 +31,7 @@ export default function Modal({ open, setOpen, children, hideClose, preventClick
           leave='ease-in duration-200'
           leaveFrom='opacity-70'
           leaveTo='opacity-0'>
-          <div className='fixed inset-0 bg-transparent transition-opacity' />
+          <div className='fixed inset-0 bg-white/70 transition-opacity' />
         </Transition.Child>
 
         <div className='fixed inset-0 z-10 overflow-y-auto'>

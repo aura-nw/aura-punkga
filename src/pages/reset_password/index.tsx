@@ -2,6 +2,7 @@ import MainButton from 'components/Button/MainButton'
 import Footer from 'components/Footer'
 import Header from 'components/Header'
 import OutlineTextField from 'components/Input/TextField/Outline'
+import Layout from 'components/Layout'
 import CheckSquare from 'images/icons/check_square_fill.svg'
 import SuccessImg from 'images/Mascot2.png'
 import { i18n } from 'next-i18next'
@@ -19,6 +20,9 @@ export default function Page(props) {
     return <></>
   }
   return <ResetPassword />
+}
+Page.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>
 }
 function ResetPassword() {
   const searchParams = useSearchParams()
@@ -78,16 +82,13 @@ function ResetPassword() {
   if (!token) {
     return (
       <>
-        <Header />
         <div className='pk-container py-4'>Missing token!</div>
-        <Footer />
       </>
     )
   }
 
   return (
     <>
-      <Header />
       {!success ? (
         <div className='flex justify-center md:items-center py-[120px] flex-col w-full max-w-[398px] mx-auto'>
           <p className='text-center text-xl leading-6 font-bold mb-10'>{t('Reset password')}</p>
@@ -137,7 +138,6 @@ function ResetPassword() {
           </MainButton>
         </div>
       )}
-      <Footer />
     </>
   )
 }

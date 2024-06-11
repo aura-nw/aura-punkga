@@ -72,45 +72,43 @@ a, button {outline : none!important;}
   }
 }
 .pk-container {
-  padding-right: 20px;
-  padding-left: 20px;
+  padding-right: 16px;
+  padding-left: 16px;
   width: 100%;
-  @media (min-width: 640px) {
-    max-width: 620px;
-    margin: auto;
-    padding-right: 0px;
-    padding-left: 0px;
-  }
+  // @media (min-width: 640px) {
+  //   max-width: 620px;
+  //   margin: auto;
+  //   padding-right: 0px;
+  //   padding-left: 0px;
+  // }
   @media (min-width: 768px) {
-    max-width: 748px;
+    padding-right: 80px;
+    padding-left: 80px;
+  }
+  // @media (min-width: 1024px) {
+  //   max-width: 1004px;
+  //   margin: auto;
+  //   padding-right: 0px;
+  //   padding-left: 0px;
+  // }
+  // @media (min-width: 1280px) {
+  //   max-width: 1180px;
+  //   margin: auto;
+  //   padding-right: 0px;
+  //   padding-left: 0px;
+  // }
+  @media (min-width: 1440px) {
+    max-width: 1280px;
     margin: auto;
     padding-right: 0px;
     padding-left: 0px;
   }
-  @media (min-width: 1024px) {
-    max-width: 1004px;
-    margin: auto;
-    padding-right: 0px;
-    padding-left: 0px;
-  }
-  @media (min-width: 1280px) {
-    max-width: 1180px;
-    margin: auto;
-    padding-right: 0px;
-    padding-left: 0px;
-  }
-  @media (min-width: 1536px) {
-    max-width: 1436px;
-    margin: auto;
-    padding-right: 0px;
-    padding-left: 0px;
-  }
-  @media (min-width: 1700px) {
-    max-width: 1640px;
-    margin: auto;
-    padding-right: 0px;
-    padding-left: 0px;
-  }
+  // @media (min-width: 1700px) {
+  //   max-width: 1640px;
+  //   margin: auto;
+  //   padding-right: 0px;
+  //   padding-left: 0px;
+  // }
 }
 .pk-width__ml {
   @media (min-width: 576px) {
