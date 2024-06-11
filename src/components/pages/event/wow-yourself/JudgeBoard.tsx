@@ -60,7 +60,7 @@ export default function JudgeBoard() {
   const {t} = useTranslation()
   return (
     <div className='mt-9 lg:mt-16'>
-      <h1 className='font-bold lg:text-xl'>Judge board</h1>
+      <h1 className='font-bold lg:text-xl'>{t('Judge board')}</h1>
       <div className='mt-4 grid gap-4 lg:gap-5 grid-cols-[repeat(auto-fit,minmax(160px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(240px,1fr))]'>
         {artistData.map((data, i) => {
           return (
