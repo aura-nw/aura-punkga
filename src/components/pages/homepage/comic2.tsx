@@ -57,25 +57,24 @@ export default function Comic2(props: IComic) {
 
                         </div>
                     )}
-                    <div className="absolute overflow-hidden bottom-0 w-full h-[50px] p-2 transition-all duration-300 ease-in-out group-hover:h-full bg-gradient-to-b from-transparent to-[rgba(0,0,0,0.75)] to-[60%] group-hover:bg-[rgba(0,0,0,0.75)] group-hover:bg-none">
-
-                        <p className='text-primary-color whitespace-nowrap text-ellipsis overflow-hidden text-base font-bold leading-5'>{props[locale].title}</p>
-                        <div className='flex text-white gap-1 whitespace-nowrap text-ellipsis overflow-hidden text-sm font-semibold leading-[17px]'>
-                            {t('by')}{' '}
-                            {props.authors.map((author, index) => (
-                                <Fragment key={index}>
-                                    <span className='text-primary-color font-[600] first:hidden'>, </span>
-                                    <span className='text-primary-color font-[600]'>
-                                        {author.slug ? (
-                                            <div className='author'>{t(author.name)}</div>
-                                        ) : (
-                                            t(author.name)
-                                        )}
-                                    </span>
-                                </Fragment>
-                            ))}
-                        </div>
+                    <div className="absolute overflow-hidden bottom-0 w-full h-[50px] p-2 transition-all duration-300 ease-in-out group-hover:h-full bg-gradient-to-b from-transparent to-[rgba(0,0,0,0.75)] to-[60%] group-hover:bg-[rgba(0,0,0,0.75)] group-hover:bg-none flex flex-col justify-between">
                         <div>
+                            <p className='text-primary-color whitespace-nowrap text-ellipsis overflow-hidden text-base font-bold leading-5'>{props[locale].title}</p>
+                            <div className='flex text-white gap-1 whitespace-nowrap text-ellipsis overflow-hidden text-sm font-semibold leading-[17px]'>
+                                {t('by')}{' '}
+                                {props.authors.map((author, index) => (
+                                    <Fragment key={index}>
+                                        <span className='text-primary-color font-[600] first:hidden'>, </span>
+                                        <span className='text-primary-color font-[600]'>
+                                            {author.slug ? (
+                                                <div className='author'>{t(author.name)}</div>
+                                            ) : (
+                                                t(author.name)
+                                            )}
+                                        </span>
+                                    </Fragment>
+                                ))}
+                            </div>
                             <div className="flex gap-1 items-center text-sm mt-1 font-semibold text-white">
                                 <div className="flex items-end gap-1">
                                     <span>{props.views}</span>
@@ -86,31 +85,20 @@ export default function Comic2(props: IComic) {
                                     <HeartIcon className="w-5 h-5" />
                                 </div>
                             </div>
-                            <div className='text-xs leading-4 mt-3 text-white'
-                                style={{
-                                    textOverflow: 'ellipsis',
-                                    overflow: 'hidden',
-                                    display: '-webkit-box',
-                                    WebkitLineClamp: 8,
-                                    WebkitBoxOrient: 'vertical',
-                                    whiteSpace: 'normal'
-                                }}
-                            >{props[locale].description}</div>
-                            <div
-                                className='mt-[6px] mb-1'
-                            >
-                                {props.status.text != 'Ongoing' && (
-                                    <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
-                                )}
+                            <div className='text-xs leading-4 mt-3 text-white' style={{
+                                textOverflow: 'ellipsis',
+                                overflow: 'hidden',
+                                display: '-webkit-box',
+                                WebkitLineClamp: 8,
+                                WebkitBoxOrient: 'vertical',
+                                whiteSpace: 'normal'
+                            }}>{props[locale].description}
                             </div>
+                        </div>
+                        <div>
                             {!!props.latestChap.number && (
-                                <div className='leading-[20px] text-white text-sm'>
-                                    {t('Latest')}:{' '}
-                                    <Link
-                                        href={`/comic/${props.slug}/chapter/${props.latestChap.number}`}
-                                        className='text-primary-color font-[600]'>
-                                        {t('Chap')} #{props.latestChap.number}
-                                    </Link>
+                                <div className='flex self-end justify-self-end leading-[20px] text-white text-sm'>
+                                    {t('Latest')}: <Link href={`/comic/${props.slug}/chapter/${props.latestChap.number}`} className='text-primary-color font-[600]'>{t('Chap')} #{props.latestChap.number}</Link>
                                 </div>
                             )}
                         </div>
