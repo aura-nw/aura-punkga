@@ -23,7 +23,7 @@ export default function Timeline() {
           <div className='w-[1px] h-[43px] bg-[#1C1C1C1A]'></div>
           <div className='flex flex-col gap-1 w-[40%]'>
             <div className='text-sm leading-[18px]'>{t('Participants')}:</div>
-            <div className='font-semibold'>140</div>
+            <div className='font-semibold'>164</div>
           </div>
         </div>
         <Link
@@ -54,6 +54,12 @@ export default function Timeline() {
             <div className='font-semibold'>---</div>
           </div>
         </div>
+        <Link
+          href='https://www.facebook.com/share/p/jY6aHWWyANt7EzeU/'
+          target='_blank'
+          className='text-[#2684FC] text-sm'>
+          {t('View on facebook')}
+        </Link>
       </div>
       <div className='w-[1px] h-[32px] xl:flex-1 xl:h-[1px] xl:min-w-5 xl:shrink-0 bg-[#1C1C1C1A]'></div>
       <div

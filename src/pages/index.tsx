@@ -188,7 +188,7 @@ function Home() {
                 : null}
             </div>
           </div>
-          <div className='lg:flex-auto lg:w-[calc(33.9%-40px)] mt-6 lg:mt-0 '>
+          <div className='lg:flex-auto lg:w-[calc(33.6%-40px)] mt-6 lg:mt-0 '>
             <div className='hidden md:block'>
               <SlideSection sliderNavRef={sliderNavRef} />
               {/* <LeaderBoard /> */}
