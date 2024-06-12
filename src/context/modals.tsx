@@ -16,11 +16,13 @@ export const ModalContext = createContext<{
   forgotPasswordOpen: boolean
   signUpOpen: boolean
   signInOpen: boolean
+  connectWalletOpen: boolean
   migrateWalletOpen: boolean
   setSignUpSuccessOpen: Dispatch<SetStateAction<boolean>>
   setForgotPasswordOpen: Dispatch<SetStateAction<boolean>>
   setSignUpOpen: Dispatch<SetStateAction<boolean>>
   setSignInOpen: Dispatch<SetStateAction<boolean>>
+  setWalletConnectOpen: Dispatch<SetStateAction<boolean>>
   setMigrateWalletOpen: Dispatch<SetStateAction<boolean>>
   showEmailVerification: (email: string, identifier: string) => void
 }>({
@@ -28,11 +30,13 @@ export const ModalContext = createContext<{
   forgotPasswordOpen: false,
   signUpOpen: false,
   signInOpen: false,
+  connectWalletOpen: false,
   migrateWalletOpen: false,
   setSignUpSuccessOpen: () => {},
   setForgotPasswordOpen: () => {},
   setSignUpOpen: () => {},
   setSignInOpen: () => {},
+  setWalletConnectOpen: () => {},
   setMigrateWalletOpen: () => {},
   showEmailVerification: () => {},
 })
@@ -41,6 +45,7 @@ function ModalProvider({ children }) {
   const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false)
   const [signUpOpen, setSignUpOpen] = useState(false)
   const [signInOpen, setSignInOpen] = useState(false)
+  const [connectWalletOpen, setWalletConnectOpen] = useState(false)
   const [migrateWalletOpen, setMigrateWalletOpen] = useState(false)
   const { account, updateProfile } = useContext(Context)
   const { isConnected } = useAccount()
@@ -134,11 +139,13 @@ function ModalProvider({ children }) {
         forgotPasswordOpen,
         signUpOpen,
         signInOpen,
+        connectWalletOpen,
         migrateWalletOpen,
         setSignUpSuccessOpen,
         setForgotPasswordOpen,
         setSignUpOpen,
         setSignInOpen,
+        setWalletConnectOpen,
         setMigrateWalletOpen,
         showEmailVerification,
       }}>

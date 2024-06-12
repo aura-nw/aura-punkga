@@ -26,7 +26,7 @@ import { useClickOutside } from 'src/hooks/useClickOutside'
 import { getBalances, getEnvKey, search } from 'src/services'
 import { shorten } from 'src/utils'
 import useSWR from 'swr'
-import { useAccount, useBalance, useConnect } from 'wagmi'
+import { useBalance } from 'wagmi'
 export default function Header({ className }: { className?: string }) {
   const { t } = useTranslation()
   const router = useRouter()
@@ -46,7 +46,6 @@ export default function Header({ className }: { className?: string }) {
       refreshInterval: 60000,
     }
   )
-  const { isConnected } = useAccount()
   const walletBalance = useBalance({
     address: wallet as any,
   })
@@ -178,7 +177,7 @@ export default function Header({ className }: { className?: string }) {
                       : `${+BigNumber(balance || 0)
                           .div(BigNumber(10).pow(6))
                           .toFixed(4)
-                          .toLocaleString()} ${getEnvKey() == 'euphoria' ? 'EAURA' : 'AURA'}`}
+                          .toLocaleString()} AURA`}
                     <span className='inline-block'>
                       {
                         <div className='ml-2 w-6 h-6 relative'>
@@ -531,7 +530,9 @@ export default function Header({ className }: { className?: string }) {
                           <div className='flex items-center'>
                             {hideBalance
                               ? '********'
-                              : `${(+walletBalance?.data?.formatted || 0).toFixed(8)} ${walletBalance?.data?.symbol}`}
+                              : `${(+walletBalance?.data?.formatted || 0).toFixed(8)} ${
+                                  walletBalance?.data?.symbol || 'AURA'
+                                }`}
                             {/* {hideBalance
                               ? '********'
                               : `${+BigNumber(balance || 0)
@@ -611,7 +612,7 @@ export default function Header({ className }: { className?: string }) {
                   </DropdownMenu>
                 </Dropdown>
               ) : (
-                <MainButton onClick={() => setSignInOpen(true)}>{t('Connect Wallet')}</MainButton>
+                <MainButton onClick={() => setSignInOpen(true)}>{t('Sign in')}</MainButton>
               )}
             </div>
           </div>
