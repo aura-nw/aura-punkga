@@ -1,12 +1,12 @@
 {
-  "REDIRECT_URL": "https://dev.punkga.me",
+  "REDIRECT_URL": "https://hackathon.punkga.me",
   "CHAIN_ID": "aura_6321-3",
   "CHAIN_INFO": {
     "chainId": "aura_6321-3",
     "chainName": "Aura Euphoria TestNet",
     "rpc": "https://rpc.euphoria.aura.network",
     "rest": "https://lcd.euphoria.aura.network",
-    "indexerV2": "https://indexer-v2.dev.aurascan.io/api/v2/graphql",
+    "indexerV2": "https://indexer-v2.staging.aurascan.io/api/v2/graphql",
     "bip44": {
       "coinType": 118
     },
@@ -43,17 +43,20 @@
       "average": 0.0025,
       "high": 0.004
     },
-    "features": ["ibc-transfer"],
+    "features": [
+      "ibc-transfer"
+    ],
     "walletUrlForStaking": "https://euphoria.aurascan.io/validators",
     "logo": "https://i.imgur.com/zi0mTYb.png",
     "explorer": "https://euphoria.aurascan.io"
   },
-  "API_URL": "https://hasura.dev.punkga.me",
-  "AUTHORIZER_URL": "https://auth.dev.punkga.me",
-  "AUTHORIZER_CLIENT_ID": "06c9c437-15cd-4240-b435-5d16206b46c6",
-  "ADMIN_URL": "https://admin.dev.punkga.me",
-  "REST_API_URL": "https://api.dev.punkga.me",
+  "API_URL": "https://hasura.hackathon.punkga.me",
+  "AUTHORIZER_URL": "https://auth.hackathon.punkga.me",
+  "AUTHORIZER_CLIENT_ID": "b1c0e241-f3b3-463d-a570-b4e31a52cd78",
+  "ADMIN_URL": "https://admin.hackathon.punkga.me",
+  "REST_API_URL": "https://api.hackathon.punkga.me",
   "IN_MAINTENANCE_MODE": false,
   "GTM_ID": "GTM-MMT4K22K",
-  "SEEKHYPE_URL": "https://dev.seekhype.io/"
+  "SEEKHYPE_URL": "https://dev.seekhype.io/",
+  "WALLET_CONNECT_PROJECT_ID": "ec40291093ad80fa0def54b1fb44c8ef"
 }

@@ -218,7 +218,7 @@ const Chapter = ({
         <LazyImage
           src={chapter.thumbnail || m6}
           alt=''
-          className={`transition-all duration-500 object-cover rounded-md overflow-hidden ${
+          className={`transition-all duration-500 object-cover rounded-md shrink-0 block overflow-hidden ${
             expandDetail ? 'w-[120px] h-[120px]' : 'w-[60px] h-[60px]'
           }`}
           width={60}
@@ -229,7 +229,7 @@ const Chapter = ({
             router.push(`/comic/${data.slug}/chapter/${chapter.number}`)
           }}
         />
-        <div className='flex flex-col justify-center flex-1'>
+        <div className='flex flex-col justify-center w-full'>
           <div>
             <div className='flex items-center'>
               <p className='mr-5'>{`${t('Chapter')} ${chapter.number}`}</p>
@@ -296,7 +296,7 @@ const Chapter = ({
               {chapter.name}
             </div>
           </div>
-          <div
+          {/* <div
             className={`flex justify-between items-end transition-all w-full duration-500 ${
               expandDetail ? 'h-full opacity-100  max-h-[100px]' : 'h-[0%] max-h-0 opacity-0 pointer-events-none'
             }`}>
@@ -308,6 +308,7 @@ const Chapter = ({
               <div className='flex items-center'>
                 <span className='mr-2 text-[#1FAB5E]'>{likes}</span>
                 <FlashAnimation
+                  className='cursor-pointer w-5 h-5'
                   InactiveComponent={(props: any) => (
                     <Image
                       className='cursor-pointer w-5 h-5'
@@ -340,7 +341,7 @@ const Chapter = ({
             </div>
 
             <div>{moment(chapter.date).format('DD/MM/yyyy')}</div>
-          </div>
+          </div> */}
         </div>
         <div
           className={` transition-all duration-500 ${
@@ -349,6 +350,7 @@ const Chapter = ({
           <div className='flex items-center'>
             <span className='mr-2 text-[#1FAB5E]'>{likes}</span>
             <FlashAnimation
+              className='cursor-pointer w-5 h-5'
               InactiveComponent={(props: any) => (
                 <Image
                   className='cursor-pointer w-5 h-5'

@@ -54,7 +54,7 @@ export default function FilledSelect({
         {({ open }) => (
           <>
             <div className='relative'>
-              <Listbox.Button className='relative cursor-pointer w-full rounded-[12px] bg-light-gray py-[3px] px-[13px] text-left text-gray-900 focus:outline-none flex items-center gap-[15px]'>
+              <Listbox.Button className={`${className} relative cursor-pointer w-full rounded-[12px] bg-light-gray py-[3px] px-[13px] text-left text-gray-900 focus:outline-none flex items-center gap-[15px]`}>
                 {leadingIcon && <span className=''>{leadingIcon}</span>}
                 <span className='flex items-center text-[16px] leading-[24px]'>
                   {!!selected.length ? (
@@ -134,7 +134,7 @@ export default function FilledSelect({
       {({ open }) => (
         <>
           <div className='relative'>
-            <Listbox.Button className='relative w-full cursor-default rounded-[12px] bg-light-gray py-[3px] pl-[13px] pr-[57px] text-left text-gray-900 focus:outline-none'>
+            <Listbox.Button className={`${className} relative w-full cursor-default rounded-[12px] bg-light-gray py-[3px] pl-[13px] pr-[57px] text-left text-gray-900 focus:outline-none`}>
               <span className='flex items-center text-[16px] leading-[24px]'>
                 {selected ? (
                   <span className='block truncate text-subtle-dark'>{selected.value}</span>

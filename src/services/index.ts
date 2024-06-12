@@ -441,15 +441,15 @@ export const getCampaignLeaderboard = async (campaignId: string) => {
 export const getBalances = async (address: string) => {
   const { data } = await axios.post(`${getConfig().CHAIN_INFO.indexerV2}`, {
     query: `query getBalance($address: String!, $denom: String) {
-  ${getEnvKey()} {
-    account_balance(
-      where: {account: {address: {_eq: $address}}, denom: {_eq: $denom}}
-    ) {
-      amount
-      denom
-    }
-  }
-}`,
+      ${getEnvKey()} {
+        account_balance(
+          where: {account: {address: {_eq: $address}}, denom: {_eq: $denom}}
+        ) {
+          amount
+          denom
+        }
+      }
+    }`,
     variables: {
       address: address,
       denom: getEnvKey() == 'euphoria' ? 'ueaura' : 'uaura',
@@ -468,4 +468,17 @@ export const linkWallet = async (signedDoc: any, signature: any) => {
   } catch (error: any) {
     return error
   }
+}
+
+export const getAllLaunchPad = async () => {
+  const { data } = await axios.get(`https://hasura.hackathon.punkga.me/api/rest/public/launchpad`)
+  return data
+}
+export const getLaunchPadDetail = async (id: string) => {
+  const { data } = await axios.get(`https://hasura.hackathon.punkga.me/api/rest/public/launchpad/${id}`)
+  return data?.launchpad_by_pk
+}
+export const getLicenseTerm = async (id: string) => {
+  const { data } = await axios.get(`https://edge.stg.storyprotocol.net/api/v1/licenses/terms/${id}`)
+  return data?.launchpad_by_pk
 }

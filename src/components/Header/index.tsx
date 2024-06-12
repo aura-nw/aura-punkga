@@ -26,6 +26,7 @@ import { useClickOutside } from 'src/hooks/useClickOutside'
 import { getBalances, getEnvKey, search } from 'src/services'
 import { shorten } from 'src/utils'
 import useSWR from 'swr'
+import { useAccount, useBalance, useConnect } from 'wagmi'
 export default function Header({ className }: { className?: string }) {
   const { t } = useTranslation()
   const router = useRouter()
@@ -45,6 +46,10 @@ export default function Header({ className }: { className?: string }) {
       refreshInterval: 60000,
     }
   )
+  const { isConnected } = useAccount()
+  const walletBalance = useBalance({
+    address: wallet as any,
+  })
   const ref = useRef<any>()
   const divRef = useRef<any>()
   const mref = useRef<any>()
@@ -142,7 +147,7 @@ export default function Header({ className }: { className?: string }) {
                     {account?.name}
                   </MainButton>
                 ) : (
-                  <MainButton onClick={() => setSignInOpen(true)}>{t('Sign in')}</MainButton>
+                  <MainButton onClick={() => setSignInOpen(true)}>{t('Connect Wallet')}</MainButton>
                 )}
               </div>
             </div>
@@ -231,7 +236,7 @@ export default function Header({ className }: { className?: string }) {
               onClick={() => router.push('/profile')}>
               {t('My profile')}
             </div>
-            {/* {!wallet && (
+            {!wallet && (
               <div
                 className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'
                 onClick={() => setMigrateWalletOpen(true)}>
@@ -240,7 +245,7 @@ export default function Header({ className }: { className?: string }) {
                   <Image src={Stars} alt='' className='inline-block ml-1' />
                 </span>
               </div>
-            )} */}
+            )}
             <div
               className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'
               onClick={logout}>
@@ -526,10 +531,13 @@ export default function Header({ className }: { className?: string }) {
                           <div className='flex items-center'>
                             {hideBalance
                               ? '********'
+                              : `${(+walletBalance?.data?.formatted || 0).toFixed(8)} ${walletBalance?.data?.symbol}`}
+                            {/* {hideBalance
+                              ? '********'
                               : `${+BigNumber(balance || 0)
                                   .div(BigNumber(10).pow(6))
                                   .toFixed(4)
-                                  .toLocaleString()} ${getEnvKey() == 'euphoria' ? 'EAURA' : 'AURA'}`}
+                                  .toLocaleString()} ${getEnvKey() == 'euphoria' ? 'EAURA' : 'AURA'}`} */}
                             <span className='inline-block'>
                               {
                                 <div className='ml-2 w-6 h-6 relative'>
@@ -584,7 +592,7 @@ export default function Header({ className }: { className?: string }) {
                           <strong>{t('My profile')}</strong>
                         </div>
                         <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0] '></span>
-                        {/* {!wallet ? (
+                        {!wallet ? (
                           <>
                             <div className='font-bold w-max' onClick={() => setMigrateWalletOpen(true)}>
                               {t('Migrate your wallet')}{' '}
@@ -594,7 +602,7 @@ export default function Header({ className }: { className?: string }) {
                             </div>
                             <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
                           </>
-                        ) : null} */}
+                        ) : null}
                         <div onClick={logout}>
                           <strong>{t('Log out')}</strong>
                         </div>
@@ -603,7 +611,7 @@ export default function Header({ className }: { className?: string }) {
                   </DropdownMenu>
                 </Dropdown>
               ) : (
-                <MainButton onClick={() => setSignInOpen(true)}>{t('Sign in')}</MainButton>
+                <MainButton onClick={() => setSignInOpen(true)}>{t('Connect Wallet')}</MainButton>
               )}
             </div>
           </div>

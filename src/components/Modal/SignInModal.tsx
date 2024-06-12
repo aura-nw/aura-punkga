@@ -11,6 +11,11 @@ import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
 import { validateEmail } from 'src/utils'
+import { useConnect, Connector, useDisconnect } from 'wagmi'
+import WCIcon from 'src/assets/images/wallet-connect.png'
+import Image from 'next/image'
+import { sepolia } from 'viem/chains'
+import { QRCodeSVG } from 'qrcode.react'
 export default function SignInModal() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -25,10 +30,47 @@ export default function SignInModal() {
   const router = useRouter()
   const { login, oauth } = useContext(Context)
   const { setSignInOpen, setSignUpOpen, setForgotPasswordOpen, signInOpen: show } = useContext(ModalContext)
+  const { connectors, connect, connectAsync: wagmiConnect } = useConnect()
+  const { disconnect: wagmiDisconnect } = useDisconnect()
+  const [mobileWallet, setMobileWallet] = useState<Connector[]>([])
+  const [installed, setInstalled] = useState<Connector[]>([])
+  const [otherWallet, setOtherWallet] = useState<Connector[]>([])
+
+  //QRCode
+  const [qrCode, setQrCode] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [showQRCode, setShowQRCode] = useState(false)
+  const [qrError, setQRError] = useState('')
 
   useEffect(() => {
     setEmailValidateErrorMsg('')
   }, [email])
+
+  useEffect(() => {
+    const setConnector = async () => {
+      const installedWallet = [] as Connector[]
+      const otherWallet = [] as Connector[]
+      const mobile = [] as Connector[]
+
+      for (let i = 0; i < connectors.length; i++) {
+        const connector = connectors[i]
+
+        if (connector.type === 'injected') {
+          if (connector.id === 'injected') {
+            mobile.push(connector)
+          }
+          connector.icon && installedWallet.push(connector)
+        } else if (connector.type === 'walletConnect') {
+          otherWallet.push(connector)
+        }
+      }
+      setMobileWallet(mobile)
+      setInstalled(installedWallet)
+      setOtherWallet(otherWallet)
+    }
+
+    setConnector()
+  }, [connectors])
 
   useEffect(() => {
     setLoginErrorMsg('')
@@ -63,6 +105,8 @@ export default function SignInModal() {
     setLoginLoading(false)
   }
 
+  const metamask = connectors.find((c) => c.id == 'io.metamask')
+
   return (
     <Transition
       show={show}
@@ -72,92 +116,117 @@ export default function SignInModal() {
       leave='transition-all duration-500'
       leaveFrom='max-h-screen opacity-100'
       leaveTo='max-h-[0vh] opacity-0'>
-      <div className='p-6 md:w-[400px]'>
-        <p className='text-center text-lg font-semibold leading-6 text-[#414141]'>{t('Sign in to Punkga')}</p>
-        <div className='mt-6'>
-          <OutlineTextField
-            placeholder={t('Enter your email')}
-            label={t('Email')}
-            type='email'
-            errorMsg={emailValidateErrorMsg}
-            value={email}
-            onChange={setEmail}
-            inputRef={emailRef}
-            onKeyDown={(e) => {
-              if (e.which == 13) {
-                passwordRef.current?.focus()
-              }
-            }}
-          />
-          <OutlineTextField
-            placeholder={t('Enter your password')}
-            label={t('Password')}
-            type='password'
-            value={password}
-            onChange={setPassword}
-            inputRef={passwordRef}
-            onKeyDown={(e) => {
-              if (e.which == 13) {
-                emailRef.current?.focus()
-                buttonRef.current?.click()
-              }
-            }}
-          />
-        </div>
-        <div
-          className='text-[#2684FC] text-sm leading-[18px] text-right cursor-pointer -mt-[18px]'
-          onClick={() => {
-            setSignInOpen(false)
-            setForgotPasswordOpen(true)
-          }}>
-          {t('Forgot password')}
-        </div>
-        <div className='mt-4 flex flex-col items-center w-full'>
-          <MainButton
-            buttonRef={buttonRef}
-            disabled={!(email && password)}
-            onClick={loginHandler}
-            className='min-w-[128px]'>
-            {t('Sign in')}
-          </MainButton>
-          <div className='text-sm leading-[18px] text-[#F0263C] mt-1'>{loginErrorMsg}</div>
-          <div className='text-sm leading-[18px] mt-1 text-[#414141]'>
-            {t('Don’t have an account')}?{' '}
-            <a
-              className='text-[#2684FC] cursor-pointer'
-              onClick={() => {
-                setSignUpOpen(true)
-                setSignInOpen(false)
-              }}>
-              {t('Sign up')}
-            </a>
+      <div className='p-5 flex gap-10 max-w-3xl min-w-[768px]'>
+        <div className='w-1/2'>
+          <div className=''>
+            <div className='font-semibold text-lg'>Installed Wallets</div>
+            <div className='mt-3 flex flex-col gap-2'>
+              {installed.map((connector) => (
+                <div key={connector.id}>
+                  <div
+                    className='flex gap-2 ml-3 items-center hover:bg-[#ebeaea] cursor-pointer w-fit py-2 px-5 rounded-lg'
+                    onClick={async () => {
+                      try {
+                        setShowQRCode(false)
+                        await wagmiConnect({ connector, chainId: sepolia.id })
+                      } catch (error: any) {
+                        wagmiDisconnect()
+                      }
+                    }}>
+                    <Image src={connector.icon} alt={`${connector.name}-Icon`} className='' height={30} width={30} />
+                    <div className=' font-semibold'>{connector.name}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className='font-semibold text-lg mt-10'>Other Wallets</div>
+            <div className='other-wallet mt-3'>
+              <div key='wallet-connect'>
+                {otherWallet.map((connector) => (
+                  <div key={connector.id}>
+                    <div
+                      className='flex gap-2 ml-3 items-center hover:bg-[#ebeaea] cursor-pointer w-fit py-2 px-5 rounded-lg'
+                      onClick={async () => {
+                        try {
+                          setShowQRCode(!showQRCode)
+                          setLoading(true)
+                          setQRError('')
+                          wagmiConnect(
+                            { connector, chainId: sepolia.id },
+                            {
+                              onSuccess: () => {
+                                setLoading(false)
+                              },
+
+                              onError: (props) => {
+                                setQRError(props.message)
+                              },
+                            }
+                          )
+                          const provider = (await connector.getProvider()) as any
+                          const deepLink = await new Promise<string>((resolve) => {
+                            provider.on('display_uri', (uri: string) => {
+                              resolve(uri)
+                            })
+                          })
+                          setLoading(false)
+                          setQrCode(deepLink)
+                        } catch (error: any) {
+                          wagmiDisconnect()
+                        }
+                      }}>
+                      <Image src={WCIcon} alt={`${connector.name}-Icon`} height={30} width={30} />
+                      <div className='font-semibold'>{connector.name}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          <div className='my-4 text-sm leading-[18px] text-[#414141]'>{t('or')}</div>
-          <div className='flex gap-4 w-full items-center'>
-            <MainButton
-              iconOnly={Facebook}
-              onClick={() => oauth('facebook')}
-              style='outline'
-              size='small'
-              className='w-full'
-            />
-            <MainButton iconOnly={Zalo} onClick={() => oauth('zalo')} style='outline' size='small' className='w-full' />
-            <MainButton
-              iconOnly={Google}
-              onClick={() => oauth('google')}
-              style='outline'
-              size='small'
-              className='w-full'
-            />
-          </div>
-          <div className='mt-4 text-sm leading-[18px] text-[#414141] text-center'>
-            {t('By continuing, you agree to our')}
-            <br />
-            <Link href='/policy' target='_blank' className='text-[#2684FC]'>
-              {t('Terms of Use')}
+
+          <div className='text-xs max-w-[270px] mx-auto text-center mt-20'>
+            By connecting your wallet, you agree to our{' '}
+            <Link href='/policy' target='_blank' rel='noreferrer'>
+              <span className='text-[#2684FC] cursor-pointer'>Terms of Service</span>
             </Link>{' '}
-            {locale == 'vn' && 'của chúng tôi'}
+            and{' '}
+            <Link href='/policy' target='_blank' rel='noreferrer'>
+              <span className='text-[#2684FC] cursor-pointer'>Privacy Policy</span>
+            </Link>
+            .
           </div>
+        </div>
+
+        <div className='w-1/2'>
+          {showQRCode ? (
+            !loading ? (
+              <div>
+                <div className=''>
+                  <div className='font-semibold text-lg'>
+                    {/* <Icon name='mobile' /> */}
+                    Scan with your wallet
+                  </div>
+                </div>
+                <div className='mt-5 flex flex-col items-center'>
+                  {qrError && (
+                    <div className='expired'>
+                      {/* <Icon name='danger' size='xl' /> */}
+                      {qrError}
+                    </div>
+                  )}
+                  <QRCodeSVG value={qrCode} size={290} level='H' bgColor='#FFFFFF' fgColor='#000000' />
+                </div>
+              </div>
+            ) : (
+              <div className='grid place-items-center p-10 w-full h-full bg-neutral-200 rounded-lg'></div>
+            )
+          ) : (
+            <div className='grid place-items-center p-10 w-full h-full bg-neutral-200 rounded-lg'>
+              <p className='text-center text-sm font-medium'>
+                Wallets are used to send, receive, store digital assets like Aura and NFTs.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </Transition>
