@@ -143,7 +143,7 @@ export default function CampaignPage() {
             key={index}
             className='cursor-pointer px-4 py-3 flex gap-5 bg-[#F2F2F2] lg:bg-white lg:border lg:border-[#DEDEDE] rounded-[10px] min-h-[180px] hover:bg-[#F2F2F2] [&_.reward]:hover:bg-white'
             onClick={() => clickHandler(campaign.slug)}>
-            <div className='flex flex-col justify-between flex-1'>
+            <div className='flex flex-col justify-between flex-1 max-w-[calc(100%-156px)]'>
               <div className='flex flex-col'>
                 <div className='inline-flex flex-wrap'>
                   <StatusLabel
@@ -166,7 +166,7 @@ export default function CampaignPage() {
                 <div className='mt-[10px] text-xs leading-[15px]'>
                   <div className=' text-[#292929] font-bold line-clamp-2 2xl:text-base'>{campaign.name}</div>
                   <div
-                    className=' text-[#61646B] mt-1 2xl:mt-[10px] line-clamp-3 2xl:text-sm'
+                    className=' text-[#61646B] mt-1 2xl:mt-[10px] line-clamp-3 2xl:text-sm max-w'
                     dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(campaign.description) }}></div>
                 </div>
               </div>

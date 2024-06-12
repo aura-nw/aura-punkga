@@ -117,34 +117,11 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                 ? `Answer a quiz`
                 : ``}
             </div>
-            {!!quest.description &&
-              (quest?.description?.length > 250 ? (
-                <>
-                  <TruncateMarkup
-                    lines={!seeMore ? 5 : 99}
-                    ellipsis={<span></span>}
-                    onTruncate={(wasTruncated) => {
-                      if (wasTruncated && seeMore == undefined) setSeeMore(false)
-                    }}>
-                    <div
-                      className={` mt-[15px] lg:mt-5 text-[#777777] text-xs lg:text-sm leading-[15px] lg:leading-[18px]`}>
-                      {ReactHtmlParser(quest.description)}
-                    </div>
-                  </TruncateMarkup>
-                  {seeMore != undefined ? (
-                    <div
-                      className='font-semibold text-xs lg:text-sm lg:leading-[18px] text-second-color cursor-pointer'
-                      onClick={() => setSeeMore(!seeMore)}>
-                      {seeMore ? 'See less' : 'See more'}
-                    </div>
-                  ) : null}
-                </>
-              ) : (
-                <div
-                  className={` mt-[15px] lg:mt-5 text-[#777777] text-xs lg:text-sm leading-[15px] lg:leading-[18px]`}>
-                  {ReactHtmlParser(quest.description)}
-                </div>
-              ))}
+            {!!quest.description && (
+              <div className={` mt-[15px] lg:mt-5 text-[#777777] text-xs lg:text-sm leading-[15px] lg:leading-[18px] max-h-[105px] lg:max-h-[126px] overflow-auto`}>
+                {ReactHtmlParser(quest.description)}
+              </div>
+            )}
           </div>
           <div className='mt-5 lg:mt-0 flex flex-col items-center row-span-2'>
             <div className='text-sm lg:text-base leading-[18px] lg:leading-5 font-semibold mb-[10px]'>👑 Reward</div>
