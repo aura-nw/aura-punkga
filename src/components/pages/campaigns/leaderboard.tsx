@@ -57,7 +57,7 @@ export default function LeaderBoard({ data, userData }: { data: any[]; userData?
                 {t('Your rank')}: <strong>{userData ? '#' + userData?.user_campaign_rank : '--'}</strong>
               </div>
               <div>
-                Your level:{' '}
+                {t('Your level')}:{' '}
                 <strong>{userData ? userData?.user_campaign_authorizer_user?.levels?.[0]?.level : '--'}</strong>
               </div>
               <div>

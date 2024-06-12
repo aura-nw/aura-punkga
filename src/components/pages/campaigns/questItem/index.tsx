@@ -16,6 +16,7 @@ import { claimQuest, getRequestLog } from 'src/services'
 import BasicQuest from './basicQuest'
 import FreeQuest from './freeQuest'
 import QuizQuest from './quizQuest'
+import { useTranslation } from 'react-i18next'
 
 export default function QuestItem({ quest, refreshCallback }: { quest: Quest; refreshCallback?: () => void }) {
   const { getProfile } = useContext(Context)
@@ -25,6 +26,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
   const [seeMore, setSeeMore] = useState(undefined)
   const [loading, setLoading] = useState(false)
   const limitChar = isMobile ? 20 : 30
+  const {t} = useTranslation()
 
   const revealResult = async (id: string) => {
     const data = await getRequestLog(id)
@@ -97,7 +99,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
             <div className='text-xs lg:text-sm leading-[15px] lg:leading-[18px] font-semibold'>
               {quest.repeat == 'Daily' && (
                 <span className='bg-[#E2D8FF] text-[#A247FF] font-bold rounded-[3px] lg:rounded-md px-2 pb-[1px] lg:pb-1 lg:pt-[2px] text-[10px] lg:text-sm leading-[13px] lg:leading-[18px] mr-[5px]'>
-                  Daily
+                  {t('Daily')}
                 </span>
               )}
               {quest.name}
@@ -124,7 +126,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
             )}
           </div>
           <div className='mt-5 lg:mt-0 flex flex-col items-center row-span-2'>
-            <div className='text-sm lg:text-base leading-[18px] lg:leading-5 font-semibold mb-[10px]'>👑 Reward</div>
+            <div className='text-sm lg:text-base leading-[18px] lg:leading-5 font-semibold mb-[10px]'>👑 {t('Reward')}</div>
             {quest.reward?.nft?.img_url ? (
               <>
                 <div className='flex flex-col items-center gap-[10px]'>
@@ -202,7 +204,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
           className={`w-[320px] lg:w-[448px] px-10 pb-5 pt-7 flex flex-col items-center ${
             quest?.reward.nft?.nft_name ? 'gap-[10px]' : 'gap-5'
           } text-sm`}>
-          <div className='leading-[18px] lg:leading-5 font-semibold text-center'>👑 Congratulation!</div>
+          <div className='leading-[18px] lg:leading-5 font-semibold text-center'>👑 {t('Congratulation')}!</div>
           <div>You have received quest reward</div>
           {quest?.reward.nft?.nft_name ? (
             <div className='flex flex-col items-center'>
@@ -261,7 +263,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
             <div className='text-xs leading-[15px] lg:text-base lg:leading-5 font-bold line-clamp-2'>
               {quest.repeat == 'Daily' && (
                 <span className='bg-[#E2D8FF] text-[#A247FF] font-bold rounded-[3px] lg:rounded-md px-2 pb-[1px] lg:pt-[2px] lg:pb-1 lg:font-semibold text-[10px] lg:text-sm leading-[13px] lg:leading-[18px] mr-[5px]'>
-                  Daily
+                  {t('Daily')}
                 </span>
               )}
               {quest.name}
@@ -285,7 +287,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
 
           {quest.reward_status == 'OUT_OF_SLOT' ? (
             <div className='text-xs w-fit bg-[#F2F2F2] leading-[15px] font-bold text-[#ABABAB] px-6 pt-1 pb-[5px] rounded-[20px]'>
-              Out of reward
+              {t('Out of reward')}
             </div>
           ) : !quest.unlock ? (
             <div className='flex gap-[10px] items-center text-xs leading-[15px] lg:text-sm lg:leading-[18px] text-medium-gray'>
@@ -375,7 +377,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
 
         {quest.reward_status == 'CLAIMED' && quest.repeat == 'Once' && (
           <div className='bg-[#1FAB5E1A] absolute bottom-0 inset-x-0 h-[60px] backdrop-blur-[10px] rounded-b-[10px] font-semibold text-second-color text-xs lg:text-sm lg:leading-[18px] flex items-center justify-center'>
-            Quest completed
+            {t('Quest completed')}
           </div>
         )}
       </div>

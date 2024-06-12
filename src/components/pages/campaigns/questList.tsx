@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { Quest } from 'src/models/campaign'
 import QuestItem from './questItem'
+import { useTranslation } from 'react-i18next'
 
 export default function QuestList({
   quests,
@@ -18,6 +19,7 @@ export default function QuestList({
 }) {
   const [rewardNFTChecked, setRewardNFTChecked] = useState<boolean>(false)
   const [filter, setFilter] = useState<string>()
+  const { t } = useTranslation()
   const questList = quests?.map((quest) => {
     if (quest.reward_status == 'OUT_OF_SLOT') {
       return {
@@ -49,19 +51,19 @@ export default function QuestList({
       <div className='lg:flex lg:items-center lg:flex-wrap lg:justify-between'>
         <p className='text-lg leading-[23px] lg:text-xl lg:leading-[25px] font-bold'>
           {quests && !isEnded
-            ? `Quests (${
+            ? `${t('Quests')} (${
                 quests.filter(
                   (quest) =>
                     (filter ? quest.repeat == filter : true) && (rewardNFTChecked ? !!quest.reward.nft?.nft_name : true)
                 ).length
               })`
-            : 'Quests'}
+            : t('Quests')}
         </p>
         {quests && !isEnded && (
           <div className='mt-[10px] flex justify-between items-center lg:mt-0'>
             <div className='p-1 lg:mr-[10px]'>
               <Checkbox
-                label={'Reward NFT'}
+                label={t('Reward NFT')}
                 checked={rewardNFTChecked}
                 onClick={() => setRewardNFTChecked(!rewardNFTChecked)}
               />
@@ -77,7 +79,7 @@ export default function QuestList({
                           : 'hover:border hover:border-[#DEDEDE] hover:p-[9px]'
                       }`}>
                       <div className='px-[5px] text-sm leading-[18px] font-semibold'>
-                        {filter ? filter : 'All quests'}
+                        {filter ? filter : t('All quests')}
                       </div>
                       <div
                         className={`rounded-full p-[5px] aspect-square bg-[#C6FFDE] grid place-items-center ${
@@ -96,13 +98,13 @@ export default function QuestList({
                 <DropdownMenu customClass='rounded-[8px]' closeOnClick>
                   <div className='w-[233px] bg-[#F2F2F2] cursor-pointer'>
                     <div className='p-[15px] text-sm font-semibold' onClick={() => setFilter(undefined)}>
-                      All quests
+                      {t('All quests')}
                     </div>
                     <div className='p-[15px] text-sm font-semibold' onClick={() => setFilter('Once')}>
-                      {`Once (${questList.filter((quest) => quest.repeat == 'Once').length})`}
+                      {`${t('Once')} (${questList.filter((quest) => quest.repeat == 'Once').length})`}
                     </div>
                     <div className='p-[15px] text-sm font-semibold' onClick={() => setFilter('Daily')}>
-                      {`Daily (${questList.filter((quest) => quest.repeat == 'Daily').length})`}
+                      {`${t('Daily')} (${questList.filter((quest) => quest.repeat == 'Daily').length})`}
                     </div>
                   </div>
                 </DropdownMenu>
@@ -115,21 +117,21 @@ export default function QuestList({
         <div className='mt-5 p-6 lg:mt-9 lg:p-6 flex flex-col items-center w-full'>
           <Image src={Mascot3} alt='' className='w-[240px] h-[240px] lg:w-[320px] lg:h-[320px]' />
           <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-semibold mt-5 text-center'>
-            Campaign Ended
+            {t('Campaign Ended')}
           </div>
         </div>
       ) : !quests ? (
         <div className='mt-5 p-6 lg:mt-9 lg:p-6 flex flex-col items-center w-full'>
           <Image src={Mascot2} alt='' className='w-[240px] h-[240px] lg:w-[320px] lg:h-[320px]' />
           <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-semibold mt-5 text-center'>
-            Enroll to view quests
+            {t('Enroll to view quests')}
           </div>
         </div>
       ) : !quests.length ? (
         <div className='mt-5 p-6 lg:mt-9 lg:p-6 flex flex-col items-center w-full'>
           <Image src={Mascot2} alt='' className='w-[240px] h-[240px] lg:w-[320px] lg:h-[320px]' />
           <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-semibold mt-5 text-center'>
-            No quests to show
+            {t('No quests to show')}
           </div>
         </div>
       ) : (
