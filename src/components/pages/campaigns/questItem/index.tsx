@@ -17,6 +17,7 @@ import BasicQuest from './basicQuest'
 import FreeQuest from './freeQuest'
 import QuizQuest from './quizQuest'
 import { useTranslation } from 'react-i18next'
+import { useRouter } from 'next/router'
 
 export default function QuestItem({ quest, refreshCallback }: { quest: Quest; refreshCallback?: () => void }) {
   const { getProfile } = useContext(Context)
@@ -26,8 +27,8 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
   const [seeMore, setSeeMore] = useState(undefined)
   const [loading, setLoading] = useState(false)
   const limitChar = isMobile ? 20 : 30
-  const {t} = useTranslation()
-
+  const { t } = useTranslation()
+  const { locale } = useRouter()
   const revealResult = async (id: string) => {
     const data = await getRequestLog(id)
     if (data?.status == 'SUCCEEDED') {
@@ -106,27 +107,38 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
             </div>
             <div className='mt-[15px] lg:mt-5 lg:text-xl lg:leading-[25px] leading-5 font-bold'>
               {quest.type == 'Subscribe'
-                ? `Subscribe to manga ${quest.requirement.subscribe.manga.title} to claim your reward`
+                ? locale == 'vn'
+                  ? `Theo dõi ${quest.requirement.subscribe.manga.title} để nhận phần thưởng`
+                  : `Subscribe to manga ${quest.requirement.subscribe.manga.title} to claim your reward`
                 : quest.type == 'Like'
-                ? `Like manga ${quest.requirement.like.manga.title} to claim your reward`
+                ? locale == 'vn'
+                  ? `Thích ${quest.requirement.like.manga.title} để nhận phần thưởng`
+                  : `Like manga ${quest.requirement.like.manga.title} to claim your reward`
                 : quest.type == 'Read'
-                ? `Read chapter ${quest.requirement.read.chapter.number} of manga ${quest.requirement.read.manga.title} to claim your reward`
+                ? locale == 'vn'
+                  ? `Đọc chương ${quest.requirement.read.chapter.number} của truyện ${quest.requirement.read.manga.title} để nhận phần thưởng`
+                  : `Read chapter ${quest.requirement.read.chapter.number} of manga ${quest.requirement.read.manga.title} to claim your reward`
                 : quest.type == 'Comment'
-                ? `Comment on chapter ${quest.requirement.comment.chapter.number} of manga ${quest.requirement.comment.manga.title} to claim your reward`
+                ? locale == 'vn'
+                  ? `Bình luận về chương ${quest.requirement.comment.chapter.number} của truện ${quest.requirement.comment.manga.title} để nhận phần thưởng`
+                  : `Comment on chapter ${quest.requirement.comment.chapter.number} of manga ${quest.requirement.comment.manga.title} to claim your reward`
                 : quest.type == 'Empty'
-                ? `Free quest`
+                ? t(`Free quest`)
                 : quest.type == 'Quiz'
-                ? `Answer a quiz`
+                ? t(`Answer a quiz`)
                 : ``}
             </div>
             {!!quest.description && (
-              <div className={` mt-[15px] lg:mt-5 text-[#777777] text-xs lg:text-sm leading-[15px] lg:leading-[18px] max-h-[105px] lg:max-h-[126px] overflow-auto`}>
+              <div
+                className={` mt-[15px] lg:mt-5 text-[#777777] text-xs lg:text-sm leading-[15px] lg:leading-[18px] max-h-[105px] lg:max-h-[126px] overflow-auto`}>
                 {ReactHtmlParser(quest.description)}
               </div>
             )}
           </div>
           <div className='mt-5 lg:mt-0 flex flex-col items-center row-span-2'>
-            <div className='text-sm lg:text-base leading-[18px] lg:leading-5 font-semibold mb-[10px]'>👑 {t('Reward')}</div>
+            <div className='text-sm lg:text-base leading-[18px] lg:leading-5 font-semibold mb-[10px]'>
+              👑 {t('Reward')}
+            </div>
             {quest.reward?.nft?.img_url ? (
               <>
                 <div className='flex flex-col items-center gap-[10px]'>
@@ -153,7 +165,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                               ? quest.quest_reward_claimed
                               : quest.repeat_quests?.[0]?.repeat_quest_reward_claimed
                           }/${quest.reward.slots}`}</div>
-                          <div>rewards claimed</div>
+                          <div>{t('rewards claimed')}</div>
                         </div>
                       </>
                     )}
@@ -177,7 +189,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                           ? quest.quest_reward_claimed
                           : quest.repeat_quests?.[0]?.repeat_quest_reward_claimed
                       }/${quest.reward.slots}`}</div>
-                      <div>rewards claimed</div>
+                      <div>{t('rewards claimed')}</div>
                     </div>
                   </>
                 )}
@@ -279,7 +291,11 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
               {!!quest.reward.slots && (
                 <>
                   <span className='w-1 h-1 rounded-full bg-[#646464]'></span>
-                  <span>{`${quest.reward.slots} slot${quest.reward.slots > 1 ? 's' : ''}`}</span>
+                  <span>
+                    {locale == 'vn'
+                      ? `${quest.reward.slots} phần thưởng`
+                      : `${quest.reward.slots} slot${quest.reward.slots > 1 ? 's' : ''}`}
+                  </span>
                 </>
               )}
             </div>
@@ -306,11 +322,11 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                 />
               </svg>
               <div>
-                {!!quest.condition.level && <span>{`Reach level ${quest.condition.level}`}</span>}
-                {!!quest.condition.level && !!quest.condition.quest_id && <span> and </span>}
+                {!!quest.condition.level && <span>{`${t('Reach level')} ${quest.condition.level}`}</span>}
+                {!!quest.condition.level && !!quest.condition.quest_id && <span> {t('and')} </span>}
                 {!!quest.condition.quest_id && (
                   <span>
-                    Complete quest{' '}
+                    {t('Complete quest')}{' '}
                     <span className='text-second-color'>
                       {quest.condition.requiredQuest?.name.length > limitChar
                         ? quest.condition.requiredQuest?.name.slice(0, limitChar) + '...'
@@ -318,7 +334,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                     </span>
                   </span>
                 )}
-                <span> to unlock</span>
+                <span> {t('to unlock')}</span>
               </div>
             </div>
           ) : quest.reward_status == 'CAN_CLAIM' ? (
@@ -329,13 +345,19 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                 claimQuestHandler()
                 e.stopPropagation()
               }}>
-              Claim Reward
+              {t('Claim Reward')}
             </FilledButton>
           ) : quest.reward_status == 'CLAIMED' && quest.repeat == 'Daily' ? (
             <div className='text-xs w-fit bg-[#DEDEDE] leading-[15px] font-bold text-medium-gray px-6 pt-1 pb-[5px] rounded-[20px]'>
               <Countdown
                 date={moment().add(1, 'd').startOf('day').toISOString()}
                 renderer={({ hours, minutes, seconds }) => {
+                  if (locale == 'vn')
+                    return (
+                      <span>
+                        Làm mới sau {zeroPad(hours)} giờ : {zeroPad(minutes)} phút : {zeroPad(seconds)} giây
+                      </span>
+                    )
                   return (
                     <span>
                       Reset in {zeroPad(hours)}h : {zeroPad(minutes)}m : {zeroPad(seconds)}s
