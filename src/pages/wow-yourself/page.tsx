@@ -77,38 +77,46 @@ export default function WowYourSelf() {
             </div>
             {locale == 'vn' ? (
               <p className='text-xs leading-5 mt-4 lg:mt-3 lg:text-sm lg:leading-6'>
-                WoW YOURSELF - CUỘC THI VẼ TRUYỆN HOT NHẤT MÙA HÈ CHỈ CÓ TẠI PUNKGA ME!
+                🔥<strong>Cuộc thi vẽ truyện hot nhất</strong> mùa hè chỉ có tại Punkga Me!
+                <br />
                 <br />
                 Bạn có đam mê vẽ truyện? Bạn muốn thể hiện cá tính và tài năng của mình? Vậy thì đừng bỏ lỡ cơ hội tỏa
                 sáng cùng cuộc thi WoW YOURSELF do Punkga ME tổ chức!
                 <br />
-                Tổng giải thưởng lên đến 8.000.000+ VNĐ cùng nhiều phần quà hấp dẫn khác, WoW YOURSELF hứa hẹn sẽ mang
-                đến những trải nghiệm thú vị và cơ hội phát triển bản thân cho tất cả các hoạ sĩ.
                 <br />
-                Tham gia group cuộc thi của Punkga tại đây:{' '}
+                🎁 Tổng giải thưởng lên đến <strong>8.000.000+ VNĐ</strong> cùng{' '}
+                <strong>nhiều phần quà hấp dẫn khác</strong>, WoW YOURSELF hứa hẹn sẽ mang đến những trải nghiệm thú vị
+                và cơ hội phát triển bản thân cho tất cả các hoạ sĩ.
+                <br />
+                <br />
+                Tham gia group cuộc thi của Punkga{' '}
                 <Link
                   href='https://www.facebook.com/groups/punkga.me'
                   target='_blank'
-                  className='text-[#2684FC] underline'>
-                  https://www.facebook.com/groups/punkga.me
+                  className='text-[#2684FC] underline font-bold'>
+                  TẠI ĐÂY
                 </Link>
               </p>
             ) : (
               <p className='text-xs leading-5 mt-4 lg:mt-3 lg:text-sm lg:leading-6'>
-                WoW YOURSELF - THE HOTTEST COMIC DRAWING CONTEST OF THE SUMMER ONLY AT PUNKGA ME!
+                🔥The <strong>hottest comic drawing contest</strong> of the summer only at Punkga Me!
+                <br />
                 <br />
                 Do you have a passion for drawing comics? Do you want to showcase your personality and talent? Then
-                don't miss the chance to shine in the WoW YOURSELF contest organized by Punkga ME!
+                don't miss the chance to shine in the WoW YOURSELF contest organized by Punkga Me!
                 <br />
-                With a total prize pool of over 8,000,000+ VND and many other attractive rewards, WoW YOURSELF promises
-                to bring exciting experiences and personal development opportunities for all artists.
                 <br />
-                Join the Punkga contest group here:{' '}
+                🎁 With a total prize pool of over <strong>8,000,000+ VND</strong> and{' '}
+                <strong>many other attractive rewards</strong>, WoW YOURSELF promises to bring exciting experiences and
+                personal development opportunities for all artists
+                <br />
+                <br />
+                Join the Punkga contest group{' '}
                 <Link
                   href='https://www.facebook.com/groups/punkga.me'
                   target='_blank'
-                  className='text-[#2684FC] underline'>
-                  https://www.facebook.com/groups/punkga.me
+                  className='text-[#2684FC] underline font-bold'>
+                  HERE
                 </Link>
               </p>
             )}
