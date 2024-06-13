@@ -4,6 +4,7 @@ import moment from 'moment'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Context } from 'src/context'
 import { Quest } from 'src/models/campaign'
@@ -23,10 +24,11 @@ export default function QuizQuest({
   open: boolean
   setOpen: (v: boolean) => void
 }) {
-  const { query } = useRouter()
-  const {account} = useContext(Context)
+  const { query, locale } = useRouter()
+  const { account } = useContext(Context)
   const slug = query.campaignSlug as string
   const { mutate } = useSWRConfig()
+  const { t } = useTranslation()
   const [selectedAnswer, setSelectedAnswer] = useState(-1)
   const [correctAnswerIndex, setCorrectAnswerIndex] = useState(-1)
   const [submitLoading, setSubmitLoading] = useState(false)
@@ -125,17 +127,23 @@ export default function QuizQuest({
         })}
         {quest.reward_status == 'CAN_CLAIM' || correctAnswerIndex != -1 ? (
           <FilledButton loading={loading} onClick={claimQuestHandler} className='w-full'>
-            Claim Reward
+            {t('Claim Reward')}
           </FilledButton>
         ) : quest.reward_status == 'OUT_OF_SLOT' ? (
           <div className='text-center bg-medium-gray leading-5 font-bold text-light-medium-gray px-6 pt-2 pb-[10px] rounded-[20px]'>
-            Out of reward
+            {t('Out of reward')}
           </div>
         ) : quest.reward_status == 'CLAIMED' && quest.repeat == 'Daily' ? (
           <div className='text-center bg-medium-gray leading-5 font-bold text-light-medium-gray px-6 pt-2 pb-[10px] rounded-[20px]'>
             <Countdown
               date={moment().add(1, 'd').startOf('day').toISOString()}
               renderer={({ hours, minutes, seconds }) => {
+                if (locale == 'vn')
+                  return (
+                    <span>
+                      Làm mới sau {zeroPad(hours)} giờ : {zeroPad(minutes)} phút : {zeroPad(seconds)} giây
+                    </span>
+                  )
                 return (
                   <span>
                     Reset in {zeroPad(hours)}h : {zeroPad(minutes)}m : {zeroPad(seconds)}s
@@ -146,11 +154,11 @@ export default function QuizQuest({
           </div>
         ) : selectedAnswer != -1 ? (
           <FilledButton loading={submitLoading} onClick={answerQuestHandler} className='w-full'>
-            Submit
+            {t('Submit')}
           </FilledButton>
         ) : (
           <FilledButton disabled className='w-full'>
-            Submit
+            {t('Submit')}
           </FilledButton>
         )}
       </div>
