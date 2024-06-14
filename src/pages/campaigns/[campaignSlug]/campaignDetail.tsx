@@ -300,11 +300,11 @@ function CampaignDetail({}) {
                 </div>
                 <span className='h-5 w-[1px] hidden lg:inline-block bg-[#F0F0F0]'></span>
                 <div className='lg:block hidden'>{`${data?.participants?.aggregate?.count} ${
-                  data?.participants?.aggregate?.count < 2 ? 'participant' : 'participants'
+                  data?.participants?.aggregate?.count < 2 ? t('participant') : t('participants')
                 }`}</div>
               </div>
               <div className='lg:hidden'>{`${data?.participants?.aggregate?.count} ${
-                data?.participants?.aggregate?.count < 2 ? 'participant' : 'participants'
+                data?.participants?.aggregate?.count < 2 ? t('participant') : t('participants')
               }`}</div>
             </div>
             <TruncateMarkup
