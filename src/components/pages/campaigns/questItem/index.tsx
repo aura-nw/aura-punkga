@@ -88,11 +88,11 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
               width={600}
               height={600}
               alt=''
-              className='max-w-[600px] w-[80vw] aspect-square rounded-lg object-contain bg-white'
+              className='max-w-[800px] w-[80vw] aspect-square rounded-lg object-contain bg-white'
             />
           </div>
         </Modal>
-        <div className='p-5 pt-10 w-[90vw] max-w-[600px] lg:w-[600px] lg:grid-cols-[1fr_190px] lg:grid lg:gap-x-10 lg:grid-rows-[auto_1fr]'>
+        <div className='p-5 pt-10 w-[90vw] max-w-[800px] lg:w-[800px] lg:grid-cols-[1fr_190px] lg:grid lg:gap-x-10 lg:grid-rows-[auto_1fr]'>
           <div>
             <div className='text-xs lg:text-sm leading-[15px] lg:leading-[18px] font-semibold'>
               {quest.repeat == 'Daily' && (
