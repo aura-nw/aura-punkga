@@ -1,12 +1,12 @@
-import Footer from 'components/Footer';
-import Header from 'components/Header';
+import Footer from 'components/Footer'
+import Header from 'components/Header'
 
-export default function Layout({children}:any) {
+export default function Layout({ children }: any) {
   return (
     <>
       <Header />
-      {children}
-      <Footer/>
+      <div className='min-h-[40vh]'>{children}</div>
+      <Footer />
     </>
   )
 }

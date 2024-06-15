@@ -65,14 +65,15 @@ function Home() {
         prev.map((v) =>
           v.key == 'All genres'
             ? {
-              key: v.key,
-              value: t(v.key),
-            }
+                key: v.key,
+                value: t(v.key),
+              }
             : v
         )
       )
     })
   }, [t('All status')])
+
   return (
     <>
       <div className='md:hidden'>
@@ -107,21 +108,21 @@ function Home() {
                   options={
                     allTags?.data
                       ? [
-                        {
-                          key: 'All genres',
-                          value: t('All genres'),
-                        },
-                        ...allTags?.data?.map((tag) => ({
-                          key: tag[locale],
-                          value: tag[locale],
-                        })),
-                      ]
+                          {
+                            key: 'All genres',
+                            value: t('All genres'),
+                          },
+                          ...allTags?.data?.map((tag) => ({
+                            key: tag[locale],
+                            value: tag[locale],
+                          })),
+                        ]
                       : [
-                        {
-                          key: 'All genres',
-                          value: t('All genres'),
-                        },
-                      ]
+                          {
+                            key: 'All genres',
+                            value: t('All genres'),
+                          },
+                        ]
                   }
                   placeholder={t('All genres')}
                 />
@@ -170,7 +171,7 @@ function Home() {
                   return <DummyComic key={index} />
                 })
                 : latestComic.data?.length
-                  ? latestComic.data
+                ? latestComic.data
                     .filter((data) =>
                       statusFilter.length && !statusFilter.some((s) => s.key == 'All status')
                         ? statusFilter.some((filter) => data.status.text == filter?.key)
@@ -184,7 +185,7 @@ function Home() {
                     .map((data, index) => {
                       return <Comic2 key={index} {...data} />
                     })
-                  : null}
+                : null}
             </div>
           </div>
           <div className='lg:flex-auto lg:w-[calc(33.6%-40px)] mt-6 lg:mt-0 '>
@@ -199,11 +200,11 @@ function Home() {
               <div className='flex flex-col gap-10 mt-2 md:mt-6'>
                 {trendingComic.loading
                   ? Array.apply(null, Array(5)).map((d, index) => {
-                    return <DummyComic key={index} />
-                  })
+                      return <DummyComic key={index} />
+                    })
                   : trendingComic.data.slice(0, 5).map((data, index) => {
-                    return <TrendingComic key={index} {...data} />
-                  })}
+                      return <TrendingComic key={index} {...data} />
+                    })}
               </div>
             </div>
 

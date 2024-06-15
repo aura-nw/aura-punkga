@@ -116,6 +116,7 @@ export default function SignInModal() {
           <MainButton
             buttonRef={buttonRef}
             disabled={!(email && password)}
+            loading={loginLoading}
             onClick={loginHandler}
             className='min-w-[128px]'>
             {t('Sign in')}

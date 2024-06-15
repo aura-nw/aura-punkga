@@ -2,68 +2,23 @@ import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache, split } from '@a
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { Authorizer } from '@authorizerdev/authorizer-js'
-import { AssetList, Chain } from '@chain-registry/types'
-import { wallets as c98Extension } from '@cosmos-kit/coin98-extension'
-import { wallets as keplrExtension } from '@cosmos-kit/keplr-extension'
-import { ChainProvider } from '@cosmos-kit/react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import axios from 'axios'
-import { chains, assets as networkAssets } from 'chain-registry'
 import { createClient } from 'graphql-ws'
 import getConfig from 'next/config'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 import { createContext, useEffect, useState } from 'react'
-import { isMobile } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
+import { SiweMessage, generateNonce } from 'siwe'
 import { IUser } from 'src/models/user'
 import { getProfile as getProfileService } from 'src/services'
-import { wallets as c98Mobile } from 'src/services/c98MobileWallet'
-import { getGasPriceByChain, oauthLogin } from 'src/utils'
+import { oauthLogin } from 'src/utils'
 import { getItem, removeItem, setItem } from 'src/utils/localStorage'
+import { useAccount, useChainId, useDisconnect, useSignMessage } from 'wagmi'
 import ModalProvider from './modals'
-const testnetChains: Chain[] = [
-  {
-    bech32_prefix: 'aura',
-    chain_id: 'aura_6321-3',
-    chain_name: 'aura_6321-3',
-    network_type: 'testnet',
-    pretty_name: 'Aura Euphoria Network',
-    slip44: 118,
-    status: 'live',
-    explorers: [
-      {
-        url: 'https://rpc.euphoria.aura.network',
-      },
-      {
-        url: 'https://lcd.euphoria.aura.network',
-      },
-    ],
-  },
-]
-const testnetAssets: AssetList[] = [
-  {
-    assets: [
-      {
-        base: 'ueaura',
-        denom_units: [
-          { denom: 'ueaura', exponent: 0 },
-          { denom: 'eaura', exponent: 6 },
-        ],
-        display: 'eaura',
-        name: 'Aura',
-        symbol: 'EAURA',
-      },
-    ],
-    chain_name: 'aura_6321-3',
-  },
-]
-const signerOptions = {
-  preferredSignType: (chain: Chain) => {
-    return 'direct'
-  },
-  signingStargate: (chain: Chain) => ({ gasPrice: getGasPriceByChain(chain) }),
-  signingCosmwasm: (chain: Chain) => ({ gasPrice: getGasPriceByChain(chain) }),
-}
+const queryClient = new QueryClient()
+
 export const Context = createContext<{
   account?: IUser
   wallet?: string
@@ -82,6 +37,23 @@ export const Context = createContext<{
   getProfile: (token?: string) => Promise<any>
   forgotPassword: (email: string) => Promise<any>
   resetPassword: (token: string, newPassword: string) => Promise<any>
+  getIPAsset: (user_id: string) => Promise<any>
+  registerIPAsset: (
+    user_id: string,
+    nft_token_id: string,
+    nft_contract_address: string,
+    ip_asset_id: string
+  ) => Promise<any>
+  getLicense: (ip_asset_id: string) => Promise<any>
+  mintLicense: (
+    licenseData: Array<{
+      ip_asset_id: string
+      license_id: string
+      license_template_address: string
+      owner: string
+      term_id: string
+    }>
+  ) => Promise<any>
 }>({
   account: undefined,
   wallet: undefined,
@@ -95,9 +67,17 @@ export const Context = createContext<{
   getProfile: async () => {},
   forgotPassword: async () => {},
   resetPassword: async () => {},
+  getIPAsset: async () => {},
+  registerIPAsset: async () => {},
+  getLicense: async () => {},
+  mintLicense: async () => {},
 })
 export const privateAxios = axios.create()
-function ContextProvider({ children }) {
+function ContextProvider({ children }: any) {
+  const { address, isConnected } = useAccount()
+  const chainId = useChainId()
+  const { signMessage } = useSignMessage()
+  const { disconnect } = useDisconnect()
   const [account, setAccount] = useState<IUser>()
   const [wallet, setWallet] = useState<string>()
   const [isSettingUp, setIsSettingUp] = useState(true)
@@ -164,13 +144,73 @@ function ContextProvider({ children }) {
     }
   }, [accessTokenParam])
 
+  useEffect(() => {
+    if (address && isConnected && !account) {
+      const domain = window.location.host
+      const origin = window.location.origin
+      const statement = 'Sign in with Ethereum to the app.'
+      const siweMessage = new SiweMessage({
+        scheme: undefined,
+        domain,
+        address,
+        statement,
+        uri: origin,
+        version: '1',
+        chainId,
+        nonce: generateNonce(),
+      })
+      const message = siweMessage.prepareMessage()
+      signMessage(
+        { message, account: address },
+        {
+          onSuccess: (data) =>
+            getAccessToken({
+              message,
+              signature: data,
+            }),
+        }
+      )
+    }
+  }, [address, isConnected, account])
+
+  const getAccessToken = async ({ message, signature }) => {
+    try {
+      const res = await authorizerRef.graphqlQuery({
+        query: `mutation Siwe {
+          siwe(
+              params: {
+                  message: "${message.replace(/(?:\r\n|\r|\n)/g, '\\n')}"
+                  signature: "${signature}"
+              }
+          ) {
+              message
+              should_show_otp_screen
+              access_token
+              id_token
+              refresh_token
+              expires_in
+          }
+      }`,
+      })
+      if (res?.siwe?.access_token) {
+        const token = res?.siwe?.access_token
+        setItem('token', res?.siwe?.access_token)
+        setLogoutTimeout(res?.siwe?.expires_in)
+        await getProfile(token)
+      }
+    } catch (error) {
+      console.log('resendVerifyEmail', error)
+      return null
+    }
+  }
+
   const setLogoutTimeout = (timeout: any) => {
     if (window.logoutTimeoutId) {
       clearTimeout(window.logoutTimeoutId)
     }
     window.logoutTimeoutId = setTimeout(
       () => {
-        setAccount(null)
+        setAccount(undefined)
       },
       timeout > 86400000 ? 86400000 : timeout
     )
@@ -183,7 +223,7 @@ function ContextProvider({ children }) {
         await authorizerRef.logout()
         removeItem('token')
         removeItem('current_reading_manga')
-        setAccount(null)
+        setAccount(undefined)
       } else {
         if (accessTokenParam) {
           setItem(
@@ -196,7 +236,7 @@ function ContextProvider({ children }) {
         } else {
           const token = getItem('token')
           if (token) {
-            const t = localStorage.getItem('token')
+            const t = localStorage.getItem('token') as string
             setLogoutTimeout(new Date(JSON.parse(t).exprire).getTime() - Date.now())
             await getProfile(token)
           }
@@ -263,7 +303,7 @@ function ContextProvider({ children }) {
       } else {
         callback && callback('failed', 'Admin account cannot be used for user purposes')
       }
-    } catch (error) {
+    } catch (error: any) {
       callback && callback('failed', error.message.includes('credentials') ? 'Wrong email or password' : error.message)
       console.log('login error: ' + error)
     }
@@ -285,9 +325,10 @@ function ContextProvider({ children }) {
   const logout = async () => {
     try {
       await authorizerRef.logout()
+      disconnect()
       removeItem('token')
       removeItem('current_reading_manga')
-      setAccount(null)
+      setAccount(undefined)
       router.push(location.origin + location.pathname)
     } catch (error) {
       console.log('logout', error)
@@ -312,7 +353,7 @@ function ContextProvider({ children }) {
       if (res) {
         callback && callback('success')
       }
-    } catch (error) {
+    } catch (error: any) {
       callback && callback('failed', error.message)
       console.log('sign up error: ' + error)
     }
@@ -328,7 +369,7 @@ function ContextProvider({ children }) {
         await getProfile()
       }
       return res
-    } catch (error) {
+    } catch (error: any) {
       console.log('update profile error: ' + error)
       throw new Error(error)
     }
@@ -376,6 +417,67 @@ function ContextProvider({ children }) {
       return null
     }
   }
+  const getIPAsset = async (user_id: string) => {
+    try {
+      const res = await privateAxios.get(`${config.API_URL}/api/rest/public/ip-assets?user_id=${user_id}`)
+      return res
+    } catch (error) {
+      console.log('getIPAsset', error)
+      return null
+    }
+  }
+
+  const registerIPAsset = async (
+    user_id: string,
+    nft_token_id: string,
+    nft_contract_address: string,
+    ip_asset_id: string
+  ) => {
+    try {
+      const res = await privateAxios.post(`${config.API_URL}/api/rest/users/ip-assets`, {
+        object: {
+          user_id,
+          nft_token_id,
+          nft_contract_address,
+          ip_asset_id,
+        },
+      })
+      return res
+    } catch (error) {
+      console.log('RegisterIPAsset', error)
+      return null
+    }
+  }
+
+  const getLicense = async (ip_asset_id: string) => {
+    try {
+      const res = await privateAxios.get(`${config.API_URL}/api/rest/public/license-token?ip_asset_id=${ip_asset_id}`)
+      return res
+    } catch (error) {
+      console.log('getLicense', error)
+      return null
+    }
+  }
+
+  const mintLicense = async (
+    licenseData: Array<{
+      ip_asset_id: string
+      license_id: string
+      license_template_address: string
+      owner: string
+      term_id: string
+    }>
+  ): Promise<any> => {
+    try {
+      const res = await privateAxios.post(`${config.API_URL}/api/rest/user/license-token`, {
+        objects: licenseData,
+      })
+      return res
+    } catch (error) {
+      console.log('MintLicense', error)
+      return null
+    }
+  }
   return (
     <Context.Provider
       value={{
@@ -391,43 +493,16 @@ function ContextProvider({ children }) {
         getProfile,
         forgotPassword,
         resetPassword,
+        getIPAsset,
+        registerIPAsset,
+        getLicense,
+        mintLicense,
       }}>
-      <ChainProvider
-        chains={[...testnetChains, ...chains.filter((chain) => chain.chain_name == 'aura')] as any}
-        assetLists={[...testnetAssets, ...networkAssets.filter((chain) => chain.chain_name == 'aura')] as any}
-        signerOptions={signerOptions as any}
-        endpointOptions={{
-          isLazy: true,
-          endpoints: {
-            aura_euphoria_evm: {
-              rpc: ['https://rpc.euphoria.aura.network'],
-            },
-            aura: {
-              rpc: ['https://rpc.aura.network'],
-            },
-          },
-        }}
-        wallets={isMobile ? [...c98Mobile, ...keplrExtension] : [...c98Extension, ...keplrExtension]}
-        walletConnectOptions={
-          isMobile
-            ? {
-                signClient: {
-                  projectId: '2dbe4db7e11c1057cc45b368eeb34319',
-                  relayUrl: 'wss://relay.walletconnect.org',
-                  metadata: {
-                    name: 'Punkga',
-                    description: 'Punkga.me comic website',
-                    url: 'https://punkga.me/',
-                    icons: ['https://punkga.me/logo.png'],
-                  },
-                },
-              }
-            : undefined
-        }>
+      <QueryClientProvider client={queryClient}>
         <ApolloProvider client={client}>
           <ModalProvider>{children}</ModalProvider>
         </ApolloProvider>
-      </ChainProvider>
+      </QueryClientProvider>
     </Context.Provider>
   )
 }

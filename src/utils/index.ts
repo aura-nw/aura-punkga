@@ -120,3 +120,16 @@ export function formatNumber(x: any) {
 export const convertStringToDot = (str: string) => {
   return Array(str.length).join('•')
 }
+
+export function convertIPFStoHTTP(ipfsUrl: string): string {
+  // Check if the input is a valid IPFS URL
+  if (!ipfsUrl.startsWith('ipfs://')) {
+    throw new Error('Invalid IPFS URL format');
+  }
+
+  // Extract the IPFS hash from the URL
+  const ipfsHash = ipfsUrl.slice(7);
+
+  // Construct the HTTP gateway URL
+  return `https://ipfs.io/ipfs/${ipfsHash}`;
+}
