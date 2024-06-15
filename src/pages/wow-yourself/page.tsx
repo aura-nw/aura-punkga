@@ -251,11 +251,10 @@ function ViewRule() {
               <li className='font-bold'>
                 Giải thưởng Vòng 2:
                 <ul className='list-disc list-inside pl-5 font-normal'>
+                  <li>TOP 2: Do Ban Giám Khảo bình chọn sẽ nhận được giải thưởng trị giá 500.000 VNĐ mỗi hoạ sĩ</li>
                   <li>
-                    TOP 10: Do Ban Giám Khảo và ban cố vấn bình chọn - Nhận 10 điểm cộng trên mỗi hoạ sĩ và được cộng
-                    vào kết quả chung cuộc!
+                    TOP 10: Do Ban Giám Khảo và ban cố vấn bình chọn sẽ nhận được 5 điểm cộng tính vào kết quả chung cuộc!
                   </li>
-                  <li>TOP 2: Do Ban Giám Khảo bình chọn - Nhận 1 cuốn artbook trên mỗi hoạ sĩ</li>
                 </ul>
               </li>
               <li className='[&::marker]:font-bold'>
@@ -402,10 +401,10 @@ function ViewRule() {
               <li className='font-bold'>
                 Round 2 Prizes:
                 <ul className='list-disc list-inside pl-5 font-normal'>
+                  <li>TOP 2: Selected by the Judges, each artist will receive a prize of 500.000 VND.</li>
                   <li>
-                    TOP 10: Selected by Judges and advisors - Receive 10 bonus points each, added to the final result.
+                    TOP 10: Selected by the Judges and Advisory Board, each artist will receive 5 bonus points added to their final score.
                   </li>
-                  <li>TOP 2: Selected by Judges - Receive 1 artbook each.</li>
                 </ul>
               </li>
               <li className='[&::marker]:font-bold'>
