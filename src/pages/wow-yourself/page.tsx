@@ -148,10 +148,12 @@ export default function WowYourSelf() {
             </Link>
           </div>
         </div>
-        {!(moment().isAfter(moment('2024-06-18')) && moment().isBefore(moment('2024-06-30'))) && <Timeline />}
+        {/* {!(moment().isAfter(moment('2024-06-18')) && moment().isBefore(moment('2024-06-30'))) && <Timeline />}
         {moment().isAfter(moment('2024-06-18')) && moment().isBefore(moment('2024-06-30')) && <ComicList />}
         <JudgeBoard />
-        {moment().isAfter(moment('2024-06-18')) && moment().isBefore(moment('2024-06-30')) && <Timeline />}
+        {moment().isAfter(moment('2024-06-18')) && moment().isBefore(moment('2024-06-30')) && <Timeline />} */}
+        {(moment().isAfter(moment('2024-06-18')) && moment().isBefore(moment('2024-06-30'))) && <Timeline />}
+        <JudgeBoard />
       </div>
     </div>
   )

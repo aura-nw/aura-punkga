@@ -23,7 +23,7 @@ export default function Timeline() {
           <div className='w-[1px] h-[43px] bg-[#1C1C1C1A]'></div>
           <div className='flex flex-col gap-1 w-[40%]'>
             <div className='text-sm leading-[18px]'>{t('Participants')}:</div>
-            <div className='font-semibold'>164</div>
+            <div className='font-semibold'>166</div>
           </div>
         </div>
         <Link

@@ -254,7 +254,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
         </div>
       </Modal>
       <div
-        className={`bg-[#F2F2F2] lg:bg-white lg:border lg:border-light-medium-gray  rounded-[10px] p-4 flex gap-[10px] min-h-[160px] relative ${
+        className={`bg-[#F2F2F2] lg:bg-white lg:border lg:border-light-medium-gray rounded-[10px] p-4 flex gap-[10px] min-h-[160px] relative ${
           quest.unlock &&
           (quest.reward_status == 'CAN_CLAIM' ||
             quest.reward_status == 'NOT_SATISFY' ||
