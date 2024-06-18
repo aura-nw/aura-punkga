@@ -125,6 +125,7 @@ export default function WowYourSelf() {
             <div className='flex gap-5'>
               <ViewRule />
               <MainButton
+                onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSdpkgu8EarRd1aXgwbOsuo0dil_zwAS8fvxoSx6DfRIP7sLCg/viewform', '_blank')}
                 disabled={!(moment().isAfter(moment('2024-06-18')) && moment().isBefore(moment('2024-06-30')))}
                 className='w-full'>
                 {t('Submit my artwork')}
