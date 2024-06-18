@@ -37,10 +37,10 @@
     tslib "^2.3.0"
     zen-observable-ts "^1.2.5"
 
-"@authorizerdev/authorizer-js@^1.2.3":
-  version "1.2.18"
-  resolved "https://registry.yarnpkg.com/@authorizerdev/authorizer-js/-/authorizer-js-1.2.18.tgz#e3dd9c537afaedd946873061aeb60cbb9af5523f"
-  integrity sha512-9j5U/4lqaaEcG78Zli+TtLJ0migSKhFwnXXunulAGTZOzQSTCJ/CSSPip5wWNa/Mkr6gdEMwk1HYfhIdk2A9Mg==
+"@authorizerdev/authorizer-js@1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@authorizerdev/authorizer-js/-/authorizer-js-1.2.3.tgz#cd3667d541ef34587c6c19b9ef37f3e5992d8870"
+  integrity sha512-rk/fMRIsqbp+fsy2y09etVjf7CY9/4mG6hf0RKgXgRRfxtAQa1jdkt/De23hBTNeEwAWu6hP/9BQZjcrln6KtA==
   dependencies:
     cross-fetch "^3.1.5"
 
