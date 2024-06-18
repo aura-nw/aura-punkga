@@ -42,7 +42,7 @@ import Miroles from './assets/authors/Miroles.webp'
 import NgocBe from './assets/authors/ngoc_be.jpg'
 import Miyuki from './assets/authors/miyuki.webp'
 import Grey from './assets/authors/grey.webp'
-import EventBanner from './assets/event-banner.png'
+import EventBanner from './assets/event-banner-v3.png'
 function Carousel({ sliderRef, children, className, setSlideIndex, sliderNavRef }) {
   var settings = {
     infinite: true,

@@ -26,11 +26,17 @@ import SPImage2VN from './assets/support-2-vn.svg'
 import SPImage2 from './assets/support-2.svg'
 import SPImageVN from './assets/support-vn.svg'
 import SPImage from './assets/support.svg'
+import HeadComponent from '../../components/Head'
 export default function Page(props) {
-  if (props.justHead) {
-    return <></>
+  if (props.justHead || props.pageProps?.justHead) {
+    return <HeadComponent data={props.pageProps?.metadata || props.metadata} />
   }
-  return <AboutUs />
+  return (
+    <>
+      <HeadComponent data={props.pageProps?.metadata || props.metadata} />
+      <AboutUs />
+    </>
+  )
 }
 
 const slideData = [
@@ -459,13 +465,17 @@ const Author = ({ data, active, setActive, index }) => {
 Page.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>
 }
-export const getStaticProps = async ({ locale }) => {
-  if (process.env.NODE_ENV === 'development') {
-    await i18n?.reloadResources()
+
+export const getServerSideProps = async (context) => {
+  const props = {
+    title: 'About Us',
+    description: context?.locale == 'en' ? 'A cyberpunk playground for comic/manga artists to create, share & monetize their work as IP Assets. Learn more about us!' : 'Sân chơi cyberpunk dành cho các họa sĩ truyện tranh/manga sáng tạo, chia sẻ và kiếm lợi nhuận từ tác phẩm của mình dưới dạng Tài sản trí tuệ. Tìm hiểu thêm về chúng tôi!',
+    canonical: `https://punkga.me/about-us`,
   }
   return {
     props: {
-      ...(await serverSideTranslations(locale!, ['common'])),
+      metadata: props,
+      ...(await serverSideTranslations(context?.locale!, ['common'])),
     },
   }
 }
