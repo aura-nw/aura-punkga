@@ -14,7 +14,7 @@ Page.getLayout = function getLayout(page) {
 }
 export const getServerSideProps = async (context) => {
   if (context.params?.campaignSlug) {
-    const res = await fetch(`https://api.staging.punkga.me/campaign/${context.params?.campaignSlug}`)
+    const res = await fetch(`https://api.punkga.me/campaign/${context.params?.campaignSlug}`)
     const data = await res.json()
     const campaign = data?.data?.campaign?.[0]
     if (!campaign)
