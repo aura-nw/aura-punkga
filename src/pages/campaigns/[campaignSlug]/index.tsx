@@ -2,12 +2,18 @@ import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import CampaignDetail from './campaignDetail'
 import Layout from 'components/Layout'
+import HeadComponent from 'components/Head'
 
 export default function Page(props) {
   if (props.justHead || props.pageProps?.justHead) {
-    return <></>
+    return <HeadComponent data={props.pageProps?.metadata || props.metadata} />
   }
-  return <CampaignDetail />
+  return (
+    <>
+      <HeadComponent data={props.pageProps?.metadata || props.metadata} />
+      <CampaignDetail />
+    </>
+  )
 }
 Page.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>
