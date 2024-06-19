@@ -43,7 +43,7 @@ function CampaignDetail({}) {
   const [seeMore, setSeeMore] = useState(undefined)
   const [enrollLoading, setEnrollLoading] = useState(false)
   const [claimLoading, setClaimLoading] = useState(false)
-  const { query } = useRouter()
+  const { query, locale } = useRouter()
   const slug = query.campaignSlug as string
   const { mutate } = useSWRConfig()
   const { t } = useTranslation()
@@ -260,7 +260,7 @@ function CampaignDetail({}) {
             </StatusLabel>
             <div className='flex justify-between'>
               <div className='font-bold mt-[5px] leading-5 lg:text-xl lg:leading-[25px] lg:mt-0'>
-                {data.name}{' '}
+                {data[locale].name}{' '}
                 <span className='hidden lg:inline-block ml-[15px]'>
                   <StatusLabel status={isUpcoming ? 'warning' : !isEnded ? 'success' : 'default'}>
                     {t(isUpcoming ? 'Upcoming' : !isEnded ? 'Ongoing' : 'Ended')}
@@ -313,7 +313,7 @@ function CampaignDetail({}) {
               ellipsis={<span></span>}
               onTruncate={(wasTruncated) => (wasTruncated && seeMore == undefined ? setSeeMore(false) : null)}>
               <div className={` text-[#61646B] text-sm leading-[18px] lg:text-base lg:leading-5`}>
-                {ReactHtmlParser(data.description)}
+                {ReactHtmlParser(data[locale].description)}
               </div>
             </TruncateMarkup>
             {seeMore != undefined ? (

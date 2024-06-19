@@ -21,6 +21,7 @@ export default function CampaignPage() {
   const { account } = useContext(Context)
   const { setSignInOpen } = useContext(ModalContext)
   const router = useRouter()
+  const {locale} = useRouter()
   const { t } = useTranslation()
   const { data } = useSWR(
     { key: 'get_all_campaigns', accountId: account?.id },
@@ -93,48 +94,47 @@ export default function CampaignPage() {
             </div>
           </div>}
         </div>
-        {list.length > 0 && (
-          <div className='flex gap-3 mt-[10px] md:mt-6 items-center flex-wrap'>
-            <Tag selected={!statusFilter.length} onClick={() => setStatusFilter([])}>
-              {t('All status')}
+
+        <div className='flex gap-3 mt-[10px] md:mt-6 items-center flex-wrap'>
+          <Tag selected={!statusFilter.length} onClick={() => setStatusFilter([])}>
+            {t('All status')}
+          </Tag>
+          <span className='inline-block w-[1px] self-stretch bg-[#DEDEDE]'></span>
+          {['Upcoming', 'Ongoing', 'Ended'].map((status, index) => (
+            <Tag
+              key={index}
+              selected={statusFilter.includes(status)}
+              onClick={() => {
+                statusFilter.includes(status)
+                  ? setStatusFilter(statusFilter.filter((s) => s != status))
+                  : setStatusFilter([...statusFilter, status])
+              }}>
+              {t(status)}
             </Tag>
-            <span className='inline-block w-[1px] self-stretch bg-[#DEDEDE]'></span>
-            {['Upcoming', 'Ongoing', 'Ended'].map((status, index) => (
-              <Tag
-                key={index}
-                selected={statusFilter.includes(status)}
+          ))}
+          <div className='hidden gap-8 items-center md:flex ml-5'>
+            <div className='p-1'>
+              <Checkbox
+                label={t('Reward NFT')}
+                checked={rewardNFTChecked}
+                onClick={() => setRewardNFTChecked(!rewardNFTChecked)}
+              />
+            </div>
+            <div className='p-1'>
+              <Checkbox
+                label={t('Enrolled')}
+                checked={enrolledChecked}
                 onClick={() => {
-                  statusFilter.includes(status)
-                    ? setStatusFilter(statusFilter.filter((s) => s != status))
-                    : setStatusFilter([...statusFilter, status])
-                }}>
-                {t(status)}
-              </Tag>
-            ))}
-            <div className='hidden gap-8 items-center md:flex ml-5'>
-              <div className='p-1'>
-                <Checkbox
-                  label={t('Reward NFT')}
-                  checked={rewardNFTChecked}
-                  onClick={() => setRewardNFTChecked(!rewardNFTChecked)}
-                />
-              </div>
-              <div className='p-1'>
-                <Checkbox
-                  label={t('Enrolled')}
-                  checked={enrolledChecked}
-                  onClick={() => {
-                    if (account) {
-                      setEnrolledChecked(!enrolledChecked)
-                    } else {
-                      setSignInOpen(true)
-                    }
-                  }}
-                />
-              </div>
+                  if (account) {
+                    setEnrolledChecked(!enrolledChecked)
+                  } else {
+                    setSignInOpen(true)
+                  }
+                }}
+              />
             </div>
           </div>
-        )}
+        </div>
 
       </div>
       {list.length > 0 ? (<div className='grid grid-cols-1 lg:grid-cols-2 gap-5 2xl:gap-10 xl:grid-cols-3'>
@@ -164,10 +164,10 @@ export default function CampaignPage() {
                   </StatusLabel>
                 </div>
                 <div className='mt-[10px] text-xs leading-[15px]'>
-                  <div className=' text-[#292929] font-bold line-clamp-2 2xl:text-base'>{campaign.name}</div>
+                  <div className=' text-[#292929] font-bold line-clamp-2 2xl:text-base'>{campaign[locale].name}</div>
                   <div
                     className=' text-[#61646B] mt-1 2xl:mt-[10px] line-clamp-3 2xl:text-sm max-w'
-                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(campaign.description) }}></div>
+                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(campaign[locale].description) }}></div>
                 </div>
               </div>
               <div className='text-xs 2xl:text-sm text-[#61646B]'>

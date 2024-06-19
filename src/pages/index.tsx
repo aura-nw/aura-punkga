@@ -38,6 +38,7 @@ function Home() {
   const { locale } = useRouter()
   const { t } = useTranslation()
   const sliderNavRef = useRef<any>()
+  const useableTags = allTags?.data?.filter(item => item.en !== "Invent contest" && item.vn !== "Invent contest")
   const [statusFilter, setStatusFilter] = useState([
     {
       key: 'All status',
@@ -73,7 +74,7 @@ function Home() {
       )
     })
   }, [t('All status')])
-
+console.log('allTags', allTags)
   return (
     <>
       <div className='md:hidden'>
@@ -106,13 +107,13 @@ function Home() {
                   onChange={setGenreFilter}
                   allKey='All genres'
                   options={
-                    allTags?.data
+                    useableTags
                       ? [
                           {
                             key: 'All genres',
                             value: t('All genres'),
                           },
-                          ...allTags?.data?.map((tag) => ({
+                          ...useableTags?.map((tag) => ({
                             key: tag[locale],
                             value: tag[locale],
                           })),
