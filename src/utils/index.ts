@@ -133,3 +133,18 @@ export function convertIPFStoHTTP(ipfsUrl: string): string {
   // Construct the HTTP gateway URL
   return `https://ipfs.io/ipfs/${ipfsHash}`;
 }
+export const isMetamaskInstalled = () => {
+  if (typeof window === 'undefined') {
+    return false
+  }
+
+  if (window.ethereum?.isMetaMask) {
+    return true
+  }
+
+  if (window.ethereum?.providers?.some((p: any) => p.isMetaMask)) {
+    return true
+  }
+
+  return false
+}

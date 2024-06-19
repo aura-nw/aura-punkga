@@ -1,29 +1,65 @@
-import { makeSignDoc } from '@cosmjs/amino'
-import { useChain, useWallet } from '@cosmos-kit/react'
 import Mascot from 'assets/images/Mascot_5_1.png'
-import C98WalletImage from 'assets/images/c98.png'
-import KeplrWalletImage from 'assets/images/keplr.png'
 import MainButton from 'components/Button/MainButton'
 import Modal from 'components/Modal'
+import Spinner from 'components/Spinner'
 import getConfig from 'next/config'
 import Image from 'next/image'
+import { QRCodeSVG } from 'qrcode.react'
 import { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { SiweMessage, generateNonce } from 'siwe'
+import WCIcon from 'src/assets/images/wallet-connect.png'
 import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
 import useLocalStorage from 'src/hooks/useLocalStorage'
 import { getRequestLog, linkWallet } from 'src/services'
+import { Connector, useAccount, useChainId, useConnect, useDisconnect, useSignMessage } from 'wagmi'
 export default function MigrateWalletModal() {
   const { getProfile } = useContext(Context)
   const { migrateWalletOpen: open, setMigrateWalletOpen: setOpen } = useContext(ModalContext)
   const { t } = useTranslation()
-  const chainName = getConfig().CHAIN_ID.includes('xstaxy') ? 'aura' : 'aura_6321-3'
-  const { walletRepo, address, disconnect, chain } = useChain(chainName)
-  const { mainWallet } = useWallet()
   const [success, setSuccess] = useState(undefined)
   const [requestId, setRequestId] = useLocalStorage('request_id', undefined)
   const [step, setStep] = useState(1)
+  const { connectors, connectAsync: wagmiConnect } = useConnect()
+  const { address } = useAccount()
+  const { disconnect } = useDisconnect()
+  const { signMessage } = useSignMessage()
+  const { disconnect: wagmiDisconnect } = useDisconnect()
+  const [installed, setInstalled] = useState<Connector[]>([])
+  const [otherWallet, setOtherWallet] = useState<Connector[]>([])
+  const chainId = useChainId()
+  //QRCode
+  const [qrCode, setQrCode] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [showQRCode, setShowQRCode] = useState(false)
+  const [qrError, setQRError] = useState('')
+
+  useEffect(() => {
+    const setConnector = async () => {
+      const installedWallet = [] as Connector[]
+      const otherWallet = [] as Connector[]
+      const mobile = [] as Connector[]
+
+      for (let i = 0; i < connectors.length; i++) {
+        const connector = connectors[i]
+
+        if (connector.type === 'injected') {
+          if (connector.id === 'injected') {
+            mobile.push(connector)
+          }
+          connector.icon && installedWallet.push(connector)
+        } else if (connector.type === 'walletConnect') {
+          otherWallet.push(connector)
+        }
+      }
+      setInstalled(installedWallet)
+      setOtherWallet(otherWallet)
+    }
+
+    setConnector()
+  }, [connectors])
   useEffect(() => {
     let id
     if (!open) {
@@ -33,57 +69,36 @@ export default function MigrateWalletModal() {
   }, [open])
   const linkWalletHandler = async () => {
     try {
-      if (mainWallet?.client?.signArbitrary && address) {
-        const msg = `Welcome to Punkga.me!
-
-This message is only to authenticate yourself. Please sign to proceed with using Punkga.me.
-
-Signing this message will not trigger a blockchain transaction or cost any gas fees.
-
-To ensure your security, your authentication status will reset after you close the browser.
-
-By continuing, you will link your wallet address to your Punkga account. This process won't be irreversible.
-
-Wallet address:
-${address}
-
-Timestamp:
-${Date.now()}`
-        const signDoc = makeSignDoc(
-          [
-            {
-              type: 'sign/MsgSignData',
-              value: {
-                signer: address,
-                data: btoa(msg),
-              },
-            },
-          ],
-          {
-            gas: '0',
-            amount: [],
+      const domain = window.location.host
+      const origin = window.location.origin
+      const statement = 'Migrate wallet with Aura Network to the app.'
+      const siweMessage = new SiweMessage({
+        scheme: undefined,
+        domain,
+        address,
+        statement,
+        uri: origin,
+        version: '1',
+        chainId,
+        nonce: generateNonce(),
+      })
+      const message = siweMessage.prepareMessage()
+      signMessage(
+        { message, account: address },
+        {
+          onSuccess: async (data) => {
+            const res = await linkWallet(message, data)
+            if (res?.data?.requestId) {
+              getProfile()
+              setRequestId(res?.data?.requestId)
+              setSuccess(true)
+            } else {
+              getProfile()
+              setSuccess(false)
+            }
           },
-          '',
-          undefined,
-          '0',
-          '0'
-        )
-        const signResult = await mainWallet.client.signArbitrary(chain.chain_id, address, msg)
-        const res = await linkWallet(signDoc, signResult)
-        if (res?.data?.requestId) {
-          getProfile()
-          setRequestId(res?.data?.requestId)
-          setSuccess(true)
-        } else {
-          getProfile()
-          setSuccess(false)
         }
-      } else {
-        if (!mainWallet?.client?.signArbitrary)
-          toast(t('Something wrong with your wallet client. Please reload and try again!'), {
-            type: 'error',
-          })
-      }
+      )
     } catch (error: any) {
       toast(error.message || t('Migration failed'), {
         type: 'error',
@@ -145,6 +160,7 @@ ${Date.now()}`
                 setOpen(false)
                 setTimeout(() => setSuccess(undefined), 300)
                 setStep(1)
+                wagmiDisconnect()
               }}>
               {t('Close')}
             </MainButton>
@@ -166,6 +182,7 @@ ${Date.now()}`
                 onClick={() => {
                   setOpen(false)
                   setTimeout(disconnect, 400)
+                  wagmiDisconnect()
                 }}>
                 {t('Cancel')}
               </MainButton>
@@ -200,51 +217,110 @@ ${Date.now()}`
               {t('If you don’t have a wallet yet, you can select a provider and create one now.')}
             </div>
             <div>
-              {walletRepo?.wallets.map((wallet, index) => {
-                return wallet.walletName.includes('keplr') ? (
-                  <div
-                    key={index}
-                    className={`py-3 flex gap-2 items-center ${
-                      wallet.walletStatus == 'NotExist'
-                        ? 'cursor-not-allowed opacity-60 pointer-events-none'
-                        : 'cursor-pointer'
-                    }`}
-                    onClick={() => wallet.connect(true)}>
-                    {wallet.walletStatus == 'Connecting' ? (
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        width='32'
-                        height='32'
-                        viewBox='0 0 32 32'
-                        fill='none'
-                        className='animate-pulse'>
-                        <circle cx='16' cy='16' r='4' fill='#1FAB5E' />
-                      </svg>
-                    ) : (
-                      <Image src={KeplrWalletImage} alt='' className='w-8 h-8' />
-                    )}
-                    <div className='text-sm font-semibold'>Keplr</div>
+              <>
+                {!showQRCode ? (
+                  <div>
+                    {installed.map((connector) => (
+                      <div key={connector.id}>
+                        <div
+                          className='flex gap-2 w-full items-center hover:bg-[#f0f0f0] cursor-pointer py-3 px-4 rounded-[4px]'
+                          onClick={async () => {
+                            try {
+                              setShowQRCode(false)
+                              await wagmiConnect({ connector, chainId: getConfig().CHAIN_INFO.evmChainId })
+                            } catch (error: any) {
+                              console.error(error)
+                              wagmiDisconnect()
+                            }
+                          }}>
+                          <Image
+                            src={connector.icon}
+                            alt={`${connector.name}-Icon`}
+                            className=''
+                            height={32}
+                            width={32}
+                          />
+                          <div className=' font-semibold'>{connector.name}</div>
+                        </div>
+                      </div>
+                    ))}
+                    {otherWallet.map((connector) => (
+                      <div key={connector.id}>
+                        <div
+                          className='flex gap-2 w-full items-center hover:bg-[#f0f0f0] cursor-pointer py-3 px-4 rounded-[4px]'
+                          onClick={async () => {
+                            try {
+                              setShowQRCode(!showQRCode)
+                              setLoading(true)
+                              setQRError('')
+                              wagmiConnect(
+                                { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
+                                {
+                                  onSuccess: () => {
+                                    setLoading(false)
+                                  },
+
+                                  onError: (props) => {
+                                    setQRError(props.message)
+                                  },
+                                }
+                              )
+                              const provider = (await connector.getProvider()) as any
+                              const deepLink = await new Promise<string>((resolve) => {
+                                provider.on('display_uri', (uri: string) => {
+                                  resolve(uri)
+                                })
+                              })
+                              setLoading(false)
+                              setQrCode(deepLink)
+                            } catch (error: any) {
+                              wagmiDisconnect()
+                            }
+                          }}>
+                          <Image src={WCIcon} alt={`${connector.name}-Icon`} height={30} width={30} />
+                          <div className='font-semibold'>{connector.name}</div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 ) : (
-                  <div
-                    key={index}
-                    className={`py-3 flex gap-2 items-center ${
-                      wallet.walletStatus == 'NotExist'
-                        ? 'cursor-not-allowed opacity-60 pointer-events-none'
-                        : 'cursor-pointer'
-                    }`}
-                    onClick={() => wallet.connect(true)}>
-                    {wallet.walletStatus == 'Connecting' ? (
-                      <svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none'>
-                        <circle cx='16' cy='16' r='4' fill='#1FAB5E' />
-                      </svg>
-                    ) : (
-                      <Image src={C98WalletImage} alt='' className='w-8 h-8' />
-                    )}
-                    <div className='text-sm font-semibold'>Coin98</div>
+                  <div className='flex flex-col gap-6'>
+                    <div
+                      className='font-semibold text-[#414141] flex items-center cursor-pointer'
+                      onClick={() => setShowQRCode(false)}>
+                      <span className='mr-1'>
+                        <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>
+                          <path
+                            d='M15 5L9 12L15 19'
+                            stroke='#1C274C'
+                            strokeWidth='1.5'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                          />
+                        </svg>
+                      </span>
+                      {t('Scan with your wallet')}
+                    </div>
+                    <div className='flex flex-col items-center'>
+                      {loading ? (
+                        <div className='w-[290px] bg-[#f0f0f0] rounded-lg aspect-square flex justify-center items-center'>
+                          <Spinner className='w-8 h-8' />
+                        </div>
+                      ) : (
+                        <>
+                          {qrError && (
+                            <div className='expired'>
+                              {/* <Icon name='danger' size='xl' /> */}
+                              {qrError}
+                            </div>
+                          )}
+                          <QRCodeSVG value={qrCode} size={290} level='H' bgColor='#FFFFFF' fgColor='#000000' />
+                        </>
+                      )}
+                    </div>
                   </div>
-                )
-              })}
+                )}
+              </>
             </div>
           </div>
         ) : (

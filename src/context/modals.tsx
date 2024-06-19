@@ -9,8 +9,8 @@ import SignUpSuccessModal from 'components/Modal/SignUpSuccessModal'
 import { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { validateEmail } from 'src/utils'
+import { useAccount } from 'wagmi'
 import { Context } from '.'
-import { useAccount, useConnect } from 'wagmi'
 export const ModalContext = createContext<{
   signUpSuccessOpen: boolean
   forgotPasswordOpen: boolean

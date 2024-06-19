@@ -39,15 +39,8 @@ export default function Header({ className }: { className?: string }) {
   const [searchValue, setSearchValue] = useState('')
   const { account, wallet, logout } = useContext(Context)
   const searchComic = useApi<any[]>(async () => await search(searchValue), !!searchValue, [searchValue])
-  const { data: balance } = useSWR(
-    { key: 'get_balance', address: wallet || account?.walletAddress },
-    ({ address }) => (address ? getBalances(address) : undefined),
-    {
-      refreshInterval: 60000,
-    }
-  )
   const walletBalance = useBalance({
-    address: wallet as any,
+    address: wallet || (account?.walletAddress as any),
   })
   const ref = useRef<any>()
   const divRef = useRef<any>()
@@ -174,10 +167,7 @@ export default function Header({ className }: { className?: string }) {
                   <div className='flex items-center'>
                     {hideBalance
                       ? '********'
-                      : `${+BigNumber(balance || 0)
-                          .div(BigNumber(10).pow(6))
-                          .toFixed(4)
-                          .toLocaleString()} AURA`}
+                      : `${(+walletBalance?.data?.formatted || 0).toFixed(8)} ${walletBalance?.data?.symbol || 'AURA'}`}
                     <span className='inline-block'>
                       {
                         <div className='ml-2 w-6 h-6 relative'>
@@ -247,7 +237,10 @@ export default function Header({ className }: { className?: string }) {
             )}
             <div
               className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'
-              onClick={logout}>
+              onClick={() => {
+                setOpenProfile(false)
+                logout()
+              }}>
               {t('Log out')}
             </div>
           </div>
