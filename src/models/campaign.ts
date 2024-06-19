@@ -1,7 +1,8 @@
+import { IMultiLanguageContent } from "./multiLanguageContent"
+
 export type Campaign = {
   id: string
   slug: string
-  name: string
   campaign_quests?: Quest[]
   reward: {
     xp: number
@@ -12,13 +13,19 @@ export type Campaign = {
       ipfs?: string
     }
   }
-  description?: string
   start_date: string
   end_date: string
   status: string
   campaign_user: any[]
   participants: { aggregate: { count: number } }
 }
+
+export interface ICampaign
+  extends Campaign, IMultiLanguageContent<{
+    name: string;
+    description: string,
+    thumbnail_url: string
+  }> { } 
 export type Quest = {
   id: string
   repeat: 'Once' | 'Daily'
