@@ -21,6 +21,7 @@ export default function CampaignPage() {
   const { account } = useContext(Context)
   const { setSignInOpen } = useContext(ModalContext)
   const router = useRouter()
+  const {locale} = useRouter()
   const { t } = useTranslation()
   const { data } = useSWR(
     { key: 'get_all_campaigns', accountId: account?.id },
@@ -164,10 +165,10 @@ export default function CampaignPage() {
                   </StatusLabel>
                 </div>
                 <div className='mt-[10px] text-xs leading-[15px]'>
-                  <div className=' text-[#292929] font-bold line-clamp-2 2xl:text-base'>{campaign.name}</div>
+                  <div className=' text-[#292929] font-bold line-clamp-2 2xl:text-base'>{campaign[locale].name}</div>
                   <div
                     className=' text-[#61646B] mt-1 2xl:mt-[10px] line-clamp-3 2xl:text-sm max-w'
-                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(campaign.description) }}></div>
+                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(campaign[locale].description) }}></div>
                 </div>
               </div>
               <div className='text-xs 2xl:text-sm text-[#61646B]'>

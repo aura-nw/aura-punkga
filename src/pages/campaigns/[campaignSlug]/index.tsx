@@ -12,13 +12,45 @@ export default function Page(props) {
 Page.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>
 }
-export const getServerSideProps = async ({ locale }) => {
-  if (process.env.NODE_ENV === 'development') {
-    await i18n?.reloadResources()
-  }
-  return {
-    props: {
-      ...(await serverSideTranslations(locale!, ['common'])),
-    },
+export const getServerSideProps = async (context) => {
+  if (context.params?.campaignSlug) {
+    const res = await fetch(`https://api.staging.punkga.me/campaign/${context.params?.campaignSlug}`)
+    const data = await res.json()
+    const campaign = data?.data?.campaign?.[0]
+    if (!campaign)
+      return {
+        props: {
+          ...(await serverSideTranslations(context?.locale!, ['common'])),
+        },
+      }
+    const props = {
+      image: '',
+      title: '',
+      description: '',
+      canonical: `https://punkga.me/campaigns/${context.params?.campaignSlug}`,
+    }
+    if (context.locale == 'en') {
+      const campaignLanguages =
+        campaign.campaign_i18n.find((ml) => ml.i18n_language.id == 1) ||
+        campaign.campaign_i18n.find((ml) => ml.i18n_language.is_main)
+      
+      props.image = campaignLanguages?.thumbnail_url
+      props.title = campaignLanguages?.name
+      props.description = campaignLanguages?.description
+    } else {
+      const campaignLanguages =
+        campaign.campaign_i18n.find((ml) => ml.i18n_language.id == 2) ||
+        campaign.campaign_i18n.find((ml) => ml.i18n_language.is_main)
+
+      props.image = campaignLanguages?.thumbnail_url
+      props.title = campaignLanguages?.name
+      props.description = campaignLanguages?.description
+    }
+    return {
+      props: {
+        metadata: props,
+        ...(await serverSideTranslations(context?.locale!, ['common'])),
+      },
+    }
   }
 }

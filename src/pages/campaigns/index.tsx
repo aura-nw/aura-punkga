@@ -21,7 +21,6 @@ Page.getLayout = function getLayout(page) {
 
 export const getServerSideProps = async (context) => {
   const props = {
-    image: 'https://punkga.me/assets/images/wow-yourself-thumb.png',
     title: 'Campaigns',
     description: context?.locale == 'en' ? 'Collection of super hot campaigns taking place on Punkga Me. Join and earn rewards now!' : 'Tổng hợp các campaign siêu hấp dẫn đang diễn ra trên Punkga Me. Tham gia và nhận thưởng ngay!',
     canonical: `https://punkga.me/campaigns`,

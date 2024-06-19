@@ -332,7 +332,22 @@ export const getCampaigns = async (accountId?: string) => {
       user_id: accountId,
     },
   })
-  return data
+  const campaigns = data.data.campaign
+  const res = {
+    data: {
+      campaign: campaigns.map((cam:any) => {
+        const c = cam
+        LANGUAGE.forEach((l) => {
+          const campaignLanguages =
+            cam.campaign_i18n.find((ml) => ml.i18n_language.id == l.id) ||
+            cam.campaign_i18n.find((ml) => ml.i18n_language.is_main)
+          c[l.shortLang] = campaignLanguages.data
+        })
+        return c
+      })
+    }
+  }
+  return res
 }
 export const getQuestDetail = async (questId: string, accountId?: string) => {
   const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/quest/${questId}`, {
@@ -388,7 +403,22 @@ export const getUserNfts = async (address: string) => {
 }
 export const getCampaignDetail = async (slug: string) => {
   const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${slug}`)
-  return data
+  const campaigns = data.data.campaign
+  const res = {
+    data: {
+      campaign: campaigns.map((cam: any) => {
+        const c = cam
+        LANGUAGE.forEach((l) => {
+          const campaignLanguages =
+            cam.campaign_i18n.find((ml) => ml.i18n_language.id == l.id) ||
+            cam.campaign_i18n.find((ml) => ml.i18n_language.is_main)
+          c[l.shortLang] = campaignLanguages.data
+        })
+        return c
+      }),
+    },
+  }
+  return res
 }
 export const getUserRankInCampaign = async (id: string) => {
   const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${id}/user-rank`)
