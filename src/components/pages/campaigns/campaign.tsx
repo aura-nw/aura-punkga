@@ -94,48 +94,47 @@ export default function CampaignPage() {
             </div>
           </div>}
         </div>
-        {list.length > 0 && (
-          <div className='flex gap-3 mt-[10px] md:mt-6 items-center flex-wrap'>
-            <Tag selected={!statusFilter.length} onClick={() => setStatusFilter([])}>
-              {t('All status')}
+
+        <div className='flex gap-3 mt-[10px] md:mt-6 items-center flex-wrap'>
+          <Tag selected={!statusFilter.length} onClick={() => setStatusFilter([])}>
+            {t('All status')}
+          </Tag>
+          <span className='inline-block w-[1px] self-stretch bg-[#DEDEDE]'></span>
+          {['Upcoming', 'Ongoing', 'Ended'].map((status, index) => (
+            <Tag
+              key={index}
+              selected={statusFilter.includes(status)}
+              onClick={() => {
+                statusFilter.includes(status)
+                  ? setStatusFilter(statusFilter.filter((s) => s != status))
+                  : setStatusFilter([...statusFilter, status])
+              }}>
+              {t(status)}
             </Tag>
-            <span className='inline-block w-[1px] self-stretch bg-[#DEDEDE]'></span>
-            {['Upcoming', 'Ongoing', 'Ended'].map((status, index) => (
-              <Tag
-                key={index}
-                selected={statusFilter.includes(status)}
+          ))}
+          <div className='hidden gap-8 items-center md:flex ml-5'>
+            <div className='p-1'>
+              <Checkbox
+                label={t('Reward NFT')}
+                checked={rewardNFTChecked}
+                onClick={() => setRewardNFTChecked(!rewardNFTChecked)}
+              />
+            </div>
+            <div className='p-1'>
+              <Checkbox
+                label={t('Enrolled')}
+                checked={enrolledChecked}
                 onClick={() => {
-                  statusFilter.includes(status)
-                    ? setStatusFilter(statusFilter.filter((s) => s != status))
-                    : setStatusFilter([...statusFilter, status])
-                }}>
-                {t(status)}
-              </Tag>
-            ))}
-            <div className='hidden gap-8 items-center md:flex ml-5'>
-              <div className='p-1'>
-                <Checkbox
-                  label={t('Reward NFT')}
-                  checked={rewardNFTChecked}
-                  onClick={() => setRewardNFTChecked(!rewardNFTChecked)}
-                />
-              </div>
-              <div className='p-1'>
-                <Checkbox
-                  label={t('Enrolled')}
-                  checked={enrolledChecked}
-                  onClick={() => {
-                    if (account) {
-                      setEnrolledChecked(!enrolledChecked)
-                    } else {
-                      setSignInOpen(true)
-                    }
-                  }}
-                />
-              </div>
+                  if (account) {
+                    setEnrolledChecked(!enrolledChecked)
+                  } else {
+                    setSignInOpen(true)
+                  }
+                }}
+              />
             </div>
           </div>
-        )}
+        </div>
 
       </div>
       {list.length > 0 ? (<div className='grid grid-cols-1 lg:grid-cols-2 gap-5 2xl:gap-10 xl:grid-cols-3'>
