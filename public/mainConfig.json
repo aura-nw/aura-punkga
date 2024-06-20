@@ -1,0 +1,59 @@
+{
+  "REDIRECT_URL": "https://punkga.me",
+  "CHAIN_ID": "aura_6322-2",
+  "CHAIN_INFO": {
+    "chainId": "aura_6322-2",
+    "chainName": "Aura Mainnet",
+    "rpc": "https://rpc.aura.network",
+    "rest": "https://lcd.aura.network",
+    "indexerV2": "https://horoscope.aura.network/api/v2/graphql",
+    "bip44": {
+      "coinType": 118
+    },
+    "bech32Config": {
+      "bech32PrefixAccAddr": "aura",
+      "bech32PrefixAccPub": "aurapub",
+      "bech32PrefixValAddr": "auravaloper",
+      "bech32PrefixValPub": "auravaloperpub",
+      "bech32PrefixConsAddr": "auravalcons",
+      "bech32PrefixConsPub": "auravalconspub"
+    },
+    "currencies": [
+      {
+        "coinDenom": "AURA",
+        "coinMinimalDenom": "uaura",
+        "coinDecimals": 6
+      }
+    ],
+    "feeCurrencies": [
+      {
+        "coinDenom": "AURA",
+        "coinMinimalDenom": "uaura",
+        "coinDecimals": 6
+      }
+    ],
+    "stakeCurrency": {
+      "coinDenom": "AURA",
+      "coinMinimalDenom": "uaura",
+      "coinDecimals": 6
+    },
+    "coinType": 118,
+    "gasPriceStep": {
+      "low": 0.001,
+      "average": 0.0025,
+      "high": 0.004
+    },
+    "features": ["ibc-transfer"],
+    "walletUrlForStaking": "https://aurascan.io/validators",
+    "logo": "https://i.imgur.com/zi0mTYb.png",
+    "explorer": "https://aurascan.io/"
+  },
+  "API_URL": "https://hasura.punkga.me",
+  "AUTHORIZER_URL": "https://auth.punkga.me",
+  "AUTHORIZER_CLIENT_ID": "06c9c437-15cd-4240-b435-5d16206b46c6",
+  "ADMIN_URL": "https://admin.punkga.me",
+  "REST_API_URL": "https://api.punkga.me",
+  "IN_MAINTENANCE_MODE": false,
+  "GTM_ID": "GTM-5N2X4HSN",
+  "SEEKHYPE_URL": "https://seekhype.io/"
+}

@@ -1,0 +1,26 @@
+{
+  "REDIRECT_URL": "https://dev.punkga.me",
+  "CHAIN_ID": "aura_6321-3",
+  "CHAIN_INFO": {
+    "chainId": "aura_6321-3",
+    "evmChainId": 6321,
+    "chainName": "Aura Euphoria TestNet",
+    "rpc": ["https://rpc.euphoria.aura.network", "https://jsonrpc.euphoria.aura.network"],
+    "indexerV2": "https://indexer-v2.staging.aurascan.io/api/v2/graphql",
+    "nativeCurrency": {
+      "name": "Aura",
+      "symbol": "EAURA",
+      "decimals": 18
+    },
+    "explorer": "https://euphoria.aurascan.io"
+  },
+  "API_URL": "https://hasura.dev.punkga.me",
+  "AUTHORIZER_URL": "https://auth.dev.punkga.me",
+  "AUTHORIZER_CLIENT_ID": "abd40c73-3390-4613-bc44-b5bde4796d03",
+  "ADMIN_URL": "https://admin.dev.punkga.me",
+  "REST_API_URL": "https://api.dev.punkga.me",
+  "IN_MAINTENANCE_MODE": false,
+  "GTM_ID": "GTM-PF4MH72V",
+  "SEEKHYPE_URL": "https://staging.seekhype.io/",
+  "WALLET_CONNECT_PROJECT_ID": "ec40291093ad80fa0def54b1fb44c8ef"
+}
