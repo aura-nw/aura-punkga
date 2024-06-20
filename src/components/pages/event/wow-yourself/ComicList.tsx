@@ -9,9 +9,11 @@ import { getLatestComic } from 'src/services'
 export default function ComicList() {
   const { t } = useTranslation()
   const latestComic = useApi<IComic[]>(getLatestComic, true, [])
-  const [useableComic, setUseableComic] = useState<any>();
+  const [useableComic, setUseableComic] = useState<any>()
   useEffect(() => {
-    const comic = latestComic.data?.filter((data: any) => data.tags.some((lang: any) => lang.en.toLowerCase() === 'invent contest'))
+    const comic = latestComic.data?.filter((data: any) =>
+      data.tags.some((lang: any) => lang.en.toLowerCase() === 'invent contest')
+    )
     setUseableComic(comic)
   }, [latestComic.data])
   return (
@@ -19,21 +21,19 @@ export default function ComicList() {
       <h1 className='font-bold lg:text-xl'>{t('Artworks')}</h1>
       <div className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-[18px] lg:gap-6 mt-4 lg:mt-6'>
         {latestComic.loading
-          ? Array.apply(null, Array(20)).map((d, index) => (
-            <DummyComic key={index} />
-          ))
+          ? Array.apply(null, Array(20)).map((d, index) => <DummyComic key={index} />)
           : latestComic.data?.length
-            ? useableComic.map((data, index) => (
-              <ComicEvent key={index} {...data} />
-            ))
-            : null}
-        {useableComic?.length <= 2 && (
-          <>
-            <div></div>
-            <div></div>
-            <div></div>
-          </>
-        )}
+          ? useableComic.map((data, index) => <ComicEvent key={index} {...data} />)
+          : null}
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
       </div>
     </div>
   )

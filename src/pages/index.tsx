@@ -38,7 +38,7 @@ function Home() {
   const { locale } = useRouter()
   const { t } = useTranslation()
   const sliderNavRef = useRef<any>()
-  const useableTags = allTags?.data?.filter(item => item.en !== "Invent contest" && item.vn !== "Invent contest")
+  const useableTags = allTags?.data?.filter((item) => item.en !== 'Invent contest' && item.vn !== 'Invent contest')
   const [statusFilter, setStatusFilter] = useState([
     {
       key: 'All status',
@@ -74,7 +74,6 @@ function Home() {
       )
     })
   }, [t('All status')])
-console.log('allTags', allTags)
   return (
     <>
       <div className='md:hidden'>
@@ -169,10 +168,11 @@ console.log('allTags', allTags)
             <div className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-[10px] mt-2 md:mt-10'>
               {latestComic.loading
                 ? Array.apply(null, Array(20)).map((d, index) => {
-                  return <DummyComic key={index} />
-                })
+                    return <DummyComic key={index} />
+                  })
                 : latestComic.data?.length
                 ? latestComic.data
+                    .filter((data: any) => data.tags.every((lang: any) => lang.en.toLowerCase() != 'invent contest'))
                     .filter((data) =>
                       statusFilter.length && !statusFilter.some((s) => s.key == 'All status')
                         ? statusFilter.some((filter) => data.status.text == filter?.key)
@@ -195,9 +195,7 @@ console.log('allTags', allTags)
               {/* <LeaderBoard /> */}
             </div>
             <div className='flex flex-col p-6 bg-[#292929] text-white rounded-[10px] mt-10'>
-              <div className='md:text-xl text-sm md:leading-[25px] font-[800] mb-4 md:mb-6'>
-                🔥{t('Trending')}
-              </div>
+              <div className='md:text-xl text-sm md:leading-[25px] font-[800] mb-4 md:mb-6'>🔥{t('Trending')}</div>
               <div className='flex flex-col gap-10 mt-2 md:mt-6'>
                 {trendingComic.loading
                   ? Array.apply(null, Array(5)).map((d, index) => {
