@@ -28,7 +28,85 @@ export default function Comic2(props: IComic) {
             <div className='w-full aspect-[16/23] rounded overflow-hidden group'>
                 <Link
                     href={`/comic/${props.slug}`}
-                    className={`relative w-full h-full aspect-[160/230] mx-auto ${props.status.text == 'Upcoming' ? 'pointer-events-none' : 'pointer-events-auto'}`}
+                    className={`relative xl:hidden w-full h-full aspect-[160/230] mx-auto ${props.status.text == 'Upcoming' ? 'pointer-events-none' : 'pointer-events-auto'}`}
+                >
+                    <div className='block h-full'>
+                        <Image
+                            src={props.image || NoImage}
+                            alt=''
+                            width={180}
+                            height={240}
+                            className={`w-full h-full ${props.image ? 'object-cover' : 'object-contain bg-light-gray'} rounded-t`}
+                        />
+                    </div>
+                    {props.status.text && props.status.text != 'Ongoing' && (
+                        <div className='group-hover:hidden absolute top-2 right-2'>
+                            {props.status.text == 'Upcoming' ? (<Image
+                                src={UpComing}
+                                alt=''
+                                width={91}
+                                height={24}
+                            />) : (
+                                <Image
+                                    src={Finished}
+                                    alt=''
+                                    width={77}
+                                    height={24}
+                                />
+                            )}
+
+                        </div>
+                    )}
+                    <div className="absolute overflow-hidden bottom-0 w-full h-[50px] p-2 transition-all duration-300 ease-in-out group-hover:h-full bg-gradient-to-b from-transparent to-[rgba(0,0,0,0.75)] to-[60%] group-hover:bg-[rgba(0,0,0,0.75)] group-hover:bg-none flex flex-col justify-between">
+                        <div>
+                            <p className='text-primary-color whitespace-nowrap text-ellipsis overflow-hidden text-base font-bold leading-5'>{props[locale].title}</p>
+                            <div className='flex text-white gap-1 whitespace-nowrap text-ellipsis overflow-hidden text-sm font-semibold leading-[17px]'>
+                                {t('by')}{' '}
+                                {props.authors.map((author, index) => (
+                                    <Fragment key={index}>
+                                        <span className='text-primary-color font-[600] first:hidden'>, </span>
+                                        <span className='text-primary-color font-[600]'>
+                                            {author.slug ? (
+                                                <div className='author'>{t(author.name)}</div>
+                                            ) : (
+                                                t(author.name)
+                                            )}
+                                        </span>
+                                    </Fragment>
+                                ))}
+                            </div>
+                            <div className="flex gap-1 items-center text-sm mt-1 font-semibold text-white">
+                                <div className="flex items-end gap-1">
+                                    <span>{props.views}</span>
+                                    <EyeIcon className="w-5 h-5" />
+                                </div>
+                                <div className="flex items-end gap-1">
+                                    <span>{props.likes}</span>
+                                    <HeartIcon className="w-5 h-5" />
+                                </div>
+                            </div>
+                            <div className='text-xs leading-4 mt-3 text-white' style={{
+                                textOverflow: 'ellipsis',
+                                overflow: 'hidden',
+                                display: '-webkit-box',
+                                WebkitLineClamp: 8,
+                                WebkitBoxOrient: 'vertical',
+                                whiteSpace: 'normal'
+                            }}>{props[locale].description}
+                            </div>
+                        </div>
+                        <div>
+                            {!!props.latestChap.number && (
+                                <div className='flex self-end justify-self-end leading-[20px] text-white text-sm'>
+                                    {t('Latest')}: <Link href={`/comic/${props.slug}/chapter/${props.latestChap.number}`} className='text-primary-color font-[600]'>{t('Chap')} #{props.latestChap.number}</Link>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </Link>
+                <Link
+                    href={`/comic/${props.slug}/chapter/1`}
+                    className={`xl:relative xl:block hidden w-full h-full aspect-[160/230] mx-auto ${props.status.text == 'Upcoming' ? 'pointer-events-none' : 'pointer-events-auto'}`}
                 >
                     <div className='block h-full'>
                         <Image
