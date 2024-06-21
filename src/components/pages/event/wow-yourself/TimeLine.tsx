@@ -82,6 +82,12 @@ export default function Timeline() {
             <div className='font-semibold'>---</div>
           </div>
         </div>
+        <Link
+          href='https://www.facebook.com/PunkgaMeManga/posts/pfbid0kpG4XKiWEeC4GNfydCkAweTXsHTMJThpbSLH7cJpwC6NDAUifdPmsW3xfthVtLMPl'
+          target='_blank'
+          className='text-[#2684FC] text-sm'>
+          {t('View on facebook')}
+        </Link>
       </div>
     </div>
   )
