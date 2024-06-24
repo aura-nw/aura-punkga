@@ -33,7 +33,7 @@ export default function SignInModal() {
       leave='transition-all duration-500'
       leaveFrom='max-h-screen opacity-100'
       leaveTo='max-h-[0vh] opacity-0'>
-      <div className='p-6 w-[90vw] max-w-[322px] md:w-[720px]'>
+      <div className='p-6 w-[90vw] max-w-[322px] md:w-[720px] md:max-w-[720px]'>
         {step == 2 && (
           <div className='md:hidden absolute top-2 left-2' onClick={() => setStep(1)}>
             <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>

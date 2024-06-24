@@ -63,7 +63,7 @@ export default function Header({ className }: { className?: string }) {
   }
 
   useEffect(() => {
-    ;(window as any).isSearchFocused = isSearchFocused
+    ; (window as any).isSearchFocused = isSearchFocused
   }, [isSearchFocused])
 
   useEffect(() => {
@@ -108,9 +108,8 @@ export default function Header({ className }: { className?: string }) {
   return (
     <>
       <div
-        className={` fixed inset-0 transition-opacity duration-500 bg-[#000] ${
-          isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
-        }`}></div>
+        className={` fixed inset-0 transition-opacity duration-500 bg-[#000] ${isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
+          }`}></div>
       <header
         className={`border-b-2 border-light-gray border-solid sticky w-full top-0 z-50 transition-all duration-300 bg-white ${className}`}>
         <nav className='lg:hidden pk-container py-[10px] px-5'>
@@ -122,11 +121,10 @@ export default function Header({ className }: { className?: string }) {
               <div className='flex items-center gap-4'>
                 <div className='flex gap-[4px] font-bold' onClick={switchLanguage}>
                   {locale == 'en' ? (
-                    <Image className='w-[24px] h-[24px] border-black border rounded-full' src={EN} alt='' />
+                    <Image className='w-[24px] h-[24px] rounded-full' src={EN} alt='' />
                   ) : (
                     <Image className='w-[24px] h-[24px]' src={VN} alt='' />
                   )}
-                  <button>{t('switchLanguage')}</button>
                 </div>
                 {account?.verified && account?.name ? (
                   <MainButton
@@ -155,9 +153,8 @@ export default function Header({ className }: { className?: string }) {
                     <div>{`${shorten(wallet || account?.walletAddress, 8, 8)}`}</div>
                   </div>
                   <span
-                    className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
-                      isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                    }`}>
+                    className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                      }`}>
                     {t('Copied')}
                   </span>
                   <Image src={CopySvg} alt='' />
@@ -177,9 +174,8 @@ export default function Header({ className }: { className?: string }) {
                             height='24'
                             viewBox='0 0 24 24'
                             fill='none'
-                            className={`absolute inset-0 transition-all ${
-                              hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                            }`}
+                            className={`absolute inset-0 transition-all ${hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                              }`}
                             onClick={() => setHideBalance(false)}>
                             <path
                               fillRule='evenodd'
@@ -194,9 +190,8 @@ export default function Header({ className }: { className?: string }) {
                             height='24'
                             viewBox='0 0 24 24'
                             fill='none'
-                            className={`absolute inset-0 transition-all ${
-                              !hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                            }`}
+                            className={`absolute inset-0 transition-all ${!hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                              }`}
                             onClick={() => setHideBalance(true)}>
                             <path
                               fillRule='evenodd'
@@ -250,7 +245,7 @@ export default function Header({ className }: { className?: string }) {
                 inputref={mref}
                 onChange={_.debounce(setSearchValue, 500)}
                 onFocus={() => setIsSearchFocused(true)}
-                className={`transition-[width] bg-light-gray duration-500 text-sm leading-6 [&>input]:py-[3px] rounded-lg`}
+                className={`transition-[width] bg-[#FDFDFD] duration-500 text-sm leading-6 [&>input]:py-[3px] rounded-lg`}
                 placeholder={t('Search by title')}
                 trailingComponent={
                   searchComic.loading ? (
@@ -272,16 +267,14 @@ export default function Header({ className }: { className?: string }) {
               />
               {!!searchComic.data?.length && (
                 <div
-                  className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[10px] max-h-[40vh] overflow-hidden ${
-                    isSearchFocused ? 'opacity-100 w-full max-w-sm' : 'pointer-events-none opacity-0 w-full'
-                  }`}>
+                  className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[10px] max-h-[40vh] overflow-hidden ${isSearchFocused ? 'opacity-100 w-full max-w-sm' : 'pointer-events-none opacity-0 w-full'
+                    }`}>
                   <div className={`max-h-[40vh] overflow-auto flex flex-col gap-3 p-2`}>
                     {searchComic.data?.map((manga, index) => (
                       <div
                         key={index}
-                        className={`flex gap-2 cursor-pointer ${
-                          manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
-                        }`}
+                        className={`flex gap-2 cursor-pointer ${manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
+                          }`}
                         onClick={() => router.push(`/comic/${manga.slug}/chapter/1`)}>
                         <Image
                           src={manga.image || NoImage}
@@ -377,6 +370,11 @@ export default function Header({ className }: { className?: string }) {
             <div
               className='py-3 text-sm leading-[18px] text-[#414141] font-bold'
               onClick={() => router.push('/campaigns')}>
+              {t('IP Asset')}
+            </div>
+            <div
+              className='py-3 text-sm leading-[18px] text-[#414141] font-bold'
+              onClick={() => router.push('/campaigns')}>
               {t('Campaign')}
             </div>
           </div>
@@ -384,113 +382,116 @@ export default function Header({ className }: { className?: string }) {
         <nav
           className={`pk-container gap-3 lg:flex items-center justify-between pt-[10px] pb-[8px] hidden`}
           aria-label='Global'>
-          <div className=''>
+          <div className='flex items-center gap-8'>
             <Link href='/' className='flex'>
               <span className='sr-only'>Your Company</span>
               <Image src={Logo} alt='header logo' className='h-[60px] min-w-[107px]' />
             </Link>
-          </div>
-          <div
-            ref={divRef}
-            className={`${
-              isSearchFocused ? 'z-30' : ''
-            } w-full md:max-w-[170px] lg:max-w-[200px] xl:max-w-[300px] 2xl:max-w-[500px] relative`}>
-            <TextField
-              inputref={ref}
-              onChange={_.debounce(setSearchValue, 500)}
-              onFocus={() => setIsSearchFocused(true)}
-              className={`transition-[width] bg-light-gray duration-500 ${isSearchFocused ? '!w-[160%]' : ''}`}
-              size='lg'
-              placeholder={t('Search by title')}
-              leadingComponent={
-                <Image
-                  src={SearchIcon}
-                  alt=''
-                  onClick={() => {
-                    if (ref.current.value) {
-                      setIsSearchFocused(false)
-                      router.push(`/search?keyword=${ref.current.value}`)
-                    }
-                  }}
-                />
-              }
-              trailingComponent={searchComic.loading ? <Spinner className='w-6 h-6' /> : null}
-            />
-            {!!searchComic.data?.length && (
-              <div
-                className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[20px] max-h-[40vh] overflow-hidden ${
-                  isSearchFocused ? 'opacity-100 w-[160%]' : 'pointer-events-none opacity-0 w-full'
-                }`}>
-                <div className={`max-h-[40vh] overflow-auto  flex flex-col gap-7  p-5`}>
-                  {searchComic.data?.map((manga, index) => (
-                    <div
-                      key={index}
-                      className={`flex gap-2 ${
-                        manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
-                      }`}
-                      onClick={() => router.push(`/comic/${manga.slug}/chapter/1`)}>
-                      <Image
-                        src={manga.image || NoImage}
-                        width={48}
-                        height={64}
-                        className='w-12 h-16 bg-medium-gray rounded-xl object-cover'
-                        alt=''
-                      />
-                      <div className='flex flex-col justify-between'>
-                        <div>
-                          <p className='text-second-color text-base font-bold cursor-pointer'>{manga[locale].title}</p>
-                          <div className='text-xs'>
-                            {manga.authors.map((author, index) => (
-                              <Fragment key={index}>
-                                <span className='text-second-color font-[600] first:hidden'>, </span>
-                                <span className='text-second-color font-[600]'>
-                                  {author.slug ? (
-                                    <Link className='author' href={`/artist/${author.slug}`}>
-                                      {t(author.name)}
-                                    </Link>
-                                  ) : (
-                                    t(author.name)
-                                  )}
-                                </span>
-                              </Fragment>
-                            ))}
+
+            <div
+              ref={divRef}
+              className={`${isSearchFocused ? 'z-30' : ''
+                } w-full md:max-w-[170px] lg:max-w-[200px] xl:max-w-[300px] 2xl:max-w-[500px] relative`}>
+              <TextField
+                inputref={ref}
+                onChange={_.debounce(setSearchValue, 500)}
+                onFocus={() => setIsSearchFocused(true)}
+                className={`transition-[width] bg-[#FDFDFD] border-[#BDBDBD] border-[1px] duration-500 ${isSearchFocused ? '!w-[160%]' : ''}`}
+                size='lg'
+                placeholder={t('Search by title')}
+                leadingComponent={
+                  <Image
+                    width={20}
+                    height={20}
+                    src={SearchIcon}
+                    alt=''
+                    onClick={() => {
+                      if (ref.current.value) {
+                        setIsSearchFocused(false)
+                        router.push(`/search?keyword=${ref.current.value}`)
+                      }
+                    }}
+                  />
+                }
+                trailingComponent={searchComic.loading ? <Spinner className='w-6 h-6' /> : null}
+              />
+              {!!searchComic.data?.length && (
+                <div
+                  className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[20px] max-h-[40vh] overflow-hidden ${isSearchFocused ? 'opacity-100 w-[160%]' : 'pointer-events-none opacity-0 w-full'
+                    }`}>
+                  <div className={`max-h-[40vh] overflow-auto  flex flex-col gap-7  p-5`}>
+                    {searchComic.data?.map((manga, index) => (
+                      <div
+                        key={index}
+                        className={`flex gap-2 ${manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
+                          }`}
+                        onClick={() => router.push(`/comic/${manga.slug}/chapter/1`)}>
+                        <Image
+                          src={manga.image || NoImage}
+                          width={48}
+                          height={64}
+                          className='w-12 h-16 bg-medium-gray rounded-xl object-cover'
+                          alt=''
+                        />
+                        <div className='flex flex-col justify-between'>
+                          <div>
+                            <p className='text-second-color text-base font-bold cursor-pointer'>{manga[locale].title}</p>
+                            <div className='text-xs'>
+                              {manga.authors.map((author, index) => (
+                                <Fragment key={index}>
+                                  <span className='text-second-color font-[600] first:hidden'>, </span>
+                                  <span className='text-second-color font-[600]'>
+                                    {author.slug ? (
+                                      <Link className='author' href={`/artist/${author.slug}`}>
+                                        {t(author.name)}
+                                      </Link>
+                                    ) : (
+                                      t(author.name)
+                                    )}
+                                  </span>
+                                </Fragment>
+                              ))}
+                            </div>
                           </div>
+                          {!!manga.latestChap.number && (
+                            <p className='text-xs'>
+                              {t('Latest chap')}:{' '}
+                              <span
+                                className='text-second-color font-semibold cursor-pointer'
+                                onClick={(e) => {
+                                  router.push(`/comic/${manga.slug}/chapter/${manga.latestChap.number}`)
+                                  e.preventDefault()
+                                }}>
+                                {manga.latestChap.number}
+                              </span>
+                            </p>
+                          )}
                         </div>
-                        {!!manga.latestChap.number && (
-                          <p className='text-xs'>
-                            {t('Latest chap')}:{' '}
-                            <span
-                              className='text-second-color font-semibold cursor-pointer'
-                              onClick={(e) => {
-                                router.push(`/comic/${manga.slug}/chapter/${manga.latestChap.number}`)
-                                e.preventDefault()
-                              }}>
-                              {manga.latestChap.number}
-                            </span>
-                          </p>
-                        )}
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
-          <div className='flex lg:gap-[40px] lg:justify-end min-w-[430px]'>
-            <Button size='lg' onClick={() => router.push('/campaigns')}>
-              {t('Campaign')}
+          <div className='flex lg:gap-[32px] lg:justify-end min-w-[430px]'>
+            <Button onClick={() => router.push('/campaigns')}>
+              <span style={{ color: '#242424', fontWeight: '500' }}>{t('Campaign')}</span>
             </Button>
-            <Button size='lg' onClick={() => router.push('/about-us')}>
-              {t('aboutUs')}
+            <Button size='md' onClick={() => router.push('/about-us')}>
+              <span style={{ color: '#242424', fontWeight: '500' }}>{t('IP Asset')}</span>
+            </Button>
+            <Button size='md' onClick={() => router.push('/about-us')}>
+              <span style={{ color: '#242424', fontWeight: '500' }}>{t('aboutUs')}</span>
             </Button>
             <div className='flex gap-[20px] items-center cursor-pointer'>
-              <div className='flex gap-1' onClick={switchLanguage}>
+              <div className='flex gap-4 items-center' onClick={switchLanguage}>
                 {locale == 'en' ? (
-                  <Image className='w-[24px] h-[24px] border-black border rounded-full' src={EN} alt='' />
+                  <Image className='w-[24px] h-[24px] rounded-full' src={EN} alt='' />
                 ) : (
                   <Image className='w-[24px] h-[24px] ' src={VN} alt='' />
                 )}
-                <button>{t('switchLanguage')}</button>
+                <div className='h-4 w-[1px] bg-[#E0E0E0]'></div>
               </div>
               {account?.verified && account?.name ? (
                 <Dropdown>
@@ -511,9 +512,8 @@ export default function Header({ className }: { className?: string }) {
                             <div>{`${shorten(wallet || account?.walletAddress, 8, 8)}`}</div>
                           </div>
                           <span
-                            className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
-                              isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                            }`}>
+                            className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                              }`}>
                             {t('Copied')}
                           </span>
                           <Image src={CopySvg} alt='' />
@@ -523,9 +523,8 @@ export default function Header({ className }: { className?: string }) {
                           <div className='flex items-center'>
                             {hideBalance
                               ? '********'
-                              : `${(+walletBalance?.data?.formatted || 0).toFixed(8)} ${
-                                  walletBalance?.data?.symbol || 'AURA'
-                                }`}
+                              : `${(+walletBalance?.data?.formatted || 0).toFixed(8)} ${walletBalance?.data?.symbol || 'AURA'
+                              }`}
                             {/* {hideBalance
                               ? '********'
                               : `${+BigNumber(balance || 0)
@@ -541,9 +540,8 @@ export default function Header({ className }: { className?: string }) {
                                     height='24'
                                     viewBox='0 0 24 24'
                                     fill='none'
-                                    className={`absolute inset-0 transition-all ${
-                                      hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                                    }`}
+                                    className={`absolute inset-0 transition-all ${hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                                      }`}
                                     onClick={() => setHideBalance(false)}>
                                     <path
                                       fillRule='evenodd'
@@ -558,9 +556,8 @@ export default function Header({ className }: { className?: string }) {
                                     height='24'
                                     viewBox='0 0 24 24'
                                     fill='none'
-                                    className={`absolute inset-0 transition-all ${
-                                      !hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                                    }`}
+                                    className={`absolute inset-0 transition-all ${!hideBalance ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                                      }`}
                                     onClick={() => setHideBalance(true)}>
                                     <path
                                       fillRule='evenodd'
