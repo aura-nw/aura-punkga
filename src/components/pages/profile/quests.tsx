@@ -33,7 +33,7 @@ export default function QuestSection() {
       {!!data?.length ? (
         <>
           <div className='w-full relative mt-[47px] hidden xl:block'>
-            <div className=' [&_.swiper-button-prev]:text-[#61646B] [&_.swiper-button-next]:text-[#61646B] flex items-center'>
+            <div className='block [&_.swiper-button-prev]:text-[#61646B] [&_.swiper-button-next]:text-[#61646B] items-center'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 width='37'
