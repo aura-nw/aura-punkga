@@ -235,7 +235,7 @@ export default function Header({ className }: { className?: string }) {
               onClick={() => router.push('/profile')}>
               {t('My profile')}
             </div>
-            {!wallet && (
+            {/* {!wallet && (
               <div
                 className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'
                 onClick={() => setMigrateWalletOpen(true)}>
@@ -244,7 +244,7 @@ export default function Header({ className }: { className?: string }) {
                   <Image src={Stars} alt='' className='inline-block ml-1' />
                 </span>
               </div>
-            )}
+            )} */}
             <div
               className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'
               onClick={logout}>
@@ -593,7 +593,7 @@ export default function Header({ className }: { className?: string }) {
                           <strong>{t('My profile')}</strong>
                         </div>
                         <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0] '></span>
-                        {!wallet ? (
+                        {/* {!wallet ? (
                           <>
                             <div className='font-bold w-max' onClick={() => setMigrateWalletOpen(true)}>
                               {t('Migrate your wallet')}{' '}
@@ -603,7 +603,7 @@ export default function Header({ className }: { className?: string }) {
                             </div>
                             <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0]'></span>
                           </>
-                        ) : null}
+                        ) : null} */}
                         <div onClick={logout}>
                           <strong>{t('Log out')}</strong>
                         </div>
