@@ -28,7 +28,7 @@ export default function ComicEvent(props: IComic) {
             <div className='w-full aspect-[16/23] rounded overflow-hidden group'>
                 <Link
                     href={`/comic/${props.slug}`}
-                    className={`relative w-full h-full aspect-[160/230] mx-auto ${props.status.text == 'Upcoming' ? 'pointer-events-none' : 'pointer-events-auto'}`}
+                    className={`relative xl:hidden w-full h-full aspect-[160/230] mx-auto ${props.status.text == 'Upcoming' ? 'pointer-events-none' : 'pointer-events-auto'}`}
                 >
                     <div className='block h-full'>
                         <Image
@@ -94,8 +94,6 @@ export default function ComicEvent(props: IComic) {
                                 whiteSpace: 'normal'
                             }}>{props[locale].description}
                             </div>
-                        </div>
-                        <div>
                         </div>
                     </div>
                 </Link>
@@ -167,9 +165,6 @@ export default function ComicEvent(props: IComic) {
                                 whiteSpace: 'normal'
                             }}>{props[locale].description}
                             </div>
-                        </div>
-                        <div>
-
                         </div>
                     </div>
                 </Link>
