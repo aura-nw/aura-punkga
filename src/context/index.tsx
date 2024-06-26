@@ -154,7 +154,7 @@ function ContextProvider({ children }: any) {
           },
           {
             onSuccess: signConnectMessage,
-            onError: (error) => console.error(error)
+            onError: (error) => console.error(error),
           }
         )
       } else {
@@ -296,7 +296,7 @@ function ContextProvider({ children }: any) {
           activeWalletAddress: res.active_wallet_address,
         } as IUser)
       }
-      if (!res.email_verified_at && res.email && res.nickname) {
+      if (!res.email_verified_at || !res.email || !res.nickname) {
         removeItem('token')
       }
       return res
