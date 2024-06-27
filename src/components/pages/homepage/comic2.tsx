@@ -57,7 +57,7 @@ export default function Comic2(props: IComic) {
 
                         </div>
                     )}
-                    <div className="absolute overflow-hidden bottom-0 w-full h-[50px] p-2 transition-all duration-300 ease-in-out group-hover:h-full bg-gradient-to-b from-transparent to-[rgba(0,0,0,0.75)] to-[60%] group-hover:bg-[rgba(0,0,0,0.75)] group-hover:bg-none flex flex-col justify-between">
+                    <div className="absolute overflow-hidden bottom-0 w-full p-2 transition-all duration-300 ease-in-out h-full to-[rgba(0,0,0,0.75)] to-[60%] group-hover:bg-[rgba(0,0,0,0.75)] group-hover:bg-none group-hover:opacity-100 opacity-0 flex flex-col justify-between">
                         <div>
                             <p className='text-primary-color whitespace-nowrap text-ellipsis overflow-hidden text-base font-bold leading-5'>{props[locale].title}</p>
                             <div className='flex text-white gap-1 whitespace-nowrap text-ellipsis overflow-hidden text-sm font-semibold leading-[17px]'>

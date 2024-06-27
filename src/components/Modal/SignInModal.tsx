@@ -120,7 +120,7 @@ const ByWallet = ({ step }) => {
   return (
     <>
       {!showQRCode ? (
-        <div className=' flex flex-col gap-3'>
+        <div className='flex flex-col gap-3'>
           <div className='font-semibold text-[#414141] hidden md:block'>{t('Sign in using a wallet')}</div>
           <div className='font-semibold text-[#414141] md:hidden text-sm w-full text-center'>
             {t('Connect a wallet')}

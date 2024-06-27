@@ -1,6 +1,7 @@
 import Stars from 'assets/images/Stars.svg'
 import Avatar from 'assets/images/avatar.svg'
 import User from 'assets/images/user.svg'
+import UserGreen from 'assets/images/userGreen.svg'
 import EN from 'assets/images/en.svg'
 import Logo from 'assets/images/header-logo.svg'
 import SearchIcon from 'assets/images/icons/search.svg'
@@ -28,11 +29,11 @@ import { useClickOutside } from 'src/hooks/useClickOutside'
 import { getBalances, getEnvKey, search } from 'src/services'
 import { shorten } from 'src/utils'
 import useSWR from 'swr'
-import { useBalance } from 'wagmi'
+import { useBalance, Connector, useConnect, useDisconnect, useAccount } from 'wagmi'
 export default function Header({ className }: { className?: string }) {
   const { t } = useTranslation()
   const router = useRouter()
-  const { setSignInOpen, setMigrateWalletOpen } = useContext(ModalContext)
+  const { setSignInOpen, setMigrateWalletOpen, setWalletConnectOpen } = useContext(ModalContext)
   const [isSearchFocused, setIsSearchFocused] = useState(false)
   const [isCopied, setIsCopied] = useState(false)
   const [openProfile, setOpenProfile] = useState(false)
@@ -48,6 +49,7 @@ export default function Header({ className }: { className?: string }) {
   const divRef = useRef<any>()
   const mref = useRef<any>()
   const mdivRef = useRef<any>()
+  const { isConnected } = useAccount()
   useClickOutside(divRef, () => {
     if (window.innerWidth > 768) {
       setIsSearchFocused(false)
@@ -98,7 +100,6 @@ export default function Header({ className }: { className?: string }) {
       )
     )
   }, [])
-
   const copyAddress = async () => {
     navigator.clipboard.writeText(wallet || account?.walletAddress)
     setIsCopied(true)
@@ -106,15 +107,14 @@ export default function Header({ className }: { className?: string }) {
       _.delay(() => setIsCopied(false), 3000)
     }, 1000)()
   }
-
   return (
     <>
       <div
         className={` fixed inset-0 transition-opacity duration-500 bg-[#000] ${isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
           }`}></div>
       <header
-        className={`border-b-2 border-light-gray border-solid sticky w-full top-0 z-50 transition-all duration-300 bg-white ${className}`}>
-        <nav className='lg:hidden pk-container py-[10px] px-5'>
+        className={`sticky w-full top-0 z-50 transition-all duration-300 bg-white ${className}`}>
+        <nav className='lg:hidden pk-container py-[10px] px-5 shadow-[0px_4px_4px_0px_#0000001A]'>
           <div className='flex justify-between items-center gap-2'>
             <div onClick={() => router.push('/')}>
               <Image src={Logo} alt='header logo' className='h-[40px] w-auto' />
@@ -141,7 +141,45 @@ export default function Header({ className }: { className?: string }) {
                 ) : (
                   <MainButton onClick={() => setSignInOpen(true)}>{t('Connect Wallet')}</MainButton>
                 )}
+                <div className='ml-6 w-6 h-6 relative'>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='24'
+                    height='24'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    className={`absolute inset-0 transition-all ${openNavigation ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                    onClick={() => setOpenNavigation(false)}>
+                    <path
+                      d='M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z'
+                      stroke='#1C274C'
+                      strokeWidth='1.5'
+                    />
+                    <path
+                      d='M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5'
+                      stroke='#1C274C'
+                      strokeWidth='1.5'
+                      strokeLinecap='round'
+                    />
+                  </svg>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='24'
+                    height='24'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    className={`absolute inset-0 transition-all ${!openNavigation ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                    onClick={() => {
+                      setOpenProfile(false)
+                      setOpenNavigation(true)
+                    }}>
+                    <path d='M20 7L4 7' stroke='#1C274C' strokeWidth='1.5' strokeLinecap='round' />
+                    <path d='M20 12L4 12' stroke='#1C274C' strokeWidth='1.5' strokeLinecap='round' />
+                    <path d='M20 17L4 17' stroke='#1C274C' strokeWidth='1.5' strokeLinecap='round' />
+                  </svg>
+                </div>
               </div>
+
             </div>
           </div>
           <div className={`${openProfile ? 'max-h-[280px]' : 'max-h-[0px]'} overflow-hidden transition-all`}>
@@ -242,126 +280,8 @@ export default function Header({ className }: { className?: string }) {
             </div>
           </div>
           <div className='flex justify-between items-center mt-[10px]'>
-            <div ref={mdivRef} className={`${isSearchFocused ? 'z-30' : ''} relative w-full`}>
-              <TextField
-                inputref={mref}
-                onChange={_.debounce(setSearchValue, 500)}
-                onFocus={() => setIsSearchFocused(true)}
-                className={`transition-[width] bg-[#FDFDFD] duration-500 text-sm leading-6 [&>input]:py-[3px] rounded-lg`}
-                placeholder={t('Search by title')}
-                trailingComponent={
-                  searchComic.loading ? (
-                    <Spinner className='w-[22px] h-[22px]' />
-                  ) : (
-                    <Image
-                      src={SearchIcon}
-                      className='w-[22px] h-[22px]'
-                      alt=''
-                      onClick={() => {
-                        if (mref.current.value) {
-                          setIsSearchFocused(false)
-                          router.push(`/search?keyword=${mref.current.value}`)
-                        }
-                      }}
-                    />
-                  )
-                }
-              />
-              {!!searchComic.data?.length && (
-                <div
-                  className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[10px] max-h-[40vh] overflow-hidden ${isSearchFocused ? 'opacity-100 w-full max-w-sm' : 'pointer-events-none opacity-0 w-full'
-                    }`}>
-                  <div className={`max-h-[40vh] overflow-auto flex flex-col gap-3 p-2`}>
-                    {searchComic.data?.map((manga, index) => (
-                      <div
-                        key={index}
-                        className={`flex gap-2 cursor-pointer ${manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
-                          }`}
-                        onClick={() => router.push(`/comic/${manga.slug}/chapter/1`)}>
-                        <Image
-                          src={manga.image || NoImage}
-                          width={48}
-                          height={64}
-                          className='w-12 h-16 bg-medium-gray rounded-md object-cover'
-                          alt=''
-                        />
-                        <div className='flex flex-col justify-between'>
-                          <div>
-                            <p className='text-second-color text-sm font-bold cursor-pointer'>{manga[locale].title}</p>
-                            <div className='text-xs'>
-                              {manga.authors.map((author, index) => (
-                                <Fragment key={index}>
-                                  <span className='text-second-color font-[600] first:hidden'>, </span>
-                                  <span className='text-second-color font-[600]'>
-                                    {author.slug ? (
-                                      <Link className='author' href={`/artist/${author.slug}`}>
-                                        {t(author.name)}
-                                      </Link>
-                                    ) : (
-                                      t(author.name)
-                                    )}
-                                  </span>
-                                </Fragment>
-                              ))}
-                            </div>
-                          </div>
-                          {!!manga.latestChap.number && (
-                            <p className='text-xs'>
-                              {t('Latest chap')}:{' '}
-                              <span
-                                className='text-second-color font-semibold cursor-pointer'
-                                onClick={(e) => {
-                                  router.push(`/comic/${manga.slug}/chapter/${manga.latestChap.number}`)
-                                  e.preventDefault()
-                                }}>
-                                {manga.latestChap.number}
-                              </span>
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className='ml-6 w-6 h-6 relative'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='24'
-                height='24'
-                viewBox='0 0 24 24'
-                fill='none'
-                className={`absolute inset-0 transition-all ${openNavigation ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-                onClick={() => setOpenNavigation(false)}>
-                <path
-                  d='M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z'
-                  stroke='#1C274C'
-                  strokeWidth='1.5'
-                />
-                <path
-                  d='M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5'
-                  stroke='#1C274C'
-                  strokeWidth='1.5'
-                  strokeLinecap='round'
-                />
-              </svg>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='24'
-                height='24'
-                viewBox='0 0 24 24'
-                fill='none'
-                className={`absolute inset-0 transition-all ${!openNavigation ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-                onClick={() => {
-                  setOpenProfile(false)
-                  setOpenNavigation(true)
-                }}>
-                <path d='M20 7L4 7' stroke='#1C274C' strokeWidth='1.5' strokeLinecap='round' />
-                <path d='M20 12L4 12' stroke='#1C274C' strokeWidth='1.5' strokeLinecap='round' />
-                <path d='M20 17L4 17' stroke='#1C274C' strokeWidth='1.5' strokeLinecap='round' />
-              </svg>
-            </div>
+
+
           </div>
           <div className={`${openNavigation ? 'max-h-[100px]' : 'max-h-[0px]'} overflow-hidden transition-all`}>
             <div
@@ -381,8 +301,102 @@ export default function Header({ className }: { className?: string }) {
             </div>
           </div>
         </nav>
+
+
+
+
+
+
+        <div className='lg:hidden pk-container py-[10px] px-5'>
+          <div
+            ref={divRef}
+            className={`${isSearchFocused ? 'z-30' : ''
+              } w-full md:max-w-[170px] lg:max-w-[200px] xl:max-w-[300px] 2xl:max-w-[500px] relative`}>
+            <TextField
+              inputref={ref}
+              onChange={_.debounce(setSearchValue, 500)}
+              onFocus={() => setIsSearchFocused(true)}
+              className={`transition-[width] bg-[#FDFDFD] border-[#BDBDBD] border-[1px] duration-500 ${isSearchFocused ? '!w-[160%]' : ''}`}
+              size='lg'
+              placeholder={t('Search by title')}
+              leadingComponent={
+                <Image
+                  width={20}
+                  height={20}
+                  src={SearchIcon}
+                  alt=''
+                  onClick={() => {
+                    if (ref.current.value) {
+                      setIsSearchFocused(false)
+                      router.push(`/search?keyword=${ref.current.value}`)
+                    }
+                  }}
+                />
+              }
+              trailingComponent={searchComic.loading ? <Spinner className='w-6 h-6' /> : null}
+            />
+            {!!searchComic.data?.length && (
+              <div
+                className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[20px] max-h-[40vh] overflow-hidden ${isSearchFocused ? 'opacity-100 w-[160%]' : 'pointer-events-none opacity-0 w-full'
+                  }`}>
+                <div className={`max-h-[40vh] overflow-auto  flex flex-col gap-7  p-5`}>
+                  {searchComic.data?.map((manga, index) => (
+                    <div
+                      key={index}
+                      className={`flex gap-2 ${manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
+                        }`}
+                      onClick={() => router.push(`/comic/${manga.slug}/chapter/1`)}>
+                      <Image
+                        src={manga.image || NoImage}
+                        width={48}
+                        height={64}
+                        className='w-12 h-16 bg-medium-gray rounded-xl object-cover'
+                        alt=''
+                      />
+                      <div className='flex flex-col justify-between'>
+                        <div>
+                          <p className='text-second-color text-base font-bold cursor-pointer'>{manga[locale].title}</p>
+                          <div className='text-xs'>
+                            {manga.authors.map((author, index) => (
+                              <Fragment key={index}>
+                                <span className='text-second-color font-[600] first:hidden'>, </span>
+                                <span className='text-second-color font-[600]'>
+                                  {author.slug ? (
+                                    <Link className='author' href={`/artist/${author.slug}`}>
+                                      {t(author.name)}
+                                    </Link>
+                                  ) : (
+                                    t(author.name)
+                                  )}
+                                </span>
+                              </Fragment>
+                            ))}
+                          </div>
+                        </div>
+                        {!!manga.latestChap.number && (
+                          <p className='text-xs'>
+                            {t('Latest chap')}:{' '}
+                            <span
+                              className='text-second-color font-semibold cursor-pointer'
+                              onClick={(e) => {
+                                router.push(`/comic/${manga.slug}/chapter/${manga.latestChap.number}`)
+                                e.preventDefault()
+                              }}>
+                              {manga.latestChap.number}
+                            </span>
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
         <nav
-          className={`pk-container gap-3 lg:flex items-center justify-between pt-[10px] pb-[8px] hidden`}
+          className={`pk-container gap-3 lg:flex items-center justify-between pt-[10px] pb-[8px] hidden shadow-[0px_4px_4px_0px_#0000001A]`}
           aria-label='Global'>
           <div className='flex items-center gap-8'>
             <Link href='/' className='flex'>
@@ -501,7 +515,7 @@ export default function Header({ className }: { className?: string }) {
                     {/* <MainButton hasAvatar style='secondary' leadingIcon={account?.image || Avatar}>
                       {account?.name}
                     </MainButton> */}
-                    <Image src={User} alt='user' />
+                    <Image src={wallet ? UserGreen : User} alt='user' />
                   </DropdownToggle>
 
                   <DropdownMenu customClass='right-0 !w-[405px] max-w-[405px] !overflow-visible mt-[26px]'>
@@ -511,7 +525,7 @@ export default function Header({ className }: { className?: string }) {
                           className='flex justify-between items-center text-second-color text-lg font-semibold  relative'
                           onClick={copyAddress}>
                           <div className='flex gap-2 items-center text-base'>
-                            {wallet ? <></> : <Image src={PunkgaWallet} alt='' className='w-8 h-8' />}
+                            <Image src={PunkgaWallet} alt='' className='w-8 h-8' />
                             <div className='text-[#4E5056] font-semibold'>{account?.name}</div>
                           </div>
                           <span
@@ -592,10 +606,12 @@ export default function Header({ className }: { className?: string }) {
                             <MainButton className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>{t('Migrate your wallet')}</MainButton>
                           </>
                         ) : null}
-                        <div className='flex gap-2 items-center mt-3'>
-                          <Image src={Warning} alt='warning' width={20} height={20} />
-                          <div className='text-[#FF4D00] text-xs'>Wallet not connected</div>
-                        </div>
+                        {wallet && account?.name && !isConnected && (
+                          <div className='flex gap-2 items-center mt-3'>
+                            <Image src={Warning} alt='warning' width={20} height={20} />
+                            <div className='text-[#FF4D00] text-xs'>Wallet not connected</div>
+                          </div>
+                        )}
                       </div>
                       <div className='font-bold'>
                         <div onClick={() => router.push('/profile')}>
@@ -611,6 +627,12 @@ export default function Header({ className }: { className?: string }) {
                 </Dropdown>
               ) : (
                 <MainButton onClick={() => setSignInOpen(true)}>{t('Sign in')}</MainButton>
+              )}
+              {account && !isConnected && (
+                <div className='flex gap-3 items-center '>
+                  <div className='h-4 w-[1px] bg-[#E0E0E0]'></div>
+                  <MainButton onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</MainButton>
+                </div>
               )}
             </div>
           </div>
