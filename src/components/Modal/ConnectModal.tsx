@@ -5,7 +5,7 @@ import Spinner from 'components/Spinner'
 import getConfig from 'next/config'
 import Image from 'next/image'
 import { QRCodeSVG } from 'qrcode.react'
-import { useContext, useEffect, useState } from 'react'
+import { use, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import WCIcon from 'src/assets/images/wallet-connect.png'
 import { Context } from 'src/context'
@@ -13,7 +13,7 @@ import { ModalContext } from 'src/context/modals'
 import Warning from 'images/icons/warning.svg'
 import CopySvg from 'images/icons/copy.svg'
 import { Connector, useAccount, useChainId, useConnect, useDisconnect, useSignMessage } from 'wagmi'
-import { isMetamaskInstalled, validateEmail } from 'src/utils'
+import { isMetamaskInstalled, shorten, validateEmail } from 'src/utils'
 import Metamask from 'images/metamask.png'
 
 export default function ConnectModal() {
@@ -62,12 +62,18 @@ export default function ConnectModal() {
     useEffect(() => {
         if (account.activeWalletAddress && account.activeWalletAddress !== address) {
             setIsWrongWallet(true)
+            console.log('ádasd')
         }
     }, [address, account.activeWalletAddress, open])
+    useEffect(() => {
+        if (isConnected && !isWrongWallet) {
+            setOpen(false)
+        }
+    }, [isConnected, isWrongWallet, open])
     const copyAddress = async () => {
         navigator.clipboard.writeText(account?.walletAddress)
     }
-    console.log('isWrongWallet',isWrongWallet)
+    console.log('isWrongWallet', isWrongWallet, account.activeWalletAddress, address)
     return (
         <Modal open={open} setOpen={setOpen} hideClose>
             <div className={` pt-4 px-8 pb-8 w-full max-w-[528px]`}>
@@ -100,7 +106,8 @@ export default function ConnectModal() {
                                 {t('To continue, connect to your linked wallet')}
                             </p>
                             <div className='w-full flex items-center justify-between px-2 py-3 border-[#DEDEDE] border-[1px] rounded-[4px]'>
-                                <div className='text-[#ABABAB] text-sm font-semibold'>{account?.activeWalletAddress}</div>
+                                <div className='flex md:hidden text-[#ABABAB] text-sm font-semibold'>{`${shorten(account?.activeWalletAddress, 8, 8)}`}</div>
+                                <div className='md:flex hidden text-[#ABABAB] text-sm font-semibold'>{account?.activeWalletAddress}</div>
 
                                 <Image className='cursor-pointer' onClick={copyAddress} width={18} height={18} src={CopySvg} alt='' />
                             </div>
