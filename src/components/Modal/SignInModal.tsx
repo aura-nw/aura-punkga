@@ -24,6 +24,7 @@ export default function SignInModal() {
   const { locale } = useRouter()
   const { signInOpen: show } = useContext(ModalContext)
   const [step, setStep] = useState(1)
+  if (!show) return <></>
   return (
     <Transition
       show={show}
