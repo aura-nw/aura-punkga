@@ -81,7 +81,7 @@ function Home() {
         <SlideSection sliderNavRef={sliderNavRef} />
       </div>
       <div className='pk-container'>
-        <div className='md:my-[50px] lg:flex gap-10'>
+        <div className='lg:py-[50px] lg:flex gap-10'>
           <div className='lg:flex-auto lg:w-[65%] relative'>
             <div className='hidden md:block'>
               <TaskSlider sliderNavRef={sliderNavRef} />

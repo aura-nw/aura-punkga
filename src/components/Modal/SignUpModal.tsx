@@ -82,7 +82,7 @@ export default function SignUpModal() {
   const signUpCallBack = (status, msg: string) => {
     if (status === 'success') {
       setSignUpOpen(false)
-      showEmailVerification(email,'basic_auth_signup')
+      showEmailVerification(email, 'basic_auth_signup')
     } else {
       if (msg.includes('has already signed up')) setEmailValidateErrorMsg(t('Email has been registered'))
       else if (msg.includes('authorizer_users_nickname_key')) setUsernameValidateErrorMsg(t('Name already taken'))
@@ -90,100 +90,91 @@ export default function SignUpModal() {
     }
     setSignUpLoading(false)
   }
-
+  if (!show) return <></>
   return (
-    <Transition
-      show={show}
-      enter='transition-all duration-500 delay-200'
-      enterFrom='max-h-[0vh] opacity-0'
-      enterTo='max-h-screen opacity-100'
-      leave='transition-all duration-500'
-      leaveFrom='max-h-screen opacity-100'
-      leaveTo='max-h-[0vh] opacity-0'>
-      <div className='p-6 md:w-[400px]'>
-        <p className='text-center text-xl font-bold leading-6'>{t('Sign up to Punkga.me')}</p>
-        <p className='text-center text-xs leading-[15px] max-w-[226px] mx-auto mt-1 text-[#61646B'>
-          {t('Subscribe, receive notifications and unlock special chapters')}
-        </p>
-        <div className='mt-3'>
-          <OutlineTextField
-            placeholder={t('Choose a username')}
-            label={t('Username')}
-            errorMsg={usernameValidateErrorMsg}
-            value={username}
-            onChange={setUsername}
-            inputRef={usernameRef}
-            onKeyDown={(e) => {
-              if (e.which == 13) {
-                emailRef.current?.focus()
-              }
-            }}
-          />
-          <OutlineTextField
-            placeholder={t('Enter your email')}
-            label={t('Email')}
-            type='email'
-            errorMsg={emailValidateErrorMsg}
-            value={email}
-            onChange={setEmail}
-            inputRef={emailRef}
-            onKeyDown={(e) => {
-              if (e.which == 13) {
-                passwordRef.current?.focus()
-              }
-            }}
-          />
-          <OutlineTextField
-            placeholder={t('Enter your password')}
-            label={t('Password')}
-            type='password'
-            value={password}
-            errorMsg={passwordValidateErrorMsg}
-            onChange={setPassword}
-            inputRef={passwordRef}
-            onKeyDown={(e) => {
-              if (e.which == 13) {
-                rpasswordRef.current?.focus()
-              }
-            }}
-          />
-          <OutlineTextField
-            placeholder={t('Re-enter your password')}
-            label={t('Confirm Password')}
-            type='password'
-            errorMsg={repasswordValidateErrorMsg}
-            value={repassword}
-            onChange={setRepassword}
-            trailingComponent={repasswordValidateSuccess ? <Image src={CheckSquare} alt='' /> : null}
-            inputRef={rpasswordRef}
-            onKeyDown={(e) => {
-              if (e.which == 13) {
-                buttonRef.current?.click()
-              }
-            }}
-          />
-        </div>
-        <MainButton
-          buttonRef={buttonRef}
-          loading={signUpLoading}
-          className='w-full mt-3'
-          disabled={!(username && email && password && repassword)}
-          onClick={signUpHandler}>
-          {t('Sign up')}
-        </MainButton>
-        {/* <div className='text-xs font-medium leading-6 text-red-600 min-h-[24px] text-center'>{signUpErrorMsg}</div> */}
-        <div className='mt-1 text-[#61646B] text-xs text-center leading-[15px]'>
-          {t('Already have an account?')}{' '}
-          <a
-            className='text-[#2684FC]'
-            onClick={() => {
-              setSignInOpen(true)
-              setSignUpOpen(false)
-            }}>
-            {t('Sign in')}
-          </a>
-        </div>
+    <div className='p-6 md:w-[400px]'>
+      <p className='text-center text-xl font-bold leading-6'>{t('Sign up to Punkga.me')}</p>
+      <p className='text-center text-xs leading-[15px] max-w-[226px] mx-auto mt-1 text-[#61646B'>
+        {t('Subscribe, receive notifications and unlock special chapters')}
+      </p>
+      <div className='mt-3'>
+        <OutlineTextField
+          placeholder={t('Choose a username')}
+          label={t('Username')}
+          errorMsg={usernameValidateErrorMsg}
+          value={username}
+          onChange={setUsername}
+          inputRef={usernameRef}
+          onKeyDown={(e) => {
+            if (e.which == 13) {
+              emailRef.current?.focus()
+            }
+          }}
+        />
+        <OutlineTextField
+          placeholder={t('Enter your email')}
+          label={t('Email')}
+          type='email'
+          errorMsg={emailValidateErrorMsg}
+          value={email}
+          onChange={setEmail}
+          inputRef={emailRef}
+          onKeyDown={(e) => {
+            if (e.which == 13) {
+              passwordRef.current?.focus()
+            }
+          }}
+        />
+        <OutlineTextField
+          placeholder={t('Enter your password')}
+          label={t('Password')}
+          type='password'
+          value={password}
+          errorMsg={passwordValidateErrorMsg}
+          onChange={setPassword}
+          inputRef={passwordRef}
+          onKeyDown={(e) => {
+            if (e.which == 13) {
+              rpasswordRef.current?.focus()
+            }
+          }}
+        />
+        <OutlineTextField
+          placeholder={t('Re-enter your password')}
+          label={t('Confirm Password')}
+          type='password'
+          errorMsg={repasswordValidateErrorMsg}
+          value={repassword}
+          onChange={setRepassword}
+          trailingComponent={repasswordValidateSuccess ? <Image src={CheckSquare} alt='' /> : null}
+          inputRef={rpasswordRef}
+          onKeyDown={(e) => {
+            if (e.which == 13) {
+              buttonRef.current?.click()
+            }
+          }}
+        />
       </div>
-    </Transition>
+      <MainButton
+        buttonRef={buttonRef}
+        loading={signUpLoading}
+        className='w-full mt-3'
+        disabled={!(username && email && password && repassword)}
+        onClick={signUpHandler}>
+        {t('Sign up')}
+      </MainButton>
+      {/* <div className='text-xs font-medium leading-6 text-red-600 min-h-[24px] text-center'>{signUpErrorMsg}</div> */}
+      <div className='mt-1 text-[#61646B] text-xs text-center leading-[15px]'>
+        {t('Already have an account?')}{' '}
+        <a
+          className='text-[#2684FC]'
+          onClick={() => {
+            setSignInOpen(true)
+            setSignUpOpen(false)
+          }}>
+          {t('Sign in')}
+        </a>
+      </div>
+    </div>
   )
 }

@@ -9,8 +9,9 @@ import SignUpSuccessModal from 'components/Modal/SignUpSuccessModal'
 import { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { validateEmail } from 'src/utils'
+import { useAccount } from 'wagmi'
 import { Context } from '.'
-import { useAccount, useConnect } from 'wagmi'
+import ConnectModal from 'components/Modal/ConnectModal'
 export const ModalContext = createContext<{
   signUpSuccessOpen: boolean
   forgotPasswordOpen: boolean
@@ -169,6 +170,7 @@ function ModalProvider({ children }) {
         <SignUpSuccessModal email={emailNeedVerify} identifier={identifier} />
       </Modal>
       {migrateWalletOpen && <MigrateWalletModal />}
+      {connectWalletOpen && <ConnectModal />}
 
       {account ? (
         validateEmail(account?.email) ? (

@@ -5,37 +5,36 @@ import Spinner from 'components/Spinner'
 import getConfig from 'next/config'
 import Image from 'next/image'
 import { QRCodeSVG } from 'qrcode.react'
-import { useContext, useEffect, useState } from 'react'
+import { use, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-import { SiweMessage, generateNonce } from 'siwe'
 import WCIcon from 'src/assets/images/wallet-connect.png'
 import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
-import useLocalStorage from 'src/hooks/useLocalStorage'
-import { getRequestLog, linkWallet } from 'src/services'
+import Warning from 'images/icons/warning.svg'
+import CopySvg from 'images/icons/copy.svg'
 import { Connector, useAccount, useChainId, useConnect, useDisconnect, useSignMessage } from 'wagmi'
-export default function MigrateWalletModal() {
-  const { getProfile } = useContext(Context)
-  const { migrateWalletOpen: open, setMigrateWalletOpen: setOpen } = useContext(ModalContext)
+import { isMetamaskInstalled, shorten, validateEmail } from 'src/utils'
+import Metamask from 'images/metamask.png'
+
+export default function ConnectModal() {
+  const { getProfile, account } = useContext(Context)
+
+  const { connectWalletOpen: open, setWalletConnectOpen: setOpen } = useContext(ModalContext)
   const { t } = useTranslation()
   const [success, setSuccess] = useState(undefined)
-  const [requestId, setRequestId] = useLocalStorage('request_id', undefined)
-  const [step, setStep] = useState(1)
+  const [mobileWallet, setMobileWallet] = useState<Connector[]>([])
   const { connectors, connectAsync: wagmiConnect } = useConnect()
-  const { address } = useAccount()
+  const { address, isConnected } = useAccount()
   const { disconnect } = useDisconnect()
-  const { signMessage } = useSignMessage()
   const { disconnect: wagmiDisconnect } = useDisconnect()
   const [installed, setInstalled] = useState<Connector[]>([])
   const [otherWallet, setOtherWallet] = useState<Connector[]>([])
-  const chainId = useChainId()
   //QRCode
   const [qrCode, setQrCode] = useState('')
   const [loading, setLoading] = useState(false)
   const [showQRCode, setShowQRCode] = useState(false)
   const [qrError, setQRError] = useState('')
-
+  const [isWrongWallet, setIsWrongWallet] = useState(false)
   useEffect(() => {
     const setConnector = async () => {
       const installedWallet = [] as Connector[]
@@ -54,165 +53,140 @@ export default function MigrateWalletModal() {
           otherWallet.push(connector)
         }
       }
+      setMobileWallet(mobile)
       setInstalled(installedWallet)
       setOtherWallet(otherWallet)
     }
-
     setConnector()
   }, [connectors])
   useEffect(() => {
-    let id
-    if (!open) {
-      id = setTimeout(() => setStep(1), 400)
+    if (account.activeWalletAddress && account.activeWalletAddress !== address) {
+      setIsWrongWallet(true)
+    } else {
+      setIsWrongWallet(false)
     }
-    return () => (id ? clearTimeout(id) : undefined)
-  }, [open])
-  const linkWalletHandler = async () => {
-    try {
-      const domain = window.location.host
-      const origin = window.location.origin
-      const statement = 'Migrate wallet with Aura Network to the app.'
-      const siweMessage = new SiweMessage({
-        scheme: undefined,
-        domain,
-        address,
-        statement,
-        uri: origin,
-        version: '1',
-        chainId,
-        nonce: generateNonce(),
-      })
-      const message = siweMessage.prepareMessage()
-      signMessage(
-        { message, account: address },
-        {
-          onSuccess: async (data) => {
-            const res = await linkWallet(message, data)
-            if (res?.data?.requestId) {
-              getProfile()
-              setRequestId(res?.data?.requestId)
-              setSuccess(true)
-            } else {
-              getProfile()
-              setSuccess(false)
-            }
-          },
-        }
-      )
-    } catch (error: any) {
-      toast(error.message || t('Migration failed'), {
-        type: 'error',
-      })
-    }
-  }
-
+  }, [address, account.activeWalletAddress, open])
   useEffect(() => {
-    if (requestId) {
-      revealResult(requestId)
+    if (isConnected && !isWrongWallet) {
+      setOpen(false)
     }
-  }, [requestId])
-
-  const revealResult = async (id: string) => {
-    const data = await getRequestLog(id)
-    if (data?.status == 'SUCCEEDED') {
-      toast('Migration successfull', { type: 'success' })
-      setRequestId(undefined)
-      return
-    }
-    if (data?.status == 'FAILED') {
-      toast('Migration failed', { type: 'error' })
-      console.log(data)
-      setRequestId(undefined)
-      return
-    }
-    setTimeout(() => revealResult(id), 5000)
+  }, [isConnected, isWrongWallet, open])
+  const copyAddress = async () => {
+    navigator.clipboard.writeText(account?.walletAddress)
   }
-
   return (
-    <Modal open={open} setOpen={setOpen}>
-      <div className={` py-6 px-[18px] w-full max-w-[670px]`}>
-        {success ? (
-          <div className='flex flex-col gap-2 max-w-[452px]'>
-            <p className='text-center text-base leading-6 font-semibold md:text-lg md:leading-[23px]'>
-              {t('Wallet migration successful!')}
-            </p>
-            <p className='text-center text-sm leading-[18px] -mt-1'>
-              {t('Transferring asset may takes a few minutes. Now you can explore Punkga using your wallet.')}
-            </p>
-            <div className='my-4 grid place-items-center w-full'>
-              <Image src={Mascot} alt='' />
-            </div>
-            <MainButton className='w-fit mx-auto' onClick={() => setOpen(false)}>
-              {t('Done')}
-            </MainButton>
-          </div>
-        ) : success === false ? (
-          <div className='flex flex-col gap-2 max-w-[452px]'>
-            <p className='text-center text-base leading-6 font-semibold md:text-lg md:leading-[23px]'>
-              {t('Wallet connection failed')}
-            </p>
-            <p className='text-center text-sm leading-[18px] my-4'>
-              {t('This wallet has been linked to another account.')}
-            </p>
-            <MainButton
-              className='w-fit mx-auto'
-              onClick={() => {
-                setOpen(false)
-                setTimeout(() => setSuccess(undefined), 300)
-                setStep(1)
-                wagmiDisconnect()
-              }}>
-              {t('Close')}
-            </MainButton>
-          </div>
-        ) : address ? (
-          <div className='flex flex-col gap-3'>
-            <p className='text-center text-base leading-6 font-semibold md:text-lg md:leading-[23px]'>
-              {t('Confirm to migrate assets')}
-            </p>
-            <p className='text-center text-sm leading-[18px] -mt-1'>
-              {t('All of your assets on Punkga will be transferred to your wallet')}
-            </p>
-            <div className='my-3 p-3 rounded-md bg-[#F2F2F2] text-[#1FAB5E] text-sm leading-[18px] w-fit mx-auto'>
-              {address}
-            </div>
-            <div className='flex justify-center gap-6 items-center'>
-              <MainButton
-                style='secondary'
+    <Modal open={open} setOpen={setOpen} hideClose>
+      <div className={` pt-4 px-8 pb-8 w-full max-w-[528px]`}>
+        {isConnected ? (
+          isWrongWallet ? (
+            <div className='flex flex-col gap-2 max-w-[528px] w-full'>
+              <div
+                className='cursor-pointer text-gray-600 flex justify-end'
                 onClick={() => {
                   setOpen(false)
-                  setTimeout(disconnect, 400)
-                  wagmiDisconnect()
+                  setTimeout(() => setSuccess(undefined), 300)
+                  disconnect()
                 }}>
-                {t('Cancel')}
-              </MainButton>
-              <MainButton onClick={linkWalletHandler}>{t('Confirm')}</MainButton>
+                <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none'>
+                  <path
+                    d='M18 6.00005L6 18M5.99995 6L17.9999 18'
+                    stroke='#000000'
+                    strokeWidth='2'
+                    strokeLinecap='round'
+                  />
+                </svg>
+              </div>
+              <div className='flex gap-3 mt-3 bg-[#F1E0DE] p-3'>
+                <Image src={Warning} alt='warning' width={24} height={24} />
+                <div className='text-[#D04046] text-xs font-semibold'>
+                  {t('Your account have already linked with another wallet address and could not be changed.')}
+                </div>
+              </div>
+              <div className='flex flex-col gap-3 mt-8'>
+                <p className='text-[#414141] text-sm leading-[18px]'>
+                  {t('To continue, connect to your linked wallet')}
+                </p>
+                <div className='w-full flex items-center justify-between px-2 py-3 border-[#DEDEDE] border-[1px] rounded-[4px]'>
+                  <div className='flex md:hidden text-[#ABABAB] text-sm font-semibold'>{`${shorten(
+                    account?.activeWalletAddress,
+                    8,
+                    8
+                  )}`}</div>
+                  <div className='md:flex hidden text-[#ABABAB] text-sm font-semibold'>
+                    {account?.activeWalletAddress}
+                  </div>
+
+                  <Image className='cursor-pointer' onClick={copyAddress} width={18} height={18} src={CopySvg} alt='' />
+                </div>
+              </div>
+              <div className='grid grid-cols-2 gap-4'>
+                {installed.map((connector) => (
+                  <div key={connector.id}>
+                    <div
+                      className='flex gap-2 w-full items-center hover:bg-[#f0f0f0] bg-[#f0f0f0] md:bg-white cursor-pointer p-2 md:py-3 md:px-4 rounded-lg border-[1px] border-[#DEDEDE]'
+                      onClick={async () => {
+                        try {
+                          await wagmiConnect({ connector, chainId: getConfig().CHAIN_INFO.evmChainId })
+                          if (!isMetamaskInstalled()) {
+                            window.open(`https://metamask.app.link/dapp/${location.hostname}/`)
+                          }
+                        } catch (error: any) {
+                          console.error(error.message)
+                          wagmiDisconnect()
+                        }
+                      }}>
+                      <Image src={connector.icon} alt={`${connector.name}-Icon`} className='' height={32} width={32} />
+                      <div className=''>{connector.name}</div>
+                    </div>
+                  </div>
+                ))}
+                {otherWallet.map((connector) => (
+                  <div key={connector.id}>
+                    <div
+                      className='flex gap-2 w-full items-center hover:bg-[#f0f0f0] bg-[#f0f0f0] md:bg-white cursor-pointer p-2 md:py-3 md:px-4 rounded-lg border-[1px] border-[#DEDEDE]'
+                      onClick={async () => {
+                        try {
+                          setShowQRCode(!showQRCode)
+                          setLoading(true)
+                          setQRError('')
+                          console.log(connector)
+                          wagmiConnect(
+                            { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
+                            {
+                              onSuccess: () => {
+                                setLoading(false)
+                              },
+
+                              onError: (props) => {
+                                setQRError(props.message)
+                              },
+                            }
+                          )
+                          const provider = (await connector.getProvider()) as any
+                          const deepLink = await new Promise<string>((resolve) => {
+                            provider.on('display_uri', (uri: string) => {
+                              resolve(uri)
+                            })
+                          })
+                          setLoading(false)
+                          setQrCode(deepLink)
+                        } catch (error: any) {
+                          wagmiDisconnect()
+                        }
+                      }}>
+                      <Image src={WCIcon} alt={`${connector.name}-Icon`} height={32} width={32} />
+                      <div className=''>{connector.name}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        ) : step == 1 ? (
+          ) : (
+            <></>
+          )
+        ) : (
           <div className='max-w-[354px] flex flex-col gap-3'>
-            <p className='text-center text-base leading-6 font-semibold md:text-lg md:leading-[23px]'>
-              {t('Migrate your wallet')}
-            </p>
-            <div className='p-6 text-xs leading-[15px] text-subtle-dark bg-light-gray rounded-2xl'>
-              <span>
-                {t(
-                  'You currently use a custodial wallet which only valid on Punkga. Migrating your own wallet allows you to:'
-                )}
-              </span>
-              <ul className='list-outside list-disc pl-6 mt-5'>
-                <li>{t('Using your wallet to log in')}</li>
-                <li>{t('Access special content without transferring NFTs to the Punkga wallet')}</li>
-                <li>{t('Trade NFTs on marketplaces')}</li>
-              </ul>
-            </div>
-            <MainButton className='w-fit mx-auto' onClick={() => setStep(2)}>
-              {t('Connect Wallet')}
-            </MainButton>
-          </div>
-        ) : step == 2 ? (
-          <div className='max-w-[354px] flex flex-col gap-3'>
-            <p className='text-center text-base leading-6 font-semibold'>{t('Migrate your wallet')}</p>
+            <p className='text-center text-base leading-6 font-semibold'>{t('Connect wallet')}</p>
             <div className='text-xs leading-[15px] text-center'>
               {t('If you don’t have a wallet yet, you can select a provider and create one now.')}
             </div>
@@ -282,6 +256,14 @@ export default function MigrateWalletModal() {
                         </div>
                       </div>
                     ))}
+                    <MainButton
+                      size='medium'
+                      className='w-fit mx-auto mt-3'
+                      onClick={() => {
+                        setOpen(false)
+                      }}>
+                      {t('Close')}
+                    </MainButton>
                   </div>
                 ) : (
                   <div className='flex flex-col gap-6'>
@@ -323,8 +305,6 @@ export default function MigrateWalletModal() {
               </>
             </div>
           </div>
-        ) : (
-          <></>
         )}
       </div>
     </Modal>
