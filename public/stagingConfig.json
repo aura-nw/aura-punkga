@@ -16,11 +16,11 @@
   },
   "API_URL": "https://hasura.staging.punkga.me",
   "AUTHORIZER_URL": "https://auth.staging.punkga.me",
-  "AUTHORIZER_CLIENT_ID": "abd40c73-3390-4613-bc44-b5bde4796d03",
+  "AUTHORIZER_CLIENT_ID": "06c9c437-15cd-4240-b435-5d16206b46c6",
   "ADMIN_URL": "https://admin.staging.punkga.me",
   "REST_API_URL": "https://api.staging.punkga.me",
   "IN_MAINTENANCE_MODE": false,
-  "GTM_ID": "GTM-PF4MH72V",
+  "GTM_ID": "GTM-MMT4K22K",
   "SEEKHYPE_URL": "https://staging.seekhype.io/",
   "WALLET_CONNECT_PROJECT_ID": "ec40291093ad80fa0def54b1fb44c8ef"
 }
