@@ -80,7 +80,7 @@ function Home() {
         <TaskSlider sliderNavRef={sliderNavRef} />
         <SlideSection sliderNavRef={sliderNavRef} />
       </div>
-      <div className='pk-container bg-[#F4F3F7]'>
+      <div className='pk-container'>
         <div className='lg:py-[50px] lg:flex gap-10'>
           <div className='lg:flex-auto lg:w-[65%] relative'>
             <div className='hidden md:block'>

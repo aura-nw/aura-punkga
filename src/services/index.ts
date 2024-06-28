@@ -327,27 +327,31 @@ export const unsubscribe = async (id) => {
   await privateAxios.delete(`${getConfig().API_URL}/api/rest/user/manga/${id}/subscribe`)
 }
 export const getCampaigns = async (accountId?: string) => {
-  const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign`, {
-    params: {
-      user_id: accountId,
-    },
-  })
-  const campaigns = data.data.campaign
-  const res = {
-    data: {
-      campaign: campaigns.map((cam:any) => {
-        const c = cam
-        LANGUAGE.forEach((l) => {
-          const campaignLanguages =
-            cam.campaign_i18n.find((ml) => ml.i18n_language.id == l.id) ||
-            cam.campaign_i18n.find((ml) => ml.i18n_language.is_main)
-          c[l.shortLang] = campaignLanguages.data
-        })
-        return c
-      })
+  try {
+    const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign`, {
+      params: {
+        user_id: accountId,
+      },
+    })
+    const campaigns = data.data.campaign
+    const res = {
+      data: {
+        campaign: campaigns.map((cam: any) => {
+          const c = cam
+          LANGUAGE.forEach((l) => {
+            const campaignLanguages =
+              cam.campaign_i18n.find((ml) => ml.i18n_language.id == l.id) ||
+              cam.campaign_i18n.find((ml) => ml.i18n_language.is_main)
+            c[l.shortLang] = campaignLanguages.data
+          })
+          return c
+        }),
+      },
     }
+    return res
+  } catch (error) {
+    console.log(error)
   }
-  return res
 }
 export const getQuestDetail = async (questId: string, accountId?: string) => {
   const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/quest/${questId}`, {
