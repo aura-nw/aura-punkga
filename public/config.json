@@ -1,5 +1,5 @@
 {
-  "REDIRECT_URL": "https://punkga.me",
+  "REDIRECT_URL": "https://dev.punkga.me",
   "CHAIN_ID": "aura_6322-2",
   "CHAIN_INFO": {
     "chainId": "aura_6321-3",
@@ -14,11 +14,11 @@
     },
     "explorer": "https://euphoria.aurascan.io"
   },
-  "API_URL": "https://hasura.punkga.me",
-  "AUTHORIZER_URL": "https://auth.punkga.me",
+  "API_URL": "https://hasura.dev.punkga.me",
+  "AUTHORIZER_URL": "https://auth.dev.punkga.me",
   "AUTHORIZER_CLIENT_ID": "06c9c437-15cd-4240-b435-5d16206b46c6",
-  "ADMIN_URL": "https://admin.punkga.me",
-  "REST_API_URL": "https://api.punkga.me",
+  "ADMIN_URL": "https://admin.dev.punkga.me",
+  "REST_API_URL": "https://api.dev.punkga.me",
   "IN_MAINTENANCE_MODE": false,
   "GTM_ID": "GTM-5N2X4HSN",
   "SEEKHYPE_URL": "https://seekhype.io/"

@@ -26,48 +26,57 @@ export default function SignInModal() {
   const [step, setStep] = useState(1)
   if (!show) return <></>
   return (
-    <div className='p-6 w-[90vw] max-w-[322px] md:max-w-[720px]'>
-      {step == 2 && (
-        <div className='md:hidden absolute top-2 left-2' onClick={() => setStep(1)}>
-          <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>
-            <path
-              d='M20 12H4M4 12L10 6M4 12L10 18'
-              stroke='#ABABAB'
-              strokeWidth='2'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-            />
-          </svg>
-        </div>
-      )}
-      <p className='text-center text-lg font-semibold leading-6 text-[#414141]'>{t('Sign in to Punkga')}</p>
-      <div className='mt-6 flex gap-[18px] md:gap-6 flex-col-reverse md:flex-row'>
-        <div className='mt-4 md:hidden text-[10px] leading-[14px] text-[#414141] text-center'>
-          {t('By continuing, you agree to our')}
-          <br />
-          <Link href='/policy' target='_blank' className='text-[#2684FC]'>
-            {t('Terms of Use')}
-          </Link>{' '}
-          {locale == 'vn' && 'của chúng tôi'}
-        </div>
-        {step == 1 && (
-          <>
-            <div className='flex-1'>
-              <ByWallet step={step} />
-            </div>
-            <div className='w-[1px] h-[400px] bg-[#F0F0F0] hidden md:block'></div>
-            <div className='md:hidden flex gap-[18px] items-center w-full'>
-              <div className='w-full flex-1 h-[1px] bg-[#F0F0F0]'></div>
-              <div className='text-[#414141] text-xs'>Or</div>
-              <div className='w-full flex-1 h-[1px] bg-[#F0F0F0]'></div>
-            </div>
-          </>
+    <Transition
+      show={show}
+      enter='transition-all duration-500 delay-200'
+      enterFrom='max-h-[0vh] opacity-0'
+      enterTo='max-h-screen opacity-100'
+      leave='transition-all duration-500'
+      leaveFrom='max-h-screen opacity-100'
+      leaveTo='max-h-[0vh] opacity-0'>
+      <div className='p-6 w-[90vw] max-w-[322px] md:w-[720px] md:max-w-[720px]'>
+        {step == 2 && (
+          <div className='md:hidden absolute top-2 left-2' onClick={() => setStep(1)}>
+            <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>
+              <path
+                d='M20 12H4M4 12L10 6M4 12L10 18'
+                stroke='#ABABAB'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              />
+            </svg>
+          </div>
         )}
-        <div className='flex-1'>
-          <ByEmail step={step} setStep={setStep} />
+        <p className='text-center text-lg font-semibold leading-6 text-[#414141]'>{t('Sign in to Punkga')}</p>
+        <div className='mt-6 flex gap-[18px] md:gap-6 flex-col-reverse md:flex-row'>
+          <div className='mt-4 md:hidden text-[10px] leading-[14px] text-[#414141] text-center'>
+            {t('By continuing, you agree to our')}
+            <br />
+            <Link href='/policy' target='_blank' className='text-[#2684FC]'>
+              {t('Terms of Use')}
+            </Link>{' '}
+            {locale == 'vn' && 'của chúng tôi'}
+          </div>
+          {step == 1 && (
+            <>
+              <div className='flex-1'>
+                <ByWallet step={step} />
+              </div>
+              <div className='w-[1px] h-[400px] bg-[#F0F0F0] hidden md:block'></div>
+              <div className='md:hidden flex gap-[18px] items-center w-full'>
+                <div className='w-full flex-1 h-[1px] bg-[#F0F0F0]'></div>
+                <div className='text-[#414141] text-xs'>Or</div>
+                <div className='w-full flex-1 h-[1px] bg-[#F0F0F0]'></div>
+              </div>
+            </>
+          )}
+          <div className='flex-1'>
+            <ByEmail step={step} setStep={setStep} />
+          </div>
         </div>
       </div>
-    </div>
+    </Transition>
   )
 }
 
@@ -112,7 +121,7 @@ const ByWallet = ({ step }) => {
   return (
     <>
       {!showQRCode ? (
-        <div className=' flex flex-col gap-3'>
+        <div className='flex flex-col gap-3'>
           <div className='font-semibold text-[#414141] hidden md:block'>{t('Sign in using a wallet')}</div>
           <div className='font-semibold text-[#414141] md:hidden text-sm w-full text-center'>
             {t('Connect a wallet')}

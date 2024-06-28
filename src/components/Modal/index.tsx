@@ -49,10 +49,10 @@ export default function Modal({
                   <div
                     className='absolute z-50 right-2 top-2 cursor-pointer text-gray-600'
                     onClick={() => setOpen(false)}>
-                    <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>
+                    <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none'>
                       <path
                         d='M18 6.00005L6 18M5.99995 6L17.9999 18'
-                        stroke='#ABABAB'
+                        stroke='#000000'
                         strokeWidth='2'
                         strokeLinecap='round'
                       />
