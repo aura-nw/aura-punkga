@@ -126,7 +126,7 @@ export default function WowYourSelf() {
               <ViewRule />
               <MainButton
                 onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSdpkgu8EarRd1aXgwbOsuo0dil_zwAS8fvxoSx6DfRIP7sLCg/viewform', '_blank')}
-                disabled={!(moment().isAfter(moment('2024-06-18')) && moment().isBefore(moment('2024-06-30')))}
+                disabled={!(moment().isAfter(moment('2024-06-18')))}
                 className='w-full'>
                 {t('Submit my artwork')}
               </MainButton>
@@ -149,10 +149,10 @@ export default function WowYourSelf() {
             </Link>
           </div>
         </div>
-        {!(moment().isAfter(moment('2024-06-18')) && moment().isBefore(moment('2024-06-30'))) && <Timeline />}
-        {moment().isAfter(moment('2024-06-18')) && moment().isBefore(moment('2024-06-30')) && <ComicList />}
+        {!(moment().isAfter(moment('2024-06-18'))) && <Timeline />}
+        {moment().isAfter(moment('2024-06-18')) && <ComicList />}
         <JudgeBoard />
-        {moment().isAfter(moment('2024-06-18')) && moment().isBefore(moment('2024-06-30')) && <Timeline />}
+        {moment().isAfter(moment('2024-06-18')) && <Timeline />}
       </div>
     </div>
   )
