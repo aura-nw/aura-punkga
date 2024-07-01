@@ -61,7 +61,7 @@ export default function ConnectModal() {
   }, [connectors])
   useEffect(() => {
     console.log(account.activeWalletAddress, address)
-    if (account.activeWalletAddress && account.activeWalletAddress !== address) {
+    if (account.activeWalletAddress && account.activeWalletAddress.toLowerCase() !== address.toLowerCase()) {
       setIsWrongWallet(true)
     } else {
       setIsWrongWallet(false)
