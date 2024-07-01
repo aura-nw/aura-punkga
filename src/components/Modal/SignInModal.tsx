@@ -325,7 +325,7 @@ const ByEmail = ({ step, setStep }) => {
           }
         }}
       />
-      {step == 2 && (
+      {(step == 2 || !isMobile) && (
         <>
           <OutlineTextField
             placeholder={t('Enter your password')}
