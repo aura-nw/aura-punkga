@@ -60,20 +60,23 @@ export default function ConnectModal() {
     setConnector()
   }, [connectors])
   useEffect(() => {
-    console.log(account.activeWalletAddress, address)
-    if (account.activeWalletAddress && account.activeWalletAddress.toLowerCase() !== address.toLowerCase()) {
+    if (
+      account?.activeWalletAddress &&
+      address &&
+      account.activeWalletAddress.toLowerCase() !== address.toLowerCase()
+    ) {
       setIsWrongWallet(true)
     } else {
       setIsWrongWallet(false)
     }
-  }, [address, account.activeWalletAddress, open])
+  }, [address, account?.activeWalletAddress, open])
   useEffect(() => {
     if (isConnected && !isWrongWallet) {
       setOpen(false)
     }
   }, [isConnected, isWrongWallet, open])
   const copyAddress = async () => {
-    navigator.clipboard.writeText(account?.walletAddress)
+    navigator.clipboard.writeText(account?.custodialWalletAddress)
   }
   return (
     <Modal open={open} setOpen={setOpen} hideClose>

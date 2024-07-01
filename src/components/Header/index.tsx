@@ -46,10 +46,10 @@ export default function Header({ className }: { className?: string }) {
   const [openNavigation, setOpenNavigation] = useState(false)
   const [hideBalance, setHideBalance] = useState(false)
   const [searchValue, setSearchValue] = useState('')
-  const { account, wallet, logout } = useContext(Context)
+  const { account, logout } = useContext(Context)
   const searchComic = useApi<any[]>(async () => await search(searchValue), !!searchValue, [searchValue])
   const walletBalance = useBalance({
-    address: wallet || (account?.walletAddress as any),
+    address: account?.activeWalletAddress as any,
   })
   const ref = useRef<any>()
   const divRef = useRef<any>()
@@ -107,7 +107,7 @@ export default function Header({ className }: { className?: string }) {
     )
   }, [])
   const copyAddress = async () => {
-    navigator.clipboard.writeText(wallet || account?.walletAddress)
+    navigator.clipboard.writeText(account?.activeWalletAddress)
     setIsCopied(true)
     _.debounce(() => {
       _.delay(() => setIsCopied(false), 3000)
@@ -129,7 +129,8 @@ export default function Header({ className }: { className?: string }) {
             <div>
               <div className='flex items-center gap-4'>
                 {account?.verified && account?.name ? (
-                  (address != account?.activeWalletAddress || !isConnected) && (
+                  (address != account?.activeWalletAddress || !isConnected) &&
+                  account?.noncustodialWalletAddress && (
                     <div className='flex gap-3 items-center '>
                       <MainButton onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</MainButton>
                     </div>
@@ -182,14 +183,18 @@ export default function Header({ className }: { className?: string }) {
             </div>
           </div>
           <div className={`${openProfile ? 'max-h-[280px]' : 'max-h-[0px]'} overflow-hidden transition-all`}>
-            {wallet || account?.walletAddress ? (
+            {account?.activeWalletAddress ? (
               <div className='my-[10px] flex flex-col w-full  gap-3 bg-light-gray rounded-xl p-3'>
                 <div
                   className='flex justify-between items-center text-second-color text-sm font-medium  relative'
                   onClick={copyAddress}>
                   <div className='flex gap-2 items-center'>
-                    {wallet ? <></> : <Image src={PunkgaWallet} alt='' className='w-6 h-6' />}
-                    <div>{`${shorten(wallet || account?.walletAddress, 8, 8)}`}</div>
+                    {account?.noncustodialWalletAddress ? (
+                      <></>
+                    ) : (
+                      <Image src={PunkgaWallet} alt='' className='w-6 h-6' />
+                    )}
+                    <div>{`${shorten(account?.activeWalletAddress, 8, 8)}`}</div>
                   </div>
                   <span
                     className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
@@ -262,7 +267,7 @@ export default function Header({ className }: { className?: string }) {
               onClick={() => router.push('/profile')}>
               {t('My profile')}
             </div>
-            {!wallet && (
+            {!account?.noncustodialWalletAddress && (
               <div
                 className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'
                 onClick={() => setMigrateWalletOpen(true)}>
@@ -327,7 +332,7 @@ export default function Header({ className }: { className?: string }) {
                     <div className='h-[1px] w-full bg-[#DEDEDE] mt-[10px] mb-[16px]'></div>
                     <div className='text-[#ABABAB] text-sm mb-1'>{`${t('Wallet')}:`}</div>
                     <div className='flex justify-between items-center text-[#4E5056] text-base font-semibold'>
-                      <div>{`${shorten(wallet || account?.walletAddress, 8, 8)}`}</div>
+                      <div>{`${shorten(account?.activeWalletAddress, 8, 8)}`}</div>
                       <div onClick={copyAddress}>
                         <Image width={18} height={18} src={CopySvg} alt='' />
                       </div>
@@ -394,14 +399,14 @@ export default function Header({ className }: { className?: string }) {
                         }
                       </span>
                     </div>
-                    {!wallet ? (
+                    {!account?.noncustodialWalletAddress ? (
                       <>
                         <MainButton className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
                           {t('Migrate your wallet')}
                         </MainButton>
                       </>
                     ) : null}
-                    {wallet && account?.name && !isConnected && (
+                    {account?.noncustodialWalletAddress && account?.name && !isConnected && (
                       <div className='flex gap-2 items-center mt-3'>
                         <Image src={Warning} alt='warning' width={20} height={20} />
                         <div className='text-[#FF4D00] text-xs'>Wallet not connected</div>
@@ -687,7 +692,7 @@ export default function Header({ className }: { className?: string }) {
                     {/* <MainButton hasAvatar style='secondary' leadingIcon={account?.image || Avatar}>
                       {account?.name}
                     </MainButton> */}
-                    <Image src={wallet ? UserGreen : User} alt='user' />
+                    <Image src={account?.noncustodialWalletAddress ? UserGreen : User} alt='user' />
                   </DropdownToggle>
 
                   <DropdownMenu customClass='right-0 !w-[405px] max-w-[405px] !overflow-visible mt-[26px]'>
@@ -710,7 +715,7 @@ export default function Header({ className }: { className?: string }) {
                         <div className='h-[1px] w-full bg-[#DEDEDE] mt-[10px] mb-[16px]'></div>
                         <div className='text-[#ABABAB] text-sm mb-1'>{`${t('Wallet')}:`}</div>
                         <div className='flex justify-between items-center text-[#4E5056] text-base font-semibold'>
-                          <div>{`${shorten(wallet || account?.walletAddress, 8, 8)}`}</div>
+                          <div>{`${shorten(account?.activeWalletAddress, 8, 8)}`}</div>
                           <div onClick={copyAddress}>
                             <Image width={18} height={18} src={CopySvg} alt='' />
                           </div>
@@ -777,14 +782,14 @@ export default function Header({ className }: { className?: string }) {
                             }
                           </span>
                         </div>
-                        {!wallet ? (
+                        {!account?.noncustodialWalletAddress ? (
                           <>
                             <MainButton className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
                               {t('Migrate your wallet')}
                             </MainButton>
                           </>
                         ) : null}
-                        {wallet && account?.name && !isConnected && (
+                        {account?.noncustodialWalletAddress && account?.name && !isConnected && (
                           <div className='flex gap-2 items-center mt-3'>
                             <Image src={Warning} alt='warning' width={20} height={20} />
                             <div className='text-[#FF4D00] text-xs'>Wallet not connected</div>
@@ -806,12 +811,15 @@ export default function Header({ className }: { className?: string }) {
               ) : (
                 <MainButton onClick={() => setSignInOpen(true)}>{t('Sign in')}</MainButton>
               )}
-              {(address != account?.activeWalletAddress || !isConnected) && account?.verified && account?.name && (
-                <div className='flex gap-3 items-center '>
-                  <div className='h-4 w-[1px] bg-[#E0E0E0]'></div>
-                  <MainButton onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</MainButton>
-                </div>
-              )}
+              {(address != account?.activeWalletAddress || !isConnected) &&
+                account?.verified &&
+                account?.name &&
+                account?.noncustodialWalletAddress && (
+                  <div className='flex gap-3 items-center '>
+                    <div className='h-4 w-[1px] bg-[#E0E0E0]'></div>
+                    <MainButton onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</MainButton>
+                  </div>
+                )}
             </div>
           </div>
         </nav>
