@@ -287,13 +287,14 @@ function ContextProvider({ children }: any) {
           birthdate: res.birthdate,
           bio: res.bio,
           signupMethods: res.signup_methods,
-          walletAddress: res.authorizer_users_user_wallet?.address,
+          custodialWalletAddress: res.authorizer_users_user_wallet?.address,
           xp: res.levels?.[0]?.xp || 0,
           level: res.levels?.[0]?.level || 0,
           completedQuests: res.user_quests || [],
           quests: res?.user_quests_aggregate?.aggregate?.count,
           rank: res.rank || 999999,
           activeWalletAddress: res.active_wallet_address,
+          noncustodialWalletAddress: res.wallet_address,
         } as IUser)
       }
       if (!res.email_verified_at || !res.email || !res.nickname) {

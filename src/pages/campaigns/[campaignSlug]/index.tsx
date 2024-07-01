@@ -39,18 +39,18 @@ export const getServerSideProps = async (context) => {
       const campaignLanguages =
         campaign.campaign_i18n.find((ml) => ml.i18n_language.id == 1) ||
         campaign.campaign_i18n.find((ml) => ml.i18n_language.is_main)
-      
-      props.image = campaignLanguages?.data?.thumbnail_url
-      props.title = campaignLanguages?.data?.name
-      props.description = campaignLanguages?.data?.description
+
+      props.image = campaignLanguages?.data?.seo?.thumbnail_url || campaignLanguages?.data?.thumbnail_url
+      props.title = campaignLanguages?.data?.seo?.name || campaignLanguages?.data?.name
+      props.description = campaignLanguages?.data?.seo?.description || campaignLanguages?.data?.description
     } else {
       const campaignLanguages =
         campaign.campaign_i18n.find((ml) => ml.i18n_language.id == 2) ||
         campaign.campaign_i18n.find((ml) => ml.i18n_language.is_main)
 
-      props.image = campaignLanguages?.data?.thumbnail_url
-      props.title = campaignLanguages?.data?.name
-      props.description = campaignLanguages?.data?.description
+      props.image = campaignLanguages?.data?.seo?.thumbnail_url || campaignLanguages?.data?.thumbnail_url
+      props.title = campaignLanguages?.data?.seo?.name || campaignLanguages?.data?.name
+      props.description = campaignLanguages?.data?.seo?.description || campaignLanguages?.data?.description
     }
     return {
       props: {

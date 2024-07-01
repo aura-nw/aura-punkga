@@ -8,7 +8,8 @@ export interface IUser {
   birthdate?: string
   bio?: string
   signupMethods: string
-  walletAddress: string
+  custodialWalletAddress: string
+  noncustodialWalletAddress?: string
   xp: number
   level: number
   completedQuests: any[]

@@ -116,7 +116,6 @@ export default function ComicEvent(props: IComic) {
                             </div>
                         </div>
                         <div>
-
                         </div>
                     </div>
                 </Link>
