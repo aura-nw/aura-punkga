@@ -806,7 +806,7 @@ export default function Header({ className }: { className?: string }) {
               ) : (
                 <MainButton onClick={() => setSignInOpen(true)}>{t('Sign in')}</MainButton>
               )}
-              {(address != account?.activeWalletAddress || !isConnected) && (
+              {(address != account?.activeWalletAddress || !isConnected) && account?.verified && account?.name && (
                 <div className='flex gap-3 items-center '>
                   <div className='h-4 w-[1px] bg-[#E0E0E0]'></div>
                   <MainButton onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</MainButton>

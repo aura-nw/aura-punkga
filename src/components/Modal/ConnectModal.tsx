@@ -60,6 +60,7 @@ export default function ConnectModal() {
     setConnector()
   }, [connectors])
   useEffect(() => {
+    console.log(account.activeWalletAddress, address)
     if (account.activeWalletAddress && account.activeWalletAddress !== address) {
       setIsWrongWallet(true)
     } else {
