@@ -135,7 +135,27 @@ export default function Comic2(props: IComic) {
 
                         </div>
                     )}
-                    <div className="absolute overflow-hidden bottom-0 w-full p-2 transition-all duration-300 ease-in-out h-full to-[rgba(0,0,0,0.75)] to-[60%] group-hover:bg-[rgba(0,0,0,0.75)] group-hover:bg-none group-hover:opacity-100 opacity-0 flex flex-col justify-between">
+                    <div className='group-hover:hidden absolute bottom-0 p-2 w-full' style={{
+                        background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.75) 66.66%)'
+                    }}>
+                        <p className='text-primary-color whitespace-nowrap text-ellipsis overflow-hidden text-base font-bold leading-5'>{props[locale].title}</p>
+                        <div className='flex text-white gap-1 whitespace-nowrap text-ellipsis overflow-hidden text-sm font-semibold leading-[17px]'>
+                            {t('by')}{' '}
+                            {props.authors.map((author, index) => (
+                                <Fragment key={index}>
+                                    <span className='text-primary-color font-[600] first:hidden'>, </span>
+                                    <span className='text-primary-color font-[600]'>
+                                        {author.slug ? (
+                                            <div className='author'>{t(author.name)}</div>
+                                        ) : (
+                                            t(author.name)
+                                        )}
+                                    </span>
+                                </Fragment>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="absolute overflow-hidden bottom-0 w-full p-2 transition-all duration-300 ease-in-out  h-full to-[rgba(0,0,0,0.75)] to-[60%] group-hover:bg-[rgba(0,0,0,0.75)] group-hover:bg-none group-hover:opacity-100 opacity-0 flex flex-col justify-between">
                         <div>
                             <p className='text-primary-color whitespace-nowrap text-ellipsis overflow-hidden text-base font-bold leading-5'>{props[locale].title}</p>
                             <div className='flex text-white gap-1 whitespace-nowrap text-ellipsis overflow-hidden text-sm font-semibold leading-[17px]'>
