@@ -1,5 +1,5 @@
 import getConfig from 'next/config'
-import { sepolia } from 'viem/chains'
+import { mainnet, sepolia } from 'viem/chains'
 import { createConfig, http } from 'wagmi'
 import { injected, metaMask, walletConnect } from 'wagmi/connectors'
 
@@ -8,6 +8,7 @@ export const getWagmiConfig = (projectId: string) => {
   const chainInfo = config.CHAIN_INFO
   return createConfig({
     chains: [
+      mainnet,
       {
         id: chainInfo.evmChainId,
         name: chainInfo.chainName,
