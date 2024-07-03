@@ -207,7 +207,7 @@ export default function Header({ className }: { className?: string }) {
                   <Image width={18} height={18} src={CopySvg} alt='' />
                 </div>
                 <div className='flex justify-between items-center text-sm font-semibold  leading-[18px]'>
-                  <div className=''>{`${t('Balance')}:`}</div>
+                  <div className=''>{`${t('Balance')}`}</div>
                   <div className='flex items-center'>
                     {hideBalance
                       ? '********'
@@ -307,14 +307,14 @@ export default function Header({ className }: { className?: string }) {
                       </span>
                     </div>
                     <div className='h-[1px] w-full bg-[#DEDEDE] mt-[10px] mb-[16px]'></div>
-                    <div className='text-[#ABABAB] text-sm mb-1'>{`${t('Wallet')}:`}</div>
+                    <div className='text-[#ABABAB] text-sm mb-1'>{`${t('Wallet')}`}</div>
                     <div className='flex justify-between items-center text-[#4E5056] text-base font-semibold'>
                       <div>{`${shorten(account?.activeWalletAddress, 8, 8)}`}</div>
                       <div onClick={copyAddress}>
                         <Image width={18} height={18} src={CopySvg} alt='' />
                       </div>
                     </div>
-                    <div className='text-[#ABABAB] text-sm mt-3 mb-1'>{`${t('Balance')}:`}</div>
+                    <div className='text-[#ABABAB] text-sm mt-3 mb-1'>{`${t('Balance')}`}</div>
                     <div className='flex justify-between items-center text-[#4E5056] text-base font-semibold leading-5'>
                       <div className='flex items-center'>
                         {hideBalance
@@ -377,26 +377,26 @@ export default function Header({ className }: { className?: string }) {
                 )}
 
                 <div
-                  className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#414141] font-semibold'
+                  className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#242424] font-semibold'
                   onClick={() => router.push('/campaigns')}>
                   <Image src={Campaign} alt='' className='w-5 h-5' />
                   {t('Campaign')}
                 </div>
                 <div
-                  className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#414141] font-semibold'
+                  className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#242424] font-semibold'
                   onClick={() => router.push('/collection')}>
                   <Image src={Collection} alt='' className='w-5 h-5' />
                   {t('Collection')}
                 </div>
                 <div
-                  className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#414141] font-semibold'
+                  className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#242424] font-semibold'
                   onClick={() => router.push('/about-us')}>
                   <Image src={AboutUs} alt='' className='w-5 h-5' />
                   {t('About Us')}
                 </div>
                 <div>
                   <div
-                    className='flex justify-between gap-3 items-center py-4 text-sm leading-[18px] text-[#414141] font-semibold'
+                    className='flex justify-between gap-3 items-center py-4 text-sm leading-[18px] font-semibold'
                     onClick={switchLanguage}>
                     <div className='flex gap-3 items-center'>
                       <Image src={Language} alt='' className='w-5 h-5' />
@@ -444,7 +444,7 @@ export default function Header({ className }: { className?: string }) {
                   height={20}
                   src={SearchIcon}
                   alt=''
-                  className='w-4 h-4'
+                  className='w-5 h-5'
                   onClick={() => {
                     if (ref.current.value) {
                       setIsSearchFocused(false)
@@ -542,8 +542,8 @@ export default function Header({ className }: { className?: string }) {
                 placeholder={t('Search by title')}
                 leadingComponent={
                   <Image
-                    width={20}
-                    height={20}
+                    width={24}
+                    height={24}
                     src={SearchIcon}
                     alt=''
                     onClick={() => {
@@ -623,9 +623,9 @@ export default function Header({ className }: { className?: string }) {
             <Button onClick={() => router.push('/campaigns')}>
               <span style={{ color: '#242424', fontWeight: '500' }}>{t('Campaign')}</span>
             </Button>
-            <Button size='md' onClick={() => router.push('/about-us')}>
+            {/* <Button size='md' onClick={() => router.push('/about-us')}>
               <span style={{ color: '#242424', fontWeight: '500' }}>{t('IP Asset')}</span>
-            </Button>
+            </Button> */}
             <Button size='md' onClick={() => router.push('/about-us')}>
               <span style={{ color: '#242424', fontWeight: '500' }}>{t('aboutUs')}</span>
             </Button>
@@ -665,14 +665,14 @@ export default function Header({ className }: { className?: string }) {
                           </span>
                         </div>
                         <div className='h-[1px] w-full bg-[#DEDEDE] mt-[10px] mb-[16px]'></div>
-                        <div className='text-[#ABABAB] text-sm mb-1'>{`${t('Wallet')}:`}</div>
+                        <div className='text-[#ABABAB] text-sm mb-1'>{`${t('Wallet')}`}</div>
                         <div className='flex justify-between items-center text-[#4E5056] text-base font-semibold'>
                           <div>{`${shorten(account?.activeWalletAddress, 8, 8)}`}</div>
                           <div onClick={copyAddress}>
                             <Image width={18} height={18} src={CopySvg} alt='' />
                           </div>
                         </div>
-                        <div className='text-[#ABABAB] text-sm mt-3 mb-1'>{`${t('Balance')}:`}</div>
+                        <div className='text-[#ABABAB] text-sm mt-3 mb-1'>{`${t('Balance')}`}</div>
                         <div className='flex justify-between items-center text-[#4E5056] text-base font-semibold leading-5'>
                           <div className='flex items-center'>
                             {hideBalance
