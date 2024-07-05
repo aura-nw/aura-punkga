@@ -146,7 +146,7 @@ function ContextProvider({ children }: any) {
   }, [accessTokenParam])
 
   useEffect(() => {
-    if (address && isConnected && !account) {
+    if (address && isConnected && !account?.verified) {
       if (chainId != config.CHAIN_INFO.evmChainId) {
         switchChain(
           {
@@ -161,7 +161,7 @@ function ContextProvider({ children }: any) {
         signConnectMessage()
       }
     }
-  }, [address, isConnected, account])
+  }, [address, isConnected, account?.verified])
 
   const signConnectMessage = () => {
     const domain = window.location.host

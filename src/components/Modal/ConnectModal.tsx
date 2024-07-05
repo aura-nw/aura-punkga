@@ -1,23 +1,21 @@
-import Mascot from 'assets/images/Mascot_5_1.png'
 import MainButton from 'components/Button/MainButton'
 import Modal from 'components/Modal'
 import Spinner from 'components/Spinner'
+import CopySvg from 'images/icons/copy.svg'
+import Warning from 'images/icons/warning.svg'
 import getConfig from 'next/config'
 import Image from 'next/image'
 import { QRCodeSVG } from 'qrcode.react'
-import { use, useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import WCIcon from 'src/assets/images/wallet-connect.png'
 import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
-import Warning from 'images/icons/warning.svg'
-import CopySvg from 'images/icons/copy.svg'
-import { Connector, useAccount, useChainId, useConnect, useDisconnect, useSignMessage } from 'wagmi'
-import { isMetamaskInstalled, shorten, validateEmail } from 'src/utils'
-import Metamask from 'images/metamask.png'
+import { isMetamaskInstalled, shorten } from 'src/utils'
+import { Connector, useAccount, useConnect, useDisconnect } from 'wagmi'
 
 export default function ConnectModal() {
-  const { getProfile, account } = useContext(Context)
+  const { account } = useContext(Context)
 
   const { connectWalletOpen: open, setWalletConnectOpen: setOpen } = useContext(ModalContext)
   const { t } = useTranslation()
