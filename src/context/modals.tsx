@@ -12,6 +12,7 @@ import { validateEmail } from 'src/utils'
 import { useAccount } from 'wagmi'
 import { Context } from '.'
 import ConnectModal from 'components/Modal/ConnectModal'
+import { removeItem } from 'src/utils/localStorage'
 export const ModalContext = createContext<{
   signUpSuccessOpen: boolean
   forgotPasswordOpen: boolean
@@ -217,7 +218,14 @@ function ModalProvider({ children }) {
             </Modal>
           )
         ) : (
-          <Modal open={open} setOpen={setOpen}>
+          <Modal
+            open={open}
+            setOpen={(value) => {
+              if (!value) {
+                removeItem('token')
+              }
+              setOpen(value)
+            }}>
             <div className='p-6 flex flex-col w-[322px]'>
               <div className='text-xl font-bold leading-6 text-center'>{t('Verify your email')}</div>
               <p className='text-xs leading-4 mt-1 text-center'>

@@ -297,7 +297,7 @@ function ContextProvider({ children }: any) {
           noncustodialWalletAddress: res.wallet_address,
         } as IUser)
       }
-      if (!res.email_verified_at || !res.email || !res.nickname) {
+      if (!res.email_verified_at) {
         removeItem('token')
       }
       return res
