@@ -9,8 +9,10 @@ import SignUpSuccessModal from 'components/Modal/SignUpSuccessModal'
 import { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { validateEmail } from 'src/utils'
+import { useAccount } from 'wagmi'
 import { Context } from '.'
-import { useAccount, useConnect } from 'wagmi'
+import ConnectModal from 'components/Modal/ConnectModal'
+import { removeItem } from 'src/utils/localStorage'
 export const ModalContext = createContext<{
   signUpSuccessOpen: boolean
   forgotPasswordOpen: boolean
@@ -47,7 +49,7 @@ function ModalProvider({ children }) {
   const [signInOpen, setSignInOpen] = useState(false)
   const [connectWalletOpen, setWalletConnectOpen] = useState(false)
   const [migrateWalletOpen, setMigrateWalletOpen] = useState(false)
-  const { account, updateProfile } = useContext(Context)
+  const { account, updateProfile, logout } = useContext(Context)
   const { isConnected } = useAccount()
   const [errorMsg, setErrorMsg] = useState('')
   const [emailErrorMsg, setEmailErrorMsg] = useState('')
@@ -85,6 +87,14 @@ function ModalProvider({ children }) {
       setSignUpOpen(false)
     }
   }, [account])
+  useEffect(() => {
+    setOpen(true)
+  }, [account])
+  useEffect(() => {
+    if (!open) {
+      logout()
+    }
+  }, [open])
 
   const setUName = async () => {
     try {
@@ -169,6 +179,7 @@ function ModalProvider({ children }) {
         <SignUpSuccessModal email={emailNeedVerify} identifier={identifier} />
       </Modal>
       {migrateWalletOpen && <MigrateWalletModal />}
+      {connectWalletOpen && <ConnectModal />}
 
       {account ? (
         validateEmail(account?.email) ? (

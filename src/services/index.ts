@@ -327,27 +327,31 @@ export const unsubscribe = async (id) => {
   await privateAxios.delete(`${getConfig().API_URL}/api/rest/user/manga/${id}/subscribe`)
 }
 export const getCampaigns = async (accountId?: string) => {
-  const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign`, {
-    params: {
-      user_id: accountId,
-    },
-  })
-  const campaigns = data.data.campaign
-  const res = {
-    data: {
-      campaign: campaigns.map((cam:any) => {
-        const c = cam
-        LANGUAGE.forEach((l) => {
-          const campaignLanguages =
-            cam.campaign_i18n.find((ml) => ml.i18n_language.id == l.id) ||
-            cam.campaign_i18n.find((ml) => ml.i18n_language.is_main)
-          c[l.shortLang] = campaignLanguages.data
-        })
-        return c
-      })
+  try {
+    const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign`, {
+      params: {
+        user_id: accountId,
+      },
+    })
+    const campaigns = data.data.campaign
+    const res = {
+      data: {
+        campaign: campaigns.map((cam: any) => {
+          const c = cam
+          LANGUAGE.forEach((l) => {
+            const campaignLanguages =
+              cam.campaign_i18n.find((ml) => ml.i18n_language.id == l.id) ||
+              cam.campaign_i18n.find((ml) => ml.i18n_language.is_main)
+            c[l.shortLang] = campaignLanguages.data
+          })
+          return c
+        }),
+      },
     }
+    return res
+  } catch (error) {
+    console.log(error)
   }
-  return res
 }
 export const getQuestDetail = async (questId: string, accountId?: string) => {
   const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/quest/${questId}`, {
@@ -379,25 +383,49 @@ export const getLeaderboard = async () => {
 }
 export const getUserNfts = async (address: string) => {
   const { data } = await axios.post(`${getConfig().CHAIN_INFO.indexerV2}`, {
-    query: `query Query721ByOwner($owner_address: String!) {
-  ${getEnvKey()} {
-    cw721_token(where: {owner: {_eq: $owner_address}}, order_by: {created_at: desc}) {
-      id
-      token_id
-      name: media_info(path: "onchain.metadata.name")
-      image_url: media_info(path: "offchain.image.url")
-      cw721_contract {
-        smart_contract {
-          address
+    query: `query queryAssetERC721(
+      $contract_address: String
+      $limit: Int = 10
+      $tokenId: String = null
+      $owner: String = null
+      $offset: Int = 0
+    ) {
+      ${getEnvKey()} {
+        cw721_token: erc721_token(
+          limit: $limit
+          offset: $offset
+          where: {
+            erc721_contract: {
+              evm_smart_contract: { address: { _eq: $contract_address } }
+            }
+            token_id: { _eq: $tokenId }
+            owner: { _eq: $owner }
+          }
+          order_by: [{ last_updated_height: desc }, { id: desc }]
+        ) {
+          id
+          token_id
+          owner
+          media_info
+          last_updated_height
+          created_at
+          cw721_contract: erc721_contract {
+            name
+            symbol
+            smart_contract: evm_smart_contract {
+              address
+            }
+          }
         }
       }
-    }
-  }
-}`,
+    }`,
     variables: {
       owner_address: address,
+      contract_address: null,
+      offset: 0,
+      limit: 100,
     },
-    operationName: 'Query721ByOwner',
+    operationName: 'queryAssetERC721',
   })
   return data?.data?.[getEnvKey()]?.cw721_token || []
 }
@@ -488,10 +516,10 @@ export const getBalances = async (address: string) => {
   })
   return data?.data?.[getEnvKey()]?.account_balance?.[0]?.amount
 }
-export const linkWallet = async (signedDoc: any, signature: any) => {
+export const linkWallet = async (message: any, signature: any) => {
   try {
     const res = await privateAxios.post(`${getConfig().REST_API_URL}/user/connect`, {
-      signedDoc,
+      message,
       signature,
     })
     return res

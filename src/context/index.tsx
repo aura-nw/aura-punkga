@@ -15,7 +15,7 @@ import { IUser } from 'src/models/user'
 import { getProfile as getProfileService } from 'src/services'
 import { oauthLogin } from 'src/utils'
 import { getItem, removeItem, setItem } from 'src/utils/localStorage'
-import { useAccount, useChainId, useDisconnect, useSignMessage } from 'wagmi'
+import { useAccount, useChainId, useDisconnect, useSignMessage, useSwitchChain } from 'wagmi'
 import ModalProvider from './modals'
 const queryClient = new QueryClient()
 
@@ -77,6 +77,7 @@ function ContextProvider({ children }: any) {
   const { address, isConnected } = useAccount()
   const chainId = useChainId()
   const { signMessage } = useSignMessage()
+  const { switchChain } = useSwitchChain()
   const { disconnect } = useDisconnect()
   const [account, setAccount] = useState<IUser>()
   const [wallet, setWallet] = useState<string>()
@@ -145,33 +146,49 @@ function ContextProvider({ children }: any) {
   }, [accessTokenParam])
 
   useEffect(() => {
-    if (address && isConnected && !account) {
-      const domain = window.location.host
-      const origin = window.location.origin
-      const statement = 'Sign in with Ethereum to the app.'
-      const siweMessage = new SiweMessage({
-        scheme: undefined,
-        domain,
-        address,
-        statement,
-        uri: origin,
-        version: '1',
-        chainId,
-        nonce: generateNonce(),
-      })
-      const message = siweMessage.prepareMessage()
-      signMessage(
-        { message, account: address },
-        {
-          onSuccess: (data) =>
-            getAccessToken({
-              message,
-              signature: data,
-            }),
-        }
-      )
+    if (!!address && !!isConnected && !account?.verified) {
+      if (chainId != config.CHAIN_INFO.evmChainId) {
+        switchChain(
+          {
+            chainId: config.CHAIN_INFO.evmChainId,
+          },
+          {
+            onSuccess: signConnectMessage,
+            onError: (error) => console.error(error),
+          }
+        )
+      } else {
+        signConnectMessage()
+      }
     }
-  }, [address, isConnected, account])
+  }, [!!address, !!isConnected, !account?.verified])
+
+  const signConnectMessage = () => {
+    const domain = window.location.host
+    const origin = window.location.origin
+    const statement = 'Sign in with Aura Network to the app.'
+    const siweMessage = new SiweMessage({
+      scheme: undefined,
+      domain,
+      address,
+      statement,
+      uri: origin,
+      version: '1',
+      chainId,
+      nonce: generateNonce(),
+    })
+    const message = siweMessage.prepareMessage()
+    signMessage(
+      { message, account: address },
+      {
+        onSuccess: (data) =>
+          getAccessToken({
+            message,
+            signature: data,
+          }),
+      }
+    )
+  }
 
   const getAccessToken = async ({ message, signature }) => {
     try {
@@ -257,6 +274,7 @@ function ContextProvider({ children }: any) {
       }
       const res = await getProfileService()
       if (res?.id) {
+        setAccount(undefined)
         if (res.wallet_address) {
           setWallet(res.wallet_address)
         }
@@ -270,16 +288,17 @@ function ContextProvider({ children }: any) {
           birthdate: res.birthdate,
           bio: res.bio,
           signupMethods: res.signup_methods,
-          walletAddress: res.authorizer_users_user_wallet?.address,
+          custodialWalletAddress: res.authorizer_users_user_wallet?.address,
           xp: res.levels?.[0]?.xp || 0,
           level: res.levels?.[0]?.level || 0,
           completedQuests: res.user_quests || [],
           quests: res?.user_quests_aggregate?.aggregate?.count,
           rank: res.rank || 999999,
           activeWalletAddress: res.active_wallet_address,
+          noncustodialWalletAddress: res.wallet_address,
         } as IUser)
       }
-      if (!res.email_verified_at && res.email && res.nickname) {
+      if (!res.email_verified_at && res.email) {
         removeItem('token')
       }
       return res

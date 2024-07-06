@@ -32,7 +32,7 @@ export default function TextField({
     return (
       <div className={`relative w-full flex rounded-[20px] ${className}`}>
         {leadingComponent && (
-          <div className=' absolute inset-y-0 left-0 flex items-center justify-center p-[13px] max-w-[50px]'>
+          <div className=' absolute inset-y-0 left-0 flex items-center justify-center py-[10px] pl-[14px] pr-2 max-w-[50px]'>
             {leadingComponent}
           </div>
         )}
@@ -136,7 +136,7 @@ export default function TextField({
   return (
     <div className={`relative w-full flex rounded-[20px] ${className}`}>
       {leadingComponent && (
-        <div className=' absolute inset-y-0 left-0 flex items-center justify-center p-[13px] max-w-[50px]'>
+        <div className='absolute inset-y-0 left-0 flex items-center justify-center py-[10px] pl-[14px] pr-2 max-w-[50px]'>
           {leadingComponent}
         </div>
       )}
