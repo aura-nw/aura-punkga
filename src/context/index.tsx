@@ -8,7 +8,7 @@ import { createClient } from 'graphql-ws'
 import getConfig from 'next/config'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SiweMessage, generateNonce } from 'siwe'
 import { IUser } from 'src/models/user'
@@ -74,6 +74,7 @@ export const Context = createContext<{
 })
 export const privateAxios = axios.create()
 function ContextProvider({ children }: any) {
+  const logoutFlag = useRef(false)
   const { address, isConnected } = useAccount()
   const chainId = useChainId()
   const { signMessage } = useSignMessage()
@@ -146,7 +147,7 @@ function ContextProvider({ children }: any) {
   }, [accessTokenParam])
 
   useEffect(() => {
-    if (!!address && !!isConnected && !account?.verified) {
+    if (!!address && !!isConnected && !account?.verified && !logoutFlag.current) {
       if (chainId != config.CHAIN_INFO.evmChainId) {
         switchChain(
           {
@@ -164,6 +165,7 @@ function ContextProvider({ children }: any) {
   }, [!!address, !!isConnected, !account?.verified])
 
   const signConnectMessage = () => {
+    logoutFlag.current = false
     const domain = window.location.host
     const origin = window.location.origin
     const statement = 'Sign in with Aura Network to the app.'
@@ -343,6 +345,7 @@ function ContextProvider({ children }: any) {
 
   const logout = async () => {
     try {
+      logoutFlag.current = true
       await authorizerRef.logout()
       disconnect()
       removeItem('token')
