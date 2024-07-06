@@ -274,6 +274,7 @@ function ContextProvider({ children }: any) {
       }
       const res = await getProfileService()
       if (res?.id) {
+        setAccount(undefined)
         if (res.wallet_address) {
           setWallet(res.wallet_address)
         }
