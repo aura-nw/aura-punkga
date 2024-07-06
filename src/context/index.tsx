@@ -78,7 +78,7 @@ function ContextProvider({ children }: any) {
   const chainId = useChainId()
   const { signMessage } = useSignMessage()
   const { switchChain } = useSwitchChain()
-  const { disconnectAsync } = useDisconnect()
+  const { disconnect } = useDisconnect()
   const [account, setAccount] = useState<IUser>()
   const [wallet, setWallet] = useState<string>()
   const [isSettingUp, setIsSettingUp] = useState(true)
@@ -146,7 +146,7 @@ function ContextProvider({ children }: any) {
   }, [accessTokenParam])
 
   useEffect(() => {
-    if (address && isConnected && !account?.verified) {
+    if (!!address && !!isConnected && !account?.verified) {
       if (chainId != config.CHAIN_INFO.evmChainId) {
         switchChain(
           {
@@ -161,7 +161,7 @@ function ContextProvider({ children }: any) {
         signConnectMessage()
       }
     }
-  }, [address, isConnected, account?.verified])
+  }, [!!address, !!isConnected, !account?.verified])
 
   const signConnectMessage = () => {
     const domain = window.location.host
@@ -344,7 +344,7 @@ function ContextProvider({ children }: any) {
   const logout = async () => {
     try {
       await authorizerRef.logout()
-      await disconnectAsync()
+      disconnect()
       removeItem('token')
       removeItem('current_reading_manga')
       setAccount(undefined)

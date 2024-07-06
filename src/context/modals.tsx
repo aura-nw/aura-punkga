@@ -49,7 +49,7 @@ function ModalProvider({ children }) {
   const [signInOpen, setSignInOpen] = useState(false)
   const [connectWalletOpen, setWalletConnectOpen] = useState(false)
   const [migrateWalletOpen, setMigrateWalletOpen] = useState(false)
-  const { account, updateProfile } = useContext(Context)
+  const { account, updateProfile, logout } = useContext(Context)
   const { isConnected } = useAccount()
   const [errorMsg, setErrorMsg] = useState('')
   const [emailErrorMsg, setEmailErrorMsg] = useState('')
@@ -89,10 +89,10 @@ function ModalProvider({ children }) {
   }, [account])
   useEffect(() => {
     setOpen(true)
-  }, [account?.verified, account?.email, account?.name])
+  }, [account])
   useEffect(() => {
     if (!open) {
-      removeItem('token')
+      logout()
     }
   }, [open])
 
