@@ -16,7 +16,7 @@ import useLocalStorage from 'src/hooks/useLocalStorage'
 import { getRequestLog, linkWallet } from 'src/services'
 import { Connector, useAccount, useChainId, useConnect, useDisconnect, useSignMessage } from 'wagmi'
 export default function MigrateWalletModal() {
-  const { getProfile } = useContext(Context)
+  const { getProfile, connectHandler } = useContext(Context)
   const { migrateWalletOpen: open, setMigrateWalletOpen: setOpen } = useContext(ModalContext)
   const { t } = useTranslation()
   const [success, setSuccess] = useState(undefined)
@@ -26,7 +26,7 @@ export default function MigrateWalletModal() {
   const { address } = useAccount()
   const { disconnect } = useDisconnect()
   const { signMessage } = useSignMessage()
-  const { disconnect: wagmiDisconnect } = useDisconnect()
+  const { disconnect: wagmiDisconnect, disconnectAsync } = useDisconnect()
   const [installed, setInstalled] = useState<Connector[]>([])
   const [otherWallet, setOtherWallet] = useState<Connector[]>([])
   const chainId = useChainId()
@@ -227,7 +227,10 @@ export default function MigrateWalletModal() {
                           onClick={async () => {
                             try {
                               setShowQRCode(false)
-                              await wagmiConnect({ connector, chainId: getConfig().CHAIN_INFO.evmChainId })
+                              await wagmiConnect(
+                                { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
+                                { onSuccess: connectHandler }
+                              )
                             } catch (error: any) {
                               console.error(error)
                               wagmiDisconnect()
@@ -256,8 +259,9 @@ export default function MigrateWalletModal() {
                               wagmiConnect(
                                 { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
                                 {
-                                  onSuccess: () => {
+                                  onSuccess: (data) => {
                                     setLoading(false)
+                                    connectHandler(data)
                                   },
 
                                   onError: (props) => {
