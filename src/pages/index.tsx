@@ -75,7 +75,7 @@ function Home() {
     })
   }, [t('All status')])
   return (
-    <>
+    <div className='bg-gray-50'>
       <div className='md:hidden'>
         <TaskSlider sliderNavRef={sliderNavRef} />
         <SlideSection sliderNavRef={sliderNavRef} />
@@ -87,7 +87,7 @@ function Home() {
               <TaskSlider sliderNavRef={sliderNavRef} />
             </div>
             <div className='mt-10 md:mt-6 flex flex-col gap-5 px-2'>
-              <div className='md:text-xl text-sm md:leading-[25px] font-[800]'>{t('Latest update')}</div>
+              <div className='md:text-xl text-sm md:leading-7 font-medium'>{t('Latest update')}</div>
               <div className='md:flex hidden gap-[20px] items-center'>
                 <FilledSelect
                   label='genres'
@@ -213,7 +213,7 @@ function Home() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

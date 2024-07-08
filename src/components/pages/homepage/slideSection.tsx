@@ -1,12 +1,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import Slider from 'react-slick'
 import { useRouter } from 'next/router'
+import Slider from 'react-slick'
 import Banner from './assets/banner.png'
 
 import BannerEn from 'components/pages/event/assets/banner_en.png'
-import Event from './assets/event-mission.png'
-import { list } from './comicSlider'
+import BannerVn from 'components/pages/event/assets/banner.png'
 function Carousel({ children, className, sliderNavRef }) {
   var settings = {
     swipeToSlide: false,
@@ -41,7 +40,7 @@ export default function SlideSection({ sliderNavRef }) {
           ))}
         </Carousel> */}
         <Link href='/campaigns'>
-          <Image src={locale == 'vn' ? Event : BannerEn} alt='' className='rounded-[10px] w-full aspect-[40/15] object-cover' />
+          <Image src={locale == 'vn' ? BannerVn : BannerEn} alt='' className='rounded-[10px] w-full aspect-[40/15] object-cover' />
         </Link>
       </div>
       <div className='px-5 md:px-0'>
