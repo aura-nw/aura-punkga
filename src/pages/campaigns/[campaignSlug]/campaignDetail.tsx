@@ -214,8 +214,8 @@ function CampaignDetail({}) {
           className={`w-[320px] lg:w-[448px] px-10 pb-5 pt-7 flex flex-col items-center ${
             data?.reward.nft?.nft_name ? 'gap-[10px]' : 'gap-5'
           } text-sm`}>
-          <div className='leading-[18px] lg:leading-5 font-semibold text-center'>👑 Congratulation!</div>
-          <div>You have received campaign reward</div>
+          <div className='leading-[18px] lg:leading-5 font-semibold text-center'>👑 {t('Congratulation')}!</div>
+          <div>{t('You have received campaign reward')}</div>
           {data?.reward.nft?.nft_name ? (
             <div className='flex flex-col items-center'>
               <div className='mb-[10px]'>

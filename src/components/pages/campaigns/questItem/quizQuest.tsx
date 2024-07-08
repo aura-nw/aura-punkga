@@ -62,7 +62,7 @@ export default function QuizQuest({
         setSubmitLoading(false)
       } else {
         setOpen(false)
-        toast(`Your answer is incorrect, please try again after a few seconds`, {
+        toast(t(`Your answer is incorrect, please try again after a few seconds`), {
           type: 'error',
           position: toast.POSITION.BOTTOM_RIGHT,
           hideProgressBar: true,
