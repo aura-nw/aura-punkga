@@ -1,24 +1,24 @@
 import { Transition } from '@headlessui/react'
 import MainButton from 'components/Button/MainButton'
 import OutlineTextField from 'components/Input/TextField/Outline'
+import Spinner from 'components/Spinner'
 import Facebook from 'images/Facebook.png'
 import Google from 'images/Google.png'
+import Metamask from 'images/metamask.png'
 import Zalo from 'images/Zalo.png'
+import getConfig from 'next/config'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { QRCodeSVG } from 'qrcode.react'
 import { useContext, useEffect, useRef, useState } from 'react'
+import { isMobile } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
+import WCIcon from 'src/assets/images/wallet-connect.png'
 import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
 import { isMetamaskInstalled, validateEmail } from 'src/utils'
 import { Connector, useConnect, useDisconnect } from 'wagmi'
-import WCIcon from 'src/assets/images/wallet-connect.png'
-import getConfig from 'next/config'
-import { QRCodeSVG } from 'qrcode.react'
-import Spinner from 'components/Spinner'
-import { isMobile } from 'react-device-detect'
-import Metamask from 'images/metamask.png'
 export default function SignInModal() {
   const { t } = useTranslation()
   const { locale } = useRouter()
@@ -83,7 +83,8 @@ export default function SignInModal() {
 const ByWallet = ({ step }) => {
   const { t } = useTranslation()
   const { connectors, connectAsync: wagmiConnect } = useConnect()
-  const { disconnect: wagmiDisconnect } = useDisconnect()
+  const { connectHandler } = useContext(Context)
+  const { disconnect: wagmiDisconnect, disconnectAsync } = useDisconnect()
   const [mobileWallet, setMobileWallet] = useState<Connector[]>([])
   const [installed, setInstalled] = useState<Connector[]>([])
   const [otherWallet, setOtherWallet] = useState<Connector[]>([])
@@ -140,7 +141,10 @@ const ByWallet = ({ step }) => {
                     className='flex gap-2 w-full items-center hover:bg-[#f0f0f0] bg-[#f0f0f0] md:bg-white cursor-pointer p-2 md:py-3 md:px-4 rounded-lg'
                     onClick={async () => {
                       try {
-                        await wagmiConnect({ connector, chainId: getConfig().CHAIN_INFO.evmChainId })
+                        await wagmiConnect(
+                          { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
+                          { onSuccess: connectHandler }
+                        )
                         if (!isMetamaskInstalled()) {
                           window.open(`https://metamask.app.link/dapp/${location.hostname}/`)
                         }
@@ -164,7 +168,12 @@ const ByWallet = ({ step }) => {
                     onClick={async () => {
                       try {
                         setShowQRCode(false)
-                        await wagmiConnect({ connector, chainId: getConfig().CHAIN_INFO.evmChainId })
+                        await wagmiConnect(
+                          { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
+                          {
+                            onSuccess: connectHandler,
+                          }
+                        )
                       } catch (error: any) {
                         console.error(error)
                         wagmiDisconnect()
@@ -187,8 +196,9 @@ const ByWallet = ({ step }) => {
                         wagmiConnect(
                           { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
                           {
-                            onSuccess: () => {
+                            onSuccess: (data) => {
                               setLoading(false)
+                              connectHandler(data)
                             },
 
                             onError: (props) => {

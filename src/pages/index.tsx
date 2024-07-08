@@ -187,6 +187,11 @@ function Home() {
                       return <Comic2 key={index} {...data} />
                     })
                 : null}
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
             </div>
           </div>
           <div className='lg:flex-auto lg:w-[calc(33.6%-40px)] mt-6 lg:mt-0 '>

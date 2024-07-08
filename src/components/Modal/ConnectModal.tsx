@@ -15,15 +15,13 @@ import { isMetamaskInstalled, shorten } from 'src/utils'
 import { Connector, useAccount, useConnect, useDisconnect } from 'wagmi'
 
 export default function ConnectModal() {
-  const { account } = useContext(Context)
+  const { account, connectHandler } = useContext(Context)
 
   const { connectWalletOpen: open, setWalletConnectOpen: setOpen } = useContext(ModalContext)
   const { t } = useTranslation()
-  const [success, setSuccess] = useState(undefined)
-  const [mobileWallet, setMobileWallet] = useState<Connector[]>([])
   const { connectors, connectAsync: wagmiConnect } = useConnect()
   const { address, isConnected } = useAccount()
-  const { disconnect } = useDisconnect()
+  const { disconnect, disconnectAsync } = useDisconnect()
   const { disconnect: wagmiDisconnect } = useDisconnect()
   const [installed, setInstalled] = useState<Connector[]>([])
   const [otherWallet, setOtherWallet] = useState<Connector[]>([])
@@ -51,28 +49,23 @@ export default function ConnectModal() {
           otherWallet.push(connector)
         }
       }
-      setMobileWallet(mobile)
       setInstalled(installedWallet)
       setOtherWallet(otherWallet)
     }
     setConnector()
   }, [connectors])
   useEffect(() => {
-    if (
-      account?.activeWalletAddress &&
-      address &&
-      account.activeWalletAddress.toLowerCase() !== address.toLowerCase()
-    ) {
-      setIsWrongWallet(true)
-    } else {
+    if (account?.activeWalletAddress && address && account.activeWalletAddress.toLowerCase() == address.toLowerCase()) {
       setIsWrongWallet(false)
+    } else {
+      setIsWrongWallet(true)
     }
-  }, [address, account?.activeWalletAddress, open])
+  }, [address, account?.activeWalletAddress])
   useEffect(() => {
     if (isConnected && !isWrongWallet) {
       setOpen(false)
     }
-  }, [isConnected, isWrongWallet, open])
+  }, [isConnected, isWrongWallet])
   const copyAddress = async () => {
     navigator.clipboard.writeText(account?.custodialWalletAddress)
   }
@@ -86,7 +79,6 @@ export default function ConnectModal() {
                 className='cursor-pointer text-gray-600 flex justify-end'
                 onClick={() => {
                   setOpen(false)
-                  setTimeout(() => setSuccess(undefined), 300)
                   disconnect()
                 }}>
                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none'>
@@ -128,7 +120,12 @@ export default function ConnectModal() {
                       className='flex gap-2 w-full items-center hover:bg-[#f0f0f0] bg-[#f0f0f0] md:bg-white cursor-pointer p-2 md:py-3 md:px-4 rounded-lg border-[1px] border-[#DEDEDE]'
                       onClick={async () => {
                         try {
-                          await wagmiConnect({ connector, chainId: getConfig().CHAIN_INFO.evmChainId })
+                          await wagmiConnect(
+                            { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
+                            {
+                              onSuccess: connectHandler,
+                            }
+                          )
                           if (!isMetamaskInstalled()) {
                             window.open(`https://metamask.app.link/dapp/${location.hostname}/`)
                           }
@@ -155,8 +152,9 @@ export default function ConnectModal() {
                           wagmiConnect(
                             { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
                             {
-                              onSuccess: () => {
+                              onSuccess: (data) => {
                                 setLoading(false)
+                                connectHandler(data)
                               },
 
                               onError: (props) => {
@@ -203,7 +201,12 @@ export default function ConnectModal() {
                           onClick={async () => {
                             try {
                               setShowQRCode(false)
-                              await wagmiConnect({ connector, chainId: getConfig().CHAIN_INFO.evmChainId })
+                              await wagmiConnect(
+                                { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
+                                {
+                                  onSuccess: connectHandler,
+                                }
+                              )
                             } catch (error: any) {
                               console.error(error)
                               wagmiDisconnect()
@@ -232,8 +235,9 @@ export default function ConnectModal() {
                               wagmiConnect(
                                 { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
                                 {
-                                  onSuccess: () => {
+                                  onSuccess: (data) => {
                                     setLoading(false)
+                                    connectHandler(data)
                                   },
 
                                   onError: (props) => {

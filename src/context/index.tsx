@@ -8,7 +8,7 @@ import { createClient } from 'graphql-ws'
 import getConfig from 'next/config'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SiweMessage, generateNonce } from 'siwe'
 import { IUser } from 'src/models/user'
@@ -37,23 +37,7 @@ export const Context = createContext<{
   getProfile: (token?: string) => Promise<any>
   forgotPassword: (email: string) => Promise<any>
   resetPassword: (token: string, newPassword: string) => Promise<any>
-  getIPAsset: (user_id: string) => Promise<any>
-  registerIPAsset: (
-    user_id: string,
-    nft_token_id: string,
-    nft_contract_address: string,
-    ip_asset_id: string
-  ) => Promise<any>
-  getLicense: (ip_asset_id: string) => Promise<any>
-  mintLicense: (
-    licenseData: Array<{
-      ip_asset_id: string
-      license_id: string
-      license_template_address: string
-      owner: string
-      term_id: string
-    }>
-  ) => Promise<any>
+  connectHandler: (data?: any) => Promise<any>
 }>({
   account: undefined,
   wallet: undefined,
@@ -67,10 +51,7 @@ export const Context = createContext<{
   getProfile: async () => {},
   forgotPassword: async () => {},
   resetPassword: async () => {},
-  getIPAsset: async () => {},
-  registerIPAsset: async () => {},
-  getLicense: async () => {},
-  mintLicense: async () => {},
+  connectHandler: async () => {},
 })
 export const privateAxios = axios.create()
 function ContextProvider({ children }: any) {
@@ -145,8 +126,8 @@ function ContextProvider({ children }: any) {
     }
   }, [accessTokenParam])
 
-  useEffect(() => {
-    if (!!address && !!isConnected && !account?.verified) {
+  const connectHandler = async (data: any) => {
+    try {
       if (chainId != config.CHAIN_INFO.evmChainId) {
         switchChain(
           {
@@ -158,19 +139,21 @@ function ContextProvider({ children }: any) {
           }
         )
       } else {
-        signConnectMessage()
+        signConnectMessage(data)
       }
+    } catch (error) {
+      console.error(error)
     }
-  }, [!!address, !!isConnected, !account?.verified])
-
-  const signConnectMessage = () => {
+  }
+  const signConnectMessage = (data?: any) => {
     const domain = window.location.host
     const origin = window.location.origin
     const statement = 'Sign in with Aura Network to the app.'
+    const addr = data?.accounts[0] || address
     const siweMessage = new SiweMessage({
       scheme: undefined,
       domain,
-      address,
+      address: addr,
       statement,
       uri: origin,
       version: '1',
@@ -179,7 +162,7 @@ function ContextProvider({ children }: any) {
     })
     const message = siweMessage.prepareMessage()
     signMessage(
-      { message, account: address },
+      { message, account: addr },
       {
         onSuccess: (data) =>
           getAccessToken({
@@ -436,67 +419,6 @@ function ContextProvider({ children }: any) {
       return null
     }
   }
-  const getIPAsset = async (user_id: string) => {
-    try {
-      const res = await privateAxios.get(`${config.API_URL}/api/rest/public/ip-assets?user_id=${user_id}`)
-      return res
-    } catch (error) {
-      console.log('getIPAsset', error)
-      return null
-    }
-  }
-
-  const registerIPAsset = async (
-    user_id: string,
-    nft_token_id: string,
-    nft_contract_address: string,
-    ip_asset_id: string
-  ) => {
-    try {
-      const res = await privateAxios.post(`${config.API_URL}/api/rest/users/ip-assets`, {
-        object: {
-          user_id,
-          nft_token_id,
-          nft_contract_address,
-          ip_asset_id,
-        },
-      })
-      return res
-    } catch (error) {
-      console.log('RegisterIPAsset', error)
-      return null
-    }
-  }
-
-  const getLicense = async (ip_asset_id: string) => {
-    try {
-      const res = await privateAxios.get(`${config.API_URL}/api/rest/public/license-token?ip_asset_id=${ip_asset_id}`)
-      return res
-    } catch (error) {
-      console.log('getLicense', error)
-      return null
-    }
-  }
-
-  const mintLicense = async (
-    licenseData: Array<{
-      ip_asset_id: string
-      license_id: string
-      license_template_address: string
-      owner: string
-      term_id: string
-    }>
-  ): Promise<any> => {
-    try {
-      const res = await privateAxios.post(`${config.API_URL}/api/rest/user/license-token`, {
-        objects: licenseData,
-      })
-      return res
-    } catch (error) {
-      console.log('MintLicense', error)
-      return null
-    }
-  }
   return (
     <Context.Provider
       value={{
@@ -512,10 +434,7 @@ function ContextProvider({ children }: any) {
         getProfile,
         forgotPassword,
         resetPassword,
-        getIPAsset,
-        registerIPAsset,
-        getLicense,
-        mintLicense,
+        connectHandler,
       }}>
       <QueryClientProvider client={queryClient}>
         <ApolloProvider client={client}>
