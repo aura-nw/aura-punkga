@@ -47,7 +47,7 @@ const ChupButton: React.FC<ChupButtonProps> = ({
   };
 
   const getVariantClasses = (): string => {
-    const baseClasses = 'transition-colors duration-300 border-[1px]';
+    const baseClasses = 'transition-colors duration-300 border-[1px] w-fit';
     if (variant === 'filled') {
       if (color === 'green') {
         return `${baseClasses} bg-[#00E160] border-[#00E160] text-[#0B0B0B]

@@ -1,13 +1,15 @@
-import StatusLabel from 'components/Label/Status'
 import Modal from 'components/Modal'
 import Popover from 'components/Popover'
+import ChupButton from 'components/core/Button/ChupButton'
 import FilledButton from 'components/core/Button/FilledButton'
+import LabelChip from 'components/core/Chip/Label'
 import IllusImage from 'components/pages/campaigns/assets/illus.svg'
 import LeaderBoard from 'components/pages/campaigns/leaderboard'
 import NoImage from 'images/no_img.png'
 import moment from 'moment'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import pluralize from 'pluralize'
 import { useContext, useEffect, useState } from 'react'
 import ReactHtmlParser from 'react-html-parser'
 import { useTranslation } from 'react-i18next'
@@ -28,8 +30,6 @@ import {
 } from 'src/services'
 import useSWR, { useSWRConfig } from 'swr'
 import QuestList from '../../../components/pages/campaigns/questList'
-import LabelChip from 'components/core/Chip/Label'
-import pluralize from 'pluralize'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -313,9 +313,7 @@ function CampaignDetail({}) {
               lineHeight={20}
               ellipsis={<span></span>}
               onTruncate={(wasTruncated) => (wasTruncated && seeMore == undefined ? setSeeMore(false) : null)}>
-              <div className={`mt-4 text-text-teriary text-sm`}>
-                {ReactHtmlParser(data[locale].description)}
-              </div>
+              <div className={`mt-4 text-text-teriary text-sm`}>{ReactHtmlParser(data[locale].description)}</div>
             </TruncateMarkup>
             {seeMore != undefined ? (
               <div
@@ -342,11 +340,11 @@ function CampaignDetail({}) {
           </div>
           <div className='row-span-2'>
             {/* Claim section */}
-            <div className='p-5 w-full flex flex-col gap-5 bg-[#F0F0F0] rounded-[10px] mt-10 lg:mt-0'>
-              <p className='text-center w-full text-lg lg:text-2xl lg:leading-[30px] leading-[23px] font-bold'>
+            <div className='px-8 pt-4 pb-8 w-full flex flex-col gap-5 bg-neutral-white rounded-mlg mt-10 lg:mt-0'>
+              <p className='text-center w-full text-base font-medium'>
                 {t('Bonus to')} 👑 {t('1st place')}
               </p>
-              <div className='flex gap-[30px] justify-center items-start'>
+              <div className='flex gap-8 justify-center items-start'>
                 {data?.reward?.nft?.nft_name && (
                   <div className='flex flex-col gap-[10px] justify-center'>
                     <Image
@@ -355,38 +353,42 @@ function CampaignDetail({}) {
                       width={200}
                       height={200}
                       alt=''
-                      className=' w-[160px] h-[160px] lg:w-[220px] lg:h-[220px] rounded-lg object-contain bg-white'
+                      className=' w-[130px] h-[130px] rounded-lg object-cover bg-background-bg-primary'
                     />
-                    <p className='text-center text-sm text-[#61646B] max-w-[160px] lg:max-w-[220px] line-clamp-2'>
-                      {data.reward?.nft.nft_name}
-                    </p>
+                    <p className='text-center text-xs max-w-[130px] line-clamp-2'>{data.reward?.nft.nft_name}</p>
                   </div>
                 )}
                 {!!data.reward.xp && (
-                  <div className='bg-white rounded-lg w-[160px] h-[160px] lg:w-[220px] lg:h-[220px] flex justify-center items-center flex-col gap-[10px]'>
-                    <Image src={IllusImage} alt='' className='h-[100px] w-[100px] lg:w-[140px] lg:h-[140px]' />
-                    <p className='text-xl leading-[25px] lg:text-[32px] lg:leading-[40px] text-second-color font-bold'>{`+ ${data.reward.xp} XP`}</p>
+                  <div className='w-[130px] h-[130px] rounded-lg object-cover bg-background-bg-primary flex justify-center items-center flex-col gap-[10px]'>
+                    <Image src={IllusImage} alt='' className='h-[80px] w-[80px]' />
+                    <p className='text-base text-text-teriary font-semibold'>{`+ ${data.reward.xp} XP`}</p>
                   </div>
                 )}
               </div>
               {isEnrolled ? (
                 account?.id == leaderboardData?.[0]?.user_id && isEnded ? (
                   authData?.user_campaign_rewards?.length == 0 ? (
-                    <FilledButton
-                      loading={claimLoading}
-                      className='w-full lg:p-3 lg:rounded-[20px] lg:text-base lg:leading-6'
+                    <ChupButton
+                      // loading={claimLoading}
+                      className='w-full'
                       onClick={claimHandler}>
                       {t('Claim Reward')}
-                    </FilledButton>
+                    </ChupButton>
                   ) : (
-                    <button className='w-full bg-[#ABABAB] text-[#DEDEDE] font-bold leading-5 text-center pt-2 pb-[10px] rounded-full lg:p-3 lg:rounded-[20px] lg:text-base lg:leading-6'>
+                    <ChupButton
+                      // loading={claimLoading}
+                      className='w-full'
+                      disabled>
                       {t('Claimed')}
-                    </button>
+                    </ChupButton>
                   )
                 ) : (
-                  <button className='w-full bg-[#ABABAB] text-[#DEDEDE] font-bold leading-5 text-center pt-2 pb-[10px] rounded-full lg:p-3 lg:rounded-[20px] lg:text-base lg:leading-6'>
-                    {t('Claim Reward')}
-                  </button>
+                  <ChupButton
+                    // loading={claimLoading}
+                    className='w-full'
+                    disabled>
+                    {t('Claimed')}
+                  </ChupButton>
                 )
               ) : null}
             </div>
