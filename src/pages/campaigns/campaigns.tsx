@@ -8,7 +8,7 @@ export default function Page(props) {
 function Campaigns() {
   return (
     <>
-      <div className='page-content'>
+      <div className='page-content bg-gray-50'>
         <Campaign />
       </div>
     </>

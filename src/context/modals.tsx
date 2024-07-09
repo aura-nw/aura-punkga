@@ -49,7 +49,7 @@ function ModalProvider({ children }) {
   const [signInOpen, setSignInOpen] = useState(false)
   const [connectWalletOpen, setWalletConnectOpen] = useState(false)
   const [migrateWalletOpen, setMigrateWalletOpen] = useState(false)
-  const { account, updateProfile } = useContext(Context)
+  const { account, updateProfile, logout } = useContext(Context)
   const { isConnected } = useAccount()
   const [errorMsg, setErrorMsg] = useState('')
   const [emailErrorMsg, setEmailErrorMsg] = useState('')
@@ -87,6 +87,14 @@ function ModalProvider({ children }) {
       setSignUpOpen(false)
     }
   }, [account])
+  useEffect(() => {
+    setOpen(true)
+  }, [account])
+  useEffect(() => {
+    if (!open) {
+      logout()
+    }
+  }, [open])
 
   const setUName = async () => {
     try {
@@ -218,14 +226,7 @@ function ModalProvider({ children }) {
             </Modal>
           )
         ) : (
-          <Modal
-            open={open}
-            setOpen={(value) => {
-              if (!value) {
-                removeItem('token')
-              }
-              setOpen(value)
-            }}>
+          <Modal open={open} setOpen={setOpen}>
             <div className='p-6 flex flex-col w-[322px]'>
               <div className='text-xl font-bold leading-6 text-center'>{t('Verify your email')}</div>
               <p className='text-xs leading-4 mt-1 text-center'>

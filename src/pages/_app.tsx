@@ -8,7 +8,7 @@ import 'moment/locale/vi'
 import { appWithTranslation } from 'next-i18next'
 import { AppProps } from 'next/app'
 import getConfig, { setConfig } from 'next/config'
-import { Plus_Jakarta_Sans, Work_Sans } from 'next/font/google'
+import { Inter, Plus_Jakarta_Sans, Work_Sans } from 'next/font/google'
 import localFont from 'next/font/local'
 import { useRouter } from 'next/router'
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
@@ -22,6 +22,7 @@ import 'src/styles/globals.scss'
 import { WagmiProvider } from 'wagmi'
 const pjs = Plus_Jakarta_Sans({ subsets: ['latin', 'vietnamese'] })
 const ws = Work_Sans({ subsets: ['latin', 'vietnamese'] })
+const inter = Inter({ subsets: ['latin', 'vietnamese'] })
 const orbitron = localFont({
   src: [
     {
@@ -104,7 +105,7 @@ function MyApp(props: AppProps) {
       <>
         <style jsx global>{`
           html {
-            font-family: ${pjs.style.fontFamily};
+            font-family: ${inter.style.fontFamily};
           }
           .font-ws {
             font-family: ${ws.style.fontFamily};
@@ -120,7 +121,7 @@ function MyApp(props: AppProps) {
       <HeadComponent />
       <style jsx global>{`
         html {
-          font-family: ${pjs.style.fontFamily};
+          font-family: ${inter.style.fontFamily};
         }
         .font-ws {
           font-family: ${ws.style.fontFamily};

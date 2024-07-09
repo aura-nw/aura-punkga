@@ -75,7 +75,7 @@ function Home() {
     })
   }, [t('All status')])
   return (
-    <>
+    <div className='bg-gray-50'>
       <div className='md:hidden'>
         <TaskSlider sliderNavRef={sliderNavRef} />
         <SlideSection sliderNavRef={sliderNavRef} />
@@ -86,9 +86,9 @@ function Home() {
             <div className='hidden md:block'>
               <TaskSlider sliderNavRef={sliderNavRef} />
             </div>
-            <div className='mt-10 md:mt-6 flex justify-between gap-5 px-2'>
-              <div className='md:text-xl text-[#333333] text-sm md:leading-[25px] font-[500]'>{t('Latest update')}</div>
-              <div className='md:flex hidden items-center'>
+            <div className='mt-10 md:mt-6 flex flex-col gap-5 px-2'>
+              <div className='md:text-xl text-sm md:leading-7 font-medium'>{t('Latest update')}</div>
+              <div className='md:flex hidden gap-[20px] items-center'>
                 <FilledSelect
                   label='genres'
                   // icon={<ChevronDownIcon className='h-5 w-5 text-subtle-dark' aria-hidden='true' />}
@@ -188,6 +188,11 @@ function Home() {
                       return <Comic2 key={index} {...data} />
                     })
                 : null}
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
             </div>
           </div>
           <div className='lg:flex-auto lg:w-[calc(33.6%-40px)] mt-6 lg:mt-0 '>
@@ -214,7 +219,7 @@ function Home() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

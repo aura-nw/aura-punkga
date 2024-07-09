@@ -4,13 +4,15 @@ import Link from 'next/link'
 import { QRCodeSVG } from 'qrcode.react'
 import { useContext, useEffect, useState } from 'react'
 import WCIcon from 'src/assets/images/wallet-connect.png'
+import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
 import { sepolia } from 'viem/chains'
 import { Connector, useConnect, useDisconnect } from 'wagmi'
 export default function ConnectWalletModal() {
   const { connectWalletOpen: show } = useContext(ModalContext)
+  const { connectHandler } = useContext(Context)
   const { connectors, connectAsync: wagmiConnect } = useConnect()
-  const { disconnect: wagmiDisconnect } = useDisconnect()
+  const { disconnect: wagmiDisconnect, disconnectAsync } = useDisconnect()
   const [installed, setInstalled] = useState<Connector[]>([])
   const [otherWallet, setOtherWallet] = useState<Connector[]>([])
 
@@ -66,7 +68,7 @@ export default function ConnectWalletModal() {
                     onClick={async () => {
                       try {
                         setShowQRCode(false)
-                        await wagmiConnect({ connector, chainId: sepolia.id })
+                        await wagmiConnect({ connector, chainId: sepolia.id }, { onSuccess: connectHandler })
                       } catch (error: any) {
                         wagmiDisconnect()
                       }
@@ -92,8 +94,9 @@ export default function ConnectWalletModal() {
                           wagmiConnect(
                             { connector, chainId: sepolia.id },
                             {
-                              onSuccess: () => {
+                              onSuccess: (data) => {
                                 setLoading(false)
+                                connectHandler(data)
                               },
 
                               onError: (props) => {

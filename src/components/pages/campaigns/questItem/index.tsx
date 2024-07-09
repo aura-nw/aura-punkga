@@ -99,7 +99,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
           <div>
             <div className='text-xs lg:text-sm leading-[15px] lg:leading-[18px] font-semibold'>
               {quest.repeat == 'Daily' && (
-                <span className='bg-[#E2D8FF] text-[#A247FF] font-bold rounded-[3px] lg:rounded-md px-2 pb-[1px] lg:pb-1 lg:pt-[2px] text-[10px] lg:text-sm leading-[13px] lg:leading-[18px] mr-[5px]'>
+                <span className='bg-[#E2D8FF] text-[#A247FF] whitespace-nowrap font-bold rounded-[3px] lg:rounded-md px-2 pb-[1px] lg:pb-1 lg:pt-[2px] text-[10px] lg:text-sm leading-[13px] lg:leading-[18px] mr-[5px]'>
                   {t('Daily')}
                 </span>
               )}
@@ -108,11 +108,11 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
             <div className='mt-[15px] lg:mt-5 lg:text-xl lg:leading-[25px] leading-5 font-bold'>
               {quest.type == 'Subscribe'
                 ? locale == 'vn'
-                  ? `Theo dõi ${quest.requirement.subscribe.manga.title} để nhận phần thưởng`
+                  ? `Đăng ký theo dõi truyện ${quest.requirement.subscribe.manga.title} để nhận phần thưởng`
                   : `Subscribe to manga ${quest.requirement.subscribe.manga.title} to claim your reward`
                 : quest.type == 'Like'
                 ? locale == 'vn'
-                  ? `Thích ${quest.requirement.like.manga.title} để nhận phần thưởng`
+                  ? `Thích truyện ${quest.requirement.like.manga.title} để nhận phần thưởng`
                   : `Like manga ${quest.requirement.like.manga.title} to claim your reward`
                 : quest.type == 'Read'
                 ? locale == 'vn'
@@ -120,10 +120,10 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                   : `Read chapter ${quest.requirement.read.chapter.number} of manga ${quest.requirement.read.manga.title} to claim your reward`
                 : quest.type == 'Comment'
                 ? locale == 'vn'
-                  ? `Bình luận về chương ${quest.requirement.comment.chapter.number} của truện ${quest.requirement.comment.manga.title} để nhận phần thưởng`
+                  ? `Bình luận về chương ${quest.requirement.comment.chapter.number} của truyện ${quest.requirement.comment.manga.title} để nhận phần thưởng`
                   : `Comment on chapter ${quest.requirement.comment.chapter.number} of manga ${quest.requirement.comment.manga.title} to claim your reward`
                 : quest.type == 'Empty'
-                ? t(`Free quest`)
+                ? t(`Free reward`)
                 : quest.type == 'Quiz'
                 ? t(`Answer a quiz`)
                 : ``}
@@ -217,7 +217,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
             quest?.reward.nft?.nft_name ? 'gap-[10px]' : 'gap-5'
           } text-sm`}>
           <div className='leading-[18px] lg:leading-5 font-semibold text-center'>👑 {t('Congratulation')}!</div>
-          <div>You have received quest reward</div>
+          <div>{t('You have received quest reward')}</div>
           {quest?.reward.nft?.nft_name ? (
             <div className='flex flex-col items-center'>
               <div className='mb-[10px]'>
@@ -274,7 +274,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
           <div className='flex flex-col justify-between h-[68px] lg:h-[76px]'>
             <div className='text-xs leading-[15px] lg:text-base lg:leading-5 font-bold line-clamp-2'>
               {quest.repeat == 'Daily' && (
-                <span className='bg-[#E2D8FF] text-[#A247FF] font-bold rounded-[3px] lg:rounded-md px-2 pb-[1px] lg:pt-[2px] lg:pb-1 lg:font-semibold text-[10px] lg:text-sm leading-[13px] lg:leading-[18px] mr-[5px]'>
+                <span className='bg-[#E2D8FF] text-[#A247FF] whitespace-nowrap font-bold rounded-[3px] lg:rounded-md px-2 pb-[1px] lg:pt-[2px] lg:pb-1 lg:font-semibold text-[10px] lg:text-sm leading-[13px] lg:leading-[18px] mr-[5px]'>
                   {t('Daily')}
                 </span>
               )}
