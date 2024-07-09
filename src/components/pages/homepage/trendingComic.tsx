@@ -35,9 +35,9 @@ export default function TrendingComic(props: IComic) {
         <Image
           src={props.image || NoImage}
           alt=''
-          width={140}
-          height={180}
-          className={`rounded-[5px] w-[115px] ${
+          width={70}
+          height={90}
+          className={`rounded-[5px] w-[70px] h-[90px] ${
             props.image ? 'object-cover' : 'object-contain bg-light-gray'
           }`}
         />
@@ -47,19 +47,19 @@ export default function TrendingComic(props: IComic) {
           <div>
             <Link
               href={`/comic/${props.slug}`}
-              className='font-semibold text-xs leading-[18px] text-second-color md:text-sm md:leading-5 xl:hidden'>
+              className='font-bold text-xs leading-[18px] text-[#4F4F4F] md:text-sm md:leading-5 xl:hidden'>
               {props[locale].title}
             </Link>
             <Link
               href={`/comic/${props.slug}/chapter/1`}
-              className='font-semibold text-second-color text-sm leading-5 hidden xl:block'>
+              className='font-semibold text-[#4F4F4F] text-sm leading-5 hidden xl:block'>
               {props[locale].title}
             </Link>
-            <div className='text-xs leading-4 md:text-xs text-white mt-[10px]'>
+            <div className='text-xs leading-4 text-[#828282] mt-[10px]'>
               <span>{t('by')} </span>
               {props.authors.map((author, index) => (
                 <Fragment key={index}>
-                  <span className='text-second-color text-xs'>
+                  <span className=''>
                     {author.slug ? (
                       <Link className='author' href={`/artist/${author.slug}`}>
                         {t(author.name)}

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IComic } from 'src/models/comic'
-import { ArrowRightIcon, BellAlertIcon, BellIcon, EyeIcon, HeartIcon } from '@heroicons/react/20/solid';
+import { EyeIcon, HeartIcon } from '@heroicons/react/24/outline';
 import StatusLabel from 'components/Label/Status'
 import UpComing from './assets/upcoming-status.png'
 import Finished from './assets/finished-status.png'
@@ -40,32 +40,40 @@ export default function Comic2(props: IComic) {
                         />
                     </div>
                     {props.status.text && props.status.text != 'Ongoing' && (
-                        <div className='group-hover:hidden absolute top-2 right-2'>
+                        <div className='group-hover:hidden absolute top-[10px] right-[10px]'>
                             {props.status.text == 'Upcoming' ? (<Image
                                 src={UpComing}
                                 alt=''
-                                width={91}
-                                height={24}
+                                width={80}
+                                height={16}
                             />) : (
                                 <Image
                                     src={Finished}
                                     alt=''
-                                    width={77}
-                                    height={24}
+                                    width={58}
+                                    height={16}
                                 />
                             )}
 
                         </div>
                     )}
-                    <div className="absolute overflow-hidden bottom-0 w-full h-[50px] p-2 transition-all duration-300 ease-in-out group-hover:h-full bg-gradient-to-b from-transparent to-[rgba(0,0,0,0.75)] to-[60%] group-hover:bg-[rgba(0,0,0,0.75)] group-hover:bg-none flex flex-col justify-between">
+                    <div className="absolute overflow-hidden bottom-0 w-full h-[102px] p-[10px] transition-all duration-300 ease-in-out group-hover:h-full bg-gradient-to-b from-transparent from-6.71% to-black to-76.24% group-hover:bg-[rgba(0,0,0,0.75)] group-hover:bg-none flex flex-col justify-between">
                         <div>
-                            <p className='text-primary-color whitespace-nowrap text-ellipsis overflow-hidden text-base font-bold leading-5'>{props[locale].title}</p>
-                            <div className='flex text-white gap-1 whitespace-nowrap text-ellipsis overflow-hidden text-sm font-semibold leading-[17px]'>
+                            <p className='text-[#F6F6F6] text-sm font-medium leading-5'
+                                style={{
+                                    textOverflow: 'ellipsis',
+                                    overflow: 'hidden',
+                                    display: '-webkit-box',
+                                    WebkitLineClamp: 2,
+                                    WebkitBoxOrient: 'vertical',
+                                    whiteSpace: 'normal'
+                                }}>{props[locale].title}</p>
+                            <div className='flex text-[#F6F6F6] gap-1 whitespace-nowrap text-ellipsis overflow-hidden text-xs font-medium leading-[18px]'>
                                 {t('by')}{' '}
                                 {props.authors.map((author, index) => (
                                     <Fragment key={index}>
-                                        <span className='text-primary-color font-[600] first:hidden'>, </span>
-                                        <span className='text-primary-color font-[600]'>
+                                        <span className='text-[#00E160] first:hidden'>, </span>
+                                        <span className='text-[#00E160]'>
                                             {author.slug ? (
                                                 <div className='author'>{t(author.name)}</div>
                                             ) : (
@@ -75,17 +83,24 @@ export default function Comic2(props: IComic) {
                                     </Fragment>
                                 ))}
                             </div>
-                            <div className="flex gap-1 items-center text-sm mt-1 font-semibold text-white">
-                                <div className="flex items-end gap-1">
-                                    <span>{props.views}</span>
+                            <div className="flex gap-4 items-center text-xs mt-1 font-medium text-[#F6F6F6]">
+                                <div className="flex items-center gap-1 leading-[18px]">
                                     <EyeIcon className="w-5 h-5" />
+                                    <span>{props.views}</span>
                                 </div>
-                                <div className="flex items-end gap-1">
-                                    <span>{props.likes}</span>
+                                <div className="flex items-center gap-1 leading-[18px]">
                                     <HeartIcon className="w-5 h-5" />
+                                    <span>{props.likes}</span>
                                 </div>
                             </div>
-                            <div className='text-xs leading-4 mt-3 text-white' style={{
+                            <div>
+                                {!!props.latestChap.number && (
+                                    <div className='flex self-end justify-self-end leading-[18px] text-[#F6F6F6] text-xs mt-[10px]'>
+                                        {t('Latest')}: <Link href={`/comic/${props.slug}/chapter/${props.latestChap.number}`} className='text-[#00E160] font-medium'>{t('Chap')} #{props.latestChap.number}</Link>
+                                    </div>
+                                )}
+                            </div>
+                            <div className='text-xs leading-4 mt-1 text-white' style={{
                                 textOverflow: 'ellipsis',
                                 overflow: 'hidden',
                                 display: '-webkit-box',
@@ -94,13 +109,6 @@ export default function Comic2(props: IComic) {
                                 whiteSpace: 'normal'
                             }}>{props[locale].description}
                             </div>
-                        </div>
-                        <div>
-                            {!!props.latestChap.number && (
-                                <div className='flex self-end justify-self-end leading-[20px] text-white text-sm'>
-                                    {t('Latest')}: <Link href={`/comic/${props.slug}/chapter/${props.latestChap.number}`} className='text-primary-color font-[600]'>{t('Chap')} #{props.latestChap.number}</Link>
-                                </div>
-                            )}
                         </div>
                     </div>
                 </Link>
@@ -118,33 +126,41 @@ export default function Comic2(props: IComic) {
                         />
                     </div>
                     {props.status.text && props.status.text != 'Ongoing' && (
-                        <div className='group-hover:hidden absolute top-2 right-2'>
+                        <div className='group-hover:hidden absolute top-[10px] right-[10px]'>
                             {props.status.text == 'Upcoming' ? (<Image
                                 src={UpComing}
                                 alt=''
-                                width={91}
-                                height={24}
+                                width={80}
+                                height={16}
                             />) : (
                                 <Image
                                     src={Finished}
                                     alt=''
-                                    width={77}
-                                    height={24}
+                                    width={58}
+                                    height={16}
                                 />
                             )}
-
                         </div>
                     )}
-                    <div className='group-hover:hidden absolute bottom-0 p-2 w-full' style={{
-                        background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.75) 66.66%)'
+                    <div className='group-hover:hidden absolute bottom-0 p-[10px] w-full' style={{
+                        background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 6.71%, #000000 76.24%)'
                     }}>
-                        <p className='text-primary-color whitespace-nowrap text-ellipsis overflow-hidden text-base font-bold leading-5'>{props[locale].title}</p>
-                        <div className='flex text-white gap-1 whitespace-nowrap text-ellipsis overflow-hidden text-sm font-semibold leading-[17px]'>
+                        <p className='text-[#F6F6F6] text-sm font-medium leading-5'
+                            style={{
+                                textOverflow: 'ellipsis',
+                                overflow: 'hidden',
+                                display: '-webkit-box',
+                                WebkitLineClamp: 2,
+                                WebkitBoxOrient: 'vertical',
+                                whiteSpace: 'normal'
+                            }}>
+                            {props[locale].title}</p>
+                        <div className='flex text-[#F6F6F6] gap-1 whitespace-nowrap text-ellipsis overflow-hidden text-xs font-medium leading-[18px]'>
                             {t('by')}{' '}
                             {props.authors.map((author, index) => (
                                 <Fragment key={index}>
-                                    <span className='text-primary-color font-[600] first:hidden'>, </span>
-                                    <span className='text-primary-color font-[600]'>
+                                    <span className='text-[#00E160] first:hidden'>, </span>
+                                    <span className='text-[#00E160]'>
                                         {author.slug ? (
                                             <div className='author'>{t(author.name)}</div>
                                         ) : (
@@ -155,15 +171,23 @@ export default function Comic2(props: IComic) {
                             ))}
                         </div>
                     </div>
-                    <div className="absolute overflow-hidden bottom-0 w-full p-2 transition-all duration-300 ease-in-out  h-full to-[rgba(0,0,0,0.75)] to-[60%] group-hover:bg-[rgba(0,0,0,0.75)] group-hover:bg-none group-hover:opacity-100 opacity-0 flex flex-col justify-between">
+                    <div className="absolute overflow-hidden bottom-0 w-full p-[10px] transition-all duration-300 ease-in-out h-full bg-gradient-to-b from-transparent from-6.71% to-black to-76.24% group-hover:bg-[rgba(0,0,0,0.75)] group-hover:bg-none group-hover:opacity-100 opacity-0 flex flex-col justify-between">
                         <div>
-                            <p className='text-primary-color whitespace-nowrap text-ellipsis overflow-hidden text-base font-bold leading-5'>{props[locale].title}</p>
-                            <div className='flex text-white gap-1 whitespace-nowrap text-ellipsis overflow-hidden text-sm font-semibold leading-[17px]'>
+                            <p className='text-[#F6F6F6] text-sm font-medium leading-5'
+                                style={{
+                                    textOverflow: 'ellipsis',
+                                    overflow: 'hidden',
+                                    display: '-webkit-box',
+                                    WebkitLineClamp: 2,
+                                    WebkitBoxOrient: 'vertical',
+                                    whiteSpace: 'normal'
+                                }}>{props[locale].title}</p>
+                            <div className='flex text-[#F6F6F6] gap-1 whitespace-nowrap text-ellipsis overflow-hidden text-xs font-medium leading-[18px]'>
                                 {t('by')}{' '}
                                 {props.authors.map((author, index) => (
                                     <Fragment key={index}>
-                                        <span className='text-primary-color font-[600] first:hidden'>, </span>
-                                        <span className='text-primary-color font-[600]'>
+                                        <span className='text-[#00E160] first:hidden'>, </span>
+                                        <span className='text-[#00E160]'>
                                             {author.slug ? (
                                                 <div className='author'>{t(author.name)}</div>
                                             ) : (
@@ -173,33 +197,34 @@ export default function Comic2(props: IComic) {
                                     </Fragment>
                                 ))}
                             </div>
-                            <div className="flex gap-1 items-center text-sm mt-1 font-semibold text-white">
-                                <div className="flex items-end gap-1">
-                                    <span>{props.views}</span>
+                            <div className="flex gap-4 items-center text-xs mt-1 font-medium text-[#F6F6F6]">
+                                <div className="flex items-center gap-1 leading-[18px]">
                                     <EyeIcon className="w-5 h-5" />
+                                    <span>{props.views}</span>
                                 </div>
-                                <div className="flex items-end gap-1">
-                                    <span>{props.likes}</span>
+                                <div className="flex items-center gap-1 leading-[18px]">
                                     <HeartIcon className="w-5 h-5" />
+                                    <span>{props.likes}</span>
                                 </div>
                             </div>
-                            <div className='text-xs leading-4 mt-3 text-white' style={{
+                            <div>
+                                {!!props.latestChap.number && (
+                                    <div className='flex self-end justify-self-end leading-[18px] text-[#F6F6F6] text-xs mt-[10px]'>
+                                        {t('Latest')}: <Link href={`/comic/${props.slug}/chapter/${props.latestChap.number}`} className='text-[#00E160] font-medium'>{t('Chap')} #{props.latestChap.number}</Link>
+                                    </div>
+                                )}
+                            </div>
+                            <div className='text-xs leading-[18px] mt-1 text-white' style={{
                                 textOverflow: 'ellipsis',
                                 overflow: 'hidden',
                                 display: '-webkit-box',
-                                WebkitLineClamp: 8,
+                                WebkitLineClamp: 5,
                                 WebkitBoxOrient: 'vertical',
                                 whiteSpace: 'normal'
                             }}>{props[locale].description}
                             </div>
                         </div>
-                        <div>
-                            {!!props.latestChap.number && (
-                                <div className='flex self-end justify-self-end leading-[20px] text-white text-sm'>
-                                    {t('Latest')}: <Link href={`/comic/${props.slug}/chapter/${props.latestChap.number}`} className='text-primary-color font-[600]'>{t('Chap')} #{props.latestChap.number}</Link>
-                                </div>
-                            )}
-                        </div>
+
                     </div>
                 </Link>
             </div>
