@@ -14,7 +14,6 @@ import Language from 'assets/images/icons/language.svg'
 import MyProfile from 'assets/images/icons/myProfile.svg'
 import LogOut from 'assets/images/icons/logout.svg'
 import Button from 'components/Button'
-import MainButton from 'components/Button/MainButton'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import TextField from 'components/Input/TextField'
 import Spinner from 'components/Spinner'
@@ -38,6 +37,7 @@ import { useBalance, Connector, useConnect, useDisconnect, useAccount } from 'wa
 import { isMobile } from 'react-device-detect'
 import EyeOpen from 'images/icons/eye-open.svg'
 import EyeClose from 'images/icons/eye-closed.svg'
+import ChupButton from 'components/core/Button/ChupButton'
 export default function Header({ className }: { className?: string }) {
   const { t } = useTranslation()
   const router = useRouter()
@@ -134,11 +134,11 @@ export default function Header({ className }: { className?: string }) {
                   (address != account?.activeWalletAddress || !isConnected) &&
                   account?.noncustodialWalletAddress && (
                     <div className='flex gap-3 items-center '>
-                      <MainButton onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</MainButton>
+                      <ChupButton onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</ChupButton>
                     </div>
                   )
                 ) : (
-                  <MainButton onClick={() => setSignInOpen(true)}>{t('Sign in')}</MainButton>
+                  <ChupButton onClick={() => setSignInOpen(true)}>{t('Sign in')}</ChupButton>
                 )}
                 <div className='w-6 h-6 relative'>
                   <svg
@@ -353,9 +353,9 @@ export default function Header({ className }: { className?: string }) {
                     </div>
                     {!account?.noncustodialWalletAddress ? (
                       <>
-                        <MainButton className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
+                        <ChupButton className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
                           {t('Migrate your wallet')}
-                        </MainButton>
+                        </ChupButton>
                       </>
                     ) : null}
                     {account?.noncustodialWalletAddress && account?.name && !isConnected && (
@@ -711,9 +711,9 @@ export default function Header({ className }: { className?: string }) {
                         </div>
                         {!account?.noncustodialWalletAddress ? (
                           <>
-                            <MainButton className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
+                            <ChupButton className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
                               {t('Migrate your wallet')}
-                            </MainButton>
+                            </ChupButton>
                           </>
                         ) : null}
                         {account?.noncustodialWalletAddress && account?.name && !isConnected && (
@@ -736,7 +736,7 @@ export default function Header({ className }: { className?: string }) {
                   </DropdownMenu>
                 </Dropdown>
               ) : (
-                <MainButton onClick={() => setSignInOpen(true)}>{t('Sign in')}</MainButton>
+                <ChupButton onClick={() => setSignInOpen(true)}>{t('Sign in')}</ChupButton>
               )}
               {(address != account?.activeWalletAddress || !isConnected) &&
                 account?.verified &&
@@ -744,7 +744,7 @@ export default function Header({ className }: { className?: string }) {
                 account?.noncustodialWalletAddress && (
                   <div className='flex gap-3 items-center '>
                     <div className='h-4 w-[1px] bg-[#E0E0E0]'></div>
-                    <MainButton onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</MainButton>
+                    <ChupButton onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</ChupButton>
                   </div>
                 )}
             </div>
