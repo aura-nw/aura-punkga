@@ -28,6 +28,8 @@ import {
 } from 'src/services'
 import useSWR, { useSWRConfig } from 'swr'
 import QuestList from '../../../components/pages/campaigns/questList'
+import LabelChip from 'components/core/Chip/Label'
+import pluralize from 'pluralize'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -197,7 +199,7 @@ function CampaignDetail({}) {
   const isOngoing = moment(data.start_date).isBefore() && moment(data.end_date).isAfter()
   const isEnrolled = !!authData?.campaign_quests
   return (
-    <>
+    <div className='bg-gray-50'>
       <Modal open={openNFTPreview} setOpen={() => setOpenNFTPreview(false)}>
         <div className=' p-10 flex flex-col items-center'>
           <Image
@@ -252,20 +254,32 @@ function CampaignDetail({}) {
         </div>
       </Modal>
       <div className='pk-container'>
-        <div className='py-5 lg:py-16 lg:grid-cols-[1fr_min(50%,520px)] lg:grid lg:gap-x-10 lg:grid-rows-[auto_1fr]'>
+        <div className='py-5 lg:py-16 lg:grid-cols-[1fr_min(50%,400px)] lg:grid lg:gap-x-8 lg:grid-rows-[auto_1fr]'>
           <div>
             {/* Campaign info  */}
-            <StatusLabel status={isUpcoming ? 'warning' : !isEnded ? 'success' : 'default'} className='lg:hidden'>
-              {t(isUpcoming ? 'Upcoming' : !isEnded ? 'Ongoing' : 'Ended')}
-            </StatusLabel>
             <div className='flex justify-between'>
-              <div className='font-bold mt-[5px] leading-5 lg:text-xl lg:leading-[25px] lg:mt-0'>
-                {data[locale].name}{' '}
-                <span className='hidden lg:inline-block ml-[15px]'>
-                  <StatusLabel status={isUpcoming ? 'warning' : !isEnded ? 'success' : 'default'}>
-                    {t(isUpcoming ? 'Upcoming' : !isEnded ? 'Ongoing' : 'Ended')}
-                  </StatusLabel>
-                </span>
+              <div className='flex flex-col gap-1.5'>
+                <LabelChip color={isUpcoming ? 'process' : !isEnded ? 'success' : 'default'} className='w-fit'>
+                  {t(isUpcoming ? 'Upcoming' : !isEnded ? 'Ongoing' : 'Ended')}
+                </LabelChip>
+                <div className='text-xl font-medium'>{data[locale].name} </div>
+                <div className='flex gap-2.5 font-medium text-sm items-center'>
+                  <div>
+                    {t('Starts')}: {moment(data.start_date).format('HH:mm DD/MM/yyyy')}
+                  </div>
+                  <svg width='4' height='4' viewBox='0 0 4 4' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                    <rect width='4' height='4' rx='2' fill='#646464' />
+                  </svg>
+                  <div>
+                    {t('Ends')}: {moment(data.end_date).format('HH:mm DD/MM/yyyy')}
+                  </div>
+                  <svg width='4' height='4' viewBox='0 0 4 4' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                    <rect width='4' height='4' rx='2' fill='#646464' />
+                  </svg>
+                  <div className='lg:block hidden'>{`${data?.participants?.aggregate?.count} ${t(
+                    pluralize('participant', data?.participants?.aggregate?.count)
+                  )}`}</div>
+                </div>
               </div>
               <div className='hidden lg:block'>
                 {/* Enroll button */}
@@ -289,36 +303,23 @@ function CampaignDetail({}) {
                 ) : null}
               </div>
             </div>
-            <div className='my-5 flex justify-between items-start text-sm leading-[18px] lg:text-base lg:leading-5'>
-              <div className='flex flex-col gap-[5px] lg:flex-row lg:gap-5 lg:flex-wrap'>
-                <div>
-                  {t('Starts')}: {moment(data.start_date).format('HH:mm DD/MM/yyyy')}
-                </div>
-                <span className='h-5 w-[1px] hidden lg:inline-block bg-[#F0F0F0]'></span>
-                <div>
-                  {t('Ends')}: {moment(data.end_date).format('HH:mm DD/MM/yyyy')}
-                </div>
-                <span className='h-5 w-[1px] hidden lg:inline-block bg-[#F0F0F0]'></span>
-                <div className='lg:block hidden'>{`${data?.participants?.aggregate?.count} ${
-                  data?.participants?.aggregate?.count < 2 ? t('participant') : t('participants')
-                }`}</div>
-              </div>
-              <div className='lg:hidden'>{`${data?.participants?.aggregate?.count} ${
-                data?.participants?.aggregate?.count < 2 ? t('participant') : t('participants')
-              }`}</div>
+            <div className='my-5 flex justify-between items-start text-sm leading-[18px] lg:text-base lg:leading-5 lg:hidden'>
+              {`${data?.participants?.aggregate?.count} ${t(
+                pluralize('participant', data?.participants?.aggregate?.count)
+              )}`}
             </div>
             <TruncateMarkup
-              lines={!seeMore ? 3 : 9999}
+              lines={!seeMore ? 4 : 9999}
               lineHeight={20}
               ellipsis={<span></span>}
               onTruncate={(wasTruncated) => (wasTruncated && seeMore == undefined ? setSeeMore(false) : null)}>
-              <div className={` text-[#61646B] text-sm leading-[18px] lg:text-base lg:leading-5`}>
+              <div className={`mt-4 text-text-teriary text-sm`}>
                 {ReactHtmlParser(data[locale].description)}
               </div>
             </TruncateMarkup>
             {seeMore != undefined ? (
               <div
-                className='font-semibold text-sm lg:text-base lg:leading-5 text-second-color mt-1 cursor-pointer'
+                className='font-semibold text-sm text-text-info-primary mt-1.5 cursor-pointer'
                 onClick={() => setSeeMore(!seeMore)}>
                 {t(seeMore ? 'See less' : 'See more')}
               </div>
@@ -425,6 +426,6 @@ function CampaignDetail({}) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }

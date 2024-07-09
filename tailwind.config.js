@@ -10,6 +10,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        xxs: '10px',
+      },
+      borderRadius: {
+        'mlg':'10px'
+      },
       colors: {
         'light-gray': 'var(--light-gray)',
         'light-medium-gray': 'var(--light-medium-gray)',
@@ -337,6 +343,7 @@ module.exports = {
         'text-teriary-on-brand': '#5d5d5d',
         'text-warning-primary-2': '#f4741b',
         'text-white': '#f6f6f6',
+        'text-daily-primary': '#9747FF'
       },
       animation: {
         flash: 'flash 1s cubic-bezier(0, 0, 0.2, 1)',

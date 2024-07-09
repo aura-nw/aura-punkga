@@ -18,6 +18,7 @@ import FreeQuest from './freeQuest'
 import QuizQuest from './quizQuest'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/router'
+import LabelChip from 'components/core/Chip/Label'
 
 export default function QuestItem({ quest, refreshCallback }: { quest: Quest; refreshCallback?: () => void }) {
   const { getProfile } = useContext(Context)
@@ -254,12 +255,12 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
         </div>
       </Modal>
       <div
-        className={`bg-[#F2F2F2] lg:bg-white lg:border lg:border-light-medium-gray rounded-[10px] p-4 flex gap-[10px] min-h-[160px] relative ${
+        className={`bg-neautral-white lg:bg-white lg:border lg:border-light-medium-gray rounded-mlg p-4 flex gap-[10px] h-[166px] relative ${
           quest.unlock &&
           (quest.reward_status == 'CAN_CLAIM' ||
             quest.reward_status == 'NOT_SATISFY' ||
             (quest.reward_status == 'CLAIMED' && quest.repeat == 'Daily'))
-            ? 'cursor-pointer hover:bg-[#F2F2F2] [&_.reward]:hover:bg-white'
+            ? 'cursor-pointer '
             : null
         }`}
         onClick={() =>
@@ -270,17 +271,36 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
             ? setOpen(true)
             : null
         }>
-        <div className='flex-1 flex flex-col justify-between relative'>
-          <div className='flex flex-col justify-between h-[68px] lg:h-[76px]'>
-            <div className='text-xs leading-[15px] lg:text-base lg:leading-5 font-bold line-clamp-2'>
-              {quest.repeat == 'Daily' && (
-                <span className='bg-[#E2D8FF] text-[#A247FF] whitespace-nowrap font-bold rounded-[3px] lg:rounded-md px-2 pb-[1px] lg:pt-[2px] lg:pb-1 lg:font-semibold text-[10px] lg:text-sm leading-[13px] lg:leading-[18px] mr-[5px]'>
-                  {t('Daily')}
-                </span>
+        <div className='flex-1 flex flex-col relative h-full'>
+          {(quest.repeat == 'Daily' || !quest.unlock) && (
+            <div className='mb-1 flex items-center gap-1.5'>
+              {quest.repeat == 'Daily' && <LabelChip>{t('Daily')}</LabelChip>}
+              {!quest.unlock && (
+                <div className='rounded h-[19px] w-[19px] grid place-items-center bg-[#DEDEDE]'>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='9' height='10' viewBox='0 0 9 10' fill='none'>
+                    <path
+                      fillRule='evenodd'
+                      clipRule='evenodd'
+                      d='M1.8 4.24319V3.25301C1.8 1.45642 3.00883 0 4.5 0C5.99117 0 7.2 1.45642 7.2 3.25301V4.24319C7.6459 4.28331 7.93628 4.3846 8.14853 4.64033C8.5 5.06379 8.5 5.74534 8.5 7.10843C8.5 8.47153 8.5 9.15308 8.14853 9.57654C7.79706 10 7.23137 10 6.1 10H2.9C1.76863 10 1.20294 10 0.851472 9.57654C0.5 9.15308 0.5 8.47153 0.5 7.10843C0.5 5.74534 0.5 5.06379 0.851472 4.64033C1.06372 4.3846 1.3541 4.28331 1.8 4.24319ZM2.4 3.25301C2.4 1.85567 3.3402 0.722892 4.5 0.722892C5.6598 0.722892 6.6 1.85567 6.6 3.25301V4.21859C6.4468 4.21687 6.28061 4.21687 6.1 4.21687H2.9C2.71939 4.21687 2.5532 4.21687 2.4 4.21859V3.25301ZM5.3 7.10843C5.3 7.64076 4.94183 8.07229 4.5 8.07229C4.05817 8.07229 3.7 7.64076 3.7 7.10843C3.7 6.57611 4.05817 6.14458 4.5 6.14458C4.94183 6.14458 5.3 6.57611 5.3 7.10843Z'
+                      fill='#61646B'
+                    />
+                    <path
+                      fillRule='evenodd'
+                      clipRule='evenodd'
+                      d='M1.8 4.24319V3.25301C1.8 1.45642 3.00883 0 4.5 0C5.99117 0 7.2 1.45642 7.2 3.25301V4.24319C7.6459 4.28331 7.93628 4.3846 8.14853 4.64033C8.5 5.06379 8.5 5.74534 8.5 7.10843C8.5 8.47153 8.5 9.15308 8.14853 9.57654C7.79706 10 7.23137 10 6.1 10H2.9C1.76863 10 1.20294 10 0.851472 9.57654C0.5 9.15308 0.5 8.47153 0.5 7.10843C0.5 5.74534 0.5 5.06379 0.851472 4.64033C1.06372 4.3846 1.3541 4.28331 1.8 4.24319ZM2.4 3.25301C2.4 1.85567 3.3402 0.722892 4.5 0.722892C5.6598 0.722892 6.6 1.85567 6.6 3.25301V4.21859C6.4468 4.21687 6.28061 4.21687 6.1 4.21687H2.9C2.71939 4.21687 2.5532 4.21687 2.4 4.21859V3.25301ZM5.3 7.10843C5.3 7.64076 4.94183 8.07229 4.5 8.07229C4.05817 8.07229 3.7 7.64076 3.7 7.10843C3.7 6.57611 4.05817 6.14458 4.5 6.14458C4.94183 6.14458 5.3 6.57611 5.3 7.10843Z'
+                      fill='black'
+                      fillOpacity='0.2'
+                    />
+                  </svg>
+                </div>
               )}
+            </div>
+          )}
+          <div className='flex flex-col mb-3 h-full'>
+            <div className='text-xs leading-[15px] lg:text-base lg:leading-[23px] font-semibold line-clamp-2'>
               {quest.name}
             </div>
-            <div className='text-xs leading-[15px] lg:text-sm lg:leading-[18px] font-semibold text-[#646464] flex items-center gap-[10px]'>
+            <div className='text-xs leading-[15px] lg:text-sm lg:leading-5 font-medium text-text-teriary mt-3 flex items-center gap-[10px]'>
               <span>{`${quest.reward.xp} XP`}</span>
               {quest.reward.nft?.img_url && (
                 <>
@@ -300,27 +320,12 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
               )}
             </div>
           </div>
-
           {quest.reward_status == 'OUT_OF_SLOT' ? (
             <div className='text-xs w-fit bg-[#F2F2F2] leading-[15px] font-bold text-[#ABABAB] px-6 pt-1 pb-[5px] rounded-[20px]'>
               {t('Out of reward')}
             </div>
           ) : !quest.unlock ? (
-            <div className='flex gap-[10px] items-center text-xs leading-[15px] lg:text-sm lg:leading-[18px] text-medium-gray'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='24'
-                height='25'
-                viewBox='0 0 24 25'
-                fill='none'
-                className='w-6 h-6 shrink-0'>
-                <path
-                  fillRule='evenodd'
-                  clipRule='evenodd'
-                  d='M5.25 10.5546V8.5C5.25 4.77208 8.27208 1.75 12 1.75C15.7279 1.75 18.75 4.77208 18.75 8.5V10.5546C19.8648 10.6379 20.5907 10.848 21.1213 11.3787C22 12.2574 22 13.6716 22 16.5C22 19.3284 22 20.7426 21.1213 21.6213C20.2426 22.5 18.8284 22.5 16 22.5H8C5.17157 22.5 3.75736 22.5 2.87868 21.6213C2 20.7426 2 19.3284 2 16.5C2 13.6716 2 12.2574 2.87868 11.3787C3.40931 10.848 4.13525 10.6379 5.25 10.5546ZM6.75 8.5C6.75 5.60051 9.10051 3.25 12 3.25C14.8995 3.25 17.25 5.60051 17.25 8.5V10.5036C16.867 10.5 16.4515 10.5 16 10.5H8C7.54849 10.5 7.13301 10.5 6.75 10.5036V8.5ZM14 16.5C14 17.6046 13.1046 18.5 12 18.5C10.8954 18.5 10 17.6046 10 16.5C10 15.3954 10.8954 14.5 12 14.5C13.1046 14.5 14 15.3954 14 16.5Z'
-                  fill='#ABABAB'
-                />
-              </svg>
+            <div className='flex gap-[10px] items-center text-xxs leading-[13px] text-text-primary'>
               <div>
                 {!!quest.condition.level && <span>{`${t('Reach level')} ${quest.condition.level}`}</span>}
                 {!!quest.condition.level && !!quest.condition.quest_id && <span> {t('and')} </span>}
@@ -369,30 +374,30 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
           ) : null}
         </div>
         <div
-          className={`reward w-[140px] max-h-[130px] shrink-0 bg-white lg:bg-[#F0F0F0] rounded-lg px-[10px] pt-[6px] pb-2 relative ${
+          className={`reward w-[130px] h-fit min-h-[130px] flex flex-col justify-center items-center shrink-0 bg-white lg:bg-[#F0F0F0] rounded-mlg px-[10px] pt-[6px] pb-2 relative ${
             quest.reward_status == 'OUT_OF_SLOT' ? 'opacity-20' : ''
           }`}>
           {quest.reward.nft?.nft_name ? (
             <div className='flex flex-col items-center'>
-              <div className='mb-[10px]'>
+              <div className='mb-1.5'>
                 <Image
                   src={quest.reward.nft.img_url || NoImage}
                   width={80}
                   height={80}
                   alt=''
-                  className='w-[80px] h-[80px] rounded-lg mt-1 object-contain bg-white'
+                  className='w-[80px] h-[80px] rounded-lg mt-1 object-cover bg-white'
                 />
               </div>
-              <div className='text-xs leading-[15px] text-[#61646B] max-w-[120px] truncate'>
+              <div className='text-xs leading-[18px] text-text-teriary w-full text-center font-medium truncate'>
                 {quest.reward.nft?.nft_name}
               </div>
             </div>
           ) : (
             <div className='flex flex-col items-center'>
-              <div className='mb-[10px]'>
+              <div className='mb-1.5'>
                 <Image src={IllusImage} width={80} height={80} alt='' className='w-[80px] h-[80px]' />
               </div>
-              <div className='w-full bg-[#61646B] rounded font-bold text-[#23FF81] text-xs leading-[15px] pt-[2px] pb-1 text-center'>{`+ ${quest.reward.xp} XP`}</div>
+              <div className='w-full text-text-teriary font-semibold text-center'>{`+ ${quest.reward.xp} XP`}</div>
             </div>
           )}
         </div>

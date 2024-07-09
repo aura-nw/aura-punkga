@@ -47,9 +47,9 @@ export default function QuestList({
     }
   })
   return (
-    <div className='mt-10'>
+    <div className='mt-8'>
       <div className='lg:flex lg:items-center lg:flex-wrap lg:justify-between'>
-        <p className='text-lg leading-[23px] lg:text-xl lg:leading-[25px] font-bold'>
+        <p className='text-lg leading-[23px] lg:text-xl lg:leading-[25px] font-medium'>
           {quests && !isEnded
             ? `${t('Quests')} (${
                 quests.filter(
@@ -78,7 +78,7 @@ export default function QuestList({
                           ? 'border-primary-color border bg-white p-[9px]'
                           : 'hover:border hover:border-[#DEDEDE] hover:p-[9px]'
                       }`}>
-                      <div className='px-[5px] text-sm leading-[18px] font-semibold'>
+                      <div className='px-[5px] text-sm leading-[18px] font-medium'>
                         {filter ? filter : t('All quests')}
                       </div>
                       <div
@@ -97,13 +97,13 @@ export default function QuestList({
                 </DropdownToggle>
                 <DropdownMenu customClass='rounded-[8px]' closeOnClick>
                   <div className='w-[233px] bg-[#F2F2F2] cursor-pointer'>
-                    <div className='p-[15px] text-sm font-semibold' onClick={() => setFilter(undefined)}>
+                    <div className='p-[15px] text-sm font-medium' onClick={() => setFilter(undefined)}>
                       {t('All quests')}
                     </div>
-                    <div className='p-[15px] text-sm font-semibold' onClick={() => setFilter('Once')}>
+                    <div className='p-[15px] text-sm font-medium' onClick={() => setFilter('Once')}>
                       {`${t('Once')} (${questList.filter((quest) => quest.repeat == 'Once').length})`}
                     </div>
-                    <div className='p-[15px] text-sm font-semibold' onClick={() => setFilter('Daily')}>
+                    <div className='p-[15px] text-sm font-medium' onClick={() => setFilter('Daily')}>
                       {`${t('Daily')} (${questList.filter((quest) => quest.repeat == 'Daily').length})`}
                     </div>
                   </div>
@@ -116,21 +116,21 @@ export default function QuestList({
       {isEnded ? (
         <div className='mt-5 p-6 lg:mt-9 lg:p-6 flex flex-col items-center w-full'>
           <Image src={Mascot3} alt='' className='w-[240px] h-[240px] lg:w-[320px] lg:h-[320px]' />
-          <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-semibold mt-5 text-center'>
+          <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-medium mt-5 text-center'>
             {t('Campaign Ended')}
           </div>
         </div>
       ) : !quests ? (
         <div className='mt-5 p-6 lg:mt-9 lg:p-6 flex flex-col items-center w-full'>
           <Image src={Mascot2} alt='' className='w-[240px] h-[240px] lg:w-[320px] lg:h-[320px]' />
-          <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-semibold mt-5 text-center'>
+          <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-medium mt-5 text-center'>
             {t('Enroll to view quests')}
           </div>
         </div>
       ) : !quests.length ? (
         <div className='mt-5 p-6 lg:mt-9 lg:p-6 flex flex-col items-center w-full'>
           <Image src={Mascot2} alt='' className='w-[240px] h-[240px] lg:w-[320px] lg:h-[320px]' />
-          <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-semibold mt-5 text-center'>
+          <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-medium mt-5 text-center'>
             {t('No quests to show')}
           </div>
         </div>
