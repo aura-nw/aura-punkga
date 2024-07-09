@@ -16,7 +16,7 @@ import useLocalStorage from 'src/hooks/useLocalStorage'
 import { getRequestLog, linkWallet } from 'src/services'
 import { Connector, useAccount, useChainId, useConnect, useDisconnect, useSignMessage } from 'wagmi'
 export default function MigrateWalletModal() {
-  const { getProfile, connectHandler } = useContext(Context)
+  const { getProfile } = useContext(Context)
   const { migrateWalletOpen: open, setMigrateWalletOpen: setOpen } = useContext(ModalContext)
   const { t } = useTranslation()
   const [success, setSuccess] = useState(undefined)
@@ -227,10 +227,7 @@ export default function MigrateWalletModal() {
                           onClick={async () => {
                             try {
                               setShowQRCode(false)
-                              await wagmiConnect(
-                                { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
-                                { onSuccess: connectHandler }
-                              )
+                              await wagmiConnect({ connector, chainId: getConfig().CHAIN_INFO.evmChainId })
                             } catch (error: any) {
                               console.error(error)
                               wagmiDisconnect()
@@ -261,7 +258,6 @@ export default function MigrateWalletModal() {
                                 {
                                   onSuccess: (data) => {
                                     setLoading(false)
-                                    connectHandler(data)
                                   },
 
                                   onError: (props) => {
