@@ -1,4 +1,4 @@
-import FilledButton from 'components/core/Button/FilledButton'
+import ChupButton from 'components/core/Button/ChupButton'
 import _ from 'lodash'
 import moment from 'moment'
 import { useRouter } from 'next/router'
@@ -82,15 +82,15 @@ export default function QuizQuest({
   }
   return (
     <div className='mt-5 w-full'>
-      <div className='bg-[#F0F0F0] rounded-lg p-4 flex flex-col gap-[10px]'>
-        <div className='text-sm leading-[18px] text-[#414141] font-semibold'>
+      <div className='bg-neutral-50 rounded-mlg p-4 flex flex-col gap-4'>
+        <div className='text-base text-text-teriary font-medium'>
           {quest.requirement.quiz.multiple_choice[0].question}
         </div>
         {answerList.map((answer, index) => {
           return (
             <div
-              className={`px-[10px] py-[7px] rounded-lg border border-light-medium-gray text-xs leading-[15px] cursor-pointer relative ${
-                selectedAnswer == index ? '!border-primary-color bg-[#C6FFDE]' : ''
+              className={`px-3 py-2 rounded-lg border border-border-secondary text-sm cursor-pointer relative ${
+                selectedAnswer == index ? 'bg-brand-2-50' : 'bg-white'
               }`}
               onClick={() => (correctAnswerIndex == -1 ? setSelectedAnswer(index) : null)}
               key={index}>
@@ -126,15 +126,15 @@ export default function QuizQuest({
           )
         })}
         {quest.reward_status == 'CAN_CLAIM' || correctAnswerIndex != -1 ? (
-          <FilledButton loading={loading} onClick={claimQuestHandler} className='w-full'>
+          <ChupButton onClick={claimQuestHandler} className='w-full'>
             {t('Claim Reward')}
-          </FilledButton>
+          </ChupButton>
         ) : quest.reward_status == 'OUT_OF_SLOT' ? (
-          <div className='text-center bg-medium-gray leading-5 font-bold text-light-medium-gray px-6 pt-2 pb-[10px] rounded-[20px]'>
+          <ChupButton disabled className='w-full'>
             {t('Out of reward')}
-          </div>
+          </ChupButton>
         ) : quest.reward_status == 'CLAIMED' && quest.repeat == 'Daily' ? (
-          <div className='text-center bg-medium-gray leading-5 font-bold text-light-medium-gray px-6 pt-2 pb-[10px] rounded-[20px]'>
+          <ChupButton disabled className='w-full'>
             <Countdown
               date={moment().add(1, 'd').startOf('day').toISOString()}
               renderer={({ hours, minutes, seconds }) => {
@@ -151,15 +151,15 @@ export default function QuizQuest({
                 )
               }}
             />
-          </div>
+          </ChupButton>
         ) : selectedAnswer != -1 ? (
-          <FilledButton loading={submitLoading} onClick={answerQuestHandler} className='w-full'>
+          <ChupButton onClick={answerQuestHandler} className='w-full'>
             {t('Submit')}
-          </FilledButton>
+          </ChupButton>
         ) : (
-          <FilledButton disabled className='w-full'>
+          <ChupButton disabled className='w-full'>
             {t('Submit')}
-          </FilledButton>
+          </ChupButton>
         )}
       </div>
     </div>
