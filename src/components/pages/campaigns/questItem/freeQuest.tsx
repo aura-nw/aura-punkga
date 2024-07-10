@@ -1,4 +1,4 @@
-import FilledButton from 'components/core/Button/FilledButton'
+import ChupButton from 'components/core/Button/ChupButton'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import Countdown, { zeroPad } from 'react-countdown'
@@ -18,15 +18,15 @@ export default function FreeQuest({
   return (
     <div className='mt-5 w-full'>
       {quest.reward_status == 'CAN_CLAIM' ? (
-        <FilledButton loading={loading} onClick={claimQuestHandler} className='w-full'>
+        <ChupButton onClick={claimQuestHandler} className='w-full'>
           {t('Claim Reward')}
-        </FilledButton>
+        </ChupButton>
       ) : quest.reward_status == 'OUT_OF_SLOT' ? (
-        <div className='text-center bg-medium-gray leading-5 font-bold text-light-medium-gray px-6 pt-2 pb-[10px] rounded-[20px]'>
+        <ChupButton disabled className='w-full'>
           {t('Out of reward')}
-        </div>
+        </ChupButton>
       ) : quest.reward_status == 'CLAIMED' && quest.repeat == 'Daily' ? (
-        <div className='text-center bg-medium-gray leading-5 font-bold text-light-medium-gray px-6 pt-2 pb-[10px] rounded-[20px]'>
+        <ChupButton disabled className='w-full'>
           <Countdown
             date={moment().add(1, 'd').startOf('day').toISOString()}
             renderer={({ hours, minutes, seconds }) => {
@@ -43,7 +43,7 @@ export default function FreeQuest({
               )
             }}
           />
-        </div>
+        </ChupButton>
       ) : null}
     </div>
   )
