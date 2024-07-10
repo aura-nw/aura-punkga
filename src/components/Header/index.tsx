@@ -120,8 +120,8 @@ export default function Header({ className }: { className?: string }) {
           isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
         }`}></div>
       <header
-        className={`sticky w-full top-0 z-50 transition-all duration-300 bg-white ${className} shadow-[0px_4px_4px_0px_#0000001A]`}>
-        <nav className='lg:hidden pk-container py-[10px] px-4'>
+        className={`sticky w-full top-0 z-50 transition-all duration-300 bg-white ${className} lg:shadow-[0px_4px_4px_0px_#0000001A]`}>
+        <nav className='lg:hidden pk-container pt-[15px] px-4 shadow-[0px_4px_4px_0px_#0000001A]'>
           <div className='flex justify-between items-center gap-2'>
             <div onClick={() => router.push('/')}>
               <Image src={Logo} alt='header logo' className='h-[40px] w-auto' />
@@ -132,11 +132,11 @@ export default function Header({ className }: { className?: string }) {
                   (address != account?.activeWalletAddress || !isConnected) &&
                   account?.noncustodialWalletAddress && (
                     <div className='flex gap-3 items-center '>
-                      <ChupButton onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</ChupButton>
+                      <ChupButton color='dark' onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</ChupButton>
                     </div>
                   )
                 ) : (
-                  <ChupButton onClick={() => setSignInOpen(true)}>{t('Sign in')}</ChupButton>
+                  <ChupButton color='dark' onClick={() => setSignInOpen(true)}>{t('Sign in')}</ChupButton>
                 )}
                 <div className='w-6 h-6 relative'>
                   <svg
@@ -351,7 +351,7 @@ export default function Header({ className }: { className?: string }) {
                     </div>
                     {!account?.noncustodialWalletAddress ? (
                       <>
-                        <ChupButton className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
+                        <ChupButton color='dark' className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
                           {t('Migrate your wallet')}
                         </ChupButton>
                       </>
@@ -426,7 +426,7 @@ export default function Header({ className }: { className?: string }) {
           )}
         </nav>
 
-        <div className='lg:hidden pk-container py-[10px] px-5 pb-4'>
+        <div className='lg:hidden pk-container py-[10px] px-5 pb-4 bg-[#F4F3F7]'>
           <div ref={divRef} className={`${isSearchFocused ? 'z-30' : ''} w-full lg:max-w-max relative`}>
             <TextField
               inputref={ref}
@@ -709,7 +709,7 @@ export default function Header({ className }: { className?: string }) {
                         </div>
                         {!account?.noncustodialWalletAddress ? (
                           <>
-                            <ChupButton className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
+                            <ChupButton color='dark' className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
                               {t('Migrate your wallet')}
                             </ChupButton>
                           </>
@@ -734,7 +734,7 @@ export default function Header({ className }: { className?: string }) {
                   </DropdownMenu>
                 </Dropdown>
               ) : (
-                <ChupButton onClick={() => setSignInOpen(true)}>{t('Sign in')}</ChupButton>
+                <ChupButton color='dark' onClick={() => setSignInOpen(true)}>{t('Sign in')}</ChupButton>
               )}
               {(address != account?.activeWalletAddress || !isConnected) &&
                 account?.verified &&
@@ -742,7 +742,7 @@ export default function Header({ className }: { className?: string }) {
                 account?.noncustodialWalletAddress && (
                   <div className='flex gap-3 items-center '>
                     <div className='h-4 w-[1px] bg-[#E0E0E0]'></div>
-                    <ChupButton onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</ChupButton>
+                    <ChupButton color='dark' onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</ChupButton>
                   </div>
                 )}
             </div>

@@ -1,7 +1,8 @@
 import React, { ButtonHTMLAttributes } from 'react';
 import Image, { StaticImageData } from 'next/image';
+import Spinner from 'components/Spinner';
 
-type ButtonSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 type ButtonVariant = 'filled' | 'outlined';
 type ButtonColor = 'green' | 'dark';
 
@@ -11,6 +12,7 @@ interface ChupButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   color?: ButtonColor;
   leadingIcon?: string | StaticImageData;
   trailingIcon?: string | StaticImageData;
+  loading?: boolean;
 }
 
 const ChupButton: React.FC<ChupButtonProps> = ({
@@ -22,21 +24,24 @@ const ChupButton: React.FC<ChupButtonProps> = ({
   trailingIcon,
   disabled,
   className,
+  loading = false,
   ...props
 }) => {
   const getSizeClasses = (): string => {
     switch (size) {
+      case 'xs': return 'text-xs px-[14px] py-[3px] leading-[18px]';
       case 'sm': return 'text-sm px-[10px] py-[10px] gap-1';
-      case 'md': return 'text-sm px-[14px] py-3 gap-1';
-      case 'lg': return 'text-md px-4 py-3 gap-[6px]';
+      case 'md': return 'text-sm px-3 py-3 gap-1';
+      case 'lg': return 'text-md px-[15px] py-3 gap-[6px]';
       case 'xl': return 'text-lg px-[18px] py-[15px] gap-[6px]';
       case '2xl': return 'text-xl px-[18px] py-4 gap-[6px]';
-      default: return 'text-lg px-4 py-3 gap-[6px]';
+      default: return 'text-sm px-3 py-3 gap-1';
     }
   };
 
   const getIconSize = (): number => {
     switch (size) {
+      case 'xs': return 12;
       case 'sm': return 16;
       case 'md': return 20;
       case 'lg': return 24;
@@ -79,19 +84,25 @@ const ChupButton: React.FC<ChupButtonProps> = ({
   const variantClasses = getVariantClasses();
   const iconSize = getIconSize();
 
+  const showIcons = size !== 'xs';
+
   return (
     <button
       className={`flex items-center justify-center font-semibold rounded-lg ${sizeClasses} ${variantClasses} ${className} disabled:cursor-not-allowed`}
-      disabled={disabled}
+      disabled={disabled || loading}
       {...props}
     >
-      {leadingIcon && (
+      {showIcons && leadingIcon && !loading && (
         <span className="inline-flex items-center justify-center mr-2">
           <Image src={leadingIcon} alt="Leading icon" width={iconSize} height={iconSize} />
         </span>
       )}
-      {children}
-      {trailingIcon && (
+      {loading ? (
+        <Spinner size={iconSize} color={variant === 'filled' ? (color === 'green' ? '#0B0B0B' : '#F6F6F6') : (color === 'green' ? '#183442' : '#009640')} />
+      ) : (
+        <span className='px-1'>{children}</span>
+      )}
+      {showIcons && trailingIcon && !loading && (
         <span className="inline-flex items-center justify-center ml-2">
           <Image src={trailingIcon} alt="Trailing icon" width={iconSize} height={iconSize} />
         </span>
