@@ -135,12 +135,12 @@ export default function WowYourSelf() {
               <div className='flex gap-6 justify-between'>
                 <div className='flex flex-col gap-1 w-[40%]'>
                   <div className='text-xs leading-[15px] lg:text-sm lg:leading-[18px]'>{t('Participants')}</div>
-                  <div className='font-semibold lg:text-lg'>166</div>
+                  <div className='font-semibold lg:text-lg'>222</div>
                 </div>
                 <div className='w-[1px] h-[43px] bg-[#1C1C1C1A]'></div>
                 <div className='flex flex-col gap-1 w-[40%]'>
                   <div className='text-xs leading-[15px] lg:text-sm lg:leading-[18px]'>{t('Submitted artworks')}</div>
-                  <div className='font-semibold lg:text-lg'>265</div>
+                  <div className='font-semibold lg:text-lg'>321</div>
                 </div>
               </div>
             </div>
