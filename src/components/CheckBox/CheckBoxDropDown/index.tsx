@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-const CheckboxDropdown = ({ options, selected, onChange, placeholder }) => {
+const CheckboxDropdown = ({ options, selected, onChange, placeholder, multiple=true }) => {
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (event) => {
@@ -22,17 +22,21 @@ const CheckboxDropdown = ({ options, selected, onChange, placeholder }) => {
     };
 
     const handleChange = (key) => {
+      if (multiple){
         const newSelected = selected.includes(key)
             ? selected.filter(item => item !== key)
             : [...selected, key];
         onChange && onChange(newSelected);
+      } else {
+        onChange && onChange(key);
+      }
     };
 
     const open = Boolean(anchorEl);
 
     return (
         <FormControl className="w-full">
-            <div onClick={handleClick} className='text-[#6D6D6D] text-sm font-medium leading-5 flex gap-[6px] cursor-pointer w-full'>
+            <div onClick={handleClick} className='text-text-teriary text-sm font-medium leading-5 flex gap-[6px] cursor-pointer w-full items-center'>
                 <div className='min-w-[70px]'>
                     {placeholder}</div>
                 <KeyboardArrowDownIcon />
@@ -61,11 +65,11 @@ const CheckboxDropdown = ({ options, selected, onChange, placeholder }) => {
                             <ListItemIcon sx={{ minWidth: '0' }}>
                                 <Checkbox
                                     edge="start"
-                                    checked={selected.includes(option.key)}
+                                    checked={multiple ? selected.includes(option.key) : selected == option.key}
                                     tabIndex={-1}
                                     disableRipple
                                     sx={{
-                                        color: '#00E160',
+                                        color: '#D1D1D1',
                                         '&.Mui-checked': {
                                             color: '#00E160',
                                         },

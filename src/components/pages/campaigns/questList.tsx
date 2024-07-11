@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { Quest } from 'src/models/campaign'
 import QuestItem from './questItem'
 import { useTranslation } from 'react-i18next'
-
+import CheckboxDropdown from 'components/CheckBox/CheckBoxDropDown'
 export default function QuestList({
   quests,
   isEnded,
@@ -18,7 +18,7 @@ export default function QuestList({
   refreshCallback?: () => void
 }) {
   const [rewardNFTChecked, setRewardNFTChecked] = useState<boolean>(false)
-  const [filter, setFilter] = useState<string>()
+  const [filter, setFilter] = useState<string>('All quests')
   const { t } = useTranslation()
   const questList = quests?.map((quest) => {
     if (quest.reward_status == 'OUT_OF_SLOT') {
@@ -54,61 +54,43 @@ export default function QuestList({
             ? `${t('Quests')} (${
                 quests.filter(
                   (quest) =>
-                    (filter ? quest.repeat == filter : true) && (rewardNFTChecked ? !!quest.reward.nft?.nft_name : true)
+                    (filter != 'All quests' ? quest.repeat == filter : true) &&
+                    (rewardNFTChecked ? !!quest.reward.nft?.nft_name : true)
                 ).length
               })`
             : t('Quests')}
         </p>
         {quests && !isEnded && (
-          <div className='mt-[10px] flex justify-between items-center lg:mt-0'>
-            <div className='p-1 lg:mr-[10px]'>
+          <div className='mt-[10px] flex justify-between items-center lg:mt-0 lg:gap-4'>
+            <div className='p-1'>
               <Checkbox
                 label={t('Reward NFT')}
                 checked={rewardNFTChecked}
                 onClick={() => setRewardNFTChecked(!rewardNFTChecked)}
               />
             </div>
+            <span className='h-4 w-[1px] bg-border-primary'></span>
             <div>
-              <Dropdown>
-                <DropdownToggle>
-                  {(open) => (
-                    <div
-                      className={`p-[10px] rounded-lg bg-[#F2F2F2] flex hover:bg-white justify-between cursor-pointer items-center w-[233px] ${
-                        open
-                          ? 'border-primary-color border bg-white p-[9px]'
-                          : 'hover:border hover:border-[#DEDEDE] hover:p-[9px]'
-                      }`}>
-                      <div className='px-[5px] text-sm leading-[18px] font-medium'>
-                        {filter ? filter : t('All quests')}
-                      </div>
-                      <div
-                        className={`rounded-full p-[5px] aspect-square bg-[#C6FFDE] grid place-items-center ${
-                          open ? 'rotate-180' : ''
-                        }`}>
-                        <svg xmlns='http://www.w3.org/2000/svg' width='8' height='4' viewBox='0 0 8 4' fill='none'>
-                          <path
-                            d='M1.4513 0L4.0013 2.47467L6.5513 0L7.33463 0.765333L4.0013 4L0.667969 0.765333L1.4513 0Z'
-                            fill='#1FAB5E'
-                          />
-                        </svg>
-                      </div>
-                    </div>
-                  )}
-                </DropdownToggle>
-                <DropdownMenu customClass='rounded-[8px]' closeOnClick>
-                  <div className='w-[233px] bg-[#F2F2F2] cursor-pointer'>
-                    <div className='p-[15px] text-sm font-medium' onClick={() => setFilter(undefined)}>
-                      {t('All quests')}
-                    </div>
-                    <div className='p-[15px] text-sm font-medium' onClick={() => setFilter('Once')}>
-                      {`${t('Once')} (${questList.filter((quest) => quest.repeat == 'Once').length})`}
-                    </div>
-                    <div className='p-[15px] text-sm font-medium' onClick={() => setFilter('Daily')}>
-                      {`${t('Daily')} (${questList.filter((quest) => quest.repeat == 'Daily').length})`}
-                    </div>
-                  </div>
-                </DropdownMenu>
-              </Dropdown>
+              <CheckboxDropdown
+                selected={filter}
+                onChange={setFilter}
+                multiple={false}
+                options={[
+                  {
+                    key: 'All quests',
+                    value: t('All quests'),
+                  },
+                  {
+                    key: 'Once',
+                    value: `${t('Once')} (${questList.filter((quest) => quest.repeat == 'Once').length})`,
+                  },
+                  {
+                    key: 'Daily',
+                    value: `${t('Daily')} (${questList.filter((quest) => quest.repeat == 'Daily').length})`,
+                  },
+                ]}
+                placeholder={t('All quests')}
+              />
             </div>
           </div>
         )}
@@ -141,7 +123,8 @@ export default function QuestList({
             .sort((a, b) => a.weight - b.weight)
             .filter(
               (quest) =>
-                (filter ? quest.repeat == filter : true) && (rewardNFTChecked ? !!quest.reward.nft?.nft_name : true)
+                (filter != 'All quests' ? quest.repeat == filter : true) &&
+                (rewardNFTChecked ? !!quest.reward.nft?.nft_name : true)
             )
             .map((quest: Quest, index) => (
               <QuestItem quest={quest} key={quest.id} refreshCallback={refreshCallback} />
