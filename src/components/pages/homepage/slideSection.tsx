@@ -40,23 +40,16 @@ export default function SlideSection({ sliderNavRef }) {
             </div>
           ))}
         </Carousel> */}
-          <Link href='/campaigns'>
-            <Image
-              src={locale == 'vn' ? BannerVn : BannerEn}
-              alt=''
-              className='rounded-[10px] w-full aspect-[40/15] object-cover'
-            />
-          </Link>
         </div>
         <div className='px-5 md:px-0'>
-          <div className='mt-5 rounded-2xl flex flex-col gap-[10px]'>
+          <div className='mt-5 md:mt-0 rounded-2xl flex flex-col gap-[10px]'>
             <Link
               href='https://docs.google.com/forms/d/e/1FAIpQLSelARRDM8YVrEHRycSfpA1J95_f2PmrvSRqXGVSKXusXla-5A/viewform'
               target='_blank'>
               <Image src={Banner} alt='' className='rounded-2xl w-full aspect-[40/15] object-cover' />
             </Link>
           </div>
-          <div className='px-5 md:px-0 mt-5 md:mt-0'>
+          <div className='mt-5'>
             <div className='flex flex-col gap-[10px]'>
               <Link href='/campaigns'>
                 <Image

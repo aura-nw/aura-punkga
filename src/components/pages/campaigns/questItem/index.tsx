@@ -310,7 +310,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
               // loading={loading}
               variant='filled'
               disabled
-              size='sm'
+              size='xs'
               onClick={(e) => {
                 claimQuestHandler()
                 e.stopPropagation()
@@ -340,7 +340,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
               // loading={loading}
               variant='filled'
               color='green'
-              size='sm'
+              size='xs'
               onClick={(e) => {
                 claimQuestHandler()
                 e.stopPropagation()
