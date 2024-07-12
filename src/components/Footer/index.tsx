@@ -8,7 +8,7 @@ import Link from 'next/link'
 import Logo from 'assets/images/header-logo.svg'
 import Facebook from 'assets/images/facebook-logo.svg'
 import Youtube from 'assets/images/youtube-logo.svg'
-import X from 'assets/images/X-logo.svg'
+import X from 'assets/images/x-logo.svg'
 
 export default function Footer() {
   const router = useRouter()
