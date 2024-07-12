@@ -387,7 +387,7 @@ function CampaignDetail({}) {
                     // loading={claimLoading}
                     className='w-full'
                     disabled>
-                    {t('Claimed')}
+                    {t('Claim Reward')}
                   </ChupButton>
                 )
               ) : null}
