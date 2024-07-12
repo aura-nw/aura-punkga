@@ -75,6 +75,7 @@ function Home() {
       )
     })
   }, [t('All status')])
+  console.log('genreFilter', genreFilter)
   return (
     <div className='bg-gray-50'>
       <div className='md:hidden'>
@@ -91,6 +92,8 @@ function Home() {
               <div className='md:text-xl text-sm md:leading-7 font-medium'>{t('Latest update')}</div>
               <div className='md:flex hidden gap-[20px] items-center'>
                 <CheckboxDropdown
+                  label={t('Genre')}
+                  allKey={t('All genres')}
                   selected={genreFilter}
                   onChange={setGenreFilter}
                   options={
@@ -116,6 +119,8 @@ function Home() {
                 />
                 <div className='w-[1px] h-4 bg-[#E0E0E0]' />
                 <CheckboxDropdown
+                  label={t('Status')}
+                  allKey={t('All status')}
                   selected={statusFilter}
                   onChange={setStatusFilter}
                   options={[

@@ -420,7 +420,7 @@ export const getUserNfts = async (address: string) => {
       }
     }`,
     variables: {
-      owner_address: address,
+      owner: address.toLowerCase(),
       contract_address: null,
       offset: 0,
       limit: 100,
