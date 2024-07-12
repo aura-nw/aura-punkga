@@ -11,7 +11,7 @@ import {
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useTranslation } from 'react-i18next';
 
-const CheckboxDropdown = ({ options, selected, onChange, placeholder, allKey, label }) => {
+const CheckboxDropdown = ({ options, selected, onChange, allKey }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [internalSelected, setInternalSelected] = useState(selected);
     const { t } = useTranslation();
@@ -61,6 +61,11 @@ const CheckboxDropdown = ({ options, selected, onChange, placeholder, allKey, la
                 <KeyboardArrowDownIcon />
             </div>
             <Popover
+                sx={{
+                    '& .MuiPaper-root': {
+                        boxShadow: '0px 4px 8px 0px #0000000D',
+                    },
+                }}
                 className='p-0 mt-2'
                 open={open}
                 anchorEl={anchorEl}
@@ -116,7 +121,7 @@ const CheckboxDropdown = ({ options, selected, onChange, placeholder, allKey, la
                                     tabIndex={-1}
                                     disableRipple
                                     sx={{
-                                        color: '#10B970',
+                                        color: '#D1D1D1',
                                         '&.Mui-checked': {
                                             color: '#10B970',
                                         },
