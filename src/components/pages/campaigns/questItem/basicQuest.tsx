@@ -46,17 +46,16 @@ export default function BasicQuest({
           />
         </ChupButton>
       ) : (
-        <ChupButton className='w-full'>
-          <Link
-            target='_blank'
-            href={`/comic/${quest.requirement[quest.type.toLowerCase()].manga.slug}${
-              quest.requirement[quest.type.toLowerCase()]?.chapter?.number
-                ? `/chapter/${quest.requirement[quest.type.toLowerCase()].chapter.number}`
-                : ''
-            }`}>
-            {t('Go to page')}
-          </Link>
-        </ChupButton>
+        <Link
+          className='w-full grid place-items-center'
+          target='_blank'
+          href={`/comic/${quest.requirement[quest.type.toLowerCase()].manga.slug}${
+            quest.requirement[quest.type.toLowerCase()]?.chapter?.number
+              ? `/chapter/${quest.requirement[quest.type.toLowerCase()].chapter.number}`
+              : ''
+          }`}>
+          <ChupButton className='w-full'>{t('Go to page')}</ChupButton>
+        </Link>
       )}
     </div>
   )
