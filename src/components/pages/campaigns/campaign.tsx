@@ -173,7 +173,7 @@ export default function CampaignPage() {
                   <div className='mt-1'>
                     <div className='font-semibold line-clamp-2 text-base'>{campaign[locale].name}</div>
                     <div
-                      className=' text-text-teriary mt-1 xl:mt-3 line-clamp-3 max-h-[60px] overflow-hidden xl:text-sm max-w'
+                      className=' text-text-teriary mt-1 xl:mt-3 line-clamp-3 max-h-[60px] overflow-hidden text-sm max-w'
                       dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(campaign[locale].description) }}></div>
                   </div>
                 </div>

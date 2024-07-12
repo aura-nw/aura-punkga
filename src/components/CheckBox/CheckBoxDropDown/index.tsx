@@ -26,7 +26,6 @@ const CheckboxDropdown = ({ options, selected, onChange, allKey = null, multiple
       const newSelected = options.find((option) => option.key == selected.key)
       return newSelected
     })
-    console.log(v, options)
     setInternalSelected([...v])
   }, [JSON.stringify(options)])
 
