@@ -201,7 +201,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                   className='w-[200px] h-[200px] lg:w-[240px] lg:h-[240px] rounded-mlg object-cover bg-background-bg-primary'
                 />
               </div>
-              <div className='text-sm font-semibold w-[240px] whitespace-nowrap truncate mt-4'>
+              <div className='text-sm font-semibold w-[240px] whitespace-nowrap text-center truncate mt-4'>
                 {quest?.reward.nft?.nft_name}
               </div>
               <div className='font-bold text-second-color text-xl text-text-brand-defaul text-center mt-4'>
