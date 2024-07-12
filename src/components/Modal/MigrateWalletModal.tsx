@@ -1,5 +1,6 @@
 import Mascot from 'assets/images/Mascot_5_1.png'
 import MainButton from 'components/Button/MainButton'
+import ChupButton from 'components/core/Button/ChupButton'
 import Modal from 'components/Modal'
 import Spinner from 'components/Spinner'
 import getConfig from 'next/config'
@@ -206,9 +207,9 @@ export default function MigrateWalletModal() {
                 <li>{t('Trade NFTs on marketplaces')}</li>
               </ul>
             </div>
-            <MainButton className='w-fit mx-auto' onClick={() => setStep(2)}>
+            <ChupButton className='w-fit mx-auto' onClick={() => setStep(2)}>
               {t('Connect Wallet')}
-            </MainButton>
+            </ChupButton>
           </div>
         ) : step == 2 ? (
           <div className='max-w-[354px] flex flex-col gap-3'>

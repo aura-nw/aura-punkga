@@ -83,7 +83,7 @@ function Home() {
         <SlideSection sliderNavRef={sliderNavRef} />
       </div>
       <div className='pk-container'>
-        <div className='lg:py-[50px] lg:flex gap-10'>
+        <div className='lg:pb-[54px] lg:pt-8 lg:flex gap-10'>
           <div className='lg:flex-auto lg:w-[65%] relative'>
             <div className='hidden md:block'>
               <TaskSlider sliderNavRef={sliderNavRef} />
@@ -92,7 +92,6 @@ function Home() {
               <div className='md:text-xl text-sm md:leading-7 font-medium'>{t('Latest update')}</div>
               <div className='md:flex hidden gap-[20px] items-center'>
                 <CheckboxDropdown
-                  label={t('Genre')}
                   allKey={t('All genres')}
                   selected={genreFilter}
                   onChange={setGenreFilter}
@@ -115,11 +114,9 @@ function Home() {
                         },
                       ]
                   }
-                  placeholder={t('All genres')}
                 />
                 <div className='w-[1px] h-4 bg-[#E0E0E0]' />
                 <CheckboxDropdown
-                  label={t('Status')}
                   allKey={t('All status')}
                   selected={statusFilter}
                   onChange={setStatusFilter}
@@ -141,11 +138,10 @@ function Home() {
                       value: t('Upcoming'),
                     },
                   ]}
-                  placeholder='All status'
                 />
               </div>
             </div>
-            <div className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-[10px] mt-2 md:mt-10'>
+            <div className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-[10px] mt-2 md:mt-10 md:pb-7'>
               {latestComic.loading
                 ? Array.apply(null, Array(20)).map((d, index) => {
                   return <DummyComic key={index} />
