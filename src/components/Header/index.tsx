@@ -209,7 +209,7 @@ export default function Header({ className }: { className?: string }) {
                   <div className='flex items-center'>
                     {hideBalance
                       ? '********'
-                      : `${(+walletBalance?.data?.formatted || 0).toFixed(8)} ${walletBalance?.data?.symbol || 'AURA'}`}
+                      : `${(+walletBalance?.data?.formatted || 0).toFixed(2)} ${walletBalance?.data?.symbol || 'AURA'}`}
                     <span className='inline-block'>
                       {
                         <div className='ml-2 relative'>
@@ -317,7 +317,7 @@ export default function Header({ className }: { className?: string }) {
                       <div className='flex items-center'>
                         {hideBalance
                           ? '********'
-                          : `${(+walletBalance?.data?.formatted || 0).toFixed(8)} ${
+                          : `${(+walletBalance?.data?.formatted || 0).toFixed(2)} ${
                               walletBalance?.data?.symbol || 'AURA'
                             }`}
                         {/* {hideBalance
@@ -675,7 +675,7 @@ export default function Header({ className }: { className?: string }) {
                           <div className='flex items-center'>
                             {hideBalance
                               ? '********'
-                              : `${(+walletBalance?.data?.formatted || 0).toFixed(8)} ${
+                              : `${(+walletBalance?.data?.formatted || 0).toFixed(2)} ${
                                   walletBalance?.data?.symbol || 'AURA'
                                 }`}
                             {/* {hideBalance
