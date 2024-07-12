@@ -18,7 +18,7 @@ export default function QuestList({
   refreshCallback?: () => void
 }) {
   const [rewardNFTChecked, setRewardNFTChecked] = useState<boolean>(false)
-  const [filter, setFilter] = useState<string>('All quests')
+  const [filter, setFilter] = useState<string[]>(['All quests'])
   const { t } = useTranslation()
   const questList = quests?.map((quest) => {
     if (quest.reward_status == 'OUT_OF_SLOT') {
@@ -54,7 +54,7 @@ export default function QuestList({
             ? `${t('Quests')} (${
                 quests.filter(
                   (quest) =>
-                    (filter != 'All quests' ? quest.repeat == filter : true) &&
+                    (filter?.[0] != 'All quests' ? quest.repeat == filter?.[0] : true) &&
                     (rewardNFTChecked ? !!quest.reward.nft?.nft_name : true)
                 ).length
               })`
@@ -74,7 +74,8 @@ export default function QuestList({
               <CheckboxDropdown
                 selected={filter}
                 onChange={setFilter}
-                multiple={false}
+                allKey='All quests'
+                label='All quests'
                 options={[
                   {
                     key: 'All quests',
@@ -123,7 +124,7 @@ export default function QuestList({
             .sort((a, b) => a.weight - b.weight)
             .filter(
               (quest) =>
-                (filter != 'All quests' ? quest.repeat == filter : true) &&
+                (filter?.[0] != 'All quests' ? quest.repeat == filter?.[0] : true) &&
                 (rewardNFTChecked ? !!quest.reward.nft?.nft_name : true)
             )
             .map((quest: Quest, index) => (
