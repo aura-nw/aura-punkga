@@ -148,7 +148,7 @@ export default function CampaignPage() {
           {list?.map((campaign, index) => (
             <div
               key={index}
-              className='cursor-pointer p-4 flex gap-5 bg-[#F2F2F2] lg:bg-white lg:border lg:border-border-teriary rounded-mlg min-h-[222px] hover:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.10)]'
+              className='cursor-pointer p-4 flex gap-5 bg-[#F2F2F2] lg:bg-white lg:border lg:border-border-teriary rounded-mlg min-h-[206px] hover:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.10)]'
               onClick={() => clickHandler(campaign.slug)}>
               <div className='flex flex-col justify-between flex-1 max-w-[calc(100%-156px)]'>
                 <div className='flex flex-col'>
@@ -173,7 +173,7 @@ export default function CampaignPage() {
                   <div className='mt-1'>
                     <div className='font-semibold line-clamp-2 text-base'>{campaign[locale].name}</div>
                     <div
-                      className=' text-text-teriary mt-1 xl:mt-3 line-clamp-4 xl:text-sm max-w'
+                      className=' text-text-teriary mt-1 xl:mt-3 line-clamp-3 xl:text-sm max-w'
                       dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(campaign[locale].description) }}></div>
                   </div>
                 </div>
@@ -264,7 +264,7 @@ export default function CampaignPage() {
                   )}
                 </div>
                 <div className='text-xs text-text-teriary text-center md:leading-[18px]'>
-                  {t('Bonus to')} <br className='md:block hidden' /> 👑 {t('1st place')}
+                  {t('Bonus to')} {t('1st place')}
                 </div>
               </div>
             </div>

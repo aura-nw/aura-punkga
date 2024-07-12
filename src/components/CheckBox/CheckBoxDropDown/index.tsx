@@ -54,7 +54,7 @@ const CheckboxDropdown = ({ options, selected, onChange, placeholder, allKey, la
 
     return (
         <FormControl className="w-full">
-            <div onClick={handleClick} className='text-[#6D6D6D] text-sm font-medium leading-5 flex gap-[6px] cursor-pointer w-full'>
+            <div onClick={handleClick} className='text-text-teriary text-sm font-medium leading-5 flex gap-[6px] cursor-pointer w-full items-center'>
                 <div className='min-w-[70px]'>
                     {allKey}
                 </div>

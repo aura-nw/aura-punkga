@@ -309,7 +309,7 @@ function CampaignDetail({}) {
               )}`}
             </div>
             <TruncateMarkup
-              lines={!seeMore ? 4 : 9999}
+              lines={!seeMore ? 3 : 9999}
               lineHeight={20}
               ellipsis={<span></span>}
               onTruncate={(wasTruncated) => (wasTruncated && seeMore == undefined ? setSeeMore(false) : null)}>
@@ -387,7 +387,7 @@ function CampaignDetail({}) {
                     // loading={claimLoading}
                     className='w-full'
                     disabled>
-                    {t('Claimed')}
+                    {t('Claim Reward')}
                   </ChupButton>
                 )
               ) : null}
