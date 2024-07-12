@@ -30,7 +30,7 @@ export default function TextField({
   const ex = ['e', '-', '=', '*', '(', ')', '+', '.']
   if (size == 'lg') {
     return (
-      <div className={`relative w-full flex rounded-[20px] ${className}`}>
+      <div className={`relative w-full flex rounded-[6px] ${className}`}>
         {leadingComponent && (
           <div className=' absolute inset-y-0 left-0 flex items-center justify-center py-[10px] pl-[14px] pr-2 max-w-[50px]'>
             {leadingComponent}
@@ -54,7 +54,7 @@ export default function TextField({
             onChange && onChange(event.target.value)
           }}
           id='input-group-1'
-          className={`bg-transparent rounded-[20px] w-full p-[13px] placeholder-medium-gray focus:outline-none ${leadingComponent ? 'pl-[50px]' : ''
+          className={`bg-transparent rounded-[6px] w-full p-[13px] placeholder-medium-gray focus:outline-none ${leadingComponent ? 'pl-[50px]' : ''
             } ${trailingComponent ? 'pr-[45px]' : ''} `}
           placeholder={placeholder}></input>
         {trailingComponent && (
@@ -134,7 +134,7 @@ export default function TextField({
   }
 
   return (
-    <div className={`relative w-full flex rounded-[20px] ${className}`}>
+    <div className={`relative w-full flex rounded-[6px] ${className}`}>
       {leadingComponent && (
         <div className='absolute inset-y-0 left-0 flex items-center justify-center py-[10px] pl-[14px] pr-2 max-w-[50px]'>
           {leadingComponent}
