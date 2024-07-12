@@ -1,7 +1,6 @@
 import Modal from 'components/Modal'
 import Popover from 'components/Popover'
 import ChupButton from 'components/core/Button/ChupButton'
-import FilledButton from 'components/core/Button/FilledButton'
 import LabelChip from 'components/core/Chip/Label'
 import IllusImage from 'components/pages/campaigns/assets/illus.svg'
 import LeaderBoard from 'components/pages/campaigns/leaderboard'
@@ -254,7 +253,7 @@ function CampaignDetail({}) {
         </div>
       </Modal>
       <div className='pk-container'>
-        <div className='py-5 lg:py-16 lg:grid-cols-[1fr_min(50%,400px)] lg:grid lg:gap-x-8 lg:grid-rows-[auto_1fr]'>
+        <div className='py-5 lg:py-8 lg:grid-cols-[1fr_min(50%,400px)] lg:grid lg:gap-x-8 lg:grid-rows-[auto_1fr]'>
           <div>
             {/* Campaign info  */}
             <div className='flex justify-between'>
@@ -296,9 +295,9 @@ function CampaignDetail({}) {
                   </Popover>
                 ) : isOngoing && !isEnrolled ? (
                   <div>
-                    <FilledButton loading={enrollLoading} className='w-full' onClick={enrollHandler}>
+                    <ChupButton size='sm' loading={enrollLoading} className='w-full' onClick={enrollHandler}>
                       {t('Enroll now')}
-                    </FilledButton>
+                    </ChupButton>
                   </div>
                 ) : null}
               </div>
@@ -332,9 +331,9 @@ function CampaignDetail({}) {
               </div>
             ) : isOngoing && !isEnrolled ? (
               <div className='mt-10 lg:hidden'>
-                <FilledButton loading={enrollLoading} className='w-full' onClick={enrollHandler}>
+                <ChupButton size='sm' loading={enrollLoading} className='w-full' onClick={enrollHandler}>
                   {t('Enroll now')}
-                </FilledButton>
+                </ChupButton>
               </div>
             ) : null}
           </div>
@@ -397,24 +396,19 @@ function CampaignDetail({}) {
                 <LeaderBoard data={leaderboardData} userData={userData} />
               ) : (
                 <div className='overflow-auto'>
-                  <div className='bg-[#f0f0f0] rounded-[10px] mt-10 min-w-[300px] md:min-w-[400px]'>
+                  <div className='bg-white rounded-mlg mt-8 min-w-[300px] md:min-w-[400px]'>
                     <div className='py-3 md:py-4 px-4 md:px-[32px] w-full h-full flex flex-col'>
                       <div
-                        className={`leading-5 md:text-xl md:leading-[25px] cursor-pointer font-bold w-full text-center  pb-[2px] mb-2 md:mb-3 text-[#414141] border-[#414141] border-b-[3px]`}>
+                        className={`leading-5 md:text-xl cursor-pointer font-semibold w-full text-center  pb-[2px] mb-2 md:mb-4`}>
                         {t('Campaign Leaderboard')}
                       </div>
-                      <div className='flex px-[6px] py-2 md:px-[18px] md:py-[11px] border-b-[1px] border-medium-gray text-subtle-dark font-bold text-xs leading-[15px] md:text-sm md:leading-[18px]'>
-                        <div className='mr-14 md:mr-[70px]'>{t('Rank')}</div>
+                      <div className='flex px-[6px] py-2 md:px-[18px] md:py-[11px] border-b-[1px] border-border-primary font-semibold text-xs leading-[15px] md:text-base'>
+                        <div className='mr-14 md:mr-[70px]'></div>
                         <div className='w-full'>{t('User')}</div>
                         <div className='w-[98px] md:w-[88px] shrink-0 text-center'>{t('Level')}</div>
                         <div className='w-12 shrink-0 text-center'>XP</div>
                       </div>
-                      <div className='h-[240px] md:h-[520px] flex flex-col relative'>
-                        <div className={`absolute inset-0  gap-2 flex flex-col text-subtle-dark h-full py-2`}>
-                          <div className='w-full h-full text-center font-semibold text-xs md:text-sm text-black grid place-items-center'>
-                            {t('Enroll to view leaderboard')}
-                          </div>
-                        </div>
+                      <div className='h-[240px] md:h-[90px] flex flex-col relative'>
                       </div>
                     </div>
                   </div>

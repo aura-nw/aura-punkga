@@ -98,21 +98,21 @@ export default function QuestList({
       </div>
       {isEnded ? (
         <div className='mt-5 p-6 lg:mt-9 lg:p-6 flex flex-col items-center w-full'>
-          <Image src={Mascot3} alt='' className='w-[240px] h-[240px] lg:w-[320px] lg:h-[320px]' />
+          <Image src={Mascot3} alt='' className='w-[160px] h-[160px]' />
           <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-medium mt-5 text-center'>
             {t('Campaign Ended')}
           </div>
         </div>
       ) : !quests ? (
         <div className='mt-5 p-6 lg:mt-9 lg:p-6 flex flex-col items-center w-full'>
-          <Image src={Mascot2} alt='' className='w-[240px] h-[240px] lg:w-[320px] lg:h-[320px]' />
+          <Image src={Mascot2} alt='' className='w-[160px] h-[160px]' />
           <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-medium mt-5 text-center'>
-            {t('Enroll to view quests')}
+            {t('Enroll to view quests and leaderboard')}
           </div>
         </div>
       ) : !quests.length ? (
         <div className='mt-5 p-6 lg:mt-9 lg:p-6 flex flex-col items-center w-full'>
-          <Image src={Mascot2} alt='' className='w-[240px] h-[240px] lg:w-[320px] lg:h-[320px]' />
+          <Image src={Mascot2} alt='' className='w-[160px] h-[160px]' />
           <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-medium mt-5 text-center'>
             {t('No quests to show')}
           </div>

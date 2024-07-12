@@ -68,7 +68,7 @@ export default function CampaignPage() {
   }
   return (
     <div className='pk-container'>
-      <div className='sticky md:top-20 top-[95px]  pb-8 pt-5 md:pt-12 bg-gray-50'>
+      <div className='sticky md:top-16 top-[95px]  pb-8 pt-5 md:pt-12 bg-gray-50'>
         <div className='flex items-center justify-between flex-wrap'>
           <div className='text-base leading-5 md:text-xl font-medium whitespace-nowrap'>
             {t('Campaign')} <span className=''>{` (${list.length})`}</span>
