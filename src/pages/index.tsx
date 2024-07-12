@@ -67,9 +67,9 @@ function Home() {
         prev.map((v) =>
           v.key == 'All genres'
             ? {
-              key: v.key,
-              value: t(v.key),
-            }
+                key: v.key,
+                value: t(v.key),
+              }
             : v
         )
       )
@@ -92,32 +92,32 @@ function Home() {
               <div className='md:text-xl text-sm md:leading-7 font-medium'>{t('Latest update')}</div>
               <div className='md:flex hidden gap-[20px] items-center'>
                 <CheckboxDropdown
-                  allKey={t('All genres')}
+                  allKey={'All genres'}
                   selected={genreFilter}
                   onChange={setGenreFilter}
                   options={
                     useableTags
                       ? [
-                        {
-                          key: 'All genres',
-                          value: t('All genres'),
-                        },
-                        ...useableTags?.map((tag) => ({
-                          key: tag[locale],
-                          value: tag[locale],
-                        })),
-                      ]
+                          {
+                            key: 'All genres',
+                            value: t('All genres'),
+                          },
+                          ...useableTags?.map((tag) => ({
+                            key: tag[locale],
+                            value: tag[locale],
+                          })),
+                        ]
                       : [
-                        {
-                          key: 'All genres',
-                          value: t('All genres'),
-                        },
-                      ]
+                          {
+                            key: 'All genres',
+                            value: t('All genres'),
+                          },
+                        ]
                   }
                 />
                 <div className='w-[1px] h-4 bg-[#E0E0E0]' />
                 <CheckboxDropdown
-                  allKey={t('All status')}
+                  allKey={'All status'}
                   selected={statusFilter}
                   onChange={setStatusFilter}
                   options={[
@@ -144,10 +144,10 @@ function Home() {
             <div className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-[10px] mt-2 md:mt-10 md:pb-7'>
               {latestComic.loading
                 ? Array.apply(null, Array(20)).map((d, index) => {
-                  return <DummyComic key={index} />
-                })
+                    return <DummyComic key={index} />
+                  })
                 : latestComic.data?.length
-                  ? latestComic.data
+                ? latestComic.data
                     .filter((data: any) => data.tags.every((lang: any) => lang.en.toLowerCase() != 'invent contest'))
                     .filter((data) =>
                       statusFilter.length && !statusFilter.some((s) => s.key == 'All status')
@@ -162,7 +162,7 @@ function Home() {
                     .map((data, index) => {
                       return <Comic2 key={index} {...data} />
                     })
-                  : null}
+                : null}
               <div></div>
               <div></div>
               <div></div>
@@ -180,11 +180,11 @@ function Home() {
               <div className='flex flex-col gap-5 mt-2 md:mt-4'>
                 {trendingComic.loading
                   ? Array.apply(null, Array(5)).map((d, index) => {
-                    return <DummyComic key={index} />
-                  })
+                      return <DummyComic key={index} />
+                    })
                   : trendingComic.data.slice(0, 8).map((data, index) => {
-                    return <TrendingComic key={index} {...data} />
-                  })}
+                      return <TrendingComic key={index} {...data} />
+                    })}
               </div>
             </div>
 

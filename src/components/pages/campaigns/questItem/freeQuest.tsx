@@ -18,7 +18,7 @@ export default function FreeQuest({
   return (
     <div className='mt-5 w-full'>
       {quest.reward_status == 'CAN_CLAIM' ? (
-        <ChupButton onClick={claimQuestHandler} className='w-full'>
+        <ChupButton loading={loading} onClick={claimQuestHandler} className='w-full'>
           {t('Claim Reward')}
         </ChupButton>
       ) : quest.reward_status == 'OUT_OF_SLOT' ? (

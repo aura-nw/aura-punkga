@@ -307,7 +307,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
             </div>
           ) : quest.reward_status == 'OUT_OF_SLOT' ? (
             <ChupButton
-              // loading={loading}
+              loading={loading}
               variant='filled'
               disabled
               size='xs'
@@ -337,7 +337,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
             </div>
           ) : quest.reward_status == 'CAN_CLAIM' ? (
             <ChupButton
-              // loading={loading}
+              loading={loading}
               variant='filled'
               color='green'
               size='xs'

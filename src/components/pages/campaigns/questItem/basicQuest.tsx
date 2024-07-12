@@ -19,7 +19,7 @@ export default function BasicQuest({
   return (
     <div className='mt-5 w-full lg:mt-10'>
       {quest.reward_status == 'CAN_CLAIM' ? (
-        <ChupButton onClick={claimQuestHandler} className='w-full'>
+        <ChupButton loading={loading} onClick={claimQuestHandler} className='w-full'>
           {t('Claim Reward')}
         </ChupButton>
       ) : quest.reward_status == 'OUT_OF_SLOT' ? (
@@ -46,7 +46,7 @@ export default function BasicQuest({
           />
         </ChupButton>
       ) : (
-        <ChupButton className='w-full' color='dark'>
+        <ChupButton className='w-full'>
           <Link
             target='_blank'
             href={`/comic/${quest.requirement[quest.type.toLowerCase()].manga.slug}${

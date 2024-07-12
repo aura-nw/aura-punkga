@@ -89,7 +89,7 @@ export default function QuizQuest({
         {answerList.map((answer, index) => {
           return (
             <div
-              className={`px-3 py-2 rounded-lg border border-border-secondary text-sm cursor-pointer relative ${
+              className={`px-3 py-2 rounded-lg border border-border-secondary text-sm cursor-pointer relative flex items-center justify-between gap-1 ${
                 selectedAnswer == index ? 'bg-brand-2-50' : 'bg-white'
               }`}
               onClick={() => (correctAnswerIndex == -1 ? setSelectedAnswer(index) : null)}
@@ -107,18 +107,13 @@ export default function QuizQuest({
                 }
               })()} ${answer}`}
               {correctAnswerIndex == index && (
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='18'
-                  height='18'
-                  viewBox='0 0 18 18'
-                  fill='none'
-                  className='absolute right-[10px] inset-y-[6px]'>
+                <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
                   <path
-                    fillRule='evenodd'
-                    clipRule='evenodd'
-                    d='M9 15.7559C9.88642 15.7559 10.7642 15.5813 11.5831 15.242C12.4021 14.9028 13.1462 14.4056 13.773 13.7788C14.3998 13.152 14.897 12.4079 15.2362 11.589C15.5754 10.77 15.75 9.89228 15.75 9.00586C15.75 8.11944 15.5754 7.24169 15.2362 6.42275C14.897 5.6038 14.3998 4.85968 13.773 4.23289C13.1462 3.60609 12.4021 3.10889 11.5831 2.76967C10.7642 2.43045 9.88642 2.25586 9 2.25586C7.20979 2.25586 5.4929 2.96702 4.22703 4.23289C2.96116 5.49876 2.25 7.21565 2.25 9.00586C2.25 10.7961 2.96116 12.513 4.22703 13.7788C5.4929 15.0447 7.20979 15.7559 9 15.7559ZM8.826 11.7359L12.576 7.23586L11.424 6.27586L8.199 10.1451L6.53025 8.47561L5.46975 9.53611L7.71975 11.7861L8.30025 12.3666L8.826 11.7359Z'
-                    fill='#2FB101'
+                    d='M12.6183 8.31916L9.0625 11.875L7.85041 10.6629M10 2.5C5.85786 2.5 2.5 5.85786 2.5 10C2.5 14.1421 5.85786 17.5 10 17.5C14.1421 17.5 17.5 14.1421 17.5 10C17.5 5.85786 14.1421 2.5 10 2.5Z'
+                    stroke='#009640'
+                    strokeWidth='2'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
                   />
                 </svg>
               )}
@@ -126,7 +121,7 @@ export default function QuizQuest({
           )
         })}
         {quest.reward_status == 'CAN_CLAIM' || correctAnswerIndex != -1 ? (
-          <ChupButton onClick={claimQuestHandler} className='w-full'>
+          <ChupButton loading={loading} onClick={claimQuestHandler} className='w-full'>
             {t('Claim Reward')}
           </ChupButton>
         ) : quest.reward_status == 'OUT_OF_SLOT' ? (
@@ -153,7 +148,7 @@ export default function QuizQuest({
             />
           </ChupButton>
         ) : selectedAnswer != -1 ? (
-          <ChupButton onClick={answerQuestHandler} className='w-full'>
+          <ChupButton loading={submitLoading} onClick={answerQuestHandler} className='w-full'>
             {t('Submit')}
           </ChupButton>
         ) : (

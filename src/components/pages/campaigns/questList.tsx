@@ -17,9 +17,14 @@ export default function QuestList({
   isEnded: boolean
   refreshCallback?: () => void
 }) {
-  const [rewardNFTChecked, setRewardNFTChecked] = useState<boolean>(false)
-  const [filter, setFilter] = useState<string[]>(['All quests'])
   const { t } = useTranslation()
+  const [rewardNFTChecked, setRewardNFTChecked] = useState<boolean>(false)
+  const [filter, setFilter] = useState<{ key: string, value: string }[]>([
+    {
+      key: 'All quests',
+      value: t('All quests'),
+    }
+  ])
   const questList = quests?.map((quest) => {
     if (quest.reward_status == 'OUT_OF_SLOT') {
       return {
@@ -54,7 +59,7 @@ export default function QuestList({
             ? `${t('Quests')} (${
                 quests.filter(
                   (quest) =>
-                    (filter?.[0] != 'All quests' ? quest.repeat == filter?.[0] : true) &&
+                    (filter?.[0]?.key != 'All quests' ? quest.repeat == filter?.[0]?.key : true) &&
                     (rewardNFTChecked ? !!quest.reward.nft?.nft_name : true)
                 ).length
               })`
@@ -74,8 +79,6 @@ export default function QuestList({
               <CheckboxDropdown
                 selected={filter}
                 onChange={setFilter}
-                allKey='All quests'
-                label='All quests'
                 options={[
                   {
                     key: 'All quests',
@@ -90,7 +93,7 @@ export default function QuestList({
                     value: `${t('Daily')} (${questList.filter((quest) => quest.repeat == 'Daily').length})`,
                   },
                 ]}
-                placeholder={t('All quests')}
+                multiple={false}
               />
             </div>
           </div>
@@ -124,7 +127,7 @@ export default function QuestList({
             .sort((a, b) => a.weight - b.weight)
             .filter(
               (quest) =>
-                (filter?.[0] != 'All quests' ? quest.repeat == filter?.[0] : true) &&
+                (filter?.[0]?.key != 'All quests' ? quest.repeat == filter?.[0]?.key : true) &&
                 (rewardNFTChecked ? !!quest.reward.nft?.nft_name : true)
             )
             .map((quest: Quest, index) => (

@@ -368,14 +368,14 @@ function CampaignDetail({}) {
                 account?.id == leaderboardData?.[0]?.user_id && isEnded ? (
                   authData?.user_campaign_rewards?.length == 0 ? (
                     <ChupButton
-                      // loading={claimLoading}
+                      loading={claimLoading}
                       className='w-full'
+                      color='dark'
                       onClick={claimHandler}>
                       {t('Claim Reward')}
                     </ChupButton>
                   ) : (
                     <ChupButton
-                      // loading={claimLoading}
                       className='w-full'
                       disabled>
                       {t('Claimed')}
@@ -383,7 +383,6 @@ function CampaignDetail({}) {
                   )
                 ) : (
                   <ChupButton
-                    // loading={claimLoading}
                     className='w-full'
                     disabled>
                     {t('Claim Reward')}
