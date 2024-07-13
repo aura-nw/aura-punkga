@@ -148,7 +148,7 @@ export default function CampaignPage() {
           {list?.map((campaign, index) => (
             <div
               key={index}
-              className='cursor-pointer p-4 flex gap-5 bg-[#F2F2F2] lg:bg-white lg:border lg:border-border-teriary rounded-mlg min-h-[206px] hover:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.10)]'
+              className='cursor-pointer p-4 flex gap-5 bg-white border border-border-teriary rounded-mlg min-h-[206px] hover:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.10)]'
               onClick={() => clickHandler(campaign.slug)}>
               <div className='flex flex-col justify-between flex-1 max-w-[calc(100%-156px)]'>
                 <div className='flex flex-col'>

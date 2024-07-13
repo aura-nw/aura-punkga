@@ -262,20 +262,20 @@ function CampaignDetail({}) {
                   {t(isUpcoming ? 'Upcoming' : !isEnded ? 'Ongoing' : 'Ended')}
                 </LabelChip>
                 <div className='text-xl font-medium'>{data[locale].name} </div>
-                <div className='flex gap-2.5 font-medium text-sm items-center'>
+                <div className='flex gap-1 lg:gap-2.5 font-medium text-sm lg:items-center flex-col lg:flex-row'>
                   <div>
                     {t('Starts')}: {moment(data.start_date).format('HH:mm DD/MM/yyyy')}
                   </div>
-                  <svg width='4' height='4' viewBox='0 0 4 4' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                  <svg width='4' height='4' viewBox='0 0 4 4' fill='none' xmlns='http://www.w3.org/2000/svg' className='hidden lg:block'>
                     <rect width='4' height='4' rx='2' fill='#646464' />
                   </svg>
                   <div>
                     {t('Ends')}: {moment(data.end_date).format('HH:mm DD/MM/yyyy')}
                   </div>
-                  <svg width='4' height='4' viewBox='0 0 4 4' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                  <svg width='4' height='4' viewBox='0 0 4 4' fill='none' xmlns='http://www.w3.org/2000/svg' className='hidden lg:block'>
                     <rect width='4' height='4' rx='2' fill='#646464' />
                   </svg>
-                  <div className='lg:block hidden'>{`${data?.participants?.aggregate?.count} ${t(
+                  <div className=''>{`${data?.participants?.aggregate?.count} ${t(
                     pluralize('participant', data?.participants?.aggregate?.count)
                   )}`}</div>
                 </div>
@@ -301,11 +301,6 @@ function CampaignDetail({}) {
                   </div>
                 ) : null}
               </div>
-            </div>
-            <div className='my-5 flex justify-between items-start text-sm leading-[18px] lg:text-base lg:leading-5 lg:hidden'>
-              {`${data?.participants?.aggregate?.count} ${t(
-                pluralize('participant', data?.participants?.aggregate?.count)
-              )}`}
             </div>
             <TruncateMarkup
               lines={!seeMore ? 3 : 9999}
