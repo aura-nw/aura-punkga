@@ -74,13 +74,13 @@ export default function Footer() {
           </div>
           <div className='flex justify-between'>
             <div className='items-center gap-4 flex'>
-              <Link target='_blank' href='https://www.facebook.com/PunkgaMeManga/'>
+              <Link className='cursor-pointer' target='_blank' href='https://www.facebook.com/PunkgaMeManga/'>
                 <Image src={Facebook} alt='facebook-logo' width={24} height={24} />
               </Link>
-              <Link target='_blank' href='https://twitter.com/PunkgaMeManga'>
+              <Link className='cursor-pointer' target='_blank' href='https://twitter.com/PunkgaMeManga'>
                 <Image src={X} alt='x-logo' width={24} height={24} />
               </Link>
-              <Link target='_blank' href='https://www.youtube.com/@Punkga'>
+              <Link className='cursor-pointer' target='_blank' href='https://www.youtube.com/@Punkga'>
                 <Image src={Youtube} alt='youtube-logo' width={24} height={24} />
               </Link>
             </div>
@@ -124,13 +124,13 @@ export default function Footer() {
               {`© ${new Date().getFullYear()} ${t('Punkga.me . All rights reserved')}.`}
             </div>
             <div className='items-center justify-center gap-4 flex mt-4'>
-              <Link target='_blank' href='https://www.facebook.com/PunkgaMeManga/'>
+              <Link className='cursor-pointer' target='_blank' href='https://www.facebook.com/PunkgaMeManga/'>
                 <Image src={Facebook} alt='facebook-logo' width={24} height={24} />
               </Link>
-              <Link target='_blank' href='https://twitter.com/PunkgaMeManga'>
+              <Link className='cursor-pointer' target='_blank' href='https://twitter.com/PunkgaMeManga'>
                 <Image src={X} alt='x-logo' width={24} height={24} />
               </Link>
-              <Link target='_blank' href='https://www.youtube.com/@Punkga'>
+              <Link className='cursor-pointer' target='_blank' href='https://www.youtube.com/@Punkga'>
                 <Image src={Youtube} alt='youtube-logo' width={24} height={24} />
               </Link>
             </div>

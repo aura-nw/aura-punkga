@@ -132,11 +132,11 @@ export default function Header({ className }: { className?: string }) {
                   (address != account?.activeWalletAddress || !isConnected) &&
                   account?.noncustodialWalletAddress && (
                     <div className='flex gap-3 items-center '>
-                      <ChupButton color='dark' onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</ChupButton>
+                      <ChupButton size='xs' color='dark' onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</ChupButton>
                     </div>
                   )
                 ) : (
-                  <ChupButton color='dark' onClick={() => setSignInOpen(true)}>{t('Sign in')}</ChupButton>
+                  <ChupButton size='xs' color='dark' onClick={() => setSignInOpen(true)}>{t('Sign in')}</ChupButton>
                 )}
                 <div className='w-6 h-6 relative'>
                   <svg
@@ -246,7 +246,7 @@ export default function Header({ className }: { className?: string }) {
               <div
                 className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'
                 onClick={() => setMigrateWalletOpen(true)}>
-                {t('Migrate your wallet')}{' '}
+                {t('Migrate wallet')}{' '}
                 <span>
                   <Image src={Stars} alt='' className='inline-block ml-1' />
                 </span>
@@ -351,7 +351,7 @@ export default function Header({ className }: { className?: string }) {
                     </div>
                     {!account?.noncustodialWalletAddress ? (
                       <>
-                        <ChupButton color='dark' className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
+                        <ChupButton size='sm' className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
                           {t('Migrate your wallet')}
                         </ChupButton>
                       </>
@@ -709,8 +709,8 @@ export default function Header({ className }: { className?: string }) {
                         </div>
                         {!account?.noncustodialWalletAddress ? (
                           <>
-                            <ChupButton color='dark' className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
-                              {t('Migrate your wallet')}
+                            <ChupButton size='sm' className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
+                              {t('Migrate wallet')}
                             </ChupButton>
                           </>
                         ) : null}
@@ -734,7 +734,7 @@ export default function Header({ className }: { className?: string }) {
                   </DropdownMenu>
                 </Dropdown>
               ) : (
-                <ChupButton color='dark' onClick={() => setSignInOpen(true)}>{t('Sign in')}</ChupButton>
+                <ChupButton size='sm' color='dark' onClick={() => setSignInOpen(true)}>{t('Sign in')}</ChupButton>
               )}
               {(address != account?.activeWalletAddress || !isConnected) &&
                 account?.verified &&
@@ -742,7 +742,7 @@ export default function Header({ className }: { className?: string }) {
                 account?.noncustodialWalletAddress && (
                   <div className='flex gap-3 items-center '>
                     <div className='h-4 w-[1px] bg-[#E0E0E0]'></div>
-                    <ChupButton color='dark' onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</ChupButton>
+                    <ChupButton size='sm' color='dark' onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</ChupButton>
                   </div>
                 )}
             </div>
