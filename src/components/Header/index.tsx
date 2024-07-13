@@ -380,12 +380,12 @@ export default function Header({ className }: { className?: string }) {
                   <Image src={Campaign} alt='' className='w-5 h-5' />
                   {t('Campaign')}
                 </div>
-                <div
+                {/* <div
                   className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#242424] font-semibold'
                   onClick={() => router.push('/collection')}>
                   <Image src={Collection} alt='' className='w-5 h-5' />
                   {t('Collection')}
-                </div>
+                </div> */}
                 <div
                   className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#242424] font-semibold'
                   onClick={() => router.push('/about-us')}>
@@ -721,13 +721,13 @@ export default function Header({ className }: { className?: string }) {
                           </div>
                         )}
                       </div>
-                      <div className='font-bold'>
+                      <div className='text-text-primary text-sm font-semibold leading-5'>
                         <div onClick={() => router.push('/profile')}>
-                          <strong>{t('My profile')}</strong>
+                          <span>{t('My profile')}</span>
                         </div>
                         <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0] '></span>
                         <div onClick={logout}>
-                          <strong>{t('Log out')}</strong>
+                          <span>{t('Log out')}</span>
                         </div>
                       </div>
                     </div>
