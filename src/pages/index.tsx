@@ -89,7 +89,7 @@ function Home() {
               <TaskSlider sliderNavRef={sliderNavRef} />
             </div>
             <div className='mt-10 md:mt-6 flex flex-row justify-between gap-5 px-2'>
-              <div className='md:text-xl text-sm md:leading-7 font-medium'>{t('Latest update')}</div>
+              <div className='text-lg leading-[26px] md:leading-7 md:text-xl font-medium text-text-primary'>{t('Latest update')}</div>
               <div className='md:flex hidden gap-[20px] items-center'>
                 <CheckboxDropdown
                   allKey={'All genres'}
