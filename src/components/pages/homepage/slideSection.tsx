@@ -23,7 +23,7 @@ export default function SlideSection({ sliderNavRef }) {
   const { locale } = useRouter()
   return (
     <>
-      <div className='flex flex-col-reverse gap-5'>
+      <div className='flex flex-col-reverse'>
         <div className='relative w-full rounded-2xl overflow-hidden hidden md:block'>
           {/* <Carousel sliderNavRef={sliderNavRef} className=''>
           {[...list.slice(1), list[0]].map((data, index) => (

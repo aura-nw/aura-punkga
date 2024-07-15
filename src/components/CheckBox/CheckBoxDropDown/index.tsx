@@ -10,6 +10,15 @@ const CheckboxDropdown = ({ options, selected, onChange, allKey = null, multiple
   const { t } = useTranslation()
 
   useEffect(() => {
+    let newValue
+    if (multiple) {
+      newValue = options.filter((s) => s.key !== allKey)
+      setInternalSelected(newValue)
+      onChange && onChange(newValue)
+    }
+  }, [options?.length])
+
+  useEffect(() => {
     setInternalSelected(selected)
   }, [selected])
 
@@ -62,7 +71,9 @@ const CheckboxDropdown = ({ options, selected, onChange, allKey = null, multiple
         onClick={handleClick}
         className='text-text-teriary text-sm font-medium leading-5 flex gap-[6px] cursor-pointer w-full items-center'>
         <div className='min-w-[70px] whitespace-nowrap'>
-          {multiple ? options.find((option) => option.key == allKey)?.value : internalSelected?.[0]?.value || internalSelected?.[0]?.key}
+          {multiple
+            ? options.find((option) => option.key == allKey)?.value
+            : internalSelected?.[0]?.value || internalSelected?.[0]?.key}
         </div>
         <KeyboardArrowDownIcon />
       </div>

@@ -69,7 +69,6 @@ function Home() {
       )
     })
   }, [t('All status')])
-  console.log('genreFilter', genreFilter)
   return (
     <div className='bg-gray-50'>
       <div className='md:hidden'>
@@ -177,9 +176,9 @@ function Home() {
               <SlideSection sliderNavRef={sliderNavRef} />
               {/* <LeaderBoard /> */}
             </div>
-            <div className='flex flex-col p-4 bg-white text-[#333333] rounded-[10px]'>
-              <div className='md:text-xl text-sm md:leading-[25px] font-[500]'>🔥{t('Trending')}</div>
-              <div className='flex flex-col gap-4 mt-2 md:mt-4'>
+            <div className='flex flex-col p-4 bg-white rounded-[10px] lg:mt-8'>
+              <div className='md:text-xl text-lg leading-[28px] font-medium'>🔥{t('Trending')}</div>
+              <div className='flex flex-col gap-4 mt-4'>
                 {trendingComic.loading
                   ? Array.apply(null, Array(5)).map((d, index) => {
                       return (
