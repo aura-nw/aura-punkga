@@ -17,6 +17,7 @@ import { oauthLogin } from 'src/utils'
 import { getItem, removeItem, setItem } from 'src/utils/localStorage'
 import { useAccount, useChainId, useDisconnect, useSignMessage, useSwitchChain } from 'wagmi'
 import ModalProvider from './modals'
+import { toast } from 'react-toastify'
 const queryClient = new QueryClient()
 
 export const Context = createContext<{
@@ -62,6 +63,7 @@ function ContextProvider({ children }: any) {
   const { disconnect } = useDisconnect()
   const [account, setAccount] = useState<IUser>()
   const [wallet, setWallet] = useState<string>()
+  const [level, setLevel] = useState(undefined)
   const [isSettingUp, setIsSettingUp] = useState(true)
   const router = useRouter()
   const { t } = useTranslation()
@@ -69,6 +71,7 @@ function ContextProvider({ children }: any) {
   const accessTokenParam = searchParams.get('access_token') || searchParams.get('token')
   const expiresInParam = searchParams.get('expires_in')
   const config = getConfig()
+
   const authorizerRef = new Authorizer({
     authorizerURL: config.AUTHORIZER_URL,
     redirectURL: location.href || config.REDIRECT_URL,
@@ -78,7 +81,23 @@ function ContextProvider({ children }: any) {
   const httpLink = new HttpLink({
     uri: `${config.API_URL}/v1/graphql`,
   })
-
+  useEffect(() => {
+    setLevel((prev) => {
+      if (typeof prev != 'undefined') {
+        if (prev != +account?.level) {
+          toast(
+            router.locale == 'vn'
+              ? `Chúc mừng! Bạn đã lên level ${account?.level}!🎉`
+              : `Congratulations! You've reached level ${account?.level}!🎉`,
+            {
+              type: 'success',
+            }
+          )
+        }
+      }
+      return account?.level
+    })
+  }, [account?.level])
   const wsLink = new GraphQLWsLink(
     createClient({
       url: `wss://${config.API_URL.split('//')[1]}/v1/graphql`,
