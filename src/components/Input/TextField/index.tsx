@@ -1,4 +1,3 @@
-
 interface ITextField {
   placeholder?: string
   leadingComponent?: JSX.Element
@@ -10,7 +9,7 @@ interface ITextField {
   onChange?: (value: string) => void
   value?: string
   type?: string
-  inputref?: any,
+  inputref?: any
   disabled?: boolean
 }
 export default function TextField({
@@ -25,12 +24,12 @@ export default function TextField({
   type = 'text',
   value,
   inputref,
-  disabled
+  disabled,
 }: ITextField) {
   const ex = ['e', '-', '=', '*', '(', ')', '+', '.']
   if (size == 'lg') {
     return (
-      <div className={`relative w-full flex rounded-[20px] ${className}`}>
+      <div className={`relative w-full flex rounded-[6px] ${className}`}>
         {leadingComponent && (
           <div className=' absolute inset-y-0 left-0 flex items-center justify-center py-[10px] pl-[14px] pr-2 max-w-[50px]'>
             {leadingComponent}
@@ -54,8 +53,9 @@ export default function TextField({
             onChange && onChange(event.target.value)
           }}
           id='input-group-1'
-          className={`bg-transparent rounded-[20px] w-full p-[13px] placeholder-medium-gray focus:outline-none ${leadingComponent ? 'pl-[50px]' : ''
-            } ${trailingComponent ? 'pr-[45px]' : ''} `}
+          className={`bg-transparent rounded-[6px] w-full p-[13px] placeholder-medium-gray focus:outline-none ${
+            leadingComponent ? 'pl-[50px]' : ''
+          } ${trailingComponent ? 'pr-[45px]' : ''} `}
           placeholder={placeholder}></input>
         {trailingComponent && (
           <div className=' absolute inset-y-0 right-0 flex items-center justify-center p-[13px] max-w-[50px]'>
@@ -90,8 +90,9 @@ export default function TextField({
           disabled={disabled}
           onChange={(event) => onChange && onChange(event.target.value)}
           id='input-group-1'
-          className={` rounded-[12px] text-base leading-6 w-full px-[13px] py-[2px] placeholder-medium-gray focus:outline-none ${leadingComponent ? 'pl-10' : ''
-            } ${className}`}
+          className={` rounded-[12px] text-base leading-6 w-full px-[13px] py-[2px] placeholder-medium-gray focus:outline-none ${
+            leadingComponent ? 'pl-10' : ''
+          } ${className}`}
           placeholder={placeholder}></input>
         {trailingComponent && (
           <div className=' absolute inset-y-0 right-[10px] flex items-center justify-center p-[13px] max-w-[50px]'>
@@ -126,17 +127,18 @@ export default function TextField({
           disabled={disabled}
           onChange={(event) => onChange && onChange(event.target.value)}
           id='input-group-1'
-          className={` rounded-[12px] text-xs leading-6 w-full px-[13px] placeholder-medium-gray focus:outline-none ${leadingComponent ? 'pl-10' : ''
-            } ${className}`}
+          className={` rounded-[12px] text-xs leading-6 w-full px-[13px] placeholder-medium-gray focus:outline-none ${
+            leadingComponent ? 'pl-10' : ''
+          } ${className}`}
           placeholder={placeholder}></input>
       </div>
     )
   }
 
   return (
-    <div className={`relative w-full flex rounded-[20px] ${className}`}>
+    <div className={`relative w-full flex rounded-lg border-border-primary border h-10 ${className}`}>
       {leadingComponent && (
-        <div className='absolute inset-y-0 left-0 flex items-center justify-center py-[10px] pl-[14px] pr-2 max-w-[50px]'>
+        <div className='absolute inset-y-0 left-0 flex items-center justify-center py-2.5 pl-3 pr-1.5 w-[38px] [&>*]:w-5 [&>*]:h-5'>
           {leadingComponent}
         </div>
       )}
@@ -157,11 +159,12 @@ export default function TextField({
         disabled={disabled}
         onChange={(event) => onChange && onChange(event.target.value)}
         id='input-group-1'
-        className={`bg-transparent rounded-[12px] w-full px-[10px] py-[8px] placeholder-medium-gray focus:outline-none ${leadingComponent ? 'pl-[45px]' : ''
-          } ${trailingComponent ? 'pr-[45px]' : ''} `}
+        className={`bg-transparent w-full px-3 py-2.5 placeholder-text-quatenary text-sm font-normal focus:outline-none ${
+          leadingComponent ? 'pl-[38px]' : ''
+        } ${trailingComponent ? 'pr-[45px]' : ''} `}
         placeholder={placeholder}></input>
       {trailingComponent && (
-        <div className=' absolute inset-y-0 right-0 flex items-center justify-center p-[13px] max-w-[50px]'>
+        <div className=' absolute inset-y-0 right-0 flex items-center justify-center py-2.5 pr-3 pl-1.5 w-[38px] [&>*]:w-5 [&>*]:h-5'>
           {trailingComponent}
         </div>
       )}

@@ -13,11 +13,11 @@ import User from 'assets/images/user.svg'
 import UserGreen from 'assets/images/userGreen.svg'
 import VN from 'assets/images/vn.svg'
 import Button from 'components/Button'
-import MainButton from 'components/Button/MainButton'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import TextField from 'components/Input/TextField'
 import Spinner from 'components/Spinner'
 import CopySvg from 'images/icons/copy.svg'
+import Menu from 'images/icons/menu.svg'
 import EyeClose from 'images/icons/eye-closed.svg'
 import EyeOpen from 'images/icons/eye-open.svg'
 import Warning from 'images/icons/warning.svg'
@@ -28,13 +28,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment, useContext, useEffect, useRef, useState } from 'react'
-import { isMobile } from 'react-device-detect'
 import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
 import useApi from 'src/hooks/useApi'
 import { useClickOutside } from 'src/hooks/useClickOutside'
 import { search } from 'src/services'
 import { shorten } from 'src/utils'
+import { isMobile } from 'react-device-detect'
+import ChupButton from 'components/core/Button/ChupButton'
 import { useAccount, useBalance } from 'wagmi'
 export default function Header({ className }: { className?: string }) {
   const { t } = useTranslation()
@@ -120,11 +121,11 @@ export default function Header({ className }: { className?: string }) {
           isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
         }`}></div>
       <header
-        className={`sticky w-full top-0 z-50 transition-all duration-300 bg-white ${className} shadow-[0px_4px_4px_0px_#0000001A]`}>
-        <nav className='lg:hidden pk-container py-[10px] px-4'>
-          <div className='flex justify-between items-center gap-2'>
+        className={`sticky w-full top-0 z-50 transition-all duration-300 bg-white ${className} lg:shadow-[0px_4px_4px_0px_#0000001A]`}>
+        <nav className='lg:hidden pk-container z-10 w-full shadow-[0px_4px_4px_0px_#0000001A]'>
+          <div className='flex justify-between items-center gap-2 w-full h-14'>
             <div onClick={() => router.push('/')}>
-              <Image src={Logo} alt='header logo' className='h-[40px] w-auto' />
+              <Image src={Logo} alt='header logo' className='h-[30px] w-auto' />
             </div>
             <div>
               <div className='flex items-center gap-4'>
@@ -132,52 +133,18 @@ export default function Header({ className }: { className?: string }) {
                   (address != account?.activeWalletAddress || !isConnected) &&
                   account?.noncustodialWalletAddress && (
                     <div className='flex gap-3 items-center '>
-                      <MainButton onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</MainButton>
+                      <ChupButton size='xs' color='dark' onClick={() => setWalletConnectOpen(true)}>
+                        {t('Connect Wallet')}
+                      </ChupButton>
                     </div>
                   )
                 ) : (
-                  <MainButton onClick={() => setSignInOpen(true)}>{t('Sign in')}</MainButton>
+                  <ChupButton size='xs' color='dark' onClick={() => setSignInOpen(true)}>
+                    {t('Sign in')}
+                  </ChupButton>
                 )}
                 <div className='w-6 h-6 relative'>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='24'
-                    height='24'
-                    viewBox='0 0 24 24'
-                    fill='none'
-                    className={`absolute inset-0 transition-all ${
-                      openNavigation ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                    }`}
-                    onClick={() => setOpenNavigation(false)}>
-                    <path
-                      d='M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z'
-                      stroke='#1C274C'
-                      strokeWidth='1.5'
-                    />
-                    <path
-                      d='M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5'
-                      stroke='#1C274C'
-                      strokeWidth='1.5'
-                      strokeLinecap='round'
-                    />
-                  </svg>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='24'
-                    height='24'
-                    viewBox='0 0 24 24'
-                    fill='none'
-                    className={`absolute inset-0 transition-all ${
-                      !openNavigation ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                    }`}
-                    onClick={() => {
-                      setOpenProfile(false)
-                      setOpenNavigation(true)
-                    }}>
-                    <path d='M20 7L4 7' stroke='#1C274C' strokeWidth='1.5' strokeLinecap='round' />
-                    <path d='M20 12L4 12' stroke='#1C274C' strokeWidth='1.5' strokeLinecap='round' />
-                    <path d='M20 17L4 17' stroke='#1C274C' strokeWidth='1.5' strokeLinecap='round' />
-                  </svg>
+                  <Image src={Menu} alt='menu icon' width={24} height={24} onClick={() => setOpenNavigation(true)} />
                 </div>
               </div>
             </div>
@@ -209,7 +176,7 @@ export default function Header({ className }: { className?: string }) {
                   <div className='flex items-center'>
                     {hideBalance
                       ? '********'
-                      : `${(+walletBalance?.data?.formatted || 0).toFixed(8)} ${walletBalance?.data?.symbol || 'AURA'}`}
+                      : `${(+walletBalance?.data?.formatted || 0).toFixed(2)} ${walletBalance?.data?.symbol || 'AURA'}`}
                     <span className='inline-block'>
                       {
                         <div className='ml-2 relative'>
@@ -246,7 +213,7 @@ export default function Header({ className }: { className?: string }) {
               <div
                 className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'
                 onClick={() => setMigrateWalletOpen(true)}>
-                {t('Migrate your wallet')}{' '}
+                {t('Migrate wallet')}{' '}
                 <span>
                   <Image src={Stars} alt='' className='inline-block ml-1' />
                 </span>
@@ -261,7 +228,6 @@ export default function Header({ className }: { className?: string }) {
               {t('Log out')}
             </div>
           </div>
-          <div className='flex justify-between items-center mt-[10px]'></div>
           {openNavigation && (
             <>
               <div className='fixed inset-0 z-10 bg-black/80'></div>
@@ -317,7 +283,7 @@ export default function Header({ className }: { className?: string }) {
                       <div className='flex items-center'>
                         {hideBalance
                           ? '********'
-                          : `${(+walletBalance?.data?.formatted || 0).toFixed(8)} ${
+                          : `${(+walletBalance?.data?.formatted || 0).toFixed(2)} ${
                               walletBalance?.data?.symbol || 'AURA'
                             }`}
                         {/* {hideBalance
@@ -351,9 +317,9 @@ export default function Header({ className }: { className?: string }) {
                     </div>
                     {!account?.noncustodialWalletAddress ? (
                       <>
-                        <MainButton className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
+                        <ChupButton size='sm' className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
                           {t('Migrate your wallet')}
-                        </MainButton>
+                        </ChupButton>
                       </>
                     ) : null}
                     {account?.noncustodialWalletAddress && account?.name && !isConnected && (
@@ -368,7 +334,10 @@ export default function Header({ className }: { className?: string }) {
                 {account && (
                   <div
                     className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#414141] font-semibold border-b border-[#E9E9E9]'
-                    onClick={() => router.push('/campaigns')}>
+                    onClick={() => {
+                      setOpenNavigation(false)
+                      router.push('/profile')
+                    }}>
                     <Image src={MyProfile} alt='' className='w-5 h-5' />
                     {t('My profile')}
                   </div>
@@ -376,19 +345,25 @@ export default function Header({ className }: { className?: string }) {
 
                 <div
                   className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#242424] font-semibold'
-                  onClick={() => router.push('/campaigns')}>
+                  onClick={() => {
+                    setOpenNavigation(false)
+                    router.push('/campaigns')
+                  }}>
                   <Image src={Campaign} alt='' className='w-5 h-5' />
                   {t('Campaign')}
                 </div>
-                <div
+                {/* <div
                   className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#242424] font-semibold'
                   onClick={() => router.push('/collection')}>
                   <Image src={Collection} alt='' className='w-5 h-5' />
                   {t('Collection')}
-                </div>
+                </div> */}
                 <div
                   className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#242424] font-semibold'
-                  onClick={() => router.push('/about-us')}>
+                  onClick={() => {
+                    setOpenNavigation(false)
+                    router.push('/about-us')
+                  }}>
                   <Image src={AboutUs} alt='' className='w-5 h-5' />
                   {t('About Us')}
                 </div>
@@ -415,6 +390,7 @@ export default function Header({ className }: { className?: string }) {
                     className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#414141] font-semibold'
                     onClick={() => {
                       setOpenProfile(false)
+                       setOpenNavigation(false)
                       logout()
                     }}>
                     <Image src={LogOut} alt='' className='w-5 h-5' />
@@ -426,15 +402,17 @@ export default function Header({ className }: { className?: string }) {
           )}
         </nav>
 
-        <div className='lg:hidden pk-container py-[10px] px-5 pb-4'>
+        <div
+          className={`lg:hidden pk-container py-[10px] px-5 pb-4 bg-[#F4F3F7] ${
+            router.pathname == '/' ? '' : 'hidden'
+          }`}>
           <div ref={divRef} className={`${isSearchFocused ? 'z-30' : ''} w-full lg:max-w-max relative`}>
             <TextField
               inputref={ref}
               onChange={_.debounce(setSearchValue, 500)}
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setIsSearchFocused(false)}
-              className='bg-[#FDFDFD] border-[#BDBDBD] border-[1px] duration-500 lg:!w-max !rounded-[10px] !text-xs'
-              size={isMobile ? 'md' : 'lg'}
+              className='duration-500 bg-white'
               placeholder={t('Search by title')}
               leadingComponent={
                 <Image
@@ -451,7 +429,15 @@ export default function Header({ className }: { className?: string }) {
                   }}
                 />
               }
-              trailingComponent={searchComic.loading ? <Spinner className='w-6 h-6' /> : null}
+              trailingComponent={
+                searchComic.loading ? (
+                  <div>
+                    <Spinner size={20} className='w-5 h-5' />
+                  </div>
+                ) : (
+                  <div></div>
+                )
+              }
             />
             {!!searchComic.data?.length && (
               <div
@@ -515,13 +501,11 @@ export default function Header({ className }: { className?: string }) {
           </div>
         </div>
 
-        <nav
-          className={`pk-container gap-3 lg:flex items-center justify-between pt-[10px] pb-[8px] hidden`}
-          aria-label='Global'>
+        <nav className={`pk-container gap-3 lg:flex items-center justify-between h-20 hidden`} aria-label='Global'>
           <div className='flex items-center gap-8'>
-            <Link href='/' className='flex'>
+            <Link href='/' className='flex shrink-0'>
               <span className='sr-only'>Your Company</span>
-              <Image src={Logo} alt='header logo' className='h-[60px] min-w-[107px]' />
+              <Image src={Logo} alt='header logo' className='w-[72px]' />
             </Link>
 
             <div
@@ -533,15 +517,12 @@ export default function Header({ className }: { className?: string }) {
                 inputref={ref}
                 onChange={_.debounce(setSearchValue, 500)}
                 onFocus={() => setIsSearchFocused(true)}
-                className={`transition-[width] bg-[#FDFDFD] border-[#BDBDBD] border-[1px] duration-500 ${
-                  isSearchFocused ? '!w-[160%]' : ''
-                }`}
-                size='lg'
+                className={`transition-[width] duration-500 ${isSearchFocused ? '!w-[160%]' : ''}`}
                 placeholder={t('Search by title')}
                 leadingComponent={
                   <Image
-                    width={24}
-                    height={24}
+                    width={20}
+                    height={20}
                     src={SearchIcon}
                     alt=''
                     onClick={() => {
@@ -552,7 +533,15 @@ export default function Header({ className }: { className?: string }) {
                     }}
                   />
                 }
-                trailingComponent={searchComic.loading ? <Spinner className='w-6 h-6' /> : null}
+                trailingComponent={
+                  searchComic.loading ? (
+                    <div>
+                      <Spinner size={20} className='w-5 h-5' />
+                    </div>
+                  ) : (
+                    <div></div>
+                  )
+                }
               />
               {!!searchComic.data?.length && (
                 <div
@@ -675,7 +664,7 @@ export default function Header({ className }: { className?: string }) {
                           <div className='flex items-center'>
                             {hideBalance
                               ? '********'
-                              : `${(+walletBalance?.data?.formatted || 0).toFixed(8)} ${
+                              : `${(+walletBalance?.data?.formatted || 0).toFixed(2)} ${
                                   walletBalance?.data?.symbol || 'AURA'
                                 }`}
                             {/* {hideBalance
@@ -709,9 +698,9 @@ export default function Header({ className }: { className?: string }) {
                         </div>
                         {!account?.noncustodialWalletAddress ? (
                           <>
-                            <MainButton className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
-                              {t('Migrate your wallet')}
-                            </MainButton>
+                            <ChupButton size='sm' className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
+                              {t('Migrate wallet')}
+                            </ChupButton>
                           </>
                         ) : null}
                         {account?.noncustodialWalletAddress && account?.name && !isConnected && (
@@ -721,20 +710,22 @@ export default function Header({ className }: { className?: string }) {
                           </div>
                         )}
                       </div>
-                      <div className='font-bold'>
+                      <div className='text-text-primary text-sm font-semibold leading-5'>
                         <div onClick={() => router.push('/profile')}>
-                          <strong>{t('My profile')}</strong>
+                          <span>{t('My profile')}</span>
                         </div>
                         <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0] '></span>
                         <div onClick={logout}>
-                          <strong>{t('Log out')}</strong>
+                          <span>{t('Log out')}</span>
                         </div>
                       </div>
                     </div>
                   </DropdownMenu>
                 </Dropdown>
               ) : (
-                <MainButton onClick={() => setSignInOpen(true)}>{t('Sign in')}</MainButton>
+                <ChupButton size='sm' color='dark' onClick={() => setSignInOpen(true)}>
+                  {t('Sign in')}
+                </ChupButton>
               )}
               {(address != account?.activeWalletAddress || !isConnected) &&
                 account?.verified &&
@@ -742,7 +733,9 @@ export default function Header({ className }: { className?: string }) {
                 account?.noncustodialWalletAddress && (
                   <div className='flex gap-3 items-center '>
                     <div className='h-4 w-[1px] bg-[#E0E0E0]'></div>
-                    <MainButton onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</MainButton>
+                    <ChupButton size='sm' color='dark' onClick={() => setWalletConnectOpen(true)}>
+                      {t('Connect Wallet')}
+                    </ChupButton>
                   </div>
                 )}
             </div>

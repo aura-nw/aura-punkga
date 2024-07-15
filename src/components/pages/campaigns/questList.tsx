@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { Quest } from 'src/models/campaign'
 import QuestItem from './questItem'
 import { useTranslation } from 'react-i18next'
-
+import CheckboxDropdown from 'components/CheckBox/CheckBoxDropDown'
 export default function QuestList({
   quests,
   isEnded,
@@ -17,9 +17,14 @@ export default function QuestList({
   isEnded: boolean
   refreshCallback?: () => void
 }) {
-  const [rewardNFTChecked, setRewardNFTChecked] = useState<boolean>(false)
-  const [filter, setFilter] = useState<string>()
   const { t } = useTranslation()
+  const [rewardNFTChecked, setRewardNFTChecked] = useState<boolean>(false)
+  const [filter, setFilter] = useState<{ key: string, value: string }[]>([
+    {
+      key: 'All quests',
+      value: t('All quests'),
+    }
+  ])
   const questList = quests?.map((quest) => {
     if (quest.reward_status == 'OUT_OF_SLOT') {
       return {
@@ -47,101 +52,83 @@ export default function QuestList({
     }
   })
   return (
-    <div className='mt-10'>
+    <div className='mt-8'>
       <div className='lg:flex lg:items-center lg:flex-wrap lg:justify-between'>
-        <p className='text-lg leading-[23px] lg:text-xl lg:leading-[25px] font-bold'>
+        <p className='text-lg leading-[26px] lg:text-xl lg:leading-[25px] font-medium'>
           {quests && !isEnded
             ? `${t('Quests')} (${
                 quests.filter(
                   (quest) =>
-                    (filter ? quest.repeat == filter : true) && (rewardNFTChecked ? !!quest.reward.nft?.nft_name : true)
+                    (filter?.[0]?.key != 'All quests' ? quest.repeat == filter?.[0]?.key : true) &&
+                    (rewardNFTChecked ? !!quest.reward.nft?.nft_name : true)
                 ).length
               })`
             : t('Quests')}
         </p>
         {quests && !isEnded && (
-          <div className='mt-[10px] flex justify-between items-center lg:mt-0'>
-            <div className='p-1 lg:mr-[10px]'>
+          <div className='mt-4 flex gap-4 items-center lg:mt-0'>
+            <div>
               <Checkbox
                 label={t('Reward NFT')}
                 checked={rewardNFTChecked}
                 onClick={() => setRewardNFTChecked(!rewardNFTChecked)}
               />
             </div>
+            <span className='h-4 w-[1px] bg-border-primary'></span>
             <div>
-              <Dropdown>
-                <DropdownToggle>
-                  {(open) => (
-                    <div
-                      className={`p-[10px] rounded-lg bg-[#F2F2F2] flex hover:bg-white justify-between cursor-pointer items-center w-[233px] ${
-                        open
-                          ? 'border-primary-color border bg-white p-[9px]'
-                          : 'hover:border hover:border-[#DEDEDE] hover:p-[9px]'
-                      }`}>
-                      <div className='px-[5px] text-sm leading-[18px] font-semibold'>
-                        {filter ? filter : t('All quests')}
-                      </div>
-                      <div
-                        className={`rounded-full p-[5px] aspect-square bg-[#C6FFDE] grid place-items-center ${
-                          open ? 'rotate-180' : ''
-                        }`}>
-                        <svg xmlns='http://www.w3.org/2000/svg' width='8' height='4' viewBox='0 0 8 4' fill='none'>
-                          <path
-                            d='M1.4513 0L4.0013 2.47467L6.5513 0L7.33463 0.765333L4.0013 4L0.667969 0.765333L1.4513 0Z'
-                            fill='#1FAB5E'
-                          />
-                        </svg>
-                      </div>
-                    </div>
-                  )}
-                </DropdownToggle>
-                <DropdownMenu customClass='rounded-[8px]' closeOnClick>
-                  <div className='w-[233px] bg-[#F2F2F2] cursor-pointer'>
-                    <div className='p-[15px] text-sm font-semibold' onClick={() => setFilter(undefined)}>
-                      {t('All quests')}
-                    </div>
-                    <div className='p-[15px] text-sm font-semibold' onClick={() => setFilter('Once')}>
-                      {`${t('Once')} (${questList.filter((quest) => quest.repeat == 'Once').length})`}
-                    </div>
-                    <div className='p-[15px] text-sm font-semibold' onClick={() => setFilter('Daily')}>
-                      {`${t('Daily')} (${questList.filter((quest) => quest.repeat == 'Daily').length})`}
-                    </div>
-                  </div>
-                </DropdownMenu>
-              </Dropdown>
+              <CheckboxDropdown
+                selected={filter}
+                onChange={setFilter}
+                options={[
+                  {
+                    key: 'All quests',
+                    value: t('All quests'),
+                  },
+                  {
+                    key: 'Once',
+                    value: `${t('Once')} (${questList.filter((quest) => quest.repeat == 'Once').length})`,
+                  },
+                  {
+                    key: 'Daily',
+                    value: `${t('Daily')} (${questList.filter((quest) => quest.repeat == 'Daily').length})`,
+                  },
+                ]}
+                multiple={false}
+              />
             </div>
           </div>
         )}
       </div>
       {isEnded ? (
         <div className='mt-5 p-6 lg:mt-9 lg:p-6 flex flex-col items-center w-full'>
-          <Image src={Mascot3} alt='' className='w-[240px] h-[240px] lg:w-[320px] lg:h-[320px]' />
-          <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-semibold mt-5 text-center'>
+          <Image src={Mascot3} alt='' className='w-[160px] h-[160px]' />
+          <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-medium mt-5 text-center'>
             {t('Campaign Ended')}
           </div>
         </div>
       ) : !quests ? (
         <div className='mt-5 p-6 lg:mt-9 lg:p-6 flex flex-col items-center w-full'>
-          <Image src={Mascot2} alt='' className='w-[240px] h-[240px] lg:w-[320px] lg:h-[320px]' />
-          <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-semibold mt-5 text-center'>
-            {t('Enroll to view quests')}
+          <Image src={Mascot2} alt='' className='w-[160px] h-[160px]' />
+          <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-medium mt-5 text-center'>
+            {t('Enroll to view quests and leaderboard')}
           </div>
         </div>
       ) : !quests.length ? (
         <div className='mt-5 p-6 lg:mt-9 lg:p-6 flex flex-col items-center w-full'>
-          <Image src={Mascot2} alt='' className='w-[240px] h-[240px] lg:w-[320px] lg:h-[320px]' />
-          <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-semibold mt-5 text-center'>
+          <Image src={Mascot2} alt='' className='w-[160px] h-[160px]' />
+          <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-medium mt-5 text-center'>
             {t('No quests to show')}
           </div>
         </div>
       ) : (
-        <div className='grid grid-cols-1 2xl:grid-cols-2 gap-5 mt-5'>
+        <div className='grid grid-cols-1 2xl:grid-cols-2 gap-4 mt-4 lg:mt-8'>
           {questList
             .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
             .sort((a, b) => a.weight - b.weight)
             .filter(
               (quest) =>
-                (filter ? quest.repeat == filter : true) && (rewardNFTChecked ? !!quest.reward.nft?.nft_name : true)
+                (filter?.[0]?.key != 'All quests' ? quest.repeat == filter?.[0]?.key : true) &&
+                (rewardNFTChecked ? !!quest.reward.nft?.nft_name : true)
             )
             .map((quest: Quest, index) => (
               <QuestItem quest={quest} key={quest.id} refreshCallback={refreshCallback} />

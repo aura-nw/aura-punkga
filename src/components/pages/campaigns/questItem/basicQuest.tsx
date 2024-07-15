@@ -1,6 +1,6 @@
-import FilledButton from 'components/core/Button/FilledButton'
-import SubFilledButton from 'components/core/Button/SubFilledButton'
+import ChupButton from 'components/core/Button/ChupButton'
 import moment from 'moment'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Countdown, { zeroPad } from 'react-countdown'
 import { useTranslation } from 'react-i18next'
@@ -14,20 +14,20 @@ export default function BasicQuest({
   loading: boolean
   claimQuestHandler: () => void
 }) {
-  const {t} = useTranslation()
-  const {locale} = useRouter()
+  const { t } = useTranslation()
+  const { locale } = useRouter()
   return (
     <div className='mt-5 w-full lg:mt-10'>
       {quest.reward_status == 'CAN_CLAIM' ? (
-        <FilledButton loading={loading} onClick={claimQuestHandler} className='w-full'>
+        <ChupButton loading={loading} onClick={claimQuestHandler} className='w-full'>
           {t('Claim Reward')}
-        </FilledButton>
+        </ChupButton>
       ) : quest.reward_status == 'OUT_OF_SLOT' ? (
-        <div className='text-center bg-medium-gray leading-5 font-bold text-light-medium-gray px-6 pt-2 pb-[10px] rounded-[20px]'>
+        <ChupButton disabled className='w-full'>
           {t('Out of reward')}
-        </div>
+        </ChupButton>
       ) : quest.reward_status == 'CLAIMED' && quest.repeat == 'Daily' ? (
-        <div className='text-center bg-medium-gray leading-5 font-bold text-light-medium-gray px-6 pt-2 pb-[10px] rounded-[20px]'>
+        <ChupButton disabled className='w-full'>
           <Countdown
             date={moment().add(1, 'd').startOf('day').toISOString()}
             renderer={({ hours, minutes, seconds }) => {
@@ -44,17 +44,18 @@ export default function BasicQuest({
               )
             }}
           />
-        </div>
+        </ChupButton>
       ) : (
-        <SubFilledButton
+        <Link
+          className='w-full grid place-items-center'
           target='_blank'
           href={`/comic/${quest.requirement[quest.type.toLowerCase()].manga.slug}${
             quest.requirement[quest.type.toLowerCase()]?.chapter?.number
               ? `/chapter/${quest.requirement[quest.type.toLowerCase()].chapter.number}`
               : ''
           }`}>
-          {t('Go to page')}
-        </SubFilledButton>
+          <ChupButton className='w-full'>{t('Go to page')}</ChupButton>
+        </Link>
       )}
     </div>
   )

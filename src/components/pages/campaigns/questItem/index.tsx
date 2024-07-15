@@ -1,23 +1,23 @@
 import Modal from 'components/Modal'
-import FilledButton from 'components/core/Button/FilledButton'
+import ChupButton from 'components/core/Button/ChupButton'
+import LabelChip from 'components/core/Chip/Label'
 import IllusImage from 'components/pages/campaigns/assets/illus.svg'
 import NoImage from 'images/no_img.png'
 import moment from 'moment'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
 import { isMobile } from 'react-device-detect'
 import ReactHtmlParser from 'react-html-parser'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import TruncateMarkup from 'react-truncate-markup'
 import { Context } from 'src/context'
 import { Quest } from 'src/models/campaign'
 import { claimQuest, getRequestLog } from 'src/services'
 import BasicQuest from './basicQuest'
 import FreeQuest from './freeQuest'
 import QuizQuest from './quizQuest'
-import { useTranslation } from 'react-i18next'
-import { useRouter } from 'next/router'
 
 export default function QuestItem({ quest, refreshCallback }: { quest: Quest; refreshCallback?: () => void }) {
   const { getProfile } = useContext(Context)
@@ -95,24 +95,18 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
             />
           </div>
         </Modal>
-        <div className='p-5 pt-10 w-[90vw] max-w-[800px] lg:w-[800px] lg:grid-cols-[1fr_190px] lg:grid lg:gap-x-10 lg:grid-rows-[auto_1fr]'>
+        <div className='p-5 pt-10 w-[90vw] max-w-[800px] lg:w-[644px] lg:grid-cols-[1fr_130px] lg:grid lg:gap-x-8 lg:grid-rows-[auto_1fr]'>
           <div>
-            <div className='text-xs lg:text-sm leading-[15px] lg:leading-[18px] font-semibold'>
-              {quest.repeat == 'Daily' && (
-                <span className='bg-[#E2D8FF] text-[#A247FF] font-bold rounded-[3px] lg:rounded-md px-2 pb-[1px] lg:pb-1 lg:pt-[2px] text-[10px] lg:text-sm leading-[13px] lg:leading-[18px] mr-[5px]'>
-                  {t('Daily')}
-                </span>
-              )}
-              {quest.name}
-            </div>
-            <div className='mt-[15px] lg:mt-5 lg:text-xl lg:leading-[25px] leading-5 font-bold'>
+            {quest.repeat == 'Daily' && <LabelChip className='mb-1.5'>{t('Daily')}</LabelChip>}
+            {/* <div className='text-lg font-semibold'>{quest.name}</div> */}
+            <div className='mt-1.5 text-lg leading-[26px] font-semibold'>
               {quest.type == 'Subscribe'
                 ? locale == 'vn'
-                  ? `Theo dõi ${quest.requirement.subscribe.manga.title} để nhận phần thưởng`
+                  ? `Đăng ký theo dõi truyện ${quest.requirement.subscribe.manga.title} để nhận phần thưởng`
                   : `Subscribe to manga ${quest.requirement.subscribe.manga.title} to claim your reward`
                 : quest.type == 'Like'
                 ? locale == 'vn'
-                  ? `Thích ${quest.requirement.like.manga.title} để nhận phần thưởng`
+                  ? `Thích truyện ${quest.requirement.like.manga.title} để nhận phần thưởng`
                   : `Like manga ${quest.requirement.like.manga.title} to claim your reward`
                 : quest.type == 'Read'
                 ? locale == 'vn'
@@ -120,79 +114,97 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                   : `Read chapter ${quest.requirement.read.chapter.number} of manga ${quest.requirement.read.manga.title} to claim your reward`
                 : quest.type == 'Comment'
                 ? locale == 'vn'
-                  ? `Bình luận về chương ${quest.requirement.comment.chapter.number} của truện ${quest.requirement.comment.manga.title} để nhận phần thưởng`
+                  ? `Bình luận về chương ${quest.requirement.comment.chapter.number} của truyện ${quest.requirement.comment.manga.title} để nhận phần thưởng`
                   : `Comment on chapter ${quest.requirement.comment.chapter.number} of manga ${quest.requirement.comment.manga.title} to claim your reward`
                 : quest.type == 'Empty'
-                ? t(`Free quest`)
+                ? t(`Free reward`)
                 : quest.type == 'Quiz'
                 ? t(`Answer a quiz`)
                 : ``}
             </div>
-            {!!quest.description && (
+            <div className='mt-3 flex flex-col items-center md:hidden'>
               <div
-                className={` mt-[15px] lg:mt-5 text-[#777777] text-xs lg:text-sm leading-[15px] lg:leading-[18px] max-h-[105px] lg:max-h-[126px] overflow-auto`}>
+                className={`${
+                  quest.reward_status == 'OUT_OF_SLOT' ? 'opacity-20' : ''
+                } rounded-mlg bg-[#F0F0F0] p-2.5 w-[130px] shrink-0 min-h-[130px] gap-1.5 flex flex-col justify-center items-center`}>
+                {quest?.reward?.nft?.nft_name ? (
+                  <>
+                    <Image
+                      src={quest?.reward?.nft.img_url || NoImage}
+                      width={80}
+                      height={80}
+                      alt=''
+                      className='w-[80px] h-[80px] rounded-lg object-cover'
+                    />
+                    <div className='text-xs leading-[18px] text-text-teriary w-[110px] truncate text-center'>
+                      {quest?.reward?.nft?.nft_name}
+                    </div>
+                  </>
+                ) : (
+                  <Image src={IllusImage} width={80} height={80} alt='' className='w-[80px] h-[80px] rounded-lg' />
+                )}
+                {!!quest?.reward?.xp && quest?.reward?.nft?.nft_name ? (
+                  <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${quest?.reward?.xp} XP`}</div>
+                ) : (
+                  <div className='text-text-teriary font-semibold'>{`+ ${quest?.reward?.xp} XP`}</div>
+                )}
+              </div>
+              {!!quest.reward.slots && (
+                <>
+                  <div className='flex flex-col items-center text-[10px] text-text-teriary leading-[13px] lg:text-xs lg:leading-[18px] mt-1.5'>
+                    <div>{`${
+                      quest.repeat_quests?.[0]?.repeat_quest_reward_claimed == undefined
+                        ? quest.quest_reward_claimed
+                        : quest.repeat_quests?.[0]?.repeat_quest_reward_claimed
+                    }/${quest.reward.slots}`}</div>
+                    <div>{t('rewards claimed')}</div>
+                  </div>
+                </>
+              )}
+            </div>
+            {!!quest.description && (
+              <div className={`mt-3 text-text-teriary text-sm max-h-[120px] overflow-auto`}>
                 {ReactHtmlParser(quest.description)}
               </div>
             )}
           </div>
-          <div className='mt-5 lg:mt-0 flex flex-col items-center row-span-2'>
-            <div className='text-sm lg:text-base leading-[18px] lg:leading-5 font-semibold mb-[10px]'>
-              👑 {t('Reward')}
-            </div>
-            {quest.reward?.nft?.img_url ? (
-              <>
-                <div className='flex flex-col items-center gap-[10px]'>
+          <div className='mt-5 lg:mt-0 md:flex flex-col items-center row-span-2 hidden'>
+            <div
+              className={`${
+                quest.reward_status == 'OUT_OF_SLOT' ? 'opacity-20' : ''
+              } rounded-mlg bg-[#F0F0F0] p-2.5 w-[130px] shrink-0 min-h-[130px] gap-1.5 flex flex-col justify-center items-center`}>
+              {quest?.reward?.nft?.nft_name ? (
+                <>
                   <Image
-                    onClick={() => setOpenNFTPreview(true)}
-                    src={quest.reward.nft.img_url}
+                    src={quest?.reward?.nft.img_url || NoImage}
+                    width={80}
+                    height={80}
                     alt=''
-                    width={180}
-                    height={180}
-                    className='w-[160px] h-[160px] rounded-lg object-contain bg-white'
+                    className='w-[80px] h-[80px] rounded-lg object-cover'
                   />
-                  <div className='text-sm lg:text-base leading-[18px] lg:leading-5 text-subtle-dark'>
-                    {quest.reward.nft.nft_name}
+                  <div className='text-xs leading-[18px] text-text-teriary w-[110px] truncate text-center'>
+                    {quest?.reward?.nft?.nft_name}
                   </div>
-                  <div className='w-[160px] h-[1px] bg-light-medium-gray'></div>
-                  <div className='flex gap-2 items-center'>
-                    <div className='text-second-color text-sm leading-[18px] lg:text-lg lg:leading-[23px] font-bold text-center'>{`+${quest.reward.xp} XP`}</div>
-                    {!!quest.reward.slots && (
-                      <>
-                        <div className='w-[1px] h-[26px] bg-light-medium-gray'></div>
-                        <div className='flex flex-col items-center text-[10px] leading-[13px] lg:text-xs lg:leading-[15px] whitespace-nowrap'>
-                          <div>{`${
-                            quest.repeat_quests?.[0]?.repeat_quest_reward_claimed == undefined
-                              ? quest.quest_reward_claimed
-                              : quest.repeat_quests?.[0]?.repeat_quest_reward_claimed
-                          }/${quest.reward.slots}`}</div>
-                          <div>{t('rewards claimed')}</div>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </>
-            ) : (
+                </>
+              ) : (
+                <Image src={IllusImage} width={80} height={80} alt='' className='w-[80px] h-[80px] rounded-lg' />
+              )}
+              {!!quest?.reward?.xp && quest?.reward?.nft?.nft_name ? (
+                <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${quest?.reward?.xp} XP`}</div>
+              ) : (
+                <div className='text-text-teriary font-semibold'>{`+ ${quest?.reward?.xp} XP`}</div>
+              )}
+            </div>
+            {!!quest.reward.slots && (
               <>
-                <div className='bg-[#F0F0F0] w-[160px] h-[160px] rounded-lg flex flex-col items-center gap-[10px] p-[10px]'>
-                  <Image src={IllusImage} alt='' className='w-[100px] h-[100px]' />
-                  <div className='text-second-color text-2xl leading-[30px] font-bold text-center'>
-                    {`+ ${quest.reward.xp} XP`}
-                  </div>
+                <div className='flex flex-col items-center text-[10px] text-text-teriary leading-[13px] lg:text-xs lg:leading-[18px] mt-1.5'>
+                  <div>{`${
+                    quest.repeat_quests?.[0]?.repeat_quest_reward_claimed == undefined
+                      ? quest.quest_reward_claimed
+                      : quest.repeat_quests?.[0]?.repeat_quest_reward_claimed
+                  }/${quest.reward.slots}`}</div>
+                  <div>{t('rewards claimed')}</div>
                 </div>
-                {!!quest.reward.slots && (
-                  <>
-                    <div className='w-[160px] h-[1px] bg-light-medium-gray my-[10px]'></div>
-                    <div className='flex flex-col items-center text-[10px] leading-[13px] lg:text-xs lg:leading-[15px]'>
-                      <div>{`${
-                        quest.repeat_quests?.[0]?.repeat_quest_reward_claimed == undefined
-                          ? quest.quest_reward_claimed
-                          : quest.repeat_quests?.[0]?.repeat_quest_reward_claimed
-                      }/${quest.reward.slots}`}</div>
-                      <div>{t('rewards claimed')}</div>
-                    </div>
-                  </>
-                )}
               </>
             )}
           </div>
@@ -212,54 +224,52 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
         </div>
       </Modal>
       <Modal open={openClaimSuccessModal} setOpen={() => setClaimSuccessModalOpen(false)}>
-        <div
-          className={`w-[320px] lg:w-[448px] px-10 pb-5 pt-7 flex flex-col items-center ${
-            quest?.reward.nft?.nft_name ? 'gap-[10px]' : 'gap-5'
-          } text-sm`}>
-          <div className='leading-[18px] lg:leading-5 font-semibold text-center'>👑 {t('Congratulation')}!</div>
-          <div>You have received quest reward</div>
+        <div className={`w-[320px] lg:w-[547px] px-10 pb-5 pt-7 flex flex-col items-center`}>
+          <div className='leading-[26px] font-semibold text-center text-lg'>{t('Congratulation')}!</div>
+          <div className='text-sm mt-2'>{t('You have received quest reward')}</div>
           {quest?.reward.nft?.nft_name ? (
-            <div className='flex flex-col items-center'>
-              <div className='mb-[10px]'>
+            <div className='flex flex-col items-center mt-8'>
+              <div>
                 <Image
                   src={quest?.reward.nft.img_url || NoImage}
-                  width={80}
-                  height={80}
+                  width={240}
+                  height={240}
                   alt=''
-                  className='w-[200px] h-[200px] lg:w-[240px] lg:h-[240px] rounded-lg object-contain bg-white'
+                  className='w-[200px] h-[200px] lg:w-[240px] lg:h-[240px] rounded-mlg object-cover bg-background-bg-primary'
                 />
               </div>
-              <div className='text-sm leading-[18px] lg:text-base lg:leading-5 text-[#414141] max-w-[240px] truncate'>
+              <div className='text-sm font-semibold w-[240px] whitespace-nowrap text-center truncate mt-4'>
                 {quest?.reward.nft?.nft_name}
               </div>
-              <div className='bg-[#DEDEDE] w-[240px] lg:w-[288px] h-[1px] my-[10px]'></div>
-              <div className='font-bold text-second-color text-lg leading-[23px] lg:text-3xl lg:leading-[30px] text-center'>
+              <div className='font-bold text-second-color text-xl text-text-brand-defaul text-center mt-4'>
                 {`+ ${quest?.reward.xp} XP`}
               </div>
             </div>
           ) : (
-            <div className='flex flex-col items-center'>
-              <div className='mb-5'>
+            <div className='flex flex-col items-center mt-8'>
+              <div>
                 <Image
                   src={IllusImage}
-                  width={80}
-                  height={80}
+                  width={240}
+                  height={240}
                   alt=''
-                  className='w-[200px] h-[200px] lg:w-[240px] lg:h-[240px]'
+                  className='w-[200px] h-[200px] lg:w-[240px] lg:h-[240px] rounded-mlg object-cover bg-background-bg-primary'
                 />
               </div>
-              <div className='font-bold text-second-color text-lg leading-[23px] lg:text-3xl lg:leading-[30px] text-center'>{`+ ${quest?.reward.xp} XP`}</div>
+              <div className='font-bold text-second-color text-xl text-text-brand-defaul text-center mt-4'>
+                {`+ ${quest?.reward.xp} XP`}
+              </div>
             </div>
           )}
         </div>
       </Modal>
       <div
-        className={`bg-[#F2F2F2] lg:bg-white lg:border lg:border-light-medium-gray rounded-[10px] p-4 flex gap-[10px] min-h-[160px] relative ${
+        className={`bg-neautral-white lg:bg-white lg:border lg:border-light-medium-gray rounded-mlg p-4 flex gap-[10px] h-[166px] relative ${
           quest.unlock &&
           (quest.reward_status == 'CAN_CLAIM' ||
             quest.reward_status == 'NOT_SATISFY' ||
             (quest.reward_status == 'CLAIMED' && quest.repeat == 'Daily'))
-            ? 'cursor-pointer hover:bg-[#F2F2F2] [&_.reward]:hover:bg-white'
+            ? 'cursor-pointer '
             : null
         }`}
         onClick={() =>
@@ -270,17 +280,34 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
             ? setOpen(true)
             : null
         }>
-        <div className='flex-1 flex flex-col justify-between relative'>
-          <div className='flex flex-col justify-between h-[68px] lg:h-[76px]'>
-            <div className='text-xs leading-[15px] lg:text-base lg:leading-5 font-bold line-clamp-2'>
-              {quest.repeat == 'Daily' && (
-                <span className='bg-[#E2D8FF] text-[#A247FF] font-bold rounded-[3px] lg:rounded-md px-2 pb-[1px] lg:pt-[2px] lg:pb-1 lg:font-semibold text-[10px] lg:text-sm leading-[13px] lg:leading-[18px] mr-[5px]'>
-                  {t('Daily')}
-                </span>
+        <div className='flex-1 flex flex-col relative h-full'>
+          {(quest.repeat == 'Daily' || !quest.unlock) && (
+            <div className='mb-1 flex items-center gap-1.5'>
+              {quest.repeat == 'Daily' && <LabelChip>{t('Daily')}</LabelChip>}
+              {!quest.unlock && (
+                <div className='rounded h-[19px] w-[19px] grid place-items-center bg-[#DEDEDE]'>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='9' height='10' viewBox='0 0 9 10' fill='none'>
+                    <path
+                      fillRule='evenodd'
+                      clipRule='evenodd'
+                      d='M1.8 4.24319V3.25301C1.8 1.45642 3.00883 0 4.5 0C5.99117 0 7.2 1.45642 7.2 3.25301V4.24319C7.6459 4.28331 7.93628 4.3846 8.14853 4.64033C8.5 5.06379 8.5 5.74534 8.5 7.10843C8.5 8.47153 8.5 9.15308 8.14853 9.57654C7.79706 10 7.23137 10 6.1 10H2.9C1.76863 10 1.20294 10 0.851472 9.57654C0.5 9.15308 0.5 8.47153 0.5 7.10843C0.5 5.74534 0.5 5.06379 0.851472 4.64033C1.06372 4.3846 1.3541 4.28331 1.8 4.24319ZM2.4 3.25301C2.4 1.85567 3.3402 0.722892 4.5 0.722892C5.6598 0.722892 6.6 1.85567 6.6 3.25301V4.21859C6.4468 4.21687 6.28061 4.21687 6.1 4.21687H2.9C2.71939 4.21687 2.5532 4.21687 2.4 4.21859V3.25301ZM5.3 7.10843C5.3 7.64076 4.94183 8.07229 4.5 8.07229C4.05817 8.07229 3.7 7.64076 3.7 7.10843C3.7 6.57611 4.05817 6.14458 4.5 6.14458C4.94183 6.14458 5.3 6.57611 5.3 7.10843Z'
+                      fill='#61646B'
+                    />
+                    <path
+                      fillRule='evenodd'
+                      clipRule='evenodd'
+                      d='M1.8 4.24319V3.25301C1.8 1.45642 3.00883 0 4.5 0C5.99117 0 7.2 1.45642 7.2 3.25301V4.24319C7.6459 4.28331 7.93628 4.3846 8.14853 4.64033C8.5 5.06379 8.5 5.74534 8.5 7.10843C8.5 8.47153 8.5 9.15308 8.14853 9.57654C7.79706 10 7.23137 10 6.1 10H2.9C1.76863 10 1.20294 10 0.851472 9.57654C0.5 9.15308 0.5 8.47153 0.5 7.10843C0.5 5.74534 0.5 5.06379 0.851472 4.64033C1.06372 4.3846 1.3541 4.28331 1.8 4.24319ZM2.4 3.25301C2.4 1.85567 3.3402 0.722892 4.5 0.722892C5.6598 0.722892 6.6 1.85567 6.6 3.25301V4.21859C6.4468 4.21687 6.28061 4.21687 6.1 4.21687H2.9C2.71939 4.21687 2.5532 4.21687 2.4 4.21859V3.25301ZM5.3 7.10843C5.3 7.64076 4.94183 8.07229 4.5 8.07229C4.05817 8.07229 3.7 7.64076 3.7 7.10843C3.7 6.57611 4.05817 6.14458 4.5 6.14458C4.94183 6.14458 5.3 6.57611 5.3 7.10843Z'
+                      fill='black'
+                      fillOpacity='0.2'
+                    />
+                  </svg>
+                </div>
               )}
-              {quest.name}
             </div>
-            <div className='text-xs leading-[15px] lg:text-sm lg:leading-[18px] font-semibold text-[#646464] flex items-center gap-[10px]'>
+          )}
+          <div className='flex flex-col mb-3 h-full'>
+            <div className='text-base font-semibold line-clamp-3 md:line-clamp-2'>{quest.name}</div>
+            <div className='text-xs leading-[18px] lg:text-sm lg:leading-5 font-medium text-text-teriary mt-3 flex items-center gap-1.5'>
               <span>{`${quest.reward.xp} XP`}</span>
               {quest.reward.nft?.img_url && (
                 <>
@@ -300,27 +327,33 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
               )}
             </div>
           </div>
-
-          {quest.reward_status == 'OUT_OF_SLOT' ? (
-            <div className='text-xs w-fit bg-[#F2F2F2] leading-[15px] font-bold text-[#ABABAB] px-6 pt-1 pb-[5px] rounded-[20px]'>
-              {t('Out of reward')}
-            </div>
-          ) : !quest.unlock ? (
-            <div className='flex gap-[10px] items-center text-xs leading-[15px] lg:text-sm lg:leading-[18px] text-medium-gray'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='24'
-                height='25'
-                viewBox='0 0 24 25'
-                fill='none'
-                className='w-6 h-6 shrink-0'>
+          {quest.reward_status == 'CLAIMED' && quest.repeat == 'Once' ? (
+            <div className='flex gap-1 items-center text-xs font-semibold text-text-brand-defaul leading-[18px]'>
+              <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>
                 <path
-                  fillRule='evenodd'
-                  clipRule='evenodd'
-                  d='M5.25 10.5546V8.5C5.25 4.77208 8.27208 1.75 12 1.75C15.7279 1.75 18.75 4.77208 18.75 8.5V10.5546C19.8648 10.6379 20.5907 10.848 21.1213 11.3787C22 12.2574 22 13.6716 22 16.5C22 19.3284 22 20.7426 21.1213 21.6213C20.2426 22.5 18.8284 22.5 16 22.5H8C5.17157 22.5 3.75736 22.5 2.87868 21.6213C2 20.7426 2 19.3284 2 16.5C2 13.6716 2 12.2574 2.87868 11.3787C3.40931 10.848 4.13525 10.6379 5.25 10.5546ZM6.75 8.5C6.75 5.60051 9.10051 3.25 12 3.25C14.8995 3.25 17.25 5.60051 17.25 8.5V10.5036C16.867 10.5 16.4515 10.5 16 10.5H8C7.54849 10.5 7.13301 10.5 6.75 10.5036V8.5ZM14 16.5C14 17.6046 13.1046 18.5 12 18.5C10.8954 18.5 10 17.6046 10 16.5C10 15.3954 10.8954 14.5 12 14.5C13.1046 14.5 14 15.3954 14 16.5Z'
-                  fill='#ABABAB'
+                  d='M15.142 9.98299L10.875 14.25L9.42049 12.7955M12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3Z'
+                  stroke='#009640'
+                  strokeWidth='2'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
                 />
               </svg>
+              {t('Quest completed')}
+            </div>
+          ) : quest.reward_status == 'OUT_OF_SLOT' ? (
+            <ChupButton
+              loading={loading}
+              variant='filled'
+              disabled
+              size='xs'
+              onClick={(e) => {
+                claimQuestHandler()
+                e.stopPropagation()
+              }}>
+              {t('Out of reward')}
+            </ChupButton>
+          ) : !quest.unlock ? (
+            <div className='flex gap-[10px] items-center text-xxs leading-[13px] text-text-primary'>
               <div>
                 {!!quest.condition.level && <span>{`${t('Reach level')} ${quest.condition.level}`}</span>}
                 {!!quest.condition.level && !!quest.condition.quest_id && <span> {t('and')} </span>}
@@ -338,15 +371,17 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
               </div>
             </div>
           ) : quest.reward_status == 'CAN_CLAIM' ? (
-            <FilledButton
+            <ChupButton
               loading={loading}
-              className='w-fit lg:!text-base lg:!leading-5 lg:!px-[24px] lg:!pt-[8px] lg:!pb-[10px]'
+              variant='filled'
+              color='green'
+              size='xs'
               onClick={(e) => {
                 claimQuestHandler()
                 e.stopPropagation()
               }}>
               {t('Claim Reward')}
-            </FilledButton>
+            </ChupButton>
           ) : quest.reward_status == 'CLAIMED' && quest.repeat == 'Daily' ? (
             <div className='text-xs w-fit bg-[#DEDEDE] leading-[15px] font-bold text-medium-gray px-6 pt-1 pb-[5px] rounded-[20px]'>
               <Countdown
@@ -369,39 +404,31 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
           ) : null}
         </div>
         <div
-          className={`reward w-[140px] max-h-[130px] shrink-0 bg-white lg:bg-[#F0F0F0] rounded-lg px-[10px] pt-[6px] pb-2 relative ${
+          className={`${
             quest.reward_status == 'OUT_OF_SLOT' ? 'opacity-20' : ''
-          }`}>
-          {quest.reward.nft?.nft_name ? (
-            <div className='flex flex-col items-center'>
-              <div className='mb-[10px]'>
-                <Image
-                  src={quest.reward.nft.img_url || NoImage}
-                  width={80}
-                  height={80}
-                  alt=''
-                  className='w-[80px] h-[80px] rounded-lg mt-1 object-contain bg-white'
-                />
+          } rounded-mlg bg-[#F0F0F0] p-2.5 w-[130px] shrink-0 min-h-[130px] gap-1.5 flex flex-col justify-center items-center`}>
+          {quest?.reward?.nft?.nft_name ? (
+            <>
+              <Image
+                src={quest?.reward?.nft.img_url || NoImage}
+                width={80}
+                height={80}
+                alt=''
+                className='w-[80px] h-[80px] rounded-lg object-cover'
+              />
+              <div className='text-xs leading-[18px] text-text-teriary w-[110px] truncate text-center'>
+                {quest?.reward?.nft?.nft_name}
               </div>
-              <div className='text-xs leading-[15px] text-[#61646B] max-w-[120px] truncate'>
-                {quest.reward.nft?.nft_name}
-              </div>
-            </div>
+            </>
           ) : (
-            <div className='flex flex-col items-center'>
-              <div className='mb-[10px]'>
-                <Image src={IllusImage} width={80} height={80} alt='' className='w-[80px] h-[80px]' />
-              </div>
-              <div className='w-full bg-[#61646B] rounded font-bold text-[#23FF81] text-xs leading-[15px] pt-[2px] pb-1 text-center'>{`+ ${quest.reward.xp} XP`}</div>
-            </div>
+            <Image src={IllusImage} width={80} height={80} alt='' className='w-[80px] h-[80px] rounded-lg' />
+          )}
+          {!!quest?.reward?.xp && quest?.reward?.nft?.nft_name ? (
+            <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${quest?.reward?.xp} XP`}</div>
+          ) : (
+            <div className='text-text-teriary font-semibold'>{`+ ${quest?.reward?.xp} XP`}</div>
           )}
         </div>
-
-        {quest.reward_status == 'CLAIMED' && quest.repeat == 'Once' && (
-          <div className='bg-[#1FAB5E1A] absolute bottom-0 inset-x-0 h-[60px] backdrop-blur-[10px] rounded-b-[10px] font-semibold text-second-color text-xs lg:text-sm lg:leading-[18px] flex items-center justify-center'>
-            {t('Quest completed')}
-          </div>
-        )}
       </div>
     </>
   )
