@@ -124,7 +124,7 @@ export default function Header({ className }: { className?: string }) {
         <nav className='lg:hidden pk-container pt-[15px] px-4 shadow-[0px_4px_4px_0px_#0000001A]'>
           <div className='flex justify-between items-center gap-2'>
             <div onClick={() => router.push('/')}>
-              <Image src={Logo} alt='header logo' className='h-[40px] w-auto' />
+              <Image src={Logo} alt='header logo' className='h-[30px] w-auto' />
             </div>
             <div>
               <div className='flex items-center gap-4'>
@@ -132,11 +132,15 @@ export default function Header({ className }: { className?: string }) {
                   (address != account?.activeWalletAddress || !isConnected) &&
                   account?.noncustodialWalletAddress && (
                     <div className='flex gap-3 items-center '>
-                      <ChupButton size='xs' color='dark' onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</ChupButton>
+                      <ChupButton size='xs' color='dark' onClick={() => setWalletConnectOpen(true)}>
+                        {t('Connect Wallet')}
+                      </ChupButton>
                     </div>
                   )
                 ) : (
-                  <ChupButton size='xs' color='dark' onClick={() => setSignInOpen(true)}>{t('Sign in')}</ChupButton>
+                  <ChupButton size='xs' color='dark' onClick={() => setSignInOpen(true)}>
+                    {t('Sign in')}
+                  </ChupButton>
                 )}
                 <div className='w-6 h-6 relative'>
                   <svg
@@ -426,15 +430,17 @@ export default function Header({ className }: { className?: string }) {
           )}
         </nav>
 
-        <div className='lg:hidden pk-container py-[10px] px-5 pb-4 bg-[#F4F3F7]'>
+        <div
+          className={`lg:hidden pk-container py-[10px] px-5 pb-4 bg-[#F4F3F7] ${
+            router.pathname == '/' ? '' : 'hidden'
+          }`}>
           <div ref={divRef} className={`${isSearchFocused ? 'z-30' : ''} w-full lg:max-w-max relative`}>
             <TextField
               inputref={ref}
               onChange={_.debounce(setSearchValue, 500)}
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setIsSearchFocused(false)}
-              className='bg-[#FDFDFD] border-[#BDBDBD] border-[1px] duration-500 lg:!w-max !rounded-[10px] !text-xs'
-              size={isMobile ? 'md' : 'lg'}
+              className='duration-500 bg-white'
               placeholder={t('Search by title')}
               leadingComponent={
                 <Image
@@ -451,7 +457,15 @@ export default function Header({ className }: { className?: string }) {
                   }}
                 />
               }
-              trailingComponent={searchComic.loading ? <Spinner className='w-6 h-6' /> : null}
+              trailingComponent={
+                searchComic.loading ? (
+                  <div>
+                    <Spinner size={20} className='w-5 h-5' />
+                  </div>
+                ) : (
+                  <div></div>
+                )
+              }
             />
             {!!searchComic.data?.length && (
               <div
@@ -515,13 +529,11 @@ export default function Header({ className }: { className?: string }) {
           </div>
         </div>
 
-        <nav
-          className={`pk-container gap-3 lg:flex items-center justify-between pt-[10px] pb-[8px] hidden`}
-          aria-label='Global'>
+        <nav className={`pk-container gap-3 lg:flex items-center justify-between h-20 hidden`} aria-label='Global'>
           <div className='flex items-center gap-8'>
-            <Link href='/' className='flex'>
+            <Link href='/' className='flex shrink-0'>
               <span className='sr-only'>Your Company</span>
-              <Image src={Logo} alt='header logo' className='h-[60px] min-w-[107px]' />
+              <Image src={Logo} alt='header logo' className='w-[72px]' />
             </Link>
 
             <div
@@ -533,15 +545,12 @@ export default function Header({ className }: { className?: string }) {
                 inputref={ref}
                 onChange={_.debounce(setSearchValue, 500)}
                 onFocus={() => setIsSearchFocused(true)}
-                className={`transition-[width] bg-[#FDFDFD] border-[#BDBDBD] border-[1px] duration-500 ${
-                  isSearchFocused ? '!w-[160%]' : ''
-                }`}
-                size='lg'
+                className={`transition-[width] duration-500 ${isSearchFocused ? '!w-[160%]' : ''}`}
                 placeholder={t('Search by title')}
                 leadingComponent={
                   <Image
-                    width={24}
-                    height={24}
+                    width={20}
+                    height={20}
                     src={SearchIcon}
                     alt=''
                     onClick={() => {
@@ -552,7 +561,15 @@ export default function Header({ className }: { className?: string }) {
                     }}
                   />
                 }
-                trailingComponent={searchComic.loading ? <Spinner className='w-6 h-6' /> : null}
+                trailingComponent={
+                  searchComic.loading ? (
+                    <div>
+                      <Spinner size={20} className='w-5 h-5' />
+                    </div>
+                  ) : (
+                    <div></div>
+                  )
+                }
               />
               {!!searchComic.data?.length && (
                 <div
@@ -734,7 +751,9 @@ export default function Header({ className }: { className?: string }) {
                   </DropdownMenu>
                 </Dropdown>
               ) : (
-                <ChupButton size='sm' color='dark' onClick={() => setSignInOpen(true)}>{t('Sign in')}</ChupButton>
+                <ChupButton size='sm' color='dark' onClick={() => setSignInOpen(true)}>
+                  {t('Sign in')}
+                </ChupButton>
               )}
               {(address != account?.activeWalletAddress || !isConnected) &&
                 account?.verified &&
@@ -742,7 +761,9 @@ export default function Header({ className }: { className?: string }) {
                 account?.noncustodialWalletAddress && (
                   <div className='flex gap-3 items-center '>
                     <div className='h-4 w-[1px] bg-[#E0E0E0]'></div>
-                    <ChupButton size='sm' color='dark' onClick={() => setWalletConnectOpen(true)}>{t('Connect Wallet')}</ChupButton>
+                    <ChupButton size='sm' color='dark' onClick={() => setWalletConnectOpen(true)}>
+                      {t('Connect Wallet')}
+                    </ChupButton>
                   </div>
                 )}
             </div>

@@ -8,7 +8,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRef, useState } from 'react'
 import { isMobile } from 'react-device-detect'
-import Slider from 'react-slick'
+import Slider, { Settings } from 'react-slick'
 import Eng from './assets/eng.svg'
 import Vn from './assets/vn.svg'
 import c1 from './assets/comics/hamulage.jpg'
@@ -43,6 +43,11 @@ import NgocBe from './assets/authors/ngoc_be.jpg'
 import Miyuki from './assets/authors/miyuki.webp'
 import Grey from './assets/authors/grey.webp'
 import EventBanner from './assets/event-banner-v3.png'
+import Banner from './assets/banner.png'
+
+import BannerEn from 'components/pages/event/assets/banner_en.png'
+import BannerVn from 'components/pages/event/assets/banner.png'
+import { useRouter } from 'next/router'
 function Carousel({ sliderRef, children, className, setSlideIndex, sliderNavRef }) {
   var settings = {
     infinite: true,
@@ -61,7 +66,7 @@ function Carousel({ sliderRef, children, className, setSlideIndex, sliderNavRef 
   )
 }
 function MobileCarousel({ children, setSlideIndex, sliderRef }) {
-  var settings = {
+  var settings: Settings = {
     dots: false,
     infinite: true,
     slidesToShow: 1,
@@ -387,13 +392,69 @@ export default function TaskSlider({ sliderNavRef }) {
   const sliderRef = useRef(null)
   const sliderRefMobile = useRef(null)
   const [slideIndex, setSlideIndex] = useState(0)
+  const { locale } = useRouter()
   return (
-    <Link target='_blank' href='/wow-yourself'>
-      <div className='md:hidden px-5 pt-5'>
-        <Image src={EventBanner} alt='' className='w-full object-cover aspect-[84/32] rounded-2xl' />
+    <>
+      <Link target='_blank' href='/wow-yourself' className='hidden md:inline'>
+        <div className='md:hidden px-5 pt-5'>
+          <Image src={EventBanner} alt='' className='w-full object-cover aspect-[84/32] rounded-2xl' />
+        </div>
+        <Image src={EventBanner} alt='' className='hidden md:block w-full object-cover aspect-[84/32] rounded-2xl' />
+      </Link>
+      <div className='md:hidden px-4 rounded-mlg overflow-hidden relative'>
+        <MobileCarousel setSlideIndex={setSlideIndex} sliderRef={sliderRefMobile}>
+          <Link href='/wow-yourself' className='relative'>
+            <Image src={EventBanner} alt='' className='w-full object-cover aspect-[84/32] rounded-mlg' />
+          </Link>
+          <Link
+            href='https://docs.google.com/forms/d/e/1FAIpQLSelARRDM8YVrEHRycSfpA1J95_f2PmrvSRqXGVSKXusXla-5A/viewform'
+            className='relative'>
+            <Image src={Banner} alt='' className='w-full object-cover aspect-[84/32] rounded-mlg' />
+          </Link>
+          <Link href='/wow-yourself' className='relative'>
+            <Image
+              src={locale == 'vn' ? BannerVn : BannerEn}
+              alt=''
+              className='w-full object-cover aspect-[84/32] rounded-mlg'
+            />
+          </Link>
+        </MobileCarousel>
+        <div className='absolute right-[26px] bottom-3.5 flex justify-end'>
+          <div className='flex gap-3'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='24'
+              height='24'
+              viewBox='0 0 38 38'
+              fill='none'
+              className='cursor-pointer'
+              onClick={() => sliderRefMobile.current.slickGoTo(slideIndex - 1 < 0 ? 2 : slideIndex - 1)}>
+              <path
+                fillRule='evenodd'
+                clipRule='evenodd'
+                d='M18.9993 34.8337C27.7439 34.8337 34.8327 27.7448 34.8327 19.0003C34.8327 10.2558 27.7439 3.16699 18.9993 3.16699C10.2548 3.16699 3.16602 10.2558 3.16602 19.0003C3.16602 27.7448 10.2548 34.8337 18.9993 34.8337ZM22.214 13.4106C22.6778 13.8744 22.6778 14.6263 22.214 15.09L18.3037 19.0003L22.214 22.9106C22.6778 23.3744 22.6778 24.1263 22.214 24.59C21.7503 25.0538 20.9984 25.0538 20.5347 24.59L15.7847 19.84C15.3209 19.3763 15.3209 18.6244 15.7847 18.1606L20.5347 13.4106C20.9984 12.9469 21.7503 12.9469 22.214 13.4106Z'
+                fill='white'
+              />
+            </svg>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='24'
+              height='24'
+              viewBox='0 0 38 38'
+              fill='none'
+              className='cursor-pointer'
+              onClick={() => sliderRefMobile.current.slickGoTo(slideIndex + 1 > 2 ? 0 : slideIndex + 1)}>
+              <path
+                fillRule='evenodd'
+                clipRule='evenodd'
+                d='M18.9993 34.8337C27.7439 34.8337 34.8327 27.7448 34.8327 19.0003C34.8327 10.2558 27.7439 3.16699 18.9993 3.16699C10.2548 3.16699 3.16602 10.2558 3.16602 19.0003C3.16602 27.7448 10.2548 34.8337 18.9993 34.8337ZM15.7847 13.4106C16.2484 12.9469 17.0003 12.9469 17.464 13.4106L22.214 18.1606C22.6778 18.6244 22.6778 19.3763 22.214 19.84L17.464 24.59C17.0003 25.0538 16.2484 25.0538 15.7847 24.59C15.3209 24.1263 15.3209 23.3744 15.7847 22.9106L19.695 19.0003L15.7847 15.09C15.3209 14.6263 15.3209 13.8744 15.7847 13.4106Z'
+                fill='white'
+              />
+            </svg>
+          </div>
+        </div>
       </div>
-      <Image src={EventBanner} alt='' className='hidden md:block w-full object-cover aspect-[84/32] rounded-2xl' />
-    </Link>
+    </>
   )
   return (
     <>
