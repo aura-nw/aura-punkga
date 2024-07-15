@@ -88,7 +88,7 @@ function Home() {
             <div className='hidden md:block'>
               <TaskSlider sliderNavRef={sliderNavRef} />
             </div>
-            <div className='mt-4 md:mt-6 flex flex-row justify-between gap-4'>
+            <div className='mt-4 md:mt-8 flex flex-row justify-between gap-5'>
               <div className='text-lg leading-[26px] md:leading-7 md:text-xl font-medium text-text-primary'>{t('Latest update')}</div>
               <div className='md:flex hidden gap-[20px] items-center'>
                 <CheckboxDropdown
