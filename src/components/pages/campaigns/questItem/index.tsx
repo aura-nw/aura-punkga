@@ -98,8 +98,8 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
         <div className='p-5 pt-10 w-[90vw] max-w-[800px] lg:w-[644px] lg:grid-cols-[1fr_130px] lg:grid lg:gap-x-8 lg:grid-rows-[auto_1fr]'>
           <div>
             {quest.repeat == 'Daily' && <LabelChip className='mb-1.5'>{t('Daily')}</LabelChip>}
-            <div className='text-xs lg:text-sm leading-[15px] font-semibold'>{quest.name}</div>
-            <div className='mt-3 lg:text-lg lg:leading-[26px] leading-5 font-semibold'>
+            {/* <div className='text-lg font-semibold'>{quest.name}</div> */}
+            <div className='mt-1.5 text-lg leading-[26px] font-semibold'>
               {quest.type == 'Subscribe'
                 ? locale == 'vn'
                   ? `Đăng ký theo dõi truyện ${quest.requirement.subscribe.manga.title} để nhận phần thưởng`
@@ -122,14 +122,53 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                 ? t(`Answer a quiz`)
                 : ``}
             </div>
-            {!!quest.description && (
+            <div className='mt-3 flex flex-col items-center md:hidden'>
               <div
-                className={`mt-3 text-text-teriary text-xs lg:text-sm leading-[15px] max-h-[105px] lg:max-h-[126px] overflow-auto`}>
+                className={`${
+                  quest.reward_status == 'OUT_OF_SLOT' ? 'opacity-20' : ''
+                } rounded-mlg bg-[#F0F0F0] p-2.5 w-[130px] shrink-0 min-h-[130px] gap-1.5 flex flex-col justify-center items-center`}>
+                {quest?.reward?.nft?.nft_name ? (
+                  <>
+                    <Image
+                      src={quest?.reward?.nft.img_url || NoImage}
+                      width={80}
+                      height={80}
+                      alt=''
+                      className='w-[80px] h-[80px] rounded-lg object-cover'
+                    />
+                    <div className='text-xs leading-[18px] text-text-teriary w-[110px] truncate text-center'>
+                      {quest?.reward?.nft?.nft_name}
+                    </div>
+                  </>
+                ) : (
+                  <Image src={IllusImage} width={80} height={80} alt='' className='w-[80px] h-[80px] rounded-lg' />
+                )}
+                {!!quest?.reward?.xp && quest?.reward?.nft?.nft_name ? (
+                  <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${quest?.reward?.xp} XP`}</div>
+                ) : (
+                  <div className='text-text-teriary font-semibold'>{`+ ${quest?.reward?.xp} XP`}</div>
+                )}
+              </div>
+              {!!quest.reward.slots && (
+                <>
+                  <div className='flex flex-col items-center text-[10px] text-text-teriary leading-[13px] lg:text-xs lg:leading-[18px] mt-1.5'>
+                    <div>{`${
+                      quest.repeat_quests?.[0]?.repeat_quest_reward_claimed == undefined
+                        ? quest.quest_reward_claimed
+                        : quest.repeat_quests?.[0]?.repeat_quest_reward_claimed
+                    }/${quest.reward.slots}`}</div>
+                    <div>{t('rewards claimed')}</div>
+                  </div>
+                </>
+              )}
+            </div>
+            {!!quest.description && (
+              <div className={`mt-3 text-text-teriary text-sm max-h-[120px] overflow-auto`}>
                 {ReactHtmlParser(quest.description)}
               </div>
             )}
           </div>
-          <div className='mt-5 lg:mt-0 flex flex-col items-center row-span-2'>
+          <div className='mt-5 lg:mt-0 md:flex flex-col items-center row-span-2 hidden'>
             <div
               className={`${
                 quest.reward_status == 'OUT_OF_SLOT' ? 'opacity-20' : ''
@@ -186,10 +225,8 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
       </Modal>
       <Modal open={openClaimSuccessModal} setOpen={() => setClaimSuccessModalOpen(false)}>
         <div className={`w-[320px] lg:w-[547px] px-10 pb-5 pt-7 flex flex-col items-center`}>
-          <div className='leading-[18px] lg:leading-[26px] font-semibold text-center text-lg'>
-            👑 {t('Congratulation')}!
-          </div>
-          <div className='text-sm'>{t('You have received quest reward')}</div>
+          <div className='leading-[26px] font-semibold text-center text-lg'>{t('Congratulation')}!</div>
+          <div className='text-sm mt-2'>{t('You have received quest reward')}</div>
           {quest?.reward.nft?.nft_name ? (
             <div className='flex flex-col items-center mt-8'>
               <div>
@@ -269,9 +306,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
             </div>
           )}
           <div className='flex flex-col mb-3 h-full'>
-            <div className='text-base font-semibold line-clamp-3 md:line-clamp-2'>
-              {quest.name}
-            </div>
+            <div className='text-base font-semibold line-clamp-3 md:line-clamp-2'>{quest.name}</div>
             <div className='text-xs leading-[18px] lg:text-sm lg:leading-5 font-medium text-text-teriary mt-3 flex items-center gap-1.5'>
               <span>{`${quest.reward.xp} XP`}</span>
               {quest.reward.nft?.img_url && (

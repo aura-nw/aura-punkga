@@ -83,7 +83,7 @@ export default function QuizQuest({
   return (
     <div className='mt-5 w-full'>
       <div className='bg-neutral-50 rounded-mlg p-4 flex flex-col gap-4'>
-        <div className='text-base text-text-teriary font-medium'>
+        <div className='text-base font-medium'>
           {quest.requirement.quiz.multiple_choice[0].question}
         </div>
         {answerList.map((answer, index) => {
@@ -121,15 +121,15 @@ export default function QuizQuest({
           )
         })}
         {quest.reward_status == 'CAN_CLAIM' || correctAnswerIndex != -1 ? (
-          <ChupButton loading={loading} onClick={claimQuestHandler} className='w-full'>
+          <ChupButton size='sm' loading={loading} onClick={claimQuestHandler} className='w-full'>
             {t('Claim Reward')}
           </ChupButton>
         ) : quest.reward_status == 'OUT_OF_SLOT' ? (
-          <ChupButton disabled className='w-full'>
+          <ChupButton size='sm' disabled className='w-full'>
             {t('Out of reward')}
           </ChupButton>
         ) : quest.reward_status == 'CLAIMED' && quest.repeat == 'Daily' ? (
-          <ChupButton disabled className='w-full'>
+          <ChupButton size='sm' disabled className='w-full'>
             <Countdown
               date={moment().add(1, 'd').startOf('day').toISOString()}
               renderer={({ hours, minutes, seconds }) => {
@@ -148,11 +148,11 @@ export default function QuizQuest({
             />
           </ChupButton>
         ) : selectedAnswer != -1 ? (
-          <ChupButton loading={submitLoading} onClick={answerQuestHandler} className='w-full'>
+          <ChupButton size='sm' loading={submitLoading} onClick={answerQuestHandler} className='w-full'>
             {t('Submit')}
           </ChupButton>
         ) : (
-          <ChupButton disabled className='w-full'>
+          <ChupButton size='sm' disabled className='w-full'>
             {t('Submit')}
           </ChupButton>
         )}
