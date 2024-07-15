@@ -398,7 +398,7 @@ function CampaignDetail({}) {
               ) : null}
             </div>
             {account && (
-              <div className='rounded-lg p-4 bg-white mt-4'>
+              <div className='rounded-lg p-4 bg-white mt-4 md:mt-8'>
                 <div className='flex justify-between items-center'>
                   <div className='font-semibold '>
                     {t('Level')} {account.level}
