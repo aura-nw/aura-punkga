@@ -253,7 +253,7 @@ function CampaignDetail({}) {
         </div>
       </Modal>
       <div className='pk-container'>
-        <div className='py-5 lg:py-8 lg:grid-cols-[1fr_min(50%,400px)] lg:grid lg:gap-x-8 lg:grid-rows-[auto_1fr]'>
+        <div className='py-8 lg:grid-cols-[1fr_min(50%,400px)] lg:grid lg:gap-x-8 lg:grid-rows-[auto_1fr]'>
           <div>
             {/* Campaign info  */}
             <div className='flex justify-between'>
@@ -266,13 +266,25 @@ function CampaignDetail({}) {
                   <div>
                     {t('Starts')}: {moment(data.start_date).format('HH:mm DD/MM/yyyy')}
                   </div>
-                  <svg width='4' height='4' viewBox='0 0 4 4' fill='none' xmlns='http://www.w3.org/2000/svg' className='hidden lg:block'>
+                  <svg
+                    width='4'
+                    height='4'
+                    viewBox='0 0 4 4'
+                    fill='none'
+                    xmlns='http://www.w3.org/2000/svg'
+                    className='hidden lg:block'>
                     <rect width='4' height='4' rx='2' fill='#646464' />
                   </svg>
                   <div>
                     {t('Ends')}: {moment(data.end_date).format('HH:mm DD/MM/yyyy')}
                   </div>
-                  <svg width='4' height='4' viewBox='0 0 4 4' fill='none' xmlns='http://www.w3.org/2000/svg' className='hidden lg:block'>
+                  <svg
+                    width='4'
+                    height='4'
+                    viewBox='0 0 4 4'
+                    fill='none'
+                    xmlns='http://www.w3.org/2000/svg'
+                    className='hidden lg:block'>
                     <rect width='4' height='4' rx='2' fill='#646464' />
                   </svg>
                   <div className=''>{`${data?.participants?.aggregate?.count} ${t(
@@ -334,9 +346,9 @@ function CampaignDetail({}) {
           </div>
           <div className='row-span-2'>
             {/* Claim section */}
-            <div className='px-8 pt-4 pb-8 w-full flex flex-col gap-5 bg-neutral-white rounded-mlg mt-10 lg:mt-0'>
+            <div className='px-8 pt-4 pb-8 w-full flex flex-col gap-5 bg-neutral-white rounded-mlg mt-8 lg:mt-0'>
               <p className='text-center w-full text-base font-medium'>
-                {t('Bonus to')} 👑 {t('1st place')}
+                {t('Bonus to')} {t('1st place')}
               </p>
               <div className='flex gap-8 justify-center items-start'>
                 {data?.reward?.nft?.nft_name && (
@@ -349,7 +361,9 @@ function CampaignDetail({}) {
                       alt=''
                       className=' w-[130px] h-[130px] rounded-lg object-cover bg-background-bg-primary'
                     />
-                    <p className='text-center text-xs max-w-[130px] line-clamp-2'>{data.reward?.nft.nft_name}</p>
+                    <p className='text-center text-xs max-w-[130px] font-medium line-clamp-2'>
+                      {data.reward?.nft.nft_name}
+                    </p>
                   </div>
                 )}
                 {!!data.reward.xp && (
@@ -362,30 +376,22 @@ function CampaignDetail({}) {
               {isEnrolled ? (
                 account?.id == leaderboardData?.[0]?.user_id && isEnded ? (
                   authData?.user_campaign_rewards?.length == 0 ? (
-                    <ChupButton
-                      loading={claimLoading}
-                      className='w-full'
-                      color='dark'
-                      onClick={claimHandler}>
+                    <ChupButton size='sm' loading={claimLoading} className='w-full' color='dark' onClick={claimHandler}>
                       {t('Claim Reward')}
                     </ChupButton>
                   ) : (
-                    <ChupButton
-                      className='w-full'
-                      disabled>
+                    <ChupButton size='sm' className='w-full' disabled>
                       {t('Claimed')}
                     </ChupButton>
                   )
                 ) : (
-                  <ChupButton
-                    className='w-full'
-                    disabled>
+                  <ChupButton size='sm' className='w-full' disabled>
                     {t('Claim Reward')}
                   </ChupButton>
                 )
               ) : null}
             </div>
-            <div>
+            <div className='hidden md:block'>
               {isEnrolled || isEnded ? (
                 <LeaderBoard data={leaderboardData} userData={userData} />
               ) : (
@@ -402,8 +408,7 @@ function CampaignDetail({}) {
                         <div className='w-[98px] md:w-[88px] shrink-0 text-center'>{t('Level')}</div>
                         <div className='w-12 shrink-0 text-center'>XP</div>
                       </div>
-                      <div className='h-[240px] md:h-[90px] flex flex-col relative'>
-                      </div>
+                      <div className='h-[240px] md:h-[90px] flex flex-col relative'></div>
                     </div>
                   </div>
                 </div>
@@ -413,6 +418,29 @@ function CampaignDetail({}) {
           <div>
             {/* Quest  */}
             <QuestList quests={authData?.campaign_quests} isEnded={isEnded} refreshCallback={refresh} />
+          </div>
+          <div className='md:hidden'>
+            {isEnrolled || isEnded ? (
+              <LeaderBoard data={leaderboardData} userData={userData} />
+            ) : (
+              <div className='overflow-auto'>
+                <div className='bg-white rounded-mlg mt-8 min-w-[300px] md:min-w-[400px]'>
+                  <div className='py-3 md:py-4 px-4 md:px-[32px] w-full h-full flex flex-col'>
+                    <div
+                      className={`leading-5 md:text-xl cursor-pointer font-semibold w-full text-center  pb-[2px] mb-2 md:mb-4`}>
+                      {t('Campaign Leaderboard')}
+                    </div>
+                    <div className='flex px-[6px] py-2 md:px-[18px] md:py-[11px] border-b-[1px] border-border-primary font-semibold text-xs leading-[15px] md:text-base'>
+                      <div className='mr-14 md:mr-[70px]'></div>
+                      <div className='w-full'>{t('User')}</div>
+                      <div className='w-[98px] md:w-[88px] shrink-0 text-center'>{t('Level')}</div>
+                      <div className='w-12 shrink-0 text-center'>XP</div>
+                    </div>
+                    <div className='h-[240px] md:h-[90px] flex flex-col relative'></div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

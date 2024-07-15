@@ -68,21 +68,22 @@ export default function CampaignPage() {
   }
   return (
     <div className='pk-container'>
-      <div className='sticky md:top-16 top-[95px]  pb-8 pt-5 md:pt-12 bg-gray-50'>
-        <div className='flex items-center justify-between flex-wrap'>
-          <div className='text-base leading-5 md:text-xl font-medium whitespace-nowrap'>
+      <div className='sticky md:top-[80px] top-[54px] pb-8 pt-5 md:pt-8 bg-gray-50'>
+        <div className='flex md:items-center justify-between flex-wrap flex-col md:flex-row gap-4'>
+          <div className='text-lg leading-[26px] md:text-xl font-medium whitespace-nowrap'>
             {t('Campaign')} <span className=''>{` (${list.length})`}</span>
           </div>
           {list.length > 0 && (
-            <div className='flex gap-[10px] items-center md:hidden'>
-              <div className='p-1'>
+            <div className='flex gap-4 items-center md:hidden'>
+              <div className=''>
                 <Checkbox
                   label={t('Reward NFT')}
                   checked={rewardNFTChecked}
                   onClick={() => setRewardNFTChecked(!rewardNFTChecked)}
                 />
               </div>
-              <div className='p-1'>
+              <span className='h-4 w-[1px] bg-border-primary'></span>
+              <div className=''>
                 <Checkbox
                   label={t('Enrolled')}
                   checked={enrolledChecked}
@@ -99,7 +100,7 @@ export default function CampaignPage() {
           )}
         </div>
 
-        <div className='flex gap-3 mt-[10px] md:mt-8 items-center flex-wrap'>
+        <div className='flex gap-3 mt-4 md:mt-8 items-center flex-wrap'>
           <Chip
             className='min-w-[103px]'
             color={!statusFilter.length ? 'success' : 'default'}
@@ -119,15 +120,17 @@ export default function CampaignPage() {
               {t(status)}
             </Chip>
           ))}
-          <div className='hidden gap-8 items-center md:flex ml-5'>
-            <div className='p-1'>
+          <div className='hidden gap-4 items-center md:flex ml-5'>
+            <div >
               <Checkbox
                 label={t('Reward NFT')}
                 checked={rewardNFTChecked}
                 onClick={() => setRewardNFTChecked(!rewardNFTChecked)}
               />
             </div>
-            <div className='p-1'>
+
+            <span className='h-4 w-[1px] bg-border-primary'></span>
+            <div >
               <Checkbox
                 label={t('Enrolled')}
                 checked={enrolledChecked}
@@ -144,11 +147,11 @@ export default function CampaignPage() {
         </div>
       </div>
       {list.length > 0 ? (
-        <div className='grid mt-0.5 grid-cols-1 lg:grid-cols-2 gap-5 xl:gap-x-8 xl:gap-y-4 xl:grid-cols-3'>
+        <div className='grid mt-0.5 grid-cols-1 lg:grid-cols-2 gap-4 xl:gap-x-8 xl:gap-y-4 xl:grid-cols-3'>
           {list?.map((campaign, index) => (
             <div
               key={index}
-              className='cursor-pointer p-4 flex gap-5 bg-white border border-border-teriary rounded-mlg min-h-[206px] hover:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.10)]'
+              className='cursor-pointer p-4 flex gap-5 bg-white border border-border-teriary rounded-mlg md:min-h-[206px] min-h-[229px] hover:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.10)]'
               onClick={() => clickHandler(campaign.slug)}>
               <div className='flex flex-col justify-between flex-1 max-w-[calc(100%-156px)]'>
                 <div className='flex flex-col'>
@@ -171,13 +174,13 @@ export default function CampaignPage() {
                     </LabelChip>
                   </div>
                   <div className='mt-1'>
-                    <div className='font-semibold line-clamp-2 text-base'>{campaign[locale].name}</div>
+                    <div className='font-semibold line-clamp-3 md:line-clamp-2 text-base'>{campaign[locale].name}</div>
                     <div
                       className=' text-text-teriary mt-1 xl:mt-3 line-clamp-3 max-h-[60px] overflow-hidden text-sm max-w'
                       dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(campaign[locale].description) }}></div>
                   </div>
                 </div>
-                <div className='text-xs xl:text-sm text-text-teriary mt-3'>
+                <div className='text-sm text-text-teriary mt-3'>
                   {moment(campaign.start_date).isAfter() ? (
                     <Countdown
                       date={campaign.start_date}

@@ -54,7 +54,7 @@ export default function QuestList({
   return (
     <div className='mt-8'>
       <div className='lg:flex lg:items-center lg:flex-wrap lg:justify-between'>
-        <p className='text-lg leading-[23px] lg:text-xl lg:leading-[25px] font-medium'>
+        <p className='text-lg leading-[26px] lg:text-xl lg:leading-[25px] font-medium'>
           {quests && !isEnded
             ? `${t('Quests')} (${
                 quests.filter(
@@ -66,8 +66,8 @@ export default function QuestList({
             : t('Quests')}
         </p>
         {quests && !isEnded && (
-          <div className='mt-[10px] flex justify-between items-center lg:mt-0 lg:gap-4'>
-            <div className='p-1'>
+          <div className='mt-4 flex gap-4 items-center lg:mt-0'>
+            <div>
               <Checkbox
                 label={t('Reward NFT')}
                 checked={rewardNFTChecked}
@@ -121,7 +121,7 @@ export default function QuestList({
           </div>
         </div>
       ) : (
-        <div className='grid grid-cols-1 2xl:grid-cols-2 gap-5 mt-5'>
+        <div className='grid grid-cols-1 2xl:grid-cols-2 gap-4 mt-4 lg:mt-8'>
           {questList
             .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
             .sort((a, b) => a.weight - b.weight)

@@ -122,7 +122,7 @@ export default function Header({ className }: { className?: string }) {
         }`}></div>
       <header
         className={`sticky w-full top-0 z-50 transition-all duration-300 bg-white ${className} lg:shadow-[0px_4px_4px_0px_#0000001A]`}>
-        <nav className='lg:hidden pk-container pt-[15px] z-10 w-full shadow-[0px_4px_4px_0px_#0000001A]'>
+        <nav className='lg:hidden pk-container z-10 w-full shadow-[0px_4px_4px_0px_#0000001A]'>
           <div className='flex justify-between items-center gap-2 w-full h-14'>
             <div onClick={() => router.push('/')}>
               <Image src={Logo} alt='header logo' className='h-[30px] w-auto' />
