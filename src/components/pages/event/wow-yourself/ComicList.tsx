@@ -1,4 +1,5 @@
 import DummyComic from 'components/DummyComponent/comic'
+import Comic2 from 'components/pages/homepage/comic2'
 import ComicEvent from 'components/pages/homepage/comicEvent'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -23,7 +24,7 @@ export default function ComicList() {
         {latestComic.loading
           ? Array.apply(null, Array(20)).map((d, index) => <DummyComic key={index} />)
           : latestComic.data?.length
-          ? useableComic.map((data, index) => <ComicEvent key={index} {...data} />)
+          ? useableComic.map((data, index) => <Comic2 key={index} {...data} />)
           : null}
         <div></div>
         <div></div>

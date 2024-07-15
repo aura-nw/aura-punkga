@@ -1,13 +1,9 @@
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import CheckboxDropdown from 'components/CheckBox/CheckBoxDropDown'
 import DummyComic from 'components/DummyComponent/comic'
-import Footer from 'components/Footer'
-import Header from 'components/Header'
-import FilledSelect from 'components/Select/FilledSelect'
+import Layout from 'components/Layout'
 import Comic2 from 'components/pages/homepage/comic2'
-import Comic from 'components/pages/homepage/comic'
-import LeaderBoard from 'components/pages/homepage/leaderboard'
-import SlideSection from 'components/pages/homepage/slideSection'
 import TaskSlider from 'components/pages/homepage/comicSlider'
+import SlideSection from 'components/pages/homepage/slideSection'
 import TrendingComic from 'components/pages/homepage/trendingComic'
 import _ from 'lodash'
 import { i18n } from 'next-i18next'
@@ -18,8 +14,6 @@ import { useTranslation } from 'react-i18next'
 import useApi from 'src/hooks/useApi'
 import { IComic } from 'src/models/comic'
 import { getAllTags, getLatestComic, getTrendingComic } from 'src/services'
-import Layout from 'components/Layout'
-import CheckboxDropdown from 'components/CheckBox/CheckBoxDropDown'
 
 declare global {
   interface Window {
@@ -89,7 +83,9 @@ function Home() {
               <TaskSlider sliderNavRef={sliderNavRef} />
             </div>
             <div className='mt-4 md:mt-8 flex flex-row justify-between gap-5'>
-              <div className='text-lg leading-[26px] md:leading-7 md:text-xl font-medium text-text-primary'>{t('Latest update')}</div>
+              <div className='text-lg leading-[26px] md:leading-7 md:text-xl font-medium text-text-primary'>
+                {t('Latest update')}
+              </div>
               <div className='md:flex hidden gap-[20px] items-center'>
                 <CheckboxDropdown
                   allKey={'All genres'}
@@ -141,10 +137,16 @@ function Home() {
                 />
               </div>
             </div>
-            <div className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-4 mt-4 md:mt-10 md:pb-7'>
+            <div className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-2.5 mt-4 md:mt-10 md:pb-7'>
               {latestComic.loading
                 ? Array.apply(null, Array(20)).map((d, index) => {
-                    return <DummyComic key={index} />
+                    return (
+                      <div className='md:flex gap-[20px] animate-pulse bg-light-gray rounded-s p-1' key={index}>
+                        <div className='flex-auto md:w-1/3'>
+                          <div className='rounded-s w-full aspect-[16/23] bg-light-medium-gray' />
+                        </div>
+                      </div>
+                    )
                   })
                 : latestComic.data?.length
                 ? latestComic.data
@@ -177,10 +179,16 @@ function Home() {
             </div>
             <div className='flex flex-col p-4 bg-white text-[#333333] rounded-[10px]'>
               <div className='md:text-xl text-sm md:leading-[25px] font-[500]'>🔥{t('Trending')}</div>
-              <div className='flex flex-col gap-5 mt-2 md:mt-4'>
+              <div className='flex flex-col gap-4 mt-2 md:mt-4'>
                 {trendingComic.loading
                   ? Array.apply(null, Array(5)).map((d, index) => {
-                      return <DummyComic key={index} />
+                      return (
+                        <div className='md:flex gap-[20px] animate-pulse bg-light-gray rounded-s p-1' key={index}>
+                          <div className='flex-auto md:w-1/3'>
+                            <div className='rounded-s w-full h-[90px] bg-light-medium-gray' />
+                          </div>
+                        </div>
+                      )
                     })
                   : trendingComic.data.slice(0, 8).map((data, index) => {
                       return <TrendingComic key={index} {...data} />
