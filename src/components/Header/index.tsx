@@ -334,7 +334,10 @@ export default function Header({ className }: { className?: string }) {
                 {account && (
                   <div
                     className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#414141] font-semibold border-b border-[#E9E9E9]'
-                    onClick={() => router.push('/campaigns')}>
+                    onClick={() => {
+                      setOpenNavigation(false)
+                      router.push('/profile')
+                    }}>
                     <Image src={MyProfile} alt='' className='w-5 h-5' />
                     {t('My profile')}
                   </div>
@@ -342,7 +345,10 @@ export default function Header({ className }: { className?: string }) {
 
                 <div
                   className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#242424] font-semibold'
-                  onClick={() => router.push('/campaigns')}>
+                  onClick={() => {
+                    setOpenNavigation(false)
+                    router.push('/campaigns')
+                  }}>
                   <Image src={Campaign} alt='' className='w-5 h-5' />
                   {t('Campaign')}
                 </div>
@@ -354,7 +360,10 @@ export default function Header({ className }: { className?: string }) {
                 </div> */}
                 <div
                   className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#242424] font-semibold'
-                  onClick={() => router.push('/about-us')}>
+                  onClick={() => {
+                    setOpenNavigation(false)
+                    router.push('/about-us')
+                  }}>
                   <Image src={AboutUs} alt='' className='w-5 h-5' />
                   {t('About Us')}
                 </div>
@@ -381,6 +390,7 @@ export default function Header({ className }: { className?: string }) {
                     className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#414141] font-semibold'
                     onClick={() => {
                       setOpenProfile(false)
+                       setOpenNavigation(false)
                       logout()
                     }}>
                     <Image src={LogOut} alt='' className='w-5 h-5' />
