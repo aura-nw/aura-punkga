@@ -121,8 +121,8 @@ export default function Header({ className }: { className?: string }) {
         }`}></div>
       <header
         className={`sticky w-full top-0 z-50 transition-all duration-300 bg-white ${className} lg:shadow-[0px_4px_4px_0px_#0000001A]`}>
-        <nav className='lg:hidden pk-container pt-[15px] px-4 shadow-[0px_4px_4px_0px_#0000001A]'>
-          <div className='flex justify-between items-center gap-2'>
+        <nav className='lg:hidden pk-container relative z-10 w-full px-4 shadow-[0px_4px_4px_0px_#0000001A]'>
+          <div className='flex justify-between items-center gap-2 w-full h-14 '>
             <div onClick={() => router.push('/')}>
               <Image src={Logo} alt='header logo' className='h-[30px] w-auto' />
             </div>
@@ -178,9 +178,10 @@ export default function Header({ className }: { className?: string }) {
                       setOpenProfile(false)
                       setOpenNavigation(true)
                     }}>
-                    <path d='M20 7L4 7' stroke='#1C274C' strokeWidth='1.5' strokeLinecap='round' />
-                    <path d='M20 12L4 12' stroke='#1C274C' strokeWidth='1.5' strokeLinecap='round' />
-                    <path d='M20 17L4 17' stroke='#1C274C' strokeWidth='1.5' strokeLinecap='round' />
+                    <path
+                      d='M4.00781 7.008C4.00781 6.456 4.43981 6 4.99181 6H19.0078C19.5598 6 19.9918 6.432 19.9918 7.008C19.9918 7.56 19.5598 7.992 19.0078 7.992H4.99181C4.43981 7.992 4.00781 7.56 4.00781 7.008ZM4.00781 12C4.00781 11.448 4.43981 10.992 4.99181 10.992H19.0078C19.5598 10.992 19.9918 11.448 19.9918 12C19.9918 12.552 19.5598 13.008 19.0078 13.008H4.99181C4.43981 13.008 4.00781 12.552 4.00781 12ZM4.00781 16.992C4.00781 16.44 4.43981 16.008 4.99181 16.008H19.0078C19.5598 16.008 19.9918 16.44 19.9918 16.992C19.9918 17.544 19.5598 18 19.0078 18H4.99181C4.43981 18 4.00781 17.544 4.00781 16.992Z'
+                      fill='#183442'
+                    />
                   </svg>
                 </div>
               </div>
@@ -265,7 +266,6 @@ export default function Header({ className }: { className?: string }) {
               {t('Log out')}
             </div>
           </div>
-          <div className='flex justify-between items-center mt-[10px]'></div>
           {openNavigation && (
             <>
               <div className='fixed inset-0 z-10 bg-black/80'></div>

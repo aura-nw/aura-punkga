@@ -88,7 +88,7 @@ function Home() {
             <div className='hidden md:block'>
               <TaskSlider sliderNavRef={sliderNavRef} />
             </div>
-            <div className='mt-4 md:mt-6 flex flex-row justify-between gap-5'>
+            <div className='mt-4 md:mt-6 flex flex-row justify-between gap-4'>
               <div className='text-lg leading-[26px] md:leading-7 md:text-xl font-medium text-text-primary'>{t('Latest update')}</div>
               <div className='md:flex hidden gap-[20px] items-center'>
                 <CheckboxDropdown
@@ -141,7 +141,7 @@ function Home() {
                 />
               </div>
             </div>
-            <div className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-[10px] mt-2 md:mt-10 md:pb-7'>
+            <div className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-4 mt-4 md:mt-10 md:pb-7'>
               {latestComic.loading
                 ? Array.apply(null, Array(20)).map((d, index) => {
                     return <DummyComic key={index} />
