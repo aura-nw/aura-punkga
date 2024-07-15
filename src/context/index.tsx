@@ -83,7 +83,7 @@ function ContextProvider({ children }: any) {
   })
   useEffect(() => {
     setLevel((prev) => {
-      if (typeof prev != 'undefined') {
+      if (typeof prev != 'undefined' && account?.level) {
         if (prev != +account?.level) {
           toast(
             router.locale == 'vn'
@@ -94,7 +94,7 @@ function ContextProvider({ children }: any) {
             }
           )
         }
-      }
+      } else {setLevel(undefined)}
       return account?.level
     })
   }, [account?.level])
