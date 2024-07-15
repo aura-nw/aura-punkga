@@ -94,7 +94,7 @@ function ContextProvider({ children }: any) {
             }
           )
         }
-      } else {setLevel(undefined)}
+      }
       return account?.level
     })
   }, [account?.level])
