@@ -17,6 +17,7 @@ import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import TextField from 'components/Input/TextField'
 import Spinner from 'components/Spinner'
 import CopySvg from 'images/icons/copy.svg'
+import Menu from 'images/icons/menu.svg'
 import EyeClose from 'images/icons/eye-closed.svg'
 import EyeOpen from 'images/icons/eye-open.svg'
 import Warning from 'images/icons/warning.svg'
@@ -121,7 +122,7 @@ export default function Header({ className }: { className?: string }) {
         }`}></div>
       <header
         className={`sticky w-full top-0 z-50 transition-all duration-300 bg-white ${className} lg:shadow-[0px_4px_4px_0px_#0000001A]`}>
-        <nav className='lg:hidden pk-container pt-[15px] px-4 shadow-[0px_4px_4px_0px_#0000001A]'>
+        <nav className='lg:hidden pk-container pt-[15px] shadow-[0px_4px_4px_0px_#0000001A]'>
           <div className='flex justify-between items-center gap-2'>
             <div onClick={() => router.push('/')}>
               <Image src={Logo} alt='header logo' className='h-[30px] w-auto' />
@@ -143,45 +144,7 @@ export default function Header({ className }: { className?: string }) {
                   </ChupButton>
                 )}
                 <div className='w-6 h-6 relative'>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='24'
-                    height='24'
-                    viewBox='0 0 24 24'
-                    fill='none'
-                    className={`absolute inset-0 transition-all ${
-                      openNavigation ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                    }`}
-                    onClick={() => setOpenNavigation(false)}>
-                    <path
-                      d='M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z'
-                      stroke='#1C274C'
-                      strokeWidth='1.5'
-                    />
-                    <path
-                      d='M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5'
-                      stroke='#1C274C'
-                      strokeWidth='1.5'
-                      strokeLinecap='round'
-                    />
-                  </svg>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='24'
-                    height='24'
-                    viewBox='0 0 24 24'
-                    fill='none'
-                    className={`absolute inset-0 transition-all ${
-                      !openNavigation ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                    }`}
-                    onClick={() => {
-                      setOpenProfile(false)
-                      setOpenNavigation(true)
-                    }}>
-                    <path d='M20 7L4 7' stroke='#1C274C' strokeWidth='1.5' strokeLinecap='round' />
-                    <path d='M20 12L4 12' stroke='#1C274C' strokeWidth='1.5' strokeLinecap='round' />
-                    <path d='M20 17L4 17' stroke='#1C274C' strokeWidth='1.5' strokeLinecap='round' />
-                  </svg>
+                  <Image src={Menu} alt='menu icon' width={24} height={24} onClick={() => setOpenNavigation(true)} />
                 </div>
               </div>
             </div>
