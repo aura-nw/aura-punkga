@@ -43,6 +43,7 @@ import NgocBe from './assets/authors/ngoc_be.jpg'
 import Miyuki from './assets/authors/miyuki.webp'
 import Grey from './assets/authors/grey.webp'
 import EventBanner from './assets/event-banner-v3.png'
+import EventBannerVN from './assets/event-banner-v3-vn.png'
 import Banner from './assets/banner.png'
 
 import BannerEn from 'components/pages/event/assets/banner_en.png'
@@ -395,23 +396,40 @@ export default function TaskSlider({ sliderNavRef }) {
   const { locale } = useRouter()
   return (
     <>
-      <Link target='_blank' href='/wow-yourself' className='hidden md:inline'>
+      <Link
+        target='_blank'
+        href='https://www.facebook.com/PunkgaMeManga/posts/pfbid02dnvJYumJhC1Nh1WungWkV54FNHdvMULh57iGLzAfAXGpvzCuhexBHGTayNbafMkSl'
+        className='hidden md:inline'>
         <div className='md:hidden px-5 pt-5'>
-          <Image src={EventBanner} alt='' className='w-full object-cover aspect-[84/32] rounded-2xl' />
+          <Image
+            src={locale == 'vn' ? EventBannerVN : EventBanner}
+            alt=''
+            className='w-full object-cover aspect-[84/32] rounded-2xl'
+          />
         </div>
-        <Image src={EventBanner} alt='' className='hidden md:block w-full object-cover aspect-[84/32] rounded-2xl' />
+        <Image
+          src={locale == 'vn' ? EventBannerVN : EventBanner}
+          alt=''
+          className='hidden md:block w-full object-cover aspect-[84/32] rounded-2xl'
+        />
       </Link>
       <div className='md:hidden px-4 rounded-mlg overflow-hidden relative'>
         <MobileCarousel setSlideIndex={setSlideIndex} sliderRef={sliderRefMobile}>
-          <Link href='/wow-yourself' className='relative'>
-            <Image src={EventBanner} alt='' className='w-full object-cover aspect-[84/32] rounded-mlg' />
+          <Link
+            href='https://www.facebook.com/PunkgaMeManga/posts/pfbid02dnvJYumJhC1Nh1WungWkV54FNHdvMULh57iGLzAfAXGpvzCuhexBHGTayNbafMkSl'
+            className='relative'>
+            <Image
+              src={locale == 'vn' ? EventBannerVN : EventBanner}
+              alt=''
+              className='w-full object-cover aspect-[84/32] rounded-mlg'
+            />
           </Link>
           <Link
             href='https://docs.google.com/forms/d/e/1FAIpQLSelARRDM8YVrEHRycSfpA1J95_f2PmrvSRqXGVSKXusXla-5A/viewform'
             className='relative'>
             <Image src={Banner} alt='' className='w-full object-cover aspect-[84/32] rounded-mlg' />
           </Link>
-          <Link href='/wow-yourself' className='relative'>
+          <Link href='/campaigns' className='relative'>
             <Image
               src={locale == 'vn' ? BannerVn : BannerEn}
               alt=''

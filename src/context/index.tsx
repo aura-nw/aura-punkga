@@ -56,7 +56,7 @@ export const Context = createContext<{
 })
 export const privateAxios = axios.create()
 function ContextProvider({ children }: any) {
-  const { address, isConnected } = useAccount()
+  const { address } = useAccount()
   const chainId = useChainId()
   const { signMessage } = useSignMessage()
   const { switchChain } = useSwitchChain()
@@ -214,7 +214,7 @@ function ContextProvider({ children }: any) {
       if (res?.siwe?.access_token) {
         const token = res?.siwe?.access_token
         setItem('token', res?.siwe?.access_token)
-        setLogoutTimeout(res?.siwe?.expires_in)
+        setLogoutTimeout(res?.siwe?.expires_in * 1000)
         await getProfile(token)
       }
     } catch (error) {

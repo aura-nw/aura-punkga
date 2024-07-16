@@ -47,28 +47,28 @@ function Home() {
     },
   ])
 
-  useEffect(() => {
-    setStatusFilter((prev) => {
-      return _.cloneDeep(
-        prev.map((v) => ({
-          key: v.key,
-          value: t(v.key),
-        }))
-      )
-    })
-    setGenreFilter((prev) => {
-      return _.cloneDeep(
-        prev.map((v) =>
-          v.key == 'All genres'
-            ? {
-                key: v.key,
-                value: t(v.key),
-              }
-            : v
-        )
-      )
-    })
-  }, [t('All status')])
+  // useEffect(() => {
+  //   setStatusFilter((prev) => {
+  //     return _.cloneDeep(
+  //       prev.map((v) => ({
+  //         key: v.key,
+  //         value: t(v.key),
+  //       }))
+  //     )
+  //   })
+  //   setGenreFilter((prev) => {
+  //     return _.cloneDeep(
+  //       prev.map((v) =>
+  //         v.key == 'All genres'
+  //           ? {
+  //               key: v.key,
+  //               value: t(v.key),
+  //             }
+  //           : v
+  //       )
+  //     )
+  //   })
+  // }, [t('All status')])
   return (
     <div className='bg-gray-50'>
       <div className='md:hidden'>
@@ -98,7 +98,7 @@ function Home() {
                             value: t('All genres'),
                           },
                           ...useableTags?.map((tag) => ({
-                            key: tag[locale],
+                            key: tag.en,
                             value: tag[locale],
                           })),
                         ]
