@@ -23,7 +23,6 @@ export const getServerSideProps = async (context) => {
     title: 'WoW YOURSELF - Cá Chép Hoá Rồng',
     description:
       ' WoW YOURSELF - theo dấu hành trình vượt Vũ Môn của hoạ sĩ, đắm mình trong mùa hè sáng tạo với các tác phẩm dự thi xuất sắc cùng Punkga Me nhé!',
-    canonical: `https://punkga.me/wow-yourself`,
   }
   return {
     props: {

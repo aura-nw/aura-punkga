@@ -38,7 +38,7 @@ export default function Footer() {
   }, [value])
   return (
     <>
-      <div className='w-full relative z-10 pb-[114px] pt-6 md:pb-0 md:pt-0'>
+      <div className='w-full relative z-10 pb-[114px] pt-6 md:pb-0 md:pt-0 mt-14 bg-white'>
         <div className='pk-container pt-6 pb-6 hidden md:flex flex-col gap-5 lg:pb-[74px] lg:pt-8'>
           <div className='flex justify-between border-b-[1px] border-border-teriary'>
             <div onClick={() => router.push('/')} className='pt-[13px]'>

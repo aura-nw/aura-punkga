@@ -398,7 +398,7 @@ export default function TaskSlider({ sliderNavRef }) {
     <>
       <Link
         target='_blank'
-        href='https://www.facebook.com/PunkgaMeManga/posts/pfbid02dnvJYumJhC1Nh1WungWkV54FNHdvMULh57iGLzAfAXGpvzCuhexBHGTayNbafMkSl'
+        href='/events/kaia-island'
         className='hidden md:inline'>
         <div className='md:hidden px-5 pt-5'>
           <Image
@@ -416,7 +416,7 @@ export default function TaskSlider({ sliderNavRef }) {
       <div className='md:hidden px-4 rounded-mlg overflow-hidden relative'>
         <MobileCarousel setSlideIndex={setSlideIndex} sliderRef={sliderRefMobile}>
           <Link
-            href='https://www.facebook.com/PunkgaMeManga/posts/pfbid02dnvJYumJhC1Nh1WungWkV54FNHdvMULh57iGLzAfAXGpvzCuhexBHGTayNbafMkSl'
+            href='/kaia-insland'
             className='relative'>
             <Image
               src={locale == 'vn' ? EventBannerVN : EventBanner}
