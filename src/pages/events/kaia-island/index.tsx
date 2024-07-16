@@ -19,10 +19,12 @@ Page.getLayout = function getLayout(page) {
 }
 export const getServerSideProps = async (context) => {
   const props = {
-    image: 'https://punkga.me/assets/images/wow-yourself-thumb.png',
-    title: 'WoW YOURSELF - Cá Chép Hoá Rồng',
-    description:
-      ' WoW YOURSELF - theo dấu hành trình vượt Vũ Môn của hoạ sĩ, đắm mình trong mùa hè sáng tạo với các tác phẩm dự thi xuất sắc cùng Punkga Me nhé!',
+    image:
+      context.locale == 'vn'
+        ? 'https://punkga.me/assets/images/kaia-island-thumb-vn.png'
+        : 'https://punkga.me/assets/images/kaia-island-thumb.png',
+    title: `Kaia's Island Mythology Record - Ghi chép về truyền thuyết đảo Kaia`,
+    description: `Kaia's Island Mythology Record Description`,
   }
   return {
     props: {
