@@ -11,9 +11,9 @@ export default function LeaderBoard({ data, userData }: { data: any[]; userData?
         <div className='py-3 md:py-4 px-4 md:px-[32px] w-full h-full flex flex-col'>
           <div className={`font-semibold w-full text-center text-xl`}>{t('Campaign Leaderboard')}</div>
           <div className='mt-8 flex px-4 pb-4 border-b border-border-primary font-semibold text-base'>
-            <div className='mr-14 md:mr-[70px]'></div>
+            <div className='w-9 mr-[10px] shrink-0'></div>
             <div className='w-full'>{t('User')}</div>
-            <div className='w-12 shrink-0 text-center'>XP</div>
+            <div className='w-12 shrink-0'>XP</div>
           </div>
           <div className={`h-[420px] flex flex-col relative overflow-y-auto overflow-x-hidden`}>
             <div className={`absolute inset-0 flex flex-col h-full py-2 md:py-3`}>
@@ -22,8 +22,8 @@ export default function LeaderBoard({ data, userData }: { data: any[]; userData?
                   <Popover
                     freeMode
                     popoverRender={() => <ProfileCard hideEmail data={item.user_campaign_authorizer_user} />}>
-                    <div className='flex px-4 md:px-[18px] text-sm font-medium items-center border-b border-border-secondary h-[60px]'>
-                      <div className='w-[24px] md:w-9 mr-[10px]'>#{index + 1}</div>
+                    <div className='flex px-4 text-sm font-medium items-center border-b border-border-secondary h-[60px]'>
+                      <div className='w-9 mr-[10px] shrink-0'>#{index + 1}</div>
                       <div className='flex items-center gap-1.5 md:gap-[10px] justify-self-start w-full'>
                         <Image
                           className='w-7 h-7 rounded-full'
@@ -34,7 +34,7 @@ export default function LeaderBoard({ data, userData }: { data: any[]; userData?
                         />
                         <div className='truncate'>{item.user_campaign_authorizer_user.nickname}</div>
                       </div>
-                      <div className='w-12 shrink-0 text-center'>{item.total_reward_xp}</div>
+                      <div className='w-12 shrink-0 pl-1'>{item.total_reward_xp}</div>
                     </div>
                   </Popover>
                 </div>
