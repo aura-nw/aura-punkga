@@ -2,9 +2,11 @@ import Modal from 'components/Modal'
 import Tooltip from 'components/Tooltip'
 import ChupButton from 'components/core/Button/ChupButton'
 import BannerDesktop from 'components/pages/event/kaia-island/assets/desktop-banner.png'
+import BannerDesktopVN from 'components/pages/event/kaia-island/assets/desktop-banner-vn.png'
 import Artworks from 'components/pages/event/kaia-island/Artwork'
 import TimeLine from 'components/pages/event/kaia-island/TimeLine'
 import BannerMobile from 'components/pages/event/kaia-island/assets/mobile-banner.png'
+import BannerMobileVN from 'components/pages/event/kaia-island/assets/mobile-banner-vn.png'
 import moment from 'moment'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -17,14 +19,14 @@ export default function KaiaIsland() {
   const [seeMore, setSeeMore] = useState(false)
   return (
     <div className=''>
-      <Image src={BannerMobile} className='w-full lg:hidden h-auto' alt='' />
+      <Image src={locale == 'vn' ? BannerMobileVN : BannerMobile} className='w-full lg:hidden h-auto' alt='' />
       <div className='pk-container hidden lg:block'>
-        <Image src={BannerDesktop} className='w-full h-auto' alt='' />
+        <Image src={locale == 'vn' ? BannerDesktopVN : BannerDesktop} className='w-full h-auto' alt='' />
       </div>
       <div className='pk-container'>
         <div className='flex flex-col gap-8 lg:gap-5 mt-5 lg:mt-8 lg:flex-row lg:justify-between'>
           <div className='lg:w-full lg:max-w-[840px]'>
-            <h1 className='font-medium flex items-start justify-between gap-2 text-xl text-neutral-black'>
+            <h1 className='font-medium flex items-start gap-4 text-xl text-neutral-black'>
               {moment().isAfter(moment('2024-07-31'))
                 ? t(`Kaia's Island Mythology Record - Round 3: Golden Treasure!`)
                 : moment().isAfter(moment('2024-07-24'))
@@ -63,7 +65,7 @@ export default function KaiaIsland() {
               </div>
               <span className='w-1 h-1 rounded-full bg-[#646464] hidden md:inline-block'></span>
               <div>
-                <span>{t('Ends')}:</span> {locale == 'vn' ? '13 Tháng 8 2024' : '13 Aug 2024'}
+                <span>{t('Ends at')}:</span> {locale == 'vn' ? '13 Tháng 8 2024' : '13 Aug 2024'}
               </div>
             </div>
             <div className='mt-4 flex gap-4 items-center'>
@@ -244,7 +246,7 @@ function ViewRule() {
             <div className='w-full text-center text-lg font-semibold'>💎 Thể lệ cuộc thi</div>
             <ul className='mt-8 text-sm list-disc list-inside'>
               <li>
-                Vòng 1 (17/7 - 23/7): To the Island! (Cá nhân)
+                <strong>Vòng 1 (17/7 - 23/7): To the Island! (Cá nhân)</strong>
                 <br />
                 <br />
                 Tạo hình nhân vật đại diện cho bạn (OC) và một người bạn đồng hành hoặc thú cưng. Hãy thể hiện cá tính
@@ -256,7 +258,7 @@ function ViewRule() {
               </li>
               <br />
               <li>
-                Vòng 2 (24/7 - 30/7): Adventure Time! (Cá nhân)
+                <strong>Vòng 2 (24/7 - 30/7): Adventure Time! (Cá nhân)</strong>
                 <br />
                 <br />
                 Vẽ 1 trang truyện tranh về cuộc hành trình trên biển đến đảo Kaia. Hãy để nhân vật của bạn đối mặt với
@@ -268,7 +270,7 @@ function ViewRule() {
               </li>
               <br />
               <li>
-                Vòng 3 (31/7 - 13/8): Golden Treasure! (Nhóm)
+                <strong>Vòng 3 (31/7 - 13/8): Golden Treasure! (Nhóm)</strong>
                 <br />
                 <br />
                 Các nhóm gồm 5 họa sĩ được ghép ngẫu nhiên sẽ cùng nhau xây dựng một câu chuyện chung về đảo Kaia. Mỗi
@@ -281,7 +283,7 @@ function ViewRule() {
             <div className='w-full text-center text-lg font-semibold'>💎 Contest Rules</div>
             <ul className='mt-8 text-sm list-disc list-inside'>
               <li>
-                Round 1 (July 17th - 23rd): To the Island! (Individual)
+                <strong>Round 1 (July 17th - 23rd): To the Island! (Individual)</strong>
                 <br />
                 <br />
                 Create a character representing yourself (OC) and a companion or pet. Showcase their personality and
@@ -293,7 +295,7 @@ function ViewRule() {
               </li>
               <br />
               <li>
-                Round 2 (July 24th - 30th): Adventure Time! (Individual)
+                <strong>Round 2 (July 24th - 30th): Adventure Time! (Individual)</strong>
                 <br />
                 <br />
                 Draw a 1-page comic about the journey to Kaia Island. Let your character face challenges, discover
@@ -305,7 +307,7 @@ function ViewRule() {
               </li>
               <br />
               <li>
-                Round 3 (July 31st - August 13th): Golden Treasure! (Group)
+                <strong>Round 3 (July 31st - August 13th): Golden Treasure! (Group)</strong>
                 <br />
                 <br />
                 Groups of 5 randomly assigned artists will collaborate to create a shared story about Kaia Island. Each
