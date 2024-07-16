@@ -264,7 +264,7 @@ function CampaignDetail({}) {
             {/* Campaign info  */}
             <div className='flex justify-between'>
               <div className='flex flex-col gap-1.5'>
-                <LabelChip color={isUpcoming ? 'process' : !isEnded ? 'success' : 'default'} className='w-fit'>
+                <LabelChip color={isUpcoming ? 'process' : !isEnded ? 'success' : 'error'} className='w-fit'>
                   {t(isUpcoming ? 'Upcoming' : !isEnded ? 'Ongoing' : 'Ended')}
                 </LabelChip>
                 <div className='text-xl font-medium'>{data[locale].name} </div>

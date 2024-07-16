@@ -103,13 +103,13 @@ export default function QuestList({
         <div className='mt-5 p-6 lg:mt-9 lg:p-6 flex flex-col items-center w-full'>
           <Image src={Mascot3} alt='' className='w-[160px] h-[160px]' />
           <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-medium mt-5 text-center'>
-            {t('Campaign Ended')}
+            {t('Campaign ended')}
           </div>
         </div>
       ) : !quests ? (
         <div className='mt-5 p-6 lg:mt-9 lg:p-6 flex flex-col items-center w-full'>
           <Image src={Mascot2} alt='' className='w-[160px] h-[160px]' />
-          <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-medium mt-5 text-center'>
+          <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-medium mt-5 text-center max-w-[278px]'>
             {t('Enroll to view quests and leaderboard')}
           </div>
         </div>
