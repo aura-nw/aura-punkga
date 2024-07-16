@@ -59,7 +59,7 @@ export default function Artworks() {
           Round 3
         </div>
       </div>
-      <div className='mt-4 grid gap-4 grid-cols-2'>
+      <div className='mt-4 grid gap-4 grid-cols-2 lg:grid-cols-4'>
         {tab == 1 ? (
           <>
             {data?.round1?.slice((page - 1) * 8, page * 8)?.map((artwork, index) => (
@@ -128,7 +128,7 @@ const Artwork = ({ artwork }) => {
           <Image
             width={600}
             height={600}
-            className='w-full aspect-square rounded-md object-cover max-w-96'
+            className='w-full aspect-square rounded-md object-cover max-w-[450px]'
             src={getImageSrc(artwork?.image)}
             alt={artwork?.image}
           />
