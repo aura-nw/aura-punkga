@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import R1Mascot from './assets/r1-mascot.svg'
+import R1Mascot from './assets/r1-mascot.gif'
 import R2Mascot from './assets/r2-mascot.svg'
 import R3Mascot from './assets/r3-mascot.svg'
 import R2GrayMascot from './assets/r2-gray-mascot.svg'
