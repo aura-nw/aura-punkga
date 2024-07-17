@@ -16,6 +16,7 @@ import NewQuest from '../../components/pages/profile/newQuests'
 import NewInfo from 'components/pages/profile/newInfo'
 import { Box, Tab, Tabs } from '@mui/material'
 import Comic2 from 'components/pages/homepage/comic2'
+import RewardHistory from 'components/pages/profile/rewardHistory'
 
 export default function Page(props) {
   if (props.justHead) {
@@ -139,15 +140,10 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
                           {subscribeList.data?.map((data, index) => (
                             <Fragment key={index}>
                               <div className='hidden md:block'>
-                                <Comic
-                                  key={index}
-                                  {...data}
-                                  unsubscribe={() => unsubscribe(data.id)}
-                                  subscribe={() => subscribe(data.id)}
-                                />
+                                <Comic2 key={index} {...data} />
                               </div>
                               <div className='md:hidden'>
-                                <MComic key={index} {...data} />
+                                <Comic2 key={index} {...data} />
                               </div>
                             </Fragment>
                           ))}
@@ -159,7 +155,7 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
                     <NFTList />
                   </CustomTabPanel>
                   <CustomTabPanel value={valueTab} index={3}>
-                    Item Four
+                    <RewardHistory data={account.completedQuests} />
                   </CustomTabPanel>
                 </Box>
                 <NFTList />
