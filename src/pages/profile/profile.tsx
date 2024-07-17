@@ -4,7 +4,7 @@ import Analytic from 'components/pages/profile/analytic'
 import Comic from 'components/pages/profile/comic'
 import NFTList from 'components/pages/profile/nfts'
 import { useRouter } from 'next/router'
-import { Fragment, useContext, useEffect } from 'react'
+import { Fragment, useContext, useEffect, useState } from 'react'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
@@ -12,14 +12,54 @@ import { subscribe, unsubscribe } from 'src/services'
 import Info from '../../components/pages/profile/info'
 import LeaderBoard from '../../components/pages/profile/leaderboard'
 import Quest from '../../components/pages/profile/quests'
+import NewQuest from '../../components/pages/profile/newQuests'
+import NewInfo from 'components/pages/profile/newInfo'
+import { Box, Tab, Tabs } from '@mui/material'
+import Comic2 from 'components/pages/homepage/comic2'
+
 export default function Page(props) {
   if (props.justHead) {
     return <></>
   }
   return <Profile {...props} />
 }
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function CustomTabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box>{children}</Box>}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
 function Profile({ subscribeList, curentlyReading, updateProfile }) {
   const { account, isSettingUp } = useContext(Context)
+  const [valueTab, setValueTab] = useState(0);
+
+  const handleChangeTab = (event: React.SyntheticEvent, newValueTab: number) => {
+    setValueTab(newValueTab);
+  };
   const { t } = useTranslation()
   const router = useRouter()
   useEffect(() => {
@@ -48,12 +88,55 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
         ) : (
           <>
             <div className='gap-10 hidden xl:flex'>
-              <div className='w-[calc(100%_-_560px)]'>
+              <div className='w-[340px]'>
                 <Info updateProfile={updateProfile} />
-                <Quest />
-                <NFTList />
+                <NewInfo updateProfile={updateProfile} />
+
               </div>
-              <div className='w-[520px]'>
+              <div className='w-[calc(100%_-_340px)] p-8 rounded-[10px] bg-white'>
+                <NewQuest />
+                {/* <Quest /> */}
+                <Box sx={{ width: '100%', marginTop: '28px' }}>
+                  <Box >
+                    <Tabs value={valueTab} onChange={handleChangeTab}>
+                      <Tab label="Currently reading" {...a11yProps(0)} />
+                      <Tab label="Subscribed mangas " {...a11yProps(1)} />
+                      <Tab label="NFTs" {...a11yProps(2)} />
+                      <Tab label="Reward history" {...a11yProps(3)} />
+                    </Tabs>
+                  </Box>
+                  <CustomTabPanel value={valueTab} index={0}>
+                    <div className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-2.5 mt-4 md:mt-10 md:pb-7'>
+                      {isSettingUp || subscribeList.loading ? (
+                        <>
+                          <DummyComic />
+                          <DummyComic />
+                          <DummyComic />
+                        </>
+                      ) : (
+                        <>
+                          {subscribeList.data?.map((data, index) => (
+                            <Fragment key={index}>
+                              <div className='block'>
+                                <Comic2 key={index} {...data} />
+                              </div>
+                            </Fragment>
+                          ))}
+                        </>
+                      )}
+                    </div>
+                  </CustomTabPanel>
+                  <CustomTabPanel value={valueTab} index={1}>
+                    Item Two
+                  </CustomTabPanel>
+                  <CustomTabPanel value={valueTab} index={2}>
+                    Item Three
+                  </CustomTabPanel>
+                  <CustomTabPanel value={valueTab} index={3}>
+                    Item Four
+                  </CustomTabPanel>
+                </Box>
+                <NFTList />
                 <Analytic />
                 <LeaderBoard />
               </div>
