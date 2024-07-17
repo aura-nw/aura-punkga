@@ -37,27 +37,33 @@ export default function Artworks() {
     <div className='mt-8'>
       <div className='text-xl font-medium'>{t('Artworks')}</div>
       <div className='mt-4 flex gap-4 text-sm font-semibold'>
-        <div
-          onClick={() => setTab(1)}
-          className={`w-full cursor-pointer text-center max-w-[104px] rounded-lg py-1 px-2 ${
-            tab == 1 ? 'bg-brand-100 text-text-brand-defaul' : ''
-          }`}>
-          Round 1
-        </div>
-        <div
-          onClick={() => setTab(2)}
-          className={`w-full cursor-pointer text-center max-w-[104px] rounded-lg py-1 px-2 ${
-            tab == 2 ? 'bg-brand-100 text-text-brand-defaul' : ''
-          }`}>
-          Round 2
-        </div>
-        <div
-          onClick={() => setTab(3)}
-          className={`w-full cursor-pointer text-center max-w-[104px] rounded-lg py-1 px-2 ${
-            tab == 3 ? 'bg-brand-100 text-text-brand-defaul' : ''
-          }`}>
-          Round 3
-        </div>
+        {!!data?.round1?.length && (
+          <div
+            onClick={() => setTab(1)}
+            className={`w-full cursor-pointer text-center max-w-[104px] rounded-lg py-1 px-2 ${
+              tab == 1 ? 'bg-brand-100 text-text-brand-defaul' : ''
+            }`}>
+            Round 1
+          </div>
+        )}
+        {!!data?.round2?.length && (
+          <div
+            onClick={() => setTab(2)}
+            className={`w-full cursor-pointer text-center max-w-[104px] rounded-lg py-1 px-2 ${
+              tab == 2 ? 'bg-brand-100 text-text-brand-defaul' : ''
+            }`}>
+            Round 2
+          </div>
+        )}
+        {!!data?.round3?.length && (
+          <div
+            onClick={() => setTab(3)}
+            className={`w-full cursor-pointer text-center max-w-[104px] rounded-lg py-1 px-2 ${
+              tab == 3 ? 'bg-brand-100 text-text-brand-defaul' : ''
+            }`}>
+            Round 3
+          </div>
+        )}
       </div>
       <div className='mt-4 grid gap-4 grid-cols-2 lg:grid-cols-4'>
         {tab == 1 ? (
@@ -111,6 +117,7 @@ const Artwork = ({ artwork }) => {
     }
     return src
   }
+  if (!artwork?.title || !artwork?.image) return null
   return (
     <>
       <div className='cursor-pointer' onClick={() => setOpen(true)}>
