@@ -37,6 +37,11 @@ import { shorten } from 'src/utils'
 import { isMobile } from 'react-device-detect'
 import ChupButton from 'components/core/Button/ChupButton'
 import { useAccount, useBalance } from 'wagmi'
+
+export const HEADER_HEIGHT = {
+  MOBILE: '56px',
+  DESKTOP: '80px',
+}
 export default function Header({ className }: { className?: string }) {
   const { t } = useTranslation()
   const router = useRouter()
@@ -344,7 +349,7 @@ export default function Header({ className }: { className?: string }) {
                 )}
 
                 <div
-                  className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#242424] font-semibold'
+                  className='flex gap-3 items-center py-4 text-sm leading-[18px] font-semibold'
                   onClick={() => {
                     setOpenNavigation(false)
                     router.push('/campaigns')
@@ -353,13 +358,13 @@ export default function Header({ className }: { className?: string }) {
                   {t('Campaign')}
                 </div>
                 {/* <div
-                  className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#242424] font-semibold'
+                  className='flex gap-3 items-center py-4 text-sm leading-[18px] font-semibold'
                   onClick={() => router.push('/collection')}>
                   <Image src={Collection} alt='' className='w-5 h-5' />
                   {t('Collection')}
                 </div> */}
                 <div
-                  className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#242424] font-semibold'
+                  className='flex gap-3 items-center py-4 text-sm leading-[18px] font-semibold'
                   onClick={() => {
                     setOpenNavigation(false)
                     router.push('/about-us')
@@ -608,13 +613,13 @@ export default function Header({ className }: { className?: string }) {
           </div>
           <div className='flex lg:gap-[32px] lg:justify-end min-w-[430px]'>
             <Button onClick={() => router.push('/campaigns')}>
-              <span style={{ color: '#242424', fontWeight: '500' }}>{t('Campaign')}</span>
+              <span style={{ fontWeight: '500' }}>{t('Campaign')}</span>
             </Button>
             {/* <Button size='md' onClick={() => router.push('/about-us')}>
-              <span style={{ color: '#242424', fontWeight: '500' }}>{t('IP Asset')}</span>
+              <span style={{ fontWeight: '500' }}>{t('IP Asset')}</span>
             </Button> */}
             <Button size='md' onClick={() => router.push('/about-us')}>
-              <span style={{ color: '#242424', fontWeight: '500' }}>{t('aboutUs')}</span>
+              <span style={{ fontWeight: '500' }}>{t('aboutUs')}</span>
             </Button>
             <div className='flex gap-[20px] items-center cursor-pointer'>
               <div className='flex gap-4 items-center' onClick={switchLanguage}>

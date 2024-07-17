@@ -52,7 +52,7 @@ export default function QuestList({
     }
   })
   return (
-    <div className='mt-8'>
+    <div className='mt-4'>
       <div className='lg:flex lg:items-center lg:flex-wrap lg:justify-between'>
         <p className='text-lg leading-[26px] lg:text-xl lg:leading-[25px] font-medium'>
           {quests && !isEnded
@@ -103,13 +103,13 @@ export default function QuestList({
         <div className='mt-5 p-6 lg:mt-9 lg:p-6 flex flex-col items-center w-full'>
           <Image src={Mascot3} alt='' className='w-[160px] h-[160px]' />
           <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-medium mt-5 text-center'>
-            {t('Campaign Ended')}
+            {t('Campaign ended')}
           </div>
         </div>
       ) : !quests ? (
         <div className='mt-5 p-6 lg:mt-9 lg:p-6 flex flex-col items-center w-full'>
           <Image src={Mascot2} alt='' className='w-[160px] h-[160px]' />
-          <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-medium mt-5 text-center'>
+          <div className='text-sm leading-[18px] lg:text-base lg:leading-5 font-medium mt-5 text-center max-w-[278px]'>
             {t('Enroll to view quests and leaderboard')}
           </div>
         </div>
@@ -121,7 +121,7 @@ export default function QuestList({
           </div>
         </div>
       ) : (
-        <div className='grid grid-cols-1 2xl:grid-cols-2 gap-4 mt-4 lg:mt-8'>
+        <div className='grid grid-cols-1 xl:grid-cols-2 gap-4 mt-4 lg:mt-8'>
           {questList
             .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
             .sort((a, b) => a.weight - b.weight)

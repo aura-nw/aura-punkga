@@ -47,29 +47,28 @@ function Home() {
     },
   ])
 
-  useEffect(() => {
-    setStatusFilter((prev) => {
-      return _.cloneDeep(
-        prev.map((v) => ({
-          key: v.key,
-          value: t(v.key),
-        }))
-      )
-    })
-    setGenreFilter((prev) => {
-      return _.cloneDeep(
-        prev.map((v) =>
-          v.key == 'All genres'
-            ? {
-                key: v.key,
-                value: t(v.key),
-              }
-            : v
-        )
-      )
-    })
-  }, [t('All status')])
-  console.log('genreFilter', genreFilter)
+  // useEffect(() => {
+  //   setStatusFilter((prev) => {
+  //     return _.cloneDeep(
+  //       prev.map((v) => ({
+  //         key: v.key,
+  //         value: t(v.key),
+  //       }))
+  //     )
+  //   })
+  //   setGenreFilter((prev) => {
+  //     return _.cloneDeep(
+  //       prev.map((v) =>
+  //         v.key == 'All genres'
+  //           ? {
+  //               key: v.key,
+  //               value: t(v.key),
+  //             }
+  //           : v
+  //       )
+  //     )
+  //   })
+  // }, [t('All status')])
   return (
     <div className='bg-gray-50'>
       <div className='md:hidden'>
@@ -99,7 +98,7 @@ function Home() {
                             value: t('All genres'),
                           },
                           ...useableTags?.map((tag) => ({
-                            key: tag[locale],
+                            key: tag.en,
                             value: tag[locale],
                           })),
                         ]
@@ -137,7 +136,7 @@ function Home() {
                 />
               </div>
             </div>
-            <div className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-2.5 mt-4 md:mt-10 md:pb-7'>
+            <div className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-2.5 mt-4 md:pb-7'>
               {latestComic.loading
                 ? Array.apply(null, Array(20)).map((d, index) => {
                     return (
@@ -177,9 +176,9 @@ function Home() {
               <SlideSection sliderNavRef={sliderNavRef} />
               {/* <LeaderBoard /> */}
             </div>
-            <div className='flex flex-col p-4 bg-white text-[#333333] rounded-[10px]'>
-              <div className='md:text-xl text-sm md:leading-[25px] font-[500]'>🔥{t('Trending')}</div>
-              <div className='flex flex-col gap-4 mt-2 md:mt-4'>
+            <div className='flex flex-col p-4 bg-white rounded-[10px] lg:mt-8'>
+              <div className='md:text-xl text-lg leading-[28px] font-medium'>🔥{t('Trending')}</div>
+              <div className='flex flex-col gap-4 mt-4'>
                 {trendingComic.loading
                   ? Array.apply(null, Array(5)).map((d, index) => {
                       return (

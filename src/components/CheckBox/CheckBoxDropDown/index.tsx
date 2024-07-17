@@ -10,6 +10,13 @@ const CheckboxDropdown = ({ options, selected, onChange, allKey = null, multiple
   const { t } = useTranslation()
 
   useEffect(() => {
+    if (multiple) {
+      setInternalSelected(options)
+      onChange && onChange(options)
+    }
+  }, [options?.length])
+
+  useEffect(() => {
     setInternalSelected(selected)
   }, [selected])
 
@@ -33,7 +40,7 @@ const CheckboxDropdown = ({ options, selected, onChange, allKey = null, multiple
     let newValue
     if (multiple) {
       if (value.key === allKey) {
-        newValue = internalSelected.length === options.length - 1 ? [] : options.filter((s) => s.key !== allKey)
+        newValue = internalSelected.length === options.length ? [] : options
       } else {
         newValue = [...internalSelected]
         const existingIndex = newValue.findIndex((item) => item.key === value.key)
@@ -52,17 +59,15 @@ const CheckboxDropdown = ({ options, selected, onChange, allKey = null, multiple
   }
 
   const open = Boolean(anchorEl)
-
-  const allChecked = internalSelected.length === options.length - 1
-  const someChecked = internalSelected.length > 0 && !allChecked
-
   return (
     <FormControl className='w-full'>
       <div
         onClick={handleClick}
         className='text-text-teriary text-sm font-medium leading-5 flex gap-[6px] cursor-pointer w-full items-center'>
         <div className='min-w-[70px] whitespace-nowrap'>
-          {multiple ? options.find((option) => option.key == allKey)?.value : internalSelected?.[0]?.value || internalSelected?.[0]?.key}
+          {multiple
+            ? options.find((option) => option.key == allKey)?.value
+            : internalSelected?.[0]?.value || internalSelected?.[0]?.key}
         </div>
         <KeyboardArrowDownIcon />
       </div>
@@ -81,10 +86,12 @@ const CheckboxDropdown = ({ options, selected, onChange, allKey = null, multiple
           horizontal: 'left',
         }}>
         <List className='top-0 left-0 absolute z-10 mt-1 max-h-[248px] w-[278px] whitespace-nowrap rounded-[4px] overflow-auto bg-white text-sm focus:outline-none border-[1px] border-[#E4E5F0] text-[#4E5056]'>
-          {allKey && (
+          {options.map((option) => (
             <ListItem
-              onClick={() => handleChange(options.find((s) => s.key === allKey))}
+              key={option.key}
+              onClick={() => handleChange(option)}
               dense
+              className='cursor-pointer'
               sx={{
                 display: 'flex',
                 gap: 0,
@@ -92,52 +99,24 @@ const CheckboxDropdown = ({ options, selected, onChange, allKey = null, multiple
               <ListItemIcon sx={{ minWidth: '0' }}>
                 <Checkbox
                   edge='start'
-                  checked={allChecked}
-                  indeterminate={someChecked}
+                  checked={
+                    option.key == allKey
+                      ? internalSelected?.length == options?.length
+                      : internalSelected.some((s) => s.key === option.key)
+                  }
                   tabIndex={-1}
                   disableRipple
                   sx={{
-                    color: '#10B970',
+                    color: '#D1D1D1',
                     '&.Mui-checked': {
-                      color: '#10B970',
-                    },
-                    '&.MuiCheckbox-indeterminate': {
                       color: '#10B970',
                     },
                   }}
                 />
               </ListItemIcon>
-              <ListItemText primary={options.find((s) => s.key === allKey).value} className='text-sm text-[#4E5056]' />
+              <ListItemText primary={option.value} className='text-sm text-[#4E5056]' />
             </ListItem>
-          )}
-          {options
-            .filter((option) => option.key !== allKey)
-            .map((option) => (
-              <ListItem
-                key={option.key}
-                onClick={() => handleChange(option)}
-                dense
-                sx={{
-                  display: 'flex',
-                  gap: 0,
-                }}>
-                <ListItemIcon sx={{ minWidth: '0' }}>
-                  <Checkbox
-                    edge='start'
-                    checked={internalSelected.some((s) => s.key === option.key)}
-                    tabIndex={-1}
-                    disableRipple
-                    sx={{
-                      color: '#D1D1D1',
-                      '&.Mui-checked': {
-                        color: '#10B970',
-                      },
-                    }}
-                  />
-                </ListItemIcon>
-                <ListItemText primary={option.value} className='text-sm text-[#4E5056]' />
-              </ListItem>
-            ))}
+          ))}
         </List>
       </Popover>
     </FormControl>

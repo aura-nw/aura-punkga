@@ -29,6 +29,7 @@ import {
 } from 'src/services'
 import useSWR, { useSWRConfig } from 'swr'
 import QuestList from '../../../components/pages/campaigns/questList'
+import { levelToXp } from 'src/utils'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -48,6 +49,11 @@ function CampaignDetail({}) {
   const slug = query.campaignSlug as string
   const { mutate } = useSWRConfig()
   const { t } = useTranslation()
+  const percentage = account
+    ? (Math.round(account.xp - levelToXp(account.level)) /
+        Math.round(levelToXp(account.level + 1) - levelToXp(account.level))) *
+      100
+    : 0
   const { data: authData } = useSWR(
     { key: 'fetch_campaign_auth_data', slug, account: account?.id },
     ({ key, slug, account }) => (account ? getCampaignAuthorizedData(slug) : null),
@@ -258,7 +264,7 @@ function CampaignDetail({}) {
             {/* Campaign info  */}
             <div className='flex justify-between'>
               <div className='flex flex-col gap-1.5'>
-                <LabelChip color={isUpcoming ? 'process' : !isEnded ? 'success' : 'default'} className='w-fit'>
+                <LabelChip color={isUpcoming ? 'process' : !isEnded ? 'success' : 'error'} className='w-fit'>
                   {t(isUpcoming ? 'Upcoming' : !isEnded ? 'Ongoing' : 'Ended')}
                 </LabelChip>
                 <div className='text-xl font-medium'>{data[locale].name} </div>
@@ -391,6 +397,23 @@ function CampaignDetail({}) {
                 )
               ) : null}
             </div>
+            {account && (
+              <div className='rounded-lg p-4 bg-white mt-4 md:mt-8'>
+                <div className='flex justify-between items-center'>
+                  <div className='font-semibold '>
+                    {t('Level')} {account.level}
+                  </div>
+                  <div className='text-xxs'>{`${Math.round(
+                    levelToXp(account.level + 1) - levelToXp(account.level)
+                  )} ${t('xp to level')} ${account.level + 1}`}</div>
+                </div>
+                <div className='relative h-3 mt-2 w-full rounded-lg overflow-hidden bg-[#1C1C1C]/5'>
+                  <div
+                    className={`absolute top-0 left-0 bg-[#1FAB5E] bottom-0`}
+                    style={{ width: `${percentage}%` }}></div>
+                </div>
+              </div>
+            )}
             <div className='hidden md:block'>
               {isEnrolled || isEnded ? (
                 <LeaderBoard data={leaderboardData} userData={userData} />

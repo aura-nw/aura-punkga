@@ -162,7 +162,7 @@ export default function CampaignPage() {
                           ? 'process'
                           : moment(campaign.end_date).isAfter()
                           ? 'success'
-                          : 'default'
+                          : 'error'
                       }>
                       {t(
                         moment(campaign.start_date).isAfter()

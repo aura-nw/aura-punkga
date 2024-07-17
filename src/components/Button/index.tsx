@@ -13,7 +13,7 @@ export default function Button({ children, size = 'md', onClick, className }: IB
     lg: `text-[20px] leading-[25px] font-bold pt-[10px] pb-[13px]`,
   }
   return (
-    <button onClick={onClick} className={`${classes[size]} ${className}`}>
+    <button onClick={onClick} className={`text-text-primary ${classes[size]} ${className}`}>
       {children}
     </button>
   )
