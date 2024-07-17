@@ -128,18 +128,18 @@ const Artwork = ({ artwork }) => {
           src={getImageSrc(artwork?.image)}
           alt={artwork?.image}
         />
-        <div className='mt-4 text-sm font-medium'>{artwork.title}</div>
+        <div className='mt-4 text-sm font-medium line-clamp-2'>{artwork.title}</div>
       </div>
-      <Modal open={open} setOpen={setOpen}>
-        <div className='py-6 px-4'>
+      <Modal open={open} setOpen={setOpen} preventClickOutsideToClose={false}>
+        <div className='py-6 px-4 max-w-[655px]'>
           <Image
             width={600}
             height={600}
-            className='w-full aspect-square rounded-md object-cover max-w-[450px]'
+            className='w-full rounded-md max-h-[70vh]'
             src={getImageSrc(artwork?.image)}
             alt={artwork?.image}
           />
-          <div className='mt-4 text-lg font-medium'>{artwork.title}</div>
+          <div className='mt-4 text-lg w-full text-center font-medium'>{artwork.title}</div>
         </div>
       </Modal>
     </>

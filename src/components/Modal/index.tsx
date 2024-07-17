@@ -22,7 +22,7 @@ export default function Modal({
         as='div'
         className='relative z-50'
         initialFocus={cancelButtonRef}
-        onClose={preventClickOutsideToClose || !hideClose ? () => {} : setOpen}>
+        onClose={preventClickOutsideToClose ? () => {} : setOpen}>
         <Transition.Child
           as='div'
           enter='ease-out duration-300'
