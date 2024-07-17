@@ -23,8 +23,14 @@ export const getServerSideProps = async (context) => {
       context.locale == 'vn'
         ? 'https://punkga.me/assets/images/kaia-island-thumb-vn.png'
         : 'https://punkga.me/assets/images/kaia-island-thumb.png',
-    title: `Kaia's Island Mythology Record - Ghi chép về truyền thuyết đảo Kaia`,
-    description: `Kaia's Island Mythology Record Description`,
+    title:
+      context.locale == 'vn'
+        ? `Cuộc Thi Vẽ Tranh Về Truyền Thuyết Đảo Kaia | PunkgaMe`
+        : `Kaia Island Mythology Drawing Contest | PunkgaMe`,
+    description:
+      context.locale == 'vn'
+        ? `Khám phá đảo Kaia kỳ bí, thể hiện tài năng hội họa và giành giải thưởng 50 triệu tại cuộc thi "Ghi Chép Về Truyền Thuyết Đảo Kaia" cùng PunkgaMe nào!`
+        : `Explore the mysterious Kaia Island, showcase your artistic talent, and win a 2000 USD prize in the "Kaia's Island Mythology Record" contest with PunkgaMe!`,
   }
   return {
     props: {

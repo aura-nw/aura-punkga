@@ -8,7 +8,7 @@ import Modal from 'components/Modal'
 export default function Artworks() {
   const { t } = useTranslation()
   const { data, isLoading } = useSWR(
-    'https://script.google.com/macros/s/AKfycbwK1f5NH_IILCflPI5645ivn-j9qEyWEcc94tD-EP1_M4bysVpXcFR8s8uW1XgaQOeezg/exec',
+    'https://script.google.com/macros/s/AKfycbxCf6YPrB9XE6DGlDStEGVa2J0THciOVqe8jnRt8XqA77P4Ce-1dH0kNVue8tjZDotqcA/exec',
     (url) => fetch(url).then((res) => res.json())
   )
   const [tab, setTab] = useState(1)

@@ -13,10 +13,15 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import useSWR from 'swr'
 export default function KaiaIsland() {
   const { locale } = useRouter()
   const { t } = useTranslation()
   const [seeMore, setSeeMore] = useState(false)
+  const { data, isLoading } = useSWR(
+    'https://script.google.com/macros/s/AKfycbxCf6YPrB9XE6DGlDStEGVa2J0THciOVqe8jnRt8XqA77P4Ce-1dH0kNVue8tjZDotqcA/exec',
+    (url) => fetch(url).then((res) => res.json())
+  )
   return (
     <div className=''>
       <Image src={locale == 'vn' ? BannerMobileVN : BannerMobile} className='w-full lg:hidden h-auto' alt='' />
@@ -214,12 +219,16 @@ export default function KaiaIsland() {
               <div className='flex gap-5 justify-between'>
                 <div className='flex flex-col gap-1 w-[40%]'>
                   <div className='text-text-teriary text-sm font-medium'>{t('Participants')}</div>
-                  <div className='font-semibold text-xl'>---</div>
+                  <div className='font-semibold text-xl'>
+                    {+data?.generalData?.find((value) => value.key == 'Participants')?.value || '---'}
+                  </div>
                 </div>
                 <div className='w-[1px] h-[43px] bg-[#1C1C1C1A]'></div>
                 <div className='flex flex-col gap-1 w-[40%]'>
                   <div className='text-text-teriary text-sm font-medium'>{t('Submitted artworks')}</div>
-                  <div className='font-semibold text-xl'>---</div>
+                  <div className='font-semibold text-xl'>
+                    {+data?.generalData?.find((value) => value.key == 'Submitted artworks')?.value || '---'}
+                  </div>
                 </div>
               </div>
             </div>

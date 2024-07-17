@@ -9,10 +9,15 @@ import Link from 'next/link'
 import CheckedRadio from 'assets/images/icons/radio-check.svg'
 import UncheckedRadio from 'assets/images/icons/radio-uncheck.svg'
 import moment from 'moment'
+import useSWR from 'swr'
 export default function TimeLine() {
   const { t } = useTranslation()
   const r2started = moment().isAfter('2024-07-24')
   const r3started = moment().isAfter('2024-07-31')
+  const { data, isLoading } = useSWR(
+    'https://script.google.com/macros/s/AKfycbxCf6YPrB9XE6DGlDStEGVa2J0THciOVqe8jnRt8XqA77P4Ce-1dH0kNVue8tjZDotqcA/exec',
+    (url) => fetch(url).then((res) => res.json())
+  )
   return (
     <div className='mt-6 md:mt-8 lg:flex-row lg:bg-white relative flex flex-col gap-4 lg:py-4 lg:rounded-mlg'>
       <div className='hidden lg:flex gap-1.5 items-center absolute w-[70%] left-1/2 -translate-x-1/2 h-[1px] bottom-[145px]'>
@@ -29,7 +34,9 @@ export default function TimeLine() {
           </div>
           <div className='font-semibold flex items-center gap-3'>
             {t('Round 1: To the Island!')}
-            {/* <Link href='/' >
+            <Link
+              href='https://www.facebook.com/PunkgaMeManga/posts/pfbid02yY6c5KZ9R897PP8WUZu7c1wxmMcJe7W3YRXPcRVUFoNysQFDMydNtqYbTP6bPZV6l'
+              target='_blank'>
               <svg xmlns='http://www.w3.org/2000/svg' width='17' height='17' viewBox='0 0 17 17' fill='none'>
                 <path
                   d='M7.75 2.5H4.75C3.50736 2.5 2.5 3.50735 2.5 4.74999V12.25C2.5 13.4926 3.50736 14.5 4.75 14.5H12.25C13.4926 14.5 14.5 13.4926 14.5 12.25V9.24996M10.7496 2.50018L14.5 2.5M14.5 2.5V5.87507M14.5 2.5L8.12445 8.87478'
@@ -39,7 +46,7 @@ export default function TimeLine() {
                   stroke-linejoin='round'
                 />
               </svg>
-            </Link> */}
+            </Link>
           </div>
         </div>
         <div
@@ -53,7 +60,9 @@ export default function TimeLine() {
           <div className='h-[47px] w-[1px] bg-border-teriary'></div>
           <div className=''>
             <div className='text-text-teriary text-sm font-medium'>{t('Participants')}</div>
-            <div className='font-semibold'>---</div>
+            <div className='font-semibold'>
+              {+data?.generalData?.find((value) => value.key == 'Round 1 Participants')?.value || '---'}
+            </div>
           </div>
         </div>
       </div>
@@ -79,7 +88,9 @@ export default function TimeLine() {
           <div className='h-[47px] w-[1px] bg-border-teriary'></div>
           <div className=''>
             <div className='text-text-teriary text-sm font-medium'>{t('Participants')}</div>
-            <div className='font-semibold'>---</div>
+            <div className='font-semibold'>
+              {+data?.generalData?.find((value) => value.key == 'Round 2 Participants')?.value || '---'}
+            </div>
           </div>
         </div>
       </div>
@@ -101,7 +112,9 @@ export default function TimeLine() {
           <div className='h-[47px] w-[1px] bg-border-teriary'></div>
           <div className=''>
             <div className='text-text-teriary text-sm font-medium'>{t('Participants')}</div>
-            <div className='font-semibold'>---</div>
+            <div className='font-semibold'>
+              {+data?.generalData?.find((value) => value.key == 'Round 3 Participants')?.value || '---'}
+            </div>
           </div>
         </div>
       </div>
