@@ -10,6 +10,7 @@ import CheckedRadio from 'assets/images/icons/radio-check.svg'
 import UncheckedRadio from 'assets/images/icons/radio-uncheck.svg'
 import moment from 'moment'
 import useSWR from 'swr'
+import Tooltip from 'components/Tooltip'
 export default function TimeLine() {
   const { t } = useTranslation()
   const r2started = moment().isAfter('2024-07-24')
@@ -34,19 +35,21 @@ export default function TimeLine() {
           </div>
           <div className='font-semibold flex items-center gap-3'>
             {t('Round 1: To the Island!')}
-            <Link
-              href='https://www.facebook.com/PunkgaMeManga/posts/pfbid02yY6c5KZ9R897PP8WUZu7c1wxmMcJe7W3YRXPcRVUFoNysQFDMydNtqYbTP6bPZV6l'
-              target='_blank'>
-              <svg xmlns='http://www.w3.org/2000/svg' width='17' height='17' viewBox='0 0 17 17' fill='none'>
-                <path
-                  d='M7.75 2.5H4.75C3.50736 2.5 2.5 3.50735 2.5 4.74999V12.25C2.5 13.4926 3.50736 14.5 4.75 14.5H12.25C13.4926 14.5 14.5 13.4926 14.5 12.25V9.24996M10.7496 2.50018L14.5 2.5M14.5 2.5V5.87507M14.5 2.5L8.12445 8.87478'
-                  stroke='#2D72FB'
-                  stroke-width='1.5'
-                  stroke-linecap='round'
-                  stroke-linejoin='round'
-                />
-              </svg>
-            </Link>
+            <Tooltip label={t('View on Facebook')}>
+              <Link
+                href='https://www.facebook.com/PunkgaMeManga/posts/pfbid02yY6c5KZ9R897PP8WUZu7c1wxmMcJe7W3YRXPcRVUFoNysQFDMydNtqYbTP6bPZV6l'
+                target='_blank'>
+                <svg xmlns='http://www.w3.org/2000/svg' width='17' height='17' viewBox='0 0 17 17' fill='none'>
+                  <path
+                    d='M7.75 2.5H4.75C3.50736 2.5 2.5 3.50735 2.5 4.74999V12.25C2.5 13.4926 3.50736 14.5 4.75 14.5H12.25C13.4926 14.5 14.5 13.4926 14.5 12.25V9.24996M10.7496 2.50018L14.5 2.5M14.5 2.5V5.87507M14.5 2.5L8.12445 8.87478'
+                    stroke='#2D72FB'
+                    stroke-width='1.5'
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                  />
+                </svg>
+              </Link>
+            </Tooltip>
           </div>
         </div>
         <div

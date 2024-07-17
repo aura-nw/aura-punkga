@@ -40,7 +40,9 @@ export default function KaiaIsland() {
               <Tooltip label={t('Share on Facebook')}>
                 <Link
                   target='_blank'
-                  href='https://www.facebook.com/PunkgaMeManga/posts/pfbid02dnvJYumJhC1Nh1WungWkV54FNHdvMULh57iGLzAfAXGpvzCuhexBHGTayNbafMkSl'
+                  href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                    'https://www.facebook.com/PunkgaMeManga/posts/pfbid02dnvJYumJhC1Nh1WungWkV54FNHdvMULh57iGLzAfAXGpvzCuhexBHGTayNbafMkSl'
+                  )}`}
                   className='cursor-pointer'>
                   <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
                     <path
@@ -66,7 +68,7 @@ export default function KaiaIsland() {
             </h1>
             <div className='text-sm font-medium flex flex-col gap-2.5 mt-1.5 md:flex-row md:items-center'>
               <div>
-                <span>{t('Start at')}:</span> {locale == 'vn' ? '17 Tháng 7 2024' : '17 July 2024'}
+                <span>{t('Starts at')}:</span> {locale == 'vn' ? '17 Tháng 7 2024' : '17 Jul 2024'}
               </div>
               <span className='w-1 h-1 rounded-full bg-[#646464] hidden md:inline-block'></span>
               <div>
