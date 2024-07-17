@@ -127,10 +127,36 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
                     </div>
                   </CustomTabPanel>
                   <CustomTabPanel value={valueTab} index={1}>
-                    Item Two
+                    <div className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-2.5 mt-4 md:mt-10 md:pb-7'>
+                      {isSettingUp || subscribeList.loading ? (
+                        <>
+                          <DummyComic />
+                          <DummyComic />
+                          <DummyComic />
+                        </>
+                      ) : (
+                        <>
+                          {subscribeList.data?.map((data, index) => (
+                            <Fragment key={index}>
+                              <div className='hidden md:block'>
+                                <Comic
+                                  key={index}
+                                  {...data}
+                                  unsubscribe={() => unsubscribe(data.id)}
+                                  subscribe={() => subscribe(data.id)}
+                                />
+                              </div>
+                              <div className='md:hidden'>
+                                <MComic key={index} {...data} />
+                              </div>
+                            </Fragment>
+                          ))}
+                        </>
+                      )}
+                    </div>
                   </CustomTabPanel>
                   <CustomTabPanel value={valueTab} index={2}>
-                    Item Three
+                    <NFTList />
                   </CustomTabPanel>
                   <CustomTabPanel value={valueTab} index={3}>
                     Item Four
