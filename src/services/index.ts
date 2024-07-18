@@ -5,6 +5,7 @@ import { IComic } from 'src/models/comic'
 import { privateAxios } from 'src/context'
 import { formatStatus } from 'src/utils'
 import { getItem } from 'src/utils/localStorage'
+import { Campaign } from 'src/models/campaign'
 export const getEnvKey = () => (getConfig().CHAIN_ID.includes('xstaxy') ? 'xstaxy' : 'euphoria')
 export const getLatestComic = async (): Promise<IComic[]> => {
   return await axios.get(`${getConfig().API_URL}/api/rest/public/latest`).then((res) =>
@@ -120,6 +121,18 @@ export const getProfile = async () => {
     return {
       ...res?.data?.authorizer_users?.[0],
       rank: rank?.data?.user_xp_rank?.[0]?.rank || 99999,
+      user_quests: res?.data?.authorizer_users?.[0]?.user_quests?.map((userQuest: any) => {
+        const quest = userQuest.quest
+        LANGUAGE.forEach((l) => {
+          const questLanguages =
+            quest.quests_i18n.find((ml) => ml.i18n_language.id == l.id) ||
+            quest.quests_i18n.find((ml) => ml.i18n_language.is_main)
+          quest[l.shortLang] = questLanguages.data
+        })
+        return {
+          ...userQuest,
+        }
+      }),
     }
   }
 }
@@ -453,22 +466,35 @@ export const getUserRankInCampaign = async (id: string) => {
   return data
 }
 export const getCampaignAuthorizedData = async (slug: string) => {
-  const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${slug}/authorized`)
-  const campaignData = data.data.campaign[0]
-  const quests = data.data.campaign[0].campaign_quests
-  campaignData.campaign_quests = campaignData.campaign_quests?.map((quest) => {
-    if (quest.condition?.quest_id) {
-      const mappedQuest = quest
-      mappedQuest.condition = {
-        ...quest.condition,
-        requiredQuest: quests.find((q) => q.id == quest.condition.quest_id),
+  try {
+    const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${slug}/authorized`)
+    const campaignData = data.data.campaign[0]
+    const quests = campaignData.campaign_quests.map((quest: any) => {
+      const q = quest
+      LANGUAGE.forEach((l) => {
+        const questLanguages =
+          quest.quests_i18n.find((ml) => ml.i18n_language.id == l.id) ||
+          quest.quests_i18n.find((ml) => ml.i18n_language.is_main)
+        q[l.shortLang] = questLanguages.data
+      })
+      return q
+    })
+    campaignData.campaignQuests = quests?.map((quest) => {
+      if (quest.condition?.quest_id) {
+        const mappedQuest = quest
+        mappedQuest.condition = {
+          ...quest.condition,
+          requiredQuest: quests.find((q) => q.id == quest.condition.quest_id),
+        }
+        return mappedQuest
+      } else {
+        return quest
       }
-      return mappedQuest
-    } else {
-      return quest
-    }
-  })
-  return campaignData
+    })
+    return campaignData as Campaign
+  } catch (error) {
+    console.error(error)
+  }
 }
 export const enrollCampaign = async (id: string) => {
   const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/campaign/${id}/enroll`)

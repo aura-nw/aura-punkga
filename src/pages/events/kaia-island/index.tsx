@@ -19,10 +19,18 @@ Page.getLayout = function getLayout(page) {
 }
 export const getServerSideProps = async (context) => {
   const props = {
-    image: 'https://punkga.me/assets/images/wow-yourself-thumb.png',
-    title: 'WoW YOURSELF - Cá Chép Hoá Rồng',
+    image:
+      context.locale == 'vn'
+        ? 'https://punkga.me/assets/images/kaia-island-thumb-vn.png'
+        : 'https://punkga.me/assets/images/kaia-island-thumb.png',
+    title:
+      context.locale == 'vn'
+        ? `Cuộc Thi Vẽ Tranh Về Truyền Thuyết Đảo Kaia`
+        : `Kaia Island Mythology Drawing Contest`,
     description:
-      ' WoW YOURSELF - theo dấu hành trình vượt Vũ Môn của hoạ sĩ, đắm mình trong mùa hè sáng tạo với các tác phẩm dự thi xuất sắc cùng Punkga Me nhé!',
+      context.locale == 'vn'
+        ? `Khám phá đảo Kaia kỳ bí, thể hiện tài năng hội họa và giành giải thưởng 50 triệu tại cuộc thi "Ghi Chép Về Truyền Thuyết Đảo Kaia" cùng PunkgaMe nào!`
+        : `Explore the mysterious Kaia Island, showcase your artistic talent, and win a 2000 USD prize in the "Kaia's Island Mythology Record" contest with PunkgaMe!`,
   }
   return {
     props: {

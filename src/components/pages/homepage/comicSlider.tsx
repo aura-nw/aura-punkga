@@ -416,7 +416,7 @@ export default function TaskSlider({ sliderNavRef }) {
       <div className='md:hidden px-4 rounded-mlg overflow-hidden relative'>
         <MobileCarousel setSlideIndex={setSlideIndex} sliderRef={sliderRefMobile}>
           <Link
-            href='/kaia-insland'
+            href='/events/kaia-island'
             className='relative'>
             <Image
               src={locale == 'vn' ? EventBannerVN : EventBanner}

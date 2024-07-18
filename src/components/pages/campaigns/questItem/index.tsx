@@ -98,7 +98,6 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
         <div className='p-5 pt-10 w-[90vw] max-w-[800px] lg:w-[644px] lg:grid-cols-[1fr_130px] lg:grid lg:gap-x-8 lg:grid-rows-[auto_1fr]'>
           <div>
             {quest.repeat == 'Daily' && <LabelChip className='mb-1.5'>{t('Daily')}</LabelChip>}
-            {/* <div className='text-lg font-semibold'>{quest.name}</div> */}
             <div className='mt-1.5 text-lg leading-[26px] font-semibold'>
               {quest.type == 'Subscribe'
                 ? locale == 'vn'
@@ -162,9 +161,9 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                 </>
               )}
             </div>
-            {!!quest.description && (
+            {!!quest[locale].description && (
               <div className={`mt-3 text-text-teriary text-sm max-h-[120px] overflow-auto`}>
-                {ReactHtmlParser(quest.description)}
+                {ReactHtmlParser(quest[locale].description)}
               </div>
             )}
           </div>
@@ -306,7 +305,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
             </div>
           )}
           <div className='flex flex-col mb-3 h-full'>
-            <div className='text-md font-semibold leading-[22px] line-clamp-3 md:line-clamp-2 text-text-primary'>{quest.name}</div>
+            <div className='text-base font-semibold line-clamp-3 md:line-clamp-2'>{quest[locale].name}</div>
             <div className='text-xs leading-[18px] lg:text-sm lg:leading-5 font-medium text-text-teriary mt-3 flex items-center gap-1.5'>
               <span>{`${quest.reward.xp} XP`}</span>
               {quest.reward.nft?.img_url && (
@@ -361,9 +360,9 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                   <span>
                     {t('Complete quest')}{' '}
                     <span className='text-second-color'>
-                      {quest.condition.requiredQuest?.name.length > limitChar
-                        ? quest.condition.requiredQuest?.name.slice(0, limitChar) + '...'
-                        : quest.condition.requiredQuest?.name}
+                      {quest.condition.requiredQuest?.[locale]?.name.length > limitChar
+                        ? quest.condition.requiredQuest?.[locale]?.name.slice(0, limitChar) + '...'
+                        : quest.condition.requiredQuest?.[locale]?.name}
                     </span>
                   </span>
                 )}
