@@ -37,7 +37,7 @@ export default function NewQuestSection() {
       </div>
       {!!data?.length ? (
         <>
-          <div className='w-full relative mt-4 hidden xl:block'>
+          <div className='w-full relative mt-4 block'>
             <div className='block'>
               <div className='flex [&_.swiper-button-prev]:text-[#61646B] [&_.swiper-button-next]:text-[#61646B] items-center'>
                 <div className='max-w-full'>

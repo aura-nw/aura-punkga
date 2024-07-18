@@ -27,6 +27,7 @@ export default function NFTList() {
     ({ wallet }) => (wallet ? getUserNfts(wallet) : null),
     { refreshInterval: 10000 }
   )
+  console.log('nft', data)
   if (!data || !data.length) {
     return (
       <div className='w-full p-5 rounded-2xl bg-[#F2F2F2] md:mt-10'>
@@ -73,25 +74,14 @@ export default function NFTList() {
   }
   return (
     <div className='w-full p-5 rounded-2xl md:mt-10 bg-[#F2F2F2]'>
-      <div className='flex items-center gap-5'>
-        <div className='text-[#1C1C1C] font-bold text-xl leading-[25px]'>{t('Your NFTs')}</div>
-        {data.length > 5 && (
-          <button
-            onClick={() => setSeeAll(!seeAll)}
-            className='px-6 py-2 rounded-full border-2 border-second-color text-second-color font-bold leading-5'>
-            {t(seeAll ? 'See less' : 'See all')}
-          </button>
-        )}
-      </div>
       <div
         className={`mt-[10px] -mx-5 grid grid-cols-[repeat(auto-fill,minmax(max(160px,calc(100%/5)),1fr))] overflow-hidden ${seeAll ? '' : 'grid-rows-1 auto-rows-[0px]'
           }`}>
         {data?.map((token, index) => (
           <Link
             target='_blank'
-            href={`${getConfig()['CHAIN_INFO'].explorer}/token/cw721/${
-              token.cw721_contract.smart_contract.address
-            }/${token.token_id}`}
+            href={`${getConfig()['CHAIN_INFO'].explorer}/token/cw721/${token.cw721_contract.smart_contract.address
+              }/${token.token_id}`}
             className='p-5 [&:hover_.view-on-seekhype]:translate-y-0'
             key={index}>
             <div className={`bg-white rounded-[20px] p-[10px]`}>
@@ -127,9 +117,8 @@ export default function NFTList() {
           {data?.reverse()?.map((token, index) => (
             <Link
               target='_blank'
-              href={`${getConfig()['CHAIN_INFO'].explorer}/token/cw721/${
-                token.cw721_contract.smart_contract.address
-              }/${token.token_id}`}
+              href={`${getConfig()['CHAIN_INFO'].explorer}/token/cw721/${token.cw721_contract.smart_contract.address
+                }/${token.token_id}`}
               className='p-[5px] lg:p-5 [&:hover_.view-on-seekhype]:translate-y-0'
               key={index}>
               <div className={`bg-white rounded-[20px] p-[10px]`}>
