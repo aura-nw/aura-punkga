@@ -28,11 +28,14 @@ export default function QuestSection() {
   )
   const { mutate } = useSWRConfig()
   return (
-    <div className='md:mt-10'>
-      <div className='text-base md:text-xl leading-5 md:leading-[25px] font-bold text-[#1C1C1C]'>{t('Available quests')}</div>
+    <div className=''>
+      <div className='flex justify-between items-center'>
+        <div className='text-xl leading-[28px] text-text-primary'>{t('Available quests')}</div>
+        {!!data?.length && (<Link href='/campaigns' className='text-text-info-primary text-sm leading-5 font-medium'>See all</Link>)}
+      </div>
       {!!data?.length ? (
         <>
-          <div className='w-full relative mt-[47px] hidden xl:block'>
+          <div className='w-full relative mt-4 hidden xl:block'>
             <div className='block'>
               <div className='flex [&_.swiper-button-prev]:text-[#61646B] [&_.swiper-button-next]:text-[#61646B] items-center'>
                 <svg

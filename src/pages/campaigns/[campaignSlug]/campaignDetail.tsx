@@ -198,11 +198,10 @@ function CampaignDetail({}) {
   }
   if (typeof data == 'undefined') return null
   if (!data) return <NotFound />
-
   const isEnded = moment(data.end_date).isBefore()
   const isUpcoming = moment(data.start_date).isAfter()
   const isOngoing = moment(data.start_date).isBefore() && moment(data.end_date).isAfter()
-  const isEnrolled = !!authData?.campaign_quests
+  const isEnrolled = !!authData?.campaignQuests
   return (
     <div className='bg-gray-50'>
       <Modal open={openNFTPreview} setOpen={() => setOpenNFTPreview(false)}>
@@ -440,7 +439,7 @@ function CampaignDetail({}) {
           </div>
           <div>
             {/* Quest  */}
-            <QuestList quests={authData?.campaign_quests} isEnded={isEnded} refreshCallback={refresh} />
+            <QuestList quests={authData?.campaignQuests} isEnded={isEnded} refreshCallback={refresh} />
           </div>
           <div className='md:hidden'>
             {isEnrolled || isEnded ? (
