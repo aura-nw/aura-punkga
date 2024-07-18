@@ -257,3 +257,17 @@ input[type=password]::-ms-clear
 {
     display: none;
 }
+
+.swiper-pagination {
+  position: static !important;
+  margin-top: 12px;
+}
+.swiper-pagination-bullet-active {
+  background: #05965A !important;
+  width: 10px !important;
+  height: 10px !important;
+}
+.swiper-pagination-bullet {
+  width: 10px !important;
+  height: 10px !important;
+}
