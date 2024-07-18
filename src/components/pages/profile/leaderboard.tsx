@@ -13,6 +13,7 @@ import useSWR from 'swr'
 import Nft from './assets/nft.svg'
 import Xp from './assets/xp.svg'
 import { useTranslation } from 'react-i18next'
+import { useRouter } from 'next/router'
 
 export default function LeaderBoard() {
   const [active, setActive] = useState(2)
@@ -53,7 +54,7 @@ export default function LeaderBoard() {
 const TabCompletedQuest = () => {
   const { account } = useContext(Context)
   const { t } = useTranslation();
-
+const {locale} = useRouter()
   return (
     <div className='h-[405px] md:h-[430px] flex flex-col relative gap-2 md:gap-3 overflow-auto'>
       {account.completedQuests.length > 0 ? (
@@ -63,7 +64,7 @@ const TabCompletedQuest = () => {
               <Image src={data.quest.reward?.nft?.img_url ? Nft : Xp} alt='' />
             </div>
             <div className='flex-1 truncate'>
-              <div className='font-bold text-base leading-5 text-subtle-dark truncate'>{data.quest.name}</div>
+              <div className='font-bold text-base leading-5 text-subtle-dark truncate'>{data.quest[locale].name}</div>
               <div className='mt-[5px] text-xs leading-[15px] text-[#61646B]'>{`Completed: ${moment(
                 data.created_at
               ).fromNow()}`}</div>

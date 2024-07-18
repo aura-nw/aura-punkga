@@ -1,8 +1,7 @@
 export type Campaign = {
   id: string
   slug: string
-  name: string
-  campaign_quests?: Quest[]
+  campaignQuests?: Quest[]
   reward: {
     xp: number
     nft?: {
@@ -12,12 +11,32 @@ export type Campaign = {
       ipfs?: string
     }
   }
-  description?: string
   start_date: string
   end_date: string
   status: string
   campaign_user: any[]
+  user_campaign_rewards: any[]
   participants: { aggregate: { count: number } }
+  en?: {
+    seo?: {
+      title?: string
+      description?: string
+      thumbnail_url?: string
+    }
+    name?: string
+    description?: string
+    thumbnail_url?: string
+  }
+  vn?: {
+    seo?: {
+      title?: string
+      description?: string
+      thumbnail_url?: string
+    }
+    name?: string
+    description?: string
+    thumbnail_url?: string
+  }
 }
 export type Quest = {
   id: string
@@ -25,11 +44,17 @@ export type Quest = {
   type: 'Read' | 'Comment' | 'Subscribe' | 'Like' | 'Poll' | 'Quiz' | 'Empty'
   reward_status: 'NOT_SATISFY' | 'CAN_CLAIM' | 'CLAIMED' | 'OUT_OF_SLOT'
   status: string
-  name: string
   created_at: string
   unlock: boolean
-  description?: string
   quest_reward_claimed: number
+  en?: {
+    name?: string
+    description?: string
+  }
+  vn?: {
+    name?: string
+    description?: string
+  }
   condition: {
     quest_id?: number
     level?: number
