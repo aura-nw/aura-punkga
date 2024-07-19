@@ -10,6 +10,9 @@ import { Context } from 'src/context'
 import { LinearProgress, Popover, styled, linearProgressClasses } from '@mui/material'
 import _ from 'lodash'
 import { levelToXp } from 'src/utils'
+import SettingPasswordModal from './settingPasswordModal'
+import ChangingPasswordModal from './changingPasswordModal'
+import { useRouter } from 'next/router'
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 12,
@@ -23,7 +26,8 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-export default function NewInfo({ updateProfile }) {
+export default function NewInfo() {
+  const router = useRouter()
   const { account, getProfile } = useContext(Context)
   const { t } = useTranslation()
   const [preview, setPreview] = useState()
@@ -32,6 +36,8 @@ export default function NewInfo({ updateProfile }) {
   const [gender, setGender] = useState<{ key: string | number; value: string }>(null)
   const [bio, setBio] = useState(null)
   const [selectedFile, setSelectedFile] = useState()
+  const [settingPasswordModalOpen, setSettingPasswordModalOpen] = useState(false)
+  const [changingPasswordModalOpen, setChangingPasswordModalOpen] = useState(false)
 
   useEffect(() => {
     if (!selectedFile) {
@@ -81,9 +87,13 @@ export default function NewInfo({ updateProfile }) {
   const handlePopoverChangePasswordClose = () => {
     setAnchorElChangePassword(null);
   };
+  const handleEditProfile = () => {
+    router.push('/profile/edit-profile')
+  }
 
   const openPopoverEditProfile = Boolean(anchorElEditProfile);
   const openPopoverChangePassword = Boolean(anchorElChangePassword);
+  console.log('account', account)
   return (
     <>
       <div className='w-full p-8 bg-white rounded-[10px] relative'>
@@ -91,9 +101,16 @@ export default function NewInfo({ updateProfile }) {
         <div className='absolute top-5 right-[17px]'>
           <div className='flex gap-3'>
 
-            <Image src={EditProfile} alt='edit profile' width={32} height={32} onMouseEnter={handlePopoverEditProfileOpen} onMouseLeave={handlePopoverEditProfileClose} />
+            <Image className='cursor-pointer' onClick={handleEditProfile} src={EditProfile} alt='edit profile' width={32} height={32} onMouseEnter={handlePopoverEditProfileOpen} onMouseLeave={handlePopoverEditProfileClose} />
 
-            <Image src={ChangePassword} alt='edit profile' width={32} height={32} onMouseEnter={handlePopoverChangePasswordOpen} onMouseLeave={handlePopoverChangePasswordClose} />
+            <Image
+              className='cursor-pointer'
+              onClick={() =>
+                account?.signupMethods?.includes('basic_auth')
+                  ? setChangingPasswordModalOpen(true)
+                  : setSettingPasswordModalOpen(true)
+              }
+              src={ChangePassword} alt='change password' width={32} height={32} onMouseEnter={handlePopoverChangePasswordOpen} onMouseLeave={handlePopoverChangePasswordClose} />
             <Popover
               className=''
               sx={{
@@ -111,7 +128,7 @@ export default function NewInfo({ updateProfile }) {
               }}
               onClose={handlePopoverEditProfileClose}
               disableRestoreFocus>
-              <div className='bg-[#323339B2] rounded-[4px] py-2 px-4 text-[#FDFDFD] text-xs'>Edit profile</div>
+              <div className='bg-[#323339B2] rounded-[4px] py-2 px-4 text-[#FDFDFD] text-xs'> {t('Edit profile')}</div>
             </Popover>
             <Popover
               className=''
@@ -130,7 +147,7 @@ export default function NewInfo({ updateProfile }) {
               }}
               onClose={handlePopoverChangePasswordClose}
               disableRestoreFocus>
-              <div className='bg-[#323339B2] rounded-[4px] py-2 px-4 text-[#FDFDFD] text-xs'>Change password</div>
+              <div className='bg-[#323339B2] rounded-[4px] py-2 px-4 text-[#FDFDFD] text-xs'>{t(account?.signupMethods?.includes('basic_auth') ? 'Change password' : 'Set password')}</div>
             </Popover>
           </div>
         </div>
@@ -208,9 +225,10 @@ export default function NewInfo({ updateProfile }) {
               <div className='text-sm font-semibold leading-5 text-text-primary'>{account.completedQuests.length}</div>
             </div>
           </div>
-
         </div>
       </div>
+      <SettingPasswordModal open={settingPasswordModalOpen} setOpen={setSettingPasswordModalOpen} profile={account} />
+      <ChangingPasswordModal open={changingPasswordModalOpen} setOpen={setChangingPasswordModalOpen} />
     </>
   )
 }

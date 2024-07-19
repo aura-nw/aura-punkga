@@ -44,10 +44,10 @@ export default function Modal({
               leave='ease-in duration-200'
               leaveFrom='opacity-100 translate-y-0 sm:scale-100'
               leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'>
-              <Dialog.Panel className='relative transform overflow-hidden rounded-2xl bg-white text-left shadow-[0px_20px_60px_0px_rgba(0,0,0,0.20)] transition-all sm:my-8'>
+              <Dialog.Panel className='static transform overflow-hidden rounded-2xl bg-white text-left shadow-[0px_20px_60px_0px_rgba(0,0,0,0.20)] transition-all sm:my-8'>
                 {!hideClose && (
                   <div
-                    className='absolute z-50 right-2 top-2 cursor-pointer text-gray-600'
+                    className='absolute z-50 right-3 top-3 cursor-pointer text-gray-600'
                     onClick={() => setOpen(false)}>
                     <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none'>
                       <path
