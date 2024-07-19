@@ -394,9 +394,12 @@ export const getAvailableQuests = async () => {
       const questLanguages =
         quest.quests_i18n.find((ml) => ml.i18n_language.id == l.id) ||
         quest.quests_i18n.find((ml) => ml.i18n_language.is_main)
-      q[l.shortLang] = questLanguages.data
+      q[l.shortLang] = questLanguages?.data || {
+        name: quest?.name,
+        description: quest?.description,
+      }
     })
-    q.pointText = q.quests_campaign.campaign_chain.punkga_config.reward_point_name
+    q.pointText = q.quests_campaign?.campaign_chain?.punkga_config?.reward_point_name || 'XP'
     return q
   })
   return res
@@ -486,9 +489,12 @@ export const getCampaignAuthorizedData = async (slug: string) => {
         const questLanguages =
           quest.quests_i18n.find((ml) => ml.i18n_language.id == l.id) ||
           quest.quests_i18n.find((ml) => ml.i18n_language.is_main)
-        q[l.shortLang] = questLanguages.data
+        q[l.shortLang] = questLanguages?.data || {
+          name: quest.name,
+          description: quest.description,
+        }
       })
-      q.pointText = campaignData.campaign_chain.punkga_config.reward_point_name
+      q.pointText = campaignData?.campaign_chain?.punkga_config?.reward_point_name || 'XP'
       return q
     })
     campaignData.campaignQuests = quests?.map((quest) => {
