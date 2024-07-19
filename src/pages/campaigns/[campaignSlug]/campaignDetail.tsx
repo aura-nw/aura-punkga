@@ -169,6 +169,7 @@ function CampaignDetail({}) {
         hideProgressBar: true,
         autoClose: 3000,
       })
+      return
     }
     setTimeout(() => revealResult(id), 4000)
   }

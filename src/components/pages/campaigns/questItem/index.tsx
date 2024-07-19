@@ -51,6 +51,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
         hideProgressBar: true,
         autoClose: 3000,
       })
+      return
     }
     setTimeout(() => revealResult(id), 4000)
   }
