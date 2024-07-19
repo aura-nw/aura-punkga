@@ -2,6 +2,11 @@ export type Campaign = {
   id: string
   slug: string
   campaignQuests?: Quest[]
+  campaign_chain?: {
+    punkga_config: {
+      reward_point_name
+    }
+  }
   reward: {
     xp: number
     nft?: {

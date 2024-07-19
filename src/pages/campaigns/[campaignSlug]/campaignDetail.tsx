@@ -2,7 +2,8 @@ import Modal from 'components/Modal'
 import Popover from 'components/Popover'
 import ChupButton from 'components/core/Button/ChupButton'
 import LabelChip from 'components/core/Chip/Label'
-import IllusImage from 'components/pages/campaigns/assets/illus.svg'
+import XPImage from 'components/pages/campaigns/assets/illus.svg'
+import KPImage from 'components/pages/campaigns/assets/ic_Kp.svg'
 import LeaderBoard from 'components/pages/campaigns/leaderboard'
 import NoImage from 'images/no_img.png'
 import moment from 'moment'
@@ -202,6 +203,11 @@ function CampaignDetail({}) {
   const isUpcoming = moment(data.start_date).isAfter()
   const isOngoing = moment(data.start_date).isBefore() && moment(data.end_date).isAfter()
   const isEnrolled = !!authData?.campaignQuests
+  const isKP = authData?.campaign_chain?.punkga_config?.reward_point_name == 'KP'
+  const displayConfig = {
+    xpImageSrc: isKP ? KPImage : XPImage,
+    xpText: isKP ? 'KP' : 'XP',
+  }
   return (
     <div className='bg-gray-50'>
       <Modal open={openNFTPreview} setOpen={() => setOpenNFTPreview(false)}>
@@ -238,21 +244,21 @@ function CampaignDetail({}) {
               </div>
               <div className='bg-[#DEDEDE] w-[240px] lg:w-[288px] h-[1px] my-[10px]'></div>
               <div className='font-bold text-second-color text-lg leading-[23px] lg:text-3xl lg:leading-[30px] text-center'>
-                {`+ ${data?.reward.xp} XP`}
+                {`+ ${data?.reward.xp} ${displayConfig.xpText}`}
               </div>
             </div>
           ) : (
             <div className='flex flex-col items-center'>
               <div className='mb-5'>
                 <Image
-                  src={IllusImage}
+                  src={displayConfig.xpImageSrc}
                   width={200}
                   height={200}
                   alt=''
                   className='w-[200px] h-[200px] lg:w-[240px] lg:h-[240px]'
                 />
               </div>
-              <div className='font-bold text-second-color text-lg leading-[23px] lg:text-3xl lg:leading-[30px] text-center'>{`+ ${data?.reward.xp} XP`}</div>
+              <div className='font-bold text-second-color text-lg leading-[23px] lg:text-3xl lg:leading-[30px] text-center'>{`+ ${data?.reward.xp} ${displayConfig.xpText}`}</div>
             </div>
           )}
         </div>
@@ -373,8 +379,8 @@ function CampaignDetail({}) {
                 )}
                 {!!data.reward.xp && (
                   <div className='w-[130px] h-[130px] rounded-lg object-cover bg-background-bg-primary flex justify-center items-center flex-col gap-[10px]'>
-                    <Image src={IllusImage} alt='' className='h-[80px] w-[80px]' />
-                    <p className='text-base text-text-teriary font-semibold'>{`+ ${data.reward.xp} XP`}</p>
+                    <Image src={displayConfig.xpImageSrc} alt='' className='h-[80px] w-[80px]' />
+                    <p className='text-base text-text-teriary font-semibold'>{`+ ${data.reward.xp} ${displayConfig.xpText}`}</p>
                   </div>
                 )}
               </div>
@@ -415,7 +421,7 @@ function CampaignDetail({}) {
             )}
             <div className='hidden md:block'>
               {isEnrolled || isEnded ? (
-                <LeaderBoard data={leaderboardData} userData={userData} />
+                <LeaderBoard data={leaderboardData} userData={userData} xpText={displayConfig.xpText} />
               ) : (
                 <div className='overflow-auto'>
                   <div className='bg-white rounded-mlg mt-8 min-w-[300px] md:min-w-[400px]'>
@@ -428,7 +434,7 @@ function CampaignDetail({}) {
                         <div className='mr-14 md:mr-[70px]'></div>
                         <div className='w-full'>{t('User')}</div>
                         <div className='w-[98px] md:w-[88px] shrink-0 text-center'>{t('Level')}</div>
-                        <div className='w-12 shrink-0 text-center'>XP</div>
+                        <div className='w-12 shrink-0 text-center'>{displayConfig.xpText}</div>
                       </div>
                       <div className='h-[240px] md:h-[90px] flex flex-col relative'></div>
                     </div>
@@ -439,11 +445,16 @@ function CampaignDetail({}) {
           </div>
           <div>
             {/* Quest  */}
-            <QuestList quests={authData?.campaignQuests} isEnded={isEnded} refreshCallback={refresh} />
+            <QuestList
+              quests={authData?.campaignQuests}
+              isEnded={isEnded}
+              refreshCallback={refresh}
+              config={displayConfig}
+            />
           </div>
           <div className='md:hidden'>
             {isEnrolled || isEnded ? (
-              <LeaderBoard data={leaderboardData} userData={userData} />
+              <LeaderBoard data={leaderboardData} userData={userData} xpText={displayConfig.xpText} />
             ) : (
               <div className='overflow-auto'>
                 <div className='bg-white rounded-mlg mt-8 min-w-[300px] md:min-w-[400px]'>
@@ -456,7 +467,7 @@ function CampaignDetail({}) {
                       <div className='mr-14 md:mr-[70px]'></div>
                       <div className='w-full'>{t('User')}</div>
                       <div className='w-[98px] md:w-[88px] shrink-0 text-center'>{t('Level')}</div>
-                      <div className='w-12 shrink-0 text-center'>XP</div>
+                      <div className='w-12 shrink-0 text-center'>{displayConfig.xpText}</div>
                     </div>
                     <div className='h-[240px] md:h-[90px] flex flex-col relative'></div>
                   </div>

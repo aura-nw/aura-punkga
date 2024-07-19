@@ -13,7 +13,8 @@ import { Context } from 'src/context'
 import { Campaign } from 'src/models/campaign'
 import { getCampaigns } from 'src/services'
 import useSWR from 'swr'
-import IllusImage from './assets/illus.svg'
+import PunkgaXPImage from './assets/illus.svg'
+import KPImage from './assets/ic_Kp.svg'
 import Mascot3 from 'components/pages/campaigns/assets/Mascot3.svg'
 import { ModalContext } from 'src/context/modals'
 import Chip from 'components/core/Chip'
@@ -121,7 +122,7 @@ export default function CampaignPage() {
             </Chip>
           ))}
           <div className='hidden gap-4 items-center md:flex ml-5'>
-            <div >
+            <div>
               <Checkbox
                 label={t('Reward NFT')}
                 checked={rewardNFTChecked}
@@ -130,7 +131,7 @@ export default function CampaignPage() {
             </div>
 
             <span className='h-4 w-[1px] bg-border-primary'></span>
-            <div >
+            <div>
               <Checkbox
                 label={t('Enrolled')}
                 checked={enrolledChecked}
@@ -148,130 +149,143 @@ export default function CampaignPage() {
       </div>
       {list.length > 0 ? (
         <div className='grid mt-0.5 grid-cols-1 lg:grid-cols-2 gap-4 xl:gap-x-8 xl:gap-y-4 xl:grid-cols-3'>
-          {list?.map((campaign, index) => (
-            <div
-              key={index}
-              className='cursor-pointer p-4 flex gap-5 bg-white border border-border-teriary rounded-mlg md:min-h-[206px] min-h-[229px] hover:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.10)]'
-              onClick={() => clickHandler(campaign.slug)}>
-              <div className='flex flex-col justify-between flex-1 max-w-[calc(100%-156px)]'>
-                <div className='flex flex-col'>
-                  <div className='inline-flex flex-wrap'>
-                    <LabelChip
-                      color={
-                        moment(campaign.start_date).isAfter()
-                          ? 'process'
-                          : moment(campaign.end_date).isAfter()
-                          ? 'success'
-                          : 'error'
-                      }>
-                      {t(
-                        moment(campaign.start_date).isAfter()
-                          ? 'Upcoming'
-                          : moment(campaign.end_date).isAfter()
-                          ? 'Ongoing'
-                          : 'Ended'
-                      )}
-                    </LabelChip>
+          {list?.map((campaign, index) => {
+            const isKP = campaign.campaign_chain?.punkga_config?.reward_point_name == 'KP'
+            return (
+              <div
+                key={index}
+                className='cursor-pointer p-4 flex gap-5 bg-white border border-border-teriary rounded-mlg md:min-h-[206px] min-h-[229px] hover:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.10)]'
+                onClick={() => clickHandler(campaign.slug)}>
+                <div className='flex flex-col justify-between flex-1 max-w-[calc(100%-156px)]'>
+                  <div className='flex flex-col'>
+                    <div className='inline-flex flex-wrap'>
+                      <LabelChip
+                        color={
+                          moment(campaign.start_date).isAfter()
+                            ? 'process'
+                            : moment(campaign.end_date).isAfter()
+                            ? 'success'
+                            : 'error'
+                        }>
+                        {t(
+                          moment(campaign.start_date).isAfter()
+                            ? 'Upcoming'
+                            : moment(campaign.end_date).isAfter()
+                            ? 'Ongoing'
+                            : 'Ended'
+                        )}
+                      </LabelChip>
+                    </div>
+                    <div className='mt-1'>
+                      <div className='font-semibold line-clamp-3 md:line-clamp-2 text-base'>
+                        {campaign[locale].name}
+                      </div>
+                      <div
+                        className=' text-text-teriary mt-1 xl:mt-3 line-clamp-3 max-h-[60px] overflow-hidden text-sm max-w'
+                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(campaign[locale].description) }}></div>
+                    </div>
                   </div>
-                  <div className='mt-1'>
-                    <div className='font-semibold line-clamp-3 md:line-clamp-2 text-base'>{campaign[locale].name}</div>
-                    <div
-                      className=' text-text-teriary mt-1 xl:mt-3 line-clamp-3 max-h-[60px] overflow-hidden text-sm max-w'
-                      dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(campaign[locale].description) }}></div>
+                  <div className='text-sm text-text-teriary mt-3'>
+                    {moment(campaign.start_date).isAfter() ? (
+                      <Countdown
+                        date={campaign.start_date}
+                        renderer={({ days, hours, minutes, seconds }) => {
+                          if (days > 0) {
+                            return (
+                              <span className='inline-flex gap-1 items-center flex-wrap'>
+                                {t('Starts')}: {moment(campaign.start_date).format('HH:mm')}
+                                <svg
+                                  xmlns='http://www.w3.org/2000/svg'
+                                  width='4'
+                                  height='5'
+                                  viewBox='0 0 4 5'
+                                  fill='none'>
+                                  <circle cx='2' cy='2.5' r='2' fill='#ABABAB' />
+                                </svg>
+                                {moment(campaign.start_date).format('DD/MM/yyyy')}
+                              </span>
+                            )
+                          } else {
+                            return (
+                              <span>
+                                {t('Starts')}: {zeroPad(hours)}h : {zeroPad(minutes)}m : {zeroPad(seconds)}s
+                              </span>
+                            )
+                          }
+                        }}
+                      />
+                    ) : moment(campaign.end_date).isAfter() ? (
+                      <Countdown
+                        date={campaign.end_date}
+                        renderer={({ days, hours, minutes, seconds }) => {
+                          if (days > 0) {
+                            return (
+                              <span className='inline-flex gap-1 items-center flex-wrap'>
+                                {t('Ends')}: {moment(campaign.end_date).format('HH:mm')}
+                                <svg
+                                  xmlns='http://www.w3.org/2000/svg'
+                                  width='4'
+                                  height='5'
+                                  viewBox='0 0 4 5'
+                                  fill='none'>
+                                  <circle cx='2' cy='2.5' r='2' fill='#ABABAB' />
+                                </svg>
+                                {moment(campaign.end_date).format('DD/MM/yyyy')}
+                              </span>
+                            )
+                          } else {
+                            return (
+                              <span>
+                                {t('Ends')}: {zeroPad(hours)}h : {zeroPad(minutes)}m : {zeroPad(seconds)}s
+                              </span>
+                            )
+                          }
+                        }}
+                      />
+                    ) : (
+                      ''
+                    )}
                   </div>
                 </div>
-                <div className='text-sm text-text-teriary mt-3'>
-                  {moment(campaign.start_date).isAfter() ? (
-                    <Countdown
-                      date={campaign.start_date}
-                      renderer={({ days, hours, minutes, seconds }) => {
-                        if (days > 0) {
-                          return (
-                            <span className='inline-flex gap-1 items-center flex-wrap'>
-                              {t('Starts')}: {moment(campaign.start_date).format('HH:mm')}
-                              <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                width='4'
-                                height='5'
-                                viewBox='0 0 4 5'
-                                fill='none'>
-                                <circle cx='2' cy='2.5' r='2' fill='#ABABAB' />
-                              </svg>
-                              {moment(campaign.start_date).format('DD/MM/yyyy')}
-                            </span>
-                          )
-                        } else {
-                          return (
-                            <span>
-                              {t('Starts')}: {zeroPad(hours)}h : {zeroPad(minutes)}m : {zeroPad(seconds)}s
-                            </span>
-                          )
-                        }
-                      }}
-                    />
-                  ) : moment(campaign.end_date).isAfter() ? (
-                    <Countdown
-                      date={campaign.end_date}
-                      renderer={({ days, hours, minutes, seconds }) => {
-                        if (days > 0) {
-                          return (
-                            <span className='inline-flex gap-1 items-center flex-wrap'>
-                              {t('Ends')}: {moment(campaign.end_date).format('HH:mm')}
-                              <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                width='4'
-                                height='5'
-                                viewBox='0 0 4 5'
-                                fill='none'>
-                                <circle cx='2' cy='2.5' r='2' fill='#ABABAB' />
-                              </svg>
-                              {moment(campaign.end_date).format('DD/MM/yyyy')}
-                            </span>
-                          )
-                        } else {
-                          return (
-                            <span>
-                              {t('Ends')}: {zeroPad(hours)}h : {zeroPad(minutes)}m : {zeroPad(seconds)}s
-                            </span>
-                          )
-                        }
-                      }}
-                    />
-                  ) : (
-                    ''
-                  )}
-                </div>
-              </div>
-              <div className='flex flex-col gap-1.5 items-center'>
-                <div className='reward rounded-mlg bg-[#F0F0F0] p-2.5 w-[130px] shrink-0 min-h-[130px] gap-1.5 flex flex-col justify-center items-center'>
-                  {campaign?.reward?.nft?.nft_name ? (
-                    <>
+                <div className='flex flex-col gap-1.5 items-center'>
+                  <div className='reward rounded-mlg bg-[#F0F0F0] p-2.5 w-[130px] shrink-0 min-h-[130px] gap-1.5 flex flex-col justify-center items-center'>
+                    {campaign?.reward?.nft?.nft_name ? (
+                      <>
+                        <Image
+                          src={campaign?.reward?.nft.img_url || NoImage}
+                          width={80}
+                          height={80}
+                          alt=''
+                          className='w-[80px] h-[80px] rounded-lg object-cover'
+                        />
+                        <div className='text-xs leading-[18px] text-text-teriary w-[110px] truncate text-center'>
+                          {campaign?.reward?.nft?.nft_name}
+                        </div>
+                      </>
+                    ) : (
                       <Image
-                        src={campaign?.reward?.nft.img_url || NoImage}
+                        src={isKP ? KPImage : PunkgaXPImage}
                         width={80}
                         height={80}
                         alt=''
-                        className='w-[80px] h-[80px] rounded-lg object-cover'
+                        className='w-[80px] h-[80px] rounded-lg'
                       />
-                      <div className='text-xs leading-[18px] text-text-teriary w-[110px] truncate text-center'>
-                        {campaign?.reward?.nft?.nft_name}
-                      </div>
-                    </>
-                  ) : (
-                    <Image src={IllusImage} width={80} height={80} alt='' className='w-[80px] h-[80px] rounded-lg' />
-                  )}
-                  {!!campaign?.reward?.xp && campaign?.reward?.nft?.nft_name ? (
-                    <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${campaign?.reward?.xp} XP`}</div>
-                  ) : (
-                    <div className='text-text-teriary font-semibold'>{`+ ${campaign?.reward?.xp} XP`}</div>
-                  )}
-                </div>
-                <div className='text-xs text-text-teriary text-center md:leading-[18px]'>
-                  {t('Bonus to')} {t('1st place')}
+                    )}
+                    {!!campaign?.reward?.xp && campaign?.reward?.nft?.nft_name ? (
+                      <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${campaign?.reward?.xp} XP`}</div>
+                    ) : (
+                      <div className='text-text-teriary text-center font-semibold'>{`+ ${campaign?.reward?.xp || 0} ${
+                        isKP ? 'KP' : 'XP'
+                      }`}</div>
+                    )}
+                  </div>
+                  <div className='text-xs text-text-teriary text-center md:leading-[18px]'>
+                    {t('Bonus to')} {t('1st place')}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       ) : (
         <div className='p-6 flex flex-col items-center w-full'>
