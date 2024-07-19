@@ -1,7 +1,8 @@
 import Modal from 'components/Modal'
 import ChupButton from 'components/core/Button/ChupButton'
 import LabelChip from 'components/core/Chip/Label'
-import IllusImage from 'components/pages/campaigns/assets/illus.svg'
+import XPImage from 'components/pages/campaigns/assets/illus.svg'
+import KPImage from 'components/pages/campaigns/assets/ic_Kp.svg'
 import NoImage from 'images/no_img.png'
 import moment from 'moment'
 import Image from 'next/image'
@@ -81,6 +82,8 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
   useEffect(() => {
     if (open) setSeeMore(undefined)
   }, [open])
+  const xpImageSrc = quest.pointText == 'KP' ? KPImage : XPImage
+  const xpText = quest.pointText == 'KP' ? 'KP' : 'XP'
   return (
     <>
       <Modal open={open} setOpen={setOpen}>
@@ -140,12 +143,12 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                     </div>
                   </>
                 ) : (
-                  <Image src={IllusImage} width={80} height={80} alt='' className='w-[80px] h-[80px] rounded-lg' />
+                  <Image src={xpImageSrc} width={80} height={80} alt='' className='w-[80px] h-[80px] rounded-lg' />
                 )}
                 {!!quest?.reward?.xp && quest?.reward?.nft?.nft_name ? (
-                  <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${quest?.reward?.xp} XP`}</div>
+                  <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${quest?.reward?.xp} ${xpText}`}</div>
                 ) : (
-                  <div className='text-text-teriary font-semibold'>{`+ ${quest?.reward?.xp} XP`}</div>
+                  <div className='text-text-teriary font-semibold'>{`+ ${quest?.reward?.xp} ${xpText}`}</div>
                 )}
               </div>
               {!!quest.reward.slots && (
@@ -186,12 +189,18 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                   </div>
                 </>
               ) : (
-                <Image src={IllusImage} width={80} height={80} alt='' className='w-[80px] h-[80px] rounded-lg' />
+                <Image
+                  src={quest.pointText == 'KP' ? KPImage : XPImage}
+                  width={80}
+                  height={80}
+                  alt=''
+                  className='w-[80px] h-[80px] rounded-lg'
+                />
               )}
               {!!quest?.reward?.xp && quest?.reward?.nft?.nft_name ? (
-                <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${quest?.reward?.xp} XP`}</div>
+                <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${quest?.reward?.xp} ${xpText}`}</div>
               ) : (
-                <div className='text-text-teriary font-semibold'>{`+ ${quest?.reward?.xp} XP`}</div>
+                <div className='text-text-teriary font-semibold'>{`+ ${quest?.reward?.xp} ${xpText}`}</div>
               )}
             </div>
             {!!quest.reward.slots && (
@@ -241,14 +250,14 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                 {quest?.reward.nft?.nft_name}
               </div>
               <div className='font-bold text-second-color text-xl text-text-brand-defaul text-center mt-4'>
-                {`+ ${quest?.reward.xp} XP`}
+                {`+ ${quest?.reward.xp} ${xpText}`}
               </div>
             </div>
           ) : (
             <div className='flex flex-col items-center mt-8'>
               <div>
                 <Image
-                  src={IllusImage}
+                  src={quest.pointText == 'KP' ? KPImage : XPImage}
                   width={240}
                   height={240}
                   alt=''
@@ -256,7 +265,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                 />
               </div>
               <div className='font-bold text-second-color text-xl text-text-brand-defaul text-center mt-4'>
-                {`+ ${quest?.reward.xp} XP`}
+                {`+ ${quest?.reward.xp} ${xpText}`}
               </div>
             </div>
           )}
@@ -307,7 +316,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
           <div className='flex flex-col mb-3 h-full'>
             <div className='text-base font-semibold line-clamp-3 md:line-clamp-2'>{quest[locale].name}</div>
             <div className='text-xs leading-[18px] lg:text-sm lg:leading-5 font-medium text-text-teriary mt-3 flex items-center gap-1.5'>
-              <span>{`${quest.reward.xp} XP`}</span>
+              <span>{`${quest.reward.xp} ${xpText}`}</span>
               {quest.reward.nft?.img_url && (
                 <>
                   <span className='w-1 h-1 rounded-full bg-[#646464]'></span>
@@ -420,12 +429,18 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
               </div>
             </>
           ) : (
-            <Image src={IllusImage} width={80} height={80} alt='' className='w-[80px] h-[80px] rounded-lg' />
+            <Image
+              src={quest.pointText == 'KP' ? KPImage : XPImage}
+              width={80}
+              height={80}
+              alt=''
+              className='w-[80px] h-[80px] rounded-lg'
+            />
           )}
           {!!quest?.reward?.xp && quest?.reward?.nft?.nft_name ? (
-            <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${quest?.reward?.xp} XP`}</div>
+            <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${quest?.reward?.xp} ${xpText}`}</div>
           ) : (
-            <div className='text-text-teriary font-semibold'>{`+ ${quest?.reward?.xp} XP`}</div>
+            <div className='text-text-teriary font-semibold'>{`+ ${quest?.reward?.xp} ${xpText}`}</div>
           )}
         </div>
       </div>

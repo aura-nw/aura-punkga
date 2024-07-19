@@ -2,7 +2,8 @@ import Modal from 'components/Modal'
 import Popover from 'components/Popover'
 import ChupButton from 'components/core/Button/ChupButton'
 import LabelChip from 'components/core/Chip/Label'
-import IllusImage from 'components/pages/campaigns/assets/illus.svg'
+import XPImage from 'components/pages/campaigns/assets/illus.svg'
+import KPImage from 'components/pages/campaigns/assets/ic_Kp.svg'
 import LeaderBoard from 'components/pages/campaigns/leaderboard'
 import NoImage from 'images/no_img.png'
 import moment from 'moment'
@@ -49,11 +50,7 @@ function CampaignDetail({}) {
   const slug = query.campaignSlug as string
   const { mutate } = useSWRConfig()
   const { t } = useTranslation()
-  const percentage = account
-    ? (Math.round(account.xp - levelToXp(account.level)) /
-        Math.round(levelToXp(account.level + 1) - levelToXp(account.level))) *
-      100
-    : 0
+
   const { data: authData } = useSWR(
     { key: 'fetch_campaign_auth_data', slug, account: account?.id },
     ({ key, slug, account }) => (account ? getCampaignAuthorizedData(slug) : null),
@@ -202,6 +199,16 @@ function CampaignDetail({}) {
   const isUpcoming = moment(data.start_date).isAfter()
   const isOngoing = moment(data.start_date).isBefore() && moment(data.end_date).isAfter()
   const isEnrolled = !!authData?.campaignQuests
+  const isKP = data?.campaign_chain?.punkga_config?.reward_point_name == 'KP'
+  const displayConfig = {
+    xpImageSrc: isKP ? KPImage : XPImage,
+    xpText: isKP ? 'KP' : 'XP',
+  }
+  const calcPercentage = (xp, level) => {
+    const percentage =
+      xp && level ? (Math.round(xp - levelToXp(level)) / Math.round(levelToXp(level + 1) - levelToXp(level))) * 100 : 0
+    return percentage
+  }
   return (
     <div className='bg-gray-50'>
       <Modal open={openNFTPreview} setOpen={() => setOpenNFTPreview(false)}>
@@ -238,21 +245,21 @@ function CampaignDetail({}) {
               </div>
               <div className='bg-[#DEDEDE] w-[240px] lg:w-[288px] h-[1px] my-[10px]'></div>
               <div className='font-bold text-second-color text-lg leading-[23px] lg:text-3xl lg:leading-[30px] text-center'>
-                {`+ ${data?.reward.xp} XP`}
+                {`+ ${data?.reward.xp} ${displayConfig.xpText}`}
               </div>
             </div>
           ) : (
             <div className='flex flex-col items-center'>
               <div className='mb-5'>
                 <Image
-                  src={IllusImage}
+                  src={displayConfig.xpImageSrc}
                   width={200}
                   height={200}
                   alt=''
                   className='w-[200px] h-[200px] lg:w-[240px] lg:h-[240px]'
                 />
               </div>
-              <div className='font-bold text-second-color text-lg leading-[23px] lg:text-3xl lg:leading-[30px] text-center'>{`+ ${data?.reward.xp} XP`}</div>
+              <div className='font-bold text-second-color text-lg leading-[23px] lg:text-3xl lg:leading-[30px] text-center'>{`+ ${data?.reward.xp} ${displayConfig.xpText}`}</div>
             </div>
           )}
         </div>
@@ -373,8 +380,8 @@ function CampaignDetail({}) {
                 )}
                 {!!data.reward.xp && (
                   <div className='w-[130px] h-[130px] rounded-lg object-cover bg-background-bg-primary flex justify-center items-center flex-col gap-[10px]'>
-                    <Image src={IllusImage} alt='' className='h-[80px] w-[80px]' />
-                    <p className='text-base text-text-teriary font-semibold'>{`+ ${data.reward.xp} XP`}</p>
+                    <Image src={displayConfig.xpImageSrc} alt='' className='h-[80px] w-[80px]' />
+                    <p className='text-base text-text-teriary font-semibold'>{`+ ${data.reward.xp} ${displayConfig.xpText}`}</p>
                   </div>
                 )}
               </div>
@@ -396,26 +403,49 @@ function CampaignDetail({}) {
                 )
               ) : null}
             </div>
-            {account && (
-              <div className='rounded-lg p-4 bg-white mt-4 md:mt-8'>
-                <div className='flex justify-between items-center'>
-                  <div className='font-semibold '>
-                    {t('Level')} {account.level}
+            {account &&
+              (isKP ? (
+                <div className='rounded-lg p-4 bg-white mt-4 md:mt-8'>
+                  <div className='flex justify-between items-center'>
+                    <div className='font-semibold '>
+                      {t('Level')} {account.levels.find((lv) => lv.chain == 'KP').level}
+                    </div>
+                    <div className='text-xxs lowercase'>{`${Math.round(
+                      levelToXp(account.levels.find((lv) => lv.chain == 'KP').level + 1) -
+                        levelToXp(account.levels.find((lv) => lv.chain == 'KP').level)
+                    )} ${t(`kp to level`)} ${account.levels.find((lv) => lv.chain == 'KP').level + 1}`}</div>
                   </div>
-                  <div className='text-xxs'>{`${Math.round(
-                    levelToXp(account.level + 1) - levelToXp(account.level)
-                  )} ${t('xp to level')} ${account.level + 1}`}</div>
+                  <div className='relative h-3 mt-2 w-full rounded-lg overflow-hidden bg-[#1C1C1C]/5'>
+                    <div
+                      className={`absolute top-0 left-0 bg-[#1FAB5E] bottom-0`}
+                      style={{
+                        width: `${calcPercentage(
+                          account.levels.find((lv) => lv.chain == 'KP').xp,
+                          account.levels.find((lv) => lv.chain == 'KP').level
+                        )}%`,
+                      }}></div>
+                  </div>
                 </div>
-                <div className='relative h-3 mt-2 w-full rounded-lg overflow-hidden bg-[#1C1C1C]/5'>
-                  <div
-                    className={`absolute top-0 left-0 bg-[#1FAB5E] bottom-0`}
-                    style={{ width: `${percentage}%` }}></div>
+              ) : (
+                <div className='rounded-lg p-4 bg-white mt-4 md:mt-8'>
+                  <div className='flex justify-between items-center'>
+                    <div className='font-semibold '>
+                      {t('Level')} {account.level}
+                    </div>
+                    <div className='text-xxs lowercase'>{`${Math.round(
+                      levelToXp(account.level + 1) - levelToXp(account.level)
+                    )} ${t(`xp to level`)} ${account.level + 1}`}</div>
+                  </div>
+                  <div className='relative h-3 mt-2 w-full rounded-lg overflow-hidden bg-[#1C1C1C]/5'>
+                    <div
+                      className={`absolute top-0 left-0 bg-[#1FAB5E] bottom-0`}
+                      style={{ width: `${calcPercentage(account.xp, account.level)}%` }}></div>
+                  </div>
                 </div>
-              </div>
-            )}
+              ))}
             <div className='hidden md:block'>
               {isEnrolled || isEnded ? (
-                <LeaderBoard data={leaderboardData} userData={userData} />
+                <LeaderBoard data={leaderboardData} userData={userData} xpText={displayConfig.xpText} />
               ) : (
                 <div className='overflow-auto'>
                   <div className='bg-white rounded-mlg mt-8 min-w-[300px] md:min-w-[400px]'>
@@ -428,7 +458,7 @@ function CampaignDetail({}) {
                         <div className='mr-14 md:mr-[70px]'></div>
                         <div className='w-full'>{t('User')}</div>
                         <div className='w-[98px] md:w-[88px] shrink-0 text-center'>{t('Level')}</div>
-                        <div className='w-12 shrink-0 text-center'>XP</div>
+                        <div className='w-12 shrink-0 text-center'>{displayConfig.xpText}</div>
                       </div>
                       <div className='h-[240px] md:h-[90px] flex flex-col relative'></div>
                     </div>
@@ -439,11 +469,15 @@ function CampaignDetail({}) {
           </div>
           <div>
             {/* Quest  */}
-            <QuestList quests={authData?.campaignQuests} isEnded={isEnded} refreshCallback={refresh} />
+            <QuestList
+              quests={authData?.campaignQuests}
+              isEnded={isEnded}
+              refreshCallback={refresh}
+            />
           </div>
           <div className='md:hidden'>
             {isEnrolled || isEnded ? (
-              <LeaderBoard data={leaderboardData} userData={userData} />
+              <LeaderBoard data={leaderboardData} userData={userData} xpText={displayConfig.xpText} />
             ) : (
               <div className='overflow-auto'>
                 <div className='bg-white rounded-mlg mt-8 min-w-[300px] md:min-w-[400px]'>
@@ -456,7 +490,7 @@ function CampaignDetail({}) {
                       <div className='mr-14 md:mr-[70px]'></div>
                       <div className='w-full'>{t('User')}</div>
                       <div className='w-[98px] md:w-[88px] shrink-0 text-center'>{t('Level')}</div>
-                      <div className='w-12 shrink-0 text-center'>XP</div>
+                      <div className='w-12 shrink-0 text-center'>{displayConfig.xpText}</div>
                     </div>
                     <div className='h-[240px] md:h-[90px] flex flex-col relative'></div>
                   </div>

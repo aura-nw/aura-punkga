@@ -3,7 +3,7 @@ import ProfileCard from 'components/Card/ProfileCard'
 import Popover from 'components/Popover'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
-export default function LeaderBoard({ data, userData }: { data: any[]; userData?: any }) {
+export default function LeaderBoard({ data, userData, xpText }: { data: any[]; userData?: any; xpText?: string }) {
   const { t } = useTranslation()
   return (
     <div className='overflow-auto'>
@@ -13,7 +13,7 @@ export default function LeaderBoard({ data, userData }: { data: any[]; userData?
           <div className='mt-8 flex px-4 pb-4 border-b border-border-primary font-semibold text-base'>
             <div className='w-9 mr-[10px] shrink-0'></div>
             <div className='w-full'>{t('User')}</div>
-            <div className='w-12 shrink-0'>XP</div>
+            <div className='w-12 shrink-0'>{xpText || 'XP'}</div>
           </div>
           <div className={`h-[420px] flex flex-col relative overflow-y-auto overflow-x-hidden`}>
             <div className={`absolute inset-0 flex flex-col h-full py-2 md:py-3`}>
@@ -51,7 +51,7 @@ export default function LeaderBoard({ data, userData }: { data: any[]; userData?
               </div>
 
               <div>
-                XP:{' '}
+                {xpText || 'XP'}:{' '}
                 <strong className='text-text-brand-defaul'>
                   {userData.total_reward_xp ? userData.total_reward_xp : '--'}
                 </strong>

@@ -19,11 +19,11 @@ export default function QuestList({
 }) {
   const { t } = useTranslation()
   const [rewardNFTChecked, setRewardNFTChecked] = useState<boolean>(false)
-  const [filter, setFilter] = useState<{ key: string, value: string }[]>([
+  const [filter, setFilter] = useState<{ key: string; value: string }[]>([
     {
       key: 'All quests',
       value: t('All quests'),
-    }
+    },
   ])
   const questList = quests?.map((quest) => {
     if (quest.reward_status == 'OUT_OF_SLOT') {

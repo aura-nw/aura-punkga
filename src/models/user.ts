@@ -12,6 +12,11 @@ export interface IUser {
   noncustodialWalletAddress?: string
   xp: number
   level: number
+  levels: {
+    chain: string
+    xp: number
+    level: number
+  }[]
   completedQuests: any[]
   quests: any
   rank: number

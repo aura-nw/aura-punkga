@@ -2,6 +2,11 @@ export type Campaign = {
   id: string
   slug: string
   campaignQuests?: Quest[]
+  campaign_chain?: {
+    punkga_config: {
+      reward_point_name
+    }
+  }
   reward: {
     xp: number
     nft?: {
@@ -40,6 +45,7 @@ export type Campaign = {
 }
 export type Quest = {
   id: string
+  pointText?: string
   repeat: 'Once' | 'Daily'
   type: 'Read' | 'Comment' | 'Subscribe' | 'Like' | 'Poll' | 'Quiz' | 'Empty'
   reward_status: 'NOT_SATISFY' | 'CAN_CLAIM' | 'CLAIMED' | 'OUT_OF_SLOT'

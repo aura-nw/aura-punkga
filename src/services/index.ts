@@ -388,7 +388,18 @@ export const readChapter = async (chapterId: string) => {
 }
 export const getAvailableQuests = async () => {
   const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/user/available-quests`)
-  return data
+  const res = data.map((quest: any) => {
+    const q = quest
+    LANGUAGE.forEach((l) => {
+      const questLanguages =
+        quest.quests_i18n.find((ml) => ml.i18n_language.id == l.id) ||
+        quest.quests_i18n.find((ml) => ml.i18n_language.is_main)
+      q[l.shortLang] = questLanguages.data
+    })
+    q.pointText = q.quests_campaign.campaign_chain.punkga_config.reward_point_name
+    return q
+  })
+  return res
 }
 export const getLeaderboard = async () => {
   const { data } = await axios.get(`${getConfig().API_URL}/api/rest/pubic/leaderboard`)
@@ -477,6 +488,7 @@ export const getCampaignAuthorizedData = async (slug: string) => {
           quest.quests_i18n.find((ml) => ml.i18n_language.is_main)
         q[l.shortLang] = questLanguages.data
       })
+      q.pointText = campaignData.campaign_chain.punkga_config.reward_point_name
       return q
     })
     campaignData.campaignQuests = quests?.map((quest) => {

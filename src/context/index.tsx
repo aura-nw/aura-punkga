@@ -294,6 +294,11 @@ function ContextProvider({ children }: any) {
           custodialWalletAddress: res.authorizer_users_user_wallet?.address,
           xp: res.levels?.[0]?.xp || 0,
           level: res.levels?.[0]?.level || 0,
+          levels: res.levels?.map((v) => ({
+            level: v.level,
+            xp: v.xp,
+            chain: v.user_level_chain.punkga_config.reward_point_name,
+          })),
           completedQuests: res.user_quests || [],
           quests: res?.user_quests_aggregate?.aggregate?.count,
           rank: res.rank || 999999,
