@@ -118,7 +118,7 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
           <>
             <div className='gap-10 flex flex-col lg:flex-row items-center lg:items-start'>
                 <div className='w-full lg:w-[340px]'>
-                <NewInfo updateProfile={updateProfile} />
+                <NewInfo />
 
               </div>
               <div className='w-full lg:w-[calc(100%_-_340px)] p-8 rounded-[10px] bg-white'>
@@ -145,7 +145,7 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
                           <div className='text-text-primary font-medium'>{t('No manga found')}</div>
                         </div>
                         :
-                        <div className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-2.5 mt-4 md:mt-10 md:pb-7'>
+                        <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2.5 mt-4 md:mt-10 md:pb-7'>
                           {isSettingUp || curentlyReading.loading ? (
                             <>
                               <DummyComic />
@@ -179,7 +179,7 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
                           <div className='text-text-primary font-medium'>{t('No manga found')}</div>
                         </div>
                         :
-                        <div className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-2.5 mt-4 md:mt-10 md:pb-7'>
+                        <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2.5 mt-4 md:mt-10 md:pb-7'>
                           {isSettingUp || subscribeList.loading ? (
                             <>
                               <DummyComic />
