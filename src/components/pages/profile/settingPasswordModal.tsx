@@ -2,6 +2,7 @@ import FilledButton from 'components/Button/FilledButton'
 import MainButton from 'components/Button/MainButton'
 import OutlineTextField from 'components/Input/TextField/Outline'
 import Modal from 'components/Modal'
+import ChupButton from 'components/core/Button/ChupButton'
 import SuccessImg from 'images/Mascot2.png'
 import CheckSquare from 'images/icons/check_square_fill.svg'
 import _ from 'lodash'
@@ -72,7 +73,7 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
 
   return (
     <Modal open={open} setOpen={setOpen} hideClose={success} preventClickOutsideToClose>
-      <div className={`p-6 w-[322px] relative transition-all duration-300 ${success ? 'h-[380px]' : ''}`}>
+      <div className={`p-6 w-[322px] transition-all duration-300 ${success ? 'h-[380px]' : ''}`}>
         <div className={` flex flex-col gap-6 transition-all duration-300 ${success ? 'opacity-0' : 'opacity-100'}`}>
           <p className='text-center text-xl leading-6 font-bold'>{t('Set password')}</p>
           <div>
@@ -103,9 +104,9 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
               inputRef={r1}
             />
           </div>
-          <MainButton disabled={!newPassword || !rePassword} loading={loading} onClick={setPasswordHandler}>
+          <ChupButton size='sm' className='w-full' disabled={!newPassword || !rePassword} loading={loading} onClick={setPasswordHandler}>
             {t('Confirm')}
-          </MainButton>
+          </ChupButton>
         </div>
         <div
           className={`absolute inset-0 py-6 px-4 flex flex-col gap-4 transition-all duration-300 ${
@@ -116,12 +117,12 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
           <p className='text-sm leading-[18px] font-semibold text-center w-[274px] mx-auto text-[#414141]'>
             {t('You can use the new password to log in Punkga now')}
           </p>
-          <MainButton
+          <ChupButton
             onClick={() => {
               setOpen(false)
             }}>
             {t('Confirm')}
-          </MainButton>
+          </ChupButton>
         </div>
       </div>
     </Modal>

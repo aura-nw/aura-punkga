@@ -21,6 +21,7 @@
     "@interchain-ui/react": "^1.7.1",
     "@mui/icons-material": "^5.16.0",
     "@mui/material": "^5.16.0",
+    "@mui/x-date-pickers": "^7.11.0",
     "@reduxjs/toolkit": "^1.6.1",
     "@story-protocol/core-sdk": "^1.0.0-rc.11",
     "@tanstack/react-query": "^5.36.0",
