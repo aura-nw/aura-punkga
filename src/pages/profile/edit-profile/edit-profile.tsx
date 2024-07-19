@@ -45,7 +45,7 @@ const StyledSelect = styled(MuiSelect)({
   maxHeight: '40px',
   borderRadius: '8px',
   backgroundColor: '#fff',
-  fontSize: '14px',
+  fontSize: '12px',
   '&:hover': {
     border: 'none !important'
   },
@@ -58,10 +58,12 @@ const StyledDatePicker = styled(DatePicker)({
   '& .MuiInputBase-root': {
     maxHeight: '40px !important',
     borderRadius: '8px',
+    fontSize: '12px !important',
   },
   '& .MuiInputBase-input': {
     padding: '5px 0px 5px 10px !important',
     height: '40px !important',
+    fontSize: '12px !important',
   }
 })
 
@@ -105,37 +107,37 @@ export default function EditProfile({ updateProfile }) {
   }, [selectedFile])
 
   const updateProfileHandler = async () => {
-    const form = new FormData()
-    if (gender.key && gender.key != account.gender) {
-      console.log('form', form)
-      form.append('gender', gender.key == 'Other' ? 'Undisclosed' : (gender.key as string))
+    try {
+      setLoading(true);
+      const form = new FormData();
+      if (gender.key && gender.key != account.gender) {
+        form.append('gender', gender.key == 'Other' ? 'Undisclosed' : (gender.key as string))
+      }
+      if (birthdate && !moment(account.birthdate).isSame(moment(birthdate), 'day')) {
+        form.append('birthdate', moment(birthdate).format('YYYY-MM-DD'));
+      }
+      if (account.bio !== bio) {
+        form.append('bio', bio || '');
+      }
+      if (account.name !== username) {
+        form.append('name', username);
+      }
+      if ((profilePicture.current as any)?.files[0]) {
+        form.append('picture', (profilePicture.current as any).files[0])
+      }
+      if (form.entries().next().done === false) {  // Check if form is not empty
+        await updateProfile(form);
+        await getProfile();
+      }
+      setSelectedFile(undefined);
+      router.push('/profile');
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      // Handle error (e.g., show error message to user)
+    } finally {
+      setLoading(false);
     }
-    if (birthdate && new Date(account.birthdate).getTime() != new Date(birthdate).getTime()) {
-      console.log('form', form)
-      form.append('birthdate', moment(birthdate).format('yyyy-mm-dd') as string)
-    }
-    if (account.bio != bio) {
-      form.append('bio', bio || '')
-      console.log('form', form)
-    }
-    if (account.name != username) {
-      form.append('name', username)
-      console.log('form', form)
-    }
-    if ((profilePicture.current as any)?.files[0]) {
-      form.append('picture', (profilePicture.current as any).files[0])
-      console.log('form', form)
-    }
-    if (Object.keys(Object.fromEntries(form)).length) {
-      console.log('form', form)
-      setLoading(true)
-      await updateProfile(form)
-      await getProfile()
-    }
-    setSelectedFile(undefined)
-    setLoading(false)
-    router.push('/profile')
-  }
+  };
 
   const onSelectFile = (e) => {
     if (!e.target?.files || e.target.files.length === 0) {
@@ -208,7 +210,7 @@ export default function EditProfile({ updateProfile }) {
                   className='text-sm text-[#61646B] font-normal md:font-bold leading-6 w-full md:aspect-[84/12]'
                 >
                   <MenuItem value="" disabled>
-                    <div className='text-text-quatenary'>{t('Select a gender')}</div>
+                    <div className='text-text-quatenary text-sm'>{t('Select a gender')}</div>
                   </MenuItem>
                   <MenuItem value="Male">{t('Male')}</MenuItem>
                   <MenuItem value="Female">{t('Female')}</MenuItem>
@@ -244,7 +246,7 @@ export default function EditProfile({ updateProfile }) {
 
         <div
           className='mt-8 flex justify-end'>
-          <ChupButton className='px-[54px]' onClick={() => updateProfileHandler}>{t('Save')}</ChupButton>
+          <ChupButton className='px-[50px] md:px-[54px]' onClick={updateProfileHandler} disabled={loading}>{loading ? t('Saving...') : t('Save')}</ChupButton>
         </div>
       </div>
     </div>

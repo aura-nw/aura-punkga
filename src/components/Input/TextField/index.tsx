@@ -93,7 +93,7 @@ export default function TextField({
           disabled={disabled}
           onChange={(event) => onChange && onChange(event.target.value)}
           id='input-group-1'
-          className={`rounded-[8px] text-base leading-6 w-full px-[13px] py-[2px] placeholder-medium-gray focus:outline-none ${leadingComponent ? 'pl-10' : ''
+          className={`rounded-[8px] text-sm leading-6 w-full px-[13px] py-[2px] placeholder-medium-gray focus:outline-none ${leadingComponent ? 'pl-10' : ''
             } ${className} ${disabledStyle}`}
           placeholder={placeholder}></input>
         {trailingComponent && (
@@ -138,7 +138,7 @@ export default function TextField({
   }
 
   return (
-    <div className={`relative w-full flex rounded-lg border-[#D1D1D1] border h-10 ${className} ${disabledStyle}`}>
+    <div className={`relative w-full flex rounded-lg border-[#D1D1D1] hover:border-black border h-10 ${className} ${disabledStyle}`}>
       {leadingComponent && (
         <div className='absolute inset-y-0 left-0 flex items-center justify-center py-2.5 pl-3 pr-1.5 w-[38px] [&>*]:w-5 [&>*]:h-5'>
           {leadingComponent}
