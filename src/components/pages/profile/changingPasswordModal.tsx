@@ -12,6 +12,7 @@ import _ from 'lodash'
 import Eye from 'assets/images/icons/eye.svg'
 import EyeClosed from 'assets/images/icons/eye_closed.svg'
 import MainButton from 'components/Button/MainButton'
+import ChupButton from 'components/core/Button/ChupButton'
 export default function ChangingPasswordModal({ open, setOpen }) {
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -94,7 +95,7 @@ export default function ChangingPasswordModal({ open, setOpen }) {
 
   return (
     <Modal open={open} setOpen={setOpen} hideClose={success} preventClickOutsideToClose>
-      <div className={`p-6 w-[322px] relative transition-all duration-300 ${success ? 'h-[412px]' : ''}`}>
+      <div className={`p-6 w-[322px] transition-all duration-300 ${success ? 'h-[412px]' : ''}`}>
         <div className={` flex flex-col gap-6 transition-all duration-300 ${success ? 'opacity-0' : 'opacity-100'}`}>
           <p className='text-center text-xl leading-6 font-bold'>{t('Change password')}</p>
           <OutlineTextField
@@ -139,13 +140,14 @@ export default function ChangingPasswordModal({ open, setOpen }) {
               placeholder={t('Re-enter new password')}
             />
           </div>
-          <MainButton
+          <ChupButton
+            size='sm'
             disabled={!newPassword || !rePassword || !currentPassword}
-            className=''
+            className='w-full'
             loading={loading}
             onClick={changePasswordHandler}>
             {t('Confirm')}
-          </MainButton>
+          </ChupButton>
         </div>
         <div
           className={`absolute inset-0 py-6 px-4 flex flex-col gap-6 transition-all duration-300 ${
@@ -157,13 +159,13 @@ export default function ChangingPasswordModal({ open, setOpen }) {
             <p className='text-sm leading-[18px] font-semibold text-center w-[246px] mx-auto'>
               {t('You can use the new password to log in Punkga now')}
             </p>
-            <FilledButton
+            <ChupButton
               className=''
               onClick={() => {
                 setOpen(false)
               }}>
               {t('Continue')}
-            </FilledButton>
+            </ChupButton>
           </div>
         </div>
       </div>
