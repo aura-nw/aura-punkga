@@ -357,6 +357,23 @@ export default function Header({ className }: { className?: string }) {
                   <Image src={Campaign} alt='' className='w-5 h-5' />
                   {t('Campaign')}
                 </div>
+                <div
+                  className='flex gap-3 items-center py-4 text-sm leading-[18px] font-semibold'
+                  onClick={() => {
+                    setOpenNavigation(false)
+                    router.push('/events')
+                  }}>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>
+                    <path
+                      d='M19.0968 11.0871L12.0911 21.3205C11.7382 21.829 10.9079 21.6007 10.9079 20.9884L10.8976 15.1348C10.8976 14.4601 10.3268 13.9204 9.621 13.9101L5.43836 13.8582C4.9298 13.8478 4.62882 13.3185 4.90905 12.9137L11.9147 2.68029C12.2676 2.17173 13.0979 2.40007 13.0979 3.01241L13.1083 8.86603C13.1083 9.54064 13.6791 10.0803 14.3848 10.0907L18.5675 10.1426C19.0656 10.1426 19.3666 10.6823 19.0968 11.0871Z'
+                      stroke='#009640'
+                      strokeWidth='1.5'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                  </svg>
+                  {t('Event')}
+                </div>
                 {/* <div
                   className='flex gap-3 items-center py-4 text-sm leading-[18px] font-semibold'
                   onClick={() => router.push('/collection')}>
@@ -395,7 +412,7 @@ export default function Header({ className }: { className?: string }) {
                     className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#414141] font-semibold'
                     onClick={() => {
                       setOpenProfile(false)
-                       setOpenNavigation(false)
+                      setOpenNavigation(false)
                       logout()
                     }}>
                     <Image src={LogOut} alt='' className='w-5 h-5' />
@@ -614,6 +631,9 @@ export default function Header({ className }: { className?: string }) {
           <div className='flex lg:gap-[32px] lg:justify-end min-w-[430px]'>
             <Button onClick={() => router.push('/campaigns')}>
               <span style={{ fontWeight: '500' }}>{t('Campaign')}</span>
+            </Button>
+            <Button onClick={() => router.push('/events')}>
+              <span style={{ fontWeight: '500' }}>{t('Event')}</span>
             </Button>
             {/* <Button size='md' onClick={() => router.push('/about-us')}>
               <span style={{ fontWeight: '500' }}>{t('IP Asset')}</span>
