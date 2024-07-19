@@ -85,7 +85,7 @@ export default function NewNFTList() {
                     <div className='font-medium text-text-primary leading-5 text-sm'>{nft.cw721_contract.name}</div>
                     <Link
                       target='_blank'
-                      href={`${getConfig()['CHAIN_INFO'].explorer}/token/cw721/${nft.cw721_contract.smart_contract.address
+                      href={`${getConfig()['CHAIN_INFO'].explorer}/token/evm/erc721/${nft.cw721_contract.smart_contract.address
                         }/${nft.token_id}`}>
                       <Image src={OpenLink} alt='' />
                     </Link>

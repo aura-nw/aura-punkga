@@ -45,21 +45,29 @@ const StyledSelect = styled(MuiSelect)({
   maxHeight: '40px',
   borderRadius: '8px',
   backgroundColor: '#fff',
-  border: '1px solid #E0E0E0',
-  fontSize: '14px',
+  fontSize: '12px',
   '&:hover': {
-    borderColor: '#B0B0B0',
-  },
-  '&.Mui-focused': {
-    borderColor: '#1976d2',
-    boxShadow: '0 0 0 2px rgba(25,118,210,0.2)',
+    border: 'none !important'
   },
   '& .MuiSelect-select': {
     padding: '5px 10px',
   },
 });
 
-export default function EditProfile() {
+const StyledDatePicker = styled(DatePicker)({
+  '& .MuiInputBase-root': {
+    maxHeight: '40px !important',
+    borderRadius: '8px',
+    fontSize: '12px !important',
+  },
+  '& .MuiInputBase-input': {
+    padding: '5px 0px 5px 10px !important',
+    height: '40px !important',
+    fontSize: '12px !important',
+  }
+})
+
+export default function EditProfile({ updateProfile }) {
   const { account, getProfile } = useContext(Context)
   const { t } = useTranslation()
   const [preview, setPreview] = useState()
@@ -98,32 +106,38 @@ export default function EditProfile() {
     return () => URL.revokeObjectURL(objectUrl)
   }, [selectedFile])
 
-  const updateProfileHandler = async ({ updateProfile }) => {
-    const form = new FormData()
-    if (gender.key && gender.key != account.gender) {
-      form.append('gender', gender.key == 'Other' ? 'Undisclosed' : (gender.key as string))
+  const updateProfileHandler = async () => {
+    try {
+      setLoading(true);
+      const form = new FormData();
+      if (gender.key && gender.key != account.gender) {
+        form.append('gender', gender.key == 'Other' ? 'Undisclosed' : (gender.key as string))
+      }
+      if (birthdate && !moment(account.birthdate).isSame(moment(birthdate), 'day')) {
+        form.append('birthdate', moment(birthdate).format('YYYY-MM-DD'));
+      }
+      if (account.bio !== bio) {
+        form.append('bio', bio || '');
+      }
+      if (account.name !== username) {
+        form.append('name', username);
+      }
+      if ((profilePicture.current as any)?.files[0]) {
+        form.append('picture', (profilePicture.current as any).files[0])
+      }
+      if (form.entries().next().done === false) {  // Check if form is not empty
+        await updateProfile(form);
+        await getProfile();
+      }
+      setSelectedFile(undefined);
+      router.push('/profile');
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      // Handle error (e.g., show error message to user)
+    } finally {
+      setLoading(false);
     }
-    if (birthdate && new Date(account.birthdate).getTime() != new Date(birthdate).getTime()) {
-      form.append('birthdate', moment(birthdate).format('yyyy-MM-DD') as string)
-    }
-    if (account.bio != bio) {
-      form.append('bio', bio || '')
-    }
-    if (account.name != username) {
-      form.append('name', username)
-    }
-    if ((profilePicture.current as any)?.files[0]) {
-      form.append('picture', (profilePicture.current as any).files[0])
-    }
-    if (Object.keys(Object.fromEntries(form)).length) {
-      setLoading(true)
-      await updateProfile(form)
-      await getProfile()
-    }
-    setSelectedFile(undefined)
-    setLoading(false)
-    router.push('/profile')
-  }
+  };
 
   const onSelectFile = (e) => {
     if (!e.target?.files || e.target.files.length === 0) {
@@ -134,6 +148,7 @@ export default function EditProfile() {
     setSelectedFile(e.target.files[0])
   }
 
+  console.log(birthdate)
   console.log(account)
 
   return (
@@ -144,7 +159,7 @@ export default function EditProfile() {
           <div className='text-[#161618] font-semibold text-sm leading-5'>{t('Profile picture')}</div>
           <div className='relative w-[146px] shrink-0 h-[146px]'>
             <Image
-              src={preview || account.image || NoImg.src}
+              src={preview || account?.image || NoImg.src}
               alt=''
               width={146}
               height={146}
@@ -162,7 +177,7 @@ export default function EditProfile() {
             </div>
           </div>
           <div className='text-[#706D77] text-xs leading-[18px]'>{t('Format: JPG, PNG, SVG. 500x500 recommended')}</div>
-          <div className='bg-[#F0F8FF] rounded flex gap-1 p-3 text-text-info-primary text-xs leading-[18px] items-center'><Image className='ml-[3px]' src={Info} alt='info' width={12} height={12} />{t('Other users can only see your username and profile picture')}</div>
+          <div className='bg-[#F0F8FF] rounded flex gap-1 p-3 text-text-info-primary text-xs leading-[18px] items-start md:items-center'><Image className='ml-[3px]' src={Info} alt='info' width={12} height={12} />{t('Other users can only see your username and profile picture')}</div>
 
           <div className='w-full flex flex-col gap-4 mt-8'>
             <div className=''>
@@ -171,16 +186,16 @@ export default function EditProfile() {
                 value={username}
                 onChange={setUsername}
                 placeholder={t('Enter your username')}
-                className='text-sm text-[#61646B] font-normal md:font-bold leading-6 !py-[5px] !px-[10px] md:w-full md:aspect-[84/12] w-[330px]'
+                className='text-sm text-[#61646B] font-normal md:font-bold leading-6 !py-[5px] !px-[10px] w-full md:aspect-[84/12]'
               />
             </div>
             <div className=''>
               <div className='font-medium text-sm mb-2 leading-5 text-text-primary'>{t('Date of birth')}</div>
               <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={locale === 'vn' ? vi : undefined}>
-                <DatePicker
+                <StyledDatePicker
                   value={birthdate}
                   onChange={(newValue) => setBirthdate(newValue)}
-                  className='text-sm text-[#61646B] font-normal md:font-bold leading-6 md:w-full md:aspect-[84/12] w-[330px] max-h-10'
+                  className='text-sm text-[#61646B] font-normal md:font-bold leading-6 w-full md:aspect-[84/12] max-h-10'
                 />
               </LocalizationProvider>
             </div>
@@ -192,10 +207,10 @@ export default function EditProfile() {
                   value={gender ? gender.key : ''}
                   onChange={(e) => setGender({ key: e.target.value as any, value: t(e.target.value as any) })}
                   displayEmpty
-                  className='text-sm text-[#61646B] font-normal md:font-bold leading-6 md:w-full md:aspect-[84/12] w-[330px]'
+                  className='text-sm text-[#61646B] font-normal md:font-bold leading-6 w-full md:aspect-[84/12]'
                 >
                   <MenuItem value="" disabled>
-                    <em>{t('Select a gender')}</em>
+                    <div className='text-text-quatenary text-sm'>{t('Select a gender')}</div>
                   </MenuItem>
                   <MenuItem value="Male">{t('Male')}</MenuItem>
                   <MenuItem value="Female">{t('Female')}</MenuItem>
@@ -213,7 +228,7 @@ export default function EditProfile() {
                 value={bio}
                 onChange={setBio}
                 placeholder={t('Write something about yourself')}
-                className='text-sm text-[#61646B] font-normal md:font-bold leading-6 !py-[5px] !px-[10px] md:w-full md:aspect-[84/12] w-[330px] min-h-[82px]'
+                className='text-sm text-[#61646B] font-normal md:font-bold leading-6 !py-[5px] !px-[10px] w-full md:aspect-[84/12] min-h-[82px]'
               />
             </div>
             <div className=''>
@@ -231,7 +246,7 @@ export default function EditProfile() {
 
         <div
           className='mt-8 flex justify-end'>
-          <ChupButton className='px-[54px]' onClick={() => updateProfileHandler}>{t('Save')}</ChupButton>
+          <ChupButton className='px-[50px] md:px-[54px]' onClick={updateProfileHandler} disabled={loading}>{loading ? t('Saving...') : t('Save')}</ChupButton>
         </div>
       </div>
     </div>
