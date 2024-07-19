@@ -15,7 +15,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useSWR from 'swr'
 
-import WaveFooter from 'components/pages/event/assets/wave.png'
+import WaveFooter from 'components/pages/event/kaia-island/assets/wave.svg'
 export default function KaiaIsland() {
   const { locale } = useRouter()
   const { t } = useTranslation()

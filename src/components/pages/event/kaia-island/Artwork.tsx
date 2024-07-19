@@ -5,8 +5,9 @@ import useSWR from 'swr'
 import { useEffect, useState } from 'react'
 import { Pagination } from '@mui/material'
 import Modal from 'components/Modal'
-import So from 'components/pages/event/assets/so.png'
-import LineFooter from 'components/pages/event/assets/Line.svg'
+import So from 'components/pages/event/kaia-island/assets/so.png'
+import LineFooter from 'components/pages/event/kaia-island/assets/Line.svg'
+import Pin from 'components/pages/event/kaia-island/assets/pin.svg'
 export default function Artworks() {
   const { t } = useTranslation()
   const { data, isLoading } = useSWR(
@@ -142,7 +143,7 @@ const Artwork = ({ artwork }) => {
   if (!artwork?.title || !artwork?.image) return null
   return (
     <>
-      <div className='cursor-pointer' onClick={() => setOpen(true)}>
+      <div className='cursor-pointer [&:hover_.pin]:block relative' onClick={() => setOpen(true)}>
         <Image
           width={300}
           height={300}
@@ -152,6 +153,7 @@ const Artwork = ({ artwork }) => {
         />
         <div className='mt-4 text-sm font-semibold line-clamp-2'>{artwork.title}</div>
         <div className='mt-0.5 text-xs font-medium'>by {artwork.artist}</div>
+        <Image src={Pin} alt='' className='w-[12%] h-auto hidden absolute -top-[5%] right-[5%] pin' />
       </div>
       <Modal open={open} setOpen={setOpen} preventClickOutsideToClose={false}>
         <div className='py-6 px-4 max-w-[655px] min-w-[500px]'>
