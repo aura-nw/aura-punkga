@@ -12,15 +12,10 @@ export default function QuestList({
   quests,
   isEnded,
   refreshCallback,
-  config,
 }: {
   quests: undefined | Quest[]
   isEnded: boolean
   refreshCallback?: () => void
-  config?: {
-    xpImageSrc: any
-    xpText: string
-  }
 }) {
   const { t } = useTranslation()
   const [rewardNFTChecked, setRewardNFTChecked] = useState<boolean>(false)
@@ -136,7 +131,7 @@ export default function QuestList({
                 (rewardNFTChecked ? !!quest.reward.nft?.nft_name : true)
             )
             .map((quest: Quest, index) => (
-              <QuestItem quest={quest} key={quest.id} refreshCallback={refreshCallback} config={config}/>
+              <QuestItem quest={quest} key={quest.id} refreshCallback={refreshCallback} />
             ))}
         </div>
       )}

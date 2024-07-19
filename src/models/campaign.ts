@@ -45,6 +45,7 @@ export type Campaign = {
 }
 export type Quest = {
   id: string
+  pointText?: string
   repeat: 'Once' | 'Daily'
   type: 'Read' | 'Comment' | 'Subscribe' | 'Like' | 'Poll' | 'Quiz' | 'Empty'
   reward_status: 'NOT_SATISFY' | 'CAN_CLAIM' | 'CLAIMED' | 'OUT_OF_SLOT'

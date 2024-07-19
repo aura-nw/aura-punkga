@@ -272,7 +272,9 @@ export default function CampaignPage() {
                       />
                     )}
                     {!!campaign?.reward?.xp && campaign?.reward?.nft?.nft_name ? (
-                      <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${campaign?.reward?.xp} XP`}</div>
+                      <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${
+                        campaign?.reward?.xp
+                      } ${isKP ? 'KP' : 'XP'}`}</div>
                     ) : (
                       <div className='text-text-teriary text-center font-semibold'>{`+ ${campaign?.reward?.xp || 0} ${
                         isKP ? 'KP' : 'XP'
