@@ -405,27 +405,29 @@ function CampaignDetail({}) {
             </div>
             {account &&
               (isKP ? (
-                <div className='rounded-lg p-4 bg-white mt-4 md:mt-8'>
-                  <div className='flex justify-between items-center'>
-                    <div className='font-semibold '>
-                      {t('Level')} {account.levels?.find((lv) => lv.chain == 'KP').level}
+                (function () {
+                  const level = account.levels?.find((lv) => lv.chain == 'KP')?.level || 0
+                  const xp = account.levels?.find((lv) => lv.chain == 'KP')?.xp || 0
+                  return (
+                    <div className='rounded-lg p-4 bg-white mt-4 md:mt-8'>
+                      <div className='flex justify-between items-center'>
+                        <div className='font-semibold '>
+                          {t('Level')} {level}
+                        </div>
+                        <div className='text-xxs lowercase'>{`${Math.round(
+                          levelToXp(level + 1) - levelToXp(level)
+                        )} ${t(`kp to level`)} ${level + 1}`}</div>
+                      </div>
+                      <div className='relative h-3 mt-2 w-full rounded-lg overflow-hidden bg-[#1C1C1C]/5'>
+                        <div
+                          className={`absolute top-0 left-0 bg-[#1FAB5E] bottom-0`}
+                          style={{
+                            width: `${calcPercentage(xp, level)}%`,
+                          }}></div>
+                      </div>
                     </div>
-                    <div className='text-xxs lowercase'>{`${Math.round(
-                      levelToXp(account.levels?.find((lv) => lv.chain == 'KP').level + 1) -
-                        levelToXp(account.levels?.find((lv) => lv.chain == 'KP').level)
-                    )} ${t(`kp to level`)} ${account.levels?.find((lv) => lv.chain == 'KP').level + 1}`}</div>
-                  </div>
-                  <div className='relative h-3 mt-2 w-full rounded-lg overflow-hidden bg-[#1C1C1C]/5'>
-                    <div
-                      className={`absolute top-0 left-0 bg-[#1FAB5E] bottom-0`}
-                      style={{
-                        width: `${calcPercentage(
-                          account.levels?.find((lv) => lv.chain == 'KP').xp,
-                          account.levels?.find((lv) => lv.chain == 'KP').level
-                        )}%`,
-                      }}></div>
-                  </div>
-                </div>
+                  )
+                })()
               ) : (
                 <div className='rounded-lg p-4 bg-white mt-4 md:mt-8'>
                   <div className='flex justify-between items-center'>
@@ -469,11 +471,7 @@ function CampaignDetail({}) {
           </div>
           <div>
             {/* Quest  */}
-            <QuestList
-              quests={authData?.campaignQuests}
-              isEnded={isEnded}
-              refreshCallback={refresh}
-            />
+            <QuestList quests={authData?.campaignQuests} isEnded={isEnded} refreshCallback={refresh} />
           </div>
           <div className='md:hidden'>
             {isEnrolled || isEnded ? (

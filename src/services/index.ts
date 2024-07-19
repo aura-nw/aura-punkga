@@ -127,7 +127,7 @@ export const getProfile = async () => {
           const questLanguages =
             quest.quests_i18n.find((ml) => ml.i18n_language.id == l.id) ||
             quest.quests_i18n.find((ml) => ml.i18n_language.is_main)
-          quest[l.shortLang] = questLanguages.data
+          quest[l.shortLang] = questLanguages?.data
         })
         return {
           ...userQuest,
