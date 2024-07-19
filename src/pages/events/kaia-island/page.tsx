@@ -14,6 +14,8 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useSWR from 'swr'
+
+import WaveFooter from 'components/pages/event/assets/wave.png'
 export default function KaiaIsland() {
   const { locale } = useRouter()
   const { t } = useTranslation()
@@ -238,6 +240,10 @@ export default function KaiaIsland() {
         </div>
         <TimeLine />
         <Artworks />
+      </div>
+
+      <div className='mt-28 -mb-14 w-screen flex justify-center overflow-hidden'>
+        <Image src={WaveFooter} alt='' className='w-screen min-w-[1080px]' />
       </div>
     </div>
   )

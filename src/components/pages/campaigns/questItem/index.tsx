@@ -41,7 +41,16 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
       return
     }
     if (data?.status == 'FAILED') {
-      throw new Error('Claim failed. Please try again later.')
+      setOpen(false)
+      setLoading(false)
+      refreshCallback()
+      await getProfile()
+      toast('Claim failed. Please try again later.', {
+        type: 'error',
+        position: toast.POSITION.TOP_RIGHT,
+        hideProgressBar: true,
+        autoClose: 3000,
+      })
     }
     setTimeout(() => revealResult(id), 4000)
   }
@@ -65,16 +74,6 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
         setLoading(false)
       }
     } catch (error) {
-      setOpen(false)
-      setLoading(false)
-      refreshCallback()
-      await getProfile()
-      toast(error?.message || 'Claim failed. Please try again later.', {
-        type: 'error',
-        position: toast.POSITION.TOP_RIGHT,
-        hideProgressBar: true,
-        autoClose: 3000,
-      })
       console.error(error)
     }
   }

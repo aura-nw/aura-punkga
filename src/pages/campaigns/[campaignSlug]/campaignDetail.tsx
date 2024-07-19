@@ -160,7 +160,15 @@ function CampaignDetail({}) {
       return
     }
     if (data?.status == 'FAILED') {
-      throw new Error('Claim failed. Please try again later.')
+      refresh()
+      await fetchData()
+      setClaimLoading(false)
+      toast(`Claim failed`, {
+        type: 'error',
+        position: toast.POSITION.BOTTOM_RIGHT,
+        hideProgressBar: true,
+        autoClose: 3000,
+      })
     }
     setTimeout(() => revealResult(id), 4000)
   }
@@ -181,15 +189,6 @@ function CampaignDetail({}) {
         setClaimLoading(false)
       }
     } catch (error) {
-      refresh()
-      await fetchData()
-      setClaimLoading(false)
-      toast(`Claim failed`, {
-        type: 'error',
-        position: toast.POSITION.BOTTOM_RIGHT,
-        hideProgressBar: true,
-        autoClose: 3000,
-      })
       console.error(error)
     }
   }
