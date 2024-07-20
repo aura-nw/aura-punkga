@@ -234,10 +234,10 @@ export default function EditProfile({ updateProfile }) {
             <div className=''>
               <div className='font-medium text-sm mb-2 leading-5 text-text-primary'>{t('Email')}</div>
               <TextField
-                value={account.email}
+                value={account?.email}
                 onChange={setUsername}
                 disabled
-                placeholder={account.email}
+                placeholder={account?.email}
                 className='text-sm text-[#61646B] font-normal md:font-bold leading-6 !py-[5px] !px-[10px] md:w-full md:aspect-[84/12] w-[330px]'
               />
             </div>
