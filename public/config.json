@@ -5,7 +5,10 @@
     "chainId": "aura_6321-3",
     "evmChainId": 6321,
     "chainName": "Aura Euphoria TestNet",
-    "rpc": ["https://rpc.euphoria.aura.network", "https://jsonrpc.euphoria.aura.network"],
+    "rpc": [
+      "https://rpc.euphoria.aura.network",
+      "https://jsonrpc.euphoria.aura.network"
+    ],
     "indexerV2": "https://indexer-v2.staging.aurascan.io/api/v2/graphql",
     "nativeCurrency": {
       "name": "Aura",

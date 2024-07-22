@@ -14,9 +14,6 @@ import {
   PaginationItem,
 } from '@mui/material';
 
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-
 const columns = [
   { id: 'campaign', label: 'Campaign', minWidth: 170 },
   { id: 'claimedAt', label: 'Claimed at', minWidth: 100 },
@@ -106,8 +103,6 @@ export default function RewardHistory({ data }) {
           onChange={handleChangePage}
           color="primary"
           size="large"
-          showFirstButton
-          showLastButton
           renderItem={(item) => (
             <PaginationItem
               {...item}
@@ -133,6 +128,12 @@ export default function RewardHistory({ data }) {
                   },
                 },
                 '&:hover': {
+                  backgroundColor: '#E7E7E7',
+                },
+                '&.MuiPaginationItem-previousNext': {
+                  color: '#6D6D6D',
+                },
+                '&.MuiPaginationItem-previousNext:hover': {
                   backgroundColor: '#E7E7E7',
                 },
               }}

@@ -293,6 +293,7 @@ function ContextProvider({ children }: any) {
           signupMethods: res.signup_methods,
           custodialWalletAddress: res.authorizer_users_user_wallet?.address,
           xp: res.levels?.[0]?.xp || 0,
+          kp: res.levels?.[1]?.xp || 0,
           level: res.levels?.[0]?.level || 0,
           levels: res.levels?.map((v) => ({
             level: v.level,

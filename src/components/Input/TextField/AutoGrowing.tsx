@@ -10,7 +10,7 @@ interface IAutoGrowingTextField {
   onKeyDown?: any
   className?: string
   maxLength?: number
-  placeholderClassName?: string // Add this line
+  placeholderClassName?: string
 }
 
 export default function AutoGrowingTextField({
@@ -23,10 +23,23 @@ export default function AutoGrowingTextField({
   onKeyDown,
   r,
   maxLength,
-  placeholderClassName, // Add this line
+  placeholderClassName,
 }: IAutoGrowingTextField) {
   const eRef = useRef<HTMLDivElement>(null)
   const ref = r || eRef
+
+  useEffect(() => {
+    if (ref.current && value !== undefined) {
+      if (ref.current.innerText !== value) {
+        ref.current.innerText = value
+      }
+    }
+  }, [value, ref])
+
+  const handleInput = (event: React.FormEvent<HTMLDivElement>) => {
+    const newValue = event.currentTarget.innerText
+    onChange && onChange(newValue)
+  }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (maxLength && event.currentTarget.innerText.length >= maxLength && !event.metaKey && !event.ctrlKey && event.key.length === 1) {
@@ -38,8 +51,9 @@ export default function AutoGrowingTextField({
   return (
     <div
       ref={ref}
-      data-placeholder={placeholder} // Use data attribute for placeholder text
+      data-placeholder={placeholder}
       onKeyDown={handleKeyDown}
+      onInput={handleInput}
       contentEditable={true}
       className={`
         whitespace-pre-wrap break-words truncate hyphens-auto min-h-[26px] md:min-h-[32px] w-full 

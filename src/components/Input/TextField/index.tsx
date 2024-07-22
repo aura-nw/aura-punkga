@@ -165,7 +165,7 @@ export default function TextField({
           } ${trailingComponent ? 'pr-[45px]' : ''} ${disabledStyle}`}
         placeholder={placeholder}></input>
       {trailingComponent && (
-        <div className='absolute inset-y-0 right-0 flex items-center justify-center py-2.5 pr-3 pl-1.5 w-[38px] [&>*]:w-5 [&>*]:h-5'>
+        <div className='absolute inset-y-0 right-0 flex items-center justify-center pr-3 pl-1.5 w-[38px] [&>*]:w-5 [&>*]:h-5'>
           {trailingComponent}
         </div>
       )}
