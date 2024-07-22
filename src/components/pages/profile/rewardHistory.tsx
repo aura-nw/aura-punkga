@@ -13,6 +13,11 @@ import {
   Pagination,
   PaginationItem,
 } from '@mui/material';
+import Link from 'next/link';
+import Image from 'next/image';
+import OpenLink from 'assets/images/icons/open-link.svg'
+import getConfig from 'next/config';
+import { useRouter } from 'next/router';
 
 const columns = [
   { id: 'campaign', label: 'Campaign', minWidth: 170 },
@@ -21,14 +26,25 @@ const columns = [
   { id: 'nfts', label: 'NFTs', minWidth: 100, align: 'right' },
 ];
 
-// Function to transform the data into the format needed for the table
-function transformData(data) {
-  return data.map(item => ({
-    campaign: item.quest.name,
-    claimedAt: new Date(item.created_at).toLocaleString(),
-    points: item.quest.reward.xp,
-    nfts: item.quest.reward.nft ? item.quest.reward.nft.nft_name : '-'
-  }));
+function transformData(data, locale) {
+  return data.map(item => {
+    const txHash = item.user_quest_rewards && item.user_quest_rewards[0]
+      ? JSON.parse(item.user_quest_rewards[0].tx_hash)[0]
+      : '#';
+
+    const nftHash = item.user_quest_rewards && item.user_quest_rewards[1]
+      ? JSON.parse(item.user_quest_rewards[1].tx_hash)[0]
+      : '#';
+
+    return {
+      campaign: item.quest[locale]?.name || item.quest.name,
+      claimedAt: new Date(item.created_at).toLocaleString(),
+      points: item.quest.reward.xp,
+      nfts: item.quest.reward.nft ? item.quest.reward.nft.nft_name : '-',
+      txHash: txHash,
+      nftHash: nftHash
+    };
+  });
 }
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -47,13 +63,13 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-
 export default function RewardHistory({ data }) {
   const { t } = useTranslation()
   const [page, setPage] = useState(1);
   const rowsPerPage = 5;
+  const { locale } = useRouter();
 
-  const rows = transformData(data);
+  const rows = transformData(data, locale);
   const totalPages = Math.ceil(rows.length / rowsPerPage);
 
   const handleChangePage = (event, newPage) => {
@@ -86,7 +102,39 @@ export default function RewardHistory({ data }) {
                       const value = row[column.id];
                       return (
                         <StyledTableCell key={column.id} >
-                          {value}
+                          <>
+                            {column.id === 'points' ? (
+                              <div className='flex items-center justify-between'>
+                                <div>{value}</div>
+                                {row.txHash !== '#' && (
+                                  <Link target='blank' href={`${getConfig()['CHAIN_INFO'].explorer}/tx/${row.txHash}`}>
+                                    <Image
+                                      src={OpenLink}
+                                      alt="Points icon"
+                                      width={20}
+                                      height={20}
+                                    />
+                                  </Link>
+                                )}
+                              </div>
+                            ) : column.id === 'nfts' ? (
+                              <div className='flex items-center justify-between'>
+                                <div>{value}</div>
+                                {row.nftHash !== '#' && (
+                                  <Link target='blank' href={`${getConfig()['CHAIN_INFO'].explorer}/tx/${row.nftHash}`}>
+                                    <Image
+                                      src={OpenLink}
+                                      alt="NFT icon"
+                                      width={20}
+                                      height={20}
+                                    />
+                                  </Link>
+                                )}
+                              </div>
+                            ) : (
+                              <div>{value}</div>
+                            )}
+                          </>
                         </StyledTableCell>
                       );
                     })}

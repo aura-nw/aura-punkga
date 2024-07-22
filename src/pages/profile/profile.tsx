@@ -97,7 +97,6 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
   useEffect(() => {
     if (!account) router.push('/')
   }, [account])
-  console.log('account', account)
   if (!account) return <></>
   return (
     <>

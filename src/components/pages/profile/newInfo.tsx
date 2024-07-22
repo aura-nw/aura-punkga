@@ -38,6 +38,8 @@ export default function NewInfo() {
   const [selectedFile, setSelectedFile] = useState()
   const [settingPasswordModalOpen, setSettingPasswordModalOpen] = useState(false)
   const [changingPasswordModalOpen, setChangingPasswordModalOpen] = useState(false)
+  const [KP, setKP] = useState(0)
+  const [XP, setXP] = useState(0)
 
   useEffect(() => {
     if (!selectedFile) {
@@ -58,6 +60,8 @@ export default function NewInfo() {
           ? { key: 'Other', value: t('Other') }
           : { key: account.gender, value: t(account.gender) }
       )
+      setKP(account.levels.find(level => level.chain == 'KP')?.xp || 0)
+      setXP(account.levels.find(level => level.chain == 'XP')?.xp || 0)
       setBirthdate(account.birthdate ? new Date(account.birthdate).getTime() : undefined)
       setBio(account.bio)
     }
@@ -217,12 +221,12 @@ export default function NewInfo() {
             <div className='flex items-center justify-between'>
               <div className='text-md font-semibold leading-6 text-text-primary'>Lv. {account.level}</div>
               <div className='text-xs leading-[15px] text-text-primary'>{`${Math.round((levelToXp(account.level + 1) - levelToXp(account.level) - (
-                account.xp - levelToXp(account.level))))} ${t('XP to level')} ${account.level + 1
+                XP - levelToXp(account.level))))} ${t('XP to level')} ${account.level + 1
                 }`}</div>
             </div>
             <div className='mt-2'>
               <BorderLinearProgress variant="determinate"
-                value={((account.xp - levelToXp(account.level)) / (levelToXp(account.level + 1) - levelToXp(account.level))) * 100} />
+                value={((XP - levelToXp(account.level)) / (levelToXp(account.level + 1) - levelToXp(account.level))) * 100} />
             </div>
           </div>
           <div className='rounded-[10px] p-3 bg-[#F6F6F6]'>
@@ -232,7 +236,7 @@ export default function NewInfo() {
                   <Image className='ml-[3px]' src={Info} alt='info' width={10.5} height={10.5} onMouseEnter={handlePopoverXPOpen}
                     onMouseLeave={handlePopoverXPClose} />
                 </div>
-                <div className='text-sm font-semibold leading-5 text-text-primary'>{account.xp}
+                <div className='text-sm font-semibold leading-5 text-text-primary'>{XP}
 
                 </div>
               </div>
@@ -240,7 +244,7 @@ export default function NewInfo() {
                 <div className='flex text-sm font-medium leading-5 text-text-teriary'>{t('KP')}
                   <Image className='ml-[3px]' src={Info} alt='info' width={10.5} height={10.5} onMouseEnter={handlePopoverKPOpen}
                     onMouseLeave={handlePopoverKPClose} /></div>
-                <div className='text-sm font-semibold leading-5 text-text-primary'>{account.kp}</div>
+                <div className='text-sm font-semibold leading-5 text-text-primary'>{KP}</div>
               </div>
 
             </div>
