@@ -59,7 +59,7 @@ const StyledSelect = styled(MuiSelect)({
   },
 });
 
-export default function EditProfile() {
+export default function EditProfile({ updateProfile }) {
   const { account, getProfile } = useContext(Context)
   const { t } = useTranslation()
   const [preview, setPreview] = useState()
@@ -98,7 +98,7 @@ export default function EditProfile() {
     return () => URL.revokeObjectURL(objectUrl)
   }, [selectedFile])
 
-  const updateProfileHandler = async ({ updateProfile }) => {
+  const updateProfileHandler = async () => {
     const form = new FormData()
     if (gender.key && gender.key != account.gender) {
       form.append('gender', gender.key == 'Other' ? 'Undisclosed' : (gender.key as string))
@@ -150,7 +150,7 @@ export default function EditProfile() {
               height={146}
               className='w-full h-full rounded-full'
             />
-            <div className='absolute top-0 right-0 cursor-pointer shadow-md z-10 w-8 h-8 bg-white hover:bg-slate-100 rounded-full p-2' >
+            <div className='absolute top-0 right-0 cursor-pointer shadow-md z-10 w-8 h-8 bg-white hover:bg-slate-100 rounded-full p-2'>
               <input
                 ref={profilePicture}
                 onChange={onSelectFile}
@@ -162,7 +162,10 @@ export default function EditProfile() {
             </div>
           </div>
           <div className='text-[#706D77] text-xs leading-[18px]'>{t('Format: JPG, PNG, SVG. 500x500 recommended')}</div>
-          <div className='bg-[#F0F8FF] rounded flex gap-1 p-3 text-text-info-primary text-xs leading-[18px] items-center'><Image className='ml-[3px]' src={Info} alt='info' width={12} height={12} />{t('Other users can only see your username and profile picture')}</div>
+          <div className='bg-[#F0F8FF] rounded flex gap-1 p-3 text-text-info-primary text-xs leading-[18px] items-center'>
+            <Image className='ml-[3px]' src={Info} alt='info' width={12} height={12} />
+            {t('Other users can only see your username and profile picture')}
+          </div>
 
           <div className='w-full flex flex-col gap-4 mt-8'>
             <div className=''>
@@ -192,14 +195,13 @@ export default function EditProfile() {
                   value={gender ? gender.key : ''}
                   onChange={(e) => setGender({ key: e.target.value as any, value: t(e.target.value as any) })}
                   displayEmpty
-                  className='text-sm text-[#61646B] font-normal md:font-bold leading-6 md:w-full md:aspect-[84/12] w-[330px]'
-                >
-                  <MenuItem value="" disabled>
+                  className='text-sm text-[#61646B] font-normal md:font-bold leading-6 md:w-full md:aspect-[84/12] w-[330px]'>
+                  <MenuItem value='' disabled>
                     <em>{t('Select a gender')}</em>
                   </MenuItem>
-                  <MenuItem value="Male">{t('Male')}</MenuItem>
-                  <MenuItem value="Female">{t('Female')}</MenuItem>
-                  <MenuItem value="Other">{t('Other')}</MenuItem>
+                  <MenuItem value='Male'>{t('Male')}</MenuItem>
+                  <MenuItem value='Female'>{t('Female')}</MenuItem>
+                  <MenuItem value='Other'>{t('Other')}</MenuItem>
                 </StyledSelect>
               </FormControl>
             </div>
@@ -229,9 +231,10 @@ export default function EditProfile() {
           </div>
         </div>
 
-        <div
-          className='mt-8 flex justify-end'>
-          <ChupButton className='px-[54px]' onClick={() => updateProfileHandler}>{t('Save')}</ChupButton>
+        <div className='mt-8 flex justify-end'>
+          <ChupButton className='px-[54px]' onClick={updateProfileHandler}>
+            {t('Save')}
+          </ChupButton>
         </div>
       </div>
     </div>
