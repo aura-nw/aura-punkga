@@ -114,7 +114,6 @@ export default function NewInfo() {
 
   const openPopoverEditProfile = Boolean(anchorElEditProfile);
   const openPopoverChangePassword = Boolean(anchorElChangePassword);
-  console.log('account', account)
   return (
     <>
       <div className='w-full p-8 bg-white rounded-[10px] relative'>
@@ -197,7 +196,7 @@ export default function NewInfo() {
               <div>{account.gender ? '•' : ''}</div>
               <div>{account.birthdate.replace(/-/g, '/')}</div>
             </div>
-            <div className='w-full text-sm leading-5 text-text-primary text-center'
+            <div className='w-full text-sm leading-5 text-text-primary text-left'
               style={{
                 textOverflow: 'ellipsis',
                 overflow: 'hidden',

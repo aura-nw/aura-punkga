@@ -74,7 +74,7 @@ export default function EditProfile({ updateProfile }) {
   const [birthdate, setBirthdate] = useState(null)
   const profilePicture = useRef()
   const [gender, setGender] = useState<{ key: string | number; value: string }>(null)
-  const [bio, setBio] = useState(null)
+  const [bio, setBio] = useState('')
   const [username, setUsername] = useState('')
   const [loading, setLoading] = useState(false)
   const [selectedFile, setSelectedFile] = useState()
@@ -104,19 +104,17 @@ export default function EditProfile({ updateProfile }) {
 
     return () => URL.revokeObjectURL(objectUrl)
   }, [selectedFile])
-
-
   const updateProfileHandler = async () => {
     try {
       setLoading(true);
       const form = new FormData();
       if (gender.key && gender.key != account.gender) {
-        form.append('gender', gender.key == 'Other' ? 'Undisclosed' : (gender.key as string))
+        form.append('gender', gender.key == 'Other' ? 'Other' : (gender.key as string))
       }
       if (birthdate && !moment(account.birthdate).isSame(moment(birthdate), 'day')) {
         form.append('birthdate', moment(birthdate).format('YYYY-MM-DD'));
       }
-      if (account.bio !== bio) {
+      if (bio !== account.bio) {
         form.append('bio', bio || '');
       }
       if (account.name !== username) {
@@ -232,7 +230,6 @@ export default function EditProfile({ updateProfile }) {
               <div className='font-medium text-sm mb-2 leading-5 text-text-primary'>{t('Email')}</div>
               <TextField
                 value={account?.email}
-                onChange={setUsername}
                 disabled
                 placeholder={account?.email}
                 className='text-sm text-[#61646B] font-normal md:font-bold leading-6 !py-[5px] !px-[10px] md:w-full md:aspect-[84/12] w-[330px]'
