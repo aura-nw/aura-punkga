@@ -88,19 +88,19 @@ export default function Artworks() {
         <div className='mt-4 lg:mt-8 grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-5'>
           {tab == 1 ? (
             <>
-              {data?.round1?.slice((page - 1) * 8, page * 8)?.map((artwork, index) => (
+              {data?.round1?.slice((page - 1) * 10, page * 10)?.map((artwork, index) => (
                 <Artwork artwork={artwork} key={artwork?.title + index} />
               ))}
             </>
           ) : tab == 2 ? (
             <>
-              {data?.round2?.slice((page - 1) * 8, page * 8)?.map((artwork, index) => (
+              {data?.round2?.slice((page - 1) * 10, page * 10)?.map((artwork, index) => (
                 <Artwork artwork={artwork} key={artwork?.title + index} />
               ))}
             </>
           ) : (
             <>
-              {data?.round3?.slice((page - 1) * 8, page * 8)?.map((artwork, index) => (
+              {data?.round3?.slice((page - 1) * 10, page * 10)?.map((artwork, index) => (
                 <Artwork artwork={artwork} key={artwork?.title + index} />
               ))}
             </>

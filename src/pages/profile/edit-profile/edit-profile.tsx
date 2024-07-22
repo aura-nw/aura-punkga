@@ -165,7 +165,7 @@ export default function EditProfile({ updateProfile }) {
               height={146}
               className='w-full h-full rounded-full'
             />
-            <div className='absolute top-0 right-0 cursor-pointer shadow-md z-10 w-8 h-8 bg-white hover:bg-slate-100 rounded-full p-2' >
+            <div className='absolute top-0 right-0 cursor-pointer shadow-md z-10 w-8 h-8 bg-white hover:bg-slate-100 rounded-full p-2'>
               <input
                 ref={profilePicture}
                 onChange={onSelectFile}
@@ -212,9 +212,9 @@ export default function EditProfile({ updateProfile }) {
                   <MenuItem value="" disabled>
                     <div className='text-text-quatenary text-sm'>{t('Select a gender')}</div>
                   </MenuItem>
-                  <MenuItem value="Male">{t('Male')}</MenuItem>
-                  <MenuItem value="Female">{t('Female')}</MenuItem>
-                  <MenuItem value="Other">{t('Other')}</MenuItem>
+                  <MenuItem value='Male'>{t('Male')}</MenuItem>
+                  <MenuItem value='Female'>{t('Female')}</MenuItem>
+                  <MenuItem value='Other'>{t('Other')}</MenuItem>
                 </StyledSelect>
               </FormControl>
             </div>
