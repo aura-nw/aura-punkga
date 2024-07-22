@@ -194,7 +194,10 @@ export default function NewInfo() {
             <div className='flex justify-center items-center w-full gap-2 text-text-primary leading-5'>
               <div>{account.gender}</div>
               <div>{account.gender ? '•' : ''}</div>
-              <div>{account.birthdate.replace(/-/g, '/')}</div>
+              <div>
+                {account?.birthdate ? account.birthdate.replace(/-/g, '/') : ''}
+              </div>
+
             </div>
             <div className='w-full text-sm leading-5 text-text-primary text-left'
               style={{
