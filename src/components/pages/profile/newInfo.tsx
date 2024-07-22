@@ -26,7 +26,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-export default function NewInfo({ updateProfile }) {
+export default function NewInfo() {
   const router = useRouter()
   const { account, getProfile } = useContext(Context)
   const { t } = useTranslation()
@@ -90,9 +90,31 @@ export default function NewInfo({ updateProfile }) {
   const handleEditProfile = () => {
     router.push('/profile/edit-profile')
   }
+  const [anchorElXP, setAnchorElXP] = React.useState<HTMLElement | null>(null);
+  const [anchorElKP, setAnchorElKP] = React.useState<HTMLElement | null>(null);
+
+  const handlePopoverXPOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElXP(event.currentTarget);
+  };
+
+  const handlePopoverXPClose = () => {
+    setAnchorElXP(null);
+  };
+
+  const handlePopoverKPOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElKP(event.currentTarget);
+  };
+
+  const handlePopoverKPClose = () => {
+    setAnchorElKP(null);
+  };
+
+  const openPopoverXP = Boolean(anchorElXP);
+  const openPopoverKP = Boolean(anchorElKP);
 
   const openPopoverEditProfile = Boolean(anchorElEditProfile);
   const openPopoverChangePassword = Boolean(anchorElChangePassword);
+  console.log('account', account)
   return (
     <>
       <div className='w-full p-8 bg-white rounded-[10px] relative'>
@@ -205,7 +227,8 @@ export default function NewInfo({ updateProfile }) {
             <div className='flex flex-col py-2 border-b-[1px] border-light-medium-grey'>
               <div className='flex items-center justify-between'>
                 <div className='flex text-sm font-medium leading-5 text-text-teriary'>{t('XP')}
-                  <Image className='ml-[3px]' src={Info} alt='info' width={10.5} height={10.5} />
+                  <Image className='ml-[3px]' src={Info} alt='info' width={10.5} height={10.5} onMouseEnter={handlePopoverXPOpen}
+                    onMouseLeave={handlePopoverXPClose} />
                 </div>
                 <div className='text-sm font-semibold leading-5 text-text-primary'>{account.xp}
 
@@ -213,12 +236,55 @@ export default function NewInfo({ updateProfile }) {
               </div>
               <div className='flex items-center justify-between'>
                 <div className='flex text-sm font-medium leading-5 text-text-teriary'>{t('KP')}
-                  <Image className='ml-[3px]' src={Info} alt='info' width={10.5} height={10.5} /></div>
+                  <Image className='ml-[3px]' src={Info} alt='info' width={10.5} height={10.5} onMouseEnter={handlePopoverKPOpen}
+                    onMouseLeave={handlePopoverKPClose} /></div>
                 <div className='text-sm font-semibold leading-5 text-text-primary'>{account.xp}</div>
               </div>
 
             </div>
+            <Popover
+              sx={{
+                pointerEvents: 'none',
+              }}
+              open={openPopoverXP}
+              anchorEl={anchorElXP}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              onClose={handlePopoverXPClose}
+              disableRestoreFocus
+            >
+              <div className='bg-[#323339B2] rounded-[4px] py-2 px-4 text-[#FDFDFD] text-xs'>
+                The core experience points that contribute to your level on PunkgaMe
+              </div>
+            </Popover>
 
+            <Popover
+              sx={{
+                pointerEvents: 'none',
+              }}
+              open={openPopoverKP}
+              anchorEl={anchorElKP}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              onClose={handlePopoverKPClose}
+              disableRestoreFocus
+            >
+              <div className='bg-[#323339B2] rounded-[4px] py-2 px-4 text-[#FDFDFD] text-xs'>
+                Reward points earned from Klaytn network quests
+              </div>
+            </Popover>
             <div className='flex items-center justify-between mt-2'>
               <div className='text-sm font-medium leading-5 text-text-teriary'>{t('Completed quest')}</div>
               <div className='text-sm font-semibold leading-5 text-text-primary'>{account.completedQuests.length}</div>
