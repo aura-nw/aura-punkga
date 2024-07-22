@@ -205,7 +205,7 @@ export default function EditProfile({ updateProfile }) {
             <div className=''>
               <div className='font-medium text-sm mb-2 leading-5 text-text-primary'>{t('Date of birth')}</div>
               <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={locale === 'vn' ? vi : undefined}>
-                <DatePicker
+                <StyledDatePicker
                   value={birthdate}
                   onChange={(newValue) => setBirthdate(newValue)}
                   className='text-sm text-[#61646B] font-normal md:font-bold leading-6 md:w-full md:aspect-[84/12] w-[330px] max-h-10'

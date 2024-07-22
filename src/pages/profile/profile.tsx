@@ -58,6 +58,9 @@ function a11yProps(index: number) {
 }
 
 const ChipTab = styled(Tab)(({ theme }) => ({
+  '&.MuiButtonBase-root': {
+    fontFamily: 'Inter, sans-serif', 
+  },
   textTransform: 'none',
   minHeight: 'auto',
   minWidth: 'auto',
