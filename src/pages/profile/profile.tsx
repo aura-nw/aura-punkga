@@ -118,7 +118,7 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
           <>
             <div className='gap-10 flex flex-col lg:flex-row items-center lg:items-start'>
                 <div className='w-full lg:w-[340px]'>
-                <NewInfo updateProfile={updateProfile} />
+                <NewInfo />
 
               </div>
               <div className='w-full lg:w-[calc(100%_-_340px)] p-8 rounded-[10px] bg-white'>

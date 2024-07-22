@@ -26,7 +26,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-export default function NewInfo({ updateProfile }) {
+export default function NewInfo() {
   const router = useRouter()
   const { account, getProfile } = useContext(Context)
   const { t } = useTranslation()
@@ -114,6 +114,7 @@ export default function NewInfo({ updateProfile }) {
 
   const openPopoverEditProfile = Boolean(anchorElEditProfile);
   const openPopoverChangePassword = Boolean(anchorElChangePassword);
+  console.log('account', account)
   return (
     <>
       <div className='w-full p-8 bg-white rounded-[10px] relative'>
