@@ -113,7 +113,7 @@ export default function Artworks() {
           <Pagination
             shape='rounded'
             page={page}
-            className='[&_.Mui-selected]:!bg-[#FABA77] [&_.Mui-selected]:!text-text-primary [&_.MuiPaginationItem-root]:!text-text-quatenary'
+            className='[&_.Mui-selected]:!bg-[#FABA77] [&_.Mui-selected]:!text-text-primary [&_.MuiPaginationItem-root:not(.Mui-selected)]:!text-text-quatenary'
             onChange={(event: React.ChangeEvent<unknown>, value: number) => {
               setPage(value)
             }}
