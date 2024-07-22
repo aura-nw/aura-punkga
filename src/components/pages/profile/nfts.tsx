@@ -27,7 +27,6 @@ export default function NFTList() {
     ({ wallet }) => (wallet ? getUserNfts(wallet) : null),
     { refreshInterval: 10000 }
   )
-  console.log('nft', data)
   if (!data || !data.length) {
     return (
       <div className='w-full p-5 rounded-2xl bg-[#F2F2F2] md:mt-10'>

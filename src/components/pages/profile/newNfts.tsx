@@ -18,6 +18,7 @@ import {
 import { useRouter } from 'next/router'
 import MascotEmpty from 'assets/images/mascot-empty.png'
 
+
 export default function NewNFTList() {
   const { locale } = useRouter()
   const { t } = useTranslation()
@@ -41,7 +42,6 @@ export default function NewNFTList() {
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedNFTs = data?.slice(startIndex, endIndex);
-console.log('nft', data)
   if (!data || !data.length) {
     return (
       <div className='w-full p-5 rounded-2xl bg-[#F2F2F2] md:mt-10'>
