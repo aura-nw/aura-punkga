@@ -41,7 +41,7 @@ export default function NewNFTList() {
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedNFTs = data?.slice(startIndex, endIndex);
-
+console.log('nft', data)
   if (!data || !data.length) {
     return (
       <div className='w-full p-5 rounded-2xl bg-[#F2F2F2] md:mt-10'>
@@ -74,7 +74,7 @@ export default function NewNFTList() {
                 <Grid item xs={12} sm={6} md={4} key={nft.id}>
                   <div>
                     <Image
-                      src={nft.image_url || NoImage}
+                      src={nft?.media_info?.offchain?.image?.url || NoImage}
                       width={260}
                       height={260}
                       className='w-full object-contain aspect-square'
@@ -100,8 +100,6 @@ export default function NewNFTList() {
                 onChange={handlePageChange}
                 color="primary"
                 size="large"
-                showFirstButton
-                showLastButton
                 renderItem={(item) => (
                   <PaginationItem
                     {...item}

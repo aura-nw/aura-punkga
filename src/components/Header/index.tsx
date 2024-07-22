@@ -164,7 +164,7 @@ export default function Header({ className }: { className?: string }) {
                     {account?.noncustodialWalletAddress ? (
                       <></>
                     ) : (
-                      <Image src={PunkgaWallet} alt='' className='w-6 h-6' />
+                      <Image src={account.image ? account.image : PunkgaWallet} width={24} height={24} alt=''/>
                     )}
                     <div>{`${shorten(account?.activeWalletAddress, 8, 8)}`}</div>
                   </div>
@@ -265,7 +265,7 @@ export default function Header({ className }: { className?: string }) {
                       className='flex justify-between items-center text-second-color text-lg font-semibold  relative'
                       onClick={copyAddress}>
                       <div className='flex gap-2 items-center text-base'>
-                        <Image src={PunkgaWallet} alt='' className='w-8 h-8' />
+                        <Image src={account.image ? account.image : PunkgaWallet} width={32} height={32} alt=''/>
                         <div className='text-[#4E5056] font-semibold'>{account?.name}</div>
                       </div>
                       <span
@@ -666,7 +666,7 @@ export default function Header({ className }: { className?: string }) {
                           className='flex justify-between items-center text-second-color text-lg font-semibold  relative'
                           onClick={copyAddress}>
                           <div className='flex gap-2 items-center text-base'>
-                            <Image src={PunkgaWallet} alt='' className='w-8 h-8' />
+                            <Image src={account.image ? account.image : PunkgaWallet} width={32} height={32} alt=''/>
                             <div className='text-[#4E5056] font-semibold'>{account?.name}</div>
                           </div>
                           <span

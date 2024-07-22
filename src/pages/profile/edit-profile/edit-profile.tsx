@@ -100,6 +100,7 @@ export default function EditProfile() {
 
   const updateProfileHandler = async ({ updateProfile }) => {
     const form = new FormData()
+    console.log('form', form)
     if (gender.key && gender.key != account.gender) {
       form.append('gender', gender.key == 'Other' ? 'Undisclosed' : (gender.key as string))
     }
@@ -110,7 +111,7 @@ export default function EditProfile() {
       form.append('bio', bio || '')
     }
     if (account.name != username) {
-      form.append('name', username)
+      form.append('nickname', username)
     }
     if ((profilePicture.current as any)?.files[0]) {
       form.append('picture', (profilePicture.current as any).files[0])
@@ -175,17 +176,6 @@ export default function EditProfile() {
               />
             </div>
             <div className=''>
-              <div className='font-medium text-sm mb-2 leading-5 text-text-primary'>{t('Date of birth')}</div>
-              <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={locale === 'vn' ? vi : undefined}>
-                <DatePicker
-                  value={birthdate}
-                  onChange={(newValue) => setBirthdate(newValue)}
-                  className='text-sm text-[#61646B] font-normal md:font-bold leading-6 md:w-full md:aspect-[84/12] w-[330px] max-h-10'
-                />
-              </LocalizationProvider>
-            </div>
-
-            <div className=''>
               <div className='font-medium text-sm mb-2 leading-5 text-text-primary'>{t('Gender')}</div>
               <FormControl fullWidth>
                 <StyledSelect
@@ -203,6 +193,17 @@ export default function EditProfile() {
                 </StyledSelect>
               </FormControl>
             </div>
+            <div className=''>
+              <div className='font-medium text-sm mb-2 leading-5 text-text-primary'>{t('Date of birth')}</div>
+              <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={locale === 'vn' ? vi : undefined}>
+                <DatePicker
+                  value={birthdate}
+                  onChange={(newValue) => setBirthdate(newValue)}
+                  className='text-sm text-[#61646B] font-normal md:font-bold leading-6 md:w-full md:aspect-[84/12] w-[330px] max-h-10'
+                />
+              </LocalizationProvider>
+            </div>
+
             <div className=''>
               <div className='flex justify-between items-center'>
                 <div className='font-medium text-sm mb-2 leading-5 text-text-primary'>{t('Short bio')}</div>

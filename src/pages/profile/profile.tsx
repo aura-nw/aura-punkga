@@ -145,7 +145,7 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
                           <div className='text-text-primary font-medium'>{t('No manga found')}</div>
                         </div>
                         :
-                        <div className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-2.5 mt-4 md:mt-10 md:pb-7'>
+                        <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2.5 mt-4 md:mt-10 md:pb-7'>
                           {isSettingUp || curentlyReading.loading ? (
                             <>
                               <DummyComic />
@@ -179,7 +179,7 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
                           <div className='text-text-primary font-medium'>{t('No manga found')}</div>
                         </div>
                         :
-                        <div className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-2.5 mt-4 md:mt-10 md:pb-7'>
+                        <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2.5 mt-4 md:mt-10 md:pb-7'>
                           {isSettingUp || subscribeList.loading ? (
                             <>
                               <DummyComic />

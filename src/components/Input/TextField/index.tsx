@@ -161,11 +161,11 @@ export default function TextField({
         disabled={disabled}
         onChange={(event) => onChange && onChange(event.target.value)}
         id='input-group-1'
-        className={`bg-transparent w-full px-3 py-2.5 placeholder-text-quatenary text-sm font-normal focus:outline-none ${leadingComponent ? 'pl-[38px]' : ''
+        className={`bg-transparent w-full placeholder-text-quatenary text-sm font-normal focus:outline-none ${leadingComponent ? 'pl-[38px]' : ''
           } ${trailingComponent ? 'pr-[45px]' : ''} ${disabledStyle}`}
         placeholder={placeholder}></input>
       {trailingComponent && (
-        <div className='absolute inset-y-0 right-0 flex items-center justify-center py-2.5 pr-3 pl-1.5 w-[38px] [&>*]:w-5 [&>*]:h-5'>
+        <div className='absolute inset-y-0 right-0 flex items-center justify-center pr-3 pl-1.5 w-[38px] [&>*]:w-5 [&>*]:h-5'>
           {trailingComponent}
         </div>
       )}

@@ -11,6 +11,7 @@ export interface IUser {
   custodialWalletAddress: string
   noncustodialWalletAddress?: string
   xp: number
+  kp: number
   level: number
   levels: {
     chain: string
