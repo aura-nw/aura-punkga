@@ -156,11 +156,11 @@ const Artwork = ({ artwork }) => {
         <Image src={Pin} alt='' className='w-[12%] h-auto hidden absolute -top-[5%] right-[5%] pin' />
       </div>
       <Modal open={open} setOpen={setOpen} preventClickOutsideToClose={false}>
-        <div className='py-6 px-4 max-w-[655px] min-w-[500px]'>
+        <div className='py-6 px-4 max-w-[699px] w-full'>
           <Image
             width={600}
             height={600}
-            className='w-full max-h-[83vh] min-h-[50vh]'
+            className='w-full min-h-[50vh]'
             src={getImageSrc(artwork?.image)}
             alt={getImageSrc(artwork?.image)}
           />

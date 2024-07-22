@@ -290,8 +290,8 @@ function ViewRule() {
                 <strong>Vòng 3 (31/7 - 13/8): Golden Treasure! (Nhóm)</strong>
                 <br />
                 <br />
-                Các nhóm gồm 5 họa sĩ được ghép ngẫu nhiên sẽ cùng nhau xây dựng một câu chuyện chung về đảo Kaia. Mỗi
-                thành viên sẽ vẽ 3 trang truyện, kết hợp với nhau tạo thành một câu chuyện hoàn chỉnh.
+                Họa sĩ có thể lựa chọn đăng ký nộp bài thi cá nhân hoặc theo nhóm hai hoặc ba người. Mỗi họa sĩ có giới
+                hạn 3 trang truyện, tổng số trang tối đa cho nhóm là 9 trang.
               </li>
             </ul>
           </div>
@@ -327,8 +327,8 @@ function ViewRule() {
                 <strong>Round 3 (July 31st - August 13th): Golden Treasure! (Group)</strong>
                 <br />
                 <br />
-                Groups of 5 randomly assigned artists will collaborate to create a shared story about Kaia Island. Each
-                member will draw 3 pages, combining them into a complete story.
+                Contestants can choose to register and submit their entries individually or in groups of two or three.
+                Each contestant can contribute up to 3 pages, with a maximum of 9 pages per group.
               </li>
             </ul>
           </div>
