@@ -7,6 +7,7 @@ import BannerDesktop from 'components/pages/event/assets/banner-desktop-v3.png'
 import BannerMobile from 'components/pages/event/assets/banner-mobile-v3.png'
 import Banner from 'components/pages/event/assets/banner.png'
 import BannerEn from 'components/pages/event/assets/banner_en.png'
+import Artwork from 'components/pages/event/wow-yourself/Artwork'
 import ComicList from 'components/pages/event/wow-yourself/ComicList'
 import JudgeBoard from 'components/pages/event/wow-yourself/JudgeBoard'
 import Timeline from 'components/pages/event/wow-yourself/TimeLine'
@@ -125,8 +126,13 @@ export default function WowYourSelf() {
             <div className='flex gap-5'>
               <ViewRule />
               <MainButton
-                onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSdpkgu8EarRd1aXgwbOsuo0dil_zwAS8fvxoSx6DfRIP7sLCg/viewform', '_blank')}
-                disabled={!(moment().isAfter(moment('2024-06-18')))}
+                onClick={() =>
+                  window.open(
+                    'https://docs.google.com/forms/d/e/1FAIpQLSdpkgu8EarRd1aXgwbOsuo0dil_zwAS8fvxoSx6DfRIP7sLCg/viewform',
+                    '_blank'
+                  )
+                }
+                disabled={!moment().isAfter(moment('2024-06-18'))}
                 className='w-full'>
                 {t('Submit my artwork')}
               </MainButton>
@@ -149,10 +155,10 @@ export default function WowYourSelf() {
             </Link>
           </div>
         </div>
-        {!(moment().isAfter(moment('2024-06-18'))) && <Timeline />}
-        {moment().isAfter(moment('2024-06-18')) && <ComicList />}
+        <ComicList />
         <JudgeBoard />
-        {moment().isAfter(moment('2024-06-18')) && <Timeline />}
+        <Timeline />
+        <Artwork/>
       </div>
     </div>
   )
