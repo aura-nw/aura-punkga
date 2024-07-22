@@ -109,11 +109,11 @@ export default function Artworks() {
           <div></div>
           <div></div>
         </div>
-        <div className='flex justify-center'>
+        <div className='flex justify-center mt-4'>
           <Pagination
             shape='rounded'
             page={page}
-            className='[&_.Mui-selected]:!bg-[#FABA77]'
+            className='[&_.Mui-selected]:!bg-[#FABA77] [&_.Mui-selected]:!text-text-primary [&_.MuiPaginationItem-root]:!text-text-quatenary'
             onChange={(event: React.ChangeEvent<unknown>, value: number) => {
               setPage(value)
             }}
