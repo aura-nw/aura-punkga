@@ -160,7 +160,7 @@ const Artwork = ({ artwork }) => {
           <Image
             width={600}
             height={600}
-            className='w-full max-h-[70vh] min-h-[50vh]'
+            className='w-full max-h-[83vh] min-h-[50vh]'
             src={getImageSrc(artwork?.image)}
             alt={getImageSrc(artwork?.image)}
           />
