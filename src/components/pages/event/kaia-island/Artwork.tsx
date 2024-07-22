@@ -119,10 +119,10 @@ export default function Artworks() {
             }}
             count={
               tab == 1
-                ? Math.ceil(data?.round1?.length / 8)
+                ? Math.ceil(data?.round1?.length / 10)
                 : tab == 2
-                ? Math.ceil(data?.round2?.length / 8)
-                : Math.ceil(data?.round3?.length / 8)
+                ? Math.ceil(data?.round2?.length / 10)
+                : Math.ceil(data?.round3?.length / 10)
             }
           />
         </div>
