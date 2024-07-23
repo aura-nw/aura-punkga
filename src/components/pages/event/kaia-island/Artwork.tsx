@@ -165,21 +165,31 @@ const Artwork = ({ data, index, allArtworks }) => {
       </div>
       <Modal open={open} setOpen={setOpen} preventClickOutsideToClose={false} className='[&_.static]:!overflow-visible'>
         <div className='py-6 px-4 max-w-[599px] w-full relative'>
-          <div className='absolute top-1/2 -left-[98px] -translate-y-1/2'>
-            <Image
-              src={NavButton}
-              alt=''
-              className='w-16 h-16 cursor-pointer'
-              onClick={() => setIdx((prev) => (prev > 0 ? prev - 1 : 0))}
-            />
+          <div
+            className='absolute top-1/2 -scale-x-100 -left-[98px] -translate-y-1/2 cursor-pointer bg-[#FFFFFF] rounded-full text-[#B0B0B0] hover:text-border-brand-hover active:text-border-brand-focus w-16 h-16 grid place-items-center shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'
+            onClick={() => setIdx((prev) => (prev > 0 ? prev - 1 : 0))}>
+            <svg xmlns='http://www.w3.org/2000/svg' width='7' height='12' viewBox='0 0 7 12' fill='none'>
+              <path
+                d='M1 1L6 6L1 11'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              />
+            </svg>
           </div>
-          <div className='absolute top-1/2 -scale-x-100 -right-[98px] -translate-y-1/2'>
-            <Image
-              src={NavButton}
-              alt=''
-              className='w-16 h-16 cursor-pointer'
-              onClick={() => setIdx((prev) => (prev < allArtworks.length - 1 ? prev + 1 : allArtworks.length - 1))}
-            />
+          <div
+            className='absolute top-1/2  -right-[98px] -translate-y-1/2 cursor-pointer bg-[#FFFFFF] rounded-full text-[#B0B0B0] hover:text-border-brand-hover active:text-border-brand-focus w-16 h-16 grid place-items-center shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'
+            onClick={() => setIdx((prev) => (prev < allArtworks.length - 1 ? prev + 1 : allArtworks.length - 1))}>
+            <svg xmlns='http://www.w3.org/2000/svg' width='7' height='12' viewBox='0 0 7 12' fill='none'>
+              <path
+                d='M1 1L6 6L1 11'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              />
+            </svg>
           </div>
           <Image
             width={600}
