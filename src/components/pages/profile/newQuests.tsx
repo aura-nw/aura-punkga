@@ -30,18 +30,22 @@ export default function NewQuestSection() {
   )
   const { mutate } = useSWRConfig()
   function chunkArray(array, chunkSize) {
-    const results = [];
+    const results = []
     for (let i = 0; i < array.length; i += chunkSize) {
-      results.push(array.slice(i, i + chunkSize));
+      results.push(array.slice(i, i + chunkSize))
     }
-    return results;
+    return results
   }
 
   return (
     <div className=''>
       <div className='flex justify-between items-center'>
         <div className='text-xl font-medium leading-[28px] text-text-primary'>{t('Available quests')}</div>
-        {!!data?.length && (<Link href='/campaigns' className='text-text-info-primary text-sm leading-5 font-medium'>See all</Link>)}
+        {!!data?.length && (
+          <Link href='/campaigns' className='text-text-info-primary text-sm leading-5 font-medium'>
+            See all
+          </Link>
+        )}
       </div>
       {!!data?.length ? (
         <>
@@ -62,15 +66,15 @@ export default function NewQuestSection() {
                       bulletClass: `swiper-pagination-bullet`,
                       bulletActiveClass: 'swiper-pagination-bullet-active',
                       renderBullet: (index, className) => {
-                        return `<span class="${className}"></span>`;
-                      }
+                        return `<span class="${className}"></span>`
+                      },
                     }}
                     modules={[Navigation, Pagination, Autoplay]}>
                     {chunkArray(data, isMobile ? 1 : 2).map((questPair, index) => (
                       <SwiperSlide key={`slide-${index}`}>
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                           {questPair.map((quest: Quest) => (
-                            <div key={`${quest.id}`} style={{ width: '48%' }}>
+                            <div key={`${quest.id}`} style={{ width: isMobile ? '100%' : '48%' }}>
                               <QuestItem
                                 quest={quest}
                                 refreshCallback={() =>
@@ -96,16 +100,18 @@ export default function NewQuestSection() {
         <>
           <Link href='/campaigns'>
             {locale === 'vn' ? (
-              <Image src={EnrollNowVN} alt='' className='w-full mt-[10px] md:hidden ' />) : (
-              <Image src={EnrollNow} alt='' className='w-full mt-[10px] md:hidden ' />)
-            }
-            {locale === 'vn' ? (<Image src={EnrollNowLargeVN} alt='' className='w-full mt-10 hidden md:block' />) : (
+              <Image src={EnrollNowVN} alt='' className='w-full mt-[10px] md:hidden ' />
+            ) : (
+              <Image src={EnrollNow} alt='' className='w-full mt-[10px] md:hidden ' />
+            )}
+            {locale === 'vn' ? (
+              <Image src={EnrollNowLargeVN} alt='' className='w-full mt-10 hidden md:block' />
+            ) : (
               <Image src={EnrollNowLarge} alt='' className='w-full mt-10 hidden md:block' />
             )}
           </Link>
         </>
-      )
-      }
-    </div >
+      )}
+    </div>
   )
 }

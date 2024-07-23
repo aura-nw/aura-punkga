@@ -80,7 +80,7 @@ export default function Header({ className }: { className?: string }) {
   }
 
   useEffect(() => {
-    ; (window as any).isSearchFocused = isSearchFocused
+    ;(window as any).isSearchFocused = isSearchFocused
   }, [isSearchFocused])
 
   useEffect(() => {
@@ -121,14 +121,15 @@ export default function Header({ className }: { className?: string }) {
     }, 1000)()
   }
   const handleOpenWalletOnExplorer = () => {
-    const url = new URL(`${config.CHAIN_INFO.explorer}/address/${account?.activeWalletAddress}`);
-    window.open(url.toString(), '_blank');
-  };
+    const url = new URL(`${config.CHAIN_INFO.explorer}/address/${account?.activeWalletAddress}`)
+    window.open(url.toString(), '_blank')
+  }
   return (
     <>
       <div
-        className={` fixed inset-0 transition-opacity duration-500 bg-[#000] ${isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
-          }`}></div>
+        className={` fixed inset-0 transition-opacity duration-500 bg-[#000] ${
+          isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
+        }`}></div>
       <header
         className={`sticky w-full top-0 z-50 transition-all duration-300 bg-white ${className} lg:shadow-[0px_4px_4px_0px_#0000001A]`}>
         <nav className='lg:hidden pk-container z-10 w-full shadow-[0px_4px_4px_0px_#0000001A]'>
@@ -170,11 +171,16 @@ export default function Header({ className }: { className?: string }) {
                     ) : (
                       <Image src={account.image ? account.image : PunkgaWallet} width={24} height={24} alt='' />
                     )}
-                    <div className='text-text-info-primary' onClick={handleOpenWalletOnExplorer}>{`${shorten(account?.activeWalletAddress, 8, 8)}`}</div>
+                    <div className='text-text-info-primary' onClick={handleOpenWalletOnExplorer}>{`${shorten(
+                      account?.activeWalletAddress,
+                      8,
+                      8
+                    )}`}</div>
                   </div>
                   <span
-                    className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                      }`}>
+                    className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
+                      isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                    }`}>
                     {t('Copied')}
                   </span>
                   <Image width={18} height={18} src={CopySvg} alt='' />
@@ -240,8 +246,9 @@ export default function Header({ className }: { className?: string }) {
             <>
               <div className='fixed inset-0 z-10 bg-black/80'></div>
               <div
-                className={`z-40  flex flex-col gap-2 bg-white text-[#414141] p-4 absolute top-0 right-0 h-screen w-4/5 transform transition-transform duration-300 ${openNavigation ? 'translate-x-0' : 'translate-x-full'
-                  }`}>
+                className={`z-40  flex flex-col gap-2 bg-white text-[#414141] p-4 absolute top-0 right-0 h-screen w-4/5 transform transition-transform duration-300 ${
+                  openNavigation ? 'translate-x-0' : 'translate-x-full'
+                }`}>
                 <div className='flex justify-between border-b border-[#E9E9E9] pb-4'>
                   <Image src={Logo} alt='header logo' className='h-[29px] w-auto' />
                   <div
@@ -271,15 +278,20 @@ export default function Header({ className }: { className?: string }) {
                         <div className='text-[#4E5056] font-semibold'>{account?.name}</div>
                       </div>
                       <span
-                        className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                          }`}>
+                        className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
+                          isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                        }`}>
                         {t('Copied')}
                       </span>
                     </div>
                     <div className='h-[1px] w-full bg-[#DEDEDE] mt-[10px] mb-[16px]'></div>
                     <div className='text-[#ABABAB] text-sm mb-1'>{`${t('Wallet')}`}</div>
                     <div className='flex justify-between items-center text-[#4E5056] text-base font-semibold'>
-                      <div className='text-text-info-primary' onClick={handleOpenWalletOnExplorer}>{`${shorten(account?.activeWalletAddress, 8, 8)}`}</div>
+                      <div className='text-text-info-primary' onClick={handleOpenWalletOnExplorer}>{`${shorten(
+                        account?.activeWalletAddress,
+                        8,
+                        8
+                      )}`}</div>
                       <div onClick={copyAddress}>
                         <Image width={18} height={18} src={CopySvg} alt='' />
                       </div>
@@ -289,8 +301,9 @@ export default function Header({ className }: { className?: string }) {
                       <div className='flex items-center'>
                         {hideBalance
                           ? '********'
-                          : `${(+walletBalance?.data?.formatted || 0).toFixed(2)} ${walletBalance?.data?.symbol || 'AURA'
-                          }`}
+                          : `${(+walletBalance?.data?.formatted || 0).toFixed(2)} ${
+                              walletBalance?.data?.symbol || 'AURA'
+                            }`}
                         {/* {hideBalance
                               ? '********'
                               : `${+BigNumber(balance || 0)
@@ -425,8 +438,9 @@ export default function Header({ className }: { className?: string }) {
         </nav>
 
         <div
-          className={`lg:hidden pk-container py-[10px] px-5 pb-4 bg-[#F4F3F7] ${router.pathname == '/' ? '' : 'hidden'
-            }`}>
+          className={`lg:hidden pk-container py-[10px] px-5 pb-4 bg-[#F4F3F7] ${
+            router.pathname == '/' ? '' : 'hidden'
+          }`}>
           <div ref={divRef} className={`${isSearchFocused ? 'z-30' : ''} w-full lg:max-w-max relative`}>
             <TextField
               inputref={ref}
@@ -462,14 +476,16 @@ export default function Header({ className }: { className?: string }) {
             />
             {!!searchComic.data?.length && (
               <div
-                className={`absolute bg-light-gray transition-all -bottom-6 translate-y-full duration-500 rounded-[20px] max-h-[40vh] overflow-hidden ${isSearchFocused ? 'opacity-100 lg:w-[160%]' : 'pointer-events-none opacity-0 w-full'
-                  }`}>
+                className={`absolute bg-light-gray transition-all -bottom-6 translate-y-full duration-500 rounded-[20px] max-h-[40vh] overflow-hidden ${
+                  isSearchFocused ? 'opacity-100 lg:w-[160%]' : 'pointer-events-none opacity-0 w-full'
+                }`}>
                 <div className={`max-h-[40vh] overflow-auto  flex flex-col gap-7  p-5`}>
                   {searchComic.data?.map((manga, index) => (
                     <div
                       key={index}
-                      className={`flex gap-2 ${manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
-                        }`}
+                      className={`flex gap-2 ${
+                        manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
+                      }`}
                       onClick={() => router.push(`/comic/${manga.slug}/chapter/1`)}>
                       <Image
                         src={manga.image || NoImage}
@@ -529,8 +545,9 @@ export default function Header({ className }: { className?: string }) {
 
             <div
               ref={divRef}
-              className={`${isSearchFocused ? 'z-30' : ''
-                } w-full md:max-w-[170px] lg:max-w-[200px] xl:max-w-[300px] 2xl:max-w-[500px] relative`}>
+              className={`${
+                isSearchFocused ? 'z-30' : ''
+              } w-full md:max-w-[170px] lg:max-w-[200px] xl:max-w-[300px] 2xl:max-w-[500px] relative`}>
               <TextField
                 inputref={ref}
                 onChange={_.debounce(setSearchValue, 500)}
@@ -563,14 +580,16 @@ export default function Header({ className }: { className?: string }) {
               />
               {!!searchComic.data?.length && (
                 <div
-                  className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[20px] max-h-[40vh] overflow-hidden ${isSearchFocused ? 'opacity-100 w-[160%]' : 'pointer-events-none opacity-0 w-full'
-                    }`}>
+                  className={`absolute bg-light-gray transition-all -bottom-4 translate-y-full duration-500 rounded-[20px] max-h-[40vh] overflow-hidden ${
+                    isSearchFocused ? 'opacity-100 w-[160%]' : 'pointer-events-none opacity-0 w-full'
+                  }`}>
                   <div className={`max-h-[40vh] overflow-auto  flex flex-col gap-7  p-5`}>
                     {searchComic.data?.map((manga, index) => (
                       <div
                         key={index}
-                        className={`flex gap-2 ${manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
-                          }`}
+                        className={`flex gap-2 ${
+                          manga.status.text == 'Upcoming' && '[&_a:not(.author)]:pointer-events-none'
+                        }`}
                         onClick={() => router.push(`/comic/${manga.slug}/chapter/1`)}>
                         <Image
                           src={manga.image || NoImage}
@@ -624,16 +643,28 @@ export default function Header({ className }: { className?: string }) {
           </div>
           <div className='flex lg:gap-[32px] lg:justify-end min-w-[430px]'>
             <Button onClick={() => router.push('/campaigns')}>
-              <span style={{ fontWeight: '500' }}>{t('Campaign')}</span>
+              <span
+                style={{ fontWeight: '500' }}
+                className={`${pathname.includes('/campaigns') ? 'text-text-brand-defaul' : ''}`}>
+                {t('Campaign')}
+              </span>
             </Button>
             <Button onClick={() => router.push('/events')}>
-              <span style={{ fontWeight: '500' }}>{t('Event')}</span>
+              <span
+                style={{ fontWeight: '500' }}
+                className={`${pathname.includes('/events') ? 'text-text-brand-defaul' : ''}`}>
+                {t('Event')}
+              </span>
             </Button>
             {/* <Button size='md' onClick={() => router.push('/about-us')}>
               <span style={{ fontWeight: '500' }}>{t('IP Asset')}</span>
             </Button> */}
             <Button size='md' onClick={() => router.push('/about-us')}>
-              <span style={{ fontWeight: '500' }}>{t('aboutUs')}</span>
+              <span
+                style={{ fontWeight: '500' }}
+                className={`${pathname.includes('/about-us') ? 'text-text-brand-defaul' : ''}`}>
+                {t('aboutUs')}
+              </span>
             </Button>
             <div className='flex gap-[20px] items-center cursor-pointer'>
               <div className='flex gap-4 items-center' onClick={switchLanguage}>
@@ -664,15 +695,20 @@ export default function Header({ className }: { className?: string }) {
                             <div className='text-[#4E5056] font-semibold'>{account?.name}</div>
                           </div>
                           <span
-                            className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                              }`}>
+                            className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
+                              isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                            }`}>
                             {t('Copied')}
                           </span>
                         </div>
                         <div className='h-[1px] w-full bg-[#DEDEDE] mt-[10px] mb-[16px]'></div>
                         <div className='text-[#ABABAB] text-sm mb-1'>{`${t('Wallet')}`}</div>
                         <div className='flex justify-between items-center text-[#4E5056] text-base font-semibold'>
-                          <div className='text-text-info-primary' onClick={handleOpenWalletOnExplorer}>{`${shorten(account?.activeWalletAddress, 8, 8)}`}</div>
+                          <div className='text-text-info-primary' onClick={handleOpenWalletOnExplorer}>{`${shorten(
+                            account?.activeWalletAddress,
+                            8,
+                            8
+                          )}`}</div>
                           <div onClick={copyAddress}>
                             <Image width={18} height={18} src={CopySvg} alt='' />
                           </div>
@@ -682,8 +718,9 @@ export default function Header({ className }: { className?: string }) {
                           <div className='flex items-center'>
                             {hideBalance
                               ? '********'
-                              : `${(+walletBalance?.data?.formatted || 0).toFixed(2)} ${walletBalance?.data?.symbol || 'AURA'
-                              }`}
+                              : `${(+walletBalance?.data?.formatted || 0).toFixed(2)} ${
+                                  walletBalance?.data?.symbol || 'AURA'
+                                }`}
                             {/* {hideBalance
                               ? '********'
                               : `${+BigNumber(balance || 0)
