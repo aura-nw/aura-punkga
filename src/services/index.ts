@@ -483,7 +483,7 @@ export const getCampaignAuthorizedData = async (slug: string) => {
   try {
     const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${slug}/authorized`)
     const campaignData = data.data.campaign[0]
-    const quests = campaignData.campaign_quests.map((quest: any) => {
+    const quests = campaignData.campaign_quests?.map((quest: any) => {
       const q = quest
       LANGUAGE.forEach((l) => {
         const questLanguages =

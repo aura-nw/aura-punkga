@@ -90,19 +90,34 @@ export default function Artworks() {
           {tab == 1 ? (
             <>
               {data?.round1?.slice((page - 1) * 10, page * 10)?.map((artwork, index) => (
-                <Artwork data={artwork} index={data?.round1?.findIndex((a) => a.image == artwork.image)} allArtworks={data?.round1} key={artwork?.title + index} />
+                <Artwork
+                  data={artwork}
+                  index={data?.round1?.findIndex((a) => a.image == artwork.image)}
+                  allArtworks={data?.round1}
+                  key={artwork?.title + index}
+                />
               ))}
             </>
           ) : tab == 2 ? (
             <>
               {data?.round2?.slice((page - 1) * 10, page * 10)?.map((artwork, index) => (
-                <Artwork data={artwork} index={data?.round2?.findIndex((a) => a.image == artwork.image)} allArtworks={data?.round2} key={artwork?.title + index} />
+                <Artwork
+                  data={artwork}
+                  index={data?.round2?.findIndex((a) => a.image == artwork.image)}
+                  allArtworks={data?.round2}
+                  key={artwork?.title + index}
+                />
               ))}
             </>
           ) : (
             <>
               {data?.round3?.slice((page - 1) * 10, page * 10)?.map((artwork, index) => (
-                <Artwork data={artwork} index={data?.round3?.findIndex((a) => a.image == artwork.image)} allArtworks={data?.round3} key={artwork?.title + index} />
+                <Artwork
+                  data={artwork}
+                  index={data?.round3?.findIndex((a) => a.image == artwork.image)}
+                  allArtworks={data?.round3}
+                  key={artwork?.title + index}
+                />
               ))}
             </>
           )}
@@ -139,6 +154,18 @@ const Artwork = ({ data, index, allArtworks }) => {
   useEffect(() => {
     if (open) {
       setIdx(index)
+      document.onkeydown = function (e) {
+        switch (e.keyCode) {
+          case 37:
+            setIdx((prev) => (prev > 0 ? prev - 1 : 0))
+            break
+          case 39:
+            setIdx((prev) => (prev < allArtworks.length - 1 ? prev + 1 : allArtworks.length - 1))
+            break
+        }
+      }
+    } else {
+      document.onkeydown = function (e) {}
     }
   }, [open])
   const getImageSrc = (src: string) => {

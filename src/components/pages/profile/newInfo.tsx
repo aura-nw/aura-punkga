@@ -68,7 +68,6 @@ export default function NewInfo() {
       setUserLevel(account.levels.find(level => level.chain == 'XP')?.level || 0)
     }
   }, [account])
-
   const copyAddress = async () => {
     navigator.clipboard.writeText(account?.activeWalletAddress)
     setIsCopied(true)

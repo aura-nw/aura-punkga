@@ -411,7 +411,7 @@ function CampaignDetail({}) {
                       {t('Level')} {account.level}
                     </div>
                     <div className='text-xxs lowercase'>{`${Math.round(
-                      levelToXp(account.level + 1) - levelToXp(account.level)
+                      levelToXp(account.level + 1) - account.xp
                     )} ${t(`XP to level`)} ${account.level + 1}`}</div>
                   </div>
                   <div className='relative h-3 mt-2 w-full rounded-lg overflow-hidden bg-[#1C1C1C]/5'>

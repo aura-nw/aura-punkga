@@ -82,25 +82,26 @@ function ContextProvider({ children }: any) {
     uri: `${config.API_URL}/v1/graphql`,
   })
   useEffect(() => {
-    if (!account?.levels) return;
-  
+    if (!account?.levels) return
+
     const xpLevel = account.levels.find(
-      level => level?.user_level_chain?.punkga_config?.reward_point_name === 'XP'
-    )?.xp;
-  
-    if (typeof xpLevel === 'undefined') return;
-  
-    setLevel(prevLevel => {
+      (level) => level?.user_level_chain?.punkga_config?.reward_point_name === 'XP'
+    )?.xp
+
+    if (typeof xpLevel === 'undefined') return
+
+    setLevel((prevLevel) => {
       if (typeof prevLevel !== 'undefined' && prevLevel !== +xpLevel) {
-        const message = router.locale === 'vn'
-          ? `Chúc mừng! Bạn đã lên level ${xpLevel}!🎉`
-          : `Congratulations! You've reached level ${xpLevel}!🎉`;
-        
-        toast(message, { type: 'success' });
+        const message =
+          router.locale === 'vn'
+            ? `Chúc mừng! Bạn đã lên level ${xpLevel}!🎉`
+            : `Congratulations! You've reached level ${xpLevel}!🎉`
+
+        toast(message, { type: 'success' })
       }
-      return account.levels;
-    });
-  }, [account?.levels]);
+      return account.levels
+    })
+  }, [account?.levels])
   const wsLink = new GraphQLWsLink(
     createClient({
       url: `wss://${config.API_URL.split('//')[1]}/v1/graphql`,
@@ -295,9 +296,9 @@ function ContextProvider({ children }: any) {
           bio: res.bio,
           signupMethods: res.signup_methods,
           custodialWalletAddress: res.authorizer_users_user_wallet?.address,
-          xp: res.levels.find(level => level.chain == 'XP')?.xp || 0,
-          kp: res.levels.find(level => level.chain == 'KP')?.xp || 0,
-          level: res.levels?.[0]?.level || 0,
+          xp: res.levels.find((level) => level.user_level_chain.punkga_config.reward_point_name == 'XP')?.xp || 0,
+          kp: res.levels.find((level) => level.user_level_chain.punkga_config.reward_point_name == 'KP')?.xp || 0,
+          level: res.levels?.find((level) => level.user_level_chain.punkga_config.reward_point_name == 'XP')?.level || 0,
           levels: res.levels?.map((v) => ({
             level: v.level,
             xp: v.xp,
