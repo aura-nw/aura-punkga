@@ -171,7 +171,7 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
                           <div className='text-text-primary font-medium'>{t('No manga found')}</div>
                         </div>
                         :
-                        <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2.5 mt-4 md:mt-8 md:pb-7'>
+                        <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2.5 md:pb-7'>
                           {isSettingUp || curentlyReading.loading ? (
                             <>
                               <DummyComic />
@@ -205,7 +205,7 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
                           <div className='text-text-primary font-medium'>{t('No manga found')}</div>
                         </div>
                         :
-                        <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2.5 mt-4 md:mt-8 md:pb-7'>
+                        <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2.5 md:pb-7'>
                           {isSettingUp || subscribeList.loading ? (
                             <>
                               <DummyComic />
@@ -232,12 +232,12 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
 
                   </CustomTabPanel>
                   <CustomTabPanel value={valueTab} index={2}>
-                    <div className='mt-4 md:mt-2 md:pb-7'>
+                    <div className='md:pb-7'>
                       <NewNFTList />
                     </div>
                   </CustomTabPanel>
                   <CustomTabPanel value={valueTab} index={3}>
-                    <div className='mt-4 md:mt-8 md:pb-7'>
+                    <div className='md:pb-7'>
                       {!account.completedQuests || account.completedQuests.length === 0 ?
                         <div className='w-full py-8 flex flex-col items-center gap-4'>
                           <Image
