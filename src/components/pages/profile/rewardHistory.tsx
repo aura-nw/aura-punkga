@@ -31,6 +31,7 @@ function transformData(data, locale) {
   return data.map(item => {
     let txHash = '#';
     let nftHash = '';
+    let explorerUrl = '';
 
     if (item.user_quest_rewards && item.user_quest_rewards[0]) {
       try {
@@ -48,18 +49,26 @@ function transformData(data, locale) {
       }
     }
 
+    // Extract explorerUrl from the nested structure
+    if (item.quest &&
+      item.quest.quests_campaign &&
+      item.quest.quests_campaign.campaign_chain &&
+      item.quest.quests_campaign.campaign_chain.punkga_config &&
+      item.quest.quests_campaign.campaign_chain.punkga_config.explorer) {
+      explorerUrl = item.quest.quests_campaign.campaign_chain.punkga_config.explorer.base_url;
+    }
+
     return {
       campaign: item.quest && item.quest[locale] ? item.quest[locale].name : (item.quest ? item.quest.name : ''),
       claimedAt: item.created_at ? new Date(item.created_at).toLocaleString() : '',
       points: item.quest && item.quest.reward ? item.quest.reward.xp : '',
       nfts: item.quest && item.quest.reward && item.quest.reward.nft ? item.quest.reward.nft.nft_name : '-',
-      explorerUrl: item.quest && item.quest.quest_campaign && item.quest.quest_campaign.campaign_chain ? item.quest.quest_campaign.campaign_chain.punkga_config.explorer.base_url : '',
+      explorerUrl: explorerUrl,
       txHash: txHash,
       nftHash: nftHash,
     };
   });
 }
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   '&.MuiTableCell-head': {
     backgroundColor: 'transparent',
@@ -135,7 +144,7 @@ export default function RewardHistory({ data }) {
                   key={column.id}
                   style={{ fontWeight: 'semibold', minWidth: column.minWidth }}
                 >
-                  {column.label}
+                  {t(column.label)}
                 </StyledTableCell>
               ))}
             </TableRow>
@@ -154,7 +163,7 @@ export default function RewardHistory({ data }) {
                             <div className='flex items-center justify-between'>
                               <div>{value}</div>
                               {row.txHash !== '#' && (
-                                <Link target='_blank' href={`${row.explorerUrl ? row.explorerUrl : getConfig()['CHAIN_INFO'].explorer}/tx/${row.txHash}`}>
+                                <Link target='_blank' href={`${row.explorerUrl || getConfig()['CHAIN_INFO'].explorer}/tx/${row.txHash}`}>
                                   <Image
                                     src={OpenLink}
                                     alt="Points icon"
@@ -168,10 +177,10 @@ export default function RewardHistory({ data }) {
                             <div className='flex items-center justify-between'>
                               <div>{value}</div>
                               {row.nftHash !== '' && (
-                                <Link target='_blank' href={`${row.explorerUrl ? row.explorerUrl : getConfig()['CHAIN_INFO'].explorer}/tx/${row.nftHash}`}>
+                                <Link target='_blank' href={`${row.explorerUrl || getConfig()['CHAIN_INFO'].explorer}/tx/${row.nftHash}`}>
                                   <Image
                                     src={OpenLink}
-                                    alt="NFT icon"
+                                    alt=""
                                     width={12}
                                     height={12}
                                   />

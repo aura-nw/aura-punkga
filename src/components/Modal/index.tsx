@@ -8,19 +8,21 @@ export default function Modal({
   children,
   hideClose,
   preventClickOutsideToClose = true,
+  className,
 }: {
   open: boolean
   setOpen: (open: boolean) => void
   children: ReactNode | JSX.Element
   hideClose?: boolean
   preventClickOutsideToClose?: boolean
+  className?: string
 }) {
   const cancelButtonRef = useRef(null)
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as='div'
-        className='relative z-50'
+        className={`relative z-50 ${className}`}
         initialFocus={cancelButtonRef}
         onClose={preventClickOutsideToClose ? () => {} : setOpen}>
         <Transition.Child

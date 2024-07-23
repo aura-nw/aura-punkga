@@ -15,7 +15,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useSWR from 'swr'
 
-import WaveFooter from 'components/pages/event/assets/wave.png'
+import WaveFooter from 'components/pages/event/kaia-island/assets/wave.svg'
 export default function KaiaIsland() {
   const { locale } = useRouter()
   const { t } = useTranslation()
@@ -81,7 +81,7 @@ export default function KaiaIsland() {
               <Link
                 href='https://www.facebook.com/PunkgaMeManga/posts/pfbid02dnvJYumJhC1Nh1WungWkV54FNHdvMULh57iGLzAfAXGpvzCuhexBHGTayNbafMkSl'
                 target='_blank'
-                className='bg-[#0866FF] rounded-sm px-1 py-0.5 flex items-center gap-1 text-xxs leading-4 font-semibold text-text-white'>
+                className='bg-[#0866FF] rounded-sm px-1 py-0.5 pr-2.5 flex items-center gap-1 text-xxs leading-4 font-semibold text-text-white'>
                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'>
                   <path
                     d='M13 8.01837C13 5.24682 10.7614 3 8 3C5.2386 3 3 5.24682 3 8.01837C3 10.3718 4.6144 12.3466 6.7922 12.889V9.55198H5.7612V8.01837H6.7922V7.35755C6.7922 5.6495 7.5624 4.8578 9.2332 4.8578C9.55 4.8578 10.0966 4.92023 10.3202 4.98246V6.37254C10.2022 6.3601 9.9972 6.35388 9.7426 6.35388C8.9228 6.35388 8.606 6.66562 8.606 7.47598V8.01837H10.2392L9.9586 9.55198H8.606V13C11.0814 12.6999 13 10.5842 13 8.01837Z'
@@ -93,7 +93,7 @@ export default function KaiaIsland() {
               <Link
                 href='https://x.com/PunkgaMeManga/status/1812863530972160222'
                 target='_blank'
-                className='bg-neutral-500 rounded-sm px-1 py-0.5 flex items-center gap-1 text-xxs leading-4 font-semibold text-text-white'>
+                className='bg-neutral-500 rounded-sm px-1 py-0.5 pr-2.5 flex items-center gap-1 text-xxs leading-4 font-semibold text-text-white'>
                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'>
                   <path
                     d='M4.0219 3L7.49669 7.96401L4 12H4.78703L7.84845 8.46635L10.3219 12H13L9.32962 6.75682L12.5844 3H11.7973L8.97802 6.25432L6.7 3H4.0219ZM5.17926 3.61933H6.40957L11.8425 11.3807H10.6122L5.17926 3.61933Z'
@@ -290,8 +290,8 @@ function ViewRule() {
                 <strong>Vòng 3 (31/7 - 13/8): Golden Treasure! (Nhóm)</strong>
                 <br />
                 <br />
-                Các nhóm gồm 5 họa sĩ được ghép ngẫu nhiên sẽ cùng nhau xây dựng một câu chuyện chung về đảo Kaia. Mỗi
-                thành viên sẽ vẽ 3 trang truyện, kết hợp với nhau tạo thành một câu chuyện hoàn chỉnh.
+                Họa sĩ có thể lựa chọn đăng ký nộp bài thi cá nhân hoặc theo nhóm hai hoặc ba người. Mỗi họa sĩ có giới
+                hạn 3 trang truyện, tổng số trang tối đa cho nhóm là 9 trang.
               </li>
             </ul>
           </div>
@@ -327,8 +327,8 @@ function ViewRule() {
                 <strong>Round 3 (July 31st - August 13th): Golden Treasure! (Group)</strong>
                 <br />
                 <br />
-                Groups of 5 randomly assigned artists will collaborate to create a shared story about Kaia Island. Each
-                member will draw 3 pages, combining them into a complete story.
+                Contestants can choose to register and submit their entries individually or in groups of two or three.
+                Each contestant can contribute up to 3 pages, with a maximum of 9 pages per group.
               </li>
             </ul>
           </div>

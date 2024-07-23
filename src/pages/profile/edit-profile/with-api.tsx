@@ -7,7 +7,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
 
   const updateProfile = async (data) => {
     try {
-      await privateAxios.put(`${config.REST_API_URL}/user/update-profile`, data)
+      return await privateAxios.put(`${config.REST_API_URL}/user/update-profile`, data)
     } catch (error) {
       console.error('Error in updateProfile:', error);
       throw error; // Re-throw the error so it can be caught in the component

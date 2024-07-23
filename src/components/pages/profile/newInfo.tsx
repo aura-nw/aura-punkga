@@ -268,7 +268,7 @@ export default function NewInfo() {
               disableRestoreFocus
             >
               <div className='bg-[#323339B2] rounded-[4px] py-2 px-4 text-[#FDFDFD] text-xs'>
-                The core experience points that contribute to your level on PunkgaMe
+                {t('The core experience points that contribute to your level on PunkgaMe')}
               </div>
             </Popover>
 
@@ -290,11 +290,11 @@ export default function NewInfo() {
               disableRestoreFocus
             >
               <div className='bg-[#323339B2] rounded-[4px] py-2 px-4 text-[#FDFDFD] text-xs'>
-                Reward points earned from Klaytn network quests
+                {t('Reward points earned from Klaytn network quests')}
               </div>
             </Popover>
             <div className='flex items-center justify-between mt-2'>
-              <div className='text-sm font-medium leading-5 text-text-teriary'>{t('Completed quest')}</div>
+              <div className='text-sm font-medium leading-5 text-text-teriary'>{t('Completed quests')}</div>
               <div className='text-sm font-semibold leading-5 text-text-primary'>{account.completedQuests.length}</div>
             </div>
           </div>

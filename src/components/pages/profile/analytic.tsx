@@ -38,7 +38,7 @@ export default function Analytic() {
           <div className={`absolute top-0 left-0 bg-primary-color bottom-0`} style={{ width: `${percentage}%` }}></div>
           <div className='absolute top-[2px] md:top-0 left-[10px] text-xs md:text-sm leading-[15px] md:leading-[18px] font-bold'>{`${Math.round(
             account.xp - levelToXp(account.level)
-          )} / ${Math.round(levelToXp(account.level + 1) - levelToXp(account.level))} ${t('xp to level')} ${
+          )} / ${Math.round(levelToXp(account.level + 1) - levelToXp(account.level))} ${t('XP to level')} ${
             account.level + 1
           }`}</div>
         </div>
