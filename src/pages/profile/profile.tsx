@@ -78,13 +78,34 @@ const ChipTab = styled(Tab)(({ theme }) => ({
   },
 }));
 
-const ChipTabs = styled(Tabs)({
+const ChipTabs = styled(Tabs)(({ theme }) => ({
   marginBottom: 32,
   minHeight: '28px',
+  height: '28px',
+  overflow: 'auto',
+  '&::-webkit-scrollbar': {
+    display: 'none',
+  },
+  scrollbarWidth: 'none',
+  '& .MuiTabs-flexContainer': {
+    display: 'inline-flex',
+    position: 'relative',
+    transition: 'transform 0.3s ease-in-out',
+  },
   '& .MuiTabs-indicator': {
     display: 'none',
   },
-});
+}));
+
+const TabsWrapper = styled('div')(({ theme }) => ({
+  width: '100%',
+  overflowX: 'auto',
+  overflowY: 'hidden',
+  '&::-webkit-scrollbar': {
+    display: 'none',
+  },
+  scrollbarWidth: 'none',
+}));
 
 function Profile({ subscribeList, curentlyReading, updateProfile }) {
   const { account, isSettingUp } = useContext(Context)
@@ -127,29 +148,15 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
               <div className='w-full lg:w-[calc(100%_-_340px)] p-8 rounded-[10px] bg-transparent lg:bg-white'>
                 <NewQuest />
                 <div className='w-full mt-[28px]'>
-                  <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
-                    <Box sx={{
-                      overflowX: 'auto',
-                      WebkitOverflowScrolling: 'touch',
-                      '&::-webkit-scrollbar': { display: 'none' },
-                      scrollbarWidth: 'none',
-                      msOverflowStyle: 'none',
-                      height: '28px',
-                      margin: '0',
-                    }}>
-                      <ChipTabs
-                        value={valueTab}
-                        onChange={handleChangeTab}
-                        variant="scrollable"
-                        scrollButtons="auto"
-                        sx={{ minWidth: 'max-content' }}
-                      >
-                        <ChipTab label="Currently reading" {...a11yProps(0)} />
-                        <ChipTab label="Subscribed mangas " {...a11yProps(1)} />
-                        <ChipTab label="NFTs" {...a11yProps(2)} />
-                        <ChipTab label="Reward history" {...a11yProps(3)} />
+                  <Box >
+                    <TabsWrapper>
+                      <ChipTabs value={valueTab} onChange={handleChangeTab} variant="scrollable" scrollButtons="auto">
+                        <ChipTab label={t('Currently reading')} {...a11yProps(0)} />
+                        <ChipTab label={t('Subscribed mangas')} {...a11yProps(1)} />
+                        <ChipTab label={t('NFTs')} {...a11yProps(2)} />
+                        <ChipTab label={t('Reward history')} {...a11yProps(3)} />
                       </ChipTabs>
-                    </Box>
+                    </TabsWrapper>
                   </Box>
                   <CustomTabPanel value={valueTab} index={0}>
                     <>

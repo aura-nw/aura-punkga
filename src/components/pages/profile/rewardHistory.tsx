@@ -158,8 +158,8 @@ export default function RewardHistory({ data }) {
                                   <Image
                                     src={OpenLink}
                                     alt="Points icon"
-                                    width={20}
-                                    height={20}
+                                    width={12}
+                                    height={12}
                                   />
                                 </Link>
                               )}
@@ -172,8 +172,8 @@ export default function RewardHistory({ data }) {
                                   <Image
                                     src={OpenLink}
                                     alt="NFT icon"
-                                    width={20}
-                                    height={20}
+                                    width={12}
+                                    height={12}
                                   />
                                 </Link>
                               )}
