@@ -134,7 +134,7 @@ export default function RewardHistory({ data }) {
     )
   }
   return (
-    <div className='w-full overflow-hidden bg-[#F6F6F6] p-[32px] flex flex-col gap-4 rounded-[10px]'>
+    <div className='w-full overflow-hidden bg-white lg:bg-[#F6F6F6] p-[32px] flex flex-col gap-4 rounded-[10px]'>
       <StyledTableContainer>
         <StyledTable stickyHeader aria-label="sticky table">
           <TableHead>
