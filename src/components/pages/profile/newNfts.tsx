@@ -71,7 +71,7 @@ export default function NewNFTList() {
           <Box>
             <Grid container spacing={7}>
               {displayedNFTs?.map((nft) => (
-                <Grid item xs={12} sm={6} md={4} key={nft.id}>
+                <Grid item xs={6} sm={6} md={4} key={nft.id}>
                   <div>
                     <Image
                       src={nft?.media_info?.offchain?.image?.url || NoImage}
