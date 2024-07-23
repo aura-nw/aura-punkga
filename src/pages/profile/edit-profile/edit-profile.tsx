@@ -12,14 +12,23 @@ import { useRouter } from 'next/router'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
-import { LinearProgress, Popover, styled, linearProgressClasses, TextField as MuiTextField, Select as MuiSelect, MenuItem, FormControl } from '@mui/material'
+import {
+  LinearProgress,
+  Popover,
+  styled,
+  linearProgressClasses,
+  TextField as MuiTextField,
+  Select as MuiSelect,
+  MenuItem,
+  FormControl,
+} from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import _ from 'lodash'
 import ChupButton from 'components/core/Button/ChupButton'
 import TextField from 'components/Input/TextField'
-
+import { toast } from 'react-toastify'
 
 const StyledTextField = styled(MuiTextField)({
   '& .MuiInputBase-root': {
@@ -38,7 +47,7 @@ const StyledTextField = styled(MuiTextField)({
   '& .MuiInputBase-input': {
     padding: '5px 10px',
   },
-});
+})
 
 const StyledSelect = styled(MuiSelect)({
   maxHeight: '40px',
@@ -46,12 +55,12 @@ const StyledSelect = styled(MuiSelect)({
   backgroundColor: '#fff',
   fontSize: '12px',
   '&:hover': {
-    border: 'none !important'
+    border: 'none !important',
   },
   '& .MuiSelect-select': {
     padding: '5px 10px',
   },
-});
+})
 
 const StyledDatePicker = styled(DatePicker)({
   '& .MuiInputBase-root': {
@@ -63,7 +72,7 @@ const StyledDatePicker = styled(DatePicker)({
     padding: '5px 0px 5px 10px !important',
     height: '40px !important',
     fontSize: '12px !important',
-  }
+  },
 })
 
 export default function EditProfile({ updateProfile }) {
@@ -107,37 +116,48 @@ export default function EditProfile({ updateProfile }) {
   }, [selectedFile])
   const updateProfileHandler = async () => {
     try {
-      setLoading(true);
-      setErrorMessage('');
-      const form = new FormData();
+      setLoading(true)
+      setErrorMessage('')
+      const form = new FormData()
       if (gender.key && gender.key != account.gender) {
         form.append('gender', gender.key == 'Other' ? 'Other' : (gender.key as string))
       }
       if (birthdate && !moment(account.birthdate).isSame(moment(birthdate), 'day')) {
-        form.append('birthdate', moment(birthdate).format('YYYY-MM-DD'));
+        form.append('birthdate', moment(birthdate).format('YYYY-MM-DD'))
       }
       if (bio !== account.bio) {
-        form.append('bio', bio || '');
+        form.append('bio', bio || '')
       }
       if (account.name !== username) {
-        form.append('nickname', username);
+        form.append('nickname', username)
       }
       if ((profilePicture.current as any)?.files[0]) {
         form.append('picture', (profilePicture.current as any).files[0])
       }
       if (form.entries().next().done === false) {
-        await updateProfile(form);
-        await getProfile();
+        const res = await updateProfile(form)
+        if (res?.data?.data?.update_authorizer_users) {
+          await getProfile()
+        } else {
+          if (res?.data?.errors?.[0]?.message?.includes('authorizer_users_nickname_key')) {
+            setErrorMessage(t('Name already taken'))
+          } else {
+            setErrorMessage(res?.data?.errors?.[0]?.message)
+          }
+          return
+        }
       }
-      setSelectedFile(undefined);
-      router.push('/profile');
+      setSelectedFile(undefined)
+      router.push('/profile')
     } catch (error) {
-      console.error('Error updating profile:', error);
-      setErrorMessage(error.response?.data?.message || t('An error occurred while updating your profile. Please try again.'));
+      console.error('Error updating profile:', error)
+      setErrorMessage(
+        error.response?.data?.message || t('An error occurred while updating your profile. Please try again.')
+      )
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const onSelectFile = (e) => {
     if (!e.target?.files || e.target.files.length === 0) {
@@ -147,7 +167,6 @@ export default function EditProfile({ updateProfile }) {
 
     setSelectedFile(e.target.files[0])
   }
-
 
   return (
     <div className='pk-container pt-5 px-5 lg:px-0 lg:pt-10 flex justify-center'>
@@ -194,9 +213,8 @@ export default function EditProfile({ updateProfile }) {
                   value={gender ? gender.key : ''}
                   onChange={(e) => setGender({ key: e.target.value as any, value: t(e.target.value as any) })}
                   displayEmpty
-                  className='text-sm text-[#61646B] font-normal md:font-bold leading-6 w-full md:aspect-[84/12]'
-                >
-                  <MenuItem value="" disabled>
+                  className='text-sm text-[#61646B] font-normal md:font-bold leading-6 w-full md:aspect-[84/12]'>
+                  <MenuItem value='' disabled>
                     <div className='text-text-quatenary text-sm'>{t('Select a gender')}</div>
                   </MenuItem>
                   <MenuItem value='Male'>{t('Male')}</MenuItem>
@@ -238,17 +256,14 @@ export default function EditProfile({ updateProfile }) {
                 className='text-sm text-[#61646B] font-normal md:font-bold leading-6 !py-[5px] !px-[10px] md:w-full md:aspect-[84/12] w-[330px]'
               />
             </div>
-            {errorMessage && (
-              <div className='text-red-500 text-sm mt-2'>
-                {errorMessage}
-              </div>
-            )}
+            {errorMessage && <div className='text-red-500 text-sm mt-2'>{errorMessage}</div>}
           </div>
         </div>
 
-        <div
-          className='mt-8 flex justify-end'>
-          <ChupButton className='px-[50px] md:px-[54px]' onClick={updateProfileHandler} disabled={loading}>{loading ? t('Saving...') : t('Save')}</ChupButton>
+        <div className='mt-8 flex justify-end'>
+          <ChupButton className='px-[50px] md:px-[54px]' onClick={updateProfileHandler} disabled={loading}>
+            {loading ? t('Saving...') : t('Save')}
+          </ChupButton>
         </div>
       </div>
     </div>

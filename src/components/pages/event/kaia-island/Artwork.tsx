@@ -5,8 +5,10 @@ import useSWR from 'swr'
 import { useEffect, useState } from 'react'
 import { Pagination } from '@mui/material'
 import Modal from 'components/Modal'
-import So from 'components/pages/event/assets/so.png'
-import LineFooter from 'components/pages/event/assets/Line.svg'
+import So from 'components/pages/event/kaia-island/assets/so.png'
+import LineFooter from 'components/pages/event/kaia-island/assets/Line.svg'
+import Pin from 'components/pages/event/kaia-island/assets/pin.svg'
+import NavButton from './assets/bt_left.svg'
 export default function Artworks() {
   const { t } = useTranslation()
   const { data, isLoading } = useSWR(
@@ -88,19 +90,19 @@ export default function Artworks() {
           {tab == 1 ? (
             <>
               {data?.round1?.slice((page - 1) * 10, page * 10)?.map((artwork, index) => (
-                <Artwork artwork={artwork} key={artwork?.title + index} />
+                <Artwork data={artwork} index={data?.round1?.findIndex((a) => a.image == artwork.image)} allArtworks={data?.round1} key={artwork?.title + index} />
               ))}
             </>
           ) : tab == 2 ? (
             <>
               {data?.round2?.slice((page - 1) * 10, page * 10)?.map((artwork, index) => (
-                <Artwork artwork={artwork} key={artwork?.title + index} />
+                <Artwork data={artwork} index={data?.round2?.findIndex((a) => a.image == artwork.image)} allArtworks={data?.round2} key={artwork?.title + index} />
               ))}
             </>
           ) : (
             <>
               {data?.round3?.slice((page - 1) * 10, page * 10)?.map((artwork, index) => (
-                <Artwork artwork={artwork} key={artwork?.title + index} />
+                <Artwork data={artwork} index={data?.round3?.findIndex((a) => a.image == artwork.image)} allArtworks={data?.round3} key={artwork?.title + index} />
               ))}
             </>
           )}
@@ -108,20 +110,20 @@ export default function Artworks() {
           <div></div>
           <div></div>
         </div>
-        <div className='flex justify-center'>
+        <div className='flex justify-center mt-4'>
           <Pagination
             shape='rounded'
             page={page}
-            className='[&_.Mui-selected]:!bg-[#FABA77]'
+            className='[&_.Mui-selected]:!bg-[#FABA77] [&_.Mui-selected]:!text-text-primary [&_.MuiPaginationItem-root:not(.Mui-selected)]:!text-text-quatenary'
             onChange={(event: React.ChangeEvent<unknown>, value: number) => {
               setPage(value)
             }}
             count={
               tab == 1
-                ? Math.ceil(data?.round1?.length / 8)
+                ? Math.ceil(data?.round1?.length / 10)
                 : tab == 2
-                ? Math.ceil(data?.round2?.length / 8)
-                : Math.ceil(data?.round3?.length / 8)
+                ? Math.ceil(data?.round2?.length / 10)
+                : Math.ceil(data?.round3?.length / 10)
             }
           />
         </div>
@@ -130,8 +132,15 @@ export default function Artworks() {
     </div>
   )
 }
-const Artwork = ({ artwork }) => {
+const Artwork = ({ data, index, allArtworks }) => {
+  const [idx, setIdx] = useState(index)
+  const artwork = allArtworks[idx]
   const [open, setOpen] = useState(false)
+  useEffect(() => {
+    if (open) {
+      setIdx(index)
+    }
+  }, [open])
   const getImageSrc = (src: string) => {
     if (src.includes('https://drive.google.com/file')) {
       const id = src.split('/')?.[5]
@@ -142,23 +151,50 @@ const Artwork = ({ artwork }) => {
   if (!artwork?.title || !artwork?.image) return null
   return (
     <>
-      <div className='cursor-pointer' onClick={() => setOpen(true)}>
+      <div className='cursor-pointer [&:hover_.pin]:block relative' onClick={() => setOpen(true)}>
         <Image
           width={300}
           height={300}
-          className='w-full aspect-[219/308] border-[5px] border-white hover:shadow-[4px_6px_4.1px_0px_rgba(0,0,0,0.25)] object-cover'
-          src={getImageSrc(artwork?.image)}
-          alt={getImageSrc(artwork?.image)}
+          className='w-full aspect-[219/308] break-words border-[5px] border-white hover:shadow-[4px_6px_4.1px_0px_rgba(0,0,0,0.25)] object-cover'
+          src={getImageSrc(data?.image)}
+          alt={getImageSrc(data?.image)}
         />
-        <div className='mt-4 text-sm font-semibold line-clamp-2'>{artwork.title}</div>
-        <div className='mt-0.5 text-xs font-medium'>by {artwork.artist}</div>
+        <div className='mt-4 text-sm font-semibold line-clamp-2'>{data.title}</div>
+        <div className='mt-0.5 text-xs font-medium'>by {data.artist}</div>
+        <Image src={Pin} alt='' className='w-[12%] h-auto hidden absolute -top-[5%] right-[5%] pin' />
       </div>
-      <Modal open={open} setOpen={setOpen} preventClickOutsideToClose={false}>
-        <div className='py-6 px-4 max-w-[655px] min-w-[500px]'>
+      <Modal open={open} setOpen={setOpen} preventClickOutsideToClose={false} className='[&_.static]:!overflow-visible'>
+        <div className='py-6 px-4 max-w-[599px] w-full relative'>
+          <div
+            className='absolute top-1/2 -scale-x-100 -left-[98px] -translate-y-1/2 cursor-pointer bg-[#FFFFFF] rounded-full text-[#B0B0B0] hover:text-border-brand-hover active:text-border-brand-focus w-16 h-16 grid place-items-center shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'
+            onClick={() => setIdx((prev) => (prev > 0 ? prev - 1 : 0))}>
+            <svg xmlns='http://www.w3.org/2000/svg' width='7' height='12' viewBox='0 0 7 12' fill='none'>
+              <path
+                d='M1 1L6 6L1 11'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              />
+            </svg>
+          </div>
+          <div
+            className='absolute top-1/2  -right-[98px] -translate-y-1/2 cursor-pointer bg-[#FFFFFF] rounded-full text-[#B0B0B0] hover:text-border-brand-hover active:text-border-brand-focus w-16 h-16 grid place-items-center shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'
+            onClick={() => setIdx((prev) => (prev < allArtworks.length - 1 ? prev + 1 : allArtworks.length - 1))}>
+            <svg xmlns='http://www.w3.org/2000/svg' width='7' height='12' viewBox='0 0 7 12' fill='none'>
+              <path
+                d='M1 1L6 6L1 11'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              />
+            </svg>
+          </div>
           <Image
             width={600}
             height={600}
-            className='w-full max-h-[70vh] min-h-[50vh]'
+            className='w-full min-h-[50vh]'
             src={getImageSrc(artwork?.image)}
             alt={getImageSrc(artwork?.image)}
           />

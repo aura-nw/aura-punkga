@@ -33,7 +33,7 @@ export default function Comic2(props: IComic) {
         alt=''
         width={180}
         height={240}
-        className={`w-full h-full ${props.image ? 'object-cover' : 'object-contain bg-light-gray'} rounded-t`}
+        className={`w-full aspect-[16/23] ${props.image ? 'object-cover' : 'object-contain bg-light-gray'} rounded-t`}
       />
 
       {props.status.text && props.status.text != 'Ongoing' && (
