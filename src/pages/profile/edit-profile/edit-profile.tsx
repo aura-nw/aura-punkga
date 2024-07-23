@@ -172,7 +172,7 @@ export default function EditProfile({ updateProfile }) {
             </div>
           </div>
           <div className='text-[#706D77] text-xs leading-[18px]'>{t('Format: JPG, PNG, SVG. 500x500 recommended')}</div>
-          <div className='bg-[#F0F8FF] rounded flex gap-1 p-3 text-text-info-primary text-xs leading-[18px] items-start md:items-center'><Image className='ml-[3px]' src={Info} alt='info' width={12} height={12} />{t('Other users can only see your username and profile picture')}</div>
+          {/* <div className='bg-[#F0F8FF] rounded flex gap-1 p-3 text-text-info-primary text-xs leading-[18px] items-start md:items-center'><Image className='ml-[3px]' src={Info} alt='info' width={12} height={12} />{t('Other users can only see your username and profile picture')}</div> */}
 
           <div className='w-full flex flex-col gap-4 mt-8'>
             <div className=''>
