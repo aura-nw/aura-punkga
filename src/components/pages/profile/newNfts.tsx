@@ -44,14 +44,14 @@ export default function NewNFTList() {
   const displayedNFTs = data?.slice(startIndex, endIndex);
   if (!data || !data.length) {
     return (
-      <div className='w-full p-5 rounded-2xl bg-[#F2F2F2] md:mt-10'>
-
-
+      <div className='w-full py-8 flex flex-col items-center gap-4'>
         <Image
           src={MascotEmpty}
           alt=''
-          className='rounded-[10px] md:max-w-[500px] md:w-1/2 aspect-[5/2] object-cover my-[10px] md:my-0 w-full max-w-none'
+          width={160}
+          height={160}
         />
+        <div className='text-text-primary font-medium'>{t('No NFT found')}</div>
       </div>
     )
   }

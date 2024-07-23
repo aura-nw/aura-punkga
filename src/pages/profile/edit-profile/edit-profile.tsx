@@ -79,6 +79,7 @@ export default function EditProfile({ updateProfile }) {
   const [loading, setLoading] = useState(false)
   const [selectedFile, setSelectedFile] = useState()
   const router = useRouter()
+  const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
     if (account) {
@@ -107,6 +108,7 @@ export default function EditProfile({ updateProfile }) {
   const updateProfileHandler = async () => {
     try {
       setLoading(true);
+      setErrorMessage('');
       const form = new FormData();
       if (gender.key && gender.key != account.gender) {
         form.append('gender', gender.key == 'Other' ? 'Other' : (gender.key as string))
@@ -131,6 +133,7 @@ export default function EditProfile({ updateProfile }) {
       router.push('/profile');
     } catch (error) {
       console.error('Error updating profile:', error);
+      setErrorMessage(error.response?.data?.message || t('An error occurred while updating your profile. Please try again.'));
     } finally {
       setLoading(false);
     }
@@ -235,6 +238,11 @@ export default function EditProfile({ updateProfile }) {
                 className='text-sm text-[#61646B] font-normal md:font-bold leading-6 !py-[5px] !px-[10px] md:w-full md:aspect-[84/12] w-[330px]'
               />
             </div>
+            {errorMessage && (
+              <div className='text-red-500 text-sm mt-2'>
+                {errorMessage}
+              </div>
+            )}
           </div>
         </div>
 

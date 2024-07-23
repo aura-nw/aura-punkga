@@ -64,13 +64,14 @@ const ChipTab = styled(Tab)(({ theme }) => ({
     fontFamily: inter.style.fontFamily,
   },
   textTransform: 'none',
-  minHeight: 'auto',
+  minHeight: '28px',
   minWidth: 'auto',
   marginRight: '16px',
   padding: theme.spacing(0.5, 1),
   borderRadius: '8px',
   color: '#6D6D6D',
   fontWeight: 600,
+  whiteSpace: 'nowrap',
   '&.Mui-selected': {
     color: '#009640',
     backgroundColor: '#D5FFE7',
@@ -80,8 +81,6 @@ const ChipTab = styled(Tab)(({ theme }) => ({
 const ChipTabs = styled(Tabs)({
   marginBottom: 32,
   minHeight: '28px',
-  height: '28px',
-
   '& .MuiTabs-indicator': {
     display: 'none',
   },
@@ -121,20 +120,36 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
         ) : (
           <>
             <div className='gap-10 flex flex-col lg:flex-row items-center lg:items-start'>
-                <div className='w-full lg:w-[340px]'>
+              <div className='w-full lg:w-[340px]'>
                 <NewInfo />
 
               </div>
-              <div className='w-full lg:w-[calc(100%_-_340px)] p-8 rounded-[10px] bg-white'>
+              <div className='w-full lg:w-[calc(100%_-_340px)] p-8 rounded-[10px] bg-transparent lg:bg-white'>
                 <NewQuest />
                 <div className='w-full mt-[28px]'>
-                  <Box >
-                    <ChipTabs value={valueTab} onChange={handleChangeTab}>
-                      <ChipTab label="Currently reading" {...a11yProps(0)} />
-                      <ChipTab label="Subscribed mangas " {...a11yProps(1)} />
-                      <ChipTab label="NFTs" {...a11yProps(2)} />
-                      <ChipTab label="Reward history" {...a11yProps(3)} />
-                    </ChipTabs>
+                  <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
+                    <Box sx={{
+                      overflowX: 'auto',
+                      WebkitOverflowScrolling: 'touch',
+                      '&::-webkit-scrollbar': { display: 'none' },
+                      scrollbarWidth: 'none',
+                      msOverflowStyle: 'none',
+                      height: '28px',
+                      margin: '0',
+                    }}>
+                      <ChipTabs
+                        value={valueTab}
+                        onChange={handleChangeTab}
+                        variant="scrollable"
+                        scrollButtons="auto"
+                        sx={{ minWidth: 'max-content' }}
+                      >
+                        <ChipTab label="Currently reading" {...a11yProps(0)} />
+                        <ChipTab label="Subscribed mangas " {...a11yProps(1)} />
+                        <ChipTab label="NFTs" {...a11yProps(2)} />
+                        <ChipTab label="Reward history" {...a11yProps(3)} />
+                      </ChipTabs>
+                    </Box>
                   </Box>
                   <CustomTabPanel value={valueTab} index={0}>
                     <>
@@ -210,22 +225,26 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
 
                   </CustomTabPanel>
                   <CustomTabPanel value={valueTab} index={2}>
-                    <NewNFTList />
+                    <div className='mt-4 md:mt-10 md:pb-7'>
+                      <NewNFTList />
+                    </div>
                   </CustomTabPanel>
                   <CustomTabPanel value={valueTab} index={3}>
-                    {!account.completedQuests || account.completedQuests.length === 0 ?
-                      <div className='w-full py-8 flex flex-col items-center gap-4'>
-                        <Image 
-                          src={MascotEmpty}
-                          alt=''
-                          width={160}
-                          height={160}
-                        />
-                        <div className='text-text-primary font-medium'>{t('Your reward history is empty')}</div>
-                      </div>
-                      :
-                      <RewardHistory data={account.completedQuests} />
-                    }
+                    <div className='mt-4 md:mt-10 md:pb-7'>
+                      {!account.completedQuests || account.completedQuests.length === 0 ?
+                        <div className='w-full py-8 flex flex-col items-center gap-4'>
+                          <Image
+                            src={MascotEmpty}
+                            alt=''
+                            width={160}
+                            height={160}
+                          />
+                          <div className='text-text-primary font-medium'>{t('Your reward history is empty')}</div>
+                        </div>
+                        :
+                        <RewardHistory data={account.completedQuests} />
+                      }
+                    </div>
                   </CustomTabPanel>
                 </div>
               </div>
