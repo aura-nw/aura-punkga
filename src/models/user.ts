@@ -17,6 +17,18 @@ export interface IUser {
     chain: string
     xp: number
     level: number
+    user_level_chain: {
+      id: number
+      name: string
+      punkga_config: {
+        reward_point_name: string
+        explorer: {
+          account_path: string
+          base_url: string
+          tx_path: string
+        }
+      }
+    }
   }[]
   completedQuests: any[]
   quests: any

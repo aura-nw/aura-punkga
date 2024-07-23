@@ -82,22 +82,25 @@ function ContextProvider({ children }: any) {
     uri: `${config.API_URL}/v1/graphql`,
   })
   useEffect(() => {
-    setLevel((prev) => {
-      if (typeof prev != 'undefined' && account?.level) {
-        if (prev != +account?.level) {
-          toast(
-            router.locale == 'vn'
-              ? `Chúc mừng! Bạn đã lên level ${account?.level}!🎉`
-              : `Congratulations! You've reached level ${account?.level}!🎉`,
-            {
-              type: 'success',
-            }
-          )
-        }
+    if (!account?.levels) return;
+  
+    const xpLevel = account.levels.find(
+      level => level?.user_level_chain?.punkga_config?.reward_point_name === 'XP'
+    )?.xp;
+  
+    if (typeof xpLevel === 'undefined') return;
+  
+    setLevel(prevLevel => {
+      if (typeof prevLevel !== 'undefined' && prevLevel !== +xpLevel) {
+        const message = router.locale === 'vn'
+          ? `Chúc mừng! Bạn đã lên level ${xpLevel}!🎉`
+          : `Congratulations! You've reached level ${xpLevel}!🎉`;
+        
+        toast(message, { type: 'success' });
       }
-      return account?.level
-    })
-  }, [account?.level])
+      return account.levels;
+    });
+  }, [account?.levels]);
   const wsLink = new GraphQLWsLink(
     createClient({
       url: `wss://${config.API_URL.split('//')[1]}/v1/graphql`,
