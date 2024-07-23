@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import _ from 'lodash'
 import {
@@ -30,23 +30,21 @@ const columns = [
 function transformData(data, locale) {
   return data.map(item => {
     let txHash = '#';
-    let nftHash = '#';
+    let nftHash = '';
 
     if (item.user_quest_rewards && item.user_quest_rewards[0]) {
       try {
         const parsedTxHash = JSON.parse(item.user_quest_rewards[0].tx_hash);
-        txHash = Array.isArray(parsedTxHash) && parsedTxHash.length > 0 ? parsedTxHash[0] : '#';
+        if (Array.isArray(parsedTxHash)) {
+          if (parsedTxHash.length > 1) {
+            txHash = parsedTxHash[0];
+            nftHash = parsedTxHash[1];
+          } else if (parsedTxHash.length === 1) {
+            txHash = parsedTxHash[0];
+          }
+        }
       } catch (error) {
         console.error('Error parsing txHash:', error);
-      }
-    }
-
-    if (item.user_quest_rewards && item.user_quest_rewards[1]) {
-      try {
-        const parsedNftHash = JSON.parse(item.user_quest_rewards[1].tx_hash);
-        nftHash = Array.isArray(parsedNftHash) && parsedNftHash.length > 0 ? parsedNftHash[0] : '#';
-      } catch (error) {
-        console.error('Error parsing nftHash:', error);
       }
     }
 
@@ -55,8 +53,9 @@ function transformData(data, locale) {
       claimedAt: item.created_at ? new Date(item.created_at).toLocaleString() : '',
       points: item.quest && item.quest.reward ? item.quest.reward.xp : '',
       nfts: item.quest && item.quest.reward && item.quest.reward.nft ? item.quest.reward.nft.nft_name : '-',
+      explorerUrl: item.quest && item.quest.quest_campaign && item.quest.quest_campaign.campaign_chain ? item.quest.quest_campaign.campaign_chain.punkga_config.explorer.base_url : '',
       txHash: txHash,
-      nftHash: nftHash
+      nftHash: nftHash,
     };
   });
 }
@@ -76,6 +75,29 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     color: '#3D3D3D !important',
   },
 }));
+
+const StyledTableContainer = styled(TableContainer)({
+  maxHeight: 'none',
+  overflow: 'auto',
+  '&::-webkit-scrollbar': {
+    height: '8px',
+  },
+  '&::-webkit-scrollbar-track': {
+    background: '#f1f1f1',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    background: '#888',
+    borderRadius: '4px',
+  },
+  '&::-webkit-scrollbar-thumb:hover': {
+    background: '#555',
+  },
+});
+
+const StyledTable = styled(Table)({
+  minWidth: 650,
+});
+
 
 export default function RewardHistory({ data }) {
   const { t } = useTranslation()
@@ -104,14 +126,14 @@ export default function RewardHistory({ data }) {
   }
   return (
     <div className='w-full overflow-hidden bg-[#F6F6F6] p-[32px] flex flex-col gap-4 rounded-[10px]'>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
+      <StyledTableContainer>
+        <StyledTable stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               {columns.map((column) => (
                 <StyledTableCell
                   key={column.id}
-                  style={{ fontWeight: 'semibold' }}
+                  style={{ fontWeight: 'semibold', minWidth: column.minWidth }}
                 >
                   {column.label}
                 </StyledTableCell>
@@ -127,40 +149,38 @@ export default function RewardHistory({ data }) {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <StyledTableCell key={column.id} >
-                          <>
-                            {column.id === 'points' ? (
-                              <div className='flex items-center justify-between'>
-                                <div>{value}</div>
-                                {row.txHash !== '#' && (
-                                  <Link target='_blank' href={`${getConfig()['CHAIN_INFO'].explorer}/tx/${row.txHash}`}>
-                                    <Image
-                                      src={OpenLink}
-                                      alt="Points icon"
-                                      width={20}
-                                      height={20}
-                                    />
-                                  </Link>
-                                )}
-                              </div>
-                            ) : column.id === 'nfts' ? (
-                              <div className='flex items-center justify-between'>
-                                <div>{value}</div>
-                                {row.nftHash !== '#' && (
-                                  <Link target='_blank' href={`${getConfig()['CHAIN_INFO'].explorer}/tx/${row.nftHash}`}>
-                                    <Image
-                                      src={OpenLink}
-                                      alt="NFT icon"
-                                      width={20}
-                                      height={20}
-                                    />
-                                  </Link>
-                                )}
-                              </div>
-                            ) : (
+                        <StyledTableCell key={column.id} style={{ minWidth: column.minWidth }}>
+                          {column.id === 'points' ? (
+                            <div className='flex items-center justify-between'>
                               <div>{value}</div>
-                            )}
-                          </>
+                              {row.txHash !== '#' && (
+                                <Link target='_blank' href={`${row.explorerUrl ? row.explorerUrl : getConfig()['CHAIN_INFO'].explorer}/tx/${row.txHash}`}>
+                                  <Image
+                                    src={OpenLink}
+                                    alt="Points icon"
+                                    width={20}
+                                    height={20}
+                                  />
+                                </Link>
+                              )}
+                            </div>
+                          ) : column.id === 'nfts' ? (
+                            <div className='flex items-center justify-between'>
+                              <div>{value}</div>
+                              {row.nftHash !== '' && (
+                                <Link target='_blank' href={`${row.explorerUrl ? row.explorerUrl : getConfig()['CHAIN_INFO'].explorer}/tx/${row.nftHash}`}>
+                                  <Image
+                                    src={OpenLink}
+                                    alt="NFT icon"
+                                    width={20}
+                                    height={20}
+                                  />
+                                </Link>
+                              )}
+                            </div>
+                          ) : (
+                            <div>{value}</div>
+                          )}
                         </StyledTableCell>
                       );
                     })}
@@ -168,8 +188,8 @@ export default function RewardHistory({ data }) {
                 );
               })}
           </TableBody>
-        </Table>
-      </TableContainer>
+        </StyledTable>
+      </StyledTableContainer>
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
         <Pagination
           count={totalPages}
