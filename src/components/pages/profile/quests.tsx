@@ -31,7 +31,7 @@ export default function QuestSection() {
     <div className=''>
       <div className='flex justify-between items-center'>
         <div className='text-xl leading-[28px] text-text-primary'>{t('Available quests')}</div>
-        {!!data?.length && (<Link href='/campaigns' className='text-text-info-primary text-sm leading-5 font-medium'>See all</Link>)}
+        {!!data?.length && (<Link href='/campaigns' className='text-text-info-primary text-sm leading-5 font-medium'>{t('See all')}</Link>)}
       </div>
       {!!data?.length ? (
         <>

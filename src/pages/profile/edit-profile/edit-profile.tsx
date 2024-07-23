@@ -17,7 +17,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import _ from 'lodash'
-import { levelToXp } from 'src/utils'
 import ChupButton from 'components/core/Button/ChupButton'
 import TextField from 'components/Input/TextField'
 
@@ -75,7 +74,7 @@ export default function EditProfile({ updateProfile }) {
   const [birthdate, setBirthdate] = useState(null)
   const profilePicture = useRef()
   const [gender, setGender] = useState<{ key: string | number; value: string }>(null)
-  const [bio, setBio] = useState(null)
+  const [bio, setBio] = useState('')
   const [username, setUsername] = useState('')
   const [loading, setLoading] = useState(false)
   const [selectedFile, setSelectedFile] = useState()
@@ -105,27 +104,26 @@ export default function EditProfile({ updateProfile }) {
 
     return () => URL.revokeObjectURL(objectUrl)
   }, [selectedFile])
-
   const updateProfileHandler = async () => {
     try {
       setLoading(true);
       const form = new FormData();
       if (gender.key && gender.key != account.gender) {
-        form.append('gender', gender.key == 'Other' ? 'Undisclosed' : (gender.key as string))
+        form.append('gender', gender.key == 'Other' ? 'Other' : (gender.key as string))
       }
       if (birthdate && !moment(account.birthdate).isSame(moment(birthdate), 'day')) {
         form.append('birthdate', moment(birthdate).format('YYYY-MM-DD'));
       }
-      if (account.bio !== bio) {
+      if (bio !== account.bio) {
         form.append('bio', bio || '');
       }
       if (account.name !== username) {
-        form.append('name', username);
+        form.append('nickname', username);
       }
       if ((profilePicture.current as any)?.files[0]) {
         form.append('picture', (profilePicture.current as any).files[0])
       }
-      if (form.entries().next().done === false) {  // Check if form is not empty
+      if (form.entries().next().done === false) {
         await updateProfile(form);
         await getProfile();
       }
@@ -133,7 +131,6 @@ export default function EditProfile({ updateProfile }) {
       router.push('/profile');
     } catch (error) {
       console.error('Error updating profile:', error);
-      // Handle error (e.g., show error message to user)
     } finally {
       setLoading(false);
     }
@@ -148,8 +145,6 @@ export default function EditProfile({ updateProfile }) {
     setSelectedFile(e.target.files[0])
   }
 
-  console.log(birthdate)
-  console.log(account)
 
   return (
     <div className='pk-container pt-5 px-5 lg:px-0 lg:pt-10 flex justify-center'>
@@ -177,7 +172,7 @@ export default function EditProfile({ updateProfile }) {
             </div>
           </div>
           <div className='text-[#706D77] text-xs leading-[18px]'>{t('Format: JPG, PNG, SVG. 500x500 recommended')}</div>
-          <div className='bg-[#F0F8FF] rounded flex gap-1 p-3 text-text-info-primary text-xs leading-[18px] items-start md:items-center'><Image className='ml-[3px]' src={Info} alt='info' width={12} height={12} />{t('Other users can only see your username and profile picture')}</div>
+          {/* <div className='bg-[#F0F8FF] rounded flex gap-1 p-3 text-text-info-primary text-xs leading-[18px] items-start md:items-center'><Image className='ml-[3px]' src={Info} alt='info' width={12} height={12} />{t('Other users can only see your username and profile picture')}</div> */}
 
           <div className='w-full flex flex-col gap-4 mt-8'>
             <div className=''>
@@ -189,17 +184,6 @@ export default function EditProfile({ updateProfile }) {
                 className='text-sm text-[#61646B] font-normal md:font-bold leading-6 !py-[5px] !px-[10px] w-full md:aspect-[84/12]'
               />
             </div>
-            <div className=''>
-              <div className='font-medium text-sm mb-2 leading-5 text-text-primary'>{t('Date of birth')}</div>
-              <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={locale === 'vn' ? vi : undefined}>
-                <StyledDatePicker
-                  value={birthdate}
-                  onChange={(newValue) => setBirthdate(newValue)}
-                  className='text-sm text-[#61646B] font-normal md:font-bold leading-6 w-full md:aspect-[84/12] max-h-10'
-                />
-              </LocalizationProvider>
-            </div>
-
             <div className=''>
               <div className='font-medium text-sm mb-2 leading-5 text-text-primary'>{t('Gender')}</div>
               <FormControl fullWidth>
@@ -219,6 +203,17 @@ export default function EditProfile({ updateProfile }) {
               </FormControl>
             </div>
             <div className=''>
+              <div className='font-medium text-sm mb-2 leading-5 text-text-primary'>{t('Date of birth')}</div>
+              <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={locale === 'vn' ? vi : undefined}>
+                <StyledDatePicker
+                  value={birthdate}
+                  onChange={(newValue) => setBirthdate(newValue)}
+                  className='text-sm text-[#61646B] font-normal md:font-bold leading-6 md:w-full md:aspect-[84/12] w-[330px] max-h-10'
+                />
+              </LocalizationProvider>
+            </div>
+
+            <div className=''>
               <div className='flex justify-between items-center'>
                 <div className='font-medium text-sm mb-2 leading-5 text-text-primary'>{t('Short bio')}</div>
                 <div className='text-[#888888] text-xs'>{bio ? bio.length : 0}/100</div>
@@ -235,7 +230,6 @@ export default function EditProfile({ updateProfile }) {
               <div className='font-medium text-sm mb-2 leading-5 text-text-primary'>{t('Email')}</div>
               <TextField
                 value={account?.email}
-                onChange={setUsername}
                 disabled
                 placeholder={account?.email}
                 className='text-sm text-[#61646B] font-normal md:font-bold leading-6 !py-[5px] !px-[10px] md:w-full md:aspect-[84/12] w-[330px]'

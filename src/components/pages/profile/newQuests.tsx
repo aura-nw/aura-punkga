@@ -7,7 +7,7 @@ import 'swiper/css'
 import 'swiper/css/grid'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import { Pagination, Navigation } from 'swiper/modules'
+import { Pagination, Navigation, Autoplay } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import useSWR, { useSWRConfig } from 'swr'
 import QuestItem from '../campaigns/questItem'
@@ -29,10 +29,18 @@ export default function NewQuestSection() {
     { refreshInterval: 30000 }
   )
   const { mutate } = useSWRConfig()
+  function chunkArray(array, chunkSize) {
+    const results = [];
+    for (let i = 0; i < array.length; i += chunkSize) {
+      results.push(array.slice(i, i + chunkSize));
+    }
+    return results;
+  }
+
   return (
     <div className=''>
       <div className='flex justify-between items-center'>
-        <div className='text-xl text-medium leading-[28px] text-text-primary'>{t('Available quests')}</div>
+        <div className='text-xl font-medium leading-[28px] text-text-primary'>{t('Available quests')}</div>
         {!!data?.length && (<Link href='/campaigns' className='text-text-info-primary text-sm leading-5 font-medium'>See all</Link>)}
       </div>
       {!!data?.length ? (
@@ -43,9 +51,9 @@ export default function NewQuestSection() {
                 <div className='max-w-full'>
                   <Swiper
                     spaceBetween={33}
-                    slidesPerView={isMobile ? 1 : 2}
+                    slidesPerView={1}
                     autoplay={{
-                      delay: 2500,
+                      delay: 5000,
                       disableOnInteraction: false,
                     }}
                     loop={true}
@@ -57,23 +65,27 @@ export default function NewQuestSection() {
                         return `<span class="${className}"></span>`;
                       }
                     }}
-                    modules={[Navigation, Pagination]}>
-                    {data?.map((quest: Quest) => {
-                      return (
-                        <SwiperSlide key={`${quest.id}`}>
-                          <QuestItem
-                            quest={quest}
-                            refreshCallback={() =>
-                              setTimeout(() => {
-                                mutate({ key: 'get_available_quests', account: account?.id })
-                                mutate('get_leaderboard')
-                                getProfile()
-                              }, 2000)
-                            }
-                          />
-                        </SwiperSlide>
-                      )
-                    })}
+                    modules={[Navigation, Pagination, Autoplay]}>
+                    {chunkArray(data, isMobile ? 1 : 2).map((questPair, index) => (
+                      <SwiperSlide key={`slide-${index}`}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          {questPair.map((quest: Quest) => (
+                            <div key={`${quest.id}`} style={{ width: '48%' }}>
+                              <QuestItem
+                                quest={quest}
+                                refreshCallback={() =>
+                                  setTimeout(() => {
+                                    mutate({ key: 'get_available_quests', account: account?.id })
+                                    mutate('get_leaderboard')
+                                    getProfile()
+                                  }, 2000)
+                                }
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </SwiperSlide>
+                    ))}
                   </Swiper>
                 </div>
               </div>

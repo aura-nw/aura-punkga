@@ -20,7 +20,9 @@ import RewardHistory from 'components/pages/profile/rewardHistory'
 import NewNFTList from 'components/pages/profile/newNfts'
 import MascotEmpty from 'assets/images/mascot-empty.png'
 import Image from 'next/image'
+import { Inter } from 'next/font/google'
 
+const inter = Inter({ subsets: ['latin'] })
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -58,6 +60,9 @@ function a11yProps(index: number) {
 }
 
 const ChipTab = styled(Tab)(({ theme }) => ({
+  '&.MuiButtonBase-root': {
+    fontFamily: inter.style.fontFamily,
+  },
   textTransform: 'none',
   minHeight: 'auto',
   minWidth: 'auto',
@@ -94,7 +99,6 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
   useEffect(() => {
     if (!account) router.push('/')
   }, [account])
-  console.log('account', account)
   if (!account) return <></>
   return (
     <>
