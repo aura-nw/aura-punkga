@@ -166,7 +166,7 @@ const Artwork = ({ data, index, allArtworks }) => {
       <Modal open={open} setOpen={setOpen} preventClickOutsideToClose={false} className='[&_.static]:!overflow-visible'>
         <div className='py-6 px-4 max-w-[599px] w-full relative'>
           <div
-            className='absolute top-1/2 -scale-x-100 -left-[98px] -translate-y-1/2 cursor-pointer bg-[#FFFFFF] rounded-full text-[#B0B0B0] hover:text-border-brand-hover active:text-border-brand-focus w-16 h-16 grid place-items-center shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'
+            className='absolute -bottom-14 md:top-1/2 -scale-x-100 left-[calc(50%-20px)] md:-left-[98px] -translate-x-1/2 md:translate-x-0 -translate-y-1/2 cursor-pointer bg-[#FFFFFF] rounded-full text-[#B0B0B0] hover:text-border-brand-hover active:text-border-brand-focus w-8 md:w-16 h-8 md:h-16 grid place-items-center shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'
             onClick={() => setIdx((prev) => (prev > 0 ? prev - 1 : 0))}>
             <svg xmlns='http://www.w3.org/2000/svg' width='7' height='12' viewBox='0 0 7 12' fill='none'>
               <path
@@ -179,7 +179,7 @@ const Artwork = ({ data, index, allArtworks }) => {
             </svg>
           </div>
           <div
-            className='absolute top-1/2  -right-[98px] -translate-y-1/2 cursor-pointer bg-[#FFFFFF] rounded-full text-[#B0B0B0] hover:text-border-brand-hover active:text-border-brand-focus w-16 h-16 grid place-items-center shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'
+            className='absolute -bottom-14 md:top-1/2 right-[calc(50%-20px)] md:-right-[98px] translate-x-1/2 md:translate-x-0 -translate-y-1/2 cursor-pointer bg-[#FFFFFF] rounded-full text-[#B0B0B0] hover:text-border-brand-hover active:text-border-brand-focus w-8 md:w-16 h-8 md:h-16 grid place-items-center shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'
             onClick={() => setIdx((prev) => (prev < allArtworks.length - 1 ? prev + 1 : allArtworks.length - 1))}>
             <svg xmlns='http://www.w3.org/2000/svg' width='7' height='12' viewBox='0 0 7 12' fill='none'>
               <path
@@ -194,7 +194,7 @@ const Artwork = ({ data, index, allArtworks }) => {
           <Image
             width={600}
             height={600}
-            className='w-full min-h-[50vh]'
+            className='w-full min-h-[50vh] max-h-[60vh] md:max-h-none break-words'
             src={getImageSrc(artwork?.image)}
             alt={getImageSrc(artwork?.image)}
           />
