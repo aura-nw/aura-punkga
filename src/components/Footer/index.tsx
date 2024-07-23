@@ -45,7 +45,7 @@ export default function Footer() {
               <Image src={Logo} alt='footer logo' className='h-10 w-auto' />
             </div>
             <div className='flex flex-col gap-1.5'>
-              <div className='text-xs leading-[18px] text-medium text-text-primary flex items-start'>
+              <div className='text-xs leading-[18px] font-medium text-text-primary flex items-start'>
                 {t('Subscribe to get fresh news update')}
               </div>
               <div className='border-[1px] border-[#BDBDBD] rounded-[10px] pl-[14px] flex gap-6 max-w-md'>
@@ -95,7 +95,7 @@ export default function Footer() {
             <Image src={Logo} alt='footer logo' className='h-[60px] w-auto' />
           </div>
           <div className='flex flex-col gap-1.5'>
-            <div className='text-xs leading-[18px] text-medium text-text-primary flex items-start'>
+            <div className='text-xs leading-[18px] font-medium text-text-primary flex items-start'>
               {t('Subscribe to get fresh news update')}
             </div>
             <div className='border-[1px] border-[#BDBDBD] rounded-[10px] pl-[14px] flex gap-6 max-w-md'>

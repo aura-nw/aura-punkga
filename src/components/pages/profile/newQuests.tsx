@@ -36,10 +36,11 @@ export default function NewQuestSection() {
     }
     return results;
   }
+
   return (
     <div className=''>
       <div className='flex justify-between items-center'>
-        <div className='text-xl text-medium leading-[28px] text-text-primary'>{t('Available quests')}</div>
+        <div className='text-xl font-medium leading-[28px] text-text-primary'>{t('Available quests')}</div>
         {!!data?.length && (<Link href='/campaigns' className='text-text-info-primary text-sm leading-5 font-medium'>See all</Link>)}
       </div>
       {!!data?.length ? (
@@ -50,7 +51,7 @@ export default function NewQuestSection() {
                 <div className='max-w-full'>
                   <Swiper
                     spaceBetween={33}
-                    slidesPerView={isMobile ? 0.5 : 1}
+                    slidesPerView={1}
                     autoplay={{
                       delay: 5000,
                       disableOnInteraction: false,
@@ -65,7 +66,7 @@ export default function NewQuestSection() {
                       }
                     }}
                     modules={[Navigation, Pagination, Autoplay]}>
-                    {chunkArray(data, 2).map((questPair, index) => (
+                    {chunkArray(data, isMobile ? 1 : 2).map((questPair, index) => (
                       <SwiperSlide key={`slide-${index}`}>
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                           {questPair.map((quest: Quest) => (
