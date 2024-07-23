@@ -23,7 +23,10 @@
 a {
   cursor: pointer;
 }
-a, button {outline : none!important;}
+a,
+button {
+  outline: none !important;
+}
 .slick-list {
   overflow: hidden;
   .slick-slide > div > div {
@@ -207,7 +210,7 @@ input[type='number'] {
   mask-repeat: no-repeat;
 }
 .Toastify__toast--success {
-  background: #1FAB5E !important;
+  background: #1fab5e !important;
   color: #fff !important;
   font-family: inherit !important;
   border-radius: 8px 0px 0px 8px !important;
@@ -225,8 +228,8 @@ input[type='number'] {
   margin-bottom: 0px !important;
 }
 .Toastify__toast-icon {
-  --toastify-icon-color-success: #C6FFDE;
-  --toastify-icon-color-error: #FFBE99;
+  --toastify-icon-color-success: #c6ffde;
+  --toastify-icon-color-error: #ffbe99;
 }
 .Toastify__close-button {
   display: none !important;
@@ -238,8 +241,8 @@ input[type='number'] {
   font-size: 16px !important;
   line-height: 20px !important;
   @media only screen and (max-width: 480px) {
-  font-size: 14px !important;
-  line-height: 18px !important;
+    font-size: 14px !important;
+    line-height: 18px !important;
   }
 }
 .Toastify__toast-container {
@@ -248,26 +251,35 @@ input[type='number'] {
   top: 161px !important;
   @media only screen and (max-width: 480px) {
     top: 161px !important;
-    width: 90vw!important;
-    left: unset!important;
+    width: 90vw !important;
+    left: unset !important;
   }
 }
-input[type=password]::-ms-reveal,
-input[type=password]::-ms-clear
-{
-    display: none;
+input[type='password']::-ms-reveal,
+input[type='password']::-ms-clear {
+  display: none;
 }
 
 .swiper-pagination {
   position: static !important;
   margin-top: 12px;
 }
+
 .swiper-pagination-bullet-active {
-  background: #05965A !important;
-  width: 10px !important;
-  height: 10px !important;
+  @media (min-width: 768px) {
+    background: #05965a !important;
+    width: 10px !important;
+    height: 10px !important;
+  }
+  background: #05965a !important;
+  width: 6px !important;
+  height: 6px !important;
 }
 .swiper-pagination-bullet {
-  width: 10px !important;
-  height: 10px !important;
+  @media (min-width: 768px) {
+    width: 10px !important;
+    height: 10px !important;
+  }
+  width: 6px !important;
+  height: 6px !important;
 }

@@ -313,7 +313,9 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
             </div>
           )}
           <div className='flex flex-col mb-3 h-full'>
-            <div className='text-base font-semibold line-clamp-3 md:line-clamp-2'>{quest[locale].name}</div>
+            <div className='text-base font-semibold overflow-hidden' style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+              {quest[locale].name}
+            </div>
             <div className='text-xs leading-[18px] lg:text-sm lg:leading-5 font-medium text-text-teriary mt-3 flex items-center gap-1.5'>
               <span>{`${quest.reward.xp} ${xpText}`}</span>
               {quest.reward.nft?.img_url && (
