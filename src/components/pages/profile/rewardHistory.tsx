@@ -18,6 +18,7 @@ import Image from 'next/image';
 import OpenLink from 'assets/images/icons/open-link.svg'
 import getConfig from 'next/config';
 import { useRouter } from 'next/router';
+import MascotEmpty from 'assets/images/mascot-empty.png'
 
 const columns = [
   { id: 'campaign', label: 'Campaign', minWidth: 170 },
@@ -28,19 +29,32 @@ const columns = [
 
 function transformData(data, locale) {
   return data.map(item => {
-    const txHash = item.user_quest_rewards && item.user_quest_rewards[0]
-      ? JSON.parse(item.user_quest_rewards[0].tx_hash)[0]
-      : '#';
+    let txHash = '#';
+    let nftHash = '#';
 
-    const nftHash = item.user_quest_rewards && item.user_quest_rewards[1]
-      ? JSON.parse(item.user_quest_rewards[1].tx_hash)[0]
-      : '#';
+    if (item.user_quest_rewards && item.user_quest_rewards[0]) {
+      try {
+        const parsedTxHash = JSON.parse(item.user_quest_rewards[0].tx_hash);
+        txHash = Array.isArray(parsedTxHash) && parsedTxHash.length > 0 ? parsedTxHash[0] : '#';
+      } catch (error) {
+        console.error('Error parsing txHash:', error);
+      }
+    }
+
+    if (item.user_quest_rewards && item.user_quest_rewards[1]) {
+      try {
+        const parsedNftHash = JSON.parse(item.user_quest_rewards[1].tx_hash);
+        nftHash = Array.isArray(parsedNftHash) && parsedNftHash.length > 0 ? parsedNftHash[0] : '#';
+      } catch (error) {
+        console.error('Error parsing nftHash:', error);
+      }
+    }
 
     return {
-      campaign: item.quest[locale]?.name || item.quest.name,
-      claimedAt: new Date(item.created_at).toLocaleString(),
-      points: item.quest.reward.xp,
-      nfts: item.quest.reward.nft ? item.quest.reward.nft.nft_name : '-',
+      campaign: item.quest && item.quest[locale] ? item.quest[locale].name : (item.quest ? item.quest.name : ''),
+      claimedAt: item.created_at ? new Date(item.created_at).toLocaleString() : '',
+      points: item.quest && item.quest.reward ? item.quest.reward.xp : '',
+      nfts: item.quest && item.quest.reward && item.quest.reward.nft ? item.quest.reward.nft.nft_name : '-',
       txHash: txHash,
       nftHash: nftHash
     };
@@ -75,7 +89,19 @@ export default function RewardHistory({ data }) {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
+  if (!data || data.length === 0) {
+    return (
+      <div className='w-full py-8 flex flex-col items-center gap-4'>
+        <Image
+          src={MascotEmpty}
+          alt=''
+          width={160}
+          height={160}
+        />
+        <div className='text-text-primary font-medium'>{t('Your reward history is empty')}</div>
+      </div>
+    )
+  }
   return (
     <div className='w-full overflow-hidden bg-[#F6F6F6] p-[32px] flex flex-col gap-4 rounded-[10px]'>
       <TableContainer sx={{ maxHeight: 440 }}>
