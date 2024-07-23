@@ -47,7 +47,7 @@ export default function NewQuestSection() {
         <>
           <div className='w-full relative mt-4 block'>
             <div className='block'>
-              <div className='flex [&_.swiper-button-prev]:text-[#61646B] [&_.swiper-button-next]:text-[#61646B] items-center'>
+              <div className='hidden md:flex [&_.swiper-button-prev]:text-[#61646B] [&_.swiper-button-next]:text-[#61646B] items-center'>
                 <div className='max-w-full'>
                   <Swiper
                     spaceBetween={33}
@@ -66,11 +66,53 @@ export default function NewQuestSection() {
                       }
                     }}
                     modules={[Navigation, Pagination, Autoplay]}>
-                    {chunkArray(data, isMobile ? 1 : 2).map((questPair, index) => (
+                    {chunkArray(data, 2).map((questPair, index) => (
                       <SwiperSlide key={`slide-${index}`}>
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                           {questPair.map((quest: Quest) => (
                             <div key={`${quest.id}`} style={{ width: '48%' }}>
+                              <QuestItem
+                                quest={quest}
+                                refreshCallback={() =>
+                                  setTimeout(() => {
+                                    mutate({ key: 'get_available_quests', account: account?.id })
+                                    mutate('get_leaderboard')
+                                    getProfile()
+                                  }, 2000)
+                                }
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </div>
+              </div>
+              <div className='md:hidden flex [&_.swiper-button-prev]:text-[#61646B] [&_.swiper-button-next]:text-[#61646B] items-center'>
+                <div className='max-w-full'>
+                  <Swiper
+                    spaceBetween={33}
+                    slidesPerView={1}
+                    autoplay={{
+                      delay: 5000,
+                      disableOnInteraction: false,
+                    }}
+                    loop={true}
+                    pagination={{
+                      clickable: true,
+                      bulletClass: `swiper-pagination-bullet`,
+                      bulletActiveClass: 'swiper-pagination-bullet-active',
+                      renderBullet: (index, className) => {
+                        return `<span class="${className}"></span>`;
+                      }
+                    }}
+                    modules={[Navigation, Pagination, Autoplay]}>
+                    {chunkArray(data, 1).map((questPair, index) => (
+                      <SwiperSlide key={`slide-${index}`}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          {questPair.map((quest: Quest) => (
+                            <div key={`${quest.id}`} style={{ width: '100%' }}>
                               <QuestItem
                                 quest={quest}
                                 refreshCallback={() =>
