@@ -8,6 +8,7 @@ import Modal from 'components/Modal'
 import So from 'components/pages/event/kaia-island/assets/so.png'
 import LineFooter from 'components/pages/event/kaia-island/assets/Line.svg'
 import Pin from 'components/pages/event/kaia-island/assets/pin.svg'
+import NavButton from './assets/bt_left.svg'
 export default function Artworks() {
   const { t } = useTranslation()
   const { data, isLoading } = useSWR(
@@ -89,19 +90,19 @@ export default function Artworks() {
           {tab == 1 ? (
             <>
               {data?.round1?.slice((page - 1) * 10, page * 10)?.map((artwork, index) => (
-                <Artwork artwork={artwork} key={artwork?.title + index} />
+                <Artwork data={artwork} index={data?.round1?.findIndex((a) => a.image == artwork.image)} allArtworks={data?.round1} key={artwork?.title + index} />
               ))}
             </>
           ) : tab == 2 ? (
             <>
               {data?.round2?.slice((page - 1) * 10, page * 10)?.map((artwork, index) => (
-                <Artwork artwork={artwork} key={artwork?.title + index} />
+                <Artwork data={artwork} index={data?.round2?.findIndex((a) => a.image == artwork.image)} allArtworks={data?.round2} key={artwork?.title + index} />
               ))}
             </>
           ) : (
             <>
               {data?.round3?.slice((page - 1) * 10, page * 10)?.map((artwork, index) => (
-                <Artwork artwork={artwork} key={artwork?.title + index} />
+                <Artwork data={artwork} index={data?.round3?.findIndex((a) => a.image == artwork.image)} allArtworks={data?.round3} key={artwork?.title + index} />
               ))}
             </>
           )}
@@ -131,8 +132,15 @@ export default function Artworks() {
     </div>
   )
 }
-const Artwork = ({ artwork }) => {
+const Artwork = ({ data, index, allArtworks }) => {
+  const [idx, setIdx] = useState(index)
+  const artwork = allArtworks[idx]
   const [open, setOpen] = useState(false)
+  useEffect(() => {
+    if (open) {
+      setIdx(index)
+    }
+  }, [open])
   const getImageSrc = (src: string) => {
     if (src.includes('https://drive.google.com/file')) {
       const id = src.split('/')?.[5]
@@ -147,16 +155,32 @@ const Artwork = ({ artwork }) => {
         <Image
           width={300}
           height={300}
-          className='w-full aspect-[219/308] border-[5px] border-white hover:shadow-[4px_6px_4.1px_0px_rgba(0,0,0,0.25)] object-cover'
-          src={getImageSrc(artwork?.image)}
-          alt={getImageSrc(artwork?.image)}
+          className='w-full aspect-[219/308] break-words border-[5px] border-white hover:shadow-[4px_6px_4.1px_0px_rgba(0,0,0,0.25)] object-cover'
+          src={getImageSrc(data?.image)}
+          alt={getImageSrc(data?.image)}
         />
-        <div className='mt-4 text-sm font-semibold line-clamp-2'>{artwork.title}</div>
-        <div className='mt-0.5 text-xs font-medium'>by {artwork.artist}</div>
+        <div className='mt-4 text-sm font-semibold line-clamp-2'>{data.title}</div>
+        <div className='mt-0.5 text-xs font-medium'>by {data.artist}</div>
         <Image src={Pin} alt='' className='w-[12%] h-auto hidden absolute -top-[5%] right-[5%] pin' />
       </div>
-      <Modal open={open} setOpen={setOpen} preventClickOutsideToClose={false}>
-        <div className='py-6 px-4 max-w-[699px] w-full'>
+      <Modal open={open} setOpen={setOpen} preventClickOutsideToClose={false} className='[&_.static]:!overflow-visible'>
+        <div className='py-6 px-4 max-w-[599px] w-full relative'>
+          <div className='absolute top-1/2 -left-[98px] -translate-y-1/2'>
+            <Image
+              src={NavButton}
+              alt=''
+              className='w-16 h-16 cursor-pointer'
+              onClick={() => setIdx((prev) => (prev > 0 ? prev - 1 : 0))}
+            />
+          </div>
+          <div className='absolute top-1/2 -scale-x-100 -right-[98px] -translate-y-1/2'>
+            <Image
+              src={NavButton}
+              alt=''
+              className='w-16 h-16 cursor-pointer'
+              onClick={() => setIdx((prev) => (prev < allArtworks.length - 1 ? prev + 1 : allArtworks.length - 1))}
+            />
+          </div>
           <Image
             width={600}
             height={600}
