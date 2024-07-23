@@ -107,7 +107,7 @@ export default function RewardHistory({ data }) {
                               <div className='flex items-center justify-between'>
                                 <div>{value}</div>
                                 {row.txHash !== '#' && (
-                                  <Link target='blank' href={`${getConfig()['CHAIN_INFO'].explorer}/tx/${row.txHash}`}>
+                                  <Link target='_blank' href={`${getConfig()['CHAIN_INFO'].explorer}/tx/${row.txHash}`}>
                                     <Image
                                       src={OpenLink}
                                       alt="Points icon"
@@ -121,7 +121,7 @@ export default function RewardHistory({ data }) {
                               <div className='flex items-center justify-between'>
                                 <div>{value}</div>
                                 {row.nftHash !== '#' && (
-                                  <Link target='blank' href={`${getConfig()['CHAIN_INFO'].explorer}/tx/${row.nftHash}`}>
+                                  <Link target='_blank' href={`${getConfig()['CHAIN_INFO'].explorer}/tx/${row.nftHash}`}>
                                     <Image
                                       src={OpenLink}
                                       alt="NFT icon"
