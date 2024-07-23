@@ -109,7 +109,6 @@ const StyledTable = styled(Table)({
 
 
 export default function RewardHistory({ data }) {
-  console.log('data', data)
   const { t } = useTranslation()
   const [page, setPage] = useState(1);
   const rowsPerPage = 5;
