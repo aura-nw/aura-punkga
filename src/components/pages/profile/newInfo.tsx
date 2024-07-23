@@ -40,6 +40,7 @@ export default function NewInfo() {
   const [changingPasswordModalOpen, setChangingPasswordModalOpen] = useState(false)
   const [KP, setKP] = useState(0)
   const [XP, setXP] = useState(0)
+  const [userLevel, setUserLevel] = useState(0)
 
   useEffect(() => {
     if (!selectedFile) {
@@ -64,6 +65,7 @@ export default function NewInfo() {
       setXP(account.levels.find(level => level.chain == 'XP')?.xp || 0)
       setBirthdate(account.birthdate ? new Date(account.birthdate).getTime() : undefined)
       setBio(account.bio)
+      setUserLevel(account.levels.find(level => level.chain == 'XP')?.level || 0)
     }
   }, [account])
 
@@ -183,7 +185,7 @@ export default function NewInfo() {
               alt=''
               width={140}
               height={140}
-              className='w-full h-full rounded-full'
+              className='w-full h-full rounded-full bg-cover'
             />
           </div>
           <div className='w-full flex flex-col gap-1.5'>
@@ -195,7 +197,7 @@ export default function NewInfo() {
                 <Image width={18} height={18} src={CopySvg} alt='' />
               </div>
             </div> */}
-            <div className='flex justify-center items-center w-full gap-2 text-text-primary leading-5'>
+            <div className='flex justify-center items-center w-full gap-2 font-medium text-text-primary leading-5'>
               <div>{account.gender}</div>
               <div>{account.gender ? '•' : ''}</div>
               <div>
@@ -219,14 +221,14 @@ export default function NewInfo() {
         <div className='flex flex-col justify-center gap-4 w-full p-3 mt-8 border-[1px] border-border-primary rounded-[10px]'>
           <div>
             <div className='flex items-center justify-between'>
-              <div className='text-md font-semibold leading-6 text-text-primary'>Lv. {account.level}</div>
-              <div className='text-xs leading-[15px] text-text-primary'>{`${Math.round((levelToXp(account.level + 1) - levelToXp(account.level) - (
-                XP - levelToXp(account.level))))} ${t('XP to level')} ${account.level + 1
+              <div className='text-md font-semibold leading-6 text-text-primary'>Lv. {userLevel}</div>
+              <div className='text-xs leading-[15px] text-text-primary'>{`${Math.round((levelToXp(userLevel + 1) - levelToXp(userLevel) - (
+                XP - levelToXp(userLevel))))} ${t('XP to level')} ${userLevel + 1
                 }`}</div>
             </div>
             <div className='mt-2'>
               <BorderLinearProgress variant="determinate"
-                value={((XP - levelToXp(account.level)) / (levelToXp(account.level + 1) - levelToXp(account.level))) * 100} />
+                value={((XP - levelToXp(userLevel)) / (levelToXp(userLevel + 1) - levelToXp(userLevel))) * 100} />
             </div>
           </div>
           <div className='rounded-[10px] p-3 bg-[#F6F6F6]'>

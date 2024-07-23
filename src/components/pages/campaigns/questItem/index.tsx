@@ -107,37 +107,38 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                   ? `Đăng ký theo dõi truyện ${quest.requirement.subscribe.manga.title} để nhận phần thưởng`
                   : `Subscribe to manga ${quest.requirement.subscribe.manga.title} to claim your reward`
                 : quest.type == 'Like'
-                ? locale == 'vn'
-                  ? `Thích truyện ${quest.requirement.like.manga.title} để nhận phần thưởng`
-                  : `Like manga ${quest.requirement.like.manga.title} to claim your reward`
-                : quest.type == 'Read'
-                ? locale == 'vn'
-                  ? `Đọc chương ${quest.requirement.read.chapter.number} của truyện ${quest.requirement.read.manga.title} để nhận phần thưởng`
-                  : `Read chapter ${quest.requirement.read.chapter.number} of manga ${quest.requirement.read.manga.title} to claim your reward`
-                : quest.type == 'Comment'
-                ? locale == 'vn'
-                  ? `Bình luận về chương ${quest.requirement.comment.chapter.number} của truyện ${quest.requirement.comment.manga.title} để nhận phần thưởng`
-                  : `Comment on chapter ${quest.requirement.comment.chapter.number} of manga ${quest.requirement.comment.manga.title} to claim your reward`
-                : quest.type == 'Empty'
-                ? t(`Free reward`)
-                : quest.type == 'Quiz'
-                ? t(`Answer a quiz`)
-                : ``}
+                  ? locale == 'vn'
+                    ? `Thích truyện ${quest.requirement.like.manga.title} để nhận phần thưởng`
+                    : `Like manga ${quest.requirement.like.manga.title} to claim your reward`
+                  : quest.type == 'Read'
+                    ? locale == 'vn'
+                      ? `Đọc chương ${quest.requirement.read.chapter.number} của truyện ${quest.requirement.read.manga.title} để nhận phần thưởng`
+                      : `Read chapter ${quest.requirement.read.chapter.number} of manga ${quest.requirement.read.manga.title} to claim your reward`
+                    : quest.type == 'Comment'
+                      ? locale == 'vn'
+                        ? `Bình luận về chương ${quest.requirement.comment.chapter.number} của truyện ${quest.requirement.comment.manga.title} để nhận phần thưởng`
+                        : `Comment on chapter ${quest.requirement.comment.chapter.number} of manga ${quest.requirement.comment.manga.title} to claim your reward`
+                      : quest.type == 'Empty'
+                        ? t(`Free reward`)
+                        : quest.type == 'Quiz'
+                          ? t(`Answer a quiz`)
+                          : ``}
             </div>
             <div className='mt-3 flex flex-col items-center md:hidden'>
               <div
-                className={`${
-                  quest.reward_status == 'OUT_OF_SLOT' ? 'opacity-20' : ''
-                } rounded-mlg bg-[#F0F0F0] p-2.5 w-[130px] shrink-0 min-h-[130px] gap-1.5 flex flex-col justify-center items-center`}>
+                className={`${quest.reward_status == 'OUT_OF_SLOT' ? 'opacity-20' : ''
+                  } rounded-mlg bg-[#F0F0F0] p-2.5 w-[130px] shrink-0 min-h-[130px] gap-1.5 flex flex-col justify-center items-center`}>
                 {quest?.reward?.nft?.nft_name ? (
                   <>
-                    <Image
-                      src={quest?.reward?.nft.img_url || NoImage}
-                      width={80}
-                      height={80}
-                      alt=''
-                      className='w-[80px] h-[80px] rounded-lg object-cover'
-                    />
+                    <div className="relative aspect-square w-[80px] h-[80px] rounded-lg">
+                      <Image
+                        src={quest?.reward?.nft.img_url || NoImage}
+                        alt=''
+                        layout="fill"
+                        objectFit="cover"
+                        className='rounded-lg'
+                      />
+                    </div>
                     <div className='text-xs leading-[18px] text-text-teriary w-[110px] truncate text-center'>
                       {quest?.reward?.nft?.nft_name}
                     </div>
@@ -154,11 +155,10 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
               {!!quest.reward.slots && (
                 <>
                   <div className='flex flex-col items-center text-[10px] text-text-teriary leading-[13px] lg:text-xs lg:leading-[18px] mt-1.5'>
-                    <div>{`${
-                      quest.repeat_quests?.[0]?.repeat_quest_reward_claimed == undefined
-                        ? quest.quest_reward_claimed
-                        : quest.repeat_quests?.[0]?.repeat_quest_reward_claimed
-                    }/${quest.reward.slots}`}</div>
+                    <div>{`${quest.repeat_quests?.[0]?.repeat_quest_reward_claimed == undefined
+                      ? quest.quest_reward_claimed
+                      : quest.repeat_quests?.[0]?.repeat_quest_reward_claimed
+                      }/${quest.reward.slots}`}</div>
                     <div>{t('rewards claimed')}</div>
                   </div>
                 </>
@@ -172,18 +172,19 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
           </div>
           <div className='mt-5 lg:mt-0 md:flex flex-col items-center row-span-2 hidden'>
             <div
-              className={`${
-                quest.reward_status == 'OUT_OF_SLOT' ? 'opacity-20' : ''
-              } rounded-mlg bg-[#F0F0F0] p-2.5 w-[130px] shrink-0 min-h-[130px] gap-1.5 flex flex-col justify-center items-center`}>
+              className={`${quest.reward_status == 'OUT_OF_SLOT' ? 'opacity-20' : ''
+                } rounded-mlg bg-[#F0F0F0] p-2.5 w-[130px] shrink-0 min-h-[130px] gap-1.5 flex flex-col justify-center items-center`}>
               {quest?.reward?.nft?.nft_name ? (
                 <>
-                  <Image
-                    src={quest?.reward?.nft.img_url || NoImage}
-                    width={80}
-                    height={80}
-                    alt=''
-                    className='w-[80px] h-[80px] rounded-lg object-cover'
-                  />
+                  <div className="relative aspect-square w-[80px] h-[80px] rounded-lg">
+                    <Image
+                      src={quest?.reward?.nft.img_url || NoImage}
+                      alt=''
+                      layout="fill"
+                      objectFit="cover"
+                      className='rounded-lg'
+                    />
+                  </div>
                   <div className='text-xs leading-[18px] text-text-teriary w-[110px] truncate text-center'>
                     {quest?.reward?.nft?.nft_name}
                   </div>
@@ -206,11 +207,10 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
             {!!quest.reward.slots && (
               <>
                 <div className='flex flex-col items-center text-[10px] text-text-teriary leading-[13px] lg:text-xs lg:leading-[18px] mt-1.5'>
-                  <div>{`${
-                    quest.repeat_quests?.[0]?.repeat_quest_reward_claimed == undefined
-                      ? quest.quest_reward_claimed
-                      : quest.repeat_quests?.[0]?.repeat_quest_reward_claimed
-                  }/${quest.reward.slots}`}</div>
+                  <div>{`${quest.repeat_quests?.[0]?.repeat_quest_reward_claimed == undefined
+                    ? quest.quest_reward_claimed
+                    : quest.repeat_quests?.[0]?.repeat_quest_reward_claimed
+                    }/${quest.reward.slots}`}</div>
                   <div>{t('rewards claimed')}</div>
                 </div>
               </>
@@ -272,19 +272,18 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
         </div>
       </Modal>
       <div
-        className={`bg-neautral-white lg:bg-white lg:border lg:border-light-medium-gray rounded-mlg p-4 flex gap-[10px] h-[166px] relative ${
-          quest.unlock &&
+        className={`bg-neautral-white lg:bg-white lg:border lg:border-light-medium-gray rounded-mlg p-4 flex gap-[10px] h-[166px] relative ${quest.unlock &&
           (quest.reward_status == 'CAN_CLAIM' ||
             quest.reward_status == 'NOT_SATISFY' ||
             (quest.reward_status == 'CLAIMED' && quest.repeat == 'Daily'))
-            ? 'cursor-pointer '
-            : null
-        }`}
+          ? 'cursor-pointer '
+          : null
+          }`}
         onClick={() =>
           quest.unlock &&
-          (quest.reward_status == 'CAN_CLAIM' ||
-            quest.reward_status == 'NOT_SATISFY' ||
-            (quest.reward_status == 'CLAIMED' && quest.repeat == 'Daily'))
+            (quest.reward_status == 'CAN_CLAIM' ||
+              quest.reward_status == 'NOT_SATISFY' ||
+              (quest.reward_status == 'CLAIMED' && quest.repeat == 'Daily'))
             ? setOpen(true)
             : null
         }>
@@ -412,20 +411,18 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
           ) : null}
         </div>
         <div
-          className={`${
-            quest.reward_status == 'OUT_OF_SLOT' ? 'opacity-20' : ''
-          } rounded-mlg bg-[#F0F0F0] p-2.5 w-[130px] shrink-0 min-h-[130px] gap-1.5 flex flex-col justify-center items-center`}>
+          className={`${quest.reward_status == 'OUT_OF_SLOT' ? 'opacity-20' : ''
+            } rounded-mlg bg-[#F0F0F0] p-2.5 w-[130px] shrink-0 min-h-[130px] gap-1.5 flex flex-col justify-center items-center`}>
           {quest?.reward?.nft?.nft_name ? (
             <>
-              <Image
-                src={quest?.reward?.nft.img_url || NoImage}
-                width={80}
-                height={80}
-                alt=''
-                className='w-[80px] h-[80px] rounded-lg object-cover'
-              />
-              <div className='text-xs leading-[18px] text-text-teriary w-[110px] truncate text-center'>
-                {quest?.reward?.nft?.nft_name}
+              <div className="relative aspect-square w-[80px] h-[80px] rounded-lg">
+                <Image
+                  src={quest?.reward?.nft.img_url || NoImage}
+                  alt=''
+                  layout="fill"
+                  objectFit="cover"
+                  className='rounded-lg'
+                />
               </div>
             </>
           ) : (
