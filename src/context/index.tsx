@@ -275,7 +275,6 @@ function ContextProvider({ children }: any) {
         throw new Error('Unauthorized access token')
       }
       const res = await getProfileService()
-      console.log(res)
       if (res?.id) {
         setAccount(undefined)
         if (res.wallet_address) {

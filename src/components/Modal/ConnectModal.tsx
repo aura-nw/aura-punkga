@@ -148,7 +148,6 @@ export default function ConnectModal() {
                           setShowQRCode(!showQRCode)
                           setLoading(true)
                           setQRError('')
-                          console.log(connector)
                           wagmiConnect(
                             { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
                             {

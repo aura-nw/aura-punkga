@@ -151,7 +151,6 @@ const Artwork = ({ data, index, allArtworks }) => {
   const [idx, setIdx] = useState(index)
   const artwork = allArtworks[idx]
   const [open, setOpen] = useState(false)
-  console.log(data)
   useEffect(() => {
     if (open) {
       setIdx(index)
@@ -170,7 +169,8 @@ const Artwork = ({ data, index, allArtworks }) => {
     }
   }, [open])
   const getImageSrc = (src: any) => {
-    const image = typeof src == 'string' ? src : src[0]
+    const image = typeof src == 'string' ? src : src?.[0]
+    if (!image) return ''
     if (image.includes('https://drive.google.com/file')) {
       const id = image.split('/')?.[5]
       return `https://lh3.googleusercontent.com/d/${id}`
@@ -183,6 +183,9 @@ const Artwork = ({ data, index, allArtworks }) => {
   if (!artwork?.title || !artwork?.image) return null
   return (
     <>
+      <Image src={getImageSrc(allArtworks[idx - 1]?.image)} width={300} height={300} alt='' className='hidden' />
+      <Image src={getImageSrc(allArtworks[idx + 1]?.image)} width={300} height={300} alt='' className='hidden' />
+      <Image src={getImageSrc(allArtworks[idx + 2]?.image)} width={300} height={300} alt='' className='hidden' />
       <div className='cursor-pointer [&:hover_.pin]:block relative' onClick={() => setOpen(true)}>
         <Image
           width={300}

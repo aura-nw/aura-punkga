@@ -42,7 +42,6 @@ export default function QuizQuest({
       setAnswerList(list)
       if (quest.reward_status == 'CAN_CLAIM') {
         const correctIndex = list.findIndex((ans) => ans == quest.requirement.quiz.multiple_choice[0].correct_answer)
-        console.log(correctIndex)
         setCorrectAnswerIndex(correctIndex)
         setSelectedAnswer(correctIndex)
       }
