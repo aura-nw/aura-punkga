@@ -1,6 +1,5 @@
 import FilledButton from 'components/Button/FilledButton'
 import OutlineTextField from 'components/Input/TextField/Outline'
-import Modal from 'components/Modal'
 import Image from 'next/image'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { Context } from 'src/context'
@@ -13,6 +12,7 @@ import Eye from 'assets/images/icons/eye.svg'
 import EyeClosed from 'assets/images/icons/eye_closed.svg'
 import MainButton from 'components/Button/MainButton'
 import ChupButton from 'components/core/Button/ChupButton'
+import { Box, Modal } from '@mui/material'
 export default function ChangingPasswordModal({ open, setOpen }) {
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -94,81 +94,100 @@ export default function ChangingPasswordModal({ open, setOpen }) {
   }
 
   return (
-    <Modal open={open} setOpen={setOpen} hideClose={success} preventClickOutsideToClose>
-      <div className={`p-6 w-[322px] transition-all duration-300 h-auto`}>
-        <div className={` flex flex-col gap-6 transition-all duration-300 ${success ? 'opacity-0' : 'opacity-100'}`}>
-          <p className='text-center text-xl leading-6 font-bold'>{t('Change password')}</p>
-          <OutlineTextField
-            label={t('Old password')}
-            value={currentPassword}
-            onChange={setCurrentPassword}
-            placeholder={t('Enter current password')}
-            errorMsg={currentPasswordError}
-            onKeyDown={(e) => {
-              if (e.which == 13) {
-                r1.current?.focus()
-              }
-            }}
-            type='password'
-          />
-          <div>
+    <Modal
+      open={open}
+      onClose={() => !success && setOpen(false)}
+      aria-labelledby="change-password-modal"
+      aria-describedby="modal-to-change-password"
+    >
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 'auto',
+          bgcolor: 'background.paper',
+          boxShadow: 24,
+          p: 1,
+          borderRadius: 2,
+          minHeight: '400px',
+        }}
+      >
+        <div className={`p-6 w-[322px] transition-all duration-300 h-auto`}>
+          <div className={`flex flex-col gap-6 transition-all duration-300 ${success ? 'opacity-0' : 'opacity-100'}`}>
+            <p className='text-center text-xl leading-6 font-bold'>{t('Change password')}</p>
             <OutlineTextField
-              label={t('New password')}
-              value={newPassword}
-              onChange={setNewPassword}
-              type='password'
-              placeholder={t('Enter new password')}
-              inputRef={r1}
+              label={t('Old password')}
+              value={currentPassword}
+              onChange={setCurrentPassword}
+              placeholder={t('Enter current password')}
+              errorMsg={currentPasswordError}
               onKeyDown={(e) => {
                 if (e.which == 13) {
-                  r2.current?.focus()
+                  r1.current?.focus()
                 }
               }}
-            />
-            <OutlineTextField
-              label={t('Confirm new password')}
-              value={rePassword}
-              onChange={setRePassword}
               type='password'
-              trailingComponent={
-                <div className='flex items-center gap-[10px]'>
-                  {repasswordValidateSuccess ? <Image src={CheckSquare} alt='' /> : null}
-                </div>
-              }
-              errorMsg={rePasswordError}
-              inputRef={r2}
-              placeholder={t('Re-enter new password')}
             />
-          </div>
-          <ChupButton
-            size='sm'
-            disabled={!newPassword || !rePassword || !currentPassword}
-            className='w-full'
-            loading={loading}
-            onClick={changePasswordHandler}>
-            {t('Confirm')}
-          </ChupButton>
-        </div>
-        <div
-          className={`absolute inset-0 py-6 px-4 flex flex-col gap-6 transition-all duration-300 ${
-            success ? 'opacity-100' : 'opacity-0 pointer-events-none'
-          }`}>
-          <p className='text-center text-xl leading-6 font-bold'>{t('Successful password change')}!</p>
-          <Image src={SuccessImg} alt='' className='w-[188px] mx-auto max-h-[188px]' />
-          <div className='flex flex-col gap-2'>
-            <p className='text-sm leading-[18px] font-semibold text-center w-[246px] mx-auto'>
-              {t('You can use the new password to log in Punkga now')}
-            </p>
+            <div>
+              <OutlineTextField
+                label={t('New password')}
+                value={newPassword}
+                onChange={setNewPassword}
+                type='password'
+                placeholder={t('Enter new password')}
+                inputRef={r1}
+                onKeyDown={(e) => {
+                  if (e.which == 13) {
+                    r2.current?.focus()
+                  }
+                }}
+              />
+              <OutlineTextField
+                label={t('Confirm new password')}
+                value={rePassword}
+                onChange={setRePassword}
+                type='password'
+                trailingComponent={
+                  <div className='flex items-center gap-[10px]'>
+                    {repasswordValidateSuccess ? <Image src={CheckSquare} alt='' /> : null}
+                  </div>
+                }
+                errorMsg={rePasswordError}
+                inputRef={r2}
+                placeholder={t('Re-enter new password')}
+              />
+            </div>
             <ChupButton
+              size='sm'
+              disabled={!newPassword || !rePassword || !currentPassword}
               className='w-full'
-              onClick={() => {
-                setOpen(false)
-              }}>
-              {t('Continue')}
+              loading={loading}
+              onClick={changePasswordHandler}>
+              {t('Confirm')}
             </ChupButton>
           </div>
+          <div
+            className={`absolute inset-0 py-6 px-4 flex flex-col gap-6 transition-all duration-300 ${success ? 'opacity-100' : 'opacity-0 pointer-events-none'
+              }`}>
+            <p className='text-center text-xl leading-6 font-bold'>{t('Successful password change')}!</p>
+            <Image src={SuccessImg} alt='' className='w-[188px] mx-auto max-h-[188px]' />
+            <div className='flex flex-col gap-2'>
+              <p className='text-sm leading-[18px] font-semibold text-center w-[246px] mx-auto'>
+                {t('You can use the new password to log in Punkga now')}
+              </p>
+              <ChupButton
+                className='w-full'
+                onClick={() => {
+                  setOpen(false)
+                }}>
+                {t('Continue')}
+              </ChupButton>
+            </div>
+          </div>
         </div>
-      </div>
+      </Box>
     </Modal>
   )
 }

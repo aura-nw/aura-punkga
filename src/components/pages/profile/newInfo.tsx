@@ -26,6 +26,13 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
+function formatDate(dateString) {
+  if (!dateString) return '';
+
+  const [year, month, day] = dateString.split('/');
+  return `${day}/${month}/${year}`;
+}
+
 export default function NewInfo() {
   const router = useRouter()
   const { account, getProfile } = useContext(Context)
@@ -200,7 +207,7 @@ export default function NewInfo() {
               <div>{t(account.gender)}</div>
               <div>{account.gender ? '•' : ''}</div>
               <div>
-                {account?.birthdate ? account.birthdate.replace(/-/g, '/') : ''}
+                {account?.birthdate ? formatDate(account.birthdate.replace(/-/g, '/')) : ''}
               </div>
 
             </div>
