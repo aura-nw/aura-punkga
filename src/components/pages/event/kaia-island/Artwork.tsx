@@ -173,6 +173,9 @@ const Artwork = ({ data, index, allArtworks }) => {
       const id = src.split('/')?.[5]
       return `https://lh3.googleusercontent.com/d/${id}`
     }
+    if (src.includes('imgur')) {
+      return `${src}.jpg`
+    }
     return src
   }
   if (!artwork?.title || !artwork?.image) return null
