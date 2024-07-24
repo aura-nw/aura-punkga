@@ -21,7 +21,7 @@ export default function KaiaIsland() {
   const { t } = useTranslation()
   const [seeMore, setSeeMore] = useState(false)
   const { data, isLoading } = useSWR(
-    'https://script.google.com/macros/s/AKfycbxCf6YPrB9XE6DGlDStEGVa2J0THciOVqe8jnRt8XqA77P4Ce-1dH0kNVue8tjZDotqcA/exec',
+    'https://script.google.com/macros/s/AKfycbyrIAyXFFkHVMzvV3Ku4syqak92g6-oPWuro6f-eVSWqYallYP4Fg9X5p_b5Zb894XDyg/exec',
     (url) => fetch(url).then((res) => res.json())
   )
   return (
