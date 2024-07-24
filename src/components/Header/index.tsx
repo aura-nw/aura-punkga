@@ -274,7 +274,7 @@ export default function Header({ className }: { className?: string }) {
                       className='flex justify-between items-center text-second-color text-lg font-semibold  relative'
                       onClick={copyAddress}>
                       <div className='flex gap-2 items-center text-base'>
-                        <Image src={account.image ? account.image : PunkgaWallet} width={32} height={32} alt='' />
+                        <Image src={account.image ? account.image : PunkgaWallet} width={32} height={32} alt='' className='rounded-full' />
                         <div className='text-[#4E5056] font-semibold'>{account?.name}</div>
                       </div>
                       <span
@@ -691,7 +691,7 @@ export default function Header({ className }: { className?: string }) {
                           className='flex justify-between items-center text-second-color text-lg font-semibold  relative'
                           onClick={copyAddress}>
                           <div className='flex gap-2 items-center text-base'>
-                            <Image src={account.image ? account.image : PunkgaWallet} width={32} height={32} alt='' />
+                            <Image src={account.image ? account.image : PunkgaWallet} width={32} height={32} alt='' className='rounded-full'/>
                             <div className='text-[#4E5056] font-semibold'>{account?.name}</div>
                           </div>
                           <span
