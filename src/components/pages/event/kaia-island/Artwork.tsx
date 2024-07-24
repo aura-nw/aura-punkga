@@ -12,7 +12,7 @@ import NavButton from './assets/bt_left.svg'
 export default function Artworks() {
   const { t } = useTranslation()
   const { data, isLoading } = useSWR(
-    'https://script.google.com/macros/s/AKfycby589y5sxg2hiroJh_aFkbOnubwu75ucBosPs6a52TzoeS5i8xL9r_zOyCS06LSVOtf_A/exec',
+    'https://script.google.com/macros/s/AKfycbyrIAyXFFkHVMzvV3Ku4syqak92g6-oPWuro6f-eVSWqYallYP4Fg9X5p_b5Zb894XDyg/exec',
     (url) => fetch(url).then((res) => res.json())
   )
   const [tab, setTab] = useState(1)
@@ -151,6 +151,7 @@ const Artwork = ({ data, index, allArtworks }) => {
   const [idx, setIdx] = useState(index)
   const artwork = allArtworks[idx]
   const [open, setOpen] = useState(false)
+  console.log(data)
   useEffect(() => {
     if (open) {
       setIdx(index)
@@ -168,15 +169,16 @@ const Artwork = ({ data, index, allArtworks }) => {
       document.onkeydown = function (e) {}
     }
   }, [open])
-  const getImageSrc = (src: string) => {
-    if (src.includes('https://drive.google.com/file')) {
-      const id = src.split('/')?.[5]
+  const getImageSrc = (src: any) => {
+    const image = typeof src == 'string' ? src : src[0]
+    if (image.includes('https://drive.google.com/file')) {
+      const id = image.split('/')?.[5]
       return `https://lh3.googleusercontent.com/d/${id}`
     }
-    if (src.includes('imgur')) {
-      return `${src}.jpg`
+    if (image.includes('imgur')) {
+      return `${image}.jpg`
     }
-    return src
+    return image
   }
   if (!artwork?.title || !artwork?.image) return null
   return (
@@ -194,9 +196,9 @@ const Artwork = ({ data, index, allArtworks }) => {
         <Image src={Pin} alt='' className='w-[12%] h-auto hidden absolute -top-[5%] right-[5%] pin' />
       </div>
       <Modal open={open} setOpen={setOpen} preventClickOutsideToClose={false} className='[&_.static]:!overflow-visible'>
-        <div className='py-6 px-4 max-w-[599px] w-full relative'>
+        <div className='py-6 px-4 w-full relative'>
           <div
-            className='absolute -bottom-14 md:top-1/2 -scale-x-100 left-[calc(50%-20px)] md:-left-[98px] -translate-x-1/2 md:translate-x-0 -translate-y-1/2 cursor-pointer bg-[#FFFFFF] rounded-full text-[#B0B0B0] hover:text-border-brand-hover active:text-border-brand-focus w-8 md:w-16 h-8 md:h-16 grid place-items-center shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'
+            className='absolute -bottom-14 lg:top-1/2 -scale-x-100 left-[calc(50%-20px)] lg:-left-[98px] -translate-x-1/2 lg:translate-x-0 -translate-y-1/2 cursor-pointer bg-[#FFFFFF] rounded-full text-[#B0B0B0] hover:text-border-brand-hover active:text-border-brand-focus w-8 lg:w-16 h-8 lg:h-16 grid place-items-center shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'
             onClick={() => setIdx((prev) => (prev > 0 ? prev - 1 : 0))}>
             <svg xmlns='http://www.w3.org/2000/svg' width='7' height='12' viewBox='0 0 7 12' fill='none'>
               <path
@@ -209,7 +211,7 @@ const Artwork = ({ data, index, allArtworks }) => {
             </svg>
           </div>
           <div
-            className='absolute -bottom-14 md:top-1/2 right-[calc(50%-20px)] md:-right-[98px] translate-x-1/2 md:translate-x-0 -translate-y-1/2 cursor-pointer bg-[#FFFFFF] rounded-full text-[#B0B0B0] hover:text-border-brand-hover active:text-border-brand-focus w-8 md:w-16 h-8 md:h-16 grid place-items-center shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'
+            className='absolute -bottom-14 lg:top-1/2 right-[calc(50%-20px)] lg:-right-[98px] translate-x-1/2 lg:translate-x-0 -translate-y-1/2 cursor-pointer bg-[#FFFFFF] rounded-full text-[#B0B0B0] hover:text-border-brand-hover active:text-border-brand-focus w-8 lg:w-16 h-8 lg:h-16 grid place-items-center shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'
             onClick={() => setIdx((prev) => (prev < allArtworks.length - 1 ? prev + 1 : allArtworks.length - 1))}>
             <svg xmlns='http://www.w3.org/2000/svg' width='7' height='12' viewBox='0 0 7 12' fill='none'>
               <path
@@ -221,13 +223,34 @@ const Artwork = ({ data, index, allArtworks }) => {
               />
             </svg>
           </div>
-          <Image
-            width={600}
-            height={600}
-            className='w-full min-h-[50vh] max-h-[60vh] md:max-h-none break-words'
-            src={getImageSrc(artwork?.image)}
-            alt={getImageSrc(artwork?.image)}
-          />
+          {typeof artwork?.image == 'string' ? (
+            <Image
+              width={600}
+              height={600}
+              className='w-full min-h-[50vh] max-h-[60vh] md:max-h-[82vh] md:max-w-[30vw] break-words'
+              src={getImageSrc(artwork?.image)}
+              alt={getImageSrc(artwork?.image)}
+            />
+          ) : (
+            <div className='flex gap-4 items-center flex-col lg:flex-row'>
+              <Image
+                width={600}
+                height={600}
+                className='w-full h-auto md:min-h-[50vh] max-h-[60vh] md:max-h-[82vh] md:max-w-[30vw] break-words'
+                src={getImageSrc(artwork?.image[0])}
+                alt={getImageSrc(artwork?.image[0])}
+              />
+              {artwork?.image[1] && (
+                <Image
+                  width={600}
+                  height={600}
+                  className='w-full h-auto md:min-h-[50vh] max-h-[60vh] md:max-h-[82vh] md:max-w-[30vw] break-words'
+                  src={getImageSrc(artwork?.image[1])}
+                  alt={getImageSrc(artwork?.image[1])}
+                />
+              )}
+            </div>
+          )}
           <div className='mt-4 text-lg w-full text-center font-medium'>{artwork.title}</div>
           <div className='mt-0.5 text-base text-center font-medium'>by {artwork.artist}</div>
         </div>
