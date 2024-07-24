@@ -304,12 +304,6 @@ export default function Header({ className }: { className?: string }) {
                           : `${(+walletBalance?.data?.formatted || 0).toFixed(2)} ${
                               walletBalance?.data?.symbol || 'AURA'
                             }`}
-                        {/* {hideBalance
-                              ? '********'
-                              : `${+BigNumber(balance || 0)
-                                  .div(BigNumber(10).pow(6))
-                                  .toFixed(4)
-                                  .toLocaleString()} ${getEnvKey() == 'euphoria' ? 'EAURA' : 'AURA'}`} */}
                       </div>
                       <span className='inline-block'>
                         {
@@ -721,12 +715,6 @@ export default function Header({ className }: { className?: string }) {
                               : `${(+walletBalance?.data?.formatted || 0).toFixed(2)} ${
                                   walletBalance?.data?.symbol || 'AURA'
                                 }`}
-                            {/* {hideBalance
-                              ? '********'
-                              : `${+BigNumber(balance || 0)
-                                  .div(BigNumber(10).pow(6))
-                                  .toFixed(4)
-                                  .toLocaleString()} ${getEnvKey() == 'euphoria' ? 'EAURA' : 'AURA'}`} */}
                           </div>
                           <span className='inline-block'>
                             {

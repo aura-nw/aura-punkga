@@ -6,7 +6,7 @@ import { privateAxios } from 'src/context'
 import { formatStatus } from 'src/utils'
 import { getItem } from 'src/utils/localStorage'
 import { Campaign } from 'src/models/campaign'
-export const getEnvKey = () => (getConfig().CHAIN_ID.includes('xstaxy') ? 'xstaxy' : 'euphoria')
+export const getEnvKey = () => (getConfig().CHAIN_ID.includes('6322') ? 'xstaxy' : 'euphoria')
 export const getLatestComic = async (): Promise<IComic[]> => {
   return await axios.get(`${getConfig().API_URL}/api/rest/public/latest`).then((res) =>
     res.data?.manga?.map((m: any) => {
