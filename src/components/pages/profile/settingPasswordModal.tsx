@@ -73,7 +73,7 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
 
   return (
     <Modal open={open} setOpen={setOpen} hideClose={success} preventClickOutsideToClose>
-      <div className={`p-6 w-[322px] transition-all duration-300 h-[380px]`}>
+      <div className={`p-6 w-[322px] transition-all duration-300 h-auto`}>
         <div className={` flex flex-col gap-6 transition-all duration-300 ${success ? 'opacity-0' : 'opacity-100'}`}>
           <p className='text-center text-xl leading-6 font-bold'>{t('Set password')}</p>
           <div>
@@ -118,6 +118,7 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
             {t('You can use the new password to log in Punkga now')}
           </p>
           <ChupButton
+            className='w-full'
             onClick={() => {
               setOpen(false)
             }}>

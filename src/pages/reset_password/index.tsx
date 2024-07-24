@@ -1,4 +1,5 @@
 import MainButton from 'components/Button/MainButton'
+import ChupButton from 'components/core/Button/ChupButton'
 import Footer from 'components/Footer'
 import Header from 'components/Header'
 import OutlineTextField from 'components/Input/TextField/Outline'
@@ -129,13 +130,13 @@ function ResetPassword() {
           <p className='text-sm leading-6 font-semibold text-center mx-auto text-[#414141]'>
             {t('You can use the new password to log in Punkga now')}
           </p>
-          <MainButton
+          <ChupButton
             className='mt-2 mx-auto w-full'
             onClick={() => {
               setSignInOpen(true)
             }}>
             {t('Sign in')}
-          </MainButton>
+          </ChupButton>
         </div>
       )}
     </>
