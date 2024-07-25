@@ -228,6 +228,7 @@ export default function EditProfile({ updateProfile }) {
               <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={locale === 'vn' ? vi : undefined}>
                 <StyledDatePicker
                   value={birthdate}
+                  format='dd/MM/yyyy'
                   onChange={(newValue) => setBirthdate(newValue)}
                   className='text-sm text-[#61646B] font-normal md:font-bold leading-6 md:w-full md:aspect-[84/12] w-[330px] max-h-10'
                 />
