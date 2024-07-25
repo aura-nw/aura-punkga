@@ -37,9 +37,17 @@ export default function AutoGrowingTextField({
   }, [value, ref])
 
   const handleInput = (event: React.FormEvent<HTMLDivElement>) => {
-    const newValue = event.currentTarget.innerText
-    onChange && onChange(newValue)
-  }
+    if (maxLength && event.currentTarget.innerText.length > maxLength) {
+      event.currentTarget.innerText = event.currentTarget.innerText.substring(0, maxLength);
+      const range = document.createRange();
+      const sel = window.getSelection();
+      range.setStart(event.currentTarget.childNodes[0], maxLength);
+      range.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+    onChange && onChange(event.currentTarget.innerText);
+  };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (maxLength && event.currentTarget.innerText.length >= maxLength && !event.metaKey && !event.ctrlKey && event.key.length === 1) {

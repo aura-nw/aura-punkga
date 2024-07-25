@@ -87,10 +87,10 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
           boxShadow: 24,
           p: 1,
           borderRadius: 2,
-          minHeight: '400px',
+          minHeight: success && '400px',
         }}
       >
-        <div className={`p-6 w-[322px] transition-all duration-300 h-auto`}>
+        <div className={`pt-6 px-6 pb-4 w-[322px] transition-all duration-300 h-auto`}>
           <div className={` flex flex-col gap-6 transition-all duration-300 ${success ? 'opacity-0' : 'opacity-100'}`}>
             <p className='text-center text-xl leading-6 font-bold'>{t('Set password')}</p>
             <div>
