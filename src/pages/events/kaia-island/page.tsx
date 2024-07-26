@@ -260,76 +260,290 @@ function ViewRule() {
       <Modal open={open} setOpen={setOpen}>
         {locale == 'vn' ? (
           <div className=' w-[90vw] p-5 lg:p-10 max-w-[1000px] max-h-[90vh] overflow-auto'>
-            <div className='w-full text-center text-lg font-semibold'>💎 Thể lệ cuộc thi</div>
-            <ul className='mt-8 text-sm list-disc list-inside'>
-              <li>
-                <strong>Vòng 1 (17/7 - 23/7): To the Island! (Cá nhân)</strong>
-                <br />
-                <br />
-                Tạo hình nhân vật đại diện cho bạn (OC) và một người bạn đồng hành hoặc thú cưng. Hãy thể hiện cá tính
-                và câu chuyện của họ qua hình ảnh và mô tả ngắn gọn.
-                <br />
-                <br />
-                Giải thưởng: Top 10 Giải concept ấn tượng dựa vào lượt tương tác trên group Facebook PunkgaMe - Hội họa
-                sĩ truyện tranh Việt Nam 🇻🇳.
-              </li>
+            <div className='w-full text-center text-lg font-semibold'>💎 Contest Rules</div>
+            <ul className='mt-8 text-sm list-disc list-inside '>
+              <strong>Vòng 1 (17/7 - 30/7): To the Island! (Cá nhân) 🏝️</strong>
               <br />
-              <li>
-                <strong>Vòng 2 (24/7 - 30/7): Adventure Time! (Cá nhân)</strong>
+              <div className='pl-5'>
+                <li>
+                  <strong>Nhiệm vụ:</strong> Tạo một nhân vật đại diện cho bạn (OC) và một người bạn đồng hành hoặc thú
+                  cưng. Thể hiện tính cách và câu chuyện của họ thông qua hình ảnh và mô tả ngắn gọn. Sử dụng mẫu có sẵn
+                  của chúng tôi:{' '}
+                  <Link href='https://bit.ly/templatev1kaia' target='_blank'>
+                    tại đây
+                  </Link>
+                </li>
                 <br />
+                <li>
+                  <strong>Giải thưởng:</strong> Top 10 Giải thưởng Ý tưởng Ấn tượng dựa trên lượt tương tác trên nhóm
+                  Facebook "PunkgaMe - Hội họa sĩ truyện tranh Việt Nam 🇻🇳" và bình chọn của Ban Giám Khảo.
+                </li>
                 <br />
-                Vẽ 1 trang truyện tranh về cuộc hành trình trên biển đến đảo Kaia. Hãy để nhân vật của bạn đối mặt với
-                những thử thách, khám phá những điều kỳ diệu và ghi lại những khoảnh khắc đáng nhớ.
+                <li>
+                  <strong>Gia hạn nộp bài:</strong> đến hết ngày 30/7.
+                </li>
                 <br />
+                <li>
+                  <strong>📝 Thông tin nộp bài:</strong>
+                  <div className='pl-5'>
+                    <br />
+                    1/ Tên/Biệt danh: [Tên của bạn] <br />
+                    <br />
+                    2/ Bài dự thi vòng 1 (bắt buộc) + caption (tùy chọn) <br />
+                    <br />
+                    3/ Hashtag: #KAIAIslandv1 #PunkgaMe #ArtMangaContest <br />
+                    <br />
+                    4/ Nộp bài trên: <br />
+                    <div className='pl-5'>
+                      4.1/ Website PunkgaMe:{' '}
+                      <Link href='https://bit.ly/tutorialr1kaia' target='_blank'>
+                        tại đây
+                      </Link>{' '}
+                      <br />
+                      4.2/ Nhóm Facebook:{' '}
+                      <Link href='https://www.facebook.com/groups/punkga.me' target='_blank'>
+                        PunkgaMe - Hội họa sĩ truyện tranh Việt Nam 🇻🇳
+                      </Link>
+                    </div>
+                  </div>
+                </li>
                 <br />
-                Giải thưởng: Top 5 Giải Câu chuyện cá nhân dựa vào lượt tương tác trên group Facebook PunkgaMe - Hội họa
-                sĩ truyện tranh Việt Nam 🇻🇳.
-              </li>
+                <div>
+                  <strong>⚠️ Lưu ý quan trọng: </strong>
+                  Những họa sĩ nộp bài sau ngày 24/7 sẽ không đủ điều kiện nhận phần thưởng vòng 1, nhưng bài dự thi của
+                  họ vẫn sẽ được xem xét để đủ điều kiện tham gia vòng 2.
+                </div>
+              </div>
               <br />
-              <li>
-                <strong>Vòng 3 (31/7 - 13/8): Golden Treasure! (Nhóm)</strong>
+              <strong>Vòng 2 (24/7 - 30/7): Adventure Time! (Cá nhân) ⛵</strong>
+              <br />
+              <div className='pl-5'>
+                <li>
+                  <strong>Nhiệm vụ:</strong> Vẽ 1 trang truyện tranh về cuộc hành trình đến đảo Kaia. Để nhân vật của
+                  bạn đối mặt với thử thách, khám phá điều kỳ diệu và ghi lại những khoảnh khắc đáng nhớ. Sử dụng mẫu có
+                  sẵn của chúng tôi:{' '}
+                  <Link href='https://bit.ly/templatev2kaia' target='_blank'>
+                    tại đây
+                  </Link>
+                </li>
                 <br />
+                <li>
+                  <strong>Giải thưởng:</strong> Top 5 Giải thưởng Câu chuyện Cá nhân dựa trên lượt tương tác trên nhóm
+                  Facebook "PunkgaMe - Hội họa sĩ truyện tranh Việt Nam 🇻🇳" và bình chọn của Ban Giám Khảo.
+                </li>
                 <br />
-                Họa sĩ có thể lựa chọn đăng ký nộp bài thi cá nhân hoặc theo nhóm hai hoặc ba người. Mỗi họa sĩ có giới
-                hạn 3 trang truyện, tổng số trang tối đa cho nhóm là 9 trang.
-              </li>
+                <li>
+                  <strong>📝 Thông tin nộp bài:</strong>
+                  <div className='pl-5'>
+                    <br />
+                    1/ Tên/Biệt danh: [Tên của bạn] <br />
+                    <br />
+                    2/ Bài dự thi vòng 2 (bắt buộc) + caption (tùy chọn) <br />
+                    <br />
+                    3/ Hashtag: #KAIAIslandv2 #PunkgaMe #ArtMangaContest <br />
+                    <br />
+                    4/ Nộp bài trên: <br />
+                    <div className='pl-5'>
+                      4.1/ Website PunkgaMe:{' '}
+                      <Link href='https://bit.ly/tutorialr1kaia' target='_blank'>
+                        tại đây
+                      </Link>{' '}
+                      <br />
+                      4.2/ Nhóm Facebook:{' '}
+                      <Link href='https://www.facebook.com/groups/punkga.me' target='_blank'>
+                        PunkgaMe - Hội họa sĩ truyện tranh Việt Nam 🇻🇳
+                      </Link>
+                    </div>
+                  </div>
+                </li>
+              </div>
+              <br />
+              <strong>Vòng 3 (31/7 - 13/8): Golden Treasure! (Cá nhân hoặc Nhóm) 🏆</strong>
+              <div className='pl-5'>
+                <br />
+                <li>
+                  <strong>Nhiệm vụ:</strong> Tạo một câu chuyện về Đảo Kaia.
+                </li>
+                <br />
+                <li>
+                  <strong>Tham gia cá nhân hoặc nhóm:</strong>
+                  <div className='pl-5'>
+                    <ul className='list-disc list-inside'>
+                      <li>
+                        <strong>Cá nhân:</strong> 👤 Gửi tối đa 3 trang.
+                      </li>
+                      <li>
+                        <strong>Nhóm (2-5 thành viên):</strong> 👥 Mỗi thành viên gửi tối đa 3 trang (tối đa 15 trang
+                        cho cả nhóm).
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <br />
+                <li>
+                  <strong>Điều kiện tiên quyết:</strong> Phải nộp bài dự thi cho cả Vòng 1 và Vòng 2.
+                </li>
+                <br />
+                <li>
+                  <strong>📝 Thông tin nộp bài:</strong> [Thông tin chi tiết sẽ được công bố sau]
+                </li>
+                <br />
+                <li>
+                  <strong>🏆 Giải thưởng chung cuộc - Dựa trên bình chọn của Ban Giám Khảo:</strong>
+                  <div className='pl-5'>
+                    🥇 1 Giải Đặc Biệt (Huyền thoại sống): 8.000.000 VNĐ <br />
+                    🥇 1 Giải Nhất (Người dệt giai thoại): 6.000.000 VNĐ <br />
+                    🥈 1 Giải Nhì (Nhà thám hiểm): 4.000.000 VNĐ <br />
+                    🥉 1 Giải Ba (Nhà nghiên cứu xuất sắc): 2.000.000 VNĐ <br />
+                    🌟 1 Giải MVP cá nhân xuất sắc: Mô hình in 3D nhân vật chính của người chiến thắng.
+                  </div>
+                </li>
+              </div>
             </ul>
           </div>
         ) : (
           <div className=' w-[90vw] p-5 lg:p-10 max-w-[1000px] max-h-[90vh] overflow-auto'>
             <div className='w-full text-center text-lg font-semibold'>💎 Contest Rules</div>
-            <ul className='mt-8 text-sm list-disc list-inside'>
-              <li>
-                <strong>Round 1 (July 17th - 23rd): To the Island! (Individual)</strong>
-                <br />
-                <br />
-                Create a character representing yourself (OC) and a companion or pet. Showcase their personality and
-                story through visuals and a brief description.
-                <br />
-                <br />
-                Prize: Top 10 Impressive Concept awards based on interactions on the Facebook group “PunkgaMe - Hội họa
-                sĩ truyện tranh Việt Nam 🇻🇳”.
-              </li>
+            <ul className='mt-8 text-sm list-disc list-inside '>
+              <strong>Round 1 (July 17th - 30th): To the Island! (Individual) 🏝️</strong>
               <br />
-              <li>
-                <strong>Round 2 (July 24th - 30th): Adventure Time! (Individual)</strong>
+              <div className='pl-5'>
+                <li>
+                  <strong>Task:</strong> Create a character representing yourself (OC) and a companion or pet. Showcase
+                  their personality and story through visuals and a brief description. Use our provided template:{' '}
+                  <Link href='https://bit.ly/templatev1kaia' target='_blank'>
+                    here
+                  </Link>
+                </li>
                 <br />
+                <li>
+                  <strong>Prize:</strong> Top 10 Impressive Concept awards based on interactions on the Facebook group
+                  and "PunkgaMe - Hội họa sĩ truyện tranh Việt Nam 🇻🇳" and jury votes.
+                </li>
                 <br />
-                Draw a 1-page comic about the journey to Kaia Island. Let your character face challenges, discover
-                wonders, and capture memorable moments.
+                <li>
+                  <strong>Gia hạn nộp bài:</strong> July 30th.
+                </li>
                 <br />
+                <li>
+                  <strong>📝 Submission Details:</strong>
+                  <div className='pl-5'>
+                    <br />
+                    1/ Name/Nickname: [Your Name] <br />
+                    <br />
+                    2/ Round 1 entry (required) + caption (optional) <br />
+                    <br />
+                    3/ Hashtag: #KAIAIslandv1 #PunkgaMe #ArtMangaContest <br />
+                    <br />
+                    4/ Submitting on: <br />
+                    <div className='pl-5'>
+                      4.1/ Submit your artwork on PunkgaMe website:{' '}
+                      <Link href='https://bit.ly/tutorialr1kaia' target='_blank'>
+                        here
+                      </Link>{' '}
+                      <br />
+                      4.2/ Facebook group:{' '}
+                      <Link href='https://www.facebook.com/groups/punkga.me' target='_blank'>
+                        PunkgaMe - Hội họa sĩ truyện tranh Việt Nam 🇻🇳
+                      </Link>
+                    </div>
+                  </div>
+                </li>
                 <br />
-                Prize: Top 5 Individual Story awards based on interactions on the Facebook group “PunkgaMe - Hội họa sĩ
-                truyện tranh Việt Nam 🇻🇳”.
-              </li>
+                <div>
+                  <strong>⚠️ Important Note: </strong>
+                  Artists submitting after July 24th will not be eligible for Round 1 rewards, but their entries will
+                  still be considered for qualification to Round 2.
+                </div>
+              </div>
               <br />
-              <li>
-                <strong>Round 3 (July 31st - August 13th): Golden Treasure! (Group)</strong>
+              <strong>Round 2 (July 24th - 30th): Adventure Time! (Individual) ⛵</strong>
+              <br />
+              <div className='pl-5'>
+                <li>
+                  <strong>Task:</strong> Draw a 1-page comic about the journey to Kaia Island. Let your character face
+                  challenges, discover wonders, and capture memorable moments. Use our provided template:{' '}
+                  <Link href='https://bit.ly/templatev2kaia' target='_blank'>
+                    here
+                  </Link>
+                </li>
                 <br />
+                <li>
+                  <strong>New Participants Welcome:</strong> Contestants can join from Round 2 and submit both Round 1 &
+                  Round 2 entries. (Late Round 1 entries won't be scored).
+                </li>
                 <br />
-                Contestants can choose to register and submit their entries individually or in groups of two or three.
-                Each contestant can contribute up to 3 pages, with a maximum of 9 pages per group.
-              </li>
+                <li>
+                  <strong>Prize:</strong> Top 5 Individual Story awards based on interactions on the Facebook group
+                  "PunkgaMe - Hội họa sĩ truyện tranh Việt Nam 🇻🇳" and jury votes.
+                </li>
+                <br />
+                <li>
+                  <strong>📝 Submission Details:</strong>
+                  <div className='pl-5'>
+                    <br />
+                    1/ Name/Nickname: [Your Name] <br />
+                    <br />
+                    2/ Round 2 entry (required) + caption (optional) <br />
+                    <br />
+                    3/ Hashtag: #KAIAIslandv2 #PunkgaMe #ArtMangaContest <br />
+                    <br />
+                    4/ Submitting on: <br />
+                    <div className='pl-5'>
+                      4.1/ Submit your artwork on PunkgaMe website:{' '}
+                      <Link href='https://bit.ly/tutorialr1kaia' target='_blank'>
+                        here
+                      </Link>{' '}
+                      <br />
+                      4.2/ Facebook group:{' '}
+                      <Link href='https://www.facebook.com/groups/punkga.me' target='_blank'>
+                        PunkgaMe - Hội họa sĩ truyện tranh Việt Nam 🇻🇳
+                      </Link>
+                    </div>
+                  </div>
+                </li>
+              </div>
+              <br />
+              <strong>Round 3 (July 31st - August 13th): Golden Treasure! (Solo or Group) 🏆</strong>
+              <div className='pl-5'>
+                <br />
+                <li>
+                  <strong>Task:</strong> Create a story about Kaia Island.
+                </li>
+                <br />
+                <li>
+                  <strong>Participation Options:</strong>
+                  <div className='pl-5'>
+                    <ul className='list-disc list-inside'>
+                      <li>
+                        <strong>Solo</strong>: 👤 Submit up to 3 pages.
+                      </li>
+                      <li>
+                        <strong>Group (2-5 members)</strong>: 👥 Each member submits up to 3 pages (max 15 pages total).
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <br />
+                <li>
+                  <strong>Prerequisite:</strong> Must have submitted entries for both Round 1 and Round 2.
+                </li>
+                <br />
+                <li>
+                  <strong>📝 Submission Details:</strong> TBC
+                </li>
+                <br />
+                <li>
+                  <strong>🏆 Grand Prizes - Based on Jury Votes:</strong>
+                  <div className='pl-5'>
+                    🥇 1 Special Prize (Living Legend) <br />
+                    🥇 1 First Prize (Story Weaver) <br />
+                    🥈 1 Second Prize (Field Explorer) <br />
+                    🥉 1 Third Prize (Outstanding Researcher) <br />
+                    🌟 1 MVP Individual Prize: 3D print of the winner's main character
+                  </div>
+                </li>
+              </div>
             </ul>
           </div>
         )}

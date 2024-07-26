@@ -230,27 +230,39 @@ const Artwork = ({ data, index, allArtworks }) => {
             <Image
               width={600}
               height={600}
-              className='w-full min-h-[50vh] max-h-[60vh] md:max-h-[82vh] md:max-w-[30vw] break-words'
+              className='w-full max-w-[90vw] h-full max-h-[83vh]'
               src={getImageSrc(artwork?.image)}
               alt={getImageSrc(artwork?.image)}
             />
           ) : (
-            <div className='flex gap-4 items-center flex-col lg:flex-row'>
-              <Image
-                width={600}
-                height={600}
-                className='w-full h-auto md:min-h-[50vh] max-h-[60vh] md:max-h-[82vh] md:max-w-[30vw] break-words'
-                src={getImageSrc(artwork?.image[0])}
-                alt={getImageSrc(artwork?.image[0])}
-              />
-              {artwork?.image[1] && (
-                <Image
-                  width={600}
-                  height={600}
-                  className='w-full h-auto md:min-h-[50vh] max-h-[60vh] md:max-h-[82vh] md:max-w-[30vw] break-words'
-                  src={getImageSrc(artwork?.image[1])}
-                  alt={getImageSrc(artwork?.image[1])}
-                />
+            <div className='flex items-center flex-col lg:flex-row '>
+              {artwork?.image[1] ? (
+                <>
+                  <Image
+                    width={600}
+                    height={600}
+                    className='w-screen max-w-[90vw] md:max-w-[70vw] lg:w-auto lg:max-w-[38vw] lg:h-screen lg:max-h-[80vh]'
+                    src={getImageSrc(artwork?.image[0])}
+                    alt={getImageSrc(artwork?.image[0])}
+                  />
+                  <Image
+                    width={600}
+                    height={600}
+                    className='w-screen max-w-[90vw] md:max-w-[70vw] lg:w-auto lg:max-w-[38vw] lg:h-screen lg:max-h-[80vh]'
+                    src={getImageSrc(artwork?.image[1])}
+                    alt={getImageSrc(artwork?.image[1])}
+                  />
+                </>
+              ) : (
+                <>
+                  <Image
+                    width={600}
+                    height={600}
+                    className='w-screen max-w-[90vw] md:max-w-[70vw] lg:w-auto lg:h-screen lg:max-h-[80vh]'
+                    src={getImageSrc(artwork?.image[0])}
+                    alt={getImageSrc(artwork?.image[0])}
+                  />
+                </>
               )}
             </div>
           )}
