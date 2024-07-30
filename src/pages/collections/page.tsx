@@ -103,7 +103,7 @@ export default function Page() {
                   <div>
                     <div className='text-sm font-medium'>{launchpad[locale].name}</div>
                     <div className='text-xs font-medium'>
-                      by{' '}
+                      {t('by')}{' '}
                       <Link href={`/artist/${launchpad.launchpad_creator.slug}`} className='text-text-brand-defaul'>
                         {launchpad.launchpad_creator.name}
                       </Link>

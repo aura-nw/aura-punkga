@@ -26,7 +26,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import _ from 'lodash'
-import ChupButton from 'components/core/Button/ChupButton'
+import Button from 'components/core/Button/Button'
 import TextField from 'components/Input/TextField'
 import { toast } from 'react-toastify'
 
@@ -262,9 +262,9 @@ export default function EditProfile({ updateProfile }) {
         </div>
 
         <div className='mt-8 flex justify-end'>
-          <ChupButton className='px-[50px] md:px-[54px]' onClick={updateProfileHandler} disabled={loading}>
+          <Button className='px-[50px] md:px-[54px]' onClick={updateProfileHandler} disabled={loading}>
             {loading ? t('Saving...') : t('Save')}
-          </ChupButton>
+          </Button>
         </div>
       </div>
     </div>

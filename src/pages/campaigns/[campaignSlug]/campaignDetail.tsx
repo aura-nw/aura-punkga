@@ -1,6 +1,6 @@
 import Modal from 'components/Modal'
 import Popover from 'components/Popover'
-import ChupButton from 'components/core/Button/ChupButton'
+import Button from 'components/core/Button/Button'
 import LabelChip from 'components/core/Chip/Label'
 import XPImage from 'components/pages/campaigns/assets/illus.svg'
 import KPImage from 'components/pages/campaigns/assets/ic_Kp.svg'
@@ -319,9 +319,9 @@ function CampaignDetail({}) {
                   </Popover>
                 ) : isOngoing && !isEnrolled ? (
                   <div>
-                    <ChupButton size='sm' loading={enrollLoading} className='w-full' onClick={enrollHandler}>
+                    <Button size='sm' loading={enrollLoading} className='w-full' onClick={enrollHandler}>
                       {t('Enroll now')}
-                    </ChupButton>
+                    </Button>
                   </div>
                 ) : null}
               </div>
@@ -350,9 +350,9 @@ function CampaignDetail({}) {
               </div>
             ) : isOngoing && !isEnrolled ? (
               <div className='mt-10 lg:hidden'>
-                <ChupButton size='sm' loading={enrollLoading} className='w-full' onClick={enrollHandler}>
+                <Button size='sm' loading={enrollLoading} className='w-full' onClick={enrollHandler}>
                   {t('Enroll now')}
-                </ChupButton>
+                </Button>
               </div>
             ) : null}
           </div>
@@ -388,18 +388,18 @@ function CampaignDetail({}) {
               {isEnrolled ? (
                 account?.id == leaderboardData?.[0]?.user_id && isEnded ? (
                   authData?.user_campaign_rewards?.length == 0 ? (
-                    <ChupButton size='sm' loading={claimLoading} className='w-full' color='dark' onClick={claimHandler}>
+                    <Button size='sm' loading={claimLoading} className='w-full' color='dark' onClick={claimHandler}>
                       {t('Claim Reward')}
-                    </ChupButton>
+                    </Button>
                   ) : (
-                    <ChupButton size='sm' className='w-full' disabled>
+                    <Button size='sm' className='w-full' disabled>
                       {t('Claimed')}
-                    </ChupButton>
+                    </Button>
                   )
                 ) : (
-                  <ChupButton size='sm' className='w-full' disabled>
+                  <Button size='sm' className='w-full' disabled>
                     {t('Claim Reward')}
-                  </ChupButton>
+                  </Button>
                 )
               ) : null}
             </div>

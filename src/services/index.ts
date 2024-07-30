@@ -601,8 +601,35 @@ export const getAllLaunchPad = async (offset: number, limit: number) => {
   }
 }
 export const getLaunchPadDetail = async (slug: string) => {
-  const { data } = await axios.get(`${getConfig().REST_API_URL}/launchpad/slug/${slug}`)
-  return data?.data?.launchpad?.[0]
+  try {
+    const { data } = await axios.get(`${getConfig().REST_API_URL}/launchpad/slug/${slug}`)
+    const res = data?.data?.launchpad?.[0]
+    LANGUAGE.forEach((l) => {
+      const launchpadLanguages =
+        res.launchpad_i18ns.find((ml) => ml.language_id == l.id) ||
+        res.launchpad_i18ns.find((ml) => ml.language_id == 1)
+      res[l.shortLang] = {
+        seo: {
+          title: launchpadLanguages?.data?.name,
+          description: launchpadLanguages?.data?.description,
+          thumbnail_url: launchpadLanguages?.data?.thumbnail_url,
+        },
+        name: launchpadLanguages?.data?.name,
+        description: launchpadLanguages?.data?.description,
+      }
+    })
+    return res
+  } catch (error) {
+    console.log(error)
+  }
+}
+export const mintNfts = async (launchpad_id: string, amount: number) => {
+  try {
+    const { data } = await axios.post(`${getConfig().REST_API_URL}/launchpad/${launchpad_id}/${amount}/mint`)
+    return data
+  } catch (error) {
+    console.log(error)
+  }
 }
 export const getLicenseTerm = async (id: string) => {
   const { data } = await axios.get(`https://edge.stg.storyprotocol.net/api/v1/licenses/terms/${id}`)

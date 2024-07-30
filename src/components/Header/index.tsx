@@ -34,7 +34,7 @@ import useApi from 'src/hooks/useApi'
 import { useClickOutside } from 'src/hooks/useClickOutside'
 import { search } from 'src/services'
 import { shorten } from 'src/utils'
-import ChupButton from 'components/core/Button/ChupButton'
+import NewButton from 'components/core/Button/Button'
 import { useAccount, useBalance } from 'wagmi'
 import getConfig from 'next/config'
 
@@ -143,15 +143,15 @@ export default function Header({ className }: { className?: string }) {
                   (address != account?.activeWalletAddress || !isConnected) &&
                   account?.noncustodialWalletAddress && (
                     <div className='flex gap-3 items-center '>
-                      <ChupButton size='xs' color='dark' onClick={() => setWalletConnectOpen(true)}>
+                      <NewButton size='xs' color='dark' onClick={() => setWalletConnectOpen(true)}>
                         {t('Connect Wallet')}
-                      </ChupButton>
+                      </NewButton>
                     </div>
                   )
                 ) : (
-                  <ChupButton size='xs' color='dark' onClick={() => setSignInOpen(true)}>
+                  <NewButton size='xs' color='dark' onClick={() => setSignInOpen(true)}>
                     {t('Sign in')}
-                  </ChupButton>
+                  </NewButton>
                 )}
                 <div className='w-6 h-6 relative'>
                   <Image src={Menu} alt='menu icon' width={24} height={24} onClick={() => setOpenNavigation(true)} />
@@ -335,9 +335,9 @@ export default function Header({ className }: { className?: string }) {
                     </div>
                     {!account?.noncustodialWalletAddress ? (
                       <>
-                        <ChupButton size='sm' className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
+                        <NewButton size='sm' className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
                           {t('Migrate your wallet')}
-                        </ChupButton>
+                        </NewButton>
                       </>
                     ) : null}
                     {account?.noncustodialWalletAddress && account?.name && !isConnected && (
@@ -774,9 +774,9 @@ export default function Header({ className }: { className?: string }) {
                         </div>
                         {!account?.noncustodialWalletAddress ? (
                           <>
-                            <ChupButton size='sm' className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
+                            <NewButton size='sm' className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
                               {t('Migrate wallet')}
-                            </ChupButton>
+                            </NewButton>
                           </>
                         ) : null}
                         {account?.noncustodialWalletAddress && account?.name && !isConnected && (
@@ -799,9 +799,9 @@ export default function Header({ className }: { className?: string }) {
                   </DropdownMenu>
                 </Dropdown>
               ) : (
-                <ChupButton size='sm' color='dark' onClick={() => setSignInOpen(true)}>
+                <NewButton size='sm' color='dark' onClick={() => setSignInOpen(true)}>
                   {t('Sign in')}
-                </ChupButton>
+                </NewButton>
               )}
               {(address != account?.activeWalletAddress || !isConnected) &&
                 account?.verified &&
@@ -809,9 +809,9 @@ export default function Header({ className }: { className?: string }) {
                 account?.noncustodialWalletAddress && (
                   <div className='flex gap-3 items-center '>
                     <div className='h-4 w-[1px] bg-[#E0E0E0]'></div>
-                    <ChupButton size='sm' color='dark' onClick={() => setWalletConnectOpen(true)}>
+                    <NewButton size='sm' color='dark' onClick={() => setWalletConnectOpen(true)}>
                       {t('Connect Wallet')}
-                    </ChupButton>
+                    </NewButton>
                   </div>
                 )}
             </div>

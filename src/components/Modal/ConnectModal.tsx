@@ -1,4 +1,4 @@
-import ChupButton from 'components/core/Button/ChupButton'
+import Button from 'components/core/Button/Button'
 import Modal from 'components/Modal'
 import Spinner from 'components/Spinner'
 import CopySvg from 'images/icons/copy.svg'
@@ -261,14 +261,14 @@ export default function ConnectModal() {
                         </div>
                       </div>
                     ))}
-                    <ChupButton
+                    <Button
                       size='md'
                       className='w-fit mx-auto mt-3'
                       onClick={() => {
                         setOpen(false)
                       }}>
                       {t('Close')}
-                    </ChupButton>
+                    </Button>
                   </div>
                 ) : (
                   <div className='flex flex-col gap-6'>
