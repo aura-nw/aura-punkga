@@ -39,7 +39,12 @@ export default function Page() {
               .fill(0)
               .map((v, i) => (
                 <div className='w-full aspect-[343/289] bg-white rounded-mlg p-4' key={i}>
-                  <Skeleton variant='rounded' width={'100%'} height={'auto'} className='aspect-[311/199] md:aspect-[373/235]' />
+                  <Skeleton
+                    variant='rounded'
+                    width={'100%'}
+                    height={'auto'}
+                    className='aspect-[311/199] md:aspect-[373/235]'
+                  />
                   <div className='mt-4 flex items-center gap-2'>
                     <Skeleton variant='circular' width={36} height={36} />
                     <div>
@@ -61,7 +66,9 @@ export default function Page() {
                     width={343}
                     height={289}
                     className={`object-cover w-full rounded-mlg ${
-                      launchpad.featured_images[2] ? 'aspect-[239/235] col-span-2' : 'aspect-[311/199] md:aspect-[373/235] col-span-3'
+                      launchpad.featured_images[2]
+                        ? 'aspect-[239/235] col-span-2'
+                        : 'aspect-[311/199] md:aspect-[373/235] col-span-3'
                     }`}
                   />
                   {launchpad.featured_images[2] && (
@@ -106,17 +113,19 @@ export default function Page() {
               </Link>
             ))}
       </div>
-      <div className='w-fit mx-auto'>
-        <Pagination
-          shape='rounded'
-          page={page}
-          className='[&_.Mui-selected]:!text-text-primary [&_.MuiPaginationItem-root:not(.Mui-selected)]:!text-text-quatenary mt-4 '
-          onChange={(event: React.ChangeEvent<unknown>, value: number) => {
-            setPage(value)
-          }}
-          count={Math.ceil(data.count/LIMIT)}
-        />
-      </div>
+      {data && (
+        <div className='w-fit mx-auto'>
+          <Pagination
+            shape='rounded'
+            page={page}
+            className='[&_.Mui-selected]:!text-text-primary [&_.MuiPaginationItem-root:not(.Mui-selected)]:!text-text-quatenary mt-4 '
+            onChange={(event: React.ChangeEvent<unknown>, value: number) => {
+              setPage(value)
+            }}
+            count={Math.ceil(data?.count / LIMIT)}
+          />
+        </div>
+      )}
     </div>
   )
 }

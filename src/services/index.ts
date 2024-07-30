@@ -575,7 +575,7 @@ export const linkWallet = async (message: any, signature: any) => {
 
 export const getAllLaunchPad = async (offset: number, limit: number) => {
   try {
-    const { data } = await axios.get(`${getConfig().REST_API_URL}/launchpad`)
+    const { data } = await axios.get(`${getConfig().REST_API_URL}/launchpad?offset=${offset}&limit=${limit}`)
     const launchpadData = data.data.launchpad
     const count = data.data.launchpad_aggregate.aggregate.count
     const launchpads = launchpadData?.map((launchpad: any) => {
@@ -600,9 +600,9 @@ export const getAllLaunchPad = async (offset: number, limit: number) => {
     console.error(error)
   }
 }
-export const getLaunchPadDetail = async (id: string) => {
-  const { data } = await axios.get(`https://hasura.hackathon.punkga.me/api/rest/public/launchpad/${id}`)
-  return data?.launchpad_by_pk
+export const getLaunchPadDetail = async (slug: string) => {
+  const { data } = await axios.get(`${getConfig().REST_API_URL}/launchpad/slug/${slug}`)
+  return data?.data?.launchpad?.[0]
 }
 export const getLicenseTerm = async (id: string) => {
   const { data } = await axios.get(`https://edge.stg.storyprotocol.net/api/v1/licenses/terms/${id}`)
