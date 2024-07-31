@@ -159,89 +159,6 @@ export default function Header({ className }: { className?: string }) {
               </div>
             </div>
           </div>
-          <div className={`${openProfile ? 'max-h-[280px]' : 'max-h-[0px]'} overflow-hidden transition-all`}>
-            {account?.activeWalletAddress ? (
-              <div className='my-[10px] flex flex-col w-full  gap-3 bg-light-gray rounded-xl p-3'>
-                <div
-                  className='flex justify-between items-center text-second-color text-sm font-medium  relative'
-                  onClick={copyAddress}>
-                  <div className='flex gap-2 items-center'>
-                    {account?.noncustodialWalletAddress ? (
-                      <></>
-                    ) : (
-                      <Image src={account.image ? account.image : PunkgaWallet} width={24} height={24} alt='' />
-                    )}
-                    <div className='text-text-info-primary' onClick={handleOpenWalletOnExplorer}>{`${shorten(
-                      account?.activeWalletAddress,
-                      8,
-                      8
-                    )}`}</div>
-                  </div>
-                  <span
-                    className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
-                      isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                    }`}>
-                    {t('Copied')}
-                  </span>
-                  <Image width={18} height={18} src={CopySvg} alt='' />
-                </div>
-                <div className='flex justify-between items-center text-sm font-semibold  leading-[18px]'>
-                  <div className=''>{`${t('Balance')}`}</div>
-                  <div className='flex items-center'>
-                    {hideBalance
-                      ? '********'
-                      : `${(+walletBalance?.data?.formatted || 0).toFixed(2)} ${walletBalance?.data?.symbol || 'AURA'}`}
-                    <span className='inline-block'>
-                      {
-                        <div className='ml-2 relative'>
-                          {hideBalance ? (
-                            <Image
-                              src={EyeClose}
-                              alt=''
-                              onClick={() => setHideBalance(false)}
-                              className='w-[18px] h-[18px] cursor-pointer'
-                            />
-                          ) : (
-                            <Image
-                              src={EyeOpen}
-                              alt=''
-                              onClick={() => setHideBalance(true)}
-                              className='w-[18px] h-[18px] cursor-pointer'
-                            />
-                          )}
-                        </div>
-                      }
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <></>
-            )}
-            <div
-              className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'
-              onClick={() => router.push('/profile')}>
-              {t('My profile')}
-            </div>
-            {!account?.noncustodialWalletAddress && (
-              <div
-                className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'
-                onClick={() => setMigrateWalletOpen(true)}>
-                {t('Migrate wallet')}{' '}
-                <span>
-                  <Image src={Stars} alt='' className='inline-block ml-1' />
-                </span>
-              </div>
-            )}
-            <div
-              className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'
-              onClick={() => {
-                setOpenProfile(false)
-                logout()
-              }}>
-              {t('Log out')}
-            </div>
-          </div>
           {openNavigation && (
             <>
               <div className='fixed inset-0 z-10 bg-black/80'></div>
@@ -283,16 +200,10 @@ export default function Header({ className }: { className?: string }) {
                         />
                         <div className='text-[#4E5056] font-semibold'>{account?.name}</div>
                       </div>
-                      <span
-                        className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
-                          isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                        }`}>
-                        {t('Copied')}
-                      </span>
                     </div>
                     <div className='h-[1px] w-full bg-[#DEDEDE] mt-[10px] mb-[16px]'></div>
                     <div className='text-[#ABABAB] text-sm mb-1'>{`${t('Wallet')}`}</div>
-                    <div className='flex justify-between items-center text-[#4E5056] text-base font-semibold'>
+                    <div className='flex justify-between items-center text-[#4E5056] text-base font-semibold relative'>
                       <div className='text-text-info-primary' onClick={handleOpenWalletOnExplorer}>{`${shorten(
                         account?.activeWalletAddress,
                         8,
@@ -301,6 +212,12 @@ export default function Header({ className }: { className?: string }) {
                       <div onClick={copyAddress}>
                         <Image width={18} height={18} src={CopySvg} alt='' />
                       </div>
+                      <span
+                        className={`transition-all w-fit mr-2 absolute -top-full right-0 text-xs bg-light-gray py-1 px-2 border rounded-md ${
+                          isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                        }`}>
+                        {t('Copied')}
+                      </span>
                     </div>
                     <div className='text-[#ABABAB] text-sm mt-3 mb-1'>{`${t('Balance')}`}</div>
                     <div className='flex justify-between items-center text-[#4E5056] text-base font-semibold leading-5'>
@@ -722,16 +639,10 @@ export default function Header({ className }: { className?: string }) {
                             />
                             <div className='text-[#4E5056] font-semibold'>{account?.name}</div>
                           </div>
-                          <span
-                            className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
-                              isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                            }`}>
-                            {t('Copied')}
-                          </span>
                         </div>
                         <div className='h-[1px] w-full bg-[#DEDEDE] mt-[10px] mb-[16px]'></div>
                         <div className='text-[#ABABAB] text-sm mb-1'>{`${t('Wallet')}`}</div>
-                        <div className='flex justify-between items-center text-[#4E5056] text-base font-semibold'>
+                        <div className='flex justify-between items-center text-[#4E5056] text-base font-semibold relative'>
                           <div className='text-text-info-primary' onClick={handleOpenWalletOnExplorer}>{`${shorten(
                             account?.activeWalletAddress,
                             8,
@@ -740,6 +651,12 @@ export default function Header({ className }: { className?: string }) {
                           <div onClick={copyAddress}>
                             <Image width={18} height={18} src={CopySvg} alt='' />
                           </div>
+                          <span
+                            className={`transition-all w-fit mr-2 absolute -top-full right-0 text-xs bg-light-gray py-1 px-2 border rounded-md ${
+                              isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                            }`}>
+                            {t('Copied')}
+                          </span>
                         </div>
                         <div className='text-[#ABABAB] text-sm mt-3 mb-1'>{`${t('Balance')}`}</div>
                         <div className='flex justify-between items-center text-[#4E5056] text-base font-semibold leading-5'>

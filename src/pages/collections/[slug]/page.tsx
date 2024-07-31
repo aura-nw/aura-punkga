@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
 import { Launchpad } from 'src/models/launchpad'
 import { getLaunchPadDetail, mintNfts } from 'src/services'
-import { useAccount, useBalance, useReadContract, useWriteContract } from 'wagmi'
+import { useAccount, useBalance, useReadContract, useWaitForTransactionReceipt, useWriteContract } from 'wagmi'
 import useSWR from 'swr'
 import { abi } from 'src/services/abi/launchpad'
 import moment from 'moment'
@@ -20,10 +20,15 @@ import { toast } from 'react-toastify'
 import { ModalContext } from 'src/context/modals'
 import _ from 'lodash'
 import { isMobile } from 'react-device-detect'
+import { parseEther } from 'viem'
 export default function Page() {
   const { query, locale } = useRouter()
   const { account } = useContext(Context)
   const { writeContractAsync } = useWriteContract()
+  const [hash, setHash] = useState<string | undefined>(undefined)
+  const result = useWaitForTransactionReceipt({
+    hash: hash as any,
+  })
   const { isConnected } = useAccount()
   const { setSignInOpen, setWalletConnectOpen } = useContext(ModalContext)
   const walletBalance = useBalance({
@@ -43,11 +48,13 @@ export default function Page() {
   const { data, isLoading } = useSWR<Launchpad>({ key: 'fecth-launchpad-detail', slug }, ({ slug }) =>
     getLaunchPadDetail(slug)
   )
-  const { data: onChainData }: { data: any } = useReadContract({
+
+  const { data: onChainData, refetch }: { data: any; refetch: any } = useReadContract({
     abi,
     address: data?.contract_address as any,
     functionName: 'saleDetails',
   })
+
   useEffect(() => {
     const height = document.querySelector('.desciption')?.getBoundingClientRect().height
     if (height > (isMobile ? 100 : 40)) {
@@ -56,6 +63,21 @@ export default function Page() {
       setShowSeeMore(false)
     }
   }, [locale])
+
+  useEffect(() => {
+    if (result.data && hash) {
+      if (result.data?.status == 'success') {
+        setSuccessOpen(true)
+      } else {
+        toast(t('Failed to collect NFT. Please try again or contact us.'), {
+          type: 'error',
+        })
+      }
+      refetch()
+      setProcessingText('')
+    }
+  }, [result, hash])
+
   if (!data || !onChainData) {
     return null
   }
@@ -82,39 +104,27 @@ export default function Page() {
   const mintHandler = async () => {
     try {
       setConfirmOpen(false)
-      setProcessingText(t('Processing'))
       if (account.noncustodialWalletAddress) {
-        console.log({
-          abi,
-          address: data?.contract_address as any,
-          functionName: 'purchase',
-          args: [BigInt(amount)],
-        })
+        setProcessingText(t('Please confirm the transaction in your wallet'))
         const res = await writeContractAsync({
           abi,
           address: data?.contract_address as any,
           functionName: 'purchase',
           args: [BigInt(amount)],
+          value: parseEther(
+            ((BigInt(onChainData.publicSalePrice) / BigInt(10) ** BigInt(18)) * BigInt(amount)).toString()
+          ),
         })
-        console.log(res)
-        if (res) {
-          setSuccessOpen(true)
-        } else {
-          toast(t('Mint failed'), {
-            type: 'error',
-          })
-        }
+        setHash(res)
       } else {
-        const res = await mintNfts(data.id as string, amount)
-        if (res) {
-          setSuccessOpen(true)
+        setProcessingText(t('Processing'))
+        const response = await mintNfts(data.id as string, amount)
+        if (response?.hash) {
+          setHash(response?.hash)
         } else {
-          toast(t('Mint failed'), {
-            type: 'error',
-          })
+          throw new Error('Failed to mint NFT. Please try again or contact us.')
         }
       }
-      setProcessingText('')
     } catch (error) {
       setProcessingText('')
       console.error(error)
@@ -123,6 +133,7 @@ export default function Page() {
       })
     }
   }
+
   return (
     <>
       <div className='py-8 px-4 pk-container lg:flex lg:gap-8 lg:bg-white lg:rounded-md lg:p-4 lg:mt-8'>
@@ -153,24 +164,28 @@ export default function Page() {
             )}
             <div className='lg:flex lg:gap-4 lg:items-center'>
               {isUpcoming ? (
-                <div className='mt-4 text-sm font-medium capitalize'>
+                <div className='mt-4 text-sm font-medium'>
                   {t('Starts at:')}{' '}
-                  {locale == 'en'
-                    ? startTime.format('HH:mm DD MMMM YYYY')
-                    : startTime.locale('vi').format('HH:mm DD MMMM YYYY')}
+                  <span className='capitalize'>
+                    {locale == 'en'
+                      ? startTime.format('HH:mm DD MMMM YYYY')
+                      : startTime.locale('vi').format('HH:mm DD MMMM YYYY')}
+                  </span>
                 </div>
               ) : (
-                <div className='mt-4 text-sm font-medium capitalize'>
+                <div className='mt-4 text-sm font-medium'>
                   {t('Ends at:')}{' '}
-                  {locale == 'en'
-                    ? endTime.format('HH:mm DD MMMM YYYY')
-                    : endTime.locale('vi').format('HH:mm DD MMMM YYYY')}
+                  <span className='capitalize'>
+                    {locale == 'en'
+                      ? endTime.format('HH:mm DD MMMM YYYY')
+                      : endTime.locale('vi').format('HH:mm DD MMMM YYYY')}
+                  </span>
                 </div>
               )}
               <div className='hidden lg:block w-[1px] h-4 bg-neutral-100 mt-4'></div>
               <div className='mt-4 text-sm font-medium'>
                 {onChainData.maxSalePurchasePerAddress == 0
-                  ? t('Unlimited Mints')
+                  ? t('Unlimited')
                   : locale == 'en'
                   ? `Max ${onChainData.maxSalePurchasePerAddress} per wallet`
                   : `Tối đa ${onChainData.maxSalePurchasePerAddress} NFT mỗi ví`}
@@ -259,7 +274,7 @@ export default function Page() {
         </div>
       </div>
       <Modal open={confirmOpen} setOpen={setConfirmOpen}>
-        <div className='bg-white py-8 px-4 min-w-[343px] md:max-w-[547px]'>
+        <div className='bg-white py-8 px-4 max-w-[343px] w-[90vw] md:max-w-[547px]'>
           <div className='text-lg font-semibold mt-2.5 text-center w-full'>{t('Mint NFT Confirmation')}</div>
           <div className='mt-8 space-y-4'>
             <div className='grid grid-cols-2 gap-4'>
@@ -290,10 +305,10 @@ export default function Page() {
             <div className='text-sm text-text-info-primary text-center'>
               {t(
                 amount == 1
-                  ? 'You will receive a random item from the collection'
+                  ? t('You will receive a random item from the collection')
                   : locale == 'en'
                   ? `You will receive ${amount} random items from the collection`
-                  : `Bạn sẽ nhận ${amount} vật phẩm ngẫu nhiên từ bộ sưu tập`
+                  : `Bạn sẽ nhận được ${amount} NFT ngẫu nhiên từ bộ sưu tập`
               )}
             </div>
             <Button className='w-full' size='sm' onClick={mintHandler}>
@@ -302,15 +317,20 @@ export default function Page() {
           </div>
         </div>
       </Modal>
-      <Modal open={successOpen} setOpen={setSuccessOpen}>
-        <div className='bg-white py-8 px-4 min-w-[343px] md:max-w-[547px]'>
+      <Modal
+        open={successOpen}
+        setOpen={(open) => {
+          if (!open) setHash(undefined)
+          setSuccessOpen(open)
+        }}>
+        <div className='bg-white py-8 px-4 max-w-[343px] w-[90vw] md:max-w-[547px]'>
           <div className='text-lg font-semibold mt-2.5 text-center w-full'>{t('You have owned an NFT')}</div>
           <div className='mt-8 space-y-4'>
             <div className='flex justify-center'>
               <Image
                 src={data?.featured_images[0]}
                 alt=''
-                className='w-full aspect-square rounded-mlg'
+                className='w-[146px] aspect-square rounded-mlg'
                 width={300}
                 height={300}
               />
@@ -319,7 +339,7 @@ export default function Page() {
             <div className='text-sm text-center'>{t('Thank you for supporting our artist')}</div>
 
             <Button className='w-full' size='sm'>
-              <Link href='/asc' target='_blank'>
+              <Link href='/profile' target='_blank'>
                 {t('View NFT')}
               </Link>
             </Button>
@@ -328,16 +348,16 @@ export default function Page() {
       </Modal>
       <Modal open={!!processingText} setOpen={() => setProcessingText('')} hideClose>
         {processingText ? (
-          <div className='p-8 bg-white flex flex-col items-center gap-8 min-w-[300px] md:max-w-[547px]'>
+          <div className='p-8 bg-white flex flex-col items-center gap-8 min-w-[300px] w-[90vw] md:max-w-[547px]'>
             <Image src={Loader} alt='' className='w-20 h-20 animate-spin' />
-            <div className='text-sm font-medium text-center'>{processingText}</div>
+            <div className='text-sm font-medium text-center'>{t(processingText)}</div>
           </div>
         ) : (
           <></>
         )}
       </Modal>
       <Modal open={insufficientBalanceOpen} setOpen={setInsufficientBalanceOpen}>
-        <div className='bg-white py-8 px-4 md:max-w-[547px]'>
+        <div className='bg-white py-8 px-4 max-w-[343px] w-[90vw] md:max-w-[547px]'>
           <div className='rounded-mlg p-3 flex gap-1 bg-feedback-error-50'>
             <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
               <path
@@ -354,7 +374,7 @@ export default function Page() {
             className='mt-2 rounded-lg py-2 px-3 flex items-center gap-1.5 cursor-pointer w-full border border-border-secondary justify-between'
             onClick={copyAddress}>
             <div className='text-sm font-medium break-words whitespace-pre-line w-[calc(100%-36px)]'>
-              {account.activeWalletAddress}
+              {account?.activeWalletAddress}
             </div>
             {isCopied ? (
               <svg

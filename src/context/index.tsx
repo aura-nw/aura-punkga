@@ -77,7 +77,7 @@ function ContextProvider({ children }: any) {
     redirectURL: location.href || config.REDIRECT_URL,
     clientID: config.AUTHORIZER_CLIENT_ID,
   })
-
+  
   const httpLink = new HttpLink({
     uri: `${config.API_URL}/v1/graphql`,
   })

@@ -575,7 +575,9 @@ export const linkWallet = async (message: any, signature: any) => {
 
 export const getAllLaunchPad = async (offset: number, limit: number) => {
   try {
-    const { data } = await axios.get(`${getConfig().REST_API_URL}/launchpad?offset=${offset}&limit=${limit}`)
+    const { data } = await axios.get(
+      `${getConfig().REST_API_URL}/launchpad?status=PUBLISHED&offset=${offset}&limit=${limit}`
+    )
     const launchpadData = data.data.launchpad
     const count = data.data.launchpad_aggregate.aggregate.count
     const launchpads = launchpadData?.map((launchpad: any) => {
@@ -625,7 +627,7 @@ export const getLaunchPadDetail = async (slug: string) => {
 }
 export const mintNfts = async (launchpad_id: string, amount: number) => {
   try {
-    const { data } = await axios.post(`${getConfig().REST_API_URL}/launchpad/${launchpad_id}/${amount}/mint`)
+    const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/launchpad/${launchpad_id}/${amount}/mint`)
     return data
   } catch (error) {
     console.log(error)
