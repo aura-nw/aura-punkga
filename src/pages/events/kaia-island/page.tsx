@@ -210,7 +210,7 @@ export default function KaiaIsland() {
                   size='sm'
                   onClick={() =>
                     window.open(
-                      'https://docs.google.com/forms/d/e/1FAIpQLSdpkgu8EarRd1aXgwbOsuo0dil_zwAS8fvxoSx6DfRIP7sLCg/viewform',
+                      'https://docs.google.com/forms/d/e/1FAIpQLScQbHPR9S5E623IItgHutKouzZ2CYhcEDf5e3iAU44pe9ON-A/viewform',
                       '_blank'
                     )
                   }
