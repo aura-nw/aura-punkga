@@ -1,7 +1,7 @@
 import HeadComponent from 'components/Head'
 import Layout from 'components/Layout'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import CollectionDetail from './page'
+import CollectionDetail from './collectionDetail'
 
 export default function Page(props) {
   if (props.justHead || props.pageProps?.justHead) {

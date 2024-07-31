@@ -21,7 +21,14 @@ import { ModalContext } from 'src/context/modals'
 import _ from 'lodash'
 import { isMobile } from 'react-device-detect'
 import { parseEther } from 'viem'
-export default function Page() {
+
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <CollectionDetail {...props} />
+}
+function CollectionDetail() {
   const { query, locale } = useRouter()
   const { account } = useContext(Context)
   const { writeContractAsync } = useWriteContract()

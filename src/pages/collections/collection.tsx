@@ -9,7 +9,14 @@ import { getAllLaunchPad } from 'src/services'
 import useSWR from 'swr'
 
 const LIMIT = 6
-export default function Page() {
+
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <Collection {...props} />
+}
+function Collection() {
   const { t } = useTranslation()
   const { locale } = useRouter()
   const [page, setPage] = useState(1)
