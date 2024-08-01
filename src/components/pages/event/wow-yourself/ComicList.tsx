@@ -12,8 +12,10 @@ export default function ComicList() {
   const latestComic = useApi<IComic[]>(getLatestComic, true, [])
   const [useableComic, setUseableComic] = useState<any>()
   useEffect(() => {
-    const comic = latestComic.data?.filter((data: any) =>
-      data.tags.some((lang: any) => lang.en.toLowerCase() === 'invent contest')
+    const comic = latestComic.data?.filter(
+      (data: any) =>
+        data.tags.some((lang: any) => lang.en.toLowerCase() === 'invent contest') &&
+        data.tags.some((lang: any) => lang.en.toLowerCase() === 'wow yourself')
     )
     setUseableComic(comic)
   }, [latestComic.data])
