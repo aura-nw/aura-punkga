@@ -4,7 +4,7 @@ export type Launchpad = {
   contract_address: string
   featured_images: string[]
   launchpad_creator: {
-    name: string
+    pen_name: string
     avatar_url: string
     slug: string
     wallet_address?: string

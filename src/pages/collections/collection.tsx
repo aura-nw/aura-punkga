@@ -1,5 +1,8 @@
 import { Pagination, Skeleton } from '@mui/material'
 import Banner from 'components/pages/collections/assets/banner.png'
+import BannerVN from 'components/pages/collections/assets/banner_vn.png'
+import MBanner from 'components/pages/collections/assets/m-banner.png'
+import MBannerVN from 'components/pages/collections/assets/m-banner_vn.png'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -30,12 +33,12 @@ function Collection() {
   return (
     <div className='py-8 px-4 pk-container'>
       <Image
-        src={Banner}
+        src={locale == 'vn' ? BannerVN : Banner}
         alt=''
         className='w-full aspect-[343/156] object-cover rounded-mlg overflow-hidden md:hidden'
       />
       <Image
-        src={Banner}
+        src={locale == 'vn' ? MBannerVN : MBanner}
         alt=''
         className='w-full aspect-[1280/220] object-cover rounded-mlg overflow-hidden hidden md:block'
       />
@@ -112,7 +115,7 @@ function Collection() {
                     <div className='text-xs font-medium'>
                       {t('by')}{' '}
                       <Link href={`/artist/${launchpad.launchpad_creator.slug}`} className='text-text-brand-defaul'>
-                        {launchpad.launchpad_creator.name}
+                        {launchpad.launchpad_creator.pen_name}
                       </Link>
                     </div>
                   </div>

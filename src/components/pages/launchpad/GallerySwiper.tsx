@@ -13,7 +13,7 @@ import { LeftButton, RightButton } from 'components/NavButtons'
 export default function GallerySwiper({ images }: { images: string[] }) {
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
   return (
-    <div>
+    <div className='w-full'>
       <Swiper
         spaceBetween={10}
         thumbs={{ swiper: thumbsSwiper }}
@@ -36,9 +36,11 @@ export default function GallerySwiper({ images }: { images: string[] }) {
         ))}
       </Swiper>
       <div className='relative px-4'>
-        <div className='absolute top-1/2 -translate-y-1/2 left-0 z-10 button-prev'>
-          <LeftButton />
-        </div>
+        {images.length > 1 && (
+          <div className='absolute top-1/2 -translate-y-1/2 left-0 z-10 button-prev'>
+            <LeftButton />
+          </div>
+        )}
         <Swiper
           onSwiper={setThumbsSwiper}
           spaceBetween={16}
@@ -60,9 +62,11 @@ export default function GallerySwiper({ images }: { images: string[] }) {
             </SwiperSlide>
           ))}
         </Swiper>
-        <div className='absolute top-1/2 -translate-y-1/2 right-0 z-10 button-next'>
-          <RightButton />
-        </div>
+        {images.length > 1 && (
+          <div className='absolute top-1/2 -translate-y-1/2 right-0 z-10 button-next'>
+            <RightButton />
+          </div>
+        )}
       </div>
     </div>
   )

@@ -156,7 +156,7 @@ function CollectionDetail() {
             <div className='mt-0.5 text-xs font-medium'>
               {t('by')}{' '}
               <Link href={`/artist/${data.launchpad_creator.slug}`} className='text-text-brand-defaul'>
-                {data.launchpad_creator.name}
+                {data.launchpad_creator.pen_name}
               </Link>
             </div>
             <div className={`mt-4 text-sm desciption ${seeMore ? '' : 'line-clamp-5 lg:line-clamp-2'}`}>
@@ -297,7 +297,7 @@ function CollectionDetail() {
                 <div className='mt-0.5 text-xs font-medium'>
                   {t('by')}{' '}
                   <Link href={`/artist/${data.launchpad_creator.slug}`} className='text-text-brand-defaul'>
-                    {data.launchpad_creator.name}
+                    {data.launchpad_creator.pen_name}
                   </Link>
                 </div>
               </div>
