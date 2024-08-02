@@ -35,11 +35,12 @@ FROM node:20-alpine AS runner
 
 WORKDIR /app
 
-COPY --from=deps /app/.next /app/.next
-COPY ./public /app/public
+COPY --from=deps /app/.next/standalone ./
+COPY --from=deps /app/.next/static ./.next/static
+COPY ./public ./public
 
 EXPOSE 3000
 
 ENV PORT 3000
 
-CMD ["node", ".next/standalone/server.js"]
+CMD ["node", "server.js"]
