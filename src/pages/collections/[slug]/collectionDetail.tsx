@@ -72,6 +72,7 @@ function CollectionDetail() {
   }, [locale])
 
   useEffect(() => {
+    console.log('hash result',result)
     if (result.data && hash) {
       if (result.data?.status == 'success') {
         setSuccessOpen(true)
