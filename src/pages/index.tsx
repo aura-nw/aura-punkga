@@ -1,15 +1,13 @@
 import CheckboxDropdown from 'components/CheckBox/CheckBoxDropDown'
-import DummyComic from 'components/DummyComponent/comic'
 import Layout from 'components/Layout'
-import Comic2 from 'components/pages/homepage/comic2'
 import TaskSlider from 'components/pages/homepage/comicSlider'
+import Manga from "components/pages/homepage/manga"
 import SlideSection from 'components/pages/homepage/slideSection'
 import TrendingComic from 'components/pages/homepage/trendingComic'
-import _ from 'lodash'
 import { i18n } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useApi from 'src/hooks/useApi'
 import { IComic } from 'src/models/comic'
@@ -161,7 +159,7 @@ function Home() {
                         : true
                     )
                     .map((data, index) => {
-                      return <Comic2 key={index} {...data} />
+                      return <Manga key={index} {...data} />
                     })
                 : null}
               <div></div>

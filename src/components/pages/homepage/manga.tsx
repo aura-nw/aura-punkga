@@ -11,7 +11,7 @@ import UpComing from './assets/upcoming-status.png'
 import Finished from './assets/finished-status.png'
 import { isMobile } from 'react-device-detect'
 
-export default function Comic2(props: IComic) {
+export default function Manga(props: IComic) {
   const { locale } = useRouter()
   const router = useRouter()
   const { t } = useTranslation()
