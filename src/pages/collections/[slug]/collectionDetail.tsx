@@ -72,6 +72,7 @@ function CollectionDetail() {
   }, [locale])
 
   useEffect(() => {
+    console.log('hash result',result)
     if (result.data && hash) {
       if (result.data?.status == 'success') {
         setSuccessOpen(true)
@@ -122,12 +123,14 @@ function CollectionDetail() {
             ((BigInt(onChainData.publicSalePrice) / BigInt(10) ** BigInt(18)) * BigInt(amount)).toString()
           ),
         })
+        console.log(res)
         setHash(res)
       } else {
         setProcessingText(t('Processing'))
         const response = await mintNfts(data.id as string, amount)
         if (response?.hash) {
           setHash(response?.hash)
+          console.log(response?.hash)
         } else {
           throw new Error('Failed to mint NFT. Please try again or contact us.')
         }
