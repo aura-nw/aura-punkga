@@ -633,7 +633,81 @@ export const mintNfts = async (launchpad_id: string, amount: number) => {
     console.log(error)
   }
 }
-export const getLicenseTerm = async (id: string) => {
-  const { data } = await axios.get(`https://edge.stg.storyprotocol.net/api/v1/licenses/terms/${id}`)
-  return data?.launchpad_by_pk
+
+export const getArtistMangas = async (id: string): Promise<IComic[]> => {
+  return await axios.get(`${getConfig().API_URL}/api/rest/public/creators/${id}/manga`).then((res) =>
+    res.data?.manga?.map((m: any) => {
+      const response = {
+        id: m.id,
+        slug: m.slug,
+        image: m.poster,
+        status: {
+          type: COMIC_STATUS[formatStatus(m.status)],
+          text: formatStatus(m.status),
+        },
+        authors: m.manga_creators?.map((c: any) => ({
+          id: c.creator?.isActive ? c.creator?.id : undefined,
+          slug: c.creator?.isActive ? c.creator?.slug : undefined,
+          name: c.creator?.isActive ? c.creator?.pen_name || c.creator?.name : 'Unknown creator',
+        })),
+        views: m.manga_total_views?.views || 0,
+        likes: m.manga_total_likes?.likes || 0,
+        subscriptions: m.manga_subscribers_aggregate?.aggregate?.count || 0,
+        latestChap: {
+          number: m.chapters?.[0]?.chapter_number,
+          id: m.chapters?.[0]?.id,
+        },
+        tags: m.manga_tags.map(({ tag }: any) => {
+          const r = {}
+          LANGUAGE.forEach((l) => {
+            const tagLanguage = tag.tag_languages.find((tl) => tl.language_id == l.id) || tag.tag_languages[0]
+            r[l.shortLang] = tagLanguage.value
+          })
+          return r
+        }),
+      }
+      LANGUAGE.forEach((language) => {
+        const l =
+          m.manga_languages.find((ml) => ml.language_id == language.id) ||
+          m.manga_languages.find((ml) => ml.is_main_language)
+        response[language.shortLang] = {
+          title: l ? l?.title : 'Unknown title',
+          description: l ? l?.description : 'Unknown description',
+        }
+      })
+      return response
+    })
+  )
+}
+export const getArtistArtworks = async (id: string) => {
+  return await axios
+    .get(`${getConfig().API_URL}/api/rest/public/creators/${id}/artworks?limit=99999&offset=0`)
+    .then((res) => res.data)
+}
+export const getArtistCollections = async (id: string) => {
+  const {data} = await axios.get(`${getConfig().API_URL}/api/rest/public/creators/${id}/launchpad`)
+  const launchpadData = data.launchpad
+  const count = data.launchpad.length
+  const launchpads = launchpadData?.map((launchpad: any) => {
+    LANGUAGE.forEach((l) => {
+      const launchpadLanguages =
+        launchpad.launchpad_i18ns.find((ml) => ml.i18n_language.id == l.id) ||
+        launchpad.launchpad_i18ns.find((ml) => ml.i18n_language.is_main)
+      launchpad[l.shortLang] = {
+        seo: {
+          title: launchpadLanguages?.data?.name,
+          description: launchpadLanguages?.data?.description,
+          thumbnail_url: launchpadLanguages?.data?.thumbnail_url,
+        },
+        name: launchpadLanguages?.data?.name,
+        description: launchpadLanguages?.data?.description,
+      }
+    })
+    return launchpad
+  })
+  return { launchpads: launchpads as Launchpad[], count }
+}
+export const getContests = async (id: string) => {
+  const res = await axios.get(`${getConfig().API_URL}/api/rest/public/creators/${id}/contests`)
+  return res?.data
 }

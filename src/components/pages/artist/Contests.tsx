@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { getContests } from 'src/services'
 import useSWR from 'swr'
-export const Contests = ({ id }) => {
+export default function Contests({ id }) {
   const [page, setPage] = useState(1)
   const { t } = useTranslation()
   const { locale } = useRouter()
@@ -15,9 +15,8 @@ export const Contests = ({ id }) => {
     {
       key: 'fetch-artist-contest',
       id,
-      page,
     },
-    ({ id, page }) => (id ? getContests(id, (page - 1) * 4) : null)
+    ({ id }) => (id ? getContests(id) : null)
   )
 
   if (isLoading)
@@ -27,6 +26,7 @@ export const Contests = ({ id }) => {
         <Skeleton className='w-full aspect-[343/256]' />
       </div>
     )
+    console.log(data)
   return (
     <div>
       {data?.contest?.length ? (

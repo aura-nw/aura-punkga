@@ -1,5 +1,7 @@
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
+import ArtworkList from 'components/pages/artist/Artworks'
 import CollectionList from 'components/pages/artist/Collections'
+import Contests from 'components/pages/artist/Contests'
 import MangaList from 'components/pages/artist/Mangas'
 import Manga from 'components/pages/homepage/manga'
 import DOMPurify from 'dompurify'
@@ -116,15 +118,19 @@ function Artist({ artistDetail, data }) {
                 </div>
               </DropdownToggle>
               <DropdownMenu closeOnClick>
-                <div className='p-3 space-y-2'>
+                <div className='p-2.5'>
                   <div
                     onClick={() => setTab('collections')}
-                    className={`${tab == 'collections' ? 'text-text-brand-defaul' : ''}`}>
+                    className={`py-3 font-semibold border-b border-border-teriary ${
+                      tab == 'collections' ? 'text-text-brand-defaul' : 'text-text-primary'
+                    }`}>
                     NFT Collections
                   </div>
                   <div
                     onClick={() => setTab('contests')}
-                    className={`${tab == 'contests' ? 'text-text-brand-defaul' : ''}`}>
+                    className={`py-3 font-semibold ${
+                      tab == 'contests' ? 'text-text-brand-defaul' : 'text-text-primary'
+                    }`}>
                     Contests
                   </div>
                 </div>
@@ -133,10 +139,10 @@ function Artist({ artistDetail, data }) {
           </div>
         </div>
         <div className='mt-8'>
-          {tab == 'mangas' && <MangaList list={artist.comics} />}
-          {tab == 'artworks' && <div></div>}
-          {tab == 'collections' && <CollectionList list={artist.collections} />}
-          {tab == 'contests' && <div></div>}
+          {tab == 'mangas' && <MangaList id={artist.id} />}
+          {tab == 'artworks' && <ArtworkList id={artist.id} />}
+          {tab == 'collections' && <CollectionList id={artist.id} />}
+          {tab == 'contests' && <Contests id={artist.id} />}
         </div>
       </div>
     </div>

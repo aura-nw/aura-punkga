@@ -27,7 +27,7 @@ export default function Manga(props: IComic) {
   return (
     <Link
       href={isMobile ? `/comic/${props.slug}` : `/comic/${props.slug}/chapter/1`}
-      className='w-full aspect-[16/23] rounded-[4px] relative overflow-hidden'>
+      className='w-full block aspect-[16/23] rounded-md relative overflow-hidden'>
       <Image
         src={props.image || NoImage}
         alt=''
