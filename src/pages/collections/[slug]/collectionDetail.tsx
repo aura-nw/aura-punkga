@@ -72,7 +72,7 @@ function CollectionDetail() {
   }, [locale])
 
   useEffect(() => {
-    console.log('hash result',result)
+    console.log('hash result', result)
     if (result.data && hash) {
       if (result.data?.status == 'success') {
         setSuccessOpen(true)
@@ -84,7 +84,7 @@ function CollectionDetail() {
       refetch()
       setProcessingText('')
     }
-  }, [result, hash])
+  }, [result.data?.status, hash])
 
   if (!data || !onChainData) {
     return null
