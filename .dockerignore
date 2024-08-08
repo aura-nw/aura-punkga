@@ -9,4 +9,7 @@
 .env.test.local
 .env.production.local
 
-.next
+.git
+.github
+
+Dockerfile
