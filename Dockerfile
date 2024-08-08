@@ -1,8 +1,7 @@
 
 FROM node:20-alpine AS deps
 RUN apk add --no-cache libc6-compat
-RUN apk add --no-cache --update alpine-sdk
-RUN apk add --no-cache python3 py3-pip
+
 WORKDIR /app
 
 COPY package.json yarn.lock ./
@@ -32,8 +31,16 @@ RUN yarn build
 
 # USER nextjs
 
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+COPY --from=deps /app/.next/standalone ./
+COPY --from=deps /app/.next/static ./.next/static
+COPY ./public ./public
+
 EXPOSE 3000
 
 ENV PORT 3000
 
-CMD ["yarn", "start"]
+CMD ["node", "server.js"]
