@@ -153,7 +153,7 @@ function ContextProvider({ children }: any) {
             chainId: config.CHAIN_INFO.evmChainId,
           },
           {
-            onSuccess: signConnectMessage,
+            onSuccess: () => signConnectMessage(data),
             onError: (error) => console.error(error),
           }
         )
