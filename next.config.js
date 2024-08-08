@@ -22,4 +22,5 @@ module.exports = {
     ],
     unoptimized: true,
   },
+  output: "standalone"
 }
