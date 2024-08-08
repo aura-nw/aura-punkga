@@ -45,21 +45,23 @@ export default function ArtworkList({ id }) {
       {data?.artworks?.length ? (
         <>
           <Modal open={open} setOpen={setOpen} preventClickOutsideToClose={false}>
-            <Swiper slidesPerView={1} autoHeight initialSlide={index} >
-              {data?.artworks?.map((artwork, index) => (
-                <SwiperSlide key={index}>
-                  <Image
-                    width={300}
-                    height={300}
-                    src={artwork.url}
-                    alt=''
-                    className='w-full h-auto rounded-md object-cover'
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
+            <div className='lg:max-w-[50vw]'>
+              <Swiper slidesPerView={1} autoHeight initialSlide={index}>
+                {data?.artworks?.map((artwork, index) => (
+                  <SwiperSlide key={index}>
+                    <Image
+                      width={300}
+                      height={300}
+                      src={artwork.url}
+                      alt=''
+                      className='w-full h-auto rounded-md object-cover'
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
           </Modal>
-          <div className='grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4'>
+          <div className='grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4'>
             {data?.artworks?.slice((page - 1) * 12, page * 12)?.map((artwork, index) => (
               <div
                 key={index}
