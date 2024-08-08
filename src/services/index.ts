@@ -685,7 +685,7 @@ export const getArtistArtworks = async (id: string) => {
     .then((res) => res.data)
 }
 export const getArtistCollections = async (id: string) => {
-  const {data} = await axios.get(`${getConfig().API_URL}/api/rest/public/creators/${id}/launchpad`)
+  const { data } = await axios.get(`${getConfig().API_URL}/api/rest/public/creators/${id}/launchpad`)
   const launchpadData = data.launchpad
   const count = data.launchpad.length
   const launchpads = launchpadData?.map((launchpad: any) => {
@@ -708,20 +708,72 @@ export const getArtistCollections = async (id: string) => {
   return { launchpads: launchpads as Launchpad[], count }
 }
 export const getContests = async (id: string) => {
-  const {data} = await axios.get(`${getConfig().API_URL}/api/rest/public/creators/${id}/contests`)
-   const contestData = data.contest
-   const count = data.contest_aggregate.aggregate.count
-   const contests = contestData?.map((contest: any) => {
-     LANGUAGE.forEach((l) => {
-       const contestLanguage =
-         contest.contest_i18ns.find((ml) => ml.i18n_language.id == l.id) ||
-         contest.contest_i18ns.find((ml) => ml.i18n_language.is_main)
-       contest[l.shortLang] = {
-         title: contestLanguage?.data?.title,
-         image: contestLanguage?.data?.image,
-       }
-     })
-     return contest
-   })
-   return { contests: contests, count }
+  const { data } = await axios.get(`${getConfig().API_URL}/api/rest/public/creators/${id}/contests`)
+  const contestData = data.contest
+  const count = data.contest_aggregate.aggregate.count
+  const contests = contestData?.map((contest: any) => {
+    LANGUAGE.forEach((l) => {
+      const contestLanguage =
+        contest.contest_i18ns.find((ml) => ml.i18n_language.id == l.id) ||
+        contest.contest_i18ns.find((ml) => ml.i18n_language.is_main)
+      contest[l.shortLang] = {
+        title: contestLanguage?.data?.title,
+        image: contestLanguage?.data?.image,
+      }
+    })
+    return contest
+  })
+  return { contests: contests, count }
+}
+export const getContestMangaAndArtwork = async (id: string, contestId: string) => {
+  const { data: mangaData } = await axios.get(
+    `${getConfig().API_URL}/api/rest/public/creators/${id}/contests/${contestId}/manga`
+  )
+  const { data: artworksData } = await axios.get(
+    `${getConfig().API_URL}/api/rest/public/creators/${id}/contests/${contestId}/artworks`
+  )
+  return {
+    mangas: mangaData.manga?.map((m: any) => {
+      const response = {
+        id: m.id,
+        slug: m.slug,
+        image: m.poster,
+        status: {
+          type: COMIC_STATUS[formatStatus(m.status)],
+          text: formatStatus(m.status),
+        },
+        authors: m.manga_creators?.map((c: any) => ({
+          id: c.creator?.isActive ? c.creator?.id : undefined,
+          slug: c.creator?.isActive ? c.creator?.slug : undefined,
+          name: c.creator?.isActive ? c.creator?.pen_name || c.creator?.name : 'Unknown creator',
+        })),
+        views: m.manga_total_views?.views || 0,
+        likes: m.manga_total_likes?.likes || 0,
+        subscriptions: m.manga_subscribers_aggregate?.aggregate?.count || 0,
+        latestChap: {
+          number: m.chapters?.[0]?.chapter_number,
+          id: m.chapters?.[0]?.id,
+        },
+        tags: m.manga_tags.map(({ tag }: any) => {
+          const r = {}
+          LANGUAGE.forEach((l) => {
+            const tagLanguage = tag.tag_languages.find((tl) => tl.language_id == l.id) || tag.tag_languages[0]
+            r[l.shortLang] = tagLanguage.value
+          })
+          return r
+        }),
+      }
+      LANGUAGE.forEach((language) => {
+        const l =
+          m.manga_languages.find((ml) => ml.language_id == language.id) ||
+          m.manga_languages.find((ml) => ml.is_main_language)
+        response[language.shortLang] = {
+          title: l ? l?.title : 'Unknown title',
+          description: l ? l?.description : 'Unknown description',
+        }
+      })
+      return response
+    }),
+    artworks: artworksData,
+  }
 }
