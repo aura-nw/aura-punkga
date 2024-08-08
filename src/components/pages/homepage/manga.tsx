@@ -11,7 +11,7 @@ import UpComing from './assets/upcoming-status.png'
 import Finished from './assets/finished-status.png'
 import { isMobile } from 'react-device-detect'
 
-export default function Comic2(props: IComic) {
+export default function Manga(props: IComic) {
   const { locale } = useRouter()
   const router = useRouter()
   const { t } = useTranslation()
@@ -27,7 +27,7 @@ export default function Comic2(props: IComic) {
   return (
     <Link
       href={isMobile ? `/comic/${props.slug}` : `/comic/${props.slug}/chapter/1`}
-      className='w-full aspect-[16/23] rounded-[4px] relative overflow-hidden'>
+      className='w-full block aspect-[16/23] rounded-md relative overflow-hidden'>
       <Image
         src={props.image || NoImage}
         alt=''

@@ -20,6 +20,8 @@ import ContextProvider, { Context } from 'src/context'
 import { getWagmiConfig } from 'src/services/wagmi/config'
 import 'src/styles/globals.scss'
 import { WagmiProvider } from 'wagmi'
+import '@radix-ui/themes/styles.css'
+import { Theme } from '@radix-ui/themes'
 const pjs = Plus_Jakarta_Sans({ subsets: ['latin', 'vietnamese'] })
 const ws = Work_Sans({ subsets: ['latin', 'vietnamese'] })
 const inter = Inter({ subsets: ['latin', 'vietnamese'] })

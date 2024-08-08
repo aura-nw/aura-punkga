@@ -1,26 +1,18 @@
+import { Box, styled, Tab, Tabs } from '@mui/material'
+import MascotEmpty from 'assets/images/mascot-empty.png'
 import DummyComic from 'components/DummyComponent/comic'
-import MComic from 'components/pages/homepage/comic'
-import Analytic from 'components/pages/profile/analytic'
-import Comic from 'components/pages/profile/comic'
-import NFTList from 'components/pages/profile/nfts'
+import Manga from "components/pages/homepage/manga"
+import NewInfo from 'components/pages/profile/newInfo'
+import NewNFTList from 'components/pages/profile/newNfts'
+import RewardHistory from 'components/pages/profile/rewardHistory'
+import { Inter } from 'next/font/google'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Fragment, useContext, useEffect, useState } from 'react'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
-import { subscribe, unsubscribe } from 'src/services'
-import Info from '../../components/pages/profile/info'
-import LeaderBoard from '../../components/pages/profile/leaderboard'
-import Quest from '../../components/pages/profile/quests'
 import NewQuest from '../../components/pages/profile/newQuests'
-import NewInfo from 'components/pages/profile/newInfo'
-import { Box, styled, Tab, Tabs } from '@mui/material'
-import Comic2 from 'components/pages/homepage/comic2'
-import RewardHistory from 'components/pages/profile/rewardHistory'
-import NewNFTList from 'components/pages/profile/newNfts'
-import MascotEmpty from 'assets/images/mascot-empty.png'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
 export default function Page(props) {
@@ -183,7 +175,7 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
                               {curentlyReading.data?.map((data, index) => (
                                 <Fragment key={index}>
                                   <div className='block'>
-                                    <Comic2 key={index} {...data} />
+                                    <Manga key={index} {...data} />
                                   </div>
                                 </Fragment>
                               ))}
@@ -217,10 +209,10 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
                               {subscribeList.data?.map((data, index) => (
                                 <Fragment key={index}>
                                   <div className='hidden md:block'>
-                                    <Comic2 key={index} {...data} />
+                                    <Manga key={index} {...data} />
                                   </div>
                                   <div className='md:hidden'>
-                                    <Comic2 key={index} {...data} />
+                                    <Manga key={index} {...data} />
                                   </div>
                                 </Fragment>
                               ))}
