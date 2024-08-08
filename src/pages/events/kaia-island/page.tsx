@@ -1,6 +1,6 @@
 import Modal from 'components/Modal'
 import Tooltip from 'components/Tooltip'
-import ChupButton from 'components/core/Button/ChupButton'
+import Button from 'components/core/Button/Button'
 import BannerDesktop from 'components/pages/event/kaia-island/assets/desktop-banner.png'
 import BannerDesktopVN from 'components/pages/event/kaia-island/assets/desktop-banner-vn.png'
 import Artworks from 'components/pages/event/kaia-island/Artwork'
@@ -206,7 +206,7 @@ export default function KaiaIsland() {
             <div className='flex gap-4 flex-col'>
               <ViewRule />
               {moment().isAfter(moment('2024-07-31')) && (
-                <ChupButton
+                <Button
                   size='sm'
                   onClick={() =>
                     window.open(
@@ -216,7 +216,7 @@ export default function KaiaIsland() {
                   }
                   className='w-full'>
                   {t('Submit my artwork')}
-                </ChupButton>
+                </Button>
               )}
             </div>
             <div className='bg-neutral-white rounded-mlg py-5 px-4 flex flex-col gap-6 text-[#1C1C1C]'>
@@ -254,9 +254,9 @@ function ViewRule() {
   const { locale } = useRouter()
   return (
     <>
-      <ChupButton color='dark' size='sm' className='w-full' onClick={() => setOpen(true)}>
+      <Button color='dark' size='sm' className='w-full' onClick={() => setOpen(true)}>
         {t('View Rule')}
-      </ChupButton>
+      </Button>
       <Modal open={open} setOpen={setOpen}>
         {locale == 'vn' ? (
           <div className=' w-[90vw] p-5 lg:p-10 max-w-[1000px] max-h-[90vh] overflow-auto'>

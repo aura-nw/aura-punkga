@@ -1,4 +1,4 @@
-import ChupButton from 'components/core/Button/ChupButton'
+import Button from 'components/core/Button/Button'
 import _ from 'lodash'
 import moment from 'moment'
 import { useRouter } from 'next/router'
@@ -120,15 +120,15 @@ export default function QuizQuest({
           )
         })}
         {quest.reward_status == 'CAN_CLAIM' || correctAnswerIndex != -1 ? (
-          <ChupButton size='sm' loading={loading} onClick={claimQuestHandler} className='w-full'>
+          <Button size='sm' loading={loading} onClick={claimQuestHandler} className='w-full'>
             {t('Claim Reward')}
-          </ChupButton>
+          </Button>
         ) : quest.reward_status == 'OUT_OF_SLOT' ? (
-          <ChupButton size='sm' disabled className='w-full'>
+          <Button size='sm' disabled className='w-full'>
             {t('Out of reward')}
-          </ChupButton>
+          </Button>
         ) : quest.reward_status == 'CLAIMED' && quest.repeat == 'Daily' ? (
-          <ChupButton size='sm' disabled className='w-full'>
+          <Button size='sm' disabled className='w-full'>
             <Countdown
               date={moment().add(1, 'd').startOf('day').toISOString()}
               renderer={({ hours, minutes, seconds }) => {
@@ -145,15 +145,15 @@ export default function QuizQuest({
                 )
               }}
             />
-          </ChupButton>
+          </Button>
         ) : selectedAnswer != -1 ? (
-          <ChupButton size='sm' loading={submitLoading} onClick={answerQuestHandler} className='w-full'>
+          <Button size='sm' loading={submitLoading} onClick={answerQuestHandler} className='w-full'>
             {t('Submit')}
-          </ChupButton>
+          </Button>
         ) : (
-          <ChupButton size='sm' disabled className='w-full'>
+          <Button size='sm' disabled className='w-full'>
             {t('Submit')}
-          </ChupButton>
+          </Button>
         )}
       </div>
     </div>

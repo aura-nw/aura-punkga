@@ -11,7 +11,7 @@ import _ from 'lodash'
 import Eye from 'assets/images/icons/eye.svg'
 import EyeClosed from 'assets/images/icons/eye_closed.svg'
 import MainButton from 'components/Button/MainButton'
-import ChupButton from 'components/core/Button/ChupButton'
+import Button from 'components/core/Button/Button'
 import { Box, Modal } from '@mui/material'
 export default function ChangingPasswordModal({ open, setOpen }) {
   const [success, setSuccess] = useState(false)
@@ -159,14 +159,14 @@ export default function ChangingPasswordModal({ open, setOpen }) {
                 placeholder={t('Re-enter new password')}
               />
             </div>
-            <ChupButton
+            <Button
               size='sm'
               disabled={!newPassword || !rePassword || !currentPassword}
               className='w-full'
               loading={loading}
               onClick={changePasswordHandler}>
               {t('Confirm')}
-            </ChupButton>
+            </Button>
           </div>
           <div
             className={`absolute inset-0 py-6 px-4 flex flex-col gap-6 transition-all duration-300 ${success ? 'opacity-100' : 'opacity-0 pointer-events-none'
@@ -177,13 +177,13 @@ export default function ChangingPasswordModal({ open, setOpen }) {
               <p className='text-sm leading-[18px] font-semibold text-center w-[246px] mx-auto'>
                 {t('You can use the new password to log in Punkga now')}
               </p>
-              <ChupButton
+              <Button
                 className='w-full'
                 onClick={() => {
                   setOpen(false)
                 }}>
                 {t('Continue')}
-              </ChupButton>
+              </Button>
             </div>
           </div>
         </div>

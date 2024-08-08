@@ -34,7 +34,7 @@ import useApi from 'src/hooks/useApi'
 import { useClickOutside } from 'src/hooks/useClickOutside'
 import { search } from 'src/services'
 import { shorten } from 'src/utils'
-import ChupButton from 'components/core/Button/ChupButton'
+import NewButton from 'components/core/Button/Button'
 import { useAccount, useBalance } from 'wagmi'
 import getConfig from 'next/config'
 
@@ -143,103 +143,20 @@ export default function Header({ className }: { className?: string }) {
                   (address != account?.activeWalletAddress || !isConnected) &&
                   account?.noncustodialWalletAddress && (
                     <div className='flex gap-3 items-center '>
-                      <ChupButton size='xs' color='dark' onClick={() => setWalletConnectOpen(true)}>
+                      <NewButton size='xs' color='dark' onClick={() => setWalletConnectOpen(true)}>
                         {t('Connect Wallet')}
-                      </ChupButton>
+                      </NewButton>
                     </div>
                   )
                 ) : (
-                  <ChupButton size='xs' color='dark' onClick={() => setSignInOpen(true)}>
+                  <NewButton size='xs' color='dark' onClick={() => setSignInOpen(true)}>
                     {t('Sign in')}
-                  </ChupButton>
+                  </NewButton>
                 )}
                 <div className='w-6 h-6 relative'>
                   <Image src={Menu} alt='menu icon' width={24} height={24} onClick={() => setOpenNavigation(true)} />
                 </div>
               </div>
-            </div>
-          </div>
-          <div className={`${openProfile ? 'max-h-[280px]' : 'max-h-[0px]'} overflow-hidden transition-all`}>
-            {account?.activeWalletAddress ? (
-              <div className='my-[10px] flex flex-col w-full  gap-3 bg-light-gray rounded-xl p-3'>
-                <div
-                  className='flex justify-between items-center text-second-color text-sm font-medium  relative'
-                  onClick={copyAddress}>
-                  <div className='flex gap-2 items-center'>
-                    {account?.noncustodialWalletAddress ? (
-                      <></>
-                    ) : (
-                      <Image src={account.image ? account.image : PunkgaWallet} width={24} height={24} alt='' />
-                    )}
-                    <div className='text-text-info-primary' onClick={handleOpenWalletOnExplorer}>{`${shorten(
-                      account?.activeWalletAddress,
-                      8,
-                      8
-                    )}`}</div>
-                  </div>
-                  <span
-                    className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
-                      isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                    }`}>
-                    {t('Copied')}
-                  </span>
-                  <Image width={18} height={18} src={CopySvg} alt='' />
-                </div>
-                <div className='flex justify-between items-center text-sm font-semibold  leading-[18px]'>
-                  <div className=''>{`${t('Balance')}`}</div>
-                  <div className='flex items-center'>
-                    {hideBalance
-                      ? '********'
-                      : `${(+walletBalance?.data?.formatted || 0).toFixed(2)} ${walletBalance?.data?.symbol || 'AURA'}`}
-                    <span className='inline-block'>
-                      {
-                        <div className='ml-2 relative'>
-                          {hideBalance ? (
-                            <Image
-                              src={EyeClose}
-                              alt=''
-                              onClick={() => setHideBalance(false)}
-                              className='w-[18px] h-[18px] cursor-pointer'
-                            />
-                          ) : (
-                            <Image
-                              src={EyeOpen}
-                              alt=''
-                              onClick={() => setHideBalance(true)}
-                              className='w-[18px] h-[18px] cursor-pointer'
-                            />
-                          )}
-                        </div>
-                      }
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <></>
-            )}
-            <div
-              className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'
-              onClick={() => router.push('/profile')}>
-              {t('My profile')}
-            </div>
-            {!account?.noncustodialWalletAddress && (
-              <div
-                className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'
-                onClick={() => setMigrateWalletOpen(true)}>
-                {t('Migrate wallet')}{' '}
-                <span>
-                  <Image src={Stars} alt='' className='inline-block ml-1' />
-                </span>
-              </div>
-            )}
-            <div
-              className='py-3 text-sm leading-[18px] text-[#414141] font-bold border-b border-[#F2F2F2]'
-              onClick={() => {
-                setOpenProfile(false)
-                logout()
-              }}>
-              {t('Log out')}
             </div>
           </div>
           {openNavigation && (
@@ -274,19 +191,19 @@ export default function Header({ className }: { className?: string }) {
                       className='flex justify-between items-center text-second-color text-lg font-semibold  relative'
                       onClick={copyAddress}>
                       <div className='flex gap-2 items-center text-base'>
-                        <Image src={account.image ? account.image : PunkgaWallet} width={32} height={32} alt='' className='rounded-full' />
+                        <Image
+                          src={account.image ? account.image : PunkgaWallet}
+                          width={32}
+                          height={32}
+                          alt=''
+                          className='rounded-full'
+                        />
                         <div className='text-[#4E5056] font-semibold'>{account?.name}</div>
                       </div>
-                      <span
-                        className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
-                          isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                        }`}>
-                        {t('Copied')}
-                      </span>
                     </div>
                     <div className='h-[1px] w-full bg-[#DEDEDE] mt-[10px] mb-[16px]'></div>
                     <div className='text-[#ABABAB] text-sm mb-1'>{`${t('Wallet')}`}</div>
-                    <div className='flex justify-between items-center text-[#4E5056] text-base font-semibold'>
+                    <div className='flex justify-between items-center text-[#4E5056] text-base font-semibold relative'>
                       <div className='text-text-info-primary' onClick={handleOpenWalletOnExplorer}>{`${shorten(
                         account?.activeWalletAddress,
                         8,
@@ -295,6 +212,12 @@ export default function Header({ className }: { className?: string }) {
                       <div onClick={copyAddress}>
                         <Image width={18} height={18} src={CopySvg} alt='' />
                       </div>
+                      <span
+                        className={`transition-all w-fit mr-2 absolute -top-full right-0 text-xs bg-light-gray py-1 px-2 border rounded-md ${
+                          isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                        }`}>
+                        {t('Copied')}
+                      </span>
                     </div>
                     <div className='text-[#ABABAB] text-sm mt-3 mb-1'>{`${t('Balance')}`}</div>
                     <div className='flex justify-between items-center text-[#4E5056] text-base font-semibold leading-5'>
@@ -329,9 +252,9 @@ export default function Header({ className }: { className?: string }) {
                     </div>
                     {!account?.noncustodialWalletAddress ? (
                       <>
-                        <ChupButton size='sm' className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
+                        <NewButton size='sm' className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
                           {t('Migrate your wallet')}
-                        </ChupButton>
+                        </NewButton>
                       </>
                     ) : null}
                     {account?.noncustodialWalletAddress && account?.name && !isConnected && (
@@ -381,12 +304,30 @@ export default function Header({ className }: { className?: string }) {
                   </svg>
                   {t('Event')}
                 </div>
-                {/* <div
+                <div
                   className='flex gap-3 items-center py-4 text-sm leading-[18px] font-semibold'
-                  onClick={() => router.push('/collection')}>
-                  <Image src={Collection} alt='' className='w-5 h-5' />
+                  onClick={() => {
+                    setOpenNavigation(false)
+                    router.push('/collections')
+                  }}>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
+                    <path
+                      d='M4 18H16C17.1046 18 18 17.0574 18 15.8947V4.10526C18 2.94256 17.1046 2 16 2H4C2.89543 2 2 2.94256 2 4.10526V15.8947C2 17.0574 2.89543 18 4 18Z'
+                      stroke='#009640'
+                      strokeWidth='1.5'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                    <path
+                      d='M5 12.9999H15L11.6667 7.16657L9.16667 10.9166L7.5 9.2499L5 12.9999Z'
+                      stroke='#009640'
+                      strokeWidth='1.5'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                  </svg>
                   {t('Collection')}
-                </div> */}
+                </div>
                 <div
                   className='flex gap-3 items-center py-4 text-sm leading-[18px] font-semibold'
                   onClick={() => {
@@ -650,9 +591,13 @@ export default function Header({ className }: { className?: string }) {
                 {t('Event')}
               </span>
             </Button>
-            {/* <Button size='md' onClick={() => router.push('/about-us')}>
-              <span style={{ fontWeight: '500' }}>{t('IP Asset')}</span>
-            </Button> */}
+            <Button onClick={() => router.push('/collections')}>
+              <span
+                style={{ fontWeight: '500' }}
+                className={`${pathname.includes('/collections') ? 'text-text-brand-defaul' : ''}`}>
+                {t('Collection')}
+              </span>
+            </Button>
             <Button size='md' onClick={() => router.push('/about-us')}>
               <span
                 style={{ fontWeight: '500' }}
@@ -685,19 +630,19 @@ export default function Header({ className }: { className?: string }) {
                           className='flex justify-between items-center text-second-color text-lg font-semibold  relative'
                           onClick={copyAddress}>
                           <div className='flex gap-2 items-center text-base'>
-                            <Image src={account.image ? account.image : PunkgaWallet} width={32} height={32} alt='' className='rounded-full'/>
+                            <Image
+                              src={account.image ? account.image : PunkgaWallet}
+                              width={32}
+                              height={32}
+                              alt=''
+                              className='rounded-full'
+                            />
                             <div className='text-[#4E5056] font-semibold'>{account?.name}</div>
                           </div>
-                          <span
-                            className={`transition-all w-fit mr-2 absolute -top-full right-[20px] text-xs bg-light-gray py-1 px-2 border rounded-md ${
-                              isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                            }`}>
-                            {t('Copied')}
-                          </span>
                         </div>
                         <div className='h-[1px] w-full bg-[#DEDEDE] mt-[10px] mb-[16px]'></div>
                         <div className='text-[#ABABAB] text-sm mb-1'>{`${t('Wallet')}`}</div>
-                        <div className='flex justify-between items-center text-[#4E5056] text-base font-semibold'>
+                        <div className='flex justify-between items-center text-[#4E5056] text-base font-semibold relative'>
                           <div className='text-text-info-primary' onClick={handleOpenWalletOnExplorer}>{`${shorten(
                             account?.activeWalletAddress,
                             8,
@@ -706,6 +651,12 @@ export default function Header({ className }: { className?: string }) {
                           <div onClick={copyAddress}>
                             <Image width={18} height={18} src={CopySvg} alt='' />
                           </div>
+                          <span
+                            className={`transition-all w-fit mr-2 absolute -top-full right-0 text-xs bg-light-gray py-1 px-2 border rounded-md ${
+                              isCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                            }`}>
+                            {t('Copied')}
+                          </span>
                         </div>
                         <div className='text-[#ABABAB] text-sm mt-3 mb-1'>{`${t('Balance')}`}</div>
                         <div className='flex justify-between items-center text-[#4E5056] text-base font-semibold leading-5'>
@@ -740,9 +691,9 @@ export default function Header({ className }: { className?: string }) {
                         </div>
                         {!account?.noncustodialWalletAddress ? (
                           <>
-                            <ChupButton size='sm' className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
+                            <NewButton size='sm' className='mt-3 w-full' onClick={() => setMigrateWalletOpen(true)}>
                               {t('Migrate wallet')}
-                            </ChupButton>
+                            </NewButton>
                           </>
                         ) : null}
                         {account?.noncustodialWalletAddress && account?.name && !isConnected && (
@@ -765,9 +716,9 @@ export default function Header({ className }: { className?: string }) {
                   </DropdownMenu>
                 </Dropdown>
               ) : (
-                <ChupButton size='sm' color='dark' onClick={() => setSignInOpen(true)}>
+                <NewButton size='sm' color='dark' onClick={() => setSignInOpen(true)}>
                   {t('Sign in')}
-                </ChupButton>
+                </NewButton>
               )}
               {(address != account?.activeWalletAddress || !isConnected) &&
                 account?.verified &&
@@ -775,9 +726,9 @@ export default function Header({ className }: { className?: string }) {
                 account?.noncustodialWalletAddress && (
                   <div className='flex gap-3 items-center '>
                     <div className='h-4 w-[1px] bg-[#E0E0E0]'></div>
-                    <ChupButton size='sm' color='dark' onClick={() => setWalletConnectOpen(true)}>
+                    <NewButton size='sm' color='dark' onClick={() => setWalletConnectOpen(true)}>
                       {t('Connect Wallet')}
-                    </ChupButton>
+                    </NewButton>
                   </div>
                 )}
             </div>

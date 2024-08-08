@@ -6,7 +6,7 @@ type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 type ButtonVariant = 'filled' | 'outlined'
 type ButtonColor = 'green' | 'dark'
 
-interface ChupButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSize
   variant?: ButtonVariant
   color?: ButtonColor
@@ -15,7 +15,7 @@ interface ChupButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean
 }
 
-const ChupButton: React.FC<ChupButtonProps> = ({
+const Button: React.FC<ButtonProps> = ({
   size = 'lg',
   variant = 'filled',
   color = 'green',
@@ -74,7 +74,7 @@ const ChupButton: React.FC<ChupButtonProps> = ({
                 focus:bg-[#00C04D] focus:border-[#00C04D]
                 disabled:bg-[#B0B0B0] disabled:border-[#B0B0B0]`
       } else {
-        return `${baseClasses} bg-gray-800 border-gray-800 text-[#F6F6F6]
+        return `${baseClasses} bg-[#183442] border-gray-800 text-[#F6F6F6]
                 hover:bg-[#3D5059] hover:border-[#3D5059]
                 focus:bg-[#0A161C] focus:border-[#0A161C]
                 disabled:bg-[#B0B0B0] disabled:border-[#B0B0B0]`
@@ -140,4 +140,4 @@ const ChupButton: React.FC<ChupButtonProps> = ({
   )
 }
 
-export default ChupButton
+export default Button

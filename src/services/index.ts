@@ -6,6 +6,7 @@ import { privateAxios } from 'src/context'
 import { formatStatus } from 'src/utils'
 import { getItem } from 'src/utils/localStorage'
 import { Campaign } from 'src/models/campaign'
+import { Launchpad } from 'src/models/launchpad'
 export const getEnvKey = () => (getConfig().CHAIN_ID.includes('6322') ? 'xstaxy' : 'euphoria')
 export const getLatestComic = async (): Promise<IComic[]> => {
   return await axios.get(`${getConfig().API_URL}/api/rest/public/latest`).then((res) =>
@@ -572,13 +573,65 @@ export const linkWallet = async (message: any, signature: any) => {
   }
 }
 
-export const getAllLaunchPad = async () => {
-  const { data } = await axios.get(`https://hasura.hackathon.punkga.me/api/rest/public/launchpad`)
-  return data
+export const getAllLaunchPad = async (offset: number, limit: number) => {
+  try {
+    const { data } = await axios.get(
+      `${getConfig().REST_API_URL}/launchpad?status=PUBLISHED&offset=${offset}&limit=${limit}`
+    )
+    const launchpadData = data.data.launchpad
+    const count = data.data.launchpad_aggregate.aggregate.count
+    const launchpads = launchpadData?.map((launchpad: any) => {
+      LANGUAGE.forEach((l) => {
+        const launchpadLanguages =
+          launchpad.launchpad_i18ns.find((ml) => ml.language_id == l.id) ||
+          launchpad.launchpad_i18ns.find((ml) => ml.language_id == 1)
+        launchpad[l.shortLang] = {
+          seo: {
+            title: launchpadLanguages?.data?.name,
+            description: launchpadLanguages?.data?.description,
+            thumbnail_url: launchpadLanguages?.data?.thumbnail_url,
+          },
+          name: launchpadLanguages?.data?.name,
+          description: launchpadLanguages?.data?.description,
+        }
+      })
+      return launchpad
+    })
+    return { launchpads: launchpads as Launchpad[], count }
+  } catch (error) {
+    console.error(error)
+  }
 }
-export const getLaunchPadDetail = async (id: string) => {
-  const { data } = await axios.get(`https://hasura.hackathon.punkga.me/api/rest/public/launchpad/${id}`)
-  return data?.launchpad_by_pk
+export const getLaunchPadDetail = async (slug: string) => {
+  try {
+    const { data } = await axios.get(`${getConfig().REST_API_URL}/launchpad/slug/${slug}`)
+    const res = data?.data?.launchpad?.[0]
+    LANGUAGE.forEach((l) => {
+      const launchpadLanguages =
+        res.launchpad_i18ns.find((ml) => ml.language_id == l.id) ||
+        res.launchpad_i18ns.find((ml) => ml.language_id == 1)
+      res[l.shortLang] = {
+        seo: {
+          title: launchpadLanguages?.data?.name,
+          description: launchpadLanguages?.data?.description,
+          thumbnail_url: launchpadLanguages?.data?.thumbnail_url,
+        },
+        name: launchpadLanguages?.data?.name,
+        description: launchpadLanguages?.data?.description,
+      }
+    })
+    return res
+  } catch (error) {
+    console.log(error)
+  }
+}
+export const mintNfts = async (launchpad_id: string, amount: number) => {
+  try {
+    const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/launchpad/${launchpad_id}/${amount}/mint`)
+    return data
+  } catch (error) {
+    console.log(error)
+  }
 }
 export const getLicenseTerm = async (id: string) => {
   const { data } = await axios.get(`https://edge.stg.storyprotocol.net/api/v1/licenses/terms/${id}`)

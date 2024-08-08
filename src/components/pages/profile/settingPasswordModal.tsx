@@ -1,6 +1,6 @@
 import { Box, Modal } from '@mui/material'
 import OutlineTextField from 'components/Input/TextField/Outline'
-import ChupButton from 'components/core/Button/ChupButton'
+import Button from 'components/core/Button/Button'
 import SuccessImg from 'images/Mascot2.png'
 import CheckSquare from 'images/icons/check_square_fill.svg'
 import _ from 'lodash'
@@ -121,9 +121,9 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
                 inputRef={r1}
               />
             </div>
-            <ChupButton size='sm' className='w-full' disabled={!newPassword || !rePassword} loading={loading} onClick={setPasswordHandler}>
+            <Button size='sm' className='w-full' disabled={!newPassword || !rePassword} loading={loading} onClick={setPasswordHandler}>
               {t('Confirm')}
-            </ChupButton>
+            </Button>
           </div>
           <div
             className={`absolute inset-0 py-6 px-4 flex flex-col gap-4 transition-all duration-300 ${success ? 'opacity-100' : 'opacity-0 pointer-events-none'
@@ -133,13 +133,13 @@ export default function SettingPasswordModal({ open, setOpen, profile }) {
             <p className='text-sm leading-[18px] font-semibold text-center w-[274px] mx-auto text-[#414141]'>
               {t('You can use the new password to log in Punkga now')}
             </p>
-            <ChupButton
+            <Button
               className='w-full'
               onClick={() => {
                 setOpen(false)
               }}>
               {t('Confirm')}
-            </ChupButton>
+            </Button>
           </div>
         </div>
       </Box>

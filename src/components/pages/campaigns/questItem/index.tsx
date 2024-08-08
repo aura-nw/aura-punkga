@@ -1,5 +1,5 @@
 import Modal from 'components/Modal'
-import ChupButton from 'components/core/Button/ChupButton'
+import Button from 'components/core/Button/Button'
 import LabelChip from 'components/core/Chip/Label'
 import XPImage from 'components/pages/campaigns/assets/illus.svg'
 import KPImage from 'components/pages/campaigns/assets/ic_Kp.svg'
@@ -350,7 +350,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
               {t('Quest completed')}
             </div>
           ) : quest.reward_status == 'OUT_OF_SLOT' ? (
-            <ChupButton
+            <Button
               loading={loading}
               variant='filled'
               disabled
@@ -360,7 +360,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                 e.stopPropagation()
               }}>
               {t('Out of reward')}
-            </ChupButton>
+            </Button>
           ) : !quest.unlock ? (
             <div className='flex gap-[10px] items-center text-xxs leading-[13px] text-text-primary'>
               <div>
@@ -380,7 +380,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
               </div>
             </div>
           ) : quest.reward_status == 'CAN_CLAIM' ? (
-            <ChupButton
+            <Button
               loading={loading}
               variant='filled'
               color='green'
@@ -390,7 +390,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                 e.stopPropagation()
               }}>
               {t('Claim Reward')}
-            </ChupButton>
+            </Button>
           ) : quest.reward_status == 'CLAIMED' && quest.repeat == 'Daily' ? (
             <div className='text-xs w-fit bg-[#DEDEDE] leading-[15px] font-bold text-medium-gray px-6 pt-1 pb-[5px] rounded-[20px]'>
               <Countdown

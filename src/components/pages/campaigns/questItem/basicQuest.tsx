@@ -1,4 +1,4 @@
-import ChupButton from 'components/core/Button/ChupButton'
+import Button from 'components/core/Button/Button'
 import moment from 'moment'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -19,15 +19,15 @@ export default function BasicQuest({
   return (
     <div className='mt-5 w-full lg:mt-10'>
       {quest.reward_status == 'CAN_CLAIM' ? (
-        <ChupButton loading={loading} onClick={claimQuestHandler} className='w-full'>
+        <Button loading={loading} onClick={claimQuestHandler} className='w-full'>
           {t('Claim Reward')}
-        </ChupButton>
+        </Button>
       ) : quest.reward_status == 'OUT_OF_SLOT' ? (
-        <ChupButton disabled className='w-full'>
+        <Button disabled className='w-full'>
           {t('Out of reward')}
-        </ChupButton>
+        </Button>
       ) : quest.reward_status == 'CLAIMED' && quest.repeat == 'Daily' ? (
-        <ChupButton disabled className='w-full'>
+        <Button disabled className='w-full'>
           <Countdown
             date={moment().add(1, 'd').startOf('day').toISOString()}
             renderer={({ hours, minutes, seconds }) => {
@@ -44,7 +44,7 @@ export default function BasicQuest({
               )
             }}
           />
-        </ChupButton>
+        </Button>
       ) : (
         <Link
           className='w-full grid place-items-center'
@@ -54,7 +54,7 @@ export default function BasicQuest({
               ? `/chapter/${quest.requirement[quest.type.toLowerCase()].chapter.number}`
               : ''
           }`}>
-          <ChupButton className='w-full'>{t('Go to page')}</ChupButton>
+          <Button className='w-full'>{t('Go to page')}</Button>
         </Link>
       )}
     </div>
