@@ -33,7 +33,7 @@ export default function CollectionList({ id }) {
           {data?.launchpads?.slice((page - 1) * 4, page * 4)?.map((launchpad, index) => (
             <Link
               href={`/collections/${launchpad.slug}`}
-              className='w-full bg-white rounded-mlg p-4'
+              className='w-full bg-white rounded-mlg p-4 lg:border lg:border-border-secondary'
               key={launchpad.id}>
               <div className='grid gap-2 grid-cols-3'>
                 <Image
@@ -96,7 +96,7 @@ export default function CollectionList({ id }) {
         </div>
       )}
       {!!data?.count && (
-        <div className='w-full flex justify-center mt-4'>
+        <div className='w-full flex justify-center mt-8'>
           <Pagination
             shape='rounded'
             count={Math.ceil(data?.count / 4)}

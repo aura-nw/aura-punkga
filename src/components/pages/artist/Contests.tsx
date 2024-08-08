@@ -44,7 +44,7 @@ export default function Contests({ id }) {
     )
   if (contestData) {
     return (
-      <div className='-mt-4'>
+      <div className='-mt-4 lg:mt-0'>
         <div className='text-sm font-medium flex items-center justify-between'>
           <div
             className='flex items-center text-text-primary-on-brand cursor-pointer'
@@ -58,22 +58,23 @@ export default function Contests({ id }) {
                 strokeLinejoin='round'
               />
             </svg>
-            {t('Back')}
+            <span className='lg:hidden'>{t('Back')}</span>
+            <span className='lg:block hidden'>{selectedContest[locale].title}</span>
           </div>
           <Link href={`/events/${selectedContest.slug}`} className='text-text-info-primary'>
             {t('View Contest')}
           </Link>
         </div>
         <div className='mt-3 text-sm font-semibold'>{t('Mangas')}</div>
-        <div className='mt-4 gap-6 grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))]'>
-          {contestData.mangas.map((manga,index) => (
+        <div className='mt-4 gap-6 lg:gap-2.5 grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))]'>
+          {contestData.mangas.map((manga, index) => (
             <div className='' key={index}>
               <Manga {...manga} />
             </div>
           ))}
         </div>
-        <div className='mt-8 text-sm font-semibold'>{t('Artworks')}</div>
-        <div className='mt-4 gap-4 grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))]'>
+        <div className='mt-8 lg:mt-4 text-sm font-semibold'>{t('Artworks')}</div>
+        <div className='mt-4 gap-4 grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(250px,1fr))]'>
           {contestData?.artworks?.artworks?.slice((artworkPage - 1) * 12, artworkPage * 12)?.map((artwork, index) => (
             <div
               key={index}
@@ -91,6 +92,18 @@ export default function Contests({ id }) {
             </div>
           ))}
         </div>
+        {!!data?.count && (
+          <div className='w-full flex justify-center mt-8 lg:mt-4'>
+            <Pagination
+              shape='rounded'
+              count={Math.ceil(contestData?.artworks?.artworks?.length / 12)}
+              page={artworkPage}
+              onChange={(event: React.ChangeEvent<unknown>, value: number) => {
+                setArtworkPage(value)
+              }}
+            />
+          </div>
+        )}
         <Modal open={open} setOpen={setOpen} preventClickOutsideToClose={false}>
           <Swiper slidesPerView={1} autoHeight initialSlide={index}>
             {contestData?.artworks?.artworks?.map((artwork, index) => (
@@ -100,7 +113,7 @@ export default function Contests({ id }) {
                   height={300}
                   src={artwork.url}
                   alt=''
-                  className='w-full h-auto rounded-md object-cover'
+                  className='w-full h-auto rounded-md object-cover lg:max-w-[40vw]'
                 />
               </SwiperSlide>
             ))}
@@ -117,7 +130,7 @@ export default function Contests({ id }) {
             <div
               onClick={() => setSelectedContest(contest)}
               key={contest.slug}
-              className='rounded-mlg p-4 bg-white relative'>
+              className='rounded-mlg p-4 bg-white relative lg:border lg:border-border-secondary cursor-pointer'>
               <div className='relative'>
                 <Image
                   src={contest[locale].image}
@@ -158,7 +171,7 @@ export default function Contests({ id }) {
         </div>
       )}
       {!!data?.count && (
-        <div className='w-full flex justify-center mt-4'>
+        <div className='w-full flex justify-center mt-8'>
           <Pagination
             shape='rounded'
             count={Math.ceil(data?.count / 4)}

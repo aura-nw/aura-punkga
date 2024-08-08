@@ -27,7 +27,7 @@ export default function MangaList({ id }) {
     )
   }
   return (
-    <div>
+    <div className='w-full'>
       {data?.length ? (
         <div className='grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-y-8 gap-x-[22px]'>
           {data?.slice((page - 1) * 20, page * 20)?.map((comic, index) => (
@@ -37,7 +37,7 @@ export default function MangaList({ id }) {
           ))}
         </div>
       ) : (
-        <div className='flex flex-col items-center gap-4 py-8'>
+        <div className='flex flex-col items-center gap-4 py-8 mx-auto w-full'>
           <Image src={Mc} alt='' className='w-[160px] h-[160px]' />
           <div className='font-medium'>{t('No manga found')}</div>
         </div>
