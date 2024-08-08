@@ -29,7 +29,7 @@ export default function MangaList({ id }) {
   return (
     <div className='w-full'>
       {data?.length ? (
-        <div className='grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-y-8 gap-x-[22px]'>
+        <div className='grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-y-8 gap-x-[22px] lg:gap-2.5'>
           {data?.slice((page - 1) * 20, page * 20)?.map((comic, index) => (
             <div key={index}>
               <Manga {...comic} />
