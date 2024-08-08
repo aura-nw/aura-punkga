@@ -708,6 +708,20 @@ export const getArtistCollections = async (id: string) => {
   return { launchpads: launchpads as Launchpad[], count }
 }
 export const getContests = async (id: string) => {
-  const res = await axios.get(`${getConfig().API_URL}/api/rest/public/creators/${id}/contests`)
-  return res?.data
+  const {data} = await axios.get(`${getConfig().API_URL}/api/rest/public/creators/${id}/contests`)
+   const contestData = data.contest
+   const count = data.contest_aggregate.aggregate.count
+   const contests = contestData?.map((contest: any) => {
+     LANGUAGE.forEach((l) => {
+       const contestLanguage =
+         contest.contest_i18ns.find((ml) => ml.i18n_language.id == l.id) ||
+         contest.contest_i18ns.find((ml) => ml.i18n_language.is_main)
+       contest[l.shortLang] = {
+         title: contestLanguage?.data?.title,
+         image: contestLanguage?.data?.image,
+       }
+     })
+     return contest
+   })
+   return { contests: contests, count }
 }
