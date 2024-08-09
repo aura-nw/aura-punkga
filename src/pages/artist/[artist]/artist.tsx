@@ -83,7 +83,7 @@ function Artist({ artistDetail, data }) {
             alt=''
             className='w-[146px] rounded-full object-cover aspect-square'
           />
-          <div className='space-y-1.5 text-center'>
+          <div className='space-y-1.5 text-center flex-col flex items-center'>
             <div className='text-xl font-semibold'>{artist.penName}</div>
             {artist.name && <div className='text-text-teriary font-medium text-sm'>{artist.name}</div>}
             <div className='flex gap-3 items-center text-sm font-medium'>
