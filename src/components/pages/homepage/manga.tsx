@@ -57,7 +57,19 @@ export default function Manga(props: IComic) {
             <Fragment key={index}>
               <span className='text-text-brand-hover first:hidden'>, </span>
               <span className='text-text-brand-hover'>
-                {author.slug ? <div className='author'>{t(author.name)}</div> : t(author.name)}
+                {author.slug ? (
+                  <div
+                    className='author'
+                    onClick={(e) => {
+                      router.push(`/artist/${author.slug}`)
+                      e.stopPropagation()
+                      e.preventDefault()
+                    }}>
+                    {t(author.name)}
+                  </div>
+                ) : (
+                  t(author.name)
+                )}
               </span>
             </Fragment>
           ))}
