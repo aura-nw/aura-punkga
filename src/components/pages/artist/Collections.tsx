@@ -92,7 +92,7 @@ export default function CollectionList({ id }) {
       ) : (
         <div className='flex flex-col items-center gap-4 py-8'>
           <Image src={Mc} alt='' className='w-[160px] h-[160px]' />
-          <div className='font-medium'>{t('No collection found')}</div>
+          <div className='font-medium'>{t('No collection submitted')}</div>
         </div>
       )}
       {!!data?.count && (

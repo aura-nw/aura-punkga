@@ -167,7 +167,7 @@ export default function Contests({ id }) {
       ) : (
         <div className='flex flex-col items-center gap-4 py-8'>
           <Image src={Mc} alt='' className='w-[160px] h-[160px]' />
-          <div className='font-medium'>{t('No contest applied')}</div>
+          <div className='font-medium'>{t('This artist has not joined any contest.')}</div>
         </div>
       )}
       {!!data?.count && (

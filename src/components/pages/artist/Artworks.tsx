@@ -87,7 +87,7 @@ export default function ArtworkList({ id }) {
       ) : (
         <div className='flex flex-col items-center gap-4 py-8'>
           <Image src={Mc} alt='' className='w-[160px] h-[160px]' />
-          <div className='font-medium'>{t('No artwork found')}</div>
+          <div className='font-medium'>{t('No artworks shared')}</div>
         </div>
       )}
       {!!data?.artworks_aggregate?.aggregate?.count && (
