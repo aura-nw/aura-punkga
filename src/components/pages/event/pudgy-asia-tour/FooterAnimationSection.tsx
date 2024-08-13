@@ -39,8 +39,8 @@ export default function FooterAnimationSection() {
       <motion.div
         className='absolute z-30 bottom-[14%] w-[14%]'
         initial={{ right: '-50%' }}
-        animate={{ right: '150%' }}
-        transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}>
+        animate={{ right: ['-50%','78%', '78%', '150%'] }}
+        transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut', times: [0, 0.6, 0.68, 1] }}>
         <Image src={Bus1} alt='' />
       </motion.div>
       <motion.div
@@ -54,14 +54,14 @@ export default function FooterAnimationSection() {
         className='absolute z-30 bottom-[4%] w-[12%]'
         initial={{ left: '-50%' }}
         animate={{ left: '150%' }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'linear'}}>
+        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}>
         <Image src={Bus2} alt='' />
       </motion.div>
       <motion.div
         className='absolute z-30 bottom-[1%] w-[9%]'
         initial={{ left: '-50%' }}
         animate={{ left: '150%' }}
-        transition={{ duration: 14, repeat: Infinity, ease: 'linear'}}>
+        transition={{ duration: 14, repeat: Infinity, ease: 'linear' }}>
         <Image src={Taxi} alt='' />
       </motion.div>
     </div>
