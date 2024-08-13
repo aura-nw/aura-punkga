@@ -16,13 +16,13 @@ export default function FooterAnimationSection() {
   const xPosition = ((hours + 6) % 12 || 12) / 12
   return (
     <div
-      className={`pt-[200px] relative ${
+      className={`pt-[10%] relative ${
         isDay ? '' : 'bg-[linear-gradient(180deg,#020321_0%,#011030_38.4%,#001F3E_100%)]'
       }`}>
       <Image
         src={isDay ? Sun : Moon}
         alt=''
-        className={`absolute top-0 left-1/2 z-10 -translate-x-1/2`}
+        className={`absolute top-0 left-1/2 z-10 -translate-x-1/2 w-[7%]`}
         style={{
           top: `${10 + 20 * (1 - yPosition / 2)}%`,
           left: `${xPosition * 100}%`,
@@ -33,7 +33,7 @@ export default function FooterAnimationSection() {
         className='absolute z-[15] w-[10%]'
         initial={{ right: '-50%', top: '100%' }}
         animate={{ right: '150%', top: '-50%' }}
-        transition={{ duration: 15, repeat: Infinity, ease: 'linear', delay: 15 }}>
+        transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}>
         <Image src={Plane} alt='' />
       </motion.div>
       <motion.div
