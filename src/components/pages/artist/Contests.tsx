@@ -1,6 +1,9 @@
 import { Pagination, Skeleton } from '@mui/material'
 import Mc from 'assets/images/mascot-empty.png'
+<<<<<<< Updated upstream
 import Modal from 'components/Modal'
+=======
+>>>>>>> Stashed changes
 import moment from 'moment'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -42,6 +45,7 @@ export default function Contests({ id }) {
         <Skeleton className='w-full aspect-[343/256]' />
       </div>
     )
+<<<<<<< Updated upstream
   if (contestData) {
     return (
       <div className='-mt-4 lg:mt-0'>
@@ -139,6 +143,17 @@ export default function Contests({ id }) {
                   alt=''
                   className='w-full aspect-[310/166] object-cover'
                 />
+=======
+  console.log(data)
+  return (
+    <div>
+      {data?.contests?.length ? (
+        <div className='grid grid-cols-1 gap-4'>
+          {data?.contests?.map((contest, index) => (
+            <div key={contest.slug} className='rounded-mlg p-4 bg-white relative'>
+              <div className='relative'>
+                <Image src={contest[locale].image} alt='' className='w-full aspect-[310/166] object-cover' />
+>>>>>>> Stashed changes
                 {moment().isAfter(contest.start_date) && moment().isBefore(contest.end_date) && (
                   <div className='absolute top-2.5 right-2.5 text-xxs font-semibold leading-[15px] bg-error-100 text-text-error-primary-3 flex items-center gap-1 rounded px-2.5 py-0.5'>
                     <svg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4' fill='none'>
@@ -171,7 +186,11 @@ export default function Contests({ id }) {
         </div>
       )}
       {!!data?.count && (
+<<<<<<< Updated upstream
         <div className='w-full flex justify-center mt-8'>
+=======
+        <div className='w-full flex justify-center -mt-8'>
+>>>>>>> Stashed changes
           <Pagination
             shape='rounded'
             count={Math.ceil(data?.count / 4)}
