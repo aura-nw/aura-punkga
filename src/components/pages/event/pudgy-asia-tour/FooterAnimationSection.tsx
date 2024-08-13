@@ -18,7 +18,7 @@ export default function FooterAnimationSection() {
   return (
     <div
       className={`pt-[10%] relative ${
-        isDay ? '' : 'bg-[linear-gradient(180deg,#020321_0%,#011030_38.4%,#001F3E_100%)]'
+        isDay ? '' : 'bg-[linear-gradient(180deg,#F5FDFF_0%,#36485B_38.4%,#000_100%)]'
       }`}>
       <Image
         src={isDay ? Sun : Moon}
@@ -31,7 +31,7 @@ export default function FooterAnimationSection() {
       />
 
       <Image src={Scenery} alt='' className={`w-full relative z-20`} />
-      {isDay ? <></> : <div className='absolute inset-0 bg-black/25 z-[21]'></div>}
+      {/* {isDay ? <></> : <div className='absolute inset-0 bg-black/25 z-[21]'></div>} */}
       <motion.div
         className='absolute z-[15] w-[10%]'
         initial={{ right: '-50%', top: '100%' }}
