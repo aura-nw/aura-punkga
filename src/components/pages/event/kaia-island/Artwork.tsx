@@ -28,7 +28,7 @@ export default function Artworks() {
     const comic = latestComic.data?.filter(
       (data: any) =>
         data.tags.some((lang: any) => lang.en.toLowerCase() === 'invent contest') &&
-        data.tags.some((lang: any) => lang.en.toLowerCase() === 'kaia insland')
+        data.tags.some((lang: any) => lang.en.toLowerCase() === 'kaia island')
     )
     setUseableComic(comic)
   }, [latestComic.data])
