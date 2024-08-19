@@ -11,7 +11,7 @@ import TimeLineImage from './assets/timeline.png'
 export default function TimeLine() {
   return (
     <>
-      <div className='hidden xl:block mt-16 pk-container'>
+      <div className='hidden xl:block pt-16 pk-container'>
         <div className='uppercase text-white text-center w-full drop-shadow-[2px_2px_0px_#000] trailer-font text-[64px] leading-[84px] font-black text-stroke'>
           IT’s Time TO TRAVEL
         </div>
