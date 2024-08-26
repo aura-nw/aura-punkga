@@ -17,7 +17,7 @@ import FooterAnimationSection from 'components/pages/event/pudgy-asia-tour/Foote
 import TimeLine from 'components/pages/event/pudgy-asia-tour/TimeLine'
 import PudgyList from 'components/pages/event/pudgy-asia-tour/Pudgy'
 import Rule1 from 'components/pages/event/pudgy-asia-tour/assets/rule1.png'
-import Rule1VN from 'components/pages/event/pudgy-asia-tour/assets/rule1VN.png'
+import Rule1VN from 'components/pages/event/pudgy-asia-tour/assets/rule1vn.png'
 import Rule2 from 'components/pages/event/pudgy-asia-tour/assets/rule2.png'
 import Rule3 from 'components/pages/event/pudgy-asia-tour/assets/rule3.png'
 export default function Pudgy() {
