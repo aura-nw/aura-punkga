@@ -9,6 +9,11 @@ import So from 'components/pages/event/kaia-island/assets/so.png'
 import LineFooter from 'components/pages/event/kaia-island/assets/Line.svg'
 import Pin from 'components/pages/event/kaia-island/assets/pin.svg'
 import NavButton from './assets/bt_left.svg'
+import useApi from 'src/hooks/useApi'
+import { IComic } from 'src/models/comic'
+import { getLatestComic } from 'src/services'
+import Comic2 from 'components/pages/homepage/comic2'
+import DummyComic from 'components/DummyComponent/comic'
 export default function Artworks() {
   const { t } = useTranslation()
   const { data, isLoading } = useSWR(
@@ -17,6 +22,16 @@ export default function Artworks() {
   )
   const [tab, setTab] = useState(1)
   const [page, setPage] = useState(1)
+  const latestComic = useApi<IComic[]>(getLatestComic, true, [])
+  const [useableComic, setUseableComic] = useState<any>()
+  useEffect(() => {
+    const comic = latestComic.data?.filter(
+      (data: any) =>
+        data.tags.some((lang: any) => lang.en.toLowerCase() === 'invent contest') &&
+        data.tags.some((lang: any) => lang.en.toLowerCase() === 'kaia island')
+    )
+    setUseableComic(comic)
+  }, [latestComic.data])
   useEffect(() => {
     setPage(1)
   }, [tab])
@@ -76,7 +91,7 @@ export default function Artworks() {
               Round 2
             </div>
           )}
-          {!!data?.round3?.length && (
+          {!!useableComic?.length && (
             <div
               onClick={() => setTab(3)}
               className={`w-full cursor-pointer text-center max-w-[104px] py-1 px-2 ${
@@ -111,14 +126,11 @@ export default function Artworks() {
             </>
           ) : (
             <>
-              {data?.round3?.slice((page - 1) * 10, page * 10)?.map((artwork, index) => (
-                <Artwork
-                  data={artwork}
-                  index={data?.round3?.findIndex((a) => a.image == artwork.image)}
-                  allArtworks={data?.round3}
-                  key={artwork?.title + index}
-                />
-              ))}
+              {latestComic.loading
+                ? Array.apply(null, Array(10)).map((d, index) => <DummyComic key={index} />)
+                : useableComic?.length
+                ? useableComic.map((data, index) => <Comic2 key={index} {...data} />)
+                : null}
             </>
           )}
           <div></div>

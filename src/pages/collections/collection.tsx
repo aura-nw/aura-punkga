@@ -33,12 +33,12 @@ function Collection() {
   return (
     <div className='py-8 px-4 pk-container'>
       <Image
-        src={locale == 'vn' ? BannerVN : Banner}
+        src={locale == 'vn' ? MBannerVN : MBanner}
         alt=''
         className='w-full aspect-[343/156] object-cover rounded-mlg overflow-hidden md:hidden'
       />
       <Image
-        src={locale == 'vn' ? MBannerVN : MBanner}
+        src={locale == 'vn' ? BannerVN : Banner}
         alt=''
         className='w-full aspect-[1280/220] object-cover rounded-mlg overflow-hidden hidden md:block'
       />

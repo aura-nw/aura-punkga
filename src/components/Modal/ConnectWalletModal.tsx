@@ -10,7 +10,7 @@ import { sepolia } from 'viem/chains'
 import { Connector, useConnect, useDisconnect } from 'wagmi'
 export default function ConnectWalletModal() {
   const { connectWalletOpen: show } = useContext(ModalContext)
-  const { connectHandler } = useContext(Context)
+  const { connectHandler, account } = useContext(Context)
   const { connectors, connectAsync: wagmiConnect } = useConnect()
   const { disconnect: wagmiDisconnect, disconnectAsync } = useDisconnect()
   const [installed, setInstalled] = useState<Connector[]>([])
@@ -96,7 +96,9 @@ export default function ConnectWalletModal() {
                             {
                               onSuccess: (data) => {
                                 setLoading(false)
-                                connectHandler(data)
+                                if (data?.accounts[0] == account?.activeWalletAddress) {
+                                  connectHandler(data)
+                                }
                               },
 
                               onError: (props) => {
