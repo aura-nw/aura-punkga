@@ -17,7 +17,7 @@ import { Controller } from 'swiper/modules'
 export default function ArtworkList({ id }) {
   const [page, setPage] = useState(1)
   const [open, setOpen] = useState(false)
-  const [index, setIndex] = useState(1)
+  const [selectedArtwork, setSelectedArtwork] = useState<any>(null)
   const { data, isLoading } = useSWR(
     {
       key: 'fetch-artist-artworks',
@@ -27,6 +27,19 @@ export default function ArtworkList({ id }) {
   )
 
   const { t } = useTranslation()
+
+  const prevHandler = () => {
+    const idx = data?.artworks?.findIndex((artwork) => artwork.url == selectedArtwork.url)
+    if (data?.artworks[idx - 1]) {
+      setSelectedArtwork(data?.artworks[idx - 1])
+    }
+  }
+  const nextHandler = () => {
+     const idx = data?.artworks?.findIndex((artwork) => artwork.url == selectedArtwork.url)
+     if (data?.artworks[idx + 1]) {
+       setSelectedArtwork(data?.artworks[idx + 1])
+     }
+  }
   if (isLoading) {
     return (
       <div className='grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4'>
@@ -44,21 +57,47 @@ export default function ArtworkList({ id }) {
     <div>
       {data?.artworks?.length ? (
         <>
-          <Modal open={open} setOpen={setOpen} preventClickOutsideToClose={false}>
-            <div className='lg:max-w-[50vw]'>
-              <Swiper slidesPerView={1} autoHeight initialSlide={index}>
-                {data?.artworks?.map((artwork, index) => (
-                  <SwiperSlide key={index}>
-                    <Image
-                      width={300}
-                      height={300}
-                      src={artwork.url}
-                      alt=''
-                      className='w-full h-auto rounded-md object-cover'
+          <Modal
+            open={open}
+            setOpen={setOpen}
+            preventClickOutsideToClose={false}
+            className='[&_.static]:!overflow-visible'>
+            <div className='relative'>
+              <Image
+                width={300}
+                height={300}
+                src={selectedArtwork?.url}
+                alt=''
+                className='w-auto h-full max-h-[80vh] rounded-md object-cover'
+              />
+              <div>
+                <div
+                  onClick={prevHandler}
+                  className='absolute -bottom-14 lg:top-1/2 -scale-x-100 left-[calc(50%-20px)] lg:-left-[98px] -translate-x-1/2 lg:translate-x-0 -translate-y-1/2 cursor-pointer bg-[#FFFFFF] rounded-full text-[#B0B0B0] hover:text-border-brand-hover active:text-border-brand-focus w-8 lg:w-16 h-8 lg:h-16 grid place-items-center shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='7' height='12' viewBox='0 0 7 12' fill='none'>
+                    <path
+                      d='M1 1L6 6L1 11'
+                      stroke='currentColor'
+                      strokeWidth='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
                     />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+                  </svg>
+                </div>
+                <div
+                  onClick={nextHandler}
+                  className='absolute -bottom-14 lg:top-1/2 right-[calc(50%-20px)] lg:-right-[98px] translate-x-1/2 lg:translate-x-0 -translate-y-1/2 cursor-pointer bg-[#FFFFFF] rounded-full text-[#B0B0B0] hover:text-border-brand-hover active:text-border-brand-focus w-8 lg:w-16 h-8 lg:h-16 grid place-items-center shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='7' height='12' viewBox='0 0 7 12' fill='none'>
+                    <path
+                      d='M1 1L6 6L1 11'
+                      stroke='currentColor'
+                      strokeWidth='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                  </svg>
+                </div>
+              </div>
             </div>
           </Modal>
           <div className='grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4'>
@@ -66,7 +105,7 @@ export default function ArtworkList({ id }) {
               <div
                 key={index}
                 onClick={() => {
-                  setIndex(index)
+                  setSelectedArtwork(artwork)
                   setOpen(true)
                 }}>
                 <Image
