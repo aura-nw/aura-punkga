@@ -29,6 +29,24 @@ export default function TimeLine() {
             <div className='text-sm text-[#009640]'>2/9/2024</div>
             <div className='text-lg'>Receive Pudgy</div>
           </div>
+          <div className='absolute cursor-pointer right-[9.8%] top-[-18%]'>
+            <svg xmlns='http://www.w3.org/2000/svg' width='147' height='85' viewBox='0 0 147 85' fill='none'>
+              <path
+                d='M0.5 10C0.5 4.75329 4.7533 0.5 10 0.5H137C142.247 0.5 146.5 4.75329 146.5 10V57C146.5 62.2467 142.247 66.5 137 66.5H10C4.75329 66.5 0.5 62.2467 0.5 57V10Z'
+                fill='#FF5050'
+                stroke='black'
+              />
+              <path d='M68.1214 66.75L76 83.8076L83.8786 66.75H68.1214Z' fill='#FF5050' stroke='black' />
+            </svg>
+            <div className='absolute inset-x-2.5 top-2.5 flex flex-col items-center'>
+              <div className='uppercase text-stroke font-black text-2xl drop-shadow-[1px_1px_0px_#000] trailer-font text-[#FFDC48]'>
+                upto 2.000 USD
+              </div>
+              <div className='-mt-1 uppercase text-stroke font-black text-base drop-shadow-[1px_1px_0px_#000] trailer-font text-[#16CC64]'>
+                Click Me
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className='mt-[22px] lg:mt-16 xl:hidden'>
