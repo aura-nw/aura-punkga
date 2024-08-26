@@ -8,26 +8,28 @@ import R2 from './assets/r2.png'
 import R3 from './assets/r3.png'
 import Line from './assets/line.svg'
 import TimeLineImage from './assets/timeline.png'
+import { useTranslation } from 'react-i18next'
 export default function TimeLine() {
+  const { t } = useTranslation()
   return (
     <>
       <div className='hidden xl:block pt-16 pk-container'>
         <div className='uppercase text-white text-center w-full drop-shadow-[2px_2px_0px_#000] trailer-font text-[64px] leading-[84px] font-black text-stroke'>
-          IT’s Time TO TRAVEL
+          {t('IT’s Time TO TRAVEL')}
         </div>
         <div className='relative mt-28 font-semibold'>
           <Image src={TimeLineImage} alt='' className='w-full' />
           <div className='absolute flex flex-col items-center top-[-12%] left-[9.5%]'>
-            <div className='text-sm text-[#009640]'>11/8/2024</div>
-            <div className='text-lg'>Register</div>
+            <div className='text-sm text-[#009640]'>01/08/2024</div>
+            <div className='text-lg'>{t('Register')}</div>
           </div>
           <div className='absolute flex flex-col items-center top-[21%] left-[37.2%]'>
-            <div className='text-sm text-[#009640]'>20/8/2024</div>
-            <div className='text-lg'>Receive Pudgy</div>
+            <div className='text-sm text-[#009640]'>01/09/2024</div>
+            <div className='text-lg'>{t('Submit your artwork')}</div>
           </div>
           <div className='absolute flex flex-col items-center top-[0%] right-[27.4%]'>
-            <div className='text-sm text-[#009640]'>2/9/2024</div>
-            <div className='text-lg'>Receive Pudgy</div>
+            <div className='text-sm text-[#009640]'>04/09/2024</div>
+            <div className='text-lg'>{t('Grading & Awards')}</div>
           </div>
           <div className='absolute cursor-pointer right-[9.8%] top-[-18%]'>
             <svg xmlns='http://www.w3.org/2000/svg' width='147' height='85' viewBox='0 0 147 85' fill='none'>
@@ -40,10 +42,10 @@ export default function TimeLine() {
             </svg>
             <div className='absolute inset-x-2.5 top-2.5 flex flex-col items-center'>
               <div className='uppercase text-stroke font-black text-2xl drop-shadow-[1px_1px_0px_#000] trailer-font text-[#FFDC48]'>
-                upto 2.000 USD
+                {t('upto 2.000 USD')}
               </div>
               <div className='-mt-1 uppercase text-stroke font-black text-base drop-shadow-[1px_1px_0px_#000] trailer-font text-[#16CC64]'>
-                Click Me
+                {t('Click Me')}
               </div>
             </div>
           </div>
@@ -51,7 +53,7 @@ export default function TimeLine() {
       </div>
       <div className='mt-[22px] lg:mt-16 xl:hidden'>
         <div className='uppercase text-white text-center w-full drop-shadow-[2px_2px_0px_#000] trailer-font text-[36px] lg:text-[64px] leading-[48px] font-black text-stroke'>
-          IT’s Time TO TRAVEL
+          {t('IT’s Time TO TRAVEL')}
         </div>
         <div className='mt-8 flex items-center w-full flex-col'>
           <div className='relative cursor-pointer -translate-x-11'>
@@ -65,10 +67,10 @@ export default function TimeLine() {
             </svg>
             <div className='absolute inset-x-2.5 top-2.5 flex flex-col items-center'>
               <div className='uppercase text-stroke font-black text-2xl drop-shadow-[1px_1px_0px_#000] trailer-font text-[#FFDC48]'>
-                upto 2.000 USD
+                {t('upto 2.000 USD')}
               </div>
               <div className='-mt-1 uppercase text-stroke font-black text-base drop-shadow-[1px_1px_0px_#000] trailer-font text-[#16CC64]'>
-                Click Me
+                {t('Click Me')}
               </div>
             </div>
           </div>
@@ -80,8 +82,8 @@ export default function TimeLine() {
               <Image src={R1} alt='' className='w-[131px]' />
             </div>
             <div className='w-[200px] pt-7'>
-              <div className='text-sm text-[#009640]'>11/8/2024</div>
-              <div className='text-lg'>Register</div>
+              <div className='text-sm text-[#009640]'>01/08/2024</div>
+              <div className='text-lg'>{t('Register')}</div>
               <Image src={Bamboo} alt='' className='w-20 mt-7' />
             </div>
           </div>
@@ -90,8 +92,8 @@ export default function TimeLine() {
               <Image src={R2} alt='' className='w-[131px]' />
             </div>
             <div className='w-[200px] pt-7'>
-              <div className='text-sm text-[#009640]'>20/8/2024</div>
-              <div className='text-lg'>Receive Pudgy</div>
+              <div className='text-sm text-[#009640]'>01/09/2024</div>
+              <div className='text-lg'>{t('Submit your artwork')}</div>
               <Image src={Image1} alt='' className='w-[167px] mt-7' />
             </div>
           </div>
@@ -103,8 +105,8 @@ export default function TimeLine() {
               <Image src={Line} alt='' className='w-screen h-3 object-cover' />
             </div>
             <div className='w-[200px] pt-11 relative'>
-              <div className='text-sm text-[#009640]'>2/9/2024</div>
-              <div className='text-lg'>Receive Pudgy</div>
+              <div className='text-sm text-[#009640]'>04/09/2024</div>
+              <div className='text-lg'>{t('Grading & Awards')}</div>
               <Image src={Image2} alt='' className='w-[173px] mt-7' />
             </div>
           </div>

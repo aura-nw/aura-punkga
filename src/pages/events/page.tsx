@@ -1,18 +1,33 @@
-import HeroBanner from 'components/pages/event/assets/hero-banner.png'
-import HeroBannerVN from 'components/pages/event/assets/hero-banner-vn.png'
-import HeroBannerMobile from 'components/pages/event/assets/hero-banner-mobile.png'
-import HeroBannerMobileVN from 'components/pages/event/assets/hero-banner-mobile-vn.png'
+import HeroBanner from 'components/pages/event/assets/allEvents/hero-banner.png'
+import HeroBannerVN from 'components/pages/event/assets/allEvents/hero-banner.png'
+import HeroBannerMobile from 'components/pages/event/assets/allEvents/hero-banner-mobile.png'
+import HeroBannerMobileVN from 'components/pages/event/assets/allEvents/hero-banner-mobile.png'
 import WowYourselfImage from 'components/pages/event/assets/allEvents/wow-yourself.png'
 import KaiaEventImage from 'components/pages/event/assets/allEvents/Kaia.png'
 import KaiaEventImageVN from 'components/pages/event/assets/allEvents/Kaia-vn.png'
+import PudgyEventImage from 'components/pages/event/assets/allEvents/Pudgy.png'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 const events = [
   {
-    url: '/events/kaia-island',
+    url: '/events/pudgy-asia-tour',
     isLive: true,
+    en: {
+      image: PudgyEventImage,
+      title: `Pudgy Asia Tour`,
+      subtitle: `01 Aug 2024 - 4 Sep 2024`,
+    },
+    vn: {
+      image: PudgyEventImage,
+      title: `Pudgy Asia Tour`,
+      subtitle: `01/08/2024 - 04/09/2024`,
+    },
+  },
+  {
+    url: '/events/kaia-island',
+    isLive: false,
     en: {
       image: KaiaEventImage,
       title: `Kaia's Island Mythology Record`,
@@ -30,12 +45,12 @@ const events = [
     en: {
       image: WowYourselfImage,
       title: `WOW yourself`,
-      subtitle: `03 Jun 2024 - 31 Jun 2024`,
+      subtitle: `03 Jun 2024 - 30 Jun 2024`,
     },
     vn: {
       image: WowYourselfImage,
       title: `WOW yourself`,
-      subtitle: `03/06/2024 - 31/06/2024`,
+      subtitle: `03/06/2024 - 30/06/2024`,
     },
   },
 ]
@@ -48,12 +63,12 @@ export default function EventPage() {
         <Image
           src={locale == 'vn' ? HeroBannerMobileVN : HeroBannerMobile}
           alt=''
-          className='w-full aspect-[343/156] object-cover rounded-mlg overflow-hidden md:hidden'
+          className='w-full h-auto object-cover rounded-mlg overflow-hidden md:hidden'
         />
         <Image
           src={locale == 'vn' ? HeroBannerVN : HeroBanner}
           alt=''
-          className='w-full aspect-[128/22] object-cover overflow-hidden hidden md:block'
+          className='w-full h-auto object-cover overflow-hidden hidden md:block'
         />
       </div>
       <div>
