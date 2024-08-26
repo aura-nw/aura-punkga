@@ -12,7 +12,7 @@ import NavButton from './assets/bt_left.svg'
 import useApi from 'src/hooks/useApi'
 import { IComic } from 'src/models/comic'
 import { getLatestComic } from 'src/services'
-import Comic2 from 'components/pages/homepage/comic2'
+import Manga from 'components/pages/homepage/manga'
 import DummyComic from 'components/DummyComponent/comic'
 export default function Artworks() {
   const { t } = useTranslation()
@@ -129,7 +129,7 @@ export default function Artworks() {
               {latestComic.loading
                 ? Array.apply(null, Array(10)).map((d, index) => <DummyComic key={index} />)
                 : useableComic?.length
-                ? useableComic.map((data, index) => <Comic2 key={index} {...data} />)
+                ? useableComic.map((data, index) => <Manga key={index} {...data} />)
                 : null}
             </>
           )}
