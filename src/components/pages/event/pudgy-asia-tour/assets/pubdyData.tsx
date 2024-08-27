@@ -47,6 +47,22 @@ import US from 'assets/images/flags/US.svg'
 import Indonesia from 'assets/images/flags/Indonesia.svg'
 export const pudgyData = [
   {
+    image: PUD6445,
+    name: 'PUD#6445',
+    description: 'The Emperor Pengu',
+    owner: 'LucaNetz',
+    nation: 'US',
+    flag: US,
+  },
+  {
+    image: PUD7692,
+    name: 'PUD#7692',
+    description: 'a bartender who love making cocktail and smile',
+    owner: 'degenden_eth',
+    nation: 'Hong Kong',
+    flag: HongKong,
+  },
+  {
     image: PUD1917,
     name: 'PUD#1917',
     description: 'Aussie, loves massages, tries weird food all the time + boomerang',
@@ -69,14 +85,6 @@ export const pudgyData = [
     owner: 'Kimming_in_web3',
     nation: 'China',
     flag: China,
-  },
-  {
-    image: PUD7692,
-    name: 'PUD#7692',
-    description: 'a bartender who love making cocktail and smile',
-    owner: 'degenden_eth',
-    nation: 'Hong Kong',
-    flag: HongKong,
   },
   {
     image: PUD2947,
@@ -275,14 +283,6 @@ export const pudgyData = [
     name: 'PUD#7944',
     description: 'Berko is the gif master, & loves to say SIESTA',
     owner: 'Berko_Crypto',
-    nation: 'US',
-    flag: US,
-  },
-  {
-    image: PUD6445,
-    name: 'PUD#6445',
-    description: 'The Emperor Pengu',
-    owner: 'LucaNetz',
     nation: 'US',
     flag: US,
   },

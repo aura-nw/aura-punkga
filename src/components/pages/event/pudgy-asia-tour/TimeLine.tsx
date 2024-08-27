@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import PudgyWithCup from './assets/pudgy-with-cup.svg'
 import Bamboo from './assets/bamboo.svg'
-import Image1 from './assets/i1.png'
+import Cup from './assets/cuo.svg'
 import Image2 from './assets/i2.png'
 import R1 from './assets/r1.png'
 import R2 from './assets/r2.png'
@@ -19,17 +19,17 @@ export default function TimeLine() {
         </div>
         <div className='relative mt-28 font-semibold'>
           <Image src={TimeLineImage} alt='' className='w-full' />
-          <div className='absolute flex flex-col items-center top-[-12%] left-[9.5%]'>
+          <div className='absolute flex flex-col items-center top-[-16%] left-[6.5%]'>
             <div className='text-sm text-[#009640]'>01/08/2024</div>
-            <div className='text-lg'>{t('Register')}</div>
+            <div className='text-lg text-center max-w-[154px]'>{t(`"Join the Waddle and start flappin'!"`)}</div>
           </div>
-          <div className='absolute flex flex-col items-center top-[21%] left-[37.2%]'>
+          <div className='absolute flex flex-col items-center top-[16%] left-[35.2%]'>
             <div className='text-sm text-[#009640]'>01/09/2024</div>
-            <div className='text-lg'>{t('Submit your artwork')}</div>
+            <div className='text-lg text-center max-w-[170px]'>{t(`"Show your best flap before this day!"`)}</div>
           </div>
-          <div className='absolute flex flex-col items-center top-[0%] right-[27.4%]'>
+          <div className='absolute flex flex-col items-center top-[-6%] right-[25.4%]'>
             <div className='text-sm text-[#009640]'>04/09/2024</div>
-            <div className='text-lg'>{t('Grading & Awards')}</div>
+            <div className='text-lg text-center max-w-[165px]'>{t(`"Shout out to the grooviest flappers!"`)}</div>
           </div>
           <div className='absolute cursor-pointer right-[9.8%] top-[-18%]'>
             <svg xmlns='http://www.w3.org/2000/svg' width='147' height='85' viewBox='0 0 147 85' fill='none'>
@@ -76,25 +76,25 @@ export default function TimeLine() {
           </div>
           <Image src={PudgyWithCup} alt='' className='w-[170px]' />
         </div>
-        <div className='flex flex-col items-center mt-5 font-semibold -space-y-4'>
+        <div className='flex flex-col items-center mt-5 font-semibold -space-y-5'>
           <div className='flex'>
             <div>
               <Image src={R1} alt='' className='w-[131px]' />
             </div>
-            <div className='w-[200px] pt-7'>
+            <div className='w-[200px] pt-5'>
               <div className='text-sm text-[#009640]'>01/08/2024</div>
-              <div className='text-lg'>{t('Register')}</div>
-              <Image src={Bamboo} alt='' className='w-20 mt-7' />
+              <div className='text-lg max-w-[154px]'>{t(`"Join the Waddle and start flappin'!"`)}</div>
+              <Image src={Bamboo} alt='' className='w-[205px] mt-3 -ml-5' />
             </div>
           </div>
           <div className='flex'>
             <div>
               <Image src={R2} alt='' className='w-[131px]' />
             </div>
-            <div className='w-[200px] pt-7'>
+            <div className='w-[200px] pt-5'>
               <div className='text-sm text-[#009640]'>01/09/2024</div>
-              <div className='text-lg'>{t('Submit your artwork')}</div>
-              <Image src={Image1} alt='' className='w-[167px] mt-7' />
+              <div className='text-lg max-w-[170px]'>{t(`"Show your best flap before this day!"`)}</div>
+              <Image src={Image2} alt='' className='w-[174px] mt-4 -ml-5' />
             </div>
           </div>
           <div className='flex relative w-full justify-center'>
@@ -104,10 +104,10 @@ export default function TimeLine() {
             <div className='w-full h-[88px] absolute inset-x-0 top-[79%] bg-[#474749] shadow-[0px_14px_0px_0px_#000] grid place-items-center'>
               <Image src={Line} alt='' className='w-screen h-3 object-cover' />
             </div>
-            <div className='w-[200px] pt-11 relative'>
+            <div className='w-[200px] pt-5 relative'>
               <div className='text-sm text-[#009640]'>04/09/2024</div>
-              <div className='text-lg'>{t('Grading & Awards')}</div>
-              <Image src={Image2} alt='' className='w-[173px] mt-7' />
+              <div className='text-lg max-w-[165px]'>{t(`"Shout out to the grooviest flappers!"`)}</div>
+              <Image src={Cup} alt='' className='w-[92px] mt-4 ml-4' />
             </div>
           </div>
         </div>

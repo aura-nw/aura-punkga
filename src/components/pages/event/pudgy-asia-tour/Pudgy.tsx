@@ -5,6 +5,7 @@ import { useState } from 'react'
 import Modal from 'components/Modal'
 import { AnimatePresence, motion, useAnimate } from 'framer-motion'
 import Logo from './assets/Punkga logo.svg'
+import Link from 'next/link'
 export default function PudgyList() {
   const [page, setPage] = useState(1)
   const [selected, setSelected] = useState(pudgyData[0])
@@ -67,7 +68,11 @@ export default function PudgyList() {
                   <div className='font-semibold text-lg line-clamp-4'>{selected.description}</div>
                   <div className='flex gap-3 items-center font-semibold text-lg mt-4'>
                     <Image src={selected.flag} alt='' className='h-6 w-auto rounded-sm' />
-                    <span className='text-[#2D72FB]'>@{selected.owner}</span>
+                    <span className='text-[#2D72FB]'>
+                      <Link href={`https://x.com/${selected.owner}`} target='_blank'>
+                        @{selected.owner}
+                      </Link>
+                    </span>
                   </div>
                 </div>
                 <div className='card-back grid place-items-center rounded-mlg bg-[#3b86f7]'>
@@ -91,7 +96,10 @@ export default function PudgyList() {
                     setTimeout(() => setSelected(data), 500)
                   }
                 }}>
-                <Image src={data.image} alt='' className='w-full aspect-square rounded-mlg border border-black' />
+                <div className='relative'>
+                  <Image src={data.image} alt='' className='w-full aspect-square rounded-mlg border border-black' />
+                  {selected.name == data.name && <div className='absolute inset-0 rounded-mlg border-[3px] border-text-info-primary'></div>}
+                </div>
                 <div className='mt-4 trailer-font font-black text-lg uppercase'>{data.name}</div>
               </div>
             ))}
@@ -145,7 +153,9 @@ const Pudgy = ({ data }) => {
             <div className='font-semibold text-lg'>{data.description}</div>
             <div className='flex gap-3 items-center font-semibold text-lg mt-4'>
               <Image src={data.flag} alt='' className='h-6 w-auto rounded-sm' />
-              <span>@{data.owner}</span>
+              <Link href={`https://x.com/${data.owner}`} target='_blank'>
+                @{data.owner}
+              </Link>
             </div>
           </div>
           <div className='absolute -bottom-20 left-1/2 -translate-x-1/2' onClick={() => setOpen(false)}>
