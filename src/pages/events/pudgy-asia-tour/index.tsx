@@ -98,14 +98,13 @@ export const getServerSideProps = async (context) => {
   const props = {
     image:
       context.locale == 'vn'
-        ? 'https://punkga.me/assets/images/kaia-island-thumb-vn.png'
-        : 'https://punkga.me/assets/images/kaia-island-thumb.png',
-    title:
-      context.locale == 'vn' ? `Cuộc Thi Vẽ Tranh Về Truyền Thuyết Đảo Kaia` : `Kaia Island Mythology Drawing Contest`,
+        ? 'https://punkga.me/assets/images/pudgy-thumb.png'
+        : 'https://punkga.me/assets/images/pudgy-thumb.png',
+    title: context.locale == 'vn' ? `CUỘC THI VẼ PUDGY ASIA ART` : `Pudgy Asia Art Contest`,
     description:
       context.locale == 'vn'
-        ? `Khám phá đảo Kaia kỳ bí, thể hiện tài năng hội họa và giành giải thưởng 50 triệu tại cuộc thi "Ghi Chép Về Truyền Thuyết Đảo Kaia" cùng PunkgaMe nào!`
-        : `Explore the mysterious Kaia Island, showcase your artistic talent, and win a 2000 USD prize in the "Kaia's Island Mythology Record" contest with PunkgaMe!`,
+        ? `Những chú chim cánh cụt Pudgy đáng yêu đến từ quốc đảo xa xôi đang háo hức khám phá những điều kỳ diệu của châu Á! Bạn có sẵn sàng trở thành người bạn đồng hành cùng các chú Pudgy tham gia những trải nghiệm du lịch độc đáo và đáng nhớ nhất không?`
+        : `The adorable Pudgy penguins from a faraway island are eager to explore the wonders of Asia! Are you ready to become their companion, guiding them through unique and unforgettable travel experiences?`,
   }
   return {
     props: {
