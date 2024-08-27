@@ -9,6 +9,7 @@ import Link from 'next/link'
 export default function PudgyList() {
   const [page, setPage] = useState(1)
   const [selected, setSelected] = useState(pudgyData[0])
+  const [selectedPudgy, setSelectedPudgy] = useState(pudgyData[0])
   const [scope, animate] = useAnimate()
   return (
     <>
@@ -93,12 +94,13 @@ export default function PudgyList() {
                       { transform: ['rotateY(180deg)', 'rotateY(360deg)', 'rotateY(0deg)'] },
                       { duration: 1, times: [0.5, 1, 1], ease: 'linear' }
                     )
+                    setSelectedPudgy(data)
                     setTimeout(() => setSelected(data), 500)
                   }
                 }}>
                 <div className='relative'>
                   <Image src={data.image} alt='' className='w-full aspect-square rounded-mlg border border-black' />
-                  {selected.name == data.name && <div className='absolute inset-0 rounded-mlg border-[3px] border-text-info-primary'></div>}
+                  {selectedPudgy.name == data.name && <div className='absolute inset-0 rounded-mlg border-[3px] border-text-info-primary'></div>}
                 </div>
                 <div className='mt-4 trailer-font font-black text-lg uppercase'>{data.name}</div>
               </div>
