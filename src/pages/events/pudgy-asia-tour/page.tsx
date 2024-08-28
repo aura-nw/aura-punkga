@@ -212,7 +212,7 @@ export default function Pudgy() {
                   <div
                     onClick={() =>
                       window.open(
-                        'https://docs.google.com/forms/d/e/1FAIpQLSe2xGTWLwcw85UVvyAClOnb3_6gfsu7Kc_I1N4y9xjP6i0jfg/viewform',
+                        'https://docs.google.com/forms/d/e/1FAIpQLScJtKi4WDONR_7NUTB1qhQ-azCnKmexzk5aZfKXjuxUROBqOg/viewform',
                         '_blank'
                       )
                     }

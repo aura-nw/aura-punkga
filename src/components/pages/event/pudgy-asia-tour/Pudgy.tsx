@@ -6,7 +6,11 @@ import Modal from 'components/Modal'
 import { AnimatePresence, motion, useAnimate } from 'framer-motion'
 import Logo from './assets/Punkga logo.svg'
 import Link from 'next/link'
+import { useTranslation } from 'react-i18next'
+import { useRouter } from 'next/router'
 export default function PudgyList() {
+  const { t } = useTranslation()
+  const { locale } = useRouter()
   const [page, setPage] = useState(1)
   const [selected, setSelected] = useState(pudgyData[0])
   const [selectedPudgy, setSelectedPudgy] = useState(pudgyData[0])
@@ -55,7 +59,7 @@ export default function PudgyList() {
       `}</style>
       <div className='pt-20 pk-container hidden xl:block'>
         <div className='uppercase text-white text-center w-full drop-shadow-[2px_2px_0px_#000] trailer-font text-[64px] leading-[84px] font-black text-stroke'>
-          Pudgy friends
+          {t('Pudgy friends')}
         </div>
         <div className='flex gap-11 mt-16'>
           <div className='w-[405px] shrink-0'>
@@ -66,7 +70,9 @@ export default function PudgyList() {
                   <div className='mt-4 trailer-font font-black text-[40px] leading-[52px] uppercase'>
                     {selected.name}
                   </div>
-                  <div className='font-semibold text-lg line-clamp-4'>{selected.description}</div>
+                  <div className='font-semibold text-lg line-clamp-4'>
+                    {locale == 'vn' ? selected.descriptionvn : selected.description}
+                  </div>
                   <div className='flex gap-3 items-center font-semibold text-lg mt-4'>
                     <Image src={selected.flag} alt='' className='h-6 w-auto rounded-sm' />
                     <span className='text-[#2D72FB]'>
@@ -100,7 +106,9 @@ export default function PudgyList() {
                 }}>
                 <div className='relative'>
                   <Image src={data.image} alt='' className='w-full aspect-square rounded-mlg border border-black' />
-                  {selectedPudgy.name == data.name && <div className='absolute inset-0 rounded-mlg border-[3px] border-text-info-primary'></div>}
+                  {selectedPudgy.name == data.name && (
+                    <div className='absolute inset-0 rounded-mlg border-[3px] border-text-info-primary'></div>
+                  )}
                 </div>
                 <div className='mt-4 trailer-font font-black text-lg uppercase'>{data.name}</div>
               </div>

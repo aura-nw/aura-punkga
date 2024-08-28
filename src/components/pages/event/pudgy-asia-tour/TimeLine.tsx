@@ -83,15 +83,15 @@ export default function TimeLine() {
 
           <div className='absolute flex flex-col items-center top-[-16%] left-[6.5%]'>
             <div className='text-sm text-[#009640]'>01/08/2024</div>
-            <div className='text-lg text-center max-w-[154px]'>{t(`"Join the Waddle and start flappin'!"`)}</div>
+            <div className='text-lg text-center max-w-[154px]'>{t(`Join the Waddle and start flappin'!`)}</div>
           </div>
           <div className='absolute flex flex-col items-center top-[16%] left-[35.2%]'>
             <div className='text-sm text-[#009640]'>01/09/2024</div>
-            <div className='text-lg text-center max-w-[170px]'>{t(`"Show your best flap before this day!"`)}</div>
+            <div className='text-lg text-center max-w-[170px]'>{t(`Show your best flap before this day!`)}</div>
           </div>
           <div className='absolute flex flex-col items-center top-[-6%] right-[25.4%]'>
             <div className='text-sm text-[#009640]'>04/09/2024</div>
-            <div className='text-lg text-center max-w-[165px]'>{t(`"Shout out to the grooviest flappers!"`)}</div>
+            <div className='text-lg text-center max-w-[165px]'>{t(`Shout out to the grooviest flappers!`)}</div>
           </div>
           <div className='absolute cursor-pointer right-[9.8%] top-[-18%]'>
             <svg xmlns='http://www.w3.org/2000/svg' width='147' height='85' viewBox='0 0 147 85' fill='none'>
