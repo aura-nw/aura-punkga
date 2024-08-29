@@ -85,11 +85,11 @@ export default function Pudgy() {
               </div>
               <div className='text-sm font-semibold flex gap-2.5 mt-1.5 flex-row items-center'>
                 <div>
-                  <span>{t('Starts at')}:</span> {locale == 'vn' ? '01 Tháng 8 2024' : '01 August 2024'}
+                  <span>{t('Starts at')}:</span> {locale == 'vn' ? '12 Tháng 8 2024' : '12 August 2024'}
                 </div>
                 <span className='w-1 h-1 rounded-full bg-[#646464]'></span>
                 <div>
-                  <span>{t('Ends at')}:</span> {locale == 'vn' ? '04 Tháng 9 2024' : '04 September 2024'}
+                  <span>{t('Ends at')}:</span> {locale == 'vn' ? '01 Tháng 9 2024' : '01 September 2024'}
                 </div>
               </div>
               <div className='mt-4 flex gap-4 items-center'>
