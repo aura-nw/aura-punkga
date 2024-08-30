@@ -5,7 +5,7 @@ import moment from 'moment'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { getContestMangaAndArtwork, getContests } from 'src/services'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -35,6 +35,16 @@ export default function Contests({ id }) {
     },
     ({ id, selectedContestId }) => (id && selectedContestId ? getContestMangaAndArtwork(id, selectedContestId) : null)
   )
+  useEffect(() => {
+    window.addEventListener('keydown', (e) => {
+      if (e.key == 'ArrowRight') {
+        ;(document.querySelector('#next') as any)?.click()
+      }
+      if (e.key == 'ArrowLeft') {
+        ;(document.querySelector('#prev') as any)?.click()
+      }
+    })
+  }, [])
   if (isLoading)
     return (
       <div className='space-y-4'>
@@ -42,18 +52,18 @@ export default function Contests({ id }) {
         <Skeleton className='w-full aspect-[343/256]' />
       </div>
     )
-    const prevHandler = () => {
-      const idx = contestData?.artworks?.artworks?.findIndex((artwork) => artwork.url == selectedArtwork.url)
-      if (contestData?.artworks?.artworks[idx - 1]) {
-        setSelectedArtwork(contestData?.artworks?.artworks[idx - 1])
-      }
+  const prevHandler = () => {
+    const idx = contestData?.artworks?.artworks?.findIndex((artwork) => artwork.url == selectedArtwork.url)
+    if (contestData?.artworks?.artworks[idx - 1]) {
+      setSelectedArtwork(contestData?.artworks?.artworks[idx - 1])
     }
-    const nextHandler = () => {
-      const idx = contestData?.artworks?.artworks?.findIndex((artwork) => artwork.url == selectedArtwork.url)
-      if (contestData?.artworks?.artworks[idx + 1]) {
-        setSelectedArtwork(contestData?.artworks?.artworks[idx + 1])
-      }
+  }
+  const nextHandler = () => {
+    const idx = contestData?.artworks?.artworks?.findIndex((artwork) => artwork.url == selectedArtwork.url)
+    if (contestData?.artworks?.artworks[idx + 1]) {
+      setSelectedArtwork(contestData?.artworks?.artworks[idx + 1])
     }
+  }
   if (contestData) {
     return (
       <div className='-mt-4 lg:mt-0'>
@@ -132,6 +142,7 @@ export default function Contests({ id }) {
             <div>
               <div
                 onClick={prevHandler}
+                id='prev'
                 className='absolute -bottom-14 lg:top-1/2 -scale-x-100 left-[calc(50%-20px)] lg:-left-[98px] -translate-x-1/2 lg:translate-x-0 -translate-y-1/2 cursor-pointer bg-[#FFFFFF] rounded-full text-[#B0B0B0] hover:text-border-brand-hover active:text-border-brand-focus w-8 lg:w-16 h-8 lg:h-16 grid place-items-center shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'>
                 <svg xmlns='http://www.w3.org/2000/svg' width='7' height='12' viewBox='0 0 7 12' fill='none'>
                   <path
@@ -145,6 +156,7 @@ export default function Contests({ id }) {
               </div>
               <div
                 onClick={nextHandler}
+                id='next'
                 className='absolute -bottom-14 lg:top-1/2 right-[calc(50%-20px)] lg:-right-[98px] translate-x-1/2 lg:translate-x-0 -translate-y-1/2 cursor-pointer bg-[#FFFFFF] rounded-full text-[#B0B0B0] hover:text-border-brand-hover active:text-border-brand-focus w-8 lg:w-16 h-8 lg:h-16 grid place-items-center shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'>
                 <svg xmlns='http://www.w3.org/2000/svg' width='7' height='12' viewBox='0 0 7 12' fill='none'>
                   <path
