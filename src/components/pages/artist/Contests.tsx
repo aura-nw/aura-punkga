@@ -16,6 +16,7 @@ export default function Contests({ id }) {
   const [index, setIndex] = useState(1)
   const [open, setOpen] = useState(false)
   const [artworkPage, setArtworkPage] = useState(1)
+  const [selectedArtwork, setSelectedArtwork] = useState<any>(null)
   const { t } = useTranslation()
   const { locale } = useRouter()
   const [selectedContest, setSelectedContest] = useState<any>()
@@ -34,7 +35,6 @@ export default function Contests({ id }) {
     },
     ({ id, selectedContestId }) => (id && selectedContestId ? getContestMangaAndArtwork(id, selectedContestId) : null)
   )
-  console.log(contestData)
   if (isLoading)
     return (
       <div className='space-y-4'>
@@ -42,6 +42,18 @@ export default function Contests({ id }) {
         <Skeleton className='w-full aspect-[343/256]' />
       </div>
     )
+    const prevHandler = () => {
+      const idx = contestData?.artworks?.artworks?.findIndex((artwork) => artwork.url == selectedArtwork.url)
+      if (contestData?.artworks?.artworks[idx - 1]) {
+        setSelectedArtwork(contestData?.artworks?.artworks[idx - 1])
+      }
+    }
+    const nextHandler = () => {
+      const idx = contestData?.artworks?.artworks?.findIndex((artwork) => artwork.url == selectedArtwork.url)
+      if (contestData?.artworks?.artworks[idx + 1]) {
+        setSelectedArtwork(contestData?.artworks?.artworks[idx + 1])
+      }
+    }
   if (contestData) {
     return (
       <div className='-mt-4 lg:mt-0'>
@@ -79,7 +91,7 @@ export default function Contests({ id }) {
             <div
               key={index}
               onClick={() => {
-                setIndex(index)
+                setSelectedArtwork(artwork)
                 setOpen(true)
               }}>
               <Image
@@ -104,20 +116,48 @@ export default function Contests({ id }) {
             />
           </div>
         )}
-        <Modal open={open} setOpen={setOpen} preventClickOutsideToClose={false}>
-          <Swiper slidesPerView={1} autoHeight initialSlide={index}>
-            {contestData?.artworks?.artworks?.map((artwork, index) => (
-              <SwiperSlide key={index}>
-                <Image
-                  width={300}
-                  height={300}
-                  src={artwork.url}
-                  alt=''
-                  className='w-full h-auto rounded-md object-cover lg:max-w-[40vw]'
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+        <Modal
+          open={open}
+          setOpen={setOpen}
+          preventClickOutsideToClose={false}
+          className='[&_.static]:!overflow-visible'>
+          <div className='relative'>
+            <Image
+              width={300}
+              height={300}
+              src={selectedArtwork?.url}
+              alt=''
+              className='w-auto h-full max-h-[80vh] rounded-md object-cover'
+            />
+            <div>
+              <div
+                onClick={prevHandler}
+                className='absolute -bottom-14 lg:top-1/2 -scale-x-100 left-[calc(50%-20px)] lg:-left-[98px] -translate-x-1/2 lg:translate-x-0 -translate-y-1/2 cursor-pointer bg-[#FFFFFF] rounded-full text-[#B0B0B0] hover:text-border-brand-hover active:text-border-brand-focus w-8 lg:w-16 h-8 lg:h-16 grid place-items-center shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'>
+                <svg xmlns='http://www.w3.org/2000/svg' width='7' height='12' viewBox='0 0 7 12' fill='none'>
+                  <path
+                    d='M1 1L6 6L1 11'
+                    stroke='currentColor'
+                    strokeWidth='2'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                  />
+                </svg>
+              </div>
+              <div
+                onClick={nextHandler}
+                className='absolute -bottom-14 lg:top-1/2 right-[calc(50%-20px)] lg:-right-[98px] translate-x-1/2 lg:translate-x-0 -translate-y-1/2 cursor-pointer bg-[#FFFFFF] rounded-full text-[#B0B0B0] hover:text-border-brand-hover active:text-border-brand-focus w-8 lg:w-16 h-8 lg:h-16 grid place-items-center shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'>
+                <svg xmlns='http://www.w3.org/2000/svg' width='7' height='12' viewBox='0 0 7 12' fill='none'>
+                  <path
+                    d='M1 1L6 6L1 11'
+                    stroke='currentColor'
+                    strokeWidth='2'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
         </Modal>
       </div>
     )
