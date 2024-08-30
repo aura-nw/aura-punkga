@@ -31,6 +31,7 @@ import PUD7692 from './pudgy/PUD7692.png'
 import PUD7944 from './pudgy/PUD7944.png'
 import PUD8550 from './pudgy/PUD8550.png'
 import PUD8641 from './pudgy/PUD8641.png'
+import PUD7732 from './pudgy/PUD7732.png'
 import Australia from 'assets/images/flags/Australia.svg'
 import China from 'assets/images/flags/China.svg'
 import HongKong from 'assets/images/flags/Hong Kong.svg'
@@ -63,6 +64,15 @@ export const pudgyData = [
     owner: 'degenden_eth',
     nation: 'Hong Kong',
     flag: HongKong,
+  },
+  {
+    image: PUD7732,
+    name: 'PUD#7732',
+    description: 'enjoy working, traveling, seeking adventure, and exploring new places',
+    descriptionvn: 'Thích làm việc, du lịch, tìm kiếm phiêu lưu và khám phá những địa điểm mới',
+    owner: 'xomnft_',
+    nation: 'Vietnam',
+    flag: Vietnam,
   },
   {
     image: PUD1917,
