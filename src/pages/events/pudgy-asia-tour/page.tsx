@@ -20,6 +20,7 @@ import Rule1 from 'components/pages/event/pudgy-asia-tour/assets/rule1.png'
 import Rule1VN from 'components/pages/event/pudgy-asia-tour/assets/rule1vn.png'
 import Rule2 from 'components/pages/event/pudgy-asia-tour/assets/rule2.png'
 import Rule3 from 'components/pages/event/pudgy-asia-tour/assets/rule3.png'
+import Mangas from 'components/pages/event/pudgy-asia-tour/Mangas'
 export default function Pudgy() {
   const { locale } = useRouter()
   const { t } = useTranslation()
@@ -243,6 +244,7 @@ export default function Pudgy() {
         </div>
         <TimeLine />
         <PudgyList />
+        <Mangas/>
         <div className='mt-28 -mb-14 flex justify-center overflow-hidden'>
           <FooterAnimationSection />
         </div>

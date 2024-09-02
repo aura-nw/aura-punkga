@@ -129,7 +129,7 @@ export default function Artworks() {
               {latestComic.loading
                 ? Array.apply(null, Array(10)).map((d, index) => <DummyComic key={index} />)
                 : useableComic?.length
-                ? useableComic.map((data, index) => <Manga key={index} {...data} />)
+                ? useableComic?.slice((page - 1) * 10, page * 10)?.map((data, index) => <Manga key={index} {...data} />)
                 : null}
             </>
           )}
