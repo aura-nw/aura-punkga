@@ -23,7 +23,7 @@ export default function Mangas() {
     )
     setUseableComic(comic)
   }, [latestComic.data])
-  if (!useableComic?.data?.length) return null
+  if (!useableComic?.length) return null
   return (
     <div className='pt-20 pk-container'>
       <div className='uppercase text-white text-center w-full drop-shadow-[2px_2px_0px_#000] trailer-font text-[36px] md:text-[64px] leading-[47px] md:leading-[84px] font-black text-stroke'>
@@ -33,11 +33,11 @@ export default function Mangas() {
         <div className='grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(270px,1fr))] gap-4 md:gap-8 w-full'>
           {latestComic.loading
             ? null
-            : useableComic.data?.length
+            : useableComic?.length
             ? useableComic.slice((page - 1) * 12, page * 12).map((data, index) => <Manga key={index} {...data} />)
             : null}
         </div>
-        {!!useableComic?.data?.length && (
+        {!!useableComic?.length && (
           <Pagination
             shape='rounded'
             page={page}
@@ -45,7 +45,7 @@ export default function Mangas() {
             onChange={(event: React.ChangeEvent<unknown>, value: number) => {
               setPage(value)
             }}
-            count={Math.ceil(useableComic.data?.length / 12)}
+            count={Math.ceil(useableComic?.length / 12)}
           />
         )}
       </div>
