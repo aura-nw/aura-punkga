@@ -277,6 +277,17 @@ export default function Header({ className }: { className?: string }) {
                     {t('My profile')}
                   </div>
                 )}
+                {account && (
+                  <div
+                    className='flex gap-3 items-center py-4 text-sm leading-[18px] text-[#414141] font-semibold border-b border-[#E9E9E9]'
+                    onClick={() => {
+                      setOpenNavigation(false)
+                      router.push('/profile/launchpad')
+                    }}>
+                    <Image src={MyProfile} alt='' className='w-5 h-5' />
+                    {t('My launchpad')}
+                  </div>
+                )}
 
                 <div
                   className='flex gap-3 items-center py-4 text-sm leading-[18px] font-semibold'
@@ -327,6 +338,30 @@ export default function Header({ className }: { className?: string }) {
                     />
                   </svg>
                   {t('Collection')}
+                </div>
+                <div
+                  className='flex gap-3 items-center py-4 text-sm leading-[18px] font-semibold'
+                  onClick={() => {
+                    setOpenNavigation(false)
+                    router.push('/ipassets')
+                  }}>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
+                    <path
+                      d='M4 18H16C17.1046 18 18 17.0574 18 15.8947V4.10526C18 2.94256 17.1046 2 16 2H4C2.89543 2 2 2.94256 2 4.10526V15.8947C2 17.0574 2.89543 18 4 18Z'
+                      stroke='#009640'
+                      strokeWidth='1.5'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                    <path
+                      d='M5 12.9999H15L11.6667 7.16657L9.16667 10.9166L7.5 9.2499L5 12.9999Z'
+                      stroke='#009640'
+                      strokeWidth='1.5'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                  </svg>
+                  {t('IP Asset')}
                 </div>
                 <div
                   className='flex gap-3 items-center py-4 text-sm leading-[18px] font-semibold'
@@ -591,6 +626,13 @@ export default function Header({ className }: { className?: string }) {
                 {t('Event')}
               </span>
             </Button>
+            <Button onClick={() => (account ? router.push('/ipassets') : setSignInOpen(true))}>
+              <span
+                style={{ fontWeight: '500' }}
+                className={`${pathname.includes('/ipassets') ? 'text-text-brand-defaul' : ''}`}>
+                {t('IP Asset')}
+              </span>
+            </Button>
             <Button onClick={() => router.push('/collections')}>
               <span
                 style={{ fontWeight: '500' }}
@@ -706,6 +748,10 @@ export default function Header({ className }: { className?: string }) {
                       <div className='text-text-primary text-sm font-semibold leading-5'>
                         <div onClick={() => router.push('/profile')}>
                           <span>{t('My profile')}</span>
+                        </div>
+                        <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0] '></span>
+                        <div onClick={() => router.push('/profile/launchpad')}>
+                          <span>{t('My launchpad')}</span>
                         </div>
                         <span className='w-full block my-[10px] border-[1px] border-solid border-[#F0F0F0] '></span>
                         <div onClick={logout}>

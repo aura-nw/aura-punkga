@@ -18,6 +18,7 @@ import { getItem, removeItem, setItem } from 'src/utils/localStorage'
 import { useAccount, useChainId, useDisconnect, useSignMessage, useSwitchChain } from 'wagmi'
 import ModalProvider from './modals'
 import { toast } from 'react-toastify'
+import StoryProvider from './story'
 const queryClient = new QueryClient()
 
 export const Context = createContext<{
@@ -39,6 +40,23 @@ export const Context = createContext<{
   forgotPassword: (email: string) => Promise<any>
   resetPassword: (token: string, newPassword: string) => Promise<any>
   connectHandler: (data?: any) => Promise<any>
+  getIPAsset: (user_id: string) => Promise<any>
+  registerIPAsset: (
+    user_id: string,
+    nft_token_id: string,
+    nft_contract_address: string,
+    ip_asset_id: string
+  ) => Promise<any>
+  getLicense: (ip_asset_id: string) => Promise<any>
+  mintLicense: (
+    licenseData: Array<{
+      ip_asset_id: string
+      license_id: string
+      license_template_address: string
+      owner: string
+      term_id: string
+    }>
+  ) => Promise<any>
 }>({
   account: undefined,
   wallet: undefined,
@@ -53,6 +71,10 @@ export const Context = createContext<{
   forgotPassword: async () => {},
   resetPassword: async () => {},
   connectHandler: async () => {},
+  getIPAsset: async () => {},
+  registerIPAsset: async () => {},
+  getLicense: async () => {},
+  mintLicense: async () => {},
 })
 export const privateAxios = axios.create()
 function ContextProvider({ children }: any) {
@@ -77,7 +99,7 @@ function ContextProvider({ children }: any) {
     redirectURL: location.href || config.REDIRECT_URL,
     clientID: config.AUTHORIZER_CLIENT_ID,
   })
-  
+
   const httpLink = new HttpLink({
     uri: `${config.API_URL}/v1/graphql`,
   })
@@ -294,7 +316,8 @@ function ContextProvider({ children }: any) {
           custodialWalletAddress: res.authorizer_users_user_wallet?.address,
           xp: res.levels.find((level) => level.user_level_chain.punkga_config.reward_point_name == 'XP')?.xp || 0,
           kp: res.levels.find((level) => level.user_level_chain.punkga_config.reward_point_name == 'KP')?.xp || 0,
-          level: res.levels?.find((level) => level.user_level_chain.punkga_config.reward_point_name == 'XP')?.level || 0,
+          level:
+            res.levels?.find((level) => level.user_level_chain.punkga_config.reward_point_name == 'XP')?.level || 0,
           levels: res.levels?.map((v) => ({
             level: v.level,
             xp: v.xp,
@@ -445,6 +468,67 @@ function ContextProvider({ children }: any) {
       return null
     }
   }
+  const getIPAsset = async (user_id: string) => {
+    try {
+      const res = await privateAxios.get(`${config.API_URL}/api/rest/public/ip-assets?user_id=${user_id}`)
+      return res
+    } catch (error) {
+      console.log('getIPAsset', error)
+      return null
+    }
+  }
+
+  const registerIPAsset = async (
+    user_id: string,
+    nft_token_id: string,
+    nft_contract_address: string,
+    ip_asset_id: string
+  ) => {
+    try {
+      const res = await privateAxios.post(`${config.API_URL}/api/rest/users/ip-assets`, {
+        object: {
+          user_id,
+          nft_token_id,
+          nft_contract_address,
+          ip_asset_id,
+        },
+      })
+      return res
+    } catch (error) {
+      console.log('RegisterIPAsset', error)
+      return null
+    }
+  }
+
+  const getLicense = async (ip_asset_id: string) => {
+    try {
+      const res = await privateAxios.get(`${config.API_URL}/api/rest/public/license-token?ip_asset_id=${ip_asset_id}`)
+      return res
+    } catch (error) {
+      console.log('getLicense', error)
+      return null
+    }
+  }
+
+  const mintLicense = async (
+    licenseData: Array<{
+      ip_asset_id: string
+      license_id: string
+      license_template_address: string
+      owner: string
+      term_id: string
+    }>
+  ): Promise<any> => {
+    try {
+      const res = await privateAxios.post(`${config.API_URL}/api/rest/user/license-token`, {
+        objects: licenseData,
+      })
+      return res
+    } catch (error) {
+      console.log('MintLicense', error)
+      return null
+    }
+  }
   return (
     <Context.Provider
       value={{
@@ -461,10 +545,16 @@ function ContextProvider({ children }: any) {
         forgotPassword,
         resetPassword,
         connectHandler,
+        getIPAsset,
+        registerIPAsset,
+        getLicense,
+        mintLicense,
       }}>
       <QueryClientProvider client={queryClient}>
         <ApolloProvider client={client}>
-          <ModalProvider>{children}</ModalProvider>
+          <StoryProvider>
+            <ModalProvider>{children}</ModalProvider>
+          </StoryProvider>
         </ApolloProvider>
       </QueryClientProvider>
     </Context.Provider>
