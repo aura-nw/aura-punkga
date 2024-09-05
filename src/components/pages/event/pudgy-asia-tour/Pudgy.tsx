@@ -8,6 +8,7 @@ import Logo from './assets/Punkga logo.svg'
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/router'
+import useSWR from 'swr'
 export default function PudgyList() {
   const { t } = useTranslation()
   const { locale } = useRouter()
@@ -15,6 +16,11 @@ export default function PudgyList() {
   const [selected, setSelected] = useState(pudgyData[0])
   const [selectedPudgy, setSelectedPudgy] = useState(pudgyData[0])
   const [scope, animate] = useAnimate()
+  const { data: pudgyDataCMS, isLoading } = useSWR(
+    'https://script.google.com/macros/s/AKfycbzLDJKGXgn6fAqNXolc4_ZSLAQauYvOhtu1vUrgiw1UVTzfgE3q1kRozAs2IU77kQljWg/exec',
+    (url) => fetch(url).then((res) => res.json())
+  )
+  const mangas = pudgyDataCMS?.mangaData?.filter((d) => d.pudgy.toLowerCase() == selectedPudgy.name.toLowerCase())
   return (
     <>
       <style jsx>{`
@@ -81,6 +87,23 @@ export default function PudgyList() {
                       </Link>
                     </span>
                   </div>
+                  {!!mangas?.length && (
+                    <div className='mt-4 border-t border-black space-y-4 pt-4'>
+                      {mangas?.map((manga, index) => (
+                        <div key={index} className='flex items-center gap-2'>
+                          <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            width='10'
+                            height='11'
+                            viewBox='0 0 10 11'
+                            fill='none'>
+                            <circle cx='5' cy='5.19531' r='5' fill='black' />
+                          </svg>
+                          <Link href={manga.url} className='text-info-default text-lg font-semibold'>{manga.manga}</Link>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 <div className='card-back grid place-items-center rounded-mlg bg-[#3b86f7]'>
                   <Image src={Logo} alt='' />
@@ -89,30 +112,32 @@ export default function PudgyList() {
             </div>
           </div>
           <div className='flex-1 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-x-10 gap-y-[22px] pr-9 max-h-[666px] overflow-auto pudgy-scrollbar'>
-            {pudgyData.map((data, index) => (
-              <div
-                className='cursor-pointer'
-                key={index}
-                onClick={() => {
-                  if (selected.name != data.name) {
-                    animate(
-                      '.card-inner',
-                      { transform: ['rotateY(180deg)', 'rotateY(360deg)', 'rotateY(0deg)'] },
-                      { duration: 1, times: [0.5, 1, 1], ease: 'linear' }
-                    )
-                    setSelectedPudgy(data)
-                    setTimeout(() => setSelected(data), 500)
-                  }
-                }}>
-                <div className='relative'>
-                  <Image src={data.image} alt='' className='w-full aspect-square rounded-mlg border border-black' />
-                  {selectedPudgy.name == data.name && (
-                    <div className='absolute inset-0 rounded-mlg border-[3px] border-text-info-primary'></div>
-                  )}
+            {pudgyData.map((data, index) => {
+              return (
+                <div
+                  className='cursor-pointer'
+                  key={index}
+                  onClick={() => {
+                    if (selected.name != data.name) {
+                      animate(
+                        '.card-inner',
+                        { transform: ['rotateY(180deg)', 'rotateY(360deg)', 'rotateY(0deg)'] },
+                        { duration: 1, times: [0.5, 1, 1], ease: 'linear' }
+                      )
+                      setSelectedPudgy(data)
+                      setTimeout(() => setSelected(data), 500)
+                    }
+                  }}>
+                  <div className='relative'>
+                    <Image src={data.image} alt='' className='w-full aspect-square rounded-mlg border border-black' />
+                    {selectedPudgy.name == data.name && (
+                      <div className='absolute inset-0 rounded-mlg border-[3px] border-text-info-primary'></div>
+                    )}
+                  </div>
+                  <div className='mt-4 trailer-font font-black text-lg uppercase'>{data.name}</div>
                 </div>
-                <div className='mt-4 trailer-font font-black text-lg uppercase'>{data.name}</div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </div>
