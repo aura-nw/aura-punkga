@@ -57,6 +57,7 @@ const Manga = (props) => {
   const { t } = useTranslation()
   return (
     <Link
+      target='_blank'
       href={isMobile ? `/comic/${props.slug}` : `/comic/${props.slug}/chapter/1`}
       className='[&:hover_.shadow]:visible relative'>
       <div className='relative'>
