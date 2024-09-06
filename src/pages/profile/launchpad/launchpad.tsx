@@ -68,8 +68,8 @@ function Launchpad() {
     <>
       <Header />
       <div className='pk-container'>
-        <div className='flex flex-col'>
-          <div className='sticky top-8 bg-white pt-16 pb-6'>
+        <div className='flex flex-col bg-white p-6 mt-6 rounded-lg'>
+          <div className='sticky top-8 pb-6'>
             <div className='flex items-center justify-between flex-wrap'>
               <div className='text-base leading-5 font-bold md:text-2xl md:leading-[18px] md:font-extrabold whitespace-nowrap'>
                 {t('Launchpad')} <span className=''>{` (${listLaunchpads?.data?.length ?? 0})`}</span>

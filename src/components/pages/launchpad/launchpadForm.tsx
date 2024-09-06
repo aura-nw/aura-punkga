@@ -7,7 +7,7 @@ import vi from 'date-fns/locale/vi'
 import moment from 'moment'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { ChangeEvent, forwardRef, useContext, useEffect, useRef, useState } from 'react'
+import React, { ChangeEvent, forwardRef, useContext, useEffect, useRef, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { Controller, useForm } from 'react-hook-form'
@@ -22,6 +22,18 @@ import { getFileNameFromURL } from '../../../pages/profile/launchpad/[id]/launch
 import Footer from '../../Footer'
 import Header from '../../Header'
 import UploadImage from './uploadImage'
+import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
+
+interface Option {
+  value: string
+  label: string
+  termId: string
+}
+const options: Option[] = [
+  { value: 'CommercialUse', label: 'Commercial Use', termId: '1' },
+  { value: 'NonComSocialRemixing', label: 'Non-Commercial Social Remixing', termId: '2' },
+  { value: 'CommercialRemix', label: 'Commercial Remix', termId: '3' },
+]
 
 type LaunchpadFormType = {
   launchpad?: any
@@ -61,7 +73,13 @@ function LaunchpadForm({
   const [validateNFTImgs, setValidateNFTImgs] = useState('')
   const [minEndDate, setMinEndDate] = useState<Date | null>()
   const [isLoading, setIsLoading] = useState<boolean>()
+  const [uriLicenseTerms, setUriLicenseTerms] = useState('')
+  const [selectedOption, setSelectedOption] = useState<Option>(options[1])
+  const [commercialRevenueShare, setCommercialRevenueShare] = useState<number>()
 
+  const handleOptionSelect = (option: Option) => {
+    setSelectedOption(option)
+  }
   const featuredImgsValues = watch(Array.from({ length: 5 }, (_, index) => `featured-images-${index + 1}`))
   const handleSubmitForm = async () => {
     if (startDate && endDate) {
@@ -111,6 +129,14 @@ function LaunchpadForm({
       formData.append('start_date', moment(values.starting).toISOString())
       formData.append('end_date', moment(values.ending).toISOString())
       formData.append('description', values.description)
+      formData.append(
+        'license_info',
+        JSON.stringify({
+          termId: selectedOption.termId,
+          uriLicenseTerms,
+          commercialRevenueShare,
+        })
+      )
       try {
         if (!launchpad) {
           for (let i = 0; i < nftImages.length; i++) {
@@ -246,7 +272,7 @@ function LaunchpadForm({
               {t(`${isCreate ? 'Create' : 'Edit'} launchpad`)}
             </div>
           </div>
-          <div className=' rounded-[10px] flex gap-16'>
+          <div className=' rounded-[10px] flex gap-6'>
             <div className='flex flex-col justify-between w-[424px] bg-white rounded-md p-6 shrink-0'>
               <div className='flex flex-col'>
                 <div className='flex flex-col gap-2'>
@@ -467,7 +493,89 @@ function LaunchpadForm({
               </div>
             </div>
 
-            <div className='flex flex-col flex-1 gap-10'>
+            <div className='flex flex-col flex-1 gap-6'>
+              <div className='bg-white rounded-2xl p-6'>
+                <div className='flex gap-2 items-center border-b border-[#F0F0F0] pb-3'>
+                  <span className='text-[#1C1C1C] font-semibold text-sm'>License term</span>
+                </div>
+                <div className='grid grid-cols-2 pt-3 gap-x-4'>
+                  <div className='flex justify-start flex-col gap-2'>
+                    <LabelInput>Type</LabelInput>
+                    <Dropdown>
+                      <DropdownToggle>
+                        {(open) => (
+                          <div
+                            className={`p-[10px] rounded-lg border border-[#eaeaea] flex justify-between cursor-pointer items-center w-[390px] `}>
+                            <div className='px-[5px] text-sm leading-[18px] font-semibold'>{selectedOption.label}</div>
+                            <div
+                              className={`rounded-full p-[5px] aspect-square bg-[#C6FFDE] grid place-items-center ${
+                                open ? 'rotate-180' : ''
+                              }`}>
+                              <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                width='8'
+                                height='4'
+                                viewBox='0 0 8 4'
+                                fill='none'>
+                                <path
+                                  d='M1.4513 0L4.0013 2.47467L6.5513 0L7.33463 0.765333L4.0013 4L0.667969 0.765333L1.4513 0Z'
+                                  fill='#1FAB5E'
+                                />
+                              </svg>
+                            </div>
+                          </div>
+                        )}
+                      </DropdownToggle>
+                      <DropdownMenu customClass='rounded-[8px]' closeOnClick>
+                        <div className='w-[300px]  cursor-pointer'>
+                          <div className='p-[15px] text-xs font-semibold' onClick={() => setSelectedOption(options[0])}>
+                            {options[0]?.value}
+                          </div>
+                          <div className='p-[15px] text-xs font-semibold' onClick={() => setSelectedOption(options[1])}>
+                            {options[1]?.value}
+                          </div>
+                          <div className='p-[15px] text-xs font-semibold' onClick={() => setSelectedOption(options[2])}>
+                            {options[2]?.value}
+                          </div>
+                        </div>
+                      </DropdownMenu>
+                      <DropdownMenu customClass='rounded-[8px]' closeOnClick>
+                        <React.Fragment>
+                          {options.map((option) => (
+                            <div
+                              key={option.value}
+                              className='w-[300px] bg-[#F2F2F2] cursor-pointer'
+                              onClick={() => handleOptionSelect(option)}>
+                              <div className='p-[15px] text-sm font-semibold'>{option.label}</div>
+                            </div>
+                          ))}
+                        </React.Fragment>
+                      </DropdownMenu>
+                    </Dropdown>
+                  </div>
+                  <div className='flex justify-start flex-col gap-2'>
+                    <LabelInput>{t('URI License Terms')}</LabelInput>
+
+                    <OutlineTextField
+                      value={uriLicenseTerms}
+                      onChange={setUriLicenseTerms}
+                      type='text'
+                      placeholder={t('Enter a link')}
+                    />
+                  </div>
+                  <div className='flex justify-start flex-col gap-2'>
+                    <LabelInput>{t('Commercial Revenue Share (%)')}</LabelInput>
+
+                    <OutlineTextField
+                      value={commercialRevenueShare ? commercialRevenueShare.toString() : ''}
+                      onChange={(e) => setCommercialRevenueShare(Number(e))}
+                      disabled={selectedOption.termId != '3'}
+                      type='text'
+                      placeholder={t(selectedOption.termId == '3' ? 'Enter an amount' : 'Not available')}
+                    />
+                  </div>
+                </div>
+              </div>
               <div className='bg-white rounded-[16px] p-6'>
                 <div className='flex gap-2 items-center border-b border-[#F0F0F0] pb-3'>
                   <span className='text-[#1C1C1C] font-semibold text-sm'>NFTs image</span>
