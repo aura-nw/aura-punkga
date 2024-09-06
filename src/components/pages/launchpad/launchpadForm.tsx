@@ -117,7 +117,7 @@ function LaunchpadForm({
       formData.append('creator_address', account?.activeWalletAddress)
       formData.append('name', values.launchpadName)
       formData.append('license_token_address', licenseAddress)
-      formData.append('license_token_id', values.licenseId)
+      formData.append('ip_asset_id', values.ipassetId)
       formData.append(
         'mint_price',
         BigNumber(values.mintPrice || 0)
@@ -227,7 +227,7 @@ function LaunchpadForm({
   useEffect(() => {
     if (launchpad) {
       setValue('launchpadName', launchpad?.name)
-      setValue('licenseId', launchpad?.license_token_id)
+      setValue('ipassetId', launchpad?.license_token_id)
       setValue('mintPrice', BigNumber(launchpad.mint_price || 0).div(BigNumber(10).pow(18)))
       setValue('maxSupply', launchpad?.max_supply)
       setValue('maxMintPrice', launchpad?.max_mint_per_address)
@@ -299,9 +299,9 @@ function LaunchpadForm({
                   />
                 </div>
                 <div className='flex flex-col gap-2'>
-                  <LabelInput>License token ID</LabelInput>
+                  <LabelInput>IP asset ID</LabelInput>
                   <Controller
-                    name='licenseId'
+                    name='ipassetId'
                     control={control}
                     defaultValue={''}
                     rules={{
@@ -592,13 +592,13 @@ function LaunchpadForm({
                             key={idx}
                             className='py-2 px-4 bg-[#F2F2F2] rounded-[10px] flex justify-between items-center'>
                             <p className='text-[#61646B] font-normal text-sm'>{nft.name}</p>
-                            <Button
+                            <div
                               onClick={() => {
                                 setNftImages((nftImages) => nftImages.filter((item) => item.id !== nft.id))
                                 defaultNftImgs = defaultNftImgs.filter((e) => e.id !== idx)
                               }}>
                               <Image src={ic_close} alt='ic_close' />
-                            </Button>
+                            </div>
                           </div>
                         )
                       })}
