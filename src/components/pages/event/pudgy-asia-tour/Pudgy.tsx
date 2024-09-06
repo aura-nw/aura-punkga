@@ -20,7 +20,7 @@ export default function PudgyList() {
     'https://script.google.com/macros/s/AKfycbzLDJKGXgn6fAqNXolc4_ZSLAQauYvOhtu1vUrgiw1UVTzfgE3q1kRozAs2IU77kQljWg/exec',
     (url) => fetch(url).then((res) => res.json())
   )
-  const mangas = pudgyDataCMS?.mangaData?.filter((d) => d.pudgy.toLowerCase() == selectedPudgy.name.toLowerCase())
+  const mangas = pudgyDataCMS?.mangaData?.filter((d) => d.pudgy.toLowerCase() == selected.name.toLowerCase())
   return (
     <>
       <style jsx>{`
@@ -40,7 +40,7 @@ export default function PudgyList() {
         }
         .card {
           width: 405px;
-          height: 648px;
+          height: 778px;
           perspective: 1000px;
         }
         .card-inner {
@@ -88,7 +88,7 @@ export default function PudgyList() {
                     </span>
                   </div>
                   {!!mangas?.length && (
-                    <div className='mt-4 border-t border-black space-y-4 pt-4'>
+                    <div className='mt-4 border-t border-black space-y-2 pt-4'>
                       {mangas?.map((manga, index) => (
                         <div key={index} className='flex items-center gap-2'>
                           <svg
@@ -96,6 +96,7 @@ export default function PudgyList() {
                             width='10'
                             height='11'
                             viewBox='0 0 10 11'
+                            className='shrink-0'
                             fill='none'>
                             <circle cx='5' cy='5.19531' r='5' fill='black' />
                           </svg>
@@ -111,7 +112,7 @@ export default function PudgyList() {
               </div>
             </div>
           </div>
-          <div className='flex-1 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-x-10 gap-y-[22px] pr-9 max-h-[666px] overflow-auto pudgy-scrollbar'>
+          <div className='flex-1 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-x-10 gap-y-[22px] pr-9 max-h-[777px] overflow-auto pudgy-scrollbar'>
             {pudgyData.map((data, index) => {
               return (
                 <div
