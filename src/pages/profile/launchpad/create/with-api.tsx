@@ -7,7 +7,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   const config = getConfig()
 
   const createLaunchpad = async (launchpad: any) => {
-    const { data } = await privateAxios.post(`${config.REST_API_URL}/launchpad`, launchpad)
+    const { data } = await privateAxios.post(`${config.REST_API_URL}/ip-launchpad`, launchpad)
     return data
   }
 

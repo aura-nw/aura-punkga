@@ -74,7 +74,7 @@ function LaunchpadForm({
   const [minEndDate, setMinEndDate] = useState<Date | null>()
   const [isLoading, setIsLoading] = useState<boolean>()
   const [uriLicenseTerms, setUriLicenseTerms] = useState('')
-  const [selectedOption, setSelectedOption] = useState<Option>(options[1])
+  const [selectedOption, setSelectedOption] = useState<Option>(options[0])
   const [commercialRevenueShare, setCommercialRevenueShare] = useState<number>()
 
   const handleOptionSelect = (option: Option) => {
@@ -173,6 +173,7 @@ function LaunchpadForm({
         toast(launchpad ? 'Saved' : 'Created', { type: 'success' })
         router.push('/profile/launchpad')
       } catch (error) {
+        setIsLoading(false)
         toast('An error ocurred, please try again', { type: 'error' })
       }
     })()
@@ -227,7 +228,7 @@ function LaunchpadForm({
   useEffect(() => {
     if (launchpad) {
       setValue('launchpadName', launchpad?.name)
-      setValue('ipassetId', launchpad?.license_token_id)
+      setValue('ipassetId', launchpad?.ip_asset_id)
       setValue('mintPrice', BigNumber(launchpad.mint_price || 0).div(BigNumber(10).pow(18)))
       setValue('maxSupply', launchpad?.max_supply)
       setValue('maxMintPrice', launchpad?.max_mint_per_address)
@@ -235,6 +236,9 @@ function LaunchpadForm({
       setValue('ending', launchpad?.end_date)
       setValue('description', launchpad?.description)
       setValue('thumbnail', launchpad?.thumbnail_url)
+      setSelectedOption(options[launchpad?.license_info?.termId-1])
+      setUriLicenseTerms(launchpad?.license_info?.uriLicenseTerms)
+      setCommercialRevenueShare(launchpad?.license_info?.commercialRevenueShare)
       defaultFeatureImgs = launchpad?.featured_images.map((e, i) => ({
         id: i,
         imgUrl: e,

@@ -16,8 +16,8 @@ export type LaunchpadType = {
 
 export const getListLaunchpads = async () => {
   try {
-    const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/launchpad/onwed`)
-    return data.data.launchpad
+    const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/ip-launchpad/onwed`)
+    return data.data.ip_launchpad
   } catch (error) {
     return false
   }

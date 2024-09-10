@@ -190,7 +190,6 @@ function ContextProvider({ children }: any) {
     const domain = window.location.host
     const origin = window.location.origin
     const statement = 'Sign in with Aura Network to the app.'
-    console.log(data)
     const addr = data?.accounts[0] || address
     const siweMessage = new SiweMessage({
       scheme: undefined,

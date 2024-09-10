@@ -39,33 +39,28 @@ function RegisterIPAssets() {
   const registerExistingNFT = async (tokenId: string, nftContract: Address) => {
     console.log(client)
     if (!client) return
+
     idRef.current && clearTimeout(idRef.current)
     idRef.current = setTimeout(() => registerExistingNFT(tokenId, nftContract), 60000)
-    setTxLoading(true)
-    setTxName('Registering an NFT as an IP Asset...')
     try {
-      console.log(client.ipAsset)
-      const response = await (client.ipAsset as any).register({
-        nftContract,
-        tokenId,
-        txOptions: { waitForTransaction: true },
-      })
-      if (response.error) {
-        setTxLoading(false)
-        return
+      setTxLoading(true)
+      let ipId = await client.ipAsset.getIpIdAddress(nftContract, tokenId)
+      if (!ipId) {
+        const response = await client.ipAsset.register({
+          nftContract,
+          tokenId,
+          txOptions: { waitForTransaction: true },
+        })
+        ipId = response.ipId
       }
       idRef.current && clearTimeout(idRef.current)
 
-      console.log(`Root IPA created at tx hash ${response.txHash}, IPA ID: ${response.ipId}`)
-      setTxLoading(false)
-      setTxHash(response.txHash as string)
-      addTransaction(response.txHash as string, 'Register IPA', {
-        ipId: response.ipId,
-      })
+      console.log(`Root IPA created. IPA ID: ${ipId}`)
 
-      await registerIPAsset(account.id, tokenId, nftContract, response.ipId)
+      await registerIPAsset(account.id, tokenId, nftContract, ipId)
 
       router.push('/ipassets')
+      setTxLoading(false)
     } catch (error) {
       setTxLoading(false)
       console.error('Error registering NFT as IP asset:', error)

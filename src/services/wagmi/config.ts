@@ -9,6 +9,7 @@ export const getWagmiConfig = (projectId: string) => {
   return createConfig({
     chains: [
       mainnet,
+      sepolia,
       {
         id: chainInfo.evmChainId,
         name: chainInfo.chainName,
@@ -34,6 +35,8 @@ export const getWagmiConfig = (projectId: string) => {
     connectors: [walletConnect({ showQrModal: false, projectId }), metaMask(), injected()],
     transports: {
       [chainInfo.evmChainId]: http(),
+      [mainnet.id]: http(),
+      [sepolia.id]: http(),
     },
   })
 }

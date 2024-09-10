@@ -625,6 +625,14 @@ export const getLaunchPadDetail = async (slug: string) => {
     console.log(error)
   }
 }
+export const getStoryLaunchPadDetail = async (id: string) => {
+  try {
+    const { data } = await axios.get(`https://hasura.hackathon.punkga.me/api/rest/public/ip-launchpad/${id}`)
+    return data?.ip_launchpad_by_pk
+  } catch (error) {
+    console.log(error)
+  }
+}
 export const mintNfts = async (launchpad_id: string, amount: number) => {
   try {
     const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/launchpad/${launchpad_id}/${amount}/mint`)

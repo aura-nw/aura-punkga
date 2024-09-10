@@ -35,8 +35,9 @@ import { useClickOutside } from 'src/hooks/useClickOutside'
 import { search } from 'src/services'
 import { shorten } from 'src/utils'
 import NewButton from 'components/core/Button/Button'
-import { useAccount, useBalance } from 'wagmi'
+import { useAccount, useBalance, useChainId, useSwitchChain } from 'wagmi'
 import getConfig from 'next/config'
+import { mainnet, sepolia } from 'viem/chains'
 
 export const HEADER_HEIGHT = {
   MOBILE: '56px',
@@ -49,6 +50,7 @@ export default function Header({ className }: { className?: string }) {
   const { setSignInOpen, setMigrateWalletOpen, setWalletConnectOpen } = useContext(ModalContext)
   const [isSearchFocused, setIsSearchFocused] = useState(false)
   const [isCopied, setIsCopied] = useState(false)
+  const chainId = useChainId()
   const [openProfile, setOpenProfile] = useState(false)
   const [openNavigation, setOpenNavigation] = useState(false)
   const [hideBalance, setHideBalance] = useState(false)
@@ -63,6 +65,7 @@ export default function Header({ className }: { className?: string }) {
   const mref = useRef<any>()
   const mdivRef = useRef<any>()
   const { isConnected, address } = useAccount()
+  const { switchChain } = useSwitchChain()
   useClickOutside(divRef, () => {
     if (window.innerWidth > 768) {
       setIsSearchFocused(false)
@@ -668,9 +671,7 @@ export default function Header({ className }: { className?: string }) {
                   <DropdownMenu customClass='right-0 !w-[405px] max-w-[405px] !overflow-visible mt-[26px]'>
                     <div className='p-5 flex flex-col gap-5'>
                       <div className='bg-[#F2F2F2] p-4 rounded-xl'>
-                        <div
-                          className='flex justify-between items-center text-second-color text-lg font-semibold  relative'
-                          onClick={copyAddress}>
+                        <div className='flex justify-between items-center text-second-color text-lg font-semibold  relative'>
                           <div className='flex gap-2 items-center text-base'>
                             <Image
                               src={account.image ? account.image : PunkgaWallet}
@@ -679,7 +680,28 @@ export default function Header({ className }: { className?: string }) {
                               alt=''
                               className='rounded-full'
                             />
-                            <div className='text-[#4E5056] font-semibold'>{account?.name}</div>
+                            <div>
+                              <div className='text-[#4E5056] font-semibold'>{account?.name}</div>
+                              {isConnected && (
+                                <div className='text-xs font-normal'>
+                                  Connected chain: {chainId == config.CHAIN_INFO.evmChainId ? 'Aura' : 'Ethereum'} •{' '}
+                                  <span
+                                    className='underline'
+                                    onClick={() => {
+                                      switchChain({
+                                        chainId:
+                                          chainId == config.CHAIN_INFO.evmChainId
+                                            ? config.CHAIN_INFO.evmChainId == 6322
+                                              ? mainnet.id
+                                              : sepolia.id
+                                            : config.CHAIN_INFO.evmChainId,
+                                      })
+                                    }}>
+                                    {chainId == config.CHAIN_INFO.evmChainId ? 'Switch to Ethereum' : 'Switch to Aura'}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
                           </div>
                         </div>
                         <div className='h-[1px] w-full bg-[#DEDEDE] mt-[10px] mb-[16px]'></div>

@@ -3,8 +3,8 @@ import { privateAxios } from 'src/context'
 
 export const getLaunchpad = async (id: string) => {
   try {
-    const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/launchpad/owned/${id}`)
-    return data.data.launchpad_by_pk
+    const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/ip-launchpad/owned/${id}`)
+    return data.data.ip_launchpad_by_pk
   } catch (error) {
     return false
   }
@@ -12,7 +12,7 @@ export const getLaunchpad = async (id: string) => {
 
 const preDeploy = async (id: string) => {
   try {
-    const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/launchpad/${id}/pre-deploy`)
+    const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/ip-launchpad/${id}/pre-deploy`)
     return data
   } catch (error) {
     return false
@@ -21,7 +21,7 @@ const preDeploy = async (id: string) => {
 
 const postDeploy = async (id: string, txHash: string ) => {
   try {
-    const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/launchpad/${id}/post-deploy`, { txHash: txHash })
+    const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/ip-launchpad/${id}/post-deploy`, { txHash: txHash })
     return data
   } catch (error) {
     return false
@@ -30,7 +30,7 @@ const postDeploy = async (id: string, txHash: string ) => {
 
 const publish = async (id: string) => {
   try {
-    const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/launchpad/${id}/publish`)
+    const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/ip-launchpad/${id}/publish`)
     return data
   } catch (error) {
     return false
@@ -39,7 +39,7 @@ const publish = async (id: string) => {
 
 const unpublish = async (id: string) => {
   try {
-    const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/launchpad/${id}/unpublish`)
+    const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/ip-launchpad/${id}/unpublish`)
     return data
   } catch (error) {
     return false
