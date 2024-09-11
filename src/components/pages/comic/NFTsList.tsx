@@ -8,11 +8,37 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/effect-coverflow'
 import 'swiper/css/pagination'
+import { useState } from 'react'
+import Select from 'components/Select'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 export default function NFTsList({ collections }: { collections: any[] }) {
+  console.log(collections)
+  const { locale } = useRouter()
+  const [selected, setSelected] = useState({
+    key: collections[0].slug,
+    value: collections[0].name[locale],
+  })
   return (
-    <div className='w-full px-6 container relative'>
-      <div className='flex justify-between items-center'></div>
+    <div className='w-full px-5 container relative'>
+      <div className='flex justify-between items-center pt-3'>
+        <div>
+          <Select
+            options={collections.map((collection) => ({
+              key: collection.slug,
+              value: collection.name[locale],
+            }))}
+            selected={selected}
+            onChange={setSelected}
+          />
+        </div>
+        <Link
+          href={`/collections/${selected.key}`}
+          className='font-bold rounded-[20px] grid place-items-center h-10 px-6 border-[2px] border-second-color text-second-color'>
+          View detail
+        </Link>
+      </div>
       <div className='swiper_container h-auto pt-10 pb-8 px-6 relative z-5'>
         <Swiper
           effect={'coverflow'}
@@ -34,27 +60,13 @@ export default function NFTsList({ collections }: { collections: any[] }) {
           }}
           modules={[EffectCoverflow, Pagination, Navigation]}
           className='z-10 relative'>
-          <SwiperSlide className='max-w-[200px]'>
-            <Image src={Howater} alt='' width={200} height={200} className='rounded-2xl object-cover' />
-          </SwiperSlide>
-          <SwiperSlide className='max-w-[200px]'>
-            <Image src={Howater} alt='' width={200} height={200} className='rounded-2xl object-cover' />
-          </SwiperSlide>
-          <SwiperSlide className='max-w-[200px]'>
-            <Image src={Howater} alt='' width={200} height={200} className='rounded-2xl object-cover' />
-          </SwiperSlide>
-          <SwiperSlide className='max-w-[200px]'>
-            <Image src={Howater} alt='' width={200} height={200} className='rounded-2xl object-cover' />
-          </SwiperSlide>
-          <SwiperSlide className='max-w-[200px]'>
-            <Image src={Howater} alt='' width={200} height={200} className='rounded-2xl object-cover' />
-          </SwiperSlide>
-          <SwiperSlide className='max-w-[200px]'>
-            <Image src={Howater} alt='' width={200} height={200} className='rounded-2xl object-cover' />
-          </SwiperSlide>
-          <SwiperSlide className='max-w-[200px]'>
-            <Image src={Howater} alt='' width={200} height={200} className='rounded-2xl object-cover' />
-          </SwiperSlide>
+          {collections
+            .find((c) => selected.key == c.slug)
+            .images.map((image, index) => (
+              <SwiperSlide className='max-w-[200px]' key={index}>
+                <Image src={image} alt='' width={200} height={200} className='rounded-2xl object-cover' />
+              </SwiperSlide>
+            ))}
         </Swiper>
 
         <div className='slider-controler z-20 absolute top-full left-1/2 transform -translate-x-1/2 flex items-center justify-center gap-7 '>

@@ -42,6 +42,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
       name: data.chapter_name,
       number: data.chapter_number,
       isLiked: !!data.chapters_likes.length,
+      collectionSlug: data.chapter_collections?.[0]?.chapter_collection?.slug,
     }
 
     if (

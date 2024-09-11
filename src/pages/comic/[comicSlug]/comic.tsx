@@ -7,6 +7,7 @@ import { HEADER_HEIGHT } from 'components/Header';
 import Tag from 'components/Label/Tag';
 import ChapterList from 'components/pages/comic/ChapterList';
 import Introduction from 'components/pages/comic/Introduction';
+import NFTsList from 'components/pages/comic/NFTsList';
 import Ninja from 'images/ninja-2.svg';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -192,19 +193,18 @@ function Comic({ comicDetails, like, unlike }) {
                 />
               </Tab.Panel>
               <Tab.Panel className='h-full flex-1 flex flex-col'>
-                {/* {!!comicDetails.data.collections.length ? (
-                  <NFTList
-                    theme="dark"
+                {!!comicDetails.data.collections.length ? (
+                  <NFTsList
                     collections={comicDetails.data.collections}
                   />
-                ) : ( */}
+                ) : (
                 <div className='flex-1 w-full flex flex-col items-center justify-center'>
                   <Image src={Ninja} alt='' className='h-[260px] aspect-square mx-auto opacity-60' />
                   <div className='font-extrabold text-2xl leading-6 text-subtle-dark mt-[10px]'>
                     {t('Artist Composing')}
                   </div>
                 </div>
-                {/* )} */}
+                )}
               </Tab.Panel>
               <Tab.Panel className='h-full flex-1 flex flex-col'>
                 <div className='flex-1 w-full flex'>
