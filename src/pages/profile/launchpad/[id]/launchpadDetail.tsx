@@ -149,12 +149,12 @@ function LaunchpadDetail({
       // Mint License
       idRef.current && clearTimeout(idRef.current)
       console.log('mint license')
-      // await client.license.mintLicenseTokens({
-      //   licensorIpId: launchpad.data.ip_asset_id,
-      //   licenseTermsId: registerTermResponse.licenseTermsId,
-      //   amount: launchpad.data.max_supply,
-      //   receiver: address,
-      // })
+      await client.license.mintLicenseTokens({
+        licensorIpId: launchpad.data.ip_asset_id,
+        licenseTermsId: registerTermResponse.licenseTermsId,
+        amount: launchpad.data.max_supply,
+        receiver: address,
+      })
       console.log(`License minted`)
       const hash = await writeContractAsync({
         abi: abi,
@@ -165,18 +165,18 @@ function LaunchpadDetail({
             address,
             launchpad.data?.ip_asset_id,
             launchpad.data?.name,
-            moment(launchpad.data?.start_date).unix(),
-            moment(launchpad.data?.end_date).unix(),
-            BigInt(+launchpad.data?.max_supply),
-            BigInt(+launchpad.data?.max_mint_per_address),
+            moment(launchpad.data?.start_date).unix().toString(),
+            moment(launchpad.data?.end_date).unix().toString(),
+            launchpad.data?.max_supply,
+            launchpad.data?.max_mint_per_address,
           ],
           [
             zeroAddress,
             usdtAddress, // usdt address
-            +launchpad.data?.mint_price,
+            launchpad.data?.mint_price,
             `${data?.metadataContractURI}/`,
             `${data?.metadataURIBase}/`,
-            0,
+            '0',
             address,
           ],
         ],
