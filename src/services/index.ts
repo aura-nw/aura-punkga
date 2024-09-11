@@ -210,7 +210,11 @@ export const getComicDetail = async (comicSlug: string, accountId: string) => {
   const collections = []
   let collectionsData = []
 
-  data?.contract_addresses?.forEach((address) => (collections.includes(address) ? null : collections.push(address)))
+  data?.manga_collections?.forEach((cl) =>
+    collections.includes(cl?.manga_collection?.contract_address)
+      ? null
+      : collections.push(cl?.manga_collection?.contract_address)
+  )
   if (collections.length) {
     const { data } = await axios.post(`${getConfig().CHAIN_INFO.indexerV2}`, {
       query: `query QueryCw721Tokens($contract_addresses: [String!]) {
