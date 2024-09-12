@@ -9,7 +9,14 @@ export const getWagmiConfig = (projectId: string) => {
   return createConfig({
     chains: [
       mainnet,
-      sepolia,
+      {
+        ...sepolia,
+        rpcUrls: {
+          default: {
+            http: ['https://ethereum-sepolia-rpc.publicnode.com'],
+          },
+        },
+      },
       {
         id: chainInfo.evmChainId,
         name: chainInfo.chainName,

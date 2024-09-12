@@ -23,7 +23,7 @@ import { Context } from 'src/context'
 import { useStory } from 'src/context/story'
 import { Address } from 'viem/accounts'
 import { http } from 'viem';
-import { waitForTransactionReceipt } from '@wagmi/core'
+import { waitForTransactionReceipt, readContract } from '@wagmi/core'
 import { sepolia, mainnet } from 'viem/chains'
 import { createConfig } from '@wagmi/core'
 

@@ -89,7 +89,7 @@ function LaunchpadDetail({
     try {
       idRef.current && clearTimeout(idRef.current)
       idRef.current = setTimeout(() => handleDeploy(id), 100000)
-      // Register PIL term
+      console.log('Register PIL term')
       let registerTermResponse
       switch (launchpad.data?.license_info?.termId) {
         case '1':
@@ -135,14 +135,13 @@ function LaunchpadDetail({
           const attachLicenseresponse = await client.license.attachLicenseTerms({
             licenseTermsId: registerTermResponse.licenseTermsId,
             licenseTemplate: '0x260B6CB6284c89dbE660c0004233f7bB99B5edE7',
-
             ipId: launchpad.data.ip_asset_id,
             txOptions: { waitForTransaction: true },
           })
           console.log(`Attached License Terms to IP at tx hash ${attachLicenseresponse.txHash}`)
         } catch (error) {
-          console.log(`Attached License Terms to IP`)
-          console.log(error)
+          console.error(`Attached License Terms to IP`)
+          console.error(error)
         }
       }
 
@@ -165,8 +164,8 @@ function LaunchpadDetail({
             address,
             launchpad.data?.ip_asset_id,
             launchpad.data?.name,
-            moment(launchpad.data?.start_date).unix().toString(),
-            moment(launchpad.data?.end_date).unix().toString(),
+            moment(launchpad.data?.start_date).unix(),
+            moment(launchpad.data?.end_date).unix(),
             launchpad.data?.max_supply,
             launchpad.data?.max_mint_per_address,
           ],
@@ -180,6 +179,7 @@ function LaunchpadDetail({
             address,
           ],
         ],
+        __mode: 'prepared',
       })
 
       if (hash) {
@@ -191,6 +191,21 @@ function LaunchpadDetail({
       setIsPending(false)
     } catch (error) {
       setIsPending(false)
+      console.error(error)
+      idRef.current && clearTimeout(idRef.current)
+      toast(
+        error?.message?.includes('last nft sale should be end')
+          ? 'This license is being used for an ongoing launchpad'
+          : 'Something went wrong',
+        { type: 'error' }
+      )
+    }
+  }
+  
+  const licenseTermsIdChecking = async (licenseTermsId) => {
+    try {
+      
+    } catch (error) {
       console.error(error)
       idRef.current && clearTimeout(idRef.current)
       toast(

@@ -11,7 +11,11 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { useStory } from 'src/context/story'
-import { Address } from 'viem'
+import { Address, http } from 'viem'
+import { waitForTransactionReceipt, readContract, createConfig } from '@wagmi/core'
+import { getWagmiConfig } from 'src/services/wagmi/config'
+import { mainnet, sepolia } from 'viem/chains'
+import { abi } from './abi'
 
 export default function Page(props) {
   if (props.justHead) {
@@ -19,6 +23,14 @@ export default function Page(props) {
   }
   return <RegisterIPAssets />
 }
+
+const config = createConfig({
+  chains: [mainnet, sepolia],
+  transports: {
+    [mainnet.id]: http(),
+    [sepolia.id]: http(),
+  },
+})
 function RegisterIPAssets() {
   const { account, registerIPAsset } = useContext(Context)
   const router = useRouter()
@@ -44,23 +56,45 @@ function RegisterIPAssets() {
     idRef.current = setTimeout(() => registerExistingNFT(tokenId, nftContract), 60000)
     try {
       setTxLoading(true)
-      let ipId = await client.ipAsset.getIpIdAddress(nftContract, tokenId)
-      if (!ipId) {
-        const response = await client.ipAsset.register({
+      let ipId = await client.ipAsset.ipAssetRegistryClient.ipId({
+        chainId: BigInt(11155111),
+        tokenContract: nftContract,
+        tokenId: BigInt(tokenId),
+      })
+      let isReg = await client.ipAsset.ipAssetRegistryClient.isRegistered({
+        id: ipId,
+      })
+      if (!isReg) {
+        await client.ipAsset.register({
           nftContract,
           tokenId,
           txOptions: { waitForTransaction: true },
         })
-        ipId = response.ipId
+        checking(ipId, tokenId, nftContract)
+      } else {
+        setTxLoading(false)
       }
       idRef.current && clearTimeout(idRef.current)
-
-      console.log(`Root IPA created. IPA ID: ${ipId}`)
-
-      await registerIPAsset(account.id, tokenId, nftContract, ipId)
-
-      router.push('/ipassets')
+    } catch (error) {
       setTxLoading(false)
+      console.error('Error registering NFT as IP asset:', error)
+    }
+  }
+  const checking = async (ipId, tokenId, nftContract) => {
+    try {
+      let isReg = await client.ipAsset.ipAssetRegistryClient.isRegistered({
+        id: ipId,
+      })
+      if (isReg) {
+        console.log(`Root IPA created. IPA ID: ${ipId}`)
+
+        await registerIPAsset(account.id, tokenId, nftContract, ipId)
+
+        router.push('/ipassets')
+        setTxLoading(false)
+      } else {
+        setTimeout(() => checking(ipId, tokenId, nftContract), 15000)
+      }
     } catch (error) {
       setTxLoading(false)
       console.error('Error registering NFT as IP asset:', error)
