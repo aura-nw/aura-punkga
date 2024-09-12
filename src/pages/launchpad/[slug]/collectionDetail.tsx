@@ -31,7 +31,6 @@ import {
   useWaitForTransactionReceipt,
   useWriteContract,
 } from 'wagmi'
-
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -106,16 +105,6 @@ function CollectionDetail() {
   })
 
   useEffect(() => {
-    if (chainId != 11155111 && isConnected) {
-      switchChain(
-        {
-          chainId: 11155111,
-        },
-        { onSuccess: (data) => console.log(data || 'switch chain'), onError: (data) => console.error(data) }
-      )
-    }
-  }, [chainId, isConnected])
-  useEffect(() => {
     console.log('hash result', result)
     if (result.data && hash) {
       if (result.data?.status == 'success') {
@@ -160,17 +149,11 @@ function CollectionDetail() {
         address: launchpadContractAddress,
         abi,
         functionName: 'mintNFT',
-        args: [
-          address,
-          data.ip_asset_id,
-          BigInt(amount),
-          usdtAddress,
-          BigInt(amount * data.mint_price),
-        ],
+        args: [address, data.ip_asset_id, BigInt(amount), usdtAddress, BigInt(amount * data.mint_price)],
       })
       setTimeout(() => {
         refetch()
-      }, 5000)
+      }, 20000)
       setHash(hash)
     } catch (error) {
       setProcessingText('')
@@ -184,6 +167,7 @@ function CollectionDetail() {
     try {
       setConfirmOpen(false)
       setProcessingText(t('Please confirm the transaction in your wallet'))
+
       if (allowanceBalance < amount * data.mint_price) {
         await writeContractAsync({
           address: usdtAddress,
@@ -191,7 +175,10 @@ function CollectionDetail() {
           functionName: 'approve',
           args: [launchpadContractAddress, '9999999999999999999999999999999999999999999999999999999999'],
         })
-        setTimeout(mintNFT, 5000)
+        setTimeout(async () => {
+          await allowance.refetch()
+          mintNFT()
+        }, 20000)
       } else {
         mintNFT()
       }

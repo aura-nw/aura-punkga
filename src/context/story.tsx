@@ -2,9 +2,9 @@ import { StoryClient } from '@story-protocol/core-sdk'
 import { PropsWithChildren, createContext, useContext, useEffect, useState } from 'react'
 import { storyChain } from 'src/services/wagmi/config'
 import { defaultNftContractAbi } from 'src/utils/defaultNftContractAbi'
-import { Address, createPublicClient, createWalletClient, custom } from 'viem'
+import { Address, createPublicClient, createWalletClient, custom, http } from 'viem'
 
-const storyChainId = '1513'
+const storyChainId = '0x5e9'
 
 interface StoryContextType {
   txLoading: boolean
@@ -42,8 +42,39 @@ export default function StoryProvider({ children }: PropsWithChildren) {
 
   const initializeStoryClient = async () => {
     try {
-      
       if (!window.ethereum) return
+      const chainId = await window.ethereum.request({ method: 'eth_chainId' })
+      console.log(chainId)
+      if (chainId != storyChainId) {
+        if (window.ethereum) {
+          try {
+            await window.ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [
+                {
+                  chainId: storyChainId,
+                  chainName: 'Story Iliad Network',
+                  nativeCurrency: {
+                    name: 'IP',
+                    symbol: 'IP',
+                    decimals: 18,
+                  },
+                  rpcUrls: ['https://testnet.storyrpc.io/'],
+                  blockExplorerUrls: ['https://testnet.storyscan.xyz/'],
+                },
+              ],
+            })
+            await window.ethereum.request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: storyChainId }],
+            })
+          } catch (error) {
+            console.error(error)
+          }
+        } else {
+          console.log('Ethereum provider not found')
+        }
+      }
       if (!client || !walletAddress) {
         const [account]: [Address] = await window.ethereum.request({
           method: 'eth_requestAccounts',
@@ -51,13 +82,12 @@ export default function StoryProvider({ children }: PropsWithChildren) {
         const config = {
           account: account,
           transport: custom(window.ethereum),
-          chainId: '1513',
+          chainId: 'iliad',
         } as any
         const client = StoryClient.newClient(config)
         setWalletAddress(account)
         setClient(client)
       }
-      const chainId = await window.ethereum.request({ method: 'eth_chainId' })
       if (chainId !== storyChainId) {
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
@@ -65,7 +95,7 @@ export default function StoryProvider({ children }: PropsWithChildren) {
         })
       }
     } catch (error) {
-     console.error(error) 
+      console.error(error)
     }
   }
 

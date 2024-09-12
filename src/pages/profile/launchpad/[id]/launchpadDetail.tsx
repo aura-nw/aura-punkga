@@ -183,7 +183,7 @@ function LaunchpadDetail({
         licensorIpId: launchpad.data.ip_asset_id,
         licenseTermsId: registerTermResponse.licenseTermsId,
         amount: launchpad.data.max_supply,
-        receiver: address,
+        receiver: launchpadContractAddress,
       })
       console.log(`License minted`)
       const hash = await writeContractAsync({

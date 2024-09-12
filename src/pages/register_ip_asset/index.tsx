@@ -54,15 +54,19 @@ function RegisterIPAssets() {
     idRef.current = setTimeout(() => registerExistingNFT(tokenId, nftContract), 60000)
     try {
       setTxLoading(true)
+      console.log('start reg')
       let ipId = await client.ipAsset.ipAssetRegistryClient.ipId({
-        chainId: BigInt(11155111),
+        chainId: BigInt(storyChain.id),
         tokenContract: nftContract,
         tokenId: BigInt(tokenId),
       })
+      console.log('ipId', ipId)
       let isReg = await client.ipAsset.ipAssetRegistryClient.isRegistered({
         id: ipId,
       })
+      console.log('isReg', isReg)
       if (!isReg) {
+        console.log('start reg tx')
         await client.ipAsset.register({
           nftContract,
           tokenId,
