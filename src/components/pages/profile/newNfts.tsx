@@ -1,17 +1,17 @@
-import NoImage from 'images/no_img.png'
+import { Box, Grid, Pagination, PaginationItem } from '@mui/material'
 import OpenLink from 'assets/images/icons/open-link.svg'
+import MascotEmpty from 'assets/images/mascot-empty.png'
+import NoImage from 'images/no_img.png'
 import getConfig from 'next/config'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'
+import { isMobile } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { getUserNfts } from 'src/services'
 import useSWR from 'swr'
-import { Box, Grid, Pagination, PaginationItem, styled } from '@mui/material'
-import { useRouter } from 'next/router'
-import MascotEmpty from 'assets/images/mascot-empty.png'
-import { isMobile } from 'react-device-detect'
 
 export default function NewNFTList() {
   const { locale } = useRouter()

@@ -8,10 +8,11 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { getAllLaunchPad } from 'src/services'
+import { getAllIpLaunchPad, getAllLaunchPad } from 'src/services'
+import { shorten } from 'src/utils'
 import useSWR from 'swr'
 
-const LIMIT = 6
+const LIMIT = 50
 
 export default function Page(props) {
   if (props.justHead) {
@@ -30,6 +31,15 @@ function Collection() {
       refreshInterval: 30000,
     }
   )
+  const { data: ipData, isLoading: ipLoading } = useSWR(
+    { key: 'get-all-ip-launch-pad', page },
+    ({ page }) => getAllIpLaunchPad((page - 1) * LIMIT, LIMIT),
+    {
+      refreshInterval: 30000,
+    }
+  )
+  console.log(ipData)
+
   return (
     <div className='py-8 px-4 pk-container'>
       <Image
@@ -44,7 +54,7 @@ function Collection() {
       />
       <div className='mt-4 md:mt-8 md:text-xl text-lg font-medium'>{t('Collections')}</div>
       <div className='mt-4 grid grid-cols-1 gap-4 md:gap-8 md:grid-cols-2 xl:grid-cols-3'>
-        {isLoading
+        {isLoading || ipLoading
           ? Array(6)
               .fill(0)
               .map((v, i) => (
@@ -64,9 +74,9 @@ function Collection() {
                   </div>
                 </div>
               ))
-          : data?.launchpads?.map((launchpad, index) => (
+          : [...data?.launchpads, ...ipData?.launchpads]?.map((launchpad, index) => (
               <Link
-                href={`/collections/${launchpad.slug}`}
+                href={`/collections/${launchpad.slug || launchpad.id}`}
                 className='w-full bg-white rounded-mlg p-4'
                 key={launchpad.id}>
                 <div className='grid gap-2 grid-cols-3'>
@@ -101,7 +111,7 @@ function Collection() {
                   )}
                 </div>
                 <div className='mt-4 flex items-center gap-2'>
-                  {launchpad.launchpad_creator.avatar_url && (
+                  {launchpad?.launchpad_creator?.avatar_url && (
                     <Image
                       src={launchpad.launchpad_creator.avatar_url}
                       alt=''
@@ -112,18 +122,25 @@ function Collection() {
                   )}
                   <div>
                     <div className='text-sm font-medium'>{launchpad[locale].name}</div>
-                    <div className='text-xs font-medium'>
-                      {t('by')}{' '}
-                      <Link href={`/artist/${launchpad.launchpad_creator.slug}`} className='text-text-brand-defaul'>
-                        {launchpad.launchpad_creator.pen_name}
-                      </Link>
-                    </div>
+                    {launchpad?.launchpad_creator?.slug && (
+                      <div className='text-xs font-medium'>
+                        {t('by')}{' '}
+                        <Link href={`/artist/${launchpad.launchpad_creator.slug}`} className='text-text-brand-defaul'>
+                          {launchpad.launchpad_creator.pen_name}
+                        </Link>
+                      </div>
+                    )}
+                    {(launchpad as any)?.creator_address && (
+                      <div className='text-xs font-medium'>
+                        {t('by')} <div className='inline'>{shorten((launchpad as any)?.creator_address)}</div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </Link>
             ))}
       </div>
-      {data && (
+      {/* {data && (
         <div className='w-fit mx-auto'>
           <Pagination
             shape='rounded'
@@ -135,7 +152,7 @@ function Collection() {
             count={Math.ceil(data?.count / LIMIT)}
           />
         </div>
-      )}
+      )} */}
     </div>
   )
 }

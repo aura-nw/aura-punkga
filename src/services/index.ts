@@ -7,6 +7,7 @@ import { formatStatus } from 'src/utils'
 import { getItem } from 'src/utils/localStorage'
 import { Campaign } from 'src/models/campaign'
 import { Launchpad } from 'src/models/launchpad'
+import { launchpadContractAddress } from 'src/constants/address'
 export const getEnvKey = () => (getConfig().CHAIN_ID.includes('6322') ? 'xstaxy' : 'euphoria')
 export const getLatestComic = async (): Promise<IComic[]> => {
   return await axios.get(`${getConfig().API_URL}/api/rest/public/latest`).then((res) =>
@@ -455,7 +456,54 @@ export const getUserNfts = async (address: string) => {
     },
     operationName: 'queryAssetERC721',
   })
-  return data?.data?.[getEnvKey()]?.cw721_token || []
+  const { data: ipData } = await axios.post('https://indexer-v2.dev.aurascan.io/api/v2/graphql', {
+    query: `
+    query queryAssetERC721(
+      $contract_address: String
+      $limit: Int = 10
+      $tokenId: String = null
+      $owner: String = null
+      $offset: Int = 0
+    ) {
+      storytestnet {
+        cw721_token: erc721_token(
+          limit: $limit
+          offset: $offset
+          where: {
+            erc721_contract: {
+              evm_smart_contract: { address: { _eq: $contract_address } }
+            }
+            token_id: { _eq: $tokenId }
+            owner: { _eq: $owner }
+          }
+          order_by: [{ last_updated_height: desc }, { id: desc }]
+        ) {
+          id
+          token_id
+          owner
+          media_info
+          last_updated_height
+          created_at
+          cw721_contract: erc721_contract {
+            name
+            symbol
+            smart_contract: evm_smart_contract {
+              address
+            }
+          }
+        }
+      }
+    }
+    `,
+    variables: {
+      limit: 10,
+      offset: 0,
+      contract_address: null,
+      owner: address.toLowerCase(),
+    },
+    operationName: 'queryAssetERC721',
+  })
+  return [...(ipData?.data?.['storytestnet']?.cw721_token || []), ...(data?.data?.[getEnvKey()]?.cw721_token || [])]
 }
 export const getCampaignDetail = async (slug: string) => {
   const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/campaign/${slug}`)
@@ -593,6 +641,30 @@ export const getAllLaunchPad = async (offset: number, limit: number) => {
           },
           name: launchpadLanguages?.data?.name,
           description: launchpadLanguages?.data?.description,
+        }
+      })
+      return launchpad
+    })
+    return { launchpads: launchpads as Launchpad[], count }
+  } catch (error) {
+    console.error(error)
+  }
+}
+export const getAllIpLaunchPad = async (offset: number, limit: number) => {
+  try {
+    const { data } = await axios.get(`${getConfig().API_URL}/api/rest/public/ip-launchpad`)
+    const launchpadData = data.ip_launchpad
+    const count = 100
+    const launchpads = launchpadData?.map((launchpad: any) => {
+      LANGUAGE.forEach((l) => {
+        launchpad[l.shortLang] = {
+          seo: {
+            title: launchpad?.name,
+            description: launchpad?.description,
+            thumbnail_url: launchpad?.featured_images[0],
+          },
+          name: launchpad?.name,
+          description: launchpad?.description,
         }
       })
       return launchpad
