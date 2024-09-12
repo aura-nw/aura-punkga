@@ -1,4 +1,4 @@
-import MainButton from 'components/Button/MainButton'
+import { createConfig } from '@wagmi/core'
 import Button from 'components/core/Button/Button'
 import Footer from 'components/Footer'
 import Header from 'components/Header'
@@ -11,11 +11,9 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { useStory } from 'src/context/story'
+import { storyChain } from 'src/services/wagmi/config'
 import { Address, http } from 'viem'
-import { waitForTransactionReceipt, readContract, createConfig } from '@wagmi/core'
-import { getWagmiConfig } from 'src/services/wagmi/config'
-import { mainnet, sepolia } from 'viem/chains'
-import { abi } from './abi'
+import { mainnet } from 'viem/chains'
 
 export default function Page(props) {
   if (props.justHead) {
@@ -25,10 +23,10 @@ export default function Page(props) {
 }
 
 const config = createConfig({
-  chains: [mainnet, sepolia],
+  chains: [mainnet, storyChain],
   transports: {
     [mainnet.id]: http(),
-    [sepolia.id]: http(),
+    [storyChain.id]: http(),
   },
 })
 function RegisterIPAssets() {

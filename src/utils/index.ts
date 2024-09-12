@@ -124,14 +124,14 @@ export const convertStringToDot = (str: string) => {
 export function convertIPFStoHTTP(ipfsUrl: string): string {
   // Check if the input is a valid IPFS URL
   if (!ipfsUrl.startsWith('ipfs://')) {
-    throw new Error('Invalid IPFS URL format');
+    throw new Error('Invalid IPFS URL format')
   }
 
   // Extract the IPFS hash from the URL
-  const ipfsHash = ipfsUrl.slice(7);
+  const ipfsHash = ipfsUrl.slice(7)
 
   // Construct the HTTP gateway URL
-  return `https://ipfs.io/ipfs/${ipfsHash}`;
+  return `https://ipfs.io/ipfs/${ipfsHash}`
 }
 export const isMetamaskInstalled = () => {
   if (typeof window === 'undefined') {
@@ -147,4 +147,11 @@ export const isMetamaskInstalled = () => {
   }
 
   return false
+}
+export const delay = (s) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve('Resolved after 5 seconds')
+    }, s || 5000)
+  })
 }

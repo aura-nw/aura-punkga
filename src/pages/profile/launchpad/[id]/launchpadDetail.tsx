@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import ic_question_circle from 'src/assets/images/icons/ic_question_circle.svg'
 import ic_trash from 'src/assets/images/icons/ic_trash.svg'
-import { currencyAddress, launchpadContractAddress, usdtAddress } from 'src/constants/address'
+import { currencyAddress, launchpadContractAddress, licneseTemplateAddress, usdtAddress } from 'src/constants/address'
 import { useStory } from 'src/context/story'
 import { zeroAddress } from 'viem'
 import { useAccount, useConnect, useReadContract, useWriteContract } from 'wagmi'
@@ -24,7 +24,7 @@ import Header from '../../../../components/Header'
 import Modal from '../../../../components/Modal'
 import { LaunchpadStatus } from '../../../../constants/constants'
 import useApi from '../../../../hooks/useApi'
-import { shorten } from '../../../../utils'
+import { delay, shorten } from '../../../../utils'
 import { getLaunchpad } from './with-api'
 
 export default function Page(props) {
@@ -87,15 +87,36 @@ function LaunchpadDetail({
     setIsPending(true)
     const data = await preDeploy(id)
     try {
-      idRef.current && clearTimeout(idRef.current)
-      idRef.current = setTimeout(() => handleDeploy(id), 100000)
       console.log('Register PIL term')
       let registerTermResponse
+      let registerTermData: any = {
+        transferable: true,
+        royaltyPolicy: zeroAddress,
+        mintingFee: BigInt(0),
+        expiration: BigInt(0),
+        commercialUse: false,
+        commercialAttribution: false,
+        commercializerChecker: zeroAddress,
+        commercializerCheckerData: zeroAddress,
+        commercialRevShare: 0,
+        commercialRevCelling: BigInt(0),
+        derivativesAllowed: true,
+        derivativesAttribution: true,
+        derivativesApproval: false,
+        derivativesReciprocal: true,
+        derivativeRevCelling: BigInt(0),
+        currency: zeroAddress,
+        uri: '',
+      }
       switch (launchpad.data?.license_info?.termId) {
         case '1':
           const commercialUseParams = {
             currency: currencyAddress,
             mintingFee: '0',
+          }
+          registerTermData = {
+            ...registerTermData,
+            ...commercialUseParams,
           }
           registerTermResponse = await client.license.registerCommercialUsePIL({
             ...commercialUseParams,
@@ -109,6 +130,9 @@ function LaunchpadDetail({
           registerTermResponse = await client.license.registerNonComSocialRemixingPIL({
             txOptions: { waitForTransaction: true },
           })
+          registerTermData = {
+            ...registerTermData,
+          }
           console.log(
             `PIL Terms registered at transaction hash ${registerTermResponse.txHash}, License Terms ID: ${registerTermResponse.licenseTermsId}`
           )
@@ -118,6 +142,10 @@ function LaunchpadDetail({
             currency: currencyAddress,
             mintingFee: '0',
             commercialRevShare: launchpad.data?.license_info?.termId,
+          }
+          registerTermData = {
+            ...registerTermData,
+            ...commercialRemixParams,
           }
           registerTermResponse = await client.license.registerCommercialRemixPIL({
             ...commercialRemixParams,
@@ -129,24 +157,27 @@ function LaunchpadDetail({
           break
       }
 
-      if (registerTermResponse.licenseTermsId) {
+      await registerChecking(registerTermResponse.licenseTermsId)
+      const res = await client.license.licenseRegistryReadOnlyClient.hasIpAttachedLicenseTerms({
+        ipId: launchpad.data.ip_asset_id,
+        licenseTemplate: licneseTemplateAddress,
+        licenseTermsId: registerTermResponse.licenseTermsId,
+      })
+      if (!res && registerTermResponse.licenseTermsId) {
         console.log('Attach License Terms to IP')
         try {
-          const attachLicenseresponse = await client.license.attachLicenseTerms({
+          await client.license.attachLicenseTerms({
             licenseTermsId: registerTermResponse.licenseTermsId,
-            licenseTemplate: '0x260B6CB6284c89dbE660c0004233f7bB99B5edE7',
+            licenseTemplate: licneseTemplateAddress,
             ipId: launchpad.data.ip_asset_id,
-            txOptions: { waitForTransaction: true },
           })
-          console.log(`Attached License Terms to IP at tx hash ${attachLicenseresponse.txHash}`)
         } catch (error) {
           console.error(`Attached License Terms to IP`)
           console.error(error)
         }
+        await attachChecking(registerTermResponse.licenseTermsId)
       }
-
       // Mint License
-      idRef.current && clearTimeout(idRef.current)
       console.log('mint license')
       await client.license.mintLicenseTokens({
         licensorIpId: launchpad.data.ip_asset_id,
@@ -192,29 +223,66 @@ function LaunchpadDetail({
     } catch (error) {
       setIsPending(false)
       console.error(error)
-      idRef.current && clearTimeout(idRef.current)
       toast(
         error?.message?.includes('last nft sale should be end')
           ? 'This license is being used for an ongoing launchpad'
-          : 'Something went wrong',
+          : 'Something went wrong. Reload and try again',
         { type: 'error' }
       )
     }
   }
-  
-  const licenseTermsIdChecking = async (licenseTermsId) => {
-    try {
-      
-    } catch (error) {
-      console.error(error)
-      idRef.current && clearTimeout(idRef.current)
-      toast(
-        error?.message?.includes('last nft sale should be end')
-          ? 'This license is being used for an ongoing launchpad'
-          : 'Something went wrong',
-        { type: 'error' }
-      )
-    }
+
+  const registerChecking = (licenseTermsId) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let success = false
+        while (!success) {
+          const res = await client.license.licenseTemplateClient.exists({
+            licenseTermsId,
+          })
+          success = res
+          await delay(15000)
+        }
+        resolve('')
+      } catch (error) {
+        console.error(error)
+        reject(error)
+        idRef.current && clearTimeout(idRef.current)
+        toast(
+          error?.message?.includes('last nft sale should be end')
+            ? 'This license is being used for an ongoing launchpad'
+            : 'Something went wrong. Reload and try again',
+          { type: 'error' }
+        )
+      }
+    })
+  }
+  const attachChecking = (licenseTermsId) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let success = false
+        while (!success) {
+          const res = await client.license.licenseRegistryReadOnlyClient.hasIpAttachedLicenseTerms({
+            ipId: launchpad.data.ip_asset_id,
+            licenseTemplate: licneseTemplateAddress,
+            licenseTermsId,
+          })
+          success = res
+          await delay(15000)
+        }
+        resolve('')
+      } catch (error) {
+        console.error(error)
+        reject(error)
+        idRef.current && clearTimeout(idRef.current)
+        toast(
+          error?.message?.includes('last nft sale should be end')
+            ? 'This license is being used for an ongoing launchpad'
+            : 'Something went wrong. Reload and try again',
+          { type: 'error' }
+        )
+      }
+    })
   }
 
   const handlePublish = async (id: string) => {

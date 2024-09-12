@@ -1,12 +1,10 @@
-import { StoryClient, StoryConfig } from '@story-protocol/core-sdk'
-import { PropsWithChildren, createContext } from 'react'
-import { useContext, useState } from 'react'
-import { useEffect } from 'react'
-import { createPublicClient, createWalletClient, Address, custom } from 'viem'
-import { sepolia } from 'viem/chains'
+import { StoryClient } from '@story-protocol/core-sdk'
+import { PropsWithChildren, createContext, useContext, useEffect, useState } from 'react'
+import { storyChain } from 'src/services/wagmi/config'
 import { defaultNftContractAbi } from 'src/utils/defaultNftContractAbi'
+import { Address, createPublicClient, createWalletClient, custom } from 'viem'
 
-const sepoliaChainId = '0xaa36a7'
+const storyChainId = '1513'
 
 interface StoryContextType {
   txLoading: boolean
@@ -53,17 +51,17 @@ export default function StoryProvider({ children }: PropsWithChildren) {
         const config = {
           account: account,
           transport: custom(window.ethereum),
-          chainId: 'sepolia',
+          chainId: '1513',
         } as any
         const client = StoryClient.newClient(config)
         setWalletAddress(account)
         setClient(client)
       }
       const chainId = await window.ethereum.request({ method: 'eth_chainId' })
-      if (chainId !== sepoliaChainId) {
+      if (chainId !== storyChainId) {
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: sepoliaChainId }],
+          params: [{ chainId: storyChainId }],
         })
       }
     } catch (error) {
@@ -81,12 +79,12 @@ export default function StoryProvider({ children }: PropsWithChildren) {
     console.log('Minting a new NFT...')
     const walletClient = createWalletClient({
       account: walletAddress as Address,
-      chain: sepolia,
+      chain: storyChain,
       transport: custom(window.ethereum),
     })
     const publicClient = createPublicClient({
       transport: custom(window.ethereum),
-      chain: sepolia,
+      chain: storyChain,
     })
 
     const { request } = await publicClient.simulateContract({

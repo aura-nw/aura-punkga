@@ -23,6 +23,7 @@ import Footer from '../../Footer'
 import Header from '../../Header'
 import UploadImage from './uploadImage'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
+import { licenseAddress } from 'src/constants/address'
 
 interface Option {
   value: string
@@ -45,7 +46,6 @@ type LaunchpadFormType = {
 let defaultFeatureImgs = []
 let newFeatureImgs = []
 let defaultNftImgs = []
-const licenseAddress = '0x1333c78A821c9a576209B01a16dDCEF881cAb6f2'
 
 const minStartDate = new Date()
 

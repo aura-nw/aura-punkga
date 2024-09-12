@@ -13,7 +13,7 @@ import { isMobile } from 'react-device-detect'
 import ReactHtmlParser from 'react-html-parser'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { launchpadContractAddress, usdtAddress } from 'src/constants/address'
+import { launchpadContractAddress, licneseTemplateAddress, usdtAddress } from 'src/constants/address'
 import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
 import { getStoryLaunchPadDetail } from 'src/services'
@@ -80,7 +80,7 @@ function CollectionDetail() {
   const nftMinted = +(minted as BigInt)?.toString() || 0
   const licenseTemplate = useReadContract({
     abi: PILicenseTemplateAbi,
-    address: '0x260B6CB6284c89dbE660c0004233f7bB99B5edE7',
+    address: licneseTemplateAddress,
     functionName: 'toJson',
     args: [data?.license?.term_id],
   })

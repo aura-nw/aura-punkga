@@ -1,9 +1,7 @@
-import Stars from 'assets/images/Stars.svg'
 import EN from 'assets/images/en.svg'
 import Logo from 'assets/images/header-logo.svg'
 import AboutUs from 'assets/images/icons/aboutUs.svg'
 import Campaign from 'assets/images/icons/campaign.svg'
-import Collection from 'assets/images/icons/collection.svg'
 import Language from 'assets/images/icons/language.svg'
 import LogOut from 'assets/images/icons/logout.svg'
 import MyProfile from 'assets/images/icons/myProfile.svg'
@@ -16,14 +14,16 @@ import Button from 'components/Button'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import TextField from 'components/Input/TextField'
 import Spinner from 'components/Spinner'
+import NewButton from 'components/core/Button/Button'
 import CopySvg from 'images/icons/copy.svg'
-import Menu from 'images/icons/menu.svg'
 import EyeClose from 'images/icons/eye-closed.svg'
 import EyeOpen from 'images/icons/eye-open.svg'
+import Menu from 'images/icons/menu.svg'
 import Warning from 'images/icons/warning.svg'
 import NoImage from 'images/no_img.png'
 import _ from 'lodash'
 import { useTranslation } from 'next-i18next'
+import getConfig from 'next/config'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -34,10 +34,8 @@ import useApi from 'src/hooks/useApi'
 import { useClickOutside } from 'src/hooks/useClickOutside'
 import { search } from 'src/services'
 import { shorten } from 'src/utils'
-import NewButton from 'components/core/Button/Button'
+import { mainnet } from 'viem/chains'
 import { useAccount, useBalance, useChainId, useSwitchChain } from 'wagmi'
-import getConfig from 'next/config'
-import { mainnet, sepolia } from 'viem/chains'
 
 export const HEADER_HEIGHT = {
   MOBILE: '56px',
@@ -684,7 +682,7 @@ export default function Header({ className }: { className?: string }) {
                               <div className='text-[#4E5056] font-semibold'>{account?.name}</div>
                               {isConnected && (
                                 <div className='text-xs font-normal'>
-                                  Connected chain: {chainId == config.CHAIN_INFO.evmChainId ? 'Aura' : 'Ethereum'} •{' '}
+                                  Connected chain: {chainId == config.CHAIN_INFO.evmChainId ? 'Aura' : 'Story'} •{' '}
                                   <span
                                     className='underline'
                                     onClick={() => {
@@ -693,11 +691,11 @@ export default function Header({ className }: { className?: string }) {
                                           chainId == config.CHAIN_INFO.evmChainId
                                             ? config.CHAIN_INFO.evmChainId == 6322
                                               ? mainnet.id
-                                              : sepolia.id
+                                              : 1513
                                             : config.CHAIN_INFO.evmChainId,
                                       })
                                     }}>
-                                    {chainId == config.CHAIN_INFO.evmChainId ? 'Switch to Ethereum' : 'Switch to Aura'}
+                                    {chainId == config.CHAIN_INFO.evmChainId ? 'Switch to Story' : 'Switch to Aura'}
                                   </span>
                                 </div>
                               )}

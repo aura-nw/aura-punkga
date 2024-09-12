@@ -4302,10 +4302,10 @@
     "@stablelib/random" "^1.0.2"
     "@stablelib/wipe" "^1.0.1"
 
-"@story-protocol/core-sdk@^1.0.0-rc.11":
-  version "1.0.0-rc.11"
-  resolved "https://registry.yarnpkg.com/@story-protocol/core-sdk/-/core-sdk-1.0.0-rc.11.tgz#ee76e8ebf688ddaffc03493ba2e8a5cee17ae336"
-  integrity sha512-ZFs29V6wlXJSvE7ucRd8xFXyi5J252JflsTEWIofKlwTLhgDZ4+Ot+9d0D2AuXMxJW2qRdkY1jBDhieTXn9Zjw==
+"@story-protocol/core-sdk@^1.0.0-rc.22":
+  version "1.0.0-rc.22"
+  resolved "https://registry.yarnpkg.com/@story-protocol/core-sdk/-/core-sdk-1.0.0-rc.22.tgz#38c491a48fd1577d7ff70d5c24a414d460f6e606"
+  integrity sha512-l+i7lzUGTdpBNfoMeFSRztFPuP9uTzAEA9PZ0wDviWg5pA22D+QmnbkF1HrBd5Mctxtv5tivdFSLARizBEjWEA==
   dependencies:
     abitype "^0.10.2"
     axios "^1.5.1"
