@@ -76,7 +76,7 @@ function Collection() {
               ))
           : [...data?.launchpads, ...ipData?.launchpads]?.map((launchpad, index) => (
               <Link
-                href={`/collections/${launchpad.slug || launchpad.id}`}
+                href={launchpad.slug ? `/collections/${launchpad.slug}` : `/launchpad/${launchpad.id}`}
                 className='w-full bg-white rounded-mlg p-4'
                 key={launchpad.id}>
                 <div className='grid gap-2 grid-cols-3'>
