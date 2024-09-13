@@ -80,6 +80,7 @@ function RegisterIPAssets() {
       }
       idRef.current && clearTimeout(idRef.current)
     } catch (error) {
+      idRef.current && clearTimeout(idRef.current)
       setTxLoading(false)
       console.error('Error registering NFT as IP asset:', error)
     }
