@@ -7,7 +7,7 @@ export const storyChain = {
   name: 'Story Public Testnet',
   nativeCurrency: {
     name: 'IP',
-    symbol: 'Story Public Testnet',
+    symbol: 'IP',
     decimals: 18,
   },
   rpcUrls: {
