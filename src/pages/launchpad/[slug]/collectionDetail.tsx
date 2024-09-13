@@ -75,7 +75,7 @@ function CollectionDetail() {
     functionName: 'numberOfNftSold',
     args: [data?.license_token_address, data?.license_token_id, 1],
   })
-
+console.log(minted)
   const nftMinted = +(minted as BigInt)?.toString() || 0
   const licenseTemplate = useReadContract({
     abi: PILicenseTemplateAbi,
@@ -149,7 +149,7 @@ function CollectionDetail() {
         address: launchpadContractAddress,
         abi,
         functionName: 'mintNFT',
-        args: [address, data.ip_asset_id, BigInt(amount), usdtAddress, BigInt(amount * data.mint_price)],
+        args: [data.creator_address, data.ip_asset_id, BigInt(amount), usdtAddress, BigInt(amount * data.mint_price)],
       })
       setTimeout(() => {
         refetch()

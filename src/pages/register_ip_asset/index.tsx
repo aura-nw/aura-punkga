@@ -9,6 +9,7 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 import { Context } from 'src/context'
 import { useStory } from 'src/context/story'
 import { storyChain } from 'src/services/wagmi/config'
@@ -75,6 +76,7 @@ function RegisterIPAssets() {
         checking(ipId, tokenId, nftContract)
       } else {
         setTxLoading(false)
+        toast('This NFT had been registered before,', { type: 'error' })
       }
       idRef.current && clearTimeout(idRef.current)
     } catch (error) {
