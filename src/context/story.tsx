@@ -1,8 +1,9 @@
-import { StoryClient } from '@story-protocol/core-sdk'
+import { StoryClient, StoryConfig } from '@story-protocol/core-sdk'
 import { PropsWithChildren, createContext, useContext, useEffect, useState } from 'react'
 import { storyChain } from 'src/services/wagmi/config'
 import { defaultNftContractAbi } from 'src/utils/defaultNftContractAbi'
 import { Address, createPublicClient, createWalletClient, custom, http } from 'viem'
+import { useAccount } from 'wagmi'
 
 const storyChainId = '0x5e9'
 
@@ -39,7 +40,7 @@ export default function StoryProvider({ children }: PropsWithChildren) {
   const [txName, setTxName] = useState<string>('')
   const [txHash, setTxHash] = useState<string>('')
   const [transactions, setTransactions] = useState<{ txHash: string; action: string; data: any }[]>([])
-
+  const { isConnected } = useAccount()
   const initializeStoryClient = async () => {
     try {
       if (!window.ethereum) return
@@ -59,8 +60,8 @@ export default function StoryProvider({ children }: PropsWithChildren) {
                     symbol: 'IP',
                     decimals: 18,
                   },
-                  rpcUrls: ['https://testnet.storyrpc.io/'],
-                  blockExplorerUrls: ['https://testnet.storyscan.xyz/'],
+                  rpcUrls: ['https://story-testnet.aura.network'],
+                  blockExplorerUrls: ['https://story.aurascan.io/'],
                 },
               ],
             })
@@ -79,7 +80,7 @@ export default function StoryProvider({ children }: PropsWithChildren) {
         const [account]: [Address] = await window.ethereum.request({
           method: 'eth_requestAccounts',
         })
-        const config = {
+        const config: StoryConfig = {
           account: account,
           transport: custom(window.ethereum),
           chainId: 'iliad',
@@ -138,10 +139,10 @@ export default function StoryProvider({ children }: PropsWithChildren) {
   }
 
   useEffect(() => {
-    if (!client || !walletAddress) {
+    if ((!client || !walletAddress) && isConnected) {
       initializeStoryClient()
     }
-  }, [])
+  }, [isConnected])
 
   return (
     <StoryContext.Provider

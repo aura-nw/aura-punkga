@@ -4,7 +4,7 @@ import { createConfig, http } from 'wagmi'
 import { injected, metaMask, walletConnect } from 'wagmi/connectors'
 export const storyChain = {
   id: 1513,
-  name: 'Story Public Testnet',
+  name: 'Story Iliad Network',
   nativeCurrency: {
     name: 'IP',
     symbol: 'IP',
