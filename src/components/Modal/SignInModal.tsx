@@ -215,6 +215,7 @@ const ByWallet = ({ step }) => {
                         setLoading(false)
                         setQrCode(deepLink)
                       } catch (error: any) {
+                        console.error(error)
                         wagmiDisconnect()
                       }
                     }}>

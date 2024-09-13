@@ -169,7 +169,9 @@ function ContextProvider({ children }: any) {
 
   const connectHandler = async (data: any) => {
     try {
+      console.log('connect wallet handler')
       if (chainId != config.CHAIN_INFO.evmChainId) {
+        console.log('Switch chain')
         switchChain(
           {
             chainId: config.CHAIN_INFO.evmChainId,
@@ -187,31 +189,43 @@ function ContextProvider({ children }: any) {
     }
   }
   const signConnectMessage = (data?: any) => {
-    const domain = window.location.host
-    const origin = window.location.origin
-    const statement = 'Sign in with Aura Network to the app.'
-    const addr = data?.accounts[0] || address
-    const siweMessage = new SiweMessage({
-      scheme: undefined,
-      domain,
-      address: addr,
-      statement,
-      uri: origin,
-      version: '1',
-      chainId,
-      nonce: generateNonce(),
-    })
-    const message = siweMessage.prepareMessage()
-    signMessage(
-      { message, account: addr },
-      {
-        onSuccess: (data) =>
-          getAccessToken({
-            message,
-            signature: data,
-          }),
-      }
-    )
+    try {
+      console.log('sign Connect Message')
+      const domain = window.location.host
+      const origin = window.location.origin
+      const statement = 'Sign in with Aura Network to the app.'
+      const addr = data?.accounts[0] || address
+      const siweMessage = new SiweMessage({
+        scheme: undefined,
+        domain,
+        address: addr,
+        statement,
+        uri: origin,
+        version: '1',
+        chainId,
+        nonce: generateNonce(),
+      })
+      const message = siweMessage.prepareMessage()
+      signMessage(
+        { message, account: addr },
+        {
+          onSuccess: (data) =>
+            getAccessToken({
+              message,
+              signature: data,
+            }),
+          onError: (error) =>
+            toast(error.message || 'Something went wrong', {
+              type: 'error',
+            }),
+        }
+      )
+    } catch (error) {
+      console.error(error)
+      toast(error.message || 'Something went wrong', {
+        type: 'error',
+      })
+    }
   }
 
   const getAccessToken = async ({ message, signature }) => {

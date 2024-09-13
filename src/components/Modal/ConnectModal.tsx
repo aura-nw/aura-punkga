@@ -124,6 +124,7 @@ export default function ConnectModal() {
                             { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
                             {
                               onSuccess: connectHandler,
+                              onError: (error) => console.log(error)
                             }
                           )
                           if (!isMetamaskInstalled()) {
