@@ -175,8 +175,10 @@ const Album = ({ id, setSelectedAlbum }) => {
         {data?.artworks?.slice((page - 1) * 12, page * 12)?.map((artwork, index) => (
           <div
             key={index}
+            className='cursor-pointer'
             onClick={() => {
               setSelectedArtwork(artwork)
+              setOpen(true)
             }}>
             <Image
               width={300}
