@@ -13,6 +13,7 @@ import { useAccount } from 'wagmi'
 import { Context } from '.'
 import ConnectModal from 'components/Modal/ConnectModal'
 import { removeItem } from 'src/utils/localStorage'
+import AddTonWalletModal from 'components/Modal/AddTonWalletModal'
 export const ModalContext = createContext<{
   signUpSuccessOpen: boolean
   forgotPasswordOpen: boolean
@@ -20,12 +21,14 @@ export const ModalContext = createContext<{
   signInOpen: boolean
   connectWalletOpen: boolean
   migrateWalletOpen: boolean
+  addTonWalletOpen: boolean
   setSignUpSuccessOpen: Dispatch<SetStateAction<boolean>>
   setForgotPasswordOpen: Dispatch<SetStateAction<boolean>>
   setSignUpOpen: Dispatch<SetStateAction<boolean>>
   setSignInOpen: Dispatch<SetStateAction<boolean>>
   setWalletConnectOpen: Dispatch<SetStateAction<boolean>>
   setMigrateWalletOpen: Dispatch<SetStateAction<boolean>>
+  setAddTonWalletOpen: Dispatch<SetStateAction<boolean>>
   showEmailVerification: (email: string, identifier: string) => void
 }>({
   signUpSuccessOpen: false,
@@ -34,6 +37,8 @@ export const ModalContext = createContext<{
   signInOpen: false,
   connectWalletOpen: false,
   migrateWalletOpen: false,
+  addTonWalletOpen: false,
+  setAddTonWalletOpen: () => {},
   setSignUpSuccessOpen: () => {},
   setForgotPasswordOpen: () => {},
   setSignUpOpen: () => {},
@@ -45,6 +50,7 @@ export const ModalContext = createContext<{
 function ModalProvider({ children }) {
   const [signUpSuccessOpen, setSignUpSuccessOpen] = useState(false)
   const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false)
+  const [addTonWalletOpen, setAddTonWalletOpen] = useState(false)
   const [signUpOpen, setSignUpOpen] = useState(false)
   const [signInOpen, setSignInOpen] = useState(false)
   const [connectWalletOpen, setWalletConnectOpen] = useState(false)
@@ -147,11 +153,13 @@ function ModalProvider({ children }) {
       value={{
         signUpSuccessOpen,
         forgotPasswordOpen,
+        addTonWalletOpen,
         signUpOpen,
         signInOpen,
         connectWalletOpen,
         migrateWalletOpen,
         setSignUpSuccessOpen,
+        setAddTonWalletOpen,
         setForgotPasswordOpen,
         setSignUpOpen,
         setSignInOpen,
@@ -174,6 +182,9 @@ function ModalProvider({ children }) {
 
       <Modal open={forgotPasswordOpen} setOpen={setForgotPasswordOpen}>
         <ForgotPasswordModal />
+      </Modal>
+      <Modal open={addTonWalletOpen} setOpen={setAddTonWalletOpen}>
+        <AddTonWalletModal />
       </Modal>
       <Modal open={signUpSuccessOpen} setOpen={setSignUpSuccessOpen}>
         <SignUpSuccessModal email={emailNeedVerify} identifier={identifier} />

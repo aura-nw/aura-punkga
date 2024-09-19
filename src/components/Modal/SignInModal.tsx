@@ -365,7 +365,7 @@ const ByEmail = ({ step, setStep }) => {
         <MainButton
           buttonRef={buttonRef}
           disabled={step == 1 ? !email : !(email && password)}
-          onClick={() => setStep(2)}
+          onClick={() => (step == 1 ? setStep(2) : loginHandler())}
           className='w-full md:hidden'>
           {t(step == 1 ? 'Continue' : 'Sign in')}
         </MainButton>
