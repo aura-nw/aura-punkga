@@ -207,45 +207,21 @@ export const getComicDetail = async (comicSlug: string, accountId: string) => {
   })
   const data = d?.data?.data?.manga[0]
   const hasAccess = await getAccess(data.id)
-  const collections = []
-  let collectionsData = []
 
-  data?.contract_addresses?.forEach((address) => (collections.includes(address) ? null : collections.push(address)))
-  if (collections.length) {
-    const { data } = await axios.post(`${getConfig().CHAIN_INFO.indexerV2}`, {
-      query: `query QueryCw721Tokens($contract_addresses: [String!]) {
-                    ${getEnvKey()} {
-                      smart_contract(where: {address: {_in: $contract_addresses}}) {
-                        cw721_contract {
-                          name
-                          smart_contract{
-                            address
-                          }
-                          cw721_tokens(where: {burned: {_eq: false}}) {
-                            token_id
-                            name: media_info(path: "onchain.metadata.name")
-                            image_url: media_info(path: "offchain.image.url")
-                            content_type: media_info(path: "offchain.image.content_type")
-                          }
-                        }
-                      }
-                    }
-                  }`,
-      variables: {
-        contract_addresses: collections,
-      },
-      operationName: 'QueryCw721Tokens',
+  const collectionsData = data?.manga_collections?.map((collection) => {
+    const name = {}
+    LANGUAGE.forEach((l) => {
+      const launchpadLanguage =
+        collection.manga_collection.launchpad_i18ns.find((tl) => tl.language_id == l.id) ||
+        collection.manga_collection.launchpad_i18ns[0]
+      name[l.shortLang] = launchpadLanguage.data
     })
-    collectionsData = data.data[getEnvKey()].smart_contract.map(({ cw721_contract }) => ({
-      name: cw721_contract.name,
-      address: cw721_contract.smart_contract.address,
-      tokens: cw721_contract.cw721_tokens.slice(0, 10).map((token) => ({
-        image: token.image_url,
-        name: token.name,
-        id: token.token_id,
-      })),
-    }))
-  }
+    return {
+      name: name,
+      slug: collection?.manga_collection?.slug,
+      images: collection?.manga_collection?.featured_images,
+    }
+  })
   const res = {
     id: data.id,
     slug: data.slug,
@@ -682,6 +658,16 @@ export const getArtistMangas = async (id: string): Promise<IComic[]> => {
 export const getArtistArtworks = async (id: string) => {
   return await axios
     .get(`${getConfig().API_URL}/api/rest/public/creators/${id}/artworks?limit=99999&offset=0`)
+    .then((res) => res.data)
+}
+export const getArtistArtworkAlbums = async (id: string) => {
+  return await axios
+    .get(`${getConfig().API_URL}/api/rest/public/creators/${id}/albums`)
+    .then((res) => res.data)
+}
+export const getArtworkAlbums = async (id: string) => {
+  return await axios
+    .get(`${getConfig().API_URL}/api/rest/public/albums/${id}?limit=99999&offset=0`)
     .then((res) => res.data)
 }
 export const getArtistCollections = async (id: string) => {

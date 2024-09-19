@@ -15,4 +15,5 @@ export interface IChapter {
   comments: number
   isLiked: boolean
   date: Date
+  collectionSlug?:string
 }
