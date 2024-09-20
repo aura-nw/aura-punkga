@@ -662,7 +662,7 @@ export const getArtistArtworks = async (id: string) => {
 }
 export const getArtistArtworkAlbums = async (id: string) => {
   return await axios
-    .get(`${getConfig().API_URL}/api/rest/public/creators/${id}/albums`)
+    .get(`${getConfig().REST_API_URL}/album/public?creator_id=${id}&limit=1000&offset=0`)
     .then((res) => res.data)
 }
 export const getArtworkAlbums = async (id: string, artistId: string) => {
