@@ -46,7 +46,7 @@ export default function ArtworkList({ id }) {
       </div>
     )
   }
-  if (selectedAlbum) return <Album id={selectedAlbum} setSelectedAlbum={setSelectedAlbum} />
+  if (selectedAlbum) return <Album id={selectedAlbum} artistId={id} setSelectedAlbum={setSelectedAlbum} />
   return (
     <div>
       {data?.albums?.length ? (
@@ -96,15 +96,16 @@ export default function ArtworkList({ id }) {
     </div>
   )
 }
-const Album = ({ id, setSelectedAlbum }) => {
+const Album = ({ id, setSelectedAlbum, artistId }) => {
   const [page, setPage] = useState(1)
   const [open, setOpen] = useState(false)
   const { data: albums, isLoading } = useSWR(
     {
       key: 'fetch-albums',
       id,
+      artistId,
     },
-    ({ id }) => (id ? getArtworkAlbums(id) : null)
+    ({ id, artistId }) => (id ? getArtworkAlbums(id, artistId) : null)
   )
   const { t } = useTranslation()
   const [selectedArtwork, setSelectedArtwork] = useState<any>(null)
