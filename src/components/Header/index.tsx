@@ -734,12 +734,15 @@ export default function Header({ className }: { className?: string }) {
                 {t('aboutUs')}
               </span>
             </div>
-            <div className='flex gap-[20px] items-center cursor-pointer'>
+            <Button size='sm' color='dark' variant='outlined' onClick={() => window.open(config.ADMIN_URL, '_blank')}>
+              Create Portal
+            </Button>
+            <div className='flex gap-[20px] ml-10 items-center cursor-pointer'>
               <div className='flex gap-4 items-center' onClick={switchLanguage}>
                 {locale == 'en' ? (
-                  <Image className='w-[24px] h-[24px] rounded-full' src={EN} alt='' />
+                  <div className='text-text-brand-defaul font-medium'>EN</div>
                 ) : (
-                  <Image className='w-[24px] h-[24px] ' src={VN} alt='' />
+                  <div className='text-text-brand-defaul font-medium'>VN</div>
                 )}
                 <div className='h-4 w-[1px] bg-[#E0E0E0]'></div>
               </div>
