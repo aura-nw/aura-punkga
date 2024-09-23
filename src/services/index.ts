@@ -661,9 +661,7 @@ export const getArtistArtworks = async (id: string) => {
     .then((res) => res.data)
 }
 export const getArtistArtworkAlbums = async (id: string) => {
-  return await axios
-    .get(`${getConfig().API_URL}/api/rest/public/creators/${id}/albums`)
-    .then((res) => res.data)
+  return await axios.get(`${getConfig().API_URL}/api/rest/public/creators/${id}/albums`).then((res) => res.data)
 }
 export const getArtworkAlbums = async (id: string) => {
   return await axios.get(`${getConfig().API_URL}/api/rest/public/albums/${id}`).then((res) => res.data)
@@ -765,5 +763,13 @@ export const getContestMangaAndArtwork = async (id: string, contestId: string) =
     return result
   } catch (error) {
     console.error(error)
+  }
+}
+export const updateProfile = async (data) => {
+  try {
+    return await privateAxios.put(`${getConfig().REST_API_URL}/user/update-profile`, data)
+  } catch (error) {
+    console.error('Error in updateProfile:', error)
+    throw error // Re-throw the error so it can be caught in the component
   }
 }
