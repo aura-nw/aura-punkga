@@ -30,7 +30,7 @@ const Button: React.FC<ButtonProps> = ({
   const getSizeClasses = (): string => {
     switch (size) {
       case 'xs':
-        return 'text-xs px-[14px] py-[3px] leading-[18px]'
+        return 'text-xs px-[14px] py-[5px] leading-[18px]'
       case 'sm':
         return 'text-sm px-[10px] py-[10px] gap-1'
       case 'md':
@@ -80,7 +80,7 @@ const Button: React.FC<ButtonProps> = ({
                 disabled:bg-[#B0B0B0] disabled:border-[#B0B0B0]`
       }
     } else {
-      if (color === 'green') {
+      if (color === 'dark') {
         return `${baseClasses} bg-transparent border-[#183442] text-[#183442]
                 hover:text-[#3D5059] hover:border-[#183442]
                 focus:text-[#0A161C] focus:border-[#0A161C]

@@ -305,6 +305,7 @@ function ContextProvider({ children }: any) {
           rank: res.rank || 999999,
           activeWalletAddress: res.active_wallet_address,
           noncustodialWalletAddress: res.wallet_address,
+          tonWalletAddress: res.ton_wallet_address,
         } as IUser)
       }
       if (!res.email_verified_at && res.email) {

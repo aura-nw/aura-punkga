@@ -769,3 +769,11 @@ export const getContestMangaAndArtwork = async (id: string, contestId: string) =
     console.error(error)
   }
 }
+export const updateProfile = async (data) => {
+  try {
+    return await privateAxios.put(`${getConfig().REST_API_URL}/user/update-profile`, data)
+  } catch (error) {
+    console.error('Error in updateProfile:', error)
+    throw error // Re-throw the error so it can be caught in the component
+  }
+}
