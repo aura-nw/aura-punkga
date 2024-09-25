@@ -101,7 +101,7 @@ function Artist({ artistDetail, data }) {
             </div>
           </div>
           <div
-            className={`font-medium text-sm`}
+            className={`font-medium text-sm max-w-80 break-words`}
             dangerouslySetInnerHTML={{
               __html: DOMPurify.sanitize(locale == 'vn' ? artist?.bio : data?.description || artist?.bio),
             }}></div>
