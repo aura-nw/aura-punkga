@@ -75,7 +75,7 @@ function Artist({ artistDetail, data }) {
             </Link>
           )}
         </div>
-        <div className='flex flex-col items-center gap-3'>
+        <div className='flex flex-col items-center gap-3 w-full'>
           <Image
             src={artist?.avatar || NoImg}
             height={360}
@@ -101,7 +101,7 @@ function Artist({ artistDetail, data }) {
             </div>
           </div>
           <div
-            className={`font-medium text-sm max-w-80 break-words`}
+            className={`font-medium text-sm max-w-full break-words`}
             dangerouslySetInnerHTML={{
               __html: DOMPurify.sanitize(locale == 'vn' ? artist?.bio : data?.description || artist?.bio),
             }}></div>
