@@ -1,9 +1,6 @@
-import Stars from 'assets/images/Stars.svg'
-import EN from 'assets/images/en.svg'
 import Logo from 'assets/images/header-logo.svg'
 import AboutUs from 'assets/images/icons/aboutUs.svg'
 import Campaign from 'assets/images/icons/campaign.svg'
-import Collection from 'assets/images/icons/collection.svg'
 import Language from 'assets/images/icons/language.svg'
 import LogOut from 'assets/images/icons/logout.svg'
 import MyProfile from 'assets/images/icons/myProfile.svg'
@@ -11,18 +8,19 @@ import SearchIcon from 'assets/images/icons/search.svg'
 import PunkgaWallet from 'assets/images/punkga.png'
 import User from 'assets/images/user.svg'
 import UserGreen from 'assets/images/userGreen.svg'
-import VN from 'assets/images/vn.svg'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import TextField from 'components/Input/TextField'
 import Spinner from 'components/Spinner'
+import Button from 'components/core/Button/Button'
+import QRCode from 'images/QR Code.svg'
 import CopySvg from 'images/icons/copy.svg'
-import Menu from 'images/icons/menu.svg'
 import EyeClose from 'images/icons/eye-closed.svg'
 import EyeOpen from 'images/icons/eye-open.svg'
-import Warning from 'images/icons/warning.svg'
+import Menu from 'images/icons/menu.svg'
 import NoImage from 'images/no_img.png'
 import _ from 'lodash'
 import { useTranslation } from 'next-i18next'
+import getConfig from 'next/config'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -33,11 +31,8 @@ import useApi from 'src/hooks/useApi'
 import { useClickOutside } from 'src/hooks/useClickOutside'
 import { search } from 'src/services'
 import { shorten } from 'src/utils'
-import Button from 'components/core/Button/Button'
-import { useAccount, useBalance } from 'wagmi'
-import getConfig from 'next/config'
-import { Accordion, AccordionActions, AccordionDetails, AccordionSummary } from '@mui/material'
 import TonWeb from 'tonweb'
+import { useAccount, useBalance } from 'wagmi'
 
 export const HEADER_HEIGHT = {
   MOBILE: '56px',
@@ -48,7 +43,8 @@ export default function Header({ className }: { className?: string }) {
   const config = getConfig()
   const { t } = useTranslation()
   const router = useRouter()
-  const { setSignInOpen, setMigrateWalletOpen, setWalletConnectOpen, setAddTonWalletOpen } = useContext(ModalContext)
+  const { setSignInOpen, setMigrateWalletOpen, setWalletConnectOpen, setAddTonWalletOpen, setTeleQrCodeOpen } =
+    useContext(ModalContext)
   const [isSearchFocused, setIsSearchFocused] = useState(false)
   const [isCopied, setIsCopied] = useState(false)
   const [isTonCopied, setIsTonCopied] = useState(false)
@@ -234,7 +230,10 @@ export default function Header({ className }: { className?: string }) {
                           alt=''
                           className='rounded-full'
                         />
-                        <div className='text-sm font-medium text-text-primary'>{account?.name}</div>
+                        <div className='text-sm font-medium text-text-primary w-full'>{account?.name}</div>
+                        <div onClick={() => setTeleQrCodeOpen(true)}>
+                          <Image src={QRCode} alt='' className='w-8 h-8' />
+                        </div>
                       </div>
                       <div>
                         <div
@@ -784,7 +783,10 @@ export default function Header({ className }: { className?: string }) {
                           alt=''
                           className='rounded-full'
                         />
-                        <div className='text-sm font-medium text-text-primary'>{account?.name}</div>
+                        <div className='text-sm font-medium text-text-primary w-full'>{account?.name}</div>
+                        <div onClick={() => setTeleQrCodeOpen(true)}>
+                          <Image src={QRCode} alt='' className='w-8 h-8' />
+                        </div>
                       </div>
                       <div className='text-text-primary text-sm font-semibold leading-5'>
                         <div

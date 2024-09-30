@@ -114,6 +114,10 @@ export const setAddress = async (address: string) => {
   })
   return data
 }
+export const getTeleQrCode = async () => {
+  const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/telegram/gen-telegram-qr`)
+  return data
+}
 
 export const getProfile = async () => {
   const res: any = await privateAxios.get(`${getConfig().API_URL}/api/rest/user/profile`)

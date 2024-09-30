@@ -14,14 +14,17 @@ import { Context } from '.'
 import ConnectModal from 'components/Modal/ConnectModal'
 import { removeItem } from 'src/utils/localStorage'
 import AddTonWalletModal from 'components/Modal/AddTonWalletModal'
+import TeleQrCodeModal from 'components/Modal/TeleQrCodeModal'
 export const ModalContext = createContext<{
   signUpSuccessOpen: boolean
   forgotPasswordOpen: boolean
   signUpOpen: boolean
+  teleQrCodeOpen: boolean
   signInOpen: boolean
   connectWalletOpen: boolean
   migrateWalletOpen: boolean
   addTonWalletOpen: boolean
+  setTeleQrCodeOpen: Dispatch<SetStateAction<boolean>>
   setSignUpSuccessOpen: Dispatch<SetStateAction<boolean>>
   setForgotPasswordOpen: Dispatch<SetStateAction<boolean>>
   setSignUpOpen: Dispatch<SetStateAction<boolean>>
@@ -38,6 +41,8 @@ export const ModalContext = createContext<{
   connectWalletOpen: false,
   migrateWalletOpen: false,
   addTonWalletOpen: false,
+  teleQrCodeOpen: false,
+  setTeleQrCodeOpen: () => {},
   setAddTonWalletOpen: () => {},
   setSignUpSuccessOpen: () => {},
   setForgotPasswordOpen: () => {},
@@ -63,6 +68,7 @@ function ModalProvider({ children }) {
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(true)
+  const [teleQrCodeOpen, setTeleQrCodeOpen] = useState(false)
   const [emailNeedVerify, setEmailNeedVerify] = useState('')
   const [identifier, setIdentifier] = useState('')
   const { t } = useTranslation()
@@ -158,6 +164,8 @@ function ModalProvider({ children }) {
         signInOpen,
         connectWalletOpen,
         migrateWalletOpen,
+        teleQrCodeOpen,
+        setTeleQrCodeOpen,
         setSignUpSuccessOpen,
         setAddTonWalletOpen,
         setForgotPasswordOpen,
@@ -180,6 +188,9 @@ function ModalProvider({ children }) {
         </div>
       </Modal>
 
+      <Modal open={teleQrCodeOpen} setOpen={setTeleQrCodeOpen}>
+        <TeleQrCodeModal />
+      </Modal>
       <Modal open={forgotPasswordOpen} setOpen={setForgotPasswordOpen}>
         <ForgotPasswordModal />
       </Modal>
