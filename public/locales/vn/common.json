@@ -100,7 +100,7 @@
   "A password reset link has been sent to": "Email khôi phục mật khẩu đã được gửi tới",
   "Please click on the link to change your password.": "Vui lòng làm theo hướng dẫn để đặt lại mật khẩu mới.",
   "Something went wrong. Your email has not been verified.": "Có lỗi xảy ra. Email của bạn chưa được xác thực.",
-  "Try agian or contact us.": "Thử lại hoặc liên hệ với chúng tôi.",
+  "Try again or contact us.": "Thử lại hoặc liên hệ với chúng tôi.",
   "Explore Punkga": "Khám phá Punkga",
   "Your email has been verified": "Email của bạn đã được xác thực",
   "results for": "kết quả cho",
@@ -371,6 +371,8 @@
   "Shout out to the grooviest flappers!": "Thông báo kết quả cuộc hành trình",
   "upto 2.000 USD": "Lên đến 2000$",
   "Click Me": "Xem ngay",
+  "Language": "Ngôn ngữ",
+  "Add TON Space wallet": "Thêm ví TON Space",
   ".": "",
   "": ""
 }

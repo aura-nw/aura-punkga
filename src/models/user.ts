@@ -10,6 +10,7 @@ export interface IUser {
   signupMethods: string
   custodialWalletAddress: string
   noncustodialWalletAddress?: string
+  tonWalletAddress?: string
   xp: number
   kp: number
   level: number

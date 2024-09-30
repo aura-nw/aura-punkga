@@ -13,19 +13,25 @@ import { useAccount } from 'wagmi'
 import { Context } from '.'
 import ConnectModal from 'components/Modal/ConnectModal'
 import { removeItem } from 'src/utils/localStorage'
+import AddTonWalletModal from 'components/Modal/AddTonWalletModal'
+import TeleQrCodeModal from 'components/Modal/TeleQrCodeModal'
 export const ModalContext = createContext<{
   signUpSuccessOpen: boolean
   forgotPasswordOpen: boolean
   signUpOpen: boolean
+  teleQrCodeOpen: boolean
   signInOpen: boolean
   connectWalletOpen: boolean
   migrateWalletOpen: boolean
+  addTonWalletOpen: boolean
+  setTeleQrCodeOpen: Dispatch<SetStateAction<boolean>>
   setSignUpSuccessOpen: Dispatch<SetStateAction<boolean>>
   setForgotPasswordOpen: Dispatch<SetStateAction<boolean>>
   setSignUpOpen: Dispatch<SetStateAction<boolean>>
   setSignInOpen: Dispatch<SetStateAction<boolean>>
   setWalletConnectOpen: Dispatch<SetStateAction<boolean>>
   setMigrateWalletOpen: Dispatch<SetStateAction<boolean>>
+  setAddTonWalletOpen: Dispatch<SetStateAction<boolean>>
   showEmailVerification: (email: string, identifier: string) => void
 }>({
   signUpSuccessOpen: false,
@@ -34,6 +40,10 @@ export const ModalContext = createContext<{
   signInOpen: false,
   connectWalletOpen: false,
   migrateWalletOpen: false,
+  addTonWalletOpen: false,
+  teleQrCodeOpen: false,
+  setTeleQrCodeOpen: () => {},
+  setAddTonWalletOpen: () => {},
   setSignUpSuccessOpen: () => {},
   setForgotPasswordOpen: () => {},
   setSignUpOpen: () => {},
@@ -45,6 +55,7 @@ export const ModalContext = createContext<{
 function ModalProvider({ children }) {
   const [signUpSuccessOpen, setSignUpSuccessOpen] = useState(false)
   const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false)
+  const [addTonWalletOpen, setAddTonWalletOpen] = useState(false)
   const [signUpOpen, setSignUpOpen] = useState(false)
   const [signInOpen, setSignInOpen] = useState(false)
   const [connectWalletOpen, setWalletConnectOpen] = useState(false)
@@ -57,6 +68,7 @@ function ModalProvider({ children }) {
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(true)
+  const [teleQrCodeOpen, setTeleQrCodeOpen] = useState(false)
   const [emailNeedVerify, setEmailNeedVerify] = useState('')
   const [identifier, setIdentifier] = useState('')
   const { t } = useTranslation()
@@ -147,11 +159,15 @@ function ModalProvider({ children }) {
       value={{
         signUpSuccessOpen,
         forgotPasswordOpen,
+        addTonWalletOpen,
         signUpOpen,
         signInOpen,
         connectWalletOpen,
         migrateWalletOpen,
+        teleQrCodeOpen,
+        setTeleQrCodeOpen,
         setSignUpSuccessOpen,
+        setAddTonWalletOpen,
         setForgotPasswordOpen,
         setSignUpOpen,
         setSignInOpen,
@@ -172,8 +188,14 @@ function ModalProvider({ children }) {
         </div>
       </Modal>
 
+      <Modal open={teleQrCodeOpen} setOpen={setTeleQrCodeOpen}>
+        <TeleQrCodeModal />
+      </Modal>
       <Modal open={forgotPasswordOpen} setOpen={setForgotPasswordOpen}>
         <ForgotPasswordModal />
+      </Modal>
+      <Modal open={addTonWalletOpen} setOpen={setAddTonWalletOpen}>
+        <AddTonWalletModal />
       </Modal>
       <Modal open={signUpSuccessOpen} setOpen={setSignUpSuccessOpen}>
         <SignUpSuccessModal email={emailNeedVerify} identifier={identifier} />

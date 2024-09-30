@@ -26,6 +26,7 @@
     "@reduxjs/toolkit": "^1.6.1",
     "@story-protocol/core-sdk": "^1.0.0-rc.11",
     "@tanstack/react-query": "^5.36.0",
+    "@types/qrcode": "^1.5.5",
     "@types/react-show-more": "^2.0.4",
     "@types/react-show-more-text": "^1.4.3",
     "@types/react-truncate": "^2.3.7",
@@ -48,6 +49,7 @@
     "next-auth": "^4.22.1",
     "next-i18next": "^14.0.0",
     "pluralize": "^8.0.0",
+    "qrcode": "^1.5.4",
     "qrcode.react": "^3.1.0",
     "ramda": "^0.29.0",
     "react": "18.2.0",
@@ -74,6 +76,7 @@
     "sort-by": "^1.2.0",
     "swiper": "^10.3.1",
     "swr": "^2.2.4",
+    "tonweb": "^0.0.66",
     "viem": "^2.8.12",
     "wagmi": "^2.9.2"
   },

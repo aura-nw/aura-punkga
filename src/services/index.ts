@@ -114,6 +114,10 @@ export const setAddress = async (address: string) => {
   })
   return data
 }
+export const getTeleQrCode = async () => {
+  const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/telegram/gen-telegram-qr`)
+  return data
+}
 
 export const getProfile = async () => {
   const res: any = await privateAxios.get(`${getConfig().API_URL}/api/rest/user/profile`)
@@ -662,12 +666,12 @@ export const getArtistArtworks = async (id: string) => {
 }
 export const getArtistArtworkAlbums = async (id: string) => {
   return await axios
-    .get(`${getConfig().API_URL}/api/rest/public/creators/${id}/albums`)
+    .get(`${getConfig().REST_API_URL}/album/public?creator_id=${id}&limit=1000&offset=0`)
     .then((res) => res.data)
 }
-export const getArtworkAlbums = async (id: string) => {
+export const getArtworkAlbums = async (id: string, artistId: string) => {
   return await axios
-    .get(`${getConfig().API_URL}/api/rest/public/albums/${id}?limit=99999&offset=0`)
+    .get(`${getConfig().API_URL}/api/rest/public/albums/${id}?creator_id=${artistId}&limit=99999&offset=0`)
     .then((res) => res.data)
 }
 export const getArtistCollections = async (id: string) => {
@@ -767,5 +771,13 @@ export const getContestMangaAndArtwork = async (id: string, contestId: string) =
     return result
   } catch (error) {
     console.error(error)
+  }
+}
+export const updateProfile = async (data) => {
+  try {
+    return await privateAxios.put(`${getConfig().REST_API_URL}/user/update-profile`, data)
+  } catch (error) {
+    console.error('Error in updateProfile:', error)
+    throw error // Re-throw the error so it can be caught in the component
   }
 }
