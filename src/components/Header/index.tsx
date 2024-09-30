@@ -157,7 +157,7 @@ export default function Header({ className }: { className?: string }) {
           isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
         }`}></div>
       <header
-        className={`sticky w-full top-0 z-50 transition-all duration-300 bg-white ${className} lg:shadow-[0px_4px_4px_0px_#0000001A]`}>
+        className={`sticky w-full top-0 z-50 transition-all duration-300 lg:h-[100px] bg-neautral-black lg:bg-transparent ${className}`}>
         <nav className='lg:hidden pk-container z-10 w-full shadow-[0px_4px_4px_0px_#0000001A]'>
           <div className='flex justify-between items-center gap-2 w-full h-14'>
             <div onClick={() => router.push('/')}>
@@ -169,13 +169,13 @@ export default function Header({ className }: { className?: string }) {
                   (address != account?.activeWalletAddress || !isConnected) &&
                   account?.noncustodialWalletAddress && (
                     <div className='flex gap-3 items-center '>
-                      <Button size='xs' color='dark' onClick={() => setWalletConnectOpen(true)}>
+                      <Button size='xs' color='neautral' onClick={() => setWalletConnectOpen(true)}>
                         {t('Connect Wallet')}
                       </Button>
                     </div>
                   )
                 ) : (
-                  <Button size='xs' color='dark' onClick={() => setSignInOpen(true)}>
+                  <Button size='xs' color='neautral' onClick={() => setSignInOpen(true)}>
                     {t('Sign in')}
                   </Button>
                 )}
@@ -618,7 +618,23 @@ export default function Header({ className }: { className?: string }) {
           </div>
         </div>
 
-        <nav className={`pk-container gap-3 lg:flex items-center justify-between h-20 hidden`} aria-label='Global'>
+        <div className='hidden lg:block absolute inset-x-0 top-0 w-full h-[100px]'>
+          <svg xmlns='http://www.w3.org/2000/svg' width='1920' height='102' viewBox='0 0 1920 102' fill='none' className='w-full'>
+            <path
+              fill-rule='evenodd'
+              clip-rule='evenodd'
+              d='M356 0H0V100H358.836C362.176 100 365.433 98.9545 368.149 97.0102L385.908 84.2975H1534.09L1551.85 97.0102C1554.57 98.9545 1557.82 100 1561.16 100H1920V0H1555H1494H426H356Z'
+              fill='#0B0B0B'
+            />
+            <path
+              d='M0 0V-1.5H-1.5V0H0ZM0 100H-1.5V101.5H0V100ZM368.149 97.0102L369.022 98.2299L368.149 97.0102ZM385.908 84.2975V82.7975H385.427L385.035 83.0778L385.908 84.2975ZM1534.09 84.2975L1534.96 83.0778L1534.57 82.7975H1534.09V84.2975ZM1551.85 97.0102L1552.72 95.7905L1551.85 97.0102ZM1920 100V101.5H1921.5V100H1920ZM1920 0H1921.5V-1.5H1920V0ZM356 -1.5H0V1.5H356V-1.5ZM-1.5 0V100H1.5V0H-1.5ZM0 101.5H358.836V98.5H0V101.5ZM358.836 101.5C362.49 101.5 366.051 100.357 369.022 98.2299L367.276 95.7905C364.815 97.5525 361.863 98.5 358.836 98.5V101.5ZM369.022 98.2299L386.781 85.5172L385.035 83.0778L367.276 95.7905L369.022 98.2299ZM385.908 85.7975H1534.09V82.7975H385.908V85.7975ZM1533.22 85.5172L1550.98 98.2299L1552.72 95.7905L1534.96 83.0778L1533.22 85.5172ZM1550.98 98.2299C1553.95 100.357 1557.51 101.5 1561.16 101.5V98.5C1558.14 98.5 1555.19 97.5525 1552.72 95.7905L1550.98 98.2299ZM1561.16 101.5H1920V98.5H1561.16V101.5ZM1921.5 100V0H1918.5V100H1921.5ZM1920 -1.5H1555V1.5H1920V-1.5ZM1555 -1.5H1494V1.5H1555V-1.5ZM1494 -1.5H426V1.5H1494V-1.5ZM426 -1.5H356V1.5H426V-1.5Z'
+              fill='#222222'
+            />
+          </svg>
+        </div>
+        <nav
+          className={`pk-container gap-3 lg:flex items-center justify-between h-[86px] hidden text-neautral-white relative`}
+          aria-label='Global'>
           <div className='flex items-center gap-8'>
             <Link href='/' className='flex shrink-0'>
               <span className='sr-only'>Your Company</span>
@@ -724,35 +740,35 @@ export default function Header({ className }: { className?: string }) {
             </div>
           </div>
           <div className='flex lg:gap-[32px] lg:justify-end min-w-[430px] items-center'>
-            <div className='h-fit' onClick={() => router.push('/campaigns')}>
+            <div className='h-fit cursor-pointer' onClick={() => router.push('/campaigns')}>
               <span
                 style={{ fontWeight: '500' }}
-                className={`${pathname.includes('/campaigns') ? 'text-text-brand-defaul' : ''}`}>
+                className={`${pathname.includes('/campaigns') ? 'text-text-brand-focus' : ''}`}>
                 {t('Campaign')}
               </span>
             </div>
-            <div className='h-fit' onClick={() => router.push('/events')}>
+            <div className='h-fit cursor-pointer' onClick={() => router.push('/events')}>
               <span
                 style={{ fontWeight: '500' }}
-                className={`${pathname.includes('/events') ? 'text-text-brand-defaul' : ''}`}>
+                className={`${pathname.includes('/events') ? 'text-text-brand-focus' : ''}`}>
                 {t('Event')}
               </span>
             </div>
-            <div className='h-fit' onClick={() => router.push('/collections')}>
+            <div className='h-fit cursor-pointer' onClick={() => router.push('/collections')}>
               <span
                 style={{ fontWeight: '500' }}
-                className={`${pathname.includes('/collections') ? 'text-text-brand-defaul' : ''}`}>
+                className={`${pathname.includes('/collections') ? 'text-text-brand-focus' : ''}`}>
                 {t('Collection')}
               </span>
             </div>
-            <div className='h-fit' onClick={() => router.push('/about-us')}>
+            <div className='h-fit cursor-pointer' onClick={() => router.push('/about-us')}>
               <span
                 style={{ fontWeight: '500' }}
-                className={`${pathname.includes('/about-us') ? 'text-text-brand-defaul' : ''}`}>
+                className={`${pathname.includes('/about-us') ? 'text-text-brand-focus' : ''}`}>
                 {t('aboutUs')}
               </span>
             </div>
-            <Button size='sm' color='dark' variant='outlined' onClick={() => window.open(config.ADMIN_URL, '_blank')}>
+            <Button size='sm' color='neautral' variant='outlined' onClick={() => window.open(config.ADMIN_URL, '_blank')}>
               Create Portal
             </Button>
             <div className='flex gap-[20px] ml-10 items-center cursor-pointer'>
@@ -962,7 +978,7 @@ export default function Header({ className }: { className?: string }) {
                   </DropdownMenu>
                 </Dropdown>
               ) : (
-                <Button size='sm' color='dark' onClick={() => setSignInOpen(true)}>
+                <Button size='sm' color='neautral' onClick={() => setSignInOpen(true)}>
                   {t('Sign in')}
                 </Button>
               )}
@@ -972,7 +988,7 @@ export default function Header({ className }: { className?: string }) {
                 account?.noncustodialWalletAddress && (
                   <div className='flex gap-3 items-center '>
                     <div className='h-4 w-[1px] bg-[#E0E0E0]'></div>
-                    <Button size='sm' color='dark' onClick={() => setWalletConnectOpen(true)}>
+                    <Button size='sm' color='neautral' onClick={() => setWalletConnectOpen(true)}>
                       {t('Connect Wallet')}
                     </Button>
                   </div>

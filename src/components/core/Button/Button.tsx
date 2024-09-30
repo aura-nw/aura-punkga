@@ -4,7 +4,7 @@ import Spinner from 'components/Spinner'
 
 type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 type ButtonVariant = 'filled' | 'outlined'
-type ButtonColor = 'green' | 'dark'
+type ButtonColor = 'green' | 'dark' | 'neautral'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSize
@@ -73,24 +73,34 @@ const Button: React.FC<ButtonProps> = ({
                 hover:bg-[#2BFD84] hover:border-[#2BFD84]
                 focus:bg-[#00C04D] focus:border-[#00C04D]
                 disabled:bg-[#B0B0B0] disabled:border-[#B0B0B0]`
-      } else {
-        return `${baseClasses} bg-[#183442] border-gray-800 text-[#F6F6F6]
-                hover:bg-[#3D5059] hover:border-[#3D5059]
-                focus:bg-[#0A161C] focus:border-[#0A161C]
-                disabled:bg-[#B0B0B0] disabled:border-[#B0B0B0]`
       }
+      if (color === 'neautral') {
+        return `${baseClasses} text-text-primary-on-brand bg-neautral-100 border-neautral-100
+              hover:bg-neautral-50 hover:border-neautral-50
+              focus:bg-neautral-white focus:border-neautral-white
+              disabled:bg-neautral-300 disabled:border-neautral-300`
+      }
+      return `${baseClasses} bg-[#183442] border-gray-800 text-[#F6F6F6]
+              hover:bg-[#3D5059] hover:border-[#3D5059]
+              focus:bg-[#0A161C] focus:border-[#0A161C]
+              disabled:bg-[#B0B0B0] disabled:border-[#B0B0B0]`
     } else {
       if (color === 'dark') {
         return `${baseClasses} bg-transparent border-[#183442] text-[#183442]
                 hover:text-[#3D5059] hover:border-[#183442]
                 focus:text-[#0A161C] focus:border-[#0A161C]
                 disabled:border-[#B0B0B0] disabled:text-[#B0B0B0]`
-      } else {
-        return `${baseClasses} bg-transparent border-[#009640] text-[#009640]
-                hover:text-[#00E160] hover:border-[#00E160]
-                focus:text-[#00C04D] focus:border-[#00C04D]
-                disabled:border-[#B0B0B0] disabled:text-[#B0B0B0]`
       }
+      if (color === 'neautral') {
+        return `${baseClasses} bg-transparent border-neautral-100 text-neautral-100
+              hover:text-neautral-50 hover:border-neautral-50
+              focus:text-neautral-white focus:border-neautral-white
+              disabled:border-neautral-300 disabled:text-neautral-300`
+      }
+      return `${baseClasses} bg-transparent border-[#009640] text-[#009640]
+              hover:text-[#00E160] hover:border-[#00E160]
+              focus:text-[#00C04D] focus:border-[#00C04D]
+              disabled:border-[#B0B0B0] disabled:text-[#B0B0B0]`
     }
   }
 
