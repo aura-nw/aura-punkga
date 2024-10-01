@@ -14,12 +14,13 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 export default function NFTsList({ collections }: { collections: any[] }) {
-  console.log(collections)
   const { locale } = useRouter()
+  console.log(collections)
   const [selected, setSelected] = useState({
-    key: collections[0].slug,
-    value: collections[0].name[locale],
+    key: collections?.[0]?.slug,
+    value: collections?.[0]?.name?.[locale],
   })
+  if (!collections?.length) return null
   return (
     <div className='w-full px-5 container relative'>
       <div className='flex justify-between items-center pt-3'>

@@ -338,14 +338,14 @@ export default function ComicDetail({
                 />
               </Tab.Panel>
               <Tab.Panel className='flex-1 flex flex-col'>
-                {/* {!!data.collections.length ? ( */}
+                {!!data.collections.length ? (
                   <NFTsList collections={data.collections} />
-                {/* ) : (
+                ) : (
                   <div className='flex-1 w-full flex flex-col items-center justify-center my-[64px]'>
                     <Image src={Ninja} alt='' className='h-[260px] aspect-square mx-auto' />
                     <div className='font-extrabold text-xl leading-6 mt-[10px]'>{t('Artist Composing')}</div>
                   </div>
-                )} */}
+                )}
               </Tab.Panel>
               <Tab.Panel className='mt-5'>
                 <Introduction data={data} language={language} />

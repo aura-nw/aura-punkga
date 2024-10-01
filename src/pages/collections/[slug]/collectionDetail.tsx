@@ -61,7 +61,12 @@ function CollectionDetail() {
     address: data?.contract_address as any,
     functionName: 'saleDetails',
   })
-
+  const { data: mintedData, refetch: refetchMintedData }: { data: any; refetch: any } = useReadContract({
+    abi,
+    address: data?.contract_address as any,
+    functionName: 'mintedPerAddress',
+    args: [account?.activeWalletAddress],
+  })
   useEffect(() => {
     const height = document.querySelector('.desciption')?.getBoundingClientRect().height
     if (height > (isMobile ? 100 : 40)) {
@@ -85,9 +90,16 @@ function CollectionDetail() {
       setProcessingText('')
     }
   }, [result.data?.status, hash])
-
-  if (!data || !onChainData) {
-    return null
+  if (isLoading) return null
+  if (!data) {
+    return <p className='w-full text-center p-20'>No collection data found</p>
+  }
+  if (!onChainData) {
+    return (
+      <p className='w-full text-center p-20'>
+        No collection data on chain found. Please connect your wallet and add our chain first.
+      </p>
+    )
   }
   const startTime = moment.unix(+BigInt(onChainData.publicSaleStart).toString())
   const endTime = moment.unix(+BigInt(onChainData.publicSaleEnd).toString())
@@ -135,6 +147,7 @@ function CollectionDetail() {
           throw new Error('Failed to mint NFT. Please try again or contact us.')
         }
       }
+      refetchMintedData()
     } catch (error) {
       setProcessingText('')
       console.error(error)
@@ -143,7 +156,6 @@ function CollectionDetail() {
       })
     }
   }
-
   return (
     <>
       <div className='py-8 px-4 pk-container lg:flex lg:gap-8 lg:bg-white lg:rounded-md lg:p-4 lg:mt-8'>
@@ -213,6 +225,10 @@ function CollectionDetail() {
                 </div>
               )}
               <div className='py-2 px-3 border border-border-secondary rounded-md bg-neutral-50'>
+                <div className='text-text-teriary text-sm font-medium'>{t('Slot')}</div>
+                <div className='mt-1.5 font-semibold'>{`${mintedData?.totalMints}/${onChainData.maxSalePurchasePerAddress}`}</div>
+              </div>
+              <div className='py-2 px-3 border border-border-secondary rounded-md bg-neutral-50'>
                 <div className='text-text-teriary text-sm font-medium'>{t('Value')}</div>
                 <div className='mt-1.5 font-semibold'>{`${
                   BigInt(onChainData.publicSalePrice) / BigInt(10) ** BigInt(18)
@@ -242,8 +258,8 @@ function CollectionDetail() {
                       className='grid place-content-center w-14 text-center border border-border-secondary rounded-r-md cursor-pointer'
                       onClick={() =>
                         setAmount((amount) =>
-                          amount <
-                          (onChainData.maxSalePurchasePerAddress || onChainData.maxSupply - onChainData.totalMinted)
+                          amount < onChainData.maxSalePurchasePerAddress - mintedData?.totalMints &&
+                          amount < onChainData.maxSupply - onChainData.totalMinted
                             ? amount + 1
                             : amount
                         )
@@ -257,6 +273,7 @@ function CollectionDetail() {
                     color='dark'
                     className='w-full lg:max-w-[328px]'
                     size='lg'
+                    disabled={mintedData?.totalMints >= onChainData.maxSalePurchasePerAddress}
                     onClick={() => {
                       if (!account) {
                         setSignInOpen(true)
@@ -275,7 +292,7 @@ function CollectionDetail() {
                         setInsufficientBalanceOpen(true)
                       }
                     }}>
-                    {t('Collect')}
+                    {mintedData?.totalMints >= onChainData.maxSalePurchasePerAddress ? t('Out of slot') : t('Collect')}
                   </Button>
                 </div>
               </>
