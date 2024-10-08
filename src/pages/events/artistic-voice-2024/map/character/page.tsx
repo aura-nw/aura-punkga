@@ -37,7 +37,7 @@ export default function Event() {
   const [selectedCharacter, setSelectedCharacter] = useState<any>()
   const guideContentRef = useRef<any>()
   const { data, mutate } = useSWR(
-    { ket: 'get-characters', userId: account.id },
+    { ket: 'get-characters', userId: account?.id },
     ({ userId }) => eventService.story.getCharacters(userId),
     {
       revalidateOnFocus: false,
