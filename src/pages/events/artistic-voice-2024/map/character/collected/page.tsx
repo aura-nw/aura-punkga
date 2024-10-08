@@ -31,45 +31,27 @@ export default function Event() {
   const { account } = useContext(Context)
   const [open, setOpen] = useState(false)
   const [likeCount, setLikeCount] = useState(0)
-  const [loading, setLoading] = useState(false)
   const [isLiked, setIsLiked] = useState(false)
   const [isCollected, setIsCollected] = useState(false)
   const [collectedCount, setCollectedCount] = useState(0)
   const [selectedCharacter, setSelectedCharacter] = useState<any>()
   const guideContentRef = useRef<any>()
-  const { data, mutate } = useSWR(
-    { ket: 'get-characters', userId: account?.id },
-    ({ userId }) => eventService.story.getCharacters(userId),
-    {
-      revalidateOnFocus: false,
-    }
-  )
-  const collectedCharacters = useSWR('get-collected-characters', () => eventService.story.getCollectedCharacters(), {
+  const { data, mutate } = useSWR('get-collected-characters', () => eventService.story.getCollectedCharacters(), {
     revalidateOnFocus: false,
   })
-  const collectedCharacter = collectedCharacters?.data?.data?.data?.user_collect_character
-  const characters = data?.data?.data?.story_character
+  const characters = data?.data?.data?.user_collect_character
   const characterData = selectedCharacter || characters?.[0]
   useEffect(() => {
     setLikeCount(characterData?.likes_aggregate?.aggregate?.count)
     setCollectedCount(characterData?.user_collect_characters_aggregate?.aggregate?.count)
     setIsLiked(!!characterData?.likes?.length)
-    setIsCollected(!!characterData?.user_collect_characters?.length)
   }, [characterData?.id])
   const collectHandler = async () => {
     try {
-      setLoading(true)
       await eventService.story.collectCharacter(characterData?.id)
-      await collectedCharacters.mutate()
-      setCollectedCount((prev) => prev + 1)
-      setLoading(false)
-      setOpen(false)
-      setIsCollected(true)
-      toast('Collect character successfully', {
-        type: 'success',
-      })
+      setCollectedCount((prev) => (isLiked ? prev - 1 : prev + 1))
+      setIsCollected((prevState) => !prevState)
     } catch (error) {
-      setLoading(false)
       toast(error.message, {
         type: 'error',
       })
@@ -105,57 +87,38 @@ export default function Event() {
             {!!characters?.length && (
               <div className='grid grid-cols-[22fr_11fr] mt-4 gap-8 min-h-[1000px] relative'>
                 <div className='shrink-0 w-full'>
-                  <div className='flex justify-between items-center h-10'>
-                    <div className='text-3xl font-medium'>Character</div>
-                    <div className='flex gap-2.5'>
-                      <div className='h-10 rounded-md px-4 flex gap-2 items-center justify-center bg-[#191919]'>
-                        <Image src={Point} alt='' className='w-8 h-auto' />
-                        <span className='text-sm font-semibold'>{3 - (collectedCharacter?.length || 0)}</span>
-                      </div>
-                      <Dropdown>
-                        <DropdownToggle>
-                          <div className='h-10 rounded-md px-4 flex gap-2 items-center justify-center bg-[#191919] cursor-pointer'>
-                            <svg
-                              xmlns='http://www.w3.org/2000/svg'
-                              width='16'
-                              height='16'
-                              viewBox='0 0 16 16'
-                              fill='none'>
-                              <path
-                                d='M15.1378 10.194C15.0128 10.0691 14.8432 9.99884 14.6665 9.99884C14.4897 9.99884 14.3201 10.0691 14.1951 10.194L11.9998 12.3894V1.9987C11.9998 1.82189 11.9295 1.65232 11.8045 1.52729C11.6795 1.40227 11.5099 1.33203 11.3331 1.33203C11.1563 1.33203 10.9867 1.40227 10.8617 1.52729C10.7367 1.65232 10.6664 1.82189 10.6664 1.9987V12.3894L8.47112 10.194C8.34538 10.0726 8.17698 10.0054 8.00218 10.0069C7.82738 10.0084 7.66018 10.0785 7.53657 10.2022C7.41297 10.3258 7.34285 10.493 7.34133 10.6678C7.33981 10.8426 7.40701 11.011 7.52845 11.1367L10.8618 14.47C10.9237 14.5321 10.9973 14.5814 11.0783 14.615C11.1593 14.6486 11.2461 14.6659 11.3338 14.6659C11.4215 14.6659 11.5083 14.6486 11.5893 14.615C11.6703 14.5814 11.7439 14.5321 11.8058 14.47L15.1391 11.1367C15.2639 11.0115 15.3339 10.8419 15.3336 10.6651C15.3334 10.4883 15.2629 10.3189 15.1378 10.194Z'
+                  <div className='h-10'>
+                    <div className='text-3xl font-medium flex items-center gap-1'>
+                      <Link href='events/artistic-voice-2024/map/character'>
+                        <svg width='32' height='33' viewBox='0 0 32 33' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                          <path
+                            d='M0 16.5C0 7.66344 7.16344 0.5 16 0.5H19.2V32.5H16C7.16344 32.5 0 25.3366 0 16.5Z'
+                            fill='white'
+                          />
+                          <rect x='18.3999' y='0.5' width='4' height='32' fill='white' />
+                          <path
+                            d='M21.6001 32.5V0.5H27.5558C30.3377 0.5 32.4353 3.10057 31.9226 5.91389L27.7573 28.771C27.3633 30.9332 25.5285 32.5 23.3904 32.5H21.6001Z'
+                            fill='white'
+                          />
+                          <g clipPath='url(#clip0_5358_41234)'>
+                            <path
+                              d='M11.1995 15.935L17.6077 9.52692C17.7559 9.37859 17.9538 9.29688 18.1647 9.29688C18.3757 9.29688 18.5735 9.37859 18.7218 9.52692L19.1937 9.99872C19.5008 10.3062 19.5008 10.8058 19.1937 11.1128L13.8126 16.4939L19.1996 21.881C19.3479 22.0293 19.4297 22.227 19.4297 22.4379C19.4297 22.649 19.3479 22.8467 19.1996 22.9951L18.7277 23.4668C18.5794 23.6152 18.3817 23.6969 18.1707 23.6969C17.9597 23.6969 17.7619 23.6152 17.6137 23.4668L11.1995 17.0529C11.0509 16.9041 10.9693 16.7054 10.9698 16.4942C10.9693 16.2822 11.0509 16.0837 11.1995 15.935Z'
+                              fill='black'
+                            />
+                          </g>
+                          <defs>
+                            <clipPath id='clip0_5358_41234'>
+                              <rect
+                                width='14.4'
+                                height='14.4'
                                 fill='white'
+                                transform='matrix(-1 0 0 1 22.3999 9.30078)'
                               />
-                              <path
-                                d='M8.47123 4.86059L5.1379 1.52726C5.07581 1.46504 5.00192 1.41586 4.92057 1.38259C4.75748 1.31518 4.57432 1.31518 4.41123 1.38259C4.32988 1.41586 4.25599 1.46504 4.1939 1.52726L0.860565 4.86059C0.73556 4.98577 0.665402 5.15549 0.665528 5.33239C0.665653 5.5093 0.736049 5.67892 0.861232 5.80392C0.986414 5.92893 1.15613 5.99909 1.33304 5.99896C1.50995 5.99884 1.67956 5.92844 1.80456 5.80326L3.9999 3.60792V13.9986C3.9999 14.1754 4.07014 14.345 4.19516 14.47C4.32018 14.595 4.48975 14.6653 4.66656 14.6653C4.84338 14.6653 5.01295 14.595 5.13797 14.47C5.26299 14.345 5.33323 14.1754 5.33323 13.9986V3.60792L7.52857 5.80326C7.6543 5.9247 7.8227 5.99189 7.9975 5.99037C8.1723 5.98885 8.33951 5.91874 8.46311 5.79514C8.58672 5.67153 8.65683 5.50432 8.65835 5.32952C8.65987 5.15473 8.59267 4.98632 8.47123 4.86059Z'
-                                fill='white'
-                              />
-                            </svg>
-                            <span className='text-sm font-semibold'>Sort by</span>
-                            <svg
-                              xmlns='http://www.w3.org/2000/svg'
-                              width='24'
-                              height='24'
-                              viewBox='0 0 24 24'
-                              fill='none'>
-                              <path
-                                d='M7 10L12.0008 14.58L17 10'
-                                stroke='white'
-                                stroke-width='1.5'
-                                stroke-linecap='round'
-                                stroke-linejoin='round'
-                              />
-                            </svg>
-                          </div>
-                        </DropdownToggle>
-                        <DropdownMenu customClass='bg-[#191919] rounded-md'>
-                          <div className='space-y-2 p-2 text-sm'>
-                            <div className='cursor-pointer px-2 text-brand-default'>Newest</div>
-                            <div className='cursor-pointer px-2'>Oldest</div>
-                            <div className='cursor-pointer px-2'>Most to least</div>
-                            <div className='cursor-pointer px-2'>Least to most</div>
-                          </div>
-                        </DropdownMenu>
-                      </Dropdown>
+                            </clipPath>
+                          </defs>
+                        </svg>
+                      </Link>
+                      My collected characters
                     </div>
                   </div>
                   <div className='grid grid-cols-4 gap-5 mt-6'>
@@ -184,16 +147,7 @@ export default function Event() {
                 </div>
                 <div className='sticky top-[12vh] h-fit'>
                   <div className='flex justify-between items-center gap-10 h-10'>
-                    <div>
-                      <Link
-                        href={
-                          !collectedCharacter?.length ? '#' : '/events/artistic-voice-2024/map/character/collected'
-                        }>
-                        <Button color='neautral' size='sm' className='h-10' disabled={!collectedCharacter?.length}>
-                          Your collected
-                        </Button>
-                      </Link>
-                    </div>
+                    <div className='flex-1'></div>
                     <div className='w-[10.5%]'>
                       <RuleAndAward />
                     </div>
@@ -286,7 +240,7 @@ export default function Event() {
                           size='sm'
                           variant='outlined'
                           className='!w-2/3 shrink-0 [&>*]:w-full'
-                          disabled={isCollected || (collectedCharacter?.length || 0) >= 3}
+                          disabled={isCollected}
                           onClick={() => setOpen(true)}>
                           <div className='flex gap-1 w-full justify-between items-center'>
                             <div>Collect IP License</div>
@@ -325,7 +279,7 @@ export default function Event() {
               <Button color='neautral' size='sm' variant='outlined' className='!w-1/3' onClick={() => setOpen(false)}>
                 Cancel
               </Button>
-              <Button size='sm' color='neautral' className='!w-2/3' onClick={collectHandler} loading={loading}>
+              <Button size='sm' color='neautral' className='!w-2/3' onClick={collectHandler}>
                 Collect IP
               </Button>
             </div>
