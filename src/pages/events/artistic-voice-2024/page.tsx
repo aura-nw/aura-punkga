@@ -40,30 +40,34 @@ export default function Event() {
     typeWriter()
   }
   return (
-    <div
-      className='bg-no-repeat h-screen w-full -mt-20 relative'
-      style={{ backgroundImage: `url(${Background.src})` }}>
+    <div className='bg-no-repeat h-screen w-full -mt-20 relative' style={{ backgroundImage: `url(${Background.src})` }}>
       <div
         className='absolute inset-x-[19%] bottom-0 translate-y-[15%] w-[62%] aspect-[1227/966] bg-no-repeat bg-contain'
         style={{ backgroundImage: `url(${Door.src})` }}>
         <Link
           href='/events/artistic-voice-2024/map'
           className='[&:hover_.active]:visible [&:hover_:not(.active)]:invisible cursor-pointer absolute top-[4%] left-[15%] w-[39%] z-10'>
-          <Image src={Map} alt='' className='w-full h-auto' />
+          <Image priority src={Map} alt='' className='w-full h-auto' />
           <Image src={ActiveMap} alt='' className='active w-full h-auto invisible absolute inset-0' />
         </Link>
         <div className='[&:hover_.active]:visible [&:hover_:not(.active)]:invisible cursor-pointer absolute top-[35%] right-[15%] w-[26%] z-10'>
-          <Image src={Sketch} alt='' className='w-full h-auto' />
+          <Image priority src={Sketch} alt='' className='w-full h-auto' />
           <Image src={ActiveSketch} alt='' className='active absolute inset-0 w-full h-auto invisible' />
         </div>
         <div className='[&:hover_.active]:visible [&:hover_:not(.active)]:invisible cursor-pointer absolute bottom-[44%] left-[33%] w-[12%] z-10'>
-          <Image src={Lamp} alt='' className=' w-full h-auto' />
+          <Image priority src={Lamp} alt='' className=' w-full h-auto' />
           <Image src={ActiveLamp} alt='' className='active absolute inset-0 w-full h-auto invisible' />
         </div>
         <div className='bottom-[14%] left-[2%] absolute flex items-end w-[90%] gap-5'>
-          <Image src={Artkeeper} alt='' className='w-[30%]' />
+          <Image priority src={Artkeeper} alt='' className='w-[30%]' />
           <div className='relative flex-1 my-[5%] w-fit flex flex-col gap-2 items-end'>
-            <svg width='109' height='38' viewBox='0 0 109 38' fill='none' xmlns='http://www.w3.org/2000/svg' className='cursor-pointer opacity-80 hover:opacity-100'>
+            <svg
+              width='109'
+              height='38'
+              viewBox='0 0 109 38'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+              className='cursor-pointer opacity-80 hover:opacity-100'>
               <path
                 d='M0.5 6C0.5 2.96243 2.96243 0.5 6 0.5H103C106.038 0.5 108.5 2.96243 108.5 6V32C108.5 35.0376 106.038 37.5 103 37.5H6C2.96243 37.5 0.5 35.0376 0.5 32V6Z'
                 fill='#0E0E0F'
@@ -78,7 +82,7 @@ export default function Event() {
               />
             </svg>
             <div className='relative'>
-              <Image src={GuideBox} alt='' className='min-h-[140px]' />
+              <Image priority src={GuideBox} alt='' className='min-h-[140px]' />
               <div className='absolute left-[3%] top-[10%] bottom-[20%] w-[94%]'>
                 <div className='h-full bg-[#111] rounded-md text-white p-5'>
                   <div ref={guideContentRef} className='h-[60%] overflow-auto'></div>

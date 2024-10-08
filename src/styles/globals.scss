@@ -31,6 +31,10 @@
 #__next {
   background: #fff;
 }
+.text-stroke {
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #000;
+}
 a {
   cursor: pointer;
 }

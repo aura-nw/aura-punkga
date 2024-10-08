@@ -21,14 +21,16 @@ export const getServerSideProps = async (context) => {
   const props = {
     image:
       context.locale == 'vn'
-        ? 'https://punkga.me/assets/images/kaia-island-thumb-vn.png'
-        : 'https://punkga.me/assets/images/kaia-island-thumb.png',
+        ? 'https://punkga.me/assets/images/ava-thumb.png'
+        : 'https://punkga.me/assets/images/ava-thumb.png',
     title:
-      context.locale == 'vn' ? `Cuộc Thi Vẽ Tranh Về Truyền Thuyết Đảo Kaia` : `Kaia Island Mythology Drawing Contest`,
+      context.locale == 'vn'
+        ? `AVA Grand Contest 2024 - Find Your Artistic Voice`
+        : `AVA Grand Contest 2024 - Find Your Artistic Voice`,
     description:
       context.locale == 'vn'
-        ? `Khám phá đảo Kaia kỳ bí, thể hiện tài năng hội họa và giành giải thưởng 50 triệu tại cuộc thi "Ghi Chép Về Truyền Thuyết Đảo Kaia" cùng PunkgaMe nào!`
-        : `Explore the mysterious Kaia Island, showcase your artistic talent, and win a 2000 USD prize in the "Kaia's Island Mythology Record" contest with PunkgaMe!`,
+        ? `Tham gia AVA Grand Contest 2024 trên PunkgaMe để chứng tỏ bản sắc nghệ thuật của riêng bạn và giành lấy phần thưởng lên tới 150 Triệu VNĐ!`
+        : `Join the AVA Grand Contest 2024 on Punkga Me to showcase your talent and win prizes up to 6,000 USD. Prove the power of true art in an AI-driven world!`,
   }
   return {
     props: {

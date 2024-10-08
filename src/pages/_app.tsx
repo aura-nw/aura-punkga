@@ -21,7 +21,6 @@ import { getWagmiConfig } from 'src/services/wagmi/config'
 import 'src/styles/globals.scss'
 import { WagmiProvider } from 'wagmi'
 import '@radix-ui/themes/styles.css'
-import { Theme } from '@radix-ui/themes'
 const pjs = Plus_Jakarta_Sans({ subsets: ['latin', 'vietnamese'] })
 const ws = Work_Sans({ subsets: ['latin', 'vietnamese'] })
 const inter = Inter({ subsets: ['latin', 'vietnamese'] })
@@ -68,6 +67,15 @@ const atlantis = localFont({
   src: [
     {
       path: '../assets/fonts/AtlantisInternational.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+})
+const jaro = localFont({
+  src: [
+    {
+      path: '../assets/fonts/Jaro-Regular.ttf',
       weight: '400',
       style: 'normal',
     },
@@ -136,6 +144,9 @@ function MyApp(props: AppProps) {
         }
         .font-atlantis {
           font-family: ${atlantis.style.fontFamily};
+        }
+        .font-jaro {
+          font-family: ${jaro.style.fontFamily};
         }
       `}</style>
       <ToastContainer />

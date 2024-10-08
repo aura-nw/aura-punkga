@@ -619,7 +619,7 @@ export default function Header({ className }: { className?: string }) {
         </div>
 
         <div className='hidden lg:block absolute inset-x-0 top-0 w-full h-[100px]'>
-          <Image src={Bg} alt='' className='w-full h-full object-cover'/>
+          <Image src={Bg} alt='' className='w-full h-full object-cover' />
         </div>
         <nav
           className={`pk-container gap-3 lg:flex items-center justify-between h-[86px] hidden text-neautral-white relative`}
@@ -757,7 +757,11 @@ export default function Header({ className }: { className?: string }) {
                 {t('aboutUs')}
               </span>
             </div>
-            <Button size='sm' color='neautral' variant='outlined' onClick={() => window.open(config.ADMIN_URL, '_blank')}>
+            <Button
+              size='sm'
+              color='neautral'
+              variant='outlined'
+              onClick={() => window.open(config.ADMIN_URL, '_blank')}>
               Create Portal
             </Button>
             <div className='flex gap-[20px] ml-10 items-center cursor-pointer'>
@@ -775,7 +779,24 @@ export default function Header({ className }: { className?: string }) {
                     {/* <MainButton hasAvatar style='secondary' leadingIcon={account?.image || Avatar}>
                       {account?.name}
                     </MainButton> */}
-                    <Image src={account?.noncustodialWalletAddress ? UserGreen : User} alt='user' />
+                    <div className='relative p-0.5'>
+                      <div className='absolute inset-0 bg-[conic-gradient(#009640_70deg,#6D6D6D_0)] rounded-xl rotate-180'></div>
+                      <div className='border border-neautral-black p-[1px] bg-neutral-500 rounded-mlg relative'>
+                        <div className='border border-neutral-800 rounded-lg overflow-hidden'>
+                          <Image
+                            src={account?.image || UserGreen}
+                            width={50}
+                            height={50}
+                            className='w-12 h-w-12'
+                            alt='user'
+                          />
+                        </div>
+                      </div>
+                      <div className='absolute bottom-0 w-full font-jaro text-center text-stroke -mb-1'>
+                        <div className='text-base'>{account.level}</div>
+                        <div className='text-xs -mt-2'>LEVEL</div>
+                      </div>
+                    </div>
                   </DropdownToggle>
 
                   <DropdownMenu customClass='right-0 !w-[405px] max-w-[405px] !overflow-visible mt-[26px]'>
