@@ -16,7 +16,7 @@ import Trai from 'components/pages/event/artistic-voice-2024/assets/trai.svg'
 import Image from 'next/image'
 import Link from 'next/link'
 import Modal from 'components/pages/event/artistic-voice-2024/Modal'
-import Map from 'components/pages/event/artistic-voice-2024/assets/map.svg'
+import Map from 'components/pages/event/artistic-voice-2024/assets/Map.svg'
 import Round1Submission from './round1Submission'
 import RuleAndAward from 'components/pages/event/artistic-voice-2024/RuleAndAward'
 
