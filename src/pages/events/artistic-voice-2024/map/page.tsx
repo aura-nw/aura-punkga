@@ -11,6 +11,11 @@ import Room5 from 'components/pages/event/artistic-voice-2024/assets/room5.svg'
 import Ava from 'components/pages/event/artistic-voice-2024/assets/ava.svg'
 import Flame from 'components/pages/event/artistic-voice-2024/assets/flame.svg'
 import Artkeeper from 'components/pages/event/artistic-voice-2024/assets/mascot-head.svg'
+import ArtkeeperClover from 'components/pages/event/artistic-voice-2024/assets/Artkeeper-clover.png'
+import ArtkeeperSad from 'components/pages/event/artistic-voice-2024/assets/Artkeeper-sad.png'
+import ArtkeeperSmile from 'components/pages/event/artistic-voice-2024/assets/Artkeeper-smile.png'
+import ArtkeeperAngry from 'components/pages/event/artistic-voice-2024/assets/Artkeeper-angry.png'
+import ArtkeeperNormal from 'components/pages/event/artistic-voice-2024/assets/Artkeeper-normal.png'
 import GuideBox from 'components/pages/event/artistic-voice-2024/assets/guide-box.svg'
 import Phai from 'components/pages/event/artistic-voice-2024/assets/phai.svg'
 import Trai from 'components/pages/event/artistic-voice-2024/assets/trai.svg'
@@ -19,33 +24,205 @@ import FourLeafClover from 'components/pages/event/artistic-voice-2024/assets/fo
 import Image from 'next/image'
 import Link from 'next/link'
 import Modal from 'components/pages/event/artistic-voice-2024/Modal'
+import useLocalStorage from 'src/hooks/useLocalStorage'
+import Button from 'components/Button'
 export default function Event() {
   const { locale } = useRouter()
   const { t } = useTranslation()
+  const router = useRouter()
   const [seeMore, setSeeMore] = useState(false)
   const [openRules, setOpenRules] = useState(false)
   const [openAward, setOpenAward] = useState(false)
+  const currentSetStep = useRef<any>()
+  const timeoutId = useRef<any>()
+
+  const [characterRoomStep, setCharacterRoomStep] = useState<number>(-1)
+  const [characterDone, setCharacterDone] = useLocalStorage<boolean>('character-done', false)
+  const [mangaRoomStep, setMangaRoomStep] = useState<number>(-1)
+  const [mangaDone, setMangaDone] = useLocalStorage<boolean>('manga-done', false)
+  const [artRoomStep, setArtRoomStep] = useState<number>(-1)
+  const [artDone, setArtDone] = useLocalStorage<boolean>('art-done', false)
+  const [campainRoomStep, setCampainRoomStep] = useState<number>(-1)
+  const [campainDone, setCampainDone] = useLocalStorage<boolean>('campain-done', false)
+  const [artkeeper, setArtkeeper] = useState('')
+  const [showGuide, setShowGuide] = useState(false)
   const guideContentRef = useRef<any>()
   useEffect(() => {
-    displayGuide(
-      `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum`
-    )
-  }, [])
+    if (characterRoomStep == 0) {
+      displayGuide(
+        locale == 'en'
+          ? `You enter the identification area, where Keeper opens a profile containing information and a fragment of the characters’ ideas.`
+          : `Bạn bước vào khu vực định danh, Keeper mở một hồ sơ các nhân vật, chứa thông tin và một mảnh ý tưởng của họ.`
+      )
+      setArtkeeper('')
+    }
+    if (characterRoomStep == 1) {
+      displayGuide(
+        locale == 'en'
+          ? `Identification and confirmation are essential steps in the plan. A fragment of your idea will become Story Clover—here it is! Though incomplete, you can finish it by combining fragments from others.`
+          : `Định danh và xác nhận là bước thiết yếu của kế hoạch, một mảnh ý tưởng của cậu sẽ trở thành Story Clover-nó đây! Dù chưa hoàn chỉnh nhưng cậu có thể hoàn thiện Story Clover bằng cách kết hợp các mảnh của người khác`
+      )
+      setArtkeeper('clover')
+    }
+    if (characterRoomStep == 2) {
+      displayGuide(
+        locale == 'en'
+          ? `By merging fragments into a full Story Clover, a completed one will emerge. The machine storing the Story Clover will launch into orbit, enlightening the AI machines and saving them from going mad.`
+          : `Kết hợp các mảnh Story Clover thành một câu chuyện thì một  Story Clover hoàn thiện sẽ xuất hiện. Cỗ máy lưu trữ Story Clover khi đầy sẽ phóng lên quỹ đạo để soi sáng cho các cỗ máy AI, cứu chúng khỏi việc phát điên.`
+      )
+      setArtkeeper('clover')
+    }
+    if (characterRoomStep == 3) {
+      displayGuide(
+        locale == 'en'
+          ? `Use these 3 Story Clover fragments to select characters. You can make them appear in your story—even just briefly, as long as you remember them. Now, let's get creative!`
+          : `Dùng 3 mảnh Story Clover này để chọn các nhân vật, có thể cho họ xuất hiện trong câu chuyện câu chuyện của cậu. Ừ! Có thể cho họ thoáng qua đâu đó thôi cũng được, miễn rằng cậu nhớ đến họ. Sáng tạo nào!`
+      )
+      setArtkeeper('normal')
+    }
+    if (characterRoomStep == 4) {
+      setShowGuide(false)
+      setCharacterDone(true)
+      router.push(`/events/artistic-voice-2024/map/character`)
+    }
+  }, [characterRoomStep])
+  useEffect(() => {
+    if (mangaRoomStep == 0) {
+      displayGuide(
+        locale == 'en'
+          ? `You enter an area filled with comic books and graphic novels.`
+          : `Bạn tiến vào một khu vực với hàng loạt truyện tranh và sách truyện.`
+      )
+      setArtkeeper('')
+    }
+    if (mangaRoomStep == 1) {
+      displayGuide(
+        locale == 'en'
+          ? `Humans are strange, they can talk and watch, but understanding—that’s another matter. I’m fascinated by stories; they contain spirit, emotion, and characters. No matter how many times I’ve read them, the feeling is always the same.`
+          : `Loài người kỳ lạ, họ có thể nói có thể xem, nhưng để hiểu thì chưa chắc. Tôi tò mò với những câu chuyện, chúng chứa đựng những thứ tinh thần, cảm xúc, nhân vật, dù đã đọc đi đọc lại rất nhiều lần nhưng cảm xúc vẫn như lúc đầu.`
+      )
+      setArtkeeper('sad')
+    }
+    if (mangaRoomStep == 2) {
+      displayGuide(
+        locale == 'en'
+          ? `Long ago, AI was also used to create stories, but those words had no soul, and readers couldn’t fully grasp them. The world needs depth, and thus, it needs stories.`
+          : `Ở thời điểm rất lâu về trước, AI cũng đã được sử dụng để tạo nên những câu chuyện nhưng những con chữ đó không có linh hồn và người đọc không thể cảm nhận chúng trọn vẹn. Thế giới cần sự sâu sắc và vì thế họ cần những câu chuyện.`
+      )
+      setArtkeeper('sad')
+    }
+    if (mangaRoomStep == 3) {
+      displayGuide(
+        locale == 'en'
+          ? `You—the chosen one. Punka and Min must’ve picked the right person. You have the gift of storytelling! So, use Story Clover wisely. Collaborate with others to craft our tale`
+          : `Cậu-người được chọn, hẳn là hai tên Punka và Min đã nhìn đúng người, cậu có khả năng kể chuyện! Vậy thì hãy dùng Story Slover thật tốt. Cùng những người khác sáng tạo, tạo nên câu chuyện của chúng ta.`
+      )
+      setArtkeeper('normal')
+    }
+    if (mangaRoomStep == 4) {
+      setShowGuide(false)
+      setMangaDone(true)
+    }
+  }, [mangaRoomStep])
+  useEffect(() => {
+    if (artRoomStep == 0) {
+      displayGuide(
+        locale == 'en'
+          ? `Artkeeper leads you into a room filled with artworks: paintings, sculptures, and other crafts. Keeper gazes quietly, then speaks:`
+          : `Artkeeper dẫn bạn đến một phòng đầy các tác phẩm nghệ thuật: tranh, tượng, và các tác phẩm thủ công khác. Keeper lặng nhìn rồi nói:`
+      )
+      setArtkeeper('')
+    }
+    if (artRoomStep == 1) {
+      displayGuide(
+        locale == 'en'
+          ? `These paintings, tiny souls, I’ve been taught to understand how beautiful they are. Unfortunately, I can’t create beautiful things. All the paintings I can protect are here.`
+          : `Những bức tranh, tâm hồn thu nhỏ, tôi đã được dạy để hiểu chúng đẹp như thế nào, tiếc rằng tôi không thể vẽ lên những thứ đẹp đẽ. Tất cả những bức tranh mà tôi có thể bảo vệ đều ở đây`
+      )
+      setArtkeeper('normal')
+    }
+    if (artRoomStep == 2) {
+      displayGuide(
+        locale == 'en'
+          ? `My life’s goal is to preserve art. You creators can make paintings, sculptures, or many other things, and the commonality is their meaning. The robots out there can’t, and they don’t understand.`
+          : `Mục tiêu cả đời của tôi là gìn giữ nghệ thuật. Các cậu là những người sáng tạo, các cậu có thể tạo ra tranh, tượng hay nhiều thứ khác và điểm chung là chúng có ý nghĩa, bọn robot ngoài kia không thể và cũng không hiểu được`
+      )
+      setArtkeeper('angry')
+    }
+    if (artRoomStep == 3) {
+      displayGuide(
+        locale == 'en'
+          ? `Sigh, that’s enough for now. You seem to have looked enough. How about picking up a brush and painting? When you do, a Story Clover will also be created, but whatever, paint because you love it! Let’s create something beautiful together...`
+          : `Haizz, vậy là đủ rồi, cậu có vẻ đã ngắm đủ. Cầm cọ lên và vẽ chứ? Khi cậu vẽ thì Story Clover cũng sẽ được tạo ra đấy, mà mặc kệ đi, hãy vẽ vì cậu yêu nó! Chúng ta sẽ cùng vẽ thứ gì đó thật đẹp…`
+      )
+      setArtkeeper('normal')
+    }
+    if (artRoomStep == 4) {
+      setShowGuide(false)
+      setArtDone(true)
+    }
+  }, [artRoomStep])
+  useEffect(() => {
+    if (campainRoomStep == 0) {
+      displayGuide(
+        locale == 'en'
+          ? `The largest door you’ve ever seen slowly opens, and Keeper leads you into a massive research space, like something out of a sci-fi movie…`
+          : `Cánh cửa lớn nhất bạn từng thấy chậm rãi mở ra, Keeper dẫn bạn tiến vào một không gian nghiên cứu đồ sộ, tưởng như trong một bộ phim khoa học viễn tưởng…`
+      )
+      setArtkeeper('')
+    }
+    if (campainRoomStep == 1) {
+      displayGuide(
+        locale == 'en'
+          ? `Watch out for those wires and don’t fiddle with them! This is the campaign area, where I plan everything. I used to tinker with it all alone until I lost track of time`
+          : `Cẩn thận mấy cái dây điện và đừng táy máy nhé! Đây là khu chiến dịch, nơi tôi lên kế hoạch cho mọi thứ, tôi đã từng một mình mày mò đến mức quên mất thời gian`
+      )
+      setArtkeeper('sad')
+    }
+    if (campainRoomStep == 2) {
+      displayGuide(
+        locale == 'en'
+          ? `But now that you’re here, let’s solve these puzzles together and try to score some points! Who knows, I might have a different view of you once you finish these tasks. The base system will record the scores`
+          : `Nhưng giờ có cậu ở đây rồi, cùng nhau giải những câu hỏi và cố gắng ghi điểm nhé! Biết đâu tôi sẽ có cái nhìn khác về cậu, khi hoàn thành các tiến trình nhiệm vụ này, hệ thống căn cứ sẽ ghi lại số điểm`
+      )
+      setArtkeeper('normal')
+    }
+    if (campainRoomStep == 3) {
+      displayGuide(
+        locale == 'en'
+          ? `I’ll personally thank you. After all, I’ve spent time making gifts—plenty of them—for those who truly deserve it. I’m very grateful to everyone who helps keep this machine running...`
+          : `Tôi sẽ đích thân cảm ơn cậu, dù sao thì tôi cũng dành thời gian để làm cả quà, rất nhiều là đằng khác, dành cho những người xứng đáng. Tôi rất biết ơn mọi người đã góp sức chạy cỗ máy này…`
+      )
+      setArtkeeper('smile')
+    }
+    if (campainRoomStep == 4) {
+      setShowGuide(false)
+      setCampainDone(true)
+    }
+  }, [campainRoomStep])
+
   const displayGuide = (text: string) => {
     let i = 0
+    setShowGuide(true)
+    if (!guideContentRef.current) {
+      return null
+    }
+    guideContentRef.current.innerHTML = ''
+    if (timeoutId.current) clearTimeout(timeoutId.current)
     function typeWriter() {
       if (guideContentRef.current) {
         if (i < text.length) {
           guideContentRef.current.innerHTML += text.charAt(i)
           i++
-          setTimeout(typeWriter, 20)
+          timeoutId.current = setTimeout(typeWriter, 20)
         }
       } else {
-        setTimeout(typeWriter, 200)
+        timeoutId.current = setTimeout(typeWriter, 200)
       }
     }
     typeWriter()
   }
+
   return (
     <>
       <div
@@ -63,31 +240,69 @@ export default function Event() {
               className='absolute -top-[0.2%] left-[1.3%] w-[20.3%] opacity-0 hover:opacity-100'
             />
           </Link>
-          <Image
-            src={Room2}
-            alt=''
-            className='absolute top-[.7%] left-[34.6%] w-[33.75%] opacity-0 hover:opacity-100'
-          />
-          <Image
-            src={Room3}
-            alt=''
-            className='absolute top-[.77%] -right-[.2%] w-[30.45%] opacity-0 hover:opacity-100'
-          />
-          <Image
-            src={Room4}
-            alt=''
-            className='absolute bottom-[14.3%] right-[32.25%] w-[38.9%] opacity-0 hover:opacity-100'
-          />
-          <Link href={`/events/artistic-voice-2024/map/character`}>
+          <Button
+            onClick={() => {
+              currentSetStep.current = setArtRoomStep
+              setArtRoomStep(0)
+              setMangaRoomStep(-1)
+              setCampainRoomStep(-1)
+              setCharacterRoomStep(-1)
+            }}>
+            <Image
+              src={Room2}
+              alt=''
+              className='absolute top-[.7%] left-[34.6%] w-[33.75%] opacity-0 hover:opacity-100'
+            />
+          </Button>
+          <Button
+            onClick={() => {
+              currentSetStep.current = setMangaRoomStep
+              setMangaRoomStep(0)
+              setArtRoomStep(-1)
+              setCampainRoomStep(-1)
+              setCharacterRoomStep(-1)
+            }}>
+            <Image
+              src={Room3}
+              alt=''
+              className='absolute top-[.77%] -right-[.2%] w-[30.45%] opacity-0 hover:opacity-100'
+            />
+          </Button>
+          <Button
+            onClick={() => {
+              currentSetStep.current = setCampainRoomStep
+              setCampainRoomStep(0)
+              setMangaRoomStep(-1)
+              setArtRoomStep(-1)
+              setCharacterRoomStep(-1)
+            }}>
+            <Image
+              src={Room4}
+              alt=''
+              className='absolute bottom-[14.3%] right-[32.25%] w-[38.9%] opacity-0 hover:opacity-100'
+            />
+          </Button>
+          <Button
+            onClick={() => {
+              currentSetStep.current = setCharacterRoomStep
+              if (!characterDone) {
+                setCharacterRoomStep(0)
+                setCampainRoomStep(-1)
+                setMangaRoomStep(-1)
+                setArtRoomStep(-1)
+              } else {
+                router.push(`/events/artistic-voice-2024/map/character`)
+              }
+            }}>
             <Image
               src={Room5}
               alt=''
               className='absolute bottom-[46%] -left-[.2%] w-[29.7%] opacity-0 hover:opacity-100'
             />
-          </Link>
-          <div className='bottom-[10%] -left-[2%] absolute flex items-end w-[90%] gap-5'>
+          </Button>
+          <div className='bottom-[10%] -left-[2%] absolute flex items-end gap-5'>
             <div
-              className='relative w-[13.5%] h-auto mb-[5%] mr-[18%] cursor-pointer'
+              className='relative w-[6.5vw] h-auto mb-[5vh] mr-[10vw] cursor-pointer'
               onClick={() => setSeeMore(!seeMore)}>
               <Image src={Artkeeper} alt='' className='w-full h-full' />
               <svg
@@ -126,40 +341,72 @@ export default function Event() {
                 </div>
               </div>
             </div>
-            <div className='relative flex-1 my-[5%] w-fit flex flex-col gap-2 items-end'>
-              <svg
-                width='109'
-                height='38'
-                viewBox='0 0 109 38'
-                fill='none'
-                xmlns='http://www.w3.org/2000/svg'
-                className='cursor-pointer opacity-80 hover:opacity-100'>
-                <path
-                  d='M0.5 6C0.5 2.96243 2.96243 0.5 6 0.5H103C106.038 0.5 108.5 2.96243 108.5 6V32C108.5 35.0376 106.038 37.5 103 37.5H6C2.96243 37.5 0.5 35.0376 0.5 32V6Z'
-                  fill='#0E0E0F'
-                />
-                <path
-                  d='M0.5 6C0.5 2.96243 2.96243 0.5 6 0.5H103C106.038 0.5 108.5 2.96243 108.5 6V32C108.5 35.0376 106.038 37.5 103 37.5H6C2.96243 37.5 0.5 35.0376 0.5 32V6Z'
-                  stroke='white'
-                />
-                <path
-                  d='M39.6172 15.7812H37.2734V18.125H44.3047V27.5H32.5859V22.8125H37.2734V23.9844H39.6172V21.6406H32.5859V12.2656H44.3047V16.9531H39.6172V15.7812ZM52.5078 12.2656H57.1953V20.4688L54.8516 22.8125L57.1953 25.1562V27.5H52.5078V26.3281L50.1641 23.9844V27.5H45.4766V12.2656H50.1641V19.2969L52.5078 21.6406V12.2656ZM63.0547 12.2656V27.5H58.3672V12.2656H63.0547ZM68.9141 15.7812V18.125L71.2578 20.4688V15.7812H68.9141ZM71.2578 25.1562L68.9141 22.8125V27.5H64.2266V12.2656H75.9453V20.4688L71.2578 25.1562Z'
-                  fill='white'
-                />
-              </svg>
-              <div className='relative w-full h-auto min-h-[150px]'>
+
+            <div
+              className={`relative flex-1 my-[5vh] w-[40vw] flex flex-col gap-2 items-end ${
+                !showGuide && 'hidden pointer-events-none'
+              }`}>
+              <div className='flex items-end gap-10 justify-end w-full'>
+                <svg
+                  width='109'
+                  height='38'
+                  viewBox='0 0 109 38'
+                  fill='none'
+                  xmlns='http://www.w3.org/2000/svg'
+                  className='cursor-pointer opacity-80 hover:opacity-100'
+                  onClick={() => currentSetStep.current(4)}>
+                  <path
+                    d='M0.5 6C0.5 2.96243 2.96243 0.5 6 0.5H103C106.038 0.5 108.5 2.96243 108.5 6V32C108.5 35.0376 106.038 37.5 103 37.5H6C2.96243 37.5 0.5 35.0376 0.5 32V6Z'
+                    fill='#0E0E0F'
+                  />
+                  <path
+                    d='M0.5 6C0.5 2.96243 2.96243 0.5 6 0.5H103C106.038 0.5 108.5 2.96243 108.5 6V32C108.5 35.0376 106.038 37.5 103 37.5H6C2.96243 37.5 0.5 35.0376 0.5 32V6Z'
+                    stroke='white'
+                  />
+                  <path
+                    d='M39.6172 15.7812H37.2734V18.125H44.3047V27.5H32.5859V22.8125H37.2734V23.9844H39.6172V21.6406H32.5859V12.2656H44.3047V16.9531H39.6172V15.7812ZM52.5078 12.2656H57.1953V20.4688L54.8516 22.8125L57.1953 25.1562V27.5H52.5078V26.3281L50.1641 23.9844V27.5H45.4766V12.2656H50.1641V19.2969L52.5078 21.6406V12.2656ZM63.0547 12.2656V27.5H58.3672V12.2656H63.0547ZM68.9141 15.7812V18.125L71.2578 20.4688V15.7812H68.9141ZM71.2578 25.1562L68.9141 22.8125V27.5H64.2266V12.2656H75.9453V20.4688L71.2578 25.1562Z'
+                    fill='white'
+                  />
+                </svg>
+                {artkeeper != '' && (
+                  <Image
+                    src={
+                      artkeeper == 'clover'
+                        ? ArtkeeperClover
+                        : artkeeper == 'sad'
+                        ? ArtkeeperSad
+                        : artkeeper == 'smile'
+                        ? ArtkeeperSmile
+                        : artkeeper == 'angry'
+                        ? ArtkeeperAngry
+                        : ArtkeeperNormal
+                    }
+                    alt=''
+                    className='w-[20%] h-auto translate-y-[10%]'
+                  />
+                )}
+              </div>
+              <div
+                className='relative w-full h-auto min-h-[150px] cursor-pointer'
+                onClick={() => currentSetStep.current((prev) => prev + 1)}>
                 <Image src={GuideBox} alt='' className='relative w-full h-auto min-h-[150px] object-cover' />
                 <div className='absolute left-[3%] top-[10%] bottom-[20%] w-[94%]'>
                   <div className='h-full bg-[#111] rounded-md text-white p-5'>
-                    <div ref={guideContentRef} className='h-[70%] overflow-auto'></div>
-                    <div className='text-text-brand-hover flex items-center gap-2 cursor-pointer justify-end w-full mt-2'>
-                      Next
-                      <svg width='37' height='23' viewBox='0 0 37 23' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                        <path d='M37 11.5009L21.0085 20.7336L21.0085 2.26815L37 11.5009Z' fill='#00E160' />
-                        <path d='M21.3223 11.5009L5.33074 20.7336L5.33074 2.26815L21.3223 11.5009Z' fill='#00E160' />
-                      </svg>
-                    </div>
+                    <div ref={guideContentRef} className='h-full overflow-auto'></div>
                   </div>
+                </div>
+                <div className='text-text-brand-hover flex items-center gap-2 text-sm cursor-pointer justify-end w-full mt-2 absolute bottom-[5%] right-[2%]'>
+                  Next
+                  <svg
+                    width='37'
+                    height='23'
+                    viewBox='0 0 37 23'
+                    fill='none'
+                    xmlns='http://www.w3.org/2000/svg'
+                    className='h-4 w-auto'>
+                    <path d='M37 11.5009L21.0085 20.7336L21.0085 2.26815L37 11.5009Z' fill='#00E160' />
+                    <path d='M21.3223 11.5009L5.33074 20.7336L5.33074 2.26815L21.3223 11.5009Z' fill='#00E160' />
+                  </svg>
                 </div>
               </div>
             </div>
