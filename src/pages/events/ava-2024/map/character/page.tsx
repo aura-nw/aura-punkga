@@ -2,28 +2,29 @@ import { useRouter } from 'next/router'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useSWR from 'swr'
-import Background from 'components/pages/event/artistic-voice-2024/assets/Main-Map.svg'
-import Decor from 'components/pages/event/artistic-voice-2024/assets/decor.svg'
-import Point from 'components/pages/event/artistic-voice-2024/assets/point.svg'
-import Frame from 'components/pages/event/artistic-voice-2024/assets/frame.svg'
-import Mock from 'components/pages/event/artistic-voice-2024/assets/Mock.png'
-import Mock2 from 'components/pages/event/artistic-voice-2024/assets/Mock-2.png'
-import Frame2 from 'components/pages/event/artistic-voice-2024/assets/frame-2.svg'
+import Background from 'components/pages/event/ava-2024/assets/Main-Map.svg'
+import Decor from 'components/pages/event/ava-2024/assets/decor.svg'
+import Point from 'components/pages/event/ava-2024/assets/point.svg'
+import Frame from 'components/pages/event/ava-2024/assets/frame.svg'
+import Mock from 'components/pages/event/ava-2024/assets/Mock.png'
+import Mock2 from 'components/pages/event/ava-2024/assets/Mock-2.png'
+import Frame2 from 'components/pages/event/ava-2024/assets/frame-2.svg'
 
-import Artkeeper from 'components/pages/event/artistic-voice-2024/assets/mascot-head.svg'
-import GuideBox from 'components/pages/event/artistic-voice-2024/assets/guide-box.svg'
-import Phai from 'components/pages/event/artistic-voice-2024/assets/phai.svg'
-import Trai from 'components/pages/event/artistic-voice-2024/assets/trai.svg'
+import Artkeeper from 'components/pages/event/ava-2024/assets/mascot-head.svg'
+import GuideBox from 'components/pages/event/ava-2024/assets/guide-box.svg'
+import Phai from 'components/pages/event/ava-2024/assets/phai.svg'
+import Trai from 'components/pages/event/ava-2024/assets/trai.svg'
 import Image from 'next/image'
 import Link from 'next/link'
-import Modal from 'components/pages/event/artistic-voice-2024/Modal'
-import Map from 'components/pages/event/artistic-voice-2024/assets/Map.svg'
-import RuleAndAward from 'components/pages/event/artistic-voice-2024/RuleAndAward'
+import Modal from 'components/pages/event/ava-2024/Modal'
+import Map from 'components/pages/event/ava-2024/assets/Map.svg'
+import RuleAndAward from 'components/pages/event/ava-2024/RuleAndAward'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import Button from 'components/core/Button/Button'
 import { eventService } from 'src/services/event.service'
 import { toast } from 'react-toastify'
 import { Context } from 'src/context'
+import { Pagination } from '@mui/material'
 
 export default function Event() {
   const { locale } = useRouter()
@@ -35,8 +36,9 @@ export default function Event() {
   const [isLiked, setIsLiked] = useState(false)
   const [isCollected, setIsCollected] = useState(false)
   const [collectedCount, setCollectedCount] = useState(0)
+  const [page, setPage] = useState(1)
   const [selectedCharacter, setSelectedCharacter] = useState<any>()
-  const guideContentRef = useRef<any>()
+  const [sort, setSort] = useState('newest')
   const { data, mutate } = useSWR(
     { ket: 'get-characters', userId: account?.id },
     ({ userId }) => eventService.story.getCharacters(userId),
@@ -147,12 +149,28 @@ export default function Event() {
                             </svg>
                           </div>
                         </DropdownToggle>
-                        <DropdownMenu customClass='bg-[#191919] rounded-md'>
+                        <DropdownMenu customClass='!bg-[#191919] rounded-md'>
                           <div className='space-y-2 p-2 text-sm'>
-                            <div className='cursor-pointer px-2 text-brand-default'>Newest</div>
-                            <div className='cursor-pointer px-2'>Oldest</div>
-                            <div className='cursor-pointer px-2'>Most to least</div>
-                            <div className='cursor-pointer px-2'>Least to most</div>
+                            <div
+                              className={`cursor-pointer px-2 ${sort == 'newest' ? 'text-brand-default' : ''}`}
+                              onClick={() => setSort('newest')}>
+                              Newest
+                            </div>
+                            <div
+                              className={`cursor-pointer px-2 ${sort == 'oldest' ? 'text-brand-default' : ''}`}
+                              onClick={() => setSort('oldest')}>
+                              Oldest
+                            </div>
+                            <div
+                              className={`cursor-pointer px-2 ${sort == 'ml' ? 'text-brand-default' : ''}`}
+                              onClick={() => setSort('ml')}>
+                              Most to least
+                            </div>
+                            <div
+                              className={`cursor-pointer px-2 ${sort == 'lm' ? 'text-brand-default' : ''}`}
+                              onClick={() => setSort('lm')}>
+                              Least to most
+                            </div>
                           </div>
                         </DropdownMenu>
                       </Dropdown>
@@ -181,14 +199,20 @@ export default function Event() {
                       </div>
                     ))}
                   </div>
+                  <div className='mt-8 flex justify-center'>
+                    <Pagination
+                      shape='rounded'
+                      className='[&_.Mui-selected]:!bg-white [&_.Mui-selected]:!text-text-primary [&_.MuiPaginationItem-root:not(.Mui-selected)]:!text-text-quatenary'
+                      page={page}
+                      onChange={(e, p) => setPage(p)}
+                      count={10}
+                    />
+                  </div>
                 </div>
                 <div className='sticky top-[12vh] h-fit'>
                   <div className='flex justify-between items-center gap-10 h-10'>
                     <div>
-                      <Link
-                        href={
-                          !collectedCharacter?.length ? '#' : '/events/artistic-voice-2024/map/character/collected'
-                        }>
+                      <Link href={!collectedCharacter?.length ? '#' : '/events/ava-2024/map/character/collected'}>
                         <Button color='neautral' size='sm' className='h-10' disabled={!collectedCharacter?.length}>
                           Your collected
                         </Button>
@@ -198,7 +222,7 @@ export default function Event() {
                       <RuleAndAward />
                     </div>
                     <Link
-                      href={`/events/artistic-voice-2024/map`}
+                      href={`/events/ava-2024/map`}
                       className='flex items-center text-sm font-semibold gap-2 whitespace-nowrap '>
                       <Image src={Map} alt='' className='w-[50px]' />
                       Back to map

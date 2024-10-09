@@ -2,18 +2,18 @@ import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useSWR from 'swr'
-import Background from 'components/pages/event/artistic-voice-2024/assets/onboarding-bg.svg'
-import Door from 'components/pages/event/artistic-voice-2024/assets/door.svg'
-import ActiveMap from 'components/pages/event/artistic-voice-2024/assets/active-map.svg'
-import Map from 'components/pages/event/artistic-voice-2024/assets/Map.svg'
-import ActiveSketch from 'components/pages/event/artistic-voice-2024/assets/active-sketch.svg'
-import Sketch from 'components/pages/event/artistic-voice-2024/assets/sketch.svg'
-import ActiveLamp from 'components/pages/event/artistic-voice-2024/assets/active-lamp.svg'
-import Lamp from 'components/pages/event/artistic-voice-2024/assets/lamp.svg'
-import ArtkeeperNormal from 'components/pages/event/artistic-voice-2024/assets/Artkeeper-normal.png'
-import ArtkeeperSad from 'components/pages/event/artistic-voice-2024/assets/Artkeeper-sad.png'
-import ArtkeeperAngry from 'components/pages/event/artistic-voice-2024/assets/Artkeeper-angry.png'
-import GuideBox from 'components/pages/event/artistic-voice-2024/assets/guide-box.svg'
+import Background from 'components/pages/event/ava-2024/assets/onboarding-bg.svg'
+import Door from 'components/pages/event/ava-2024/assets/door.svg'
+import ActiveMap from 'components/pages/event/ava-2024/assets/active-map.svg'
+import Map from 'components/pages/event/ava-2024/assets/Map.svg'
+import ActiveSketch from 'components/pages/event/ava-2024/assets/active-sketch.svg'
+import Sketch from 'components/pages/event/ava-2024/assets/sketch.svg'
+import ActiveLamp from 'components/pages/event/ava-2024/assets/active-lamp.svg'
+import Lamp from 'components/pages/event/ava-2024/assets/lamp.svg'
+import ArtkeeperNormal from 'components/pages/event/ava-2024/assets/Artkeeper-normal.png'
+import ArtkeeperSad from 'components/pages/event/ava-2024/assets/Artkeeper-sad.png'
+import ArtkeeperAngry from 'components/pages/event/ava-2024/assets/Artkeeper-angry.png'
+import GuideBox from 'components/pages/event/ava-2024/assets/guide-box.svg'
 import Image from 'next/image'
 import Link from 'next/link'
 import useLocalStorage from 'src/hooks/useLocalStorage'
@@ -111,7 +111,7 @@ export default function Event() {
         style={{ backgroundImage: `url(${Door.src})` }}>
         <Button
           onClick={() => {
-            router.push('/events/artistic-voice-2024/map')
+            router.push('/events/ava-2024/map')
           }}
           className='[&:hover_.active]:visible [&:hover_:not(.active)]:invisible cursor-pointer absolute top-[4%] left-[15%] w-[39%] z-10'>
           <>

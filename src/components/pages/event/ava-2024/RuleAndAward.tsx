@@ -2,23 +2,23 @@ import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useSWR from 'swr'
-import Background from 'components/pages/event/artistic-voice-2024/assets/Main-Map.svg'
-import Room1 from 'components/pages/event/artistic-voice-2024/assets/room1.svg'
-import Room2 from 'components/pages/event/artistic-voice-2024/assets/room2.svg'
-import Room3 from 'components/pages/event/artistic-voice-2024/assets/room3.svg'
-import Room4 from 'components/pages/event/artistic-voice-2024/assets/room4.svg'
-import Room5 from 'components/pages/event/artistic-voice-2024/assets/room5.svg'
-import Ava from 'components/pages/event/artistic-voice-2024/assets/ava.svg'
-import Flame from 'components/pages/event/artistic-voice-2024/assets/flame.svg'
-import Artkeeper from 'components/pages/event/artistic-voice-2024/assets/mascot-head.svg'
-import GuideBox from 'components/pages/event/artistic-voice-2024/assets/guide-box.svg'
-import Phai from 'components/pages/event/artistic-voice-2024/assets/phai.svg'
-import Trai from 'components/pages/event/artistic-voice-2024/assets/trai.svg'
-import Map from 'components/pages/event/artistic-voice-2024/assets/map-0.svg'
-import FourLeafClover from 'components/pages/event/artistic-voice-2024/assets/fourleafclover.svg'
+import Background from 'components/pages/event/ava-2024/assets/Main-Map.svg'
+import Room1 from 'components/pages/event/ava-2024/assets/room1.svg'
+import Room2 from 'components/pages/event/ava-2024/assets/room2.svg'
+import Room3 from 'components/pages/event/ava-2024/assets/room3.svg'
+import Room4 from 'components/pages/event/ava-2024/assets/room4.svg'
+import Room5 from 'components/pages/event/ava-2024/assets/room5.svg'
+import Ava from 'components/pages/event/ava-2024/assets/ava.svg'
+import Flame from 'components/pages/event/ava-2024/assets/flame.svg'
+import Artkeeper from 'components/pages/event/ava-2024/assets/mascot-head.svg'
+import GuideBox from 'components/pages/event/ava-2024/assets/guide-box.svg'
+import Phai from 'components/pages/event/ava-2024/assets/phai.svg'
+import Trai from 'components/pages/event/ava-2024/assets/trai.svg'
+import Map from 'components/pages/event/ava-2024/assets/map-0.svg'
+import FourLeafClover from 'components/pages/event/ava-2024/assets/fourleafclover.svg'
 import Image from 'next/image'
 import Link from 'next/link'
-import Modal from 'components/pages/event/artistic-voice-2024/Modal'
+import Modal from 'components/pages/event/ava-2024/Modal'
 import { usePathname } from 'next/navigation'
 
 export default function RuleAndAward() {
@@ -53,9 +53,9 @@ export default function RuleAndAward() {
           <div className='bg-neutral-100 border-[2px] border-neutral-black rounded-mlg p-2.5 w-[154px] font-semibold text-sm text-text-primary-on-brand text-center cursor-pointer'>
             View Rule
           </div>
-          {pathname != '/events/artistic-voice-2024/map/submit-portal' && (
+          {pathname != '/events/ava-2024/map/submit-portal' && (
             <Link
-              href={`/events/artistic-voice-2024/map/submit-portal`}
+              href={`/events/ava-2024/map/submit-portal`}
               className='block bg-neutral-100 border-[2px] border-neutral-black rounded-mlg p-2.5 w-[154px] font-semibold text-sm text-text-primary-on-brand text-center cursor-pointer'>
               Submit
             </Link>

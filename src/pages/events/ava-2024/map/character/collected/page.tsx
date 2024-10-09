@@ -2,23 +2,23 @@ import { useRouter } from 'next/router'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useSWR from 'swr'
-import Background from 'components/pages/event/artistic-voice-2024/assets/Main-Map.svg'
-import Decor from 'components/pages/event/artistic-voice-2024/assets/decor.svg'
-import Point from 'components/pages/event/artistic-voice-2024/assets/point.svg'
-import Frame from 'components/pages/event/artistic-voice-2024/assets/frame.svg'
-import Mock from 'components/pages/event/artistic-voice-2024/assets/Mock.png'
-import Mock2 from 'components/pages/event/artistic-voice-2024/assets/Mock-2.png'
-import Frame2 from 'components/pages/event/artistic-voice-2024/assets/frame-2.svg'
+import Background from 'components/pages/event/ava-2024/assets/Main-Map.svg'
+import Decor from 'components/pages/event/ava-2024/assets/decor.svg'
+import Point from 'components/pages/event/ava-2024/assets/point.svg'
+import Frame from 'components/pages/event/ava-2024/assets/frame.svg'
+import Mock from 'components/pages/event/ava-2024/assets/Mock.png'
+import Mock2 from 'components/pages/event/ava-2024/assets/Mock-2.png'
+import Frame2 from 'components/pages/event/ava-2024/assets/frame-2.svg'
 
-import Artkeeper from 'components/pages/event/artistic-voice-2024/assets/mascot-head.svg'
-import GuideBox from 'components/pages/event/artistic-voice-2024/assets/guide-box.svg'
-import Phai from 'components/pages/event/artistic-voice-2024/assets/phai.svg'
-import Trai from 'components/pages/event/artistic-voice-2024/assets/trai.svg'
+import Artkeeper from 'components/pages/event/ava-2024/assets/mascot-head.svg'
+import GuideBox from 'components/pages/event/ava-2024/assets/guide-box.svg'
+import Phai from 'components/pages/event/ava-2024/assets/phai.svg'
+import Trai from 'components/pages/event/ava-2024/assets/trai.svg'
 import Image from 'next/image'
 import Link from 'next/link'
-import Modal from 'components/pages/event/artistic-voice-2024/Modal'
-import Map from 'components/pages/event/artistic-voice-2024/assets/Map.svg'
-import RuleAndAward from 'components/pages/event/artistic-voice-2024/RuleAndAward'
+import Modal from 'components/pages/event/ava-2024/Modal'
+import Map from 'components/pages/event/ava-2024/assets/Map.svg'
+import RuleAndAward from 'components/pages/event/ava-2024/RuleAndAward'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import Button from 'components/core/Button/Button'
 import { eventService } from 'src/services/event.service'
@@ -89,7 +89,7 @@ export default function Event() {
                 <div className='shrink-0 w-full'>
                   <div className='h-10'>
                     <div className='text-3xl font-medium flex items-center gap-1'>
-                      <Link href='events/artistic-voice-2024/map/character'>
+                      <Link href='events/ava-2024/map/character'>
                         <svg width='32' height='33' viewBox='0 0 32 33' fill='none' xmlns='http://www.w3.org/2000/svg'>
                           <path
                             d='M0 16.5C0 7.66344 7.16344 0.5 16 0.5H19.2V32.5H16C7.16344 32.5 0 25.3366 0 16.5Z'
@@ -152,7 +152,7 @@ export default function Event() {
                       <RuleAndAward />
                     </div>
                     <Link
-                      href={`/events/artistic-voice-2024/map`}
+                      href={`/events/ava-2024/map`}
                       className='flex items-center text-sm font-semibold gap-2 whitespace-nowrap '>
                       <Image src={Map} alt='' className='w-[50px]' />
                       Back to map

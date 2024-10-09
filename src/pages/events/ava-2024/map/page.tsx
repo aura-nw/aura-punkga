@@ -2,28 +2,28 @@ import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useSWR from 'swr'
-import Background from 'components/pages/event/artistic-voice-2024/assets/Main-Map.svg'
-import Room1 from 'components/pages/event/artistic-voice-2024/assets/room1.svg'
-import Room2 from 'components/pages/event/artistic-voice-2024/assets/room2.svg'
-import Room3 from 'components/pages/event/artistic-voice-2024/assets/room3.svg'
-import Room4 from 'components/pages/event/artistic-voice-2024/assets/room4.svg'
-import Room5 from 'components/pages/event/artistic-voice-2024/assets/room5.svg'
-import Ava from 'components/pages/event/artistic-voice-2024/assets/ava.svg'
-import Flame from 'components/pages/event/artistic-voice-2024/assets/flame.svg'
-import Artkeeper from 'components/pages/event/artistic-voice-2024/assets/mascot-head.svg'
-import ArtkeeperClover from 'components/pages/event/artistic-voice-2024/assets/Artkeeper-clover.png'
-import ArtkeeperSad from 'components/pages/event/artistic-voice-2024/assets/Artkeeper-sad.png'
-import ArtkeeperSmile from 'components/pages/event/artistic-voice-2024/assets/Artkeeper-smile.png'
-import ArtkeeperAngry from 'components/pages/event/artistic-voice-2024/assets/Artkeeper-angry.png'
-import ArtkeeperNormal from 'components/pages/event/artistic-voice-2024/assets/Artkeeper-normal.png'
-import GuideBox from 'components/pages/event/artistic-voice-2024/assets/guide-box.svg'
-import Phai from 'components/pages/event/artistic-voice-2024/assets/phai.svg'
-import Trai from 'components/pages/event/artistic-voice-2024/assets/trai.svg'
-import Map from 'components/pages/event/artistic-voice-2024/assets/map-0.svg'
-import FourLeafClover from 'components/pages/event/artistic-voice-2024/assets/fourleafclover.svg'
+import Background from 'components/pages/event/ava-2024/assets/Main-Map.svg'
+import Room1 from 'components/pages/event/ava-2024/assets/room1.svg'
+import Room2 from 'components/pages/event/ava-2024/assets/room2.svg'
+import Room3 from 'components/pages/event/ava-2024/assets/room3.svg'
+import Room4 from 'components/pages/event/ava-2024/assets/room4.svg'
+import Room5 from 'components/pages/event/ava-2024/assets/room5.svg'
+import Ava from 'components/pages/event/ava-2024/assets/ava.svg'
+import Flame from 'components/pages/event/ava-2024/assets/flame.svg'
+import Artkeeper from 'components/pages/event/ava-2024/assets/mascot-head.svg'
+import ArtkeeperClover from 'components/pages/event/ava-2024/assets/Artkeeper-clover.png'
+import ArtkeeperSad from 'components/pages/event/ava-2024/assets/Artkeeper-sad.png'
+import ArtkeeperSmile from 'components/pages/event/ava-2024/assets/Artkeeper-smile.png'
+import ArtkeeperAngry from 'components/pages/event/ava-2024/assets/Artkeeper-angry.png'
+import ArtkeeperNormal from 'components/pages/event/ava-2024/assets/Artkeeper-normal.png'
+import GuideBox from 'components/pages/event/ava-2024/assets/guide-box.svg'
+import Phai from 'components/pages/event/ava-2024/assets/phai.svg'
+import Trai from 'components/pages/event/ava-2024/assets/trai.svg'
+import Map from 'components/pages/event/ava-2024/assets/map-0.svg'
+import FourLeafClover from 'components/pages/event/ava-2024/assets/fourleafclover.svg'
 import Image from 'next/image'
 import Link from 'next/link'
-import Modal from 'components/pages/event/artistic-voice-2024/Modal'
+import Modal from 'components/pages/event/ava-2024/Modal'
 import useLocalStorage from 'src/hooks/useLocalStorage'
 import Button from 'components/Button'
 export default function Event() {
@@ -83,7 +83,7 @@ export default function Event() {
     if (characterRoomStep == 4) {
       setShowGuide(false)
       setCharacterDone(true)
-      router.push(`/events/artistic-voice-2024/map/character`)
+      router.push(`/events/ava-2024/map/character`)
     }
   }, [characterRoomStep])
   useEffect(() => {
@@ -233,7 +233,7 @@ export default function Event() {
         <div
           className='absolute inset-x-[19%] bottom-[3%] translate-y-[15%] w-[60%] aspect-[1227/966] bg-no-repeat bg-contain'
           style={{ backgroundImage: `url(${Map.src})` }}>
-          <Link href={`/events/artistic-voice-2024/`}>
+          <Link href={`/events/ava-2024/`}>
             <Image
               src={Room1}
               alt=''
@@ -291,7 +291,7 @@ export default function Event() {
                 setMangaRoomStep(-1)
                 setArtRoomStep(-1)
               } else {
-                router.push(`/events/artistic-voice-2024/map/character`)
+                router.push(`/events/ava-2024/map/character`)
               }
             }}>
             <Image
@@ -330,7 +330,7 @@ export default function Event() {
                   View Rule
                 </div>
                 <Link
-                  href={`/events/artistic-voice-2024/map/submit-portal`}
+                  href={`/events/ava-2024/map/submit-portal`}
                   className='block bg-neutral-100 border-[2px] border-neutral-black rounded-mlg p-2.5 w-[154px] font-semibold text-sm text-text-primary-on-brand text-center cursor-pointer'>
                   Submit
                 </Link>
