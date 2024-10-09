@@ -195,13 +195,13 @@ export default function Header({ className }: { className?: string }) {
                 <div className='flex justify-between pb-4 sticky top-0 bg-white'>
                   <Image src={Logo} alt='header logo' className='h-[29px] w-auto' />
                   <div className='flex items-center gap-4'>
-                    <Button
+                    {/* <Button
                       size='xs'
                       color='dark'
                       variant='outlined'
                       onClick={() => window.open(config.ADMIN_URL, '_blank')}>
                       Create Portal
-                    </Button>
+                    </Button> */}
                     <div
                       className='w-6 h-6 mt-2 relative'
                       onClick={() => {
@@ -757,13 +757,13 @@ export default function Header({ className }: { className?: string }) {
                 {t('aboutUs')}
               </span>
             </div>
-            <Button
+            {/* <Button
               size='sm'
               color='neautral'
               variant='outlined'
               onClick={() => window.open(config.ADMIN_URL, '_blank')}>
               Create Portal
-            </Button>
+            </Button> */}
             <div className='flex gap-[20px] ml-10 items-center cursor-pointer'>
               <div className='flex gap-4 items-center' onClick={switchLanguage}>
                 {locale == 'en' ? (

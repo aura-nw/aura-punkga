@@ -2,8 +2,10 @@ import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useSWR from 'swr'
-import Background from 'components/pages/event/ava-2024/assets/onboarding-bg.svg'
+import Background from 'components/pages/event/ava-2024/assets/onboarding-bg.png'
 import Door from 'components/pages/event/ava-2024/assets/door.svg'
+import Ban from 'components/pages/event/ava-2024/assets/table.png'
+import Ghe from 'components/pages/event/ava-2024/assets/chair.png'
 import ActiveMap from 'components/pages/event/ava-2024/assets/active-map.svg'
 import Map from 'components/pages/event/ava-2024/assets/Map.svg'
 import ActiveSketch from 'components/pages/event/ava-2024/assets/active-sketch.svg'
@@ -13,9 +15,9 @@ import Lamp from 'components/pages/event/ava-2024/assets/lamp.svg'
 import ArtkeeperNormal from 'components/pages/event/ava-2024/assets/Artkeeper-normal.png'
 import ArtkeeperSad from 'components/pages/event/ava-2024/assets/Artkeeper-sad.png'
 import ArtkeeperAngry from 'components/pages/event/ava-2024/assets/Artkeeper-angry.png'
-import GuideBox from 'components/pages/event/ava-2024/assets/guide-box.svg'
+import GuideBox from 'components/pages/event/ava-2024/assets/guide-box.png'
 import Image from 'next/image'
-import Link from 'next/link'
+import Logo from 'components/pages/event/ava-2024/assets/logo.svg'
 import useLocalStorage from 'src/hooks/useLocalStorage'
 import Button from 'components/Button'
 export default function Event() {
@@ -105,10 +107,36 @@ export default function Event() {
     typeWriter()
   }
   return (
-    <div className='bg-no-repeat h-screen w-full -mt-20 relative' style={{ backgroundImage: `url(${Background.src})` }}>
+    <div
+      className='bg-no-repeat h-screen w-full -mt-20 relative bg-cover'
+      style={{ backgroundImage: `url(${Background.src})` }}>
+      <div className='lg:hidden h-full w-full relative'>
+        <Image priority src={Logo} alt='' className='absolute top-[100px] right-4 w-[150px]' />
+        <Button
+          onClick={() => {
+            router.push('/events/ava-2024/map')
+          }}
+          className='[&:hover_.active]:visible [&:hover_:not(.active)]:invisible cursor-pointer absolute top-[100px] left-4 w-[200px] z-10'>
+          <>
+            <Image priority src={Map} alt='' className='w-full h-auto' />
+            <Image src={ActiveMap} alt='' className='active w-full h-auto invisible absolute inset-0' />
+          </>
+        </Button>
+        <div className='[&:hover_.active]:visible [&:hover_:not(.active)]:invisible cursor-pointer absolute top-[260px] right-[16px] w-[240px] z-10'>
+          <Image priority src={Sketch} alt='' className='w-full h-auto' />
+          <Image src={ActiveSketch} alt='' className='active absolute inset-0 w-full h-auto invisible' />
+        </div>
+        <Image priority src={Ban} alt='' className='absolute bottom-[0px] left-[0px] w-[180px]' />
+        <Image priority src={Ghe} alt='' className='absolute bottom-[0px] right-[0px] w-[310px]' />
+        <div className='[&:hover_.active]:visible [&:hover_:not(.active)]:invisible cursor-pointer absolute bottom-[310px] right-[30px] w-[100px] z-10'>
+          <Image priority src={Lamp} alt='' className=' w-full h-auto' />
+          <Image src={ActiveLamp} alt='' className='active absolute inset-0 w-full h-auto invisible' />
+        </div>
+      </div>
       <div
-        className='absolute inset-x-[19%] bottom-0 translate-y-[15%] w-[62%] aspect-[1227/966] bg-no-repeat bg-contain'
+        className='hidden lg:block absolute inset-x-[19%] bottom-0 translate-y-[15%] w-[62%] aspect-[1227/966] bg-no-repeat bg-contain'
         style={{ backgroundImage: `url(${Door.src})` }}>
+        <Image priority src={Logo} alt='' className='absolute top-[10%] right-[22%] w-[18%]' />
         <Button
           onClick={() => {
             router.push('/events/ava-2024/map')
@@ -127,56 +155,59 @@ export default function Event() {
           <Image priority src={Lamp} alt='' className=' w-full h-auto' />
           <Image src={ActiveLamp} alt='' className='active absolute inset-0 w-full h-auto invisible' />
         </div>
-        {!isDone && (
-          <div className='bottom-[14%] left-[2%] absolute flex items-end w-[90%] gap-5'>
-            <Image
-              priority
-              src={[3, 4].includes(step) ? ArtkeeperNormal : [5, 6].includes(step) ? ArtkeeperSad : ArtkeeperAngry}
-              alt=''
-              className={`w-[30%] ${[0, 1, 2].includes(step) ? 'invisible' : ''}`}
-            />
-            <div className='relative flex-1 my-[5%] w-fit flex flex-col gap-2 items-end'>
-              <svg
-                width='109'
-                height='38'
-                viewBox='0 0 109 38'
-                fill='none'
-                xmlns='http://www.w3.org/2000/svg'
-                className='cursor-pointer opacity-80 hover:opacity-100'
-                onClick={() => setStep(8)}>
-                <path
-                  d='M0.5 6C0.5 2.96243 2.96243 0.5 6 0.5H103C106.038 0.5 108.5 2.96243 108.5 6V32C108.5 35.0376 106.038 37.5 103 37.5H6C2.96243 37.5 0.5 35.0376 0.5 32V6Z'
-                  fill='#0E0E0F'
-                />
-                <path
-                  d='M0.5 6C0.5 2.96243 2.96243 0.5 6 0.5H103C106.038 0.5 108.5 2.96243 108.5 6V32C108.5 35.0376 106.038 37.5 103 37.5H6C2.96243 37.5 0.5 35.0376 0.5 32V6Z'
-                  stroke='white'
-                />
-                <path
-                  d='M39.6172 15.7812H37.2734V18.125H44.3047V27.5H32.5859V22.8125H37.2734V23.9844H39.6172V21.6406H32.5859V12.2656H44.3047V16.9531H39.6172V15.7812ZM52.5078 12.2656H57.1953V20.4688L54.8516 22.8125L57.1953 25.1562V27.5H52.5078V26.3281L50.1641 23.9844V27.5H45.4766V12.2656H50.1641V19.2969L52.5078 21.6406V12.2656ZM63.0547 12.2656V27.5H58.3672V12.2656H63.0547ZM68.9141 15.7812V18.125L71.2578 20.4688V15.7812H68.9141ZM71.2578 25.1562L68.9141 22.8125V27.5H64.2266V12.2656H75.9453V20.4688L71.2578 25.1562Z'
-                  fill='white'
-                />
-              </svg>
-              <div className='relative cursor-pointer' onClick={() => setStep(step + 1)}>
-                <Image priority src={GuideBox} alt='' className='min-h-[140px]' />
-                <div className='absolute left-[3%] top-[10%] bottom-[20%] w-[94%]'>
-                  <div className='h-full bg-[#111] rounded-md text-white p-5'>
-                    <div ref={guideContentRef} className='h-full overflow-auto'></div>
-                  </div>
+      </div>
+      <div className='bottom-0 lg:-bottom-5 inset-x-[2%] lg:inset-x-[20%] absolute flex-col lg:flex-row lg:items-end flex gap-5'>
+        <Image
+          priority
+          src={[5, 6].includes(step) ? ArtkeeperSad : [7].includes(step) ? ArtkeeperAngry : ArtkeeperNormal}
+          alt=''
+          className={`w-[30%] max-w-[150px] lg:max-w-[296px] cursor-pointer`}
+          onClick={() => (step >= 0 && step <= 7 ? setStep(step + 1) : setStep(0))}
+        />
+        {step >= 0 && step <= 7 && (
+          <div className='relative flex-1 my-[32px] w-full flex flex-col gap-2 items-end'>
+            <svg
+              width='109'
+              height='38'
+              viewBox='0 0 109 38'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+              className='cursor-pointer opacity-80 hover:opacity-100'
+              onClick={() => setStep(8)}>
+              <path
+                d='M0.5 6C0.5 2.96243 2.96243 0.5 6 0.5H103C106.038 0.5 108.5 2.96243 108.5 6V32C108.5 35.0376 106.038 37.5 103 37.5H6C2.96243 37.5 0.5 35.0376 0.5 32V6Z'
+                fill='#0E0E0F'
+              />
+              <path
+                d='M0.5 6C0.5 2.96243 2.96243 0.5 6 0.5H103C106.038 0.5 108.5 2.96243 108.5 6V32C108.5 35.0376 106.038 37.5 103 37.5H6C2.96243 37.5 0.5 35.0376 0.5 32V6Z'
+                stroke='white'
+              />
+              <path
+                d='M39.6172 15.7812H37.2734V18.125H44.3047V27.5H32.5859V22.8125H37.2734V23.9844H39.6172V21.6406H32.5859V12.2656H44.3047V16.9531H39.6172V15.7812ZM52.5078 12.2656H57.1953V20.4688L54.8516 22.8125L57.1953 25.1562V27.5H52.5078V26.3281L50.1641 23.9844V27.5H45.4766V12.2656H50.1641V19.2969L52.5078 21.6406V12.2656ZM63.0547 12.2656V27.5H58.3672V12.2656H63.0547ZM68.9141 15.7812V18.125L71.2578 20.4688V15.7812H68.9141ZM71.2578 25.1562L68.9141 22.8125V27.5H64.2266V12.2656H75.9453V20.4688L71.2578 25.1562Z'
+                fill='white'
+              />
+            </svg>
+            <div
+              className='relative w-full h-auto min-h-[160px] cursor-pointer bg-no-repeat'
+              onClick={() => setStep(step + 1)}
+              style={{ backgroundImage: `url(${GuideBox.src})`, backgroundSize: '100% 100%' }}>
+              <div className='absolute left-[3%] top-[10%] bottom-[20%] w-[94%]'>
+                <div className='h-full bg-[#111] rounded-md text-white p-5'>
+                  <div ref={guideContentRef} className='h-full overflow-auto'></div>
                 </div>
-                <div className='text-text-brand-hover flex items-center gap-2 text-sm cursor-pointer justify-end w-full mt-2 absolute bottom-[5%] right-[2%]'>
-                  Next
-                  <svg
-                    width='37'
-                    height='23'
-                    viewBox='0 0 37 23'
-                    fill='none'
-                    xmlns='http://www.w3.org/2000/svg'
-                    className='h-4 w-auto'>
-                    <path d='M37 11.5009L21.0085 20.7336L21.0085 2.26815L37 11.5009Z' fill='#00E160' />
-                    <path d='M21.3223 11.5009L5.33074 20.7336L5.33074 2.26815L21.3223 11.5009Z' fill='#00E160' />
-                  </svg>
-                </div>
+              </div>
+              <div className='text-text-brand-hover flex items-center gap-2 text-sm cursor-pointer justify-end w-full mt-2 absolute bottom-[5%] right-[2%]'>
+                Next
+                <svg
+                  width='37'
+                  height='23'
+                  viewBox='0 0 37 23'
+                  fill='none'
+                  xmlns='http://www.w3.org/2000/svg'
+                  className='h-4 w-auto'>
+                  <path d='M37 11.5009L21.0085 20.7336L21.0085 2.26815L37 11.5009Z' fill='#00E160' />
+                  <path d='M21.3223 11.5009L5.33074 20.7336L5.33074 2.26815L21.3223 11.5009Z' fill='#00E160' />
+                </svg>
               </div>
             </div>
           </div>

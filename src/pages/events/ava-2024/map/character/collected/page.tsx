@@ -39,7 +39,7 @@ export default function Event() {
   const { data, mutate } = useSWR('get-collected-characters', () => eventService.story.getCollectedCharacters(), {
     revalidateOnFocus: false,
   })
-  const characters = data?.data?.data?.user_collect_character
+  const characters = data?.data?.data?.user_collect_character.map((c) => c.story_character)
   const characterData = selectedCharacter || characters?.[0]
   useEffect(() => {
     setLikeCount(characterData?.likes_aggregate?.aggregate?.count)
@@ -89,7 +89,7 @@ export default function Event() {
                 <div className='shrink-0 w-full'>
                   <div className='h-10'>
                     <div className='text-3xl font-medium flex items-center gap-1'>
-                      <Link href='events/ava-2024/map/character'>
+                      <Link href='/events/ava-2024/map/character'>
                         <svg width='32' height='33' viewBox='0 0 32 33' fill='none' xmlns='http://www.w3.org/2000/svg'>
                           <path
                             d='M0 16.5C0 7.66344 7.16344 0.5 16 0.5H19.2V32.5H16C7.16344 32.5 0 25.3366 0 16.5Z'
@@ -235,20 +235,6 @@ export default function Event() {
                         </div>
                       </div>
                       <div className='flex gap-1.5 mt-4'>
-                        <Button
-                          color='neautral'
-                          size='sm'
-                          variant='outlined'
-                          className='!w-2/3 shrink-0 [&>*]:w-full'
-                          disabled={isCollected}
-                          onClick={() => setOpen(true)}>
-                          <div className='flex gap-1 w-full justify-between items-center'>
-                            <div>Collect IP License</div>
-                            <div className='flex items-center gap-1'>
-                              -1 <Image src={Point} alt='' className='h-5 w-auto ml-1' />
-                            </div>
-                          </div>
-                        </Button>
                         <Button size='sm' color='neautral' className='!w-full' onClick={likeHandler}>
                           {isLiked ? 'Unlike' : 'Like'}
                         </Button>

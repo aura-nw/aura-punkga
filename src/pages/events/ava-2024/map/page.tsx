@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useSWR from 'swr'
-import Background from 'components/pages/event/ava-2024/assets/Main-Map.svg'
+import Background from 'components/pages/event/ava-2024/assets/Main_Map.png'
 import Room1 from 'components/pages/event/ava-2024/assets/room1.svg'
 import Room2 from 'components/pages/event/ava-2024/assets/room2.svg'
 import Room3 from 'components/pages/event/ava-2024/assets/room3.svg'
@@ -16,7 +16,7 @@ import ArtkeeperSad from 'components/pages/event/ava-2024/assets/Artkeeper-sad.p
 import ArtkeeperSmile from 'components/pages/event/ava-2024/assets/Artkeeper-smile.png'
 import ArtkeeperAngry from 'components/pages/event/ava-2024/assets/Artkeeper-angry.png'
 import ArtkeeperNormal from 'components/pages/event/ava-2024/assets/Artkeeper-normal.png'
-import GuideBox from 'components/pages/event/ava-2024/assets/guide-box.svg'
+import GuideBox from 'components/pages/event/ava-2024/assets/guide-box.png'
 import Phai from 'components/pages/event/ava-2024/assets/phai.svg'
 import Trai from 'components/pages/event/ava-2024/assets/trai.svg'
 import Map from 'components/pages/event/ava-2024/assets/map-0.svg'
@@ -226,7 +226,7 @@ export default function Event() {
   return (
     <>
       <div
-        className='bg-no-repeat h-screen w-full -mt-20 relative'
+        className='bg-no-repeat h-screen w-full -mt-20 relative bg-cover'
         style={{ backgroundImage: `url(${Background.src})` }}>
         <Image src={Trai} alt='' className='absolute bottom-0 left-0' />
         <Image src={Phai} alt='' className='absolute bottom-0 right-0' />
@@ -387,9 +387,9 @@ export default function Event() {
                 )}
               </div>
               <div
-                className='relative w-full h-auto min-h-[150px] cursor-pointer'
+                className='relative w-full h-auto min-h-[150px] cursor-pointer bg-no-repeat'
+                style={{backgroundImage: `url(${GuideBox.src})`, backgroundSize:'100% 100%'}}
                 onClick={() => currentSetStep.current((prev) => prev + 1)}>
-                <Image src={GuideBox} alt='' className='relative w-full h-auto min-h-[150px] object-cover' />
                 <div className='absolute left-[3%] top-[10%] bottom-[20%] w-[94%]'>
                   <div className='h-full bg-[#111] rounded-md text-white p-5'>
                     <div ref={guideContentRef} className='h-full overflow-auto'></div>
