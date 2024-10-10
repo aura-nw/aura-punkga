@@ -81,7 +81,11 @@ export default function Event() {
   }
   const likeHandler = async () => {
     try {
-      await eventService.story.likeCharacter(characterData?.id)
+      if (isLiked) {
+        await eventService.story.unlikeCharacter(characterData?.id)
+      } else {
+        await eventService.story.likeCharacter(characterData?.id)
+      }
       setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1))
       setIsLiked((prevState) => !prevState)
     } catch (error) {
