@@ -236,7 +236,7 @@ export default function Event() {
                       className='[&_.Mui-selected]:!bg-white [&_.Mui-selected]:!text-text-primary [&_.MuiPaginationItem-root:not(.Mui-selected)]:!text-text-quatenary'
                       page={page}
                       onChange={(e, p) => setPage(p)}
-                      count={Math.ceil((data?.data?.data?.story_character_aggregate?.aggregate?.count || 0) / 10)}
+                      count={Math.ceil((data?.data?.data?.story_character_aggregate?.aggregate?.count || 0) / 20)}
                     />
                   </div>
                 </div>
