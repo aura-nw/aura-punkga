@@ -275,7 +275,7 @@ export default function Rules() {
 
           <div className='mt-5'>
             <h2 className='font-bold text-lg'>3/ Cách thức dự thi</h2>
-            <p>- Đọc kĩ thể lệ và gửi bài dự thi tại Đ Y, website sẽ chính thức được mở vào ngày 12/10/2024</p>
+            <p>- Đọc kĩ thể lệ và gửi bài dự thi, website sẽ chính thức được mở vào ngày 12/10/2024</p>
           </div>
 
           <div className='mt-5'>
