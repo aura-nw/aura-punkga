@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useSWR from 'swr'
-import Background from 'components/pages/event/ava-2024/assets/Main-Map.svg'
+import Background from 'components/pages/event/ava-2024/assets/Main_Map.png'
 import Decor from 'components/pages/event/ava-2024/assets/decor.svg'
 import Room2 from 'components/pages/event/ava-2024/assets/room2.svg'
 import Room3 from 'components/pages/event/ava-2024/assets/room3.svg'
@@ -28,7 +28,7 @@ export default function Event() {
   return (
     <>
       <div
-        className='bg-no-repeat h-screen w-full -mt-20 relative'
+        className='bg-no-repeat min-h-screen w-full -mt-20 relative bg-cover'
         style={{ backgroundImage: `url(${Background.src})` }}>
         <div className='absolute left-0 bottom-0 h-screen'>
           <svg
@@ -47,10 +47,10 @@ export default function Event() {
         <Image src={Decor} alt='' className='absolute -top-[4%] inset-x-0 w-full' />
         <div className='relative pk-container mx-auto pt-24 text-white'>
           <div className='py-10'>
-            <div className='flex w-full justify-between items-center'>
+            <div className='flex w-full flex-col lg:flex-row gap-5 justify-between lg:items-center relative z-10'>
               <div className='text-3xl font-medium'>{t('Submission Portal')}</div>
               <div className='flex items-center gap-10'>
-                <div className='w-[16.5%]'>
+                <div className='w-[10%] lg:w-[16.5%]'>
                   <RuleAndAward/>
                 </div>
                 <Link

@@ -50,7 +50,7 @@ export default function RuleAndAward() {
           />
         </svg>
         <div className={`active space-y-2 absolute left-1/2 -translate-x-1/2 top-[120%] ${seeMore ? '' : 'hidden'}`}>
-          <div className='bg-neutral-100 border-[2px] border-neutral-black rounded-mlg p-2.5 w-[154px] font-semibold text-sm text-text-primary-on-brand text-center cursor-pointer'>
+          <div onClick={() => setOpenRules(true)} className='bg-neutral-100 border-[2px] border-neutral-black rounded-mlg p-2.5 w-[154px] font-semibold text-sm text-text-primary-on-brand text-center cursor-pointer'>
             View Rule
           </div>
           {pathname != '/events/ava-2024/map/submit-portal' && (
@@ -60,7 +60,7 @@ export default function RuleAndAward() {
               Submit
             </Link>
           )}
-          <div className='bg-neutral-100 border-[2px] border-neutral-black rounded-mlg p-2.5 w-[154px] font-semibold text-sm text-text-primary-on-brand text-center cursor-pointer'>
+          <div onClick={() => setOpenAward(true)} className='bg-neutral-100 border-[2px] border-neutral-black rounded-mlg p-2.5 w-[154px] font-semibold text-sm text-text-primary-on-brand text-center cursor-pointer'>
             Award
           </div>
         </div>

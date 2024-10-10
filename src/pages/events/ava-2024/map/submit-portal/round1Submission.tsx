@@ -7,9 +7,12 @@ import { toast } from 'react-toastify'
 import { eventService } from 'src/services/event.service'
 import useSWR from 'swr'
 import moment from 'moment'
+import { useTranslation } from 'react-i18next'
 export default function Round1Submission() {
   const [name, setName] = useState('')
+  const { t } = useTranslation()
   const [description, setDescription] = useState<any>()
+  const [loading, setLoading] = useState(false)
   const [avatar, setAvatar] = useState<any>()
   const [error, setError] = useState()
   const { data, mutate } = useSWR('get-submissions', eventService.story.getSubmissions, {
@@ -17,7 +20,8 @@ export default function Round1Submission() {
   })
   const submitHandler = async () => {
     try {
-      if (name && description && avatar) {
+      if (name && description && avatar && !loading) {
+        setLoading(true)
         const payload = new FormData()
         payload.append('name', name)
         payload.append('avatar', avatar)
@@ -36,8 +40,10 @@ export default function Round1Submission() {
           setAvatar(undefined)
           setDescription(undefined)
         }
+        setLoading(false)
       }
     } catch (error) {
+      setLoading(false)
       toast(error.message, {
         type: 'error',
       })
@@ -45,7 +51,7 @@ export default function Round1Submission() {
   }
   const submissions = data?.data?.data?.story_event_submission
   return (
-    <div className='grid grid-cols-[3fr_4fr] gap-8'>
+    <div className='grid grid-cols-1 lg:grid-cols-[3fr_4fr] gap-8'>
       <div className='rounded-md border-[3px] border-neutral-black bg-neautral-950 p-6'>
         <div>
           <label className='text-sm font-medium' htmlFor='name'>
@@ -138,9 +144,11 @@ export default function Round1Submission() {
           </div>
         </div>
         <div
-          className='w-[217px] rounded-md font-jaro text-2xl border border-white bg-black p-2.5 text-center mx-auto cursor-pointer mt-6'
+          className={`w-[217px] rounded-md font-jaro text-2xl border border-white bg-black p-2.5 text-center mx-auto cursor-pointer mt-6 ${
+            loading && 'opacity-70 pointer-events-none'
+          }`}
           onClick={submitHandler}>
-          Submit
+          {t(loading ? 'Loading' : 'Submit')}
         </div>
       </div>
       <div className='rounded-md border-[3px] border-neutral-black bg-neautral-950 p-6'>

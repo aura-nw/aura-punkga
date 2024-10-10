@@ -210,7 +210,7 @@ export default function Event() {
                   </div>
                 </div>
                 <div className='sticky top-[12vh] h-fit'>
-                  <div className='flex justify-between items-center gap-10 h-10'>
+                  <div className='flex justify-between relative z-10 items-center gap-10 h-10'>
                     <div>
                       <Link href={!collectedCharacter?.length ? '#' : '/events/ava-2024/map/character/collected'}>
                         <Button color='neautral' size='sm' className='h-10' disabled={!collectedCharacter?.length}>
@@ -228,7 +228,7 @@ export default function Event() {
                       Back to map
                     </Link>
                   </div>
-                  <div className='mt-6 rounded-mlg border-[3px] border-black p-5 bg-[#191919] h-fit min-w-[350px] w-full relative'>
+                  <div className='mt-6 rounded-mlg border-[3px] relative border-black p-5 bg-[#191919] h-fit min-w-[350px] w-full relative'>
                     <Skew className='absolute top-1.5 right-1.5' />
                     <Skew className='absolute top-1.5 left-1.5' />
                     <div className='relative'>
