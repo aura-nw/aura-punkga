@@ -548,7 +548,7 @@ export default function Event() {
           </div>
         </div>
       </Modal>
-      <Modal open={openRules} setOpen={setOpenRules} title='CONTEST RULES'>
+      <Modal open={openRules} setOpen={setOpenRules}>
         <Rules/>
       </Modal>
     </>
