@@ -6,7 +6,7 @@ export const eventService = {
       await privateAxios.post(`${getConfig().REST_API_URL}/story-event/submission/character`, payload),
     getCharacters: async (userId, page, sort) =>
       await privateAxios.get(
-        `${getConfig().REST_API_URL}/story-event/character?limit=10&offset=${(page - 1) * 20}&order_by=${sort}${
+        `${getConfig().REST_API_URL}/story-event/character?limit=10&offset=${(page - 1) * 4}&order_by=${sort}${
           userId ? `&user_id=${userId}` : ``
         }`
       ),

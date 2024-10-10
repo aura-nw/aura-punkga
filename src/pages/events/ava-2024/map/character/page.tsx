@@ -205,30 +205,32 @@ export default function Event() {
                     </div>
                   </div>
                   <div className='grid grid-cols-2 md:grid-cols-4 gap-5 mt-6'>
-                    {characters?.map((character, index) => (
-                      <div
-                        className={`relative rounded-xl border-[3px] ${
-                          characterData?.id == character.id ? 'border-brand-default' : 'border-black'
-                        } overflow-hidden cursor-pointer`}
-                        onClick={() => {
-                          setSelectedCharacter(character)
-                          if (width < 1024) {
-                            setShowModal(true)
-                          }
-                        }}
-                        key={character.id}>
-                        <div className='absolute bottom-0 inset-x-0 w-full'>
-                          <Image
-                            src={character.avatar_url}
-                            width={300}
-                            height={300}
-                            alt=''
-                            className='w-full relative'
-                          />
+                    {characters
+                      ?.sort((a, b) => (b.is_default_character === a.is_default_character ? 0 : b.is_default_character ? 1 : -1))
+                      ?.map((character, index) => (
+                        <div
+                          className={`relative rounded-xl border-[3px] ${
+                            characterData?.id == character.id ? 'border-brand-default' : 'border-black'
+                          } overflow-hidden cursor-pointer`}
+                          onClick={() => {
+                            setSelectedCharacter(character)
+                            if (width < 1024) {
+                              setShowModal(true)
+                            }
+                          }}
+                          key={character.id}>
+                          <div className='absolute bottom-0 inset-x-0 w-full'>
+                            <Image
+                              src={character.avatar_url}
+                              width={300}
+                              height={300}
+                              alt=''
+                              className='w-full relative'
+                            />
+                          </div>
+                          <Image src={Frame} alt='' className='w-full  relative rounded-mlg' />
                         </div>
-                        <Image src={Frame} alt='' className='w-full  relative rounded-mlg' />
-                      </div>
-                    ))}
+                      ))}
                   </div>
                   <div className='mt-8 flex justify-center'>
                     <Pagination
@@ -236,7 +238,7 @@ export default function Event() {
                       className='[&_.Mui-selected]:!bg-white [&_.Mui-selected]:!text-text-primary [&_.MuiPaginationItem-root:not(.Mui-selected)]:!text-text-quatenary'
                       page={page}
                       onChange={(e, p) => setPage(p)}
-                      count={Math.ceil((data?.data?.data?.story_character_aggregate?.aggregate?.count || 0) / 20)}
+                      count={Math.ceil((data?.data?.data?.story_character_aggregate?.aggregate?.count || 0) / 4)}
                     />
                   </div>
                 </div>
