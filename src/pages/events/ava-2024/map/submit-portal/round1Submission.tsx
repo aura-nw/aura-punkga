@@ -20,7 +20,7 @@ export default function Round1Submission() {
   })
   const submitHandler = async () => {
     try {
-      if (name && description && avatar && !loading) {
+      if (name && name.length <= 50 && description && avatar && !loading) {
         setLoading(true)
         const payload = new FormData()
         payload.append('name', name)
@@ -60,7 +60,10 @@ export default function Round1Submission() {
           <TextField id='name' className='mt-2 bg-transparent' value={name} onChange={setName} />
           <div className='mt-2 flex justify-between text-xs'>
             <div className='text-text-error-primary-3'>{error}</div>
-            <div className='text-text-teriary'>{`${name.length}/50`}</div>
+            <div
+              className={
+                name.length > 50 ? 'text-text-error-primary-3' : 'text-text-teriary'
+              }>{`${name.length}/50`}</div>
           </div>
         </div>
         <div className='mt-8 grid grid-cols-2 gap-10'>

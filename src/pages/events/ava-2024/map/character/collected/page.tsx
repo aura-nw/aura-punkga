@@ -146,7 +146,7 @@ export default function Event() {
                   </div>
                 </div>
                 <div className='sticky top-[12vh] h-fit'>
-                  <div className='flex justify-between items-center gap-10 h-10'>
+                  <div className='flex justify-between items-center gap-10 h-10 relative z-10'>
                     <div className='flex-1'></div>
                     <div className='w-[10.5%]'>
                       <RuleAndAward />
