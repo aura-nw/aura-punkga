@@ -53,7 +53,7 @@ export default function Event() {
     if (data?.data?.data?.story_character) {
       setCharacters(data?.data?.data?.story_character)
     }
-  }, [data?.data?.data?.story_character?.length])
+  }, [data?.data?.data?.story_character])
   useEffect(() => {
     setLikeCount(characterData?.likes_aggregate?.aggregate?.count)
     setCollectedCount(characterData?.user_collect_characters_aggregate?.aggregate?.count)
@@ -238,12 +238,14 @@ export default function Event() {
                 </div>
                 <div className='sticky top-[12vh] h-fit hidden lg:block'>
                   <div className='flex justify-between relative z-10 items-center gap-10 h-10'>
-                    <div>
-                      <Link href={!collectedCharacter?.length ? '#' : '/events/ava-2024/map/character/collected'}>
-                        <Button color='neautral' size='sm' className='h-10' disabled={!collectedCharacter?.length}>
-                          Your collected
-                        </Button>
-                      </Link>
+                    <div className='flex-1'>
+                      {account && (
+                        <Link href={!collectedCharacter?.length ? '#' : '/events/ava-2024/map/character/collected'}>
+                          <Button color='neautral' size='sm' className='h-10' disabled={!collectedCharacter?.length}>
+                            Your collected
+                          </Button>
+                        </Link>
+                      )}
                     </div>
                     <div className='w-[10.5%]'>
                       <RuleAndAward />

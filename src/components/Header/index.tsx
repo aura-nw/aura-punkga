@@ -32,8 +32,9 @@ import { useClickOutside } from 'src/hooks/useClickOutside'
 import { search } from 'src/services'
 import { shorten } from 'src/utils'
 import TonWeb from 'tonweb'
-import { useAccount, useBalance } from 'wagmi'
+import { useAccount, useBalance, useChainId, useSwitchChain } from 'wagmi'
 import Bg from './assets/bg.svg'
+import { mainnet } from 'viem/chains'
 export const HEADER_HEIGHT = {
   MOBILE: '56px',
   DESKTOP: '80px',
@@ -61,6 +62,8 @@ export default function Header({ className }: { className?: string }) {
     address: account?.activeWalletAddress as any,
   })
   const ref = useRef<any>()
+  const { switchChain } = useSwitchChain()
+  const chainId = useChainId()
   const divRef = useRef<any>()
   const mref = useRef<any>()
   const mdivRef = useRef<any>()
@@ -234,6 +237,23 @@ export default function Header({ className }: { className?: string }) {
                         <div onClick={() => setTeleQrCodeOpen(true)}>
                           <Image src={QRCode} alt='' className='w-8 h-8' />
                         </div>
+                      </div>
+                      <div className='text-xs font-normal text-brand-2-defaul'>
+                        Connected chain: {chainId == config.CHAIN_INFO.evmChainId ? 'Aura' : 'Story'} •{' '}
+                        <span
+                          className='underline'
+                          onClick={() => {
+                            switchChain({
+                              chainId:
+                                chainId == config.CHAIN_INFO.evmChainId
+                                  ? config.CHAIN_INFO.evmChainId == 6322
+                                    ? mainnet.id
+                                    : 1513
+                                  : config.CHAIN_INFO.evmChainId,
+                            })
+                          }}>
+                          {chainId == config.CHAIN_INFO.evmChainId ? 'Switch to Story' : 'Switch to Aura'}
+                        </span>
                       </div>
                       <div>
                         <div
@@ -813,6 +833,23 @@ export default function Header({ className }: { className?: string }) {
                         <div onClick={() => setTeleQrCodeOpen(true)}>
                           <Image src={QRCode} alt='' className='w-8 h-8' />
                         </div>
+                      </div>
+                      <div className='text-xs font-normal text-brand-2-defaul'>
+                        Connected chain: {chainId == config.CHAIN_INFO.evmChainId ? 'Aura' : 'Story'} •{' '}
+                        <span
+                          className='underline'
+                          onClick={() => {
+                            switchChain({
+                              chainId:
+                                chainId == config.CHAIN_INFO.evmChainId
+                                  ? config.CHAIN_INFO.evmChainId == 6322
+                                    ? mainnet.id
+                                    : 1513
+                                  : config.CHAIN_INFO.evmChainId,
+                            })
+                          }}>
+                          {chainId == config.CHAIN_INFO.evmChainId ? 'Switch to Story' : 'Switch to Aura'}
+                        </span>
                       </div>
                       <div className='text-text-primary text-sm font-semibold leading-5'>
                         <div

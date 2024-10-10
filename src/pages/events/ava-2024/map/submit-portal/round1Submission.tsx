@@ -1,6 +1,6 @@
 import TextField from 'components/Input/TextField'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Frame from 'components/pages/event/ava-2024/assets/frame.svg'
 import Placeholder from 'components/pages/event/ava-2024/assets/placeholder.svg'
 import { toast } from 'react-toastify'
@@ -8,8 +8,10 @@ import { eventService } from 'src/services/event.service'
 import useSWR from 'swr'
 import moment from 'moment'
 import { useTranslation } from 'react-i18next'
+import { Context } from 'src/context'
 export default function Round1Submission() {
   const [name, setName] = useState('')
+  const { account } = useContext(Context)
   const { t } = useTranslation()
   const [description, setDescription] = useState<any>()
   const [loading, setLoading] = useState(false)
@@ -50,6 +52,7 @@ export default function Round1Submission() {
     }
   }
   const submissions = data?.data?.data?.story_event_submission
+  if (!account) return <div className='w-full text-center'>Login to countinue</div>
   return (
     <div className='grid grid-cols-1 lg:grid-cols-[3fr_4fr] gap-8'>
       <div className='rounded-md border-[3px] border-neutral-black bg-neautral-950 p-6'>
