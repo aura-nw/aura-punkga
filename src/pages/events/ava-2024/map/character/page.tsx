@@ -1,31 +1,25 @@
+import Background from 'components/pages/event/ava-2024/assets/Main_Map.png'
+import Decor from 'components/pages/event/ava-2024/assets/decor.svg'
+import Frame2 from 'components/pages/event/ava-2024/assets/frame-2.svg'
+import Frame from 'components/pages/event/ava-2024/assets/frame.svg'
+import Point from 'components/pages/event/ava-2024/assets/point.svg'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useSWR from 'swr'
-import Background from 'components/pages/event/ava-2024/assets/Main-Map.svg'
-import Decor from 'components/pages/event/ava-2024/assets/decor.svg'
-import Point from 'components/pages/event/ava-2024/assets/point.svg'
-import Frame from 'components/pages/event/ava-2024/assets/frame.svg'
-import Mock from 'components/pages/event/ava-2024/assets/Mock.png'
-import Mock2 from 'components/pages/event/ava-2024/assets/Mock-2.png'
-import Frame2 from 'components/pages/event/ava-2024/assets/frame-2.svg'
 import { useWindowSize } from 'usehooks-ts'
 
-import Artkeeper from 'components/pages/event/ava-2024/assets/mascot-head.svg'
-import GuideBox from 'components/pages/event/ava-2024/assets/guide-box.svg'
-import Phai from 'components/pages/event/ava-2024/assets/phai.svg'
-import Trai from 'components/pages/event/ava-2024/assets/trai.svg'
-import Image from 'next/image'
-import Link from 'next/link'
-import Modal from 'components/pages/event/ava-2024/Modal'
-import Map from 'components/pages/event/ava-2024/assets/Map.svg'
-import RuleAndAward from 'components/pages/event/ava-2024/RuleAndAward'
+import { Pagination } from '@mui/material'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import Button from 'components/core/Button/Button'
-import { eventService } from 'src/services/event.service'
+import Modal from 'components/pages/event/ava-2024/Modal'
+import RuleAndAward from 'components/pages/event/ava-2024/RuleAndAward'
+import Map from 'components/pages/event/ava-2024/assets/Map.svg'
+import Image from 'next/image'
+import Link from 'next/link'
 import { toast } from 'react-toastify'
 import { Context } from 'src/context'
-import { Pagination } from '@mui/material'
+import { eventService } from 'src/services/event.service'
 
 export default function Event() {
   const { locale } = useRouter()
@@ -99,7 +93,7 @@ export default function Event() {
   return (
     <>
       <div
-        className='bg-no-repeat min-h-[1500px] bg-fixed w-full -mt-20 relative'
+        className='bg-no-repeat min-h-[1500px] bg-fixed w-full -mt-20 relative bg-cover'
         style={{ backgroundImage: `url(${Background.src})` }}>
         <div className='absolute left-0 top-0 h-screen'>
           <svg width='143' height='1198' viewBox='0 0 143 1198' fill='none' xmlns='http://www.w3.org/2000/svg'>
