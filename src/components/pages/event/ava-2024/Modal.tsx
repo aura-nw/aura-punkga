@@ -27,7 +27,7 @@ export default function Modal({
           leave='ease-in duration-200'
           leaveFrom='opacity-70'
           leaveTo='opacity-0'>
-          <div className='fixed inset-0 bg-neutral-500/70 transition-opacity' />
+          <div className='fixed inset-0 bg-black/80 transition-opacity' />
         </Transition.Child>
 
         <div className='fixed inset-0 z-10 overflow-y-auto'>
@@ -59,7 +59,7 @@ export default function Modal({
                     fillOpacity='0.1'
                   />
                 </svg>
-                <div className='flex justify-end relative'>
+                <div className='flex justify-end absolute top-4 right-4 z-20'>
                   <svg
                     width='24'
                     height='24'
@@ -71,8 +71,8 @@ export default function Modal({
                     <path d='M16 8L8 16M16 16L8 8' stroke='white' stroke-width='1.5' stroke-linecap='round' />
                   </svg>
                 </div>
-                <div className='text-lg font-semibold w-full text-center relative'>{title}</div>
-                <div className='mt-4 relative'>{children}</div>
+                {title && <div className='text-lg font-semibold w-full text-center relative my-4'>{title}</div>}
+                <div className='relative'>{children}</div>
               </Dialog.Panel>
             </Transition.Child>
           </div>
