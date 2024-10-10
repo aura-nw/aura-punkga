@@ -38,10 +38,10 @@ export default function Event() {
   const [collectedCount, setCollectedCount] = useState(0)
   const [page, setPage] = useState(1)
   const [selectedCharacter, setSelectedCharacter] = useState<any>()
-  const [sort, setSort] = useState('newest')
+  const [sort, setSort] = useState('Created_At_Desc')
   const { data, mutate } = useSWR(
-    { ket: 'get-characters', userId: account?.id },
-    ({ userId }) => eventService.story.getCharacters(userId),
+    { ket: 'get-characters', userId: account?.id, page, sort },
+    ({ userId, page, sort }) => eventService.story.getCharacters(userId, page, sort),
     {
       revalidateOnFocus: false,
     }
@@ -152,23 +152,23 @@ export default function Event() {
                         <DropdownMenu customClass='!bg-[#191919] rounded-md'>
                           <div className='space-y-2 p-2 text-sm'>
                             <div
-                              className={`cursor-pointer px-2 ${sort == 'newest' ? 'text-brand-default' : ''}`}
-                              onClick={() => setSort('newest')}>
+                              className={`cursor-pointer px-2 ${sort == 'Created_At_Desc' ? 'text-brand-default' : ''}`}
+                              onClick={() => setSort('Created_At_Desc')}>
                               Newest
                             </div>
                             <div
-                              className={`cursor-pointer px-2 ${sort == 'oldest' ? 'text-brand-default' : ''}`}
-                              onClick={() => setSort('oldest')}>
+                              className={`cursor-pointer px-2 ${sort == 'Created_At_Asc' ? 'text-brand-default' : ''}`}
+                              onClick={() => setSort('Created_At_Asc')}>
                               Oldest
                             </div>
                             <div
-                              className={`cursor-pointer px-2 ${sort == 'ml' ? 'text-brand-default' : ''}`}
-                              onClick={() => setSort('ml')}>
+                              className={`cursor-pointer px-2 ${sort == 'User_Collect_Desc' ? 'text-brand-default' : ''}`}
+                              onClick={() => setSort('User_Collect_Desc')}>
                               Most to least
                             </div>
                             <div
-                              className={`cursor-pointer px-2 ${sort == 'lm' ? 'text-brand-default' : ''}`}
-                              onClick={() => setSort('lm')}>
+                              className={`cursor-pointer px-2 ${sort == 'User_Collect_Asc' ? 'text-brand-default' : ''}`}
+                              onClick={() => setSort('User_Collect_Asc')}>
                               Least to most
                             </div>
                           </div>
@@ -205,7 +205,7 @@ export default function Event() {
                       className='[&_.Mui-selected]:!bg-white [&_.Mui-selected]:!text-text-primary [&_.MuiPaginationItem-root:not(.Mui-selected)]:!text-text-quatenary'
                       page={page}
                       onChange={(e, p) => setPage(p)}
-                      count={10}
+                      count={Math.ceil((data?.data?.data?.story_character_aggregate?.aggregate?.count || 0)/10)}
                     />
                   </div>
                 </div>

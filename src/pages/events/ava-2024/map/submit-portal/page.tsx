@@ -47,10 +47,10 @@ export default function Event() {
         <Image src={Decor} alt='' className='absolute -top-[4%] inset-x-0 w-full' />
         <div className='relative pk-container mx-auto pt-24 text-white'>
           <div className='py-10'>
-            <div className='flex w-full flex-col lg:flex-row gap-5 justify-between lg:items-center relative z-10'>
+            <div className='flex w-full flex-col-reverse lg:flex-row gap-5 justify-between lg:items-center relative z-10'>
               <div className='text-3xl font-medium'>{t('Submission Portal')}</div>
-              <div className='flex items-center gap-10'>
-                <div className='w-[10%] lg:w-[16.5%]'>
+              <div className='flex w-full justify-between flex-row-reverse lg:w-fit lg:justify-end lg:flex-row pr-3 lg:pr-0 items-center gap-10'>
+                <div className='w-[50px] lg:w-[16.5%]'>
                   <RuleAndAward/>
                 </div>
                 <Link

@@ -4,8 +4,12 @@ export const eventService = {
   story: {
     createCharacter: async (payload) =>
       await privateAxios.post(`${getConfig().REST_API_URL}/story-event/submission/character`, payload),
-    getCharacters: async (userId) =>
-      await privateAxios.get(`${getConfig().REST_API_URL}/story-event/character${userId ? `?user_id=${userId}` : ``}`),
+    getCharacters: async (userId, page, sort) =>
+      await privateAxios.get(
+        `${getConfig().REST_API_URL}/story-event/character?limit=10&offset=${(page - 1) * 10}&order_by=${sort}${
+          userId ? `&user_id=${userId}` : ``
+        }`
+      ),
     getCollectedCharacters: async () =>
       await privateAxios.get(`${getConfig().REST_API_URL}/story-event/character/collected`),
     likeCharacter: async (id) =>

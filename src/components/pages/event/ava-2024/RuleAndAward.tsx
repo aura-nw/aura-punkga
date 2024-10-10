@@ -49,7 +49,7 @@ export default function RuleAndAward() {
             fill='#0B0B0B'
           />
         </svg>
-        <div className={`active space-y-2 absolute left-1/2 -translate-x-1/2 top-[120%] ${seeMore ? '' : 'hidden'}`}>
+        <div className={`active space-y-2 absolute right-1/2 translate-x-1/4 top-[120%] ${seeMore ? '' : 'hidden'}`}>
           <div onClick={() => setOpenRules(true)} className='bg-neutral-100 border-[2px] border-neutral-black rounded-mlg p-2.5 w-[154px] font-semibold text-sm text-text-primary-on-brand text-center cursor-pointer'>
             View Rule
           </div>
