@@ -381,7 +381,7 @@ export default function Event() {
                             }
                           }}>
                           <div className='flex gap-1 w-full justify-between items-center'>
-                            {isCollected ? (
+                            {isCollected || characterData?.is_default_character ? (
                               <>
                                 <div>{t('Collected')}</div>
                                 <div className='flex items-center gap-1'></div>
@@ -502,10 +502,19 @@ export default function Event() {
                       }
                     }}>
                     <div className='flex gap-1 w-full justify-between items-center'>
-                      <div>Collect IP License</div>
-                      <div className='flex items-center gap-1'>
-                        -1 <Image src={Point} alt='' className='h-5 w-auto ml-1' />
-                      </div>
+                      {isCollected || characterData?.is_default_character ? (
+                        <>
+                          <div>{t('Collected')}</div>
+                          <div className='flex items-center gap-1'></div>
+                        </>
+                      ) : (
+                        <>
+                          <div>{t('Collect IP License')}</div>
+                          <div className='flex items-center gap-1'>
+                            -1 <Image src={Point} alt='' className='h-5 w-auto ml-1' />
+                          </div>
+                        </>
+                      )}
                     </div>
                   </Button>
                   <Button size='sm' color='neautral' className='!w-full' onClick={likeHandler}>
