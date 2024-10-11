@@ -52,7 +52,7 @@ export default function Round1Submission() {
     }
   }
   const submissions = data?.data?.data?.story_event_submission
-  if (!account) return <div className='w-full text-center'>Login to countinue</div>
+  if (!account) return <div className='w-full text-center'>{t('Login to continue')}</div>
   return (
     <div className='grid grid-cols-1 lg:grid-cols-[3fr_4fr] gap-8'>
       <div className='rounded-md border-[3px] border-neutral-black bg-neautral-950 p-6'>

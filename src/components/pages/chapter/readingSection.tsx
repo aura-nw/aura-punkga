@@ -200,7 +200,7 @@ export default function ReadingSection({
                 onClick={() => setSignInOpen(true)}>
                 {t('sign in')}
               </a>{' '}
-              {t('to countinue reading')}!
+              {t('to continue reading')}!
             </p>
           </div>
         </div>

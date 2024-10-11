@@ -33,7 +33,7 @@
   "Exit Fullscreen": "Thoát chế độ toàn màn hình",
   "This is account only chapter": "Chương này yêu cầu tài khoản Punkga",
   "Please": "Vui lòng",
-  "to countinue reading": "để tiếp tục đọc",
+  "to continue reading": "để tiếp tục đọc",
   "comments": "bình luận",
   "comment": "bình luận",
   "Previous chap": "Chương trước",
@@ -384,6 +384,7 @@
   "Unlock on round 2": "Mở khóa ở vòng 2",
   "Unlock on round 3": "Mở khóa ở vòng 3",
   "submit2": "Gửi bài thi",
+  "Login to continue": "Đăng nhập để tiếp tục",
   ".": "",
   "": ""
 }

@@ -72,7 +72,7 @@ export default function Event() {
         <Image src={Decor} alt='' className='absolute -top-[4%] inset-x-0 w-full' />
         <div className='relative pk-container mx-auto pt-24 text-white'>
           {!account ? (
-            <div className='w-full text-center py-10'>Login to countinue</div>
+            <div className='w-full text-center py-10'>{t('Login to continue')}</div>
           ) : (
             <div className='lg:py-10'>
               {!!characters?.length && (
