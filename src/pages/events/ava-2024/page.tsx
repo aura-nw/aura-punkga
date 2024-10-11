@@ -18,14 +18,14 @@ import ArtkeeperAngry from 'components/pages/event/ava-2024/assets/Artkeeper-ang
 import GuideBox from 'components/pages/event/ava-2024/assets/guide-box.png'
 import Image from 'next/image'
 import Logo from 'components/pages/event/ava-2024/assets/logo.svg'
-import useLocalStorage from 'src/hooks/useLocalStorage'
 import Button from 'components/Button'
+import { useLocalStorage } from 'usehooks-ts'
 export default function Event() {
   const { locale } = useRouter()
   const { t } = useTranslation()
   const router = useRouter()
   const [step, setStep] = useState<number>(-1)
-  const [isDone, setIsDone] = useLocalStorage<boolean>('onboarding-done', false)
+  const [isDone, setIsDone, remove] = useLocalStorage<boolean>('onboarding-done', false)
   const timeoutId = useRef<any>()
   const guideContentRef = useRef<any>()
   const contentRef = useRef<any>()
@@ -87,6 +87,7 @@ export default function Event() {
     }
   }, [step])
   useEffect(() => {
+    console.log(isDone)
     if (!isDone) setStep(0)
   }, [isDone])
   const displayGuide = (text: string) => {
