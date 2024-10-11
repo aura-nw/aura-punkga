@@ -29,7 +29,18 @@ export default function Rules() {
           <div className='mt-5'>
             <h2 className='font-bold text-lg'>3/ Submission Process</h2>
             <p>
-              - Read the rules carefully and submit your entry. The website will officially open on October 12, 2024.
+              - Compulsory: Submit your entry in English at the{' '}
+              <Link target='_blank' className='text-info-400' href='/events/ava-2024/map/submit-portal'>
+                Website
+              </Link>
+            </p>
+            <p>- Optional:</p>
+            <p className=''>
+              + Submit on Facebook Group "PunkgaMe - Vietnam Comic Artists Association" with hashtag{' '}
+              <span className='text-info-400'>#PunkgaMe #AVA2024 #AVARound1</span>
+            </p>
+            <p className=''>
+              + Submit on X with hashtag <span className='text-info-400'>#PunkgaMe #AVA2024 #AVARound1</span>
             </p>
           </div>
           <div className='mt-5'>
@@ -282,7 +293,20 @@ export default function Rules() {
 
           <div className='mt-5'>
             <h2 className='font-bold text-lg'>3/ Cách thức dự thi</h2>
-            <p>- Đọc kĩ thể lệ và gửi bài dự thi, website sẽ chính thức được mở vào ngày 12/10/2024</p>
+            <p>
+              - Bắt buộc: Nộp bài dự thi 2 bản bằng Tiếng Anh và Tiếng Việt tại{' '}
+              <Link target='_blank' className='text-info-400' href='/events/ava-2024/map/submit-portal'>
+                Website
+              </Link>
+            </p>
+            <p>- Không bắt buộc:</p>
+            <p className=''>
+              + Nộp bài trên Group Facebook "PunkgaMe - Hội họa sĩ truyện tranh Việt Nam" kèm hashtag{' '}
+              <span className='text-info-400'>#PunkgaMe #AVA2024 #AVARound1</span>
+            </p>
+            <p className=''>
+              + Nộp bài trên X kèm hashtag <span className='text-info-400'>#PunkgaMe #AVA2024 #AVARound1</span>
+            </p>
           </div>
 
           <div className='mt-5'>
