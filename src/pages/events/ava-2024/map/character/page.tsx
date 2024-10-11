@@ -305,12 +305,12 @@ export default function Event() {
                         <div className='space-y-1.5 flex-1 min-w-0'>
                           {characterData?.is_default_character && <div className='text-sm mt-3'>{t('Free')}</div>}
                           <div className='font-jaro text-2xl line-clamp-2'>{characterData?.name}</div>
-                          {characterData.story_ip_asset.ip_asset_id && (
+                          {characterData.story_ip_asset?.ip_asset_id && (
                             <Link
-                              href={`https://explorer.story.foundation/ipa/${characterData.story_ip_asset.ip_asset_id}`}
+                              href={`https://explorer.story.foundation/ipa/${characterData.story_ip_asset?.ip_asset_id}`}
                               target='_blank'
                               className='text-brand-default text-sm'>
-                              {shorten(characterData.story_ip_asset.ip_asset_id)}
+                              {shorten(characterData.story_ip_asset?.ip_asset_id)}
                             </Link>
                           )}
                           <div className='text-sm font-medium'>
@@ -370,7 +370,7 @@ export default function Event() {
                         </div>
                       </div>
                       <div className='flex gap-1.5 mt-4'>
-                        {(characterData?.is_default_character ||
+                        {!(characterData?.is_default_character ||
                           isCollected ||
                           (collectedCharacter?.length || 0) >= 3) && (
                           <Button
@@ -433,12 +433,12 @@ export default function Event() {
                   <div className='space-y-1.5 flex-1 min-w-0'>
                     {characterData?.is_default_character && <div className='text-sm mt-3'>{t('Free')}</div>}
                     <div className='font-jaro text-2xl line-clamp-2'>{characterData?.name}</div>
-                    {characterData.story_ip_asset.ip_asset_id && (
+                    {characterData.story_ip_asset?.ip_asset_id && (
                       <Link
-                        href={`https://explorer.story.foundation/ipa/${characterData.story_ip_asset.ip_asset_id}`}
+                        href={`https://explorer.story.foundation/ipa/${characterData.story_ip_asset?.ip_asset_id}`}
                         target='_blank'
                         className='text-brand-default text-sm'>
-                        {shorten(characterData.story_ip_asset.ip_asset_id)}
+                        {shorten(characterData.story_ip_asset?.ip_asset_id)}
                       </Link>
                     )}
                     <div className='text-sm font-medium'>
@@ -485,7 +485,7 @@ export default function Event() {
                   </div>
                 </div>
                 <div className='flex gap-1.5 mt-4'>
-                  {(characterData?.is_default_character || isCollected || (collectedCharacter?.length || 0) >= 3) && (
+                  {!(characterData?.is_default_character || isCollected || (collectedCharacter?.length || 0) >= 3) && (
                     <Button
                       color='neautral'
                       size='sm'

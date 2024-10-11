@@ -24,25 +24,25 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import useLocalStorage from 'src/hooks/useLocalStorage'
+import { useLocalStorage } from 'usehooks-ts'
 export default function Event() {
   const { locale, push } = useRouter()
   const { t } = useTranslation()
   const router = useRouter()
-  const [seeMore, setSeeMore] = useLocalStorage('see-more-btn', true)
+  const [seeMore, setSeeMore] = useState(true)
   const [openRules, setOpenRules] = useState(false)
   const [openAward, setOpenAward] = useState(false)
   const currentSetStep = useRef<any>()
   const timeoutId = useRef<any>()
   const [active, setActive] = useState(0)
   const [characterRoomStep, setCharacterRoomStep] = useState<number>(-1)
-  const [characterDone, setCharacterDone] = useLocalStorage<boolean>('character-done', false)
+  const [characterDone, setCharacterDone, removeCharacterDone] = useLocalStorage<boolean>('character-done', false)
   const [mangaRoomStep, setMangaRoomStep] = useState<number>(-1)
-  const [mangaDone, setMangaDone] = useLocalStorage<boolean>('manga-done', false)
+  const [mangaDone, setMangaDone, removeMangaDone] = useLocalStorage<boolean>('manga-done', false)
   const [artRoomStep, setArtRoomStep] = useState<number>(-1)
-  const [artDone, setArtDone] = useLocalStorage<boolean>('art-done', false)
+  const [artDone, setArtDone, removeArtDone] = useLocalStorage<boolean>('art-done', false)
   const [campainRoomStep, setCampainRoomStep] = useState<number>(-1)
-  const [campainDone, setCampainDone] = useLocalStorage<boolean>('campain-done', false)
+  const [campainDone, setCampainDone, removeCampainDone] = useLocalStorage<boolean>('campain-done', false)
   const [artkeeper, setArtkeeper] = useState('')
   const [showGuide, setShowGuide] = useState(false)
   const guideContentRef = useRef<any>()
@@ -598,8 +598,8 @@ export default function Event() {
           </div>
         </div>
       </div>
-      <Modal open={openAward} setOpen={setOpenAward} title={locale =='vn'?'GIẢI THƯỞNG':'AWARD'}>
-        <Award/>
+      <Modal open={openAward} setOpen={setOpenAward} title={locale == 'vn' ? 'GIẢI THƯỞNG' : 'AWARD'}>
+        <Award />
       </Modal>
       <Modal open={openRules} setOpen={setOpenRules}>
         <Rules />
