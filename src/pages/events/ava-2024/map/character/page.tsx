@@ -128,7 +128,7 @@ export default function Event() {
                     <div>
                       <Link href={!collectedCharacter?.length ? '#' : '/events/ava-2024/map/character/collected'}>
                         <Button color='neautral' size='sm' className='h-10' disabled={!collectedCharacter?.length}>
-                          Your collected
+                          {t('Your collected')}
                         </Button>
                       </Link>
                     </div>
@@ -139,11 +139,11 @@ export default function Event() {
                       href={`/events/ava-2024/map`}
                       className='flex items-center text-sm font-semibold gap-2 whitespace-nowrap '>
                       <Image src={Map} alt='' className='w-[50px]' />
-                      Back to map
+                      {t('Back to map')}
                     </Link>
                   </div>
                   <div className='flex justify-between items-center h-10'>
-                    <div className='text-3xl font-medium'>Character</div>
+                    <div className='text-3xl font-medium'>{t('Character')}</div>
                     <div className='flex gap-2.5'>
                       <div className='h-10 rounded-md px-4 flex gap-2 items-center justify-center bg-[#191919]'>
                         <Image src={Point} alt='' className='w-8 h-auto' />
@@ -167,7 +167,7 @@ export default function Event() {
                                 fill='white'
                               />
                             </svg>
-                            <span className='text-sm font-semibold'>Sort by</span>
+                            <span className='text-sm font-semibold'>{t('Sort by')}</span>
                             <svg
                               xmlns='http://www.w3.org/2000/svg'
                               width='24'
@@ -189,26 +189,26 @@ export default function Event() {
                             <div
                               className={`cursor-pointer px-2 ${sort == 'Created_At_Desc' ? 'text-brand-default' : ''}`}
                               onClick={() => setSort('Created_At_Desc')}>
-                              Newest
+                              {t('Newest')}
                             </div>
                             <div
                               className={`cursor-pointer px-2 ${sort == 'Created_At_Asc' ? 'text-brand-default' : ''}`}
                               onClick={() => setSort('Created_At_Asc')}>
-                              Oldest
+                              {t('Oldest')}
                             </div>
                             <div
                               className={`cursor-pointer px-2 ${
                                 sort == 'User_Collect_Desc' ? 'text-brand-default' : ''
                               }`}
                               onClick={() => setSort('User_Collect_Desc')}>
-                              Most to least
+                              {t('Most collected')}
                             </div>
                             <div
                               className={`cursor-pointer px-2 ${
                                 sort == 'User_Collect_Asc' ? 'text-brand-default' : ''
                               }`}
                               onClick={() => setSort('User_Collect_Asc')}>
-                              Least to most
+                              {t('Least collected')}
                             </div>
                           </div>
                         </DropdownMenu>
@@ -266,7 +266,7 @@ export default function Event() {
                       {account && (
                         <Link href={!collectedCharacter?.length ? '#' : '/events/ava-2024/map/character/collected'}>
                           <Button color='neautral' size='sm' className='h-10' disabled={!collectedCharacter?.length}>
-                            Your collected
+                            {t('Your collected')}
                           </Button>
                         </Link>
                       )}
@@ -278,7 +278,7 @@ export default function Event() {
                       href={`/events/ava-2024/map`}
                       className='flex items-center text-sm font-semibold gap-2 whitespace-nowrap '>
                       <Image src={Map} alt='' className='w-[50px]' />
-                      Back to map
+                      {t('Back to map')}
                     </Link>
                   </div>
                   <div className='mt-6 rounded-mlg border-[3px] relative border-black p-5 bg-[#191919] h-fit min-w-[350px] w-full'>
@@ -305,14 +305,19 @@ export default function Event() {
                         <div className='space-y-1.5 flex-1 min-w-0'>
                           {characterData?.is_default_character && <div className='text-sm mt-3'>{t('Free')}</div>}
                           <div className='font-jaro text-2xl line-clamp-2'>{characterData?.name}</div>
-                          <Link
-                            href={`https://explorer.story.foundation/ipa/${characterData.story_ip_asset.ip_asset_id}`}
-                            target='_blank'
-                            className='text-brand-default text-sm'>
-                            {shorten(characterData.story_ip_asset.ip_asset_id)}
-                          </Link>
+                          {characterData.story_ip_asset.ip_asset_id && (
+                            <Link
+                              href={`https://explorer.story.foundation/ipa/${characterData.story_ip_asset.ip_asset_id}`}
+                              target='_blank'
+                              className='text-brand-default text-sm'>
+                              {shorten(characterData.story_ip_asset.ip_asset_id)}
+                            </Link>
+                          )}
                           <div className='text-sm font-medium'>
-                            by <span className='text-brand-default'>{characterData?.authorizer_user.nickname}</span>
+                            {t('by')}{' '}
+                            <span className='text-brand-default'>
+                              {characterData?.authorizer_user.nickname || 'Punkga'}
+                            </span>
                           </div>
                         </div>
                         <div className='text-sm font-medium flex gap-1.5 shrink-0'>
@@ -365,37 +370,30 @@ export default function Event() {
                         </div>
                       </div>
                       <div className='flex gap-1.5 mt-4'>
-                        <Button
-                          color='neautral'
-                          size='sm'
-                          variant='outlined'
-                          className='!w-2/3 shrink-0 [&>*]:w-full'
-                          disabled={
-                            characterData?.is_default_character || isCollected || (collectedCharacter?.length || 0) >= 3
-                          }
-                          onClick={() => {
-                            if (account) {
-                              setOpen(true)
-                            } else {
-                              setSignInOpen(true)
-                            }
-                          }}>
-                          <div className='flex gap-1 w-full justify-between items-center'>
-                            {isCollected || characterData?.is_default_character ? (
-                              <>
-                                <div>{t('Collected')}</div>
-                                <div className='flex items-center gap-1'></div>
-                              </>
-                            ) : (
-                              <>
-                                <div>{t('Collect IP License')}</div>
-                                <div className='flex items-center gap-1'>
-                                  -1 <Image src={Point} alt='' className='h-5 w-auto ml-1' />
-                                </div>
-                              </>
-                            )}
-                          </div>
-                        </Button>
+                        {(characterData?.is_default_character ||
+                          isCollected ||
+                          (collectedCharacter?.length || 0) >= 3) && (
+                          <Button
+                            color='neautral'
+                            size='sm'
+                            variant='outlined'
+                            className='!w-2/3 shrink-0 [&>*]:w-full'
+                            onClick={() => {
+                              if (account) {
+                                setShowModal(false)
+                                setOpen(true)
+                              } else {
+                                setSignInOpen(true)
+                              }
+                            }}>
+                            <div className='flex items-center justify-between'>
+                              <div>{t('Collect IP License')}</div>
+                              <div className='flex items-center gap-1'>
+                                -1 <Image src={Point} alt='' className='h-5 w-auto ml-1' />
+                              </div>
+                            </div>
+                          </Button>
+                        )}
                         <Button size='sm' color='neautral' className='!w-full' onClick={likeHandler}>
                           {t(isLiked ? 'Unlike' : 'Like')}
                         </Button>
@@ -435,12 +433,14 @@ export default function Event() {
                   <div className='space-y-1.5 flex-1 min-w-0'>
                     {characterData?.is_default_character && <div className='text-sm mt-3'>{t('Free')}</div>}
                     <div className='font-jaro text-2xl line-clamp-2'>{characterData?.name}</div>
-                    <Link
-                      href={`https://explorer.story.foundation/ipa/${characterData.story_ip_asset.ip_asset_id}`}
-                      target='_blank'
-                      className='text-brand-default text-sm'>
-                      {shorten(characterData.story_ip_asset.ip_asset_id)}
-                    </Link>
+                    {characterData.story_ip_asset.ip_asset_id && (
+                      <Link
+                        href={`https://explorer.story.foundation/ipa/${characterData.story_ip_asset.ip_asset_id}`}
+                        target='_blank'
+                        className='text-brand-default text-sm'>
+                        {shorten(characterData.story_ip_asset.ip_asset_id)}
+                      </Link>
+                    )}
                     <div className='text-sm font-medium'>
                       by <span className='text-brand-default'>{characterData?.authorizer_user.nickname}</span>
                     </div>
@@ -485,38 +485,26 @@ export default function Event() {
                   </div>
                 </div>
                 <div className='flex gap-1.5 mt-4'>
-                  <Button
-                    color='neautral'
-                    size='sm'
-                    variant='outlined'
-                    className='!w-2/3 shrink-0 [&>*]:w-full'
-                    disabled={
-                      characterData?.is_default_character || isCollected || (collectedCharacter?.length || 0) >= 3
-                    }
-                    onClick={() => {
-                      if (account) {
-                        setShowModal(false)
-                        setOpen(true)
-                      } else {
-                        setSignInOpen(true)
-                      }
-                    }}>
-                    <div className='flex gap-1 w-full justify-between items-center'>
-                      {isCollected || characterData?.is_default_character ? (
-                        <>
-                          <div>{t('Collected')}</div>
-                          <div className='flex items-center gap-1'></div>
-                        </>
-                      ) : (
-                        <>
-                          <div>{t('Collect IP License')}</div>
-                          <div className='flex items-center gap-1'>
-                            -1 <Image src={Point} alt='' className='h-5 w-auto ml-1' />
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </Button>
+                  {(characterData?.is_default_character || isCollected || (collectedCharacter?.length || 0) >= 3) && (
+                    <Button
+                      color='neautral'
+                      size='sm'
+                      variant='outlined'
+                      className='!w-2/3 shrink-0 [&>*]:w-full'
+                      onClick={() => {
+                        if (account) {
+                          setShowModal(false)
+                          setOpen(true)
+                        } else {
+                          setSignInOpen(true)
+                        }
+                      }}>
+                      <div>{t('Collect IP License')}</div>
+                      <div className='flex items-center gap-1'>
+                        -1 <Image src={Point} alt='' className='h-5 w-auto ml-1' />
+                      </div>
+                    </Button>
+                  )}
                   <Button size='sm' color='neautral' className='!w-full' onClick={likeHandler}>
                     {t(isLiked ? 'Unlike' : 'Like')}
                   </Button>

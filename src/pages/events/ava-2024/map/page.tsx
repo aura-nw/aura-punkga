@@ -1,33 +1,30 @@
-import { useRouter } from 'next/router'
-import { useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import useSWR from 'swr'
+import Button from 'components/Button'
+import ArtkeeperAngry from 'components/pages/event/ava-2024/assets/Artkeeper-angry.png'
+import ArtkeeperClover from 'components/pages/event/ava-2024/assets/Artkeeper-clover.png'
+import ArtkeeperNormal from 'components/pages/event/ava-2024/assets/Artkeeper-normal.png'
+import ArtkeeperSad from 'components/pages/event/ava-2024/assets/Artkeeper-sad.png'
+import ArtkeeperSmile from 'components/pages/event/ava-2024/assets/Artkeeper-smile.png'
+import GuideBox from 'components/pages/event/ava-2024/assets/guide-box.png'
 import Background from 'components/pages/event/ava-2024/assets/Main_Map.png'
+import Map from 'components/pages/event/ava-2024/assets/map-0.svg'
+import Artkeeper from 'components/pages/event/ava-2024/assets/mascot-head.svg'
+import MobileMap from 'components/pages/event/ava-2024/assets/mobile-map.png'
+import Phai from 'components/pages/event/ava-2024/assets/phai.png'
 import Room1 from 'components/pages/event/ava-2024/assets/room1.png'
 import Room2 from 'components/pages/event/ava-2024/assets/room2.png'
 import Room3 from 'components/pages/event/ava-2024/assets/room3.png'
 import Room4 from 'components/pages/event/ava-2024/assets/room4.png'
 import Room5 from 'components/pages/event/ava-2024/assets/room5.png'
-import Ava from 'components/pages/event/ava-2024/assets/ava.svg'
-import Flame from 'components/pages/event/ava-2024/assets/flame.svg'
-import Artkeeper from 'components/pages/event/ava-2024/assets/mascot-head.svg'
-import ArtkeeperClover from 'components/pages/event/ava-2024/assets/Artkeeper-clover.png'
-import ArtkeeperSad from 'components/pages/event/ava-2024/assets/Artkeeper-sad.png'
-import ArtkeeperSmile from 'components/pages/event/ava-2024/assets/Artkeeper-smile.png'
-import ArtkeeperAngry from 'components/pages/event/ava-2024/assets/Artkeeper-angry.png'
-import ArtkeeperNormal from 'components/pages/event/ava-2024/assets/Artkeeper-normal.png'
-import GuideBox from 'components/pages/event/ava-2024/assets/guide-box.png'
-import Phai from 'components/pages/event/ava-2024/assets/phai.png'
 import Trai from 'components/pages/event/ava-2024/assets/trai.png'
-import Map from 'components/pages/event/ava-2024/assets/map-0.svg'
-import MobileMap from 'components/pages/event/ava-2024/assets/mobile-map.png'
-import FourLeafClover from 'components/pages/event/ava-2024/assets/fourleafclover.svg'
+import Award from 'components/pages/event/ava-2024/Award'
+import Modal from 'components/pages/event/ava-2024/Modal'
+import Rules from 'components/pages/event/ava-2024/Rules'
 import Image from 'next/image'
 import Link from 'next/link'
-import Modal from 'components/pages/event/ava-2024/Modal'
+import { useRouter } from 'next/router'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import useLocalStorage from 'src/hooks/useLocalStorage'
-import Button from 'components/Button'
-import Rules from 'components/pages/event/ava-2024/Rules'
 export default function Event() {
   const { locale, push } = useRouter()
   const { t } = useTranslation()
@@ -601,48 +598,8 @@ export default function Event() {
           </div>
         </div>
       </div>
-      <Modal open={openAward} setOpen={setOpenAward} title='AWARD'>
-        <div className='w-[80vw] max-w-[500px]'>
-          <div className='flex flex-col items-center bg-neutral-950 py-5 px-14 border-[3px] w-full border-black'>
-            <div className='text-lg font-bold rounded-md bg-[#A967FF] px-2 py-0.5'>Prize pool</div>
-            <Image src={Ava} alt='' className='w-[138px] h-auto' />
-            <div className='font-jaro text-2xl rounded-md bg-black text-center mt-2 w-full'>6000 USD</div>
-            <div className='font-medium mt-2'>53 prizes</div>
-          </div>
-          <div className='w-full border-t border-dashed border-white my-4'></div>
-          <div className='text-lg font-medium w-full text-center'>Grand Final Prizes</div>
-          <div className='flex flex-col items-center bg-neutral-950 py-5 px-14 border-[3px] w-full border-black mt-4'>
-            <div className='text-lg font-bold rounded-md bg-[#1EBB61] px-2 py-0.5'>Special Prize</div>
-            <Image src={Flame} alt='' className='w-[138px] h-auto' />
-            <div className='font-jaro text-2xl rounded-md bg-black text-center mt-2 w-full'>1200 USD</div>
-          </div>
-          <div className='mt-4 bg-neutral-950 p-4 text-sm space-y-1.5'>
-            <div className='flex gap-1.5 items-center'>
-              <span>
-                <Image src={FourLeafClover} alt='' className='w-5' />
-              </span>
-              Grand Final - 01 1st Prize: 600 USD
-            </div>
-            <div className='flex gap-1.5 items-center'>
-              <span>
-                <Image src={FourLeafClover} alt='' className='w-5' />
-              </span>
-              Grand Final - 02 2nd Prize: 400 USD
-            </div>
-            <div className='flex gap-1.5 items-center'>
-              <span>
-                <Image src={FourLeafClover} alt='' className='w-5' />
-              </span>
-              Grand Final - 03 3rd Prize: 200 USD
-            </div>
-            <div className='flex gap-1.5 items-center'>
-              <span>
-                <Image src={FourLeafClover} alt='' className='w-5' />
-              </span>
-              Grand Final - 10 Encouragement Prizes: 40 USD
-            </div>
-          </div>
-        </div>
+      <Modal open={openAward} setOpen={setOpenAward} title={locale =='vn'?'GIẢI THƯỞNG':'AWARD'}>
+        <Award/>
       </Modal>
       <Modal open={openRules} setOpen={setOpenRules}>
         <Rules />

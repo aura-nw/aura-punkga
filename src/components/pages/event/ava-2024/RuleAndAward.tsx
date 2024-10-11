@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Rules from './Rules'
 import { useTranslation } from 'react-i18next'
+import Award from './Award'
 
 export default function RuleAndAward() {
   const { t } = useTranslation()
@@ -60,48 +61,8 @@ export default function RuleAndAward() {
           </div>
         </div>
       </div>
-      <Modal open={openAward} setOpen={setOpenAward} title='AWARD'>
-        <div className='w-[80vw] max-w-[500px]'>
-          <div className='flex flex-col items-center bg-neutral-950 py-5 px-14 border-[3px] w-full border-black'>
-            <div className='text-lg font-bold rounded-md bg-[#A967FF] px-2 py-0.5'>Prize pool</div>
-            <Image src={Ava} alt='' className='w-[138px] h-auto' />
-            <div className='font-jaro text-2xl rounded-md bg-black text-center mt-2 w-full'>6000 USD</div>
-            <div className='font-medium mt-2'>53 prizes</div>
-          </div>
-          <div className='w-full border-t border-dashed border-white my-4'></div>
-          <div className='text-lg font-medium w-full text-center'>Grand Final Prizes</div>
-          <div className='flex flex-col items-center bg-neutral-950 py-5 px-14 border-[3px] w-full border-black mt-4'>
-            <div className='text-lg font-bold rounded-md bg-[#1EBB61] px-2 py-0.5'>Special Prize</div>
-            <Image src={Flame} alt='' className='w-[138px] h-auto' />
-            <div className='font-jaro text-2xl rounded-md bg-black text-center mt-2 w-full'>1200 USD</div>
-          </div>
-          <div className='mt-4 bg-neutral-950 p-4 text-sm space-y-1.5'>
-            <div className='flex gap-1.5 items-center'>
-              <span>
-                <Image src={FourLeafClover} alt='' className='w-5' />
-              </span>
-              Grand Final - 01 1st Prize: 600 USD
-            </div>
-            <div className='flex gap-1.5 items-center'>
-              <span>
-                <Image src={FourLeafClover} alt='' className='w-5' />
-              </span>
-              Grand Final - 02 2nd Prize: 400 USD
-            </div>
-            <div className='flex gap-1.5 items-center'>
-              <span>
-                <Image src={FourLeafClover} alt='' className='w-5' />
-              </span>
-              Grand Final - 03 3rd Prize: 200 USD
-            </div>
-            <div className='flex gap-1.5 items-center'>
-              <span>
-                <Image src={FourLeafClover} alt='' className='w-5' />
-              </span>
-              Grand Final - 10 Encouragement Prizes: 40 USD
-            </div>
-          </div>
-        </div>
+      <Modal open={openAward} setOpen={setOpenAward} title={locale =='vn'?'GIẢI THƯỞNG':'AWARD'}>
+        <Award/>
       </Modal>
       <Modal open={openRules} setOpen={setOpenRules}>
         <Rules />

@@ -53,7 +53,7 @@ export default function Event() {
                   href={`/events/ava-2024/map`}
                   className='flex items-center text-sm font-semibold gap-2 whitespace-nowrap '>
                   <Image src={Map} alt='' className='w-[50px]' />
-                  Back to map
+                  {t('Back to map')}
                 </Link>
               </div>
             </div>
@@ -64,21 +64,21 @@ export default function Event() {
                   round == 1 ? 'bg-white text-black' : 'bg-gray-500 text-white'
                 } text-sm font-semibold px-3.5 cursor-pointer`}
                 onClick={() => setRound(1)}>
-                <span className='skew-x-12'>Round 1</span>
+                <span className='skew-x-12'>{t('Round 1')}</span>
               </div>
               <div
                 className={`h-9 grid place-items-center rounded ${
                   round == 2 ? 'bg-white text-black' : 'bg-gray-500 text-white'
                 } text-sm font-semibold px-3.5 cursor-pointer`}
                 onClick={() => setRound(2)}>
-                <span className='skew-x-12'>Round 2</span>
+                <span className='skew-x-12'>{t('Round 2')}</span>
               </div>
               <div
                 className={`h-9 grid place-items-center rounded ${
                   round == 3 ? 'bg-white text-black' : 'bg-gray-500 text-white'
                 } text-sm font-semibold px-3.5 cursor-pointer`}
                 onClick={() => setRound(3)}>
-                <span className='skew-x-12'>Round 3</span>
+                <span className='skew-x-12'>{t('Round 3')}</span>
               </div>
             </div>
             <div className='mt-8'>
@@ -89,7 +89,7 @@ export default function Event() {
               ) : (
                 <>
                   <div className='font-jaro text-2xl w-full text-center h-[20vh] grid place-items-center'>
-                    Coming soon!
+                    {t('Coming soon')}!
                   </div>
                 </>
               )}

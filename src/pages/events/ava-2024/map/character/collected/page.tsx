@@ -86,7 +86,7 @@ export default function Event() {
                         href={`/events/ava-2024/map`}
                         className='flex items-center text-sm font-semibold gap-2 whitespace-nowrap '>
                         <Image src={Map} alt='' className='w-[50px]' />
-                        Back to map
+                        {t('Back to map')}
                       </Link>
                     </div>
                     <div className='h-10'>
@@ -125,7 +125,7 @@ export default function Event() {
                             </defs>
                           </svg>
                         </Link>
-                        My collected characters
+                        {t('My collected characters')}
                       </div>
                     </div>
                     <div className='grid grid-cols-2 md:grid-cols-4 gap-5 mt-6'>
@@ -167,7 +167,7 @@ export default function Event() {
                         href={`/events/ava-2024/map`}
                         className='flex items-center text-sm font-semibold gap-2 whitespace-nowrap '>
                         <Image src={Map} alt='' className='w-[50px]' />
-                        Back to map
+                        {t('Back to map')}
                       </Link>
                     </div>
                     <div className='mt-6 rounded-mlg border-[3px] border-black p-5 bg-[#191919] h-fit min-w-[350px] w-full relative'>
@@ -194,7 +194,7 @@ export default function Event() {
                           <div className='space-y-1.5 flex-1 min-w-0'>
                             <div className='font-jaro text-2xl line-clamp-2'>{characterData.name}</div>
                             <div className='text-sm font-medium'>
-                              by <span className='text-brand-default'>{characterData.authorizer_user.nickname}</span>
+                              {t('by')} <span className='text-brand-default'>{characterData.authorizer_user.nickname}</span>
                             </div>
                           </div>
                           <div className='text-sm font-medium flex gap-1.5 shrink-0'>
@@ -248,7 +248,7 @@ export default function Event() {
                         </div>
                         <div className='flex gap-1.5 mt-4'>
                           <Button size='sm' color='neautral' className='!w-full' onClick={likeHandler}>
-                            {isLiked ? 'Unlike' : 'Like'}
+                            {t(isLiked ? 'Unlike' : 'Like')}
                           </Button>
                         </div>
                       </div>
@@ -286,7 +286,7 @@ export default function Event() {
                 <div className='space-y-1.5 flex-1 min-w-0'>
                   <div className='font-jaro text-2xl line-clamp-2'>{characterData.name}</div>
                   <div className='text-sm font-medium'>
-                    by <span className='text-brand-default'>{characterData.authorizer_user.nickname}</span>
+                    {t('by')} <span className='text-brand-default'>{characterData.authorizer_user.nickname}</span>
                   </div>
                 </div>
                 <div className='text-sm font-medium flex gap-1.5 shrink-0'>
@@ -330,7 +330,7 @@ export default function Event() {
               </div>
               <div className='flex gap-1.5 mt-4'>
                 <Button size='sm' color='neautral' className='!w-full' onClick={likeHandler}>
-                  {isLiked ? 'Unlike' : 'Like'}
+                  {t(isLiked ? 'Unlike' : 'Like')}
                 </Button>
               </div>
             </div>

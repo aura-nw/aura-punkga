@@ -7,7 +7,7 @@ export default function Rules() {
   const [round, setRound] = useState(1)
 
   return (
-    <div className='text-sm font-light'>
+    <div className='text-sm font-light max-h-[80vh] overflow-auto no-scrollbar'>
       {locale == 'en' ? (
         <div>
           <h1 className='text-2xl font-bold text-center'>AVA GRAND CONTEST 2024</h1>
