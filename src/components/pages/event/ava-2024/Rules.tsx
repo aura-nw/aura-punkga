@@ -36,8 +36,11 @@ export default function Rules() {
             </p>
             <p>- Optional:</p>
             <p className=''>
-              + Submit on Facebook Group "PunkgaMe - Vietnam Comic Artists Association" with hashtag{' '}
-              <span className='text-info-400'>#PunkgaMe #AVA2024 #AVARound1</span>
+              + Submit on Facebook Group{' '}
+              <Link target='_blank' className='text-info-400' href='https://www.facebook.com/groups/1245774482777852'>
+                "PunkgaMe - Vietnam Comic Artists Association"
+              </Link>
+              with hashtag <span className='text-info-400'>#PunkgaMe #AVA2024 #AVARound1</span>
             </p>
             <p className=''>
               + Submit on X with hashtag <span className='text-info-400'>#PunkgaMe #AVA2024 #AVARound1</span>
@@ -100,7 +103,7 @@ export default function Rules() {
                     </Link>
                   </p>
                   <p>
-                    - Submit 1 A4 page using the provided template, introducing a full-body character (front or 3/4
+                    - Submit 01 A4 page using the provided template, introducing a full-body character (front or 3/4
                     view) and 1 avatar (1:1 ratio, 1500x1500px) to create an exclusive IP in the IP room.
                   </p>
                   <p>
@@ -108,7 +111,7 @@ export default function Rules() {
                     character.
                   </p>
                   <p>- The artwork must be in colour.</p>
-                  <p>- Submit both English and Vietnamese versions.</p>
+                  <p>- Submit in English.</p>
                   <p>- Use any font (ensure readability).</p>
                   <h4 className='font-medium mt-1'>D/ Note:</h4>
                   <p>
@@ -227,7 +230,7 @@ export default function Rules() {
             <p>- 02 Artistic Merit Award: $400 USD each</p>
             <p>- 03 Best Emerging Artist: $120 USD each</p>
             <p>- 10 Consolation Prizes: $40 USD each</p>
-            <h4 className='font-medium mt-1'>F/ Quest Campaign Prizes:</h4>
+            <h4 className='font-medium mt-1'>G/ Quest Campaign Prizes:</h4>
             <p>- 1 Top Leaderboard: $80 USD</p>
             <p>- 10 Lucky Angles: $40 USD</p>
           </div>
@@ -301,8 +304,11 @@ export default function Rules() {
             </p>
             <p>- Không bắt buộc:</p>
             <p className=''>
-              + Nộp bài trên Group Facebook "PunkgaMe - Hội họa sĩ truyện tranh Việt Nam" kèm hashtag{' '}
-              <span className='text-info-400'>#PunkgaMe #AVA2024 #AVARound1</span>
+              + Nộp bài trên Group Facebook{' '}
+              <Link target='_blank' className='text-info-400' href='https://www.facebook.com/groups/1245774482777852'>
+                "PunkgaMe - Hội họa sĩ truyện tranh Việt Nam"
+              </Link>
+              kèm hashtag <span className='text-info-400'>#PunkgaMe #AVA2024 #AVARound1</span>
             </p>
             <p className=''>
               + Nộp bài trên X kèm hashtag <span className='text-info-400'>#PunkgaMe #AVA2024 #AVARound1</span>
@@ -489,9 +495,9 @@ export default function Rules() {
             <p>- Top 1 bình chọn trên Group Facebook: 1.000.000 VNĐ</p>
 
             <h4 className='font-medium mt-1'>D/ Giải Most Collected IP:</h4>
-            <p>- Top 1 IP được sử dụng nhiều nhất: 3,000,000 VNĐ</p>
-            <p>- Top 2 IP được sử dụng nhiều nhất: 2,000,000 VNĐ</p>
-            <p>- Top 3 IP được sử dụng nhiều nhất: 1,000,000 VNĐ</p>
+            <p>- Top 1 IP được sử dụng nhiều nhất: 3.000.000 VNĐ</p>
+            <p>- Top 2 IP được sử dụng nhiều nhất: 2.000.000 VNĐ</p>
+            <p>- Top 3 IP được sử dụng nhiều nhất: 1.000.000 VNĐ</p>
 
             <h4 className='font-medium mt-1'>E/ Giải tương tác, đóng góp cho cộng đồng:</h4>
             <p>- Dành cho 10 bạn, mỗi giải 1.000.000 VNĐ</p>
@@ -504,8 +510,8 @@ export default function Rules() {
             <p>- 03 Giải Ba: 3.000.000 VNĐ / giải</p>
             <p>- 10 Giải Khuyến Khích: 1.000.000 VNĐ / giải</p>
             <h4 className='font-medium mt-1'>G/ Quest Campaign Award:</h4>
-            <p>- 1 Giải Top Leaderboard: 2,000,000 VNĐ</p>
-            <p>10 giải may mắn: 1,000,000 VNĐ/ giải</p>
+            <p>- 1 Giải Top Leaderboard: 2.000.000 VNĐ</p>
+            <p>10 giải may mắn: 1.000.000 VNĐ/ giải</p>
           </div>
 
           <div className='mt-5'>

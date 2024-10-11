@@ -83,6 +83,7 @@ export default function SignInModal() {
 }
 
 const ByWallet = ({ step }) => {
+  
   const { t } = useTranslation()
   const { connectors, connectAsync: wagmiConnect } = useConnect()
   const { connectHandler } = useContext(Context)
@@ -95,7 +96,6 @@ const ByWallet = ({ step }) => {
   const [loading, setLoading] = useState(false)
   const [showQRCode, setShowQRCode] = useState(false)
   const [qrError, setQRError] = useState('')
-
   useEffect(() => {
     const setConnector = async () => {
       const installedWallet = [] as Connector[]

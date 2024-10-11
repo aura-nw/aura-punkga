@@ -18,6 +18,7 @@ import { getItem, removeItem, setItem } from 'src/utils/localStorage'
 import { useAccount, useChainId, useDisconnect, useSignMessage, useSwitchChain } from 'wagmi'
 import ModalProvider from './modals'
 import { toast } from 'react-toastify'
+import { storyChain } from 'src/services/wagmi/config'
 const queryClient = new QueryClient()
 
 export const Context = createContext<{
@@ -60,7 +61,7 @@ function ContextProvider({ children }: any) {
   const chainId = useChainId()
   const { signMessage } = useSignMessage()
   const { switchChain } = useSwitchChain()
-  const { disconnect } = useDisconnect()
+  const { disconnectAsync } = useDisconnect()
   const [account, setAccount] = useState<IUser>()
   const [wallet, setWallet] = useState<string>()
   const [level, setLevel] = useState(undefined)
@@ -147,10 +148,14 @@ function ContextProvider({ children }: any) {
 
   const connectHandler = async (data: any) => {
     try {
-      if (chainId != config.CHAIN_INFO.evmChainId) {
+      let targetChainId = config.CHAIN_INFO.evmChainId
+      if (location.pathname.includes('ava-2024')) {
+        targetChainId = storyChain.id
+      }
+      if (chainId != targetChainId) {
         switchChain(
           {
-            chainId: config.CHAIN_INFO.evmChainId,
+            chainId: targetChainId,
           },
           {
             onSuccess: () => signConnectMessage(data),
@@ -168,7 +173,6 @@ function ContextProvider({ children }: any) {
     const domain = window.location.host
     const origin = window.location.origin
     const statement = 'Sign in with Aura Network to the app.'
-    console.log(data)
     const addr = data?.accounts[0] || address
     const siweMessage = new SiweMessage({
       scheme: undefined,
@@ -354,7 +358,7 @@ function ContextProvider({ children }: any) {
   const logout = async () => {
     try {
       await authorizerRef.logout()
-      disconnect()
+      await disconnectAsync()
       removeItem('token')
       removeItem('current_reading_manga')
       setAccount(undefined)

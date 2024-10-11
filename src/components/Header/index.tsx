@@ -160,7 +160,7 @@ export default function Header({ className }: { className?: string }) {
           isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
         }`}></div>
       <header
-        className={`sticky w-full top-0 z-50 transition-all duration-300 lg:h-[80px] bg-neautral-black lg:bg-transparent ${className}`}>
+        className={`sticky w-full top-0 z-50 transition-all duration-300 lg:h-24 bg-neautral-black lg:bg-transparent ${className}`}>
         <nav className='lg:hidden pk-container z-10 w-full shadow-[0px_4px_4px_0px_#0000001A]'>
           <div className='flex justify-between items-center gap-2 w-full h-14'>
             <div onClick={() => router.push('/')}>
