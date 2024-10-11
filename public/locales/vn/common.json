@@ -60,7 +60,7 @@
   "Link Wallet": "Kết nối ví",
   "Invalid email format": "Email không hợp lệ",
   "Something went wrong": "Có lỗi xảy ra",
-  "Sign in to Punkga": "Đăng nhập vào Pungka",
+  "Sign in to Punkga": "Đăng nhập vào Punkga",
   "Subscribe, receive notifications and unlock special chapters": "Đăng ký, nhận thông báo và mở khóa các chương đặc biệt",
   "Enter your email": "Nhập email",
   "Enter your password": "Nhập mật khẩu",
@@ -408,8 +408,12 @@
   "Oldest": "Cũ nhất",
   "Most collected": "Thu thập nhiều nhất",
   "Least collected": "Thu thập ít nhất",
-  "Collect IP License": "Thu thập IP",
+  "Collect IP License": "Thu thập giấy phép sử dụng IP",
   "My collected characters": "Nhân vật đã thu thập",
+  "Collect IP": "Thu thập",
+  "Loading": "Đang xử lý",
+  "Submitting": "Đang gửi",
+  "Dream point": "Điểm Dream",
   ".": "",
   "": ""
 }

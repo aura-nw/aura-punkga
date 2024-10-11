@@ -12,7 +12,7 @@ export default function Award() {
         <div className='flex flex-col items-center bg-neutral-950 py-5 px-14 border-[3px] w-full border-black'>
           <div className='text-lg font-bold rounded-md bg-[#A967FF] px-2 py-0.5'>Tổng giải thưởng</div>
           <Image src={Ava} alt='' className='w-[138px] h-auto' />
-          <div className='font-jaro text-2xl rounded-md bg-black text-center mt-2 w-full'>150.000.000 VND</div>
+          <div className='font-jaro text-2xl rounded-md bg-black text-center mt-2 w-full'>152.000.000 VND</div>
           <div className='font-medium mt-2'>53 giải thưởng</div>
         </div>
         <div className='w-full border-t border-dashed border-white my-4'></div>

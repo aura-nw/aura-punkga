@@ -2,7 +2,7 @@ import TextField from 'components/Input/TextField'
 import Image from 'next/image'
 import { useContext, useState } from 'react'
 import Frame from 'components/pages/event/ava-2024/assets/frame.svg'
-import Placeholder from 'components/pages/event/ava-2024/assets/placeholder.svg'
+import Placeholder from 'components/pages/event/ava-2024/assets/placeholder.png'
 import { toast } from 'react-toastify'
 import { eventService } from 'src/services/event.service'
 import useSWR from 'swr'
@@ -160,7 +160,7 @@ export default function Round1Submission() {
             loading && 'opacity-70 pointer-events-none'
           }`}
           onClick={submitHandler}>
-          {t(loading ? 'Loading' : 'submit2')}
+          {t(loading ? 'Submitting' : 'submit2')}
         </div>
       </div>
       <div className='rounded-md border-[3px] border-neutral-black bg-neautral-950 p-6'>

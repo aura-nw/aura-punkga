@@ -203,15 +203,22 @@ export default function Rules() {
             <p>- 3rd Most Impressive Artwork: $40 USD</p>
             <p>- Top 1 Vote on X (formerly Twitter): $40 USD</p>
             <p>- Top 1 Vote on Facebook Group: $40 USD</p>
-            <h4 className='font-medium mt-1'>D/ Interaction & Community Contribution Prizes:</h4>
-            <p>- For 10 participants, each prize is $40 USD</p>
-            <h4 className='font-medium mt-1'>E/ Final Prizes:</h4>
+            <h4 className='font-medium mt-1'>D/ Most Collected IP Prizes:</h4>
+            <p>- The Most Collected IP - Top 1: $120 USD</p>
+            <p>- The Most Collected IP - Top 2: $80 USD</p>
+            <p>- The Most Collected IP - Top 3: $40 USD</p>
+            <h4 className='font-medium mt-1'>E/ Interaction & Community Contribution Prizes:</h4>
+            <p>For 10 participants, each prize is $40 USD</p>
+            <h4 className='font-medium mt-1'>F/ Final Prizes:</h4>
             <p>Note: Final prizes are only for participants who have completed all 3 rounds</p>
             <p>- 01 Masterpiece Award: $1,200 USD</p>
             <p>- 01 Excellence Award: $600 USD</p>
             <p>- 02 Artistic Merit Award: $400 USD each</p>
             <p>- 03 Best Emerging Artist: $120 USD each</p>
             <p>- 10 Consolation Prizes: $40 USD each</p>
+            <h4 className='font-medium mt-1'>F/ Quest Campaign Prizes:</h4>
+            <p>- 1 Top Leaderboard: $80 USD</p>
+            <p>- 10 Lucky Angles: $40 USD</p>
           </div>
           <div className='mt-5'>
             <h2 className='font-bold text-lg'>6/ Other Benefits</h2>
@@ -280,125 +287,158 @@ export default function Rules() {
 
           <div className='mt-5'>
             <h2 className='font-bold text-lg'>4/ Thời gian và thể lệ các vòng</h2>
-
-            <h3 className='font-bold mt-4'>Vòng 1: Your Artistic Voice - Tiếng nói nghệ thuật của bạn</h3>
-            <h4 className='font-medium mt-1'>A/ Thời gian diễn ra:</h4>
-            <p>- Từ 12/10 - 18/10</p>
-            <h4 className='font-medium mt-1'>B/ Nội dung:</h4>
-            <p>
-              - Sau khi nhân vật bí ẩn tìm đến Thỏ Punka và Thỏ Min, họ cần thêm sự giúp đỡ để thành lập đội quân nghệ
-              sĩ chống lại trí tuệ nhân tạo xấu trong tương lai. Người đó chính là bạn.
-            </p>
-            <h4 className='font-medium mt-1'>C/ Yêu cầu bài dự thi:</h4>
-            <p>
-              - Bài thi mẫu, thí sinh tham khảo{' '}
-              <Link
-                className='text-info-500'
-                href='https://drive.google.com/drive/folders/1g9O2PBVOlLA6ZWnnxBb6KX1-bNMlXW-P?usp=drive_link'
-                target='_blank'>
-                TẠI ĐÂY
-              </Link>
-            </p>
-            <p>
-              - Template Vòng 1: Thí sinh vui lòng lấy{' '}
-              <Link
-                className='text-info-500'
-                href='https://drive.google.com/drive/folders/1JS-exiM9ENtKKTk7y1P0lkT6uF3SJYO0?usp=drive_link'
-                target='_blank'>
-                TẠI ĐÂY
-              </Link>
-            </p>
-            <p>
-              - Nộp 01 trang A4 theo Template của BTC, giới thiệu nhân vật full body góc chính diện hoặc 3/4 và 01
-              avatar nhân vật đó theo tỷ lệ 1:1 (1500x1500px) để tạo IP độc quyền trong IP room.
-            </p>
-            <p>
-              - Ở bài dự thi trang A4, ghi chú thêm một vài thông tin: tên, nghề nghiệp, quan điểm sáng tạo nghệ thuật
-              và phong cách nghệ thuật của nhân vật.
-            </p>
-            <p>- Tác phẩm bắt buộc có màu.</p>
-            <p>- Bắt buộc nộp 02 bản ENG và VIE.</p>
-            <p>- Sử dụng font tùy thích (số lượng chữ và kích thước cần dễ đọc).</p>
-            <h4 className='font-medium mt-1'>D/ Lưu ý:</h4>
-            <p>
-              - Avatar của bạn trong Vòng 1 sẽ được lưu trữ tại IP room, khi click vào Avatar bạn cũng có thể xem được
-              bài dự thi full Vòng 1 của mình.
-            </p>
-
-            <h3 className='font-bold mt-4'>Vòng 2: The Art of Storytelling - Nghệ thuật kể chuyện</h3>
-            <h4 className='font-medium mt-1'>A/ Thời gian diễn ra:</h4>
-            <p>- Từ 19/10 - 01/11</p>
-            <h4 className='font-medium mt-1'>B/ Nội dung:</h4>
-            <p>
-              - Hãy chia sẻ về câu chuyện sáng tạo nghệ thuật hoặc những trải nghiệm của bạn trong quá trình sáng tạo
-              nghệ thuật. Câu chuyện nên có sự trọn vẹn và truyền tải thông điệp mang tinh thần tích cực, thể hiện được
-              quan điểm của cá nhân bạn về giá trị thuần túy mà nghệ thuật đem lại cho cuộc sống. Đây chính là chìa khóa
-              để tạo ra những vũ khí mạnh mẽ.
-            </p>
-            <h4 className='font-medium mt-1'>C/ Yêu cầu bài dự thi:</h4>
-            <p>- Bài dự thi từ 3-10 trang (không tính trang bìa).</p>
-            <p>- Bài thi không có thoại (Silent manga) và chỉ được sử dụng hình ảnh để kể câu chuyện của mình.</p>
-            <p>
-              - Trong bài thi, bắt buộc phải có sự xuất hiện của "Lồng đèn cỏ 4 lá". Thí sinh có thể thỏa sức sáng tạo
-              và thiết kế hình ảnh lồng đèn theo phong cách riêng của mình, hoặc có thể tham khảo và sử dụng hình ảnh
-              mẫu của Ban Tổ Chức{' '}
-              <Link
-                className='text-info-500'
-                href='https://drive.google.com/file/d/1mxDR8G9zfIjb_96xD8cz6w-1TmPXVjNS/view?usp=drive_link'
-                target='_blank'>
-                TẠI ĐÂY
-              </Link>
-            </p>
-            <p>- Kích thước khổ A4, tối đa 1 trang đôi.</p>
-            <p>- Không nhất thiết có màu.</p>
-            <h4 className='font-medium mt-1'>D/ Lưu ý:</h4>
-            <p>- Bài thi không có thoại và chỉ được sử dụng hình ảnh để kể câu chuyện của mình.</p>
-            <p>
-              - Mỗi thí sinh tham gia vòng 2 sẽ có luôn 03 Aura Point, bạn có thể dùng Aura Point đổi lấy nhân vật của
-              thí sinh khác để cameo, mỗi nhân vật tương ứng 01 Aura Point. Vậy tối đa mỗi thí sinh được đổi lấy 03 nhân
-              vật khác trong IP room để dùng cho bài dự thi của mình. Bên cạnh đó trong IP Room cũng có một vài IP miễn
-              phí khác đến từ BTC và các đơn vị đồng hành, bạn đều có thể sử dụng chúng một cách miễn phí. Điểm tối đa
-              là 09 điểm.
-            </p>
-            <p>
-              - Mỗi IP xuất hiện trong truyện của bạn tại vòng 2 đều sẽ được tính thêm 1 điểm cộng vào tổng điểm Vòng 2
-              (bao gồm cả các IP miễn phí).
-            </p>
-            <p>
-              - Bạn không cần tham gia Vòng 1 để được tham gia Vòng 2. Tuy nhiên để có cơ hội tham gia tranh giải chung
-              cuộc, bạn buộc phải nộp bài Vòng 1.
-            </p>
-
-            <h3 className='font-bold mt-4'>Vòng 3: The meaning of Pure Art - Ý nghĩa của nghệ thuật thuần túy</h3>
-            <h4 className='font-medium mt-1'>A/ Thời gian diễn ra:</h4>
-            <p>- Từ ngày 02/11 - 09/11</p>
-            <h4 className='font-medium mt-1'>B/ Nội dung:</h4>
-            <p>
-              - Khi kẻ địch đã suy yếu, một đòn dứt điểm là cần thiết. Đây chính là vũ khí mạnh nhất của những nghệ sĩ.
-              Ở vòng này, hãy đúc kết những giá trị và thông điệp bạn muốn truyền tải xuyên suốt câu chuyện bạn đã kể ở
-              vòng 2.
-            </p>
-            <h4 className='font-medium mt-1'>C/ Yêu cầu bài dự thi:</h4>
-            <p>- Bài dự thi chỉ nộp 01 trang kích thước khổ A3 ngang.</p>
-            <p>
-              - Trong bài thi, bắt buộc phải có sự xuất hiện của "Lồng đèn cỏ 4 lá". Thí sinh có thể thỏa sức sáng tạo
-              và thiết kế hình ảnh lồng đèn theo phong cách riêng của mình, hoặc có thể tham khảo và sử dụng hình ảnh
-              mẫu của Ban Tổ Chức{' '}
-              <Link
-                className='text-info-500'
-                href='https://drive.google.com/file/d/1mxDR8G9zfIjb_96xD8cz6w-1TmPXVjNS/view?usp=drive_link'
-                target='_blank'>
-                TẠI ĐÂY
-              </Link>
-              .
-            </p>
-            <p>- Khuyến khích có màu.</p>
-            <h4 className='font-medium mt-1'>D/ Lưu ý:</h4>
-            <p>
-              - Bạn không cần tham gia Vòng 2 để được tham gia Vòng 3. Tuy nhiên, để có cơ hội tham gia tranh giải chung
-              cuộc, bạn buộc phải nộp bài Vòng 2.
-            </p>
-            <p>- Những thí sinh tham gia đủ 3 Vòng sẽ dành được cơ hội tranh giải chung cuộc.</p>
+            <div className='mt-4 flex gap-2 -skew-x-12'>
+              <div className='h-9 w-3 rounded bg-white'></div>
+              <div
+                className={`h-9 grid place-items-center rounded ${
+                  round == 1 ? 'bg-white text-black' : 'bg-gray-500 text-white'
+                } text-sm font-semibold px-3.5 cursor-pointer`}
+                onClick={() => setRound(1)}>
+                <span className='skew-x-12'>Vòng 1</span>
+              </div>
+              <div
+                className={`h-9 grid place-items-center rounded ${
+                  round == 2 ? 'bg-white text-black' : 'bg-gray-500 text-white'
+                } text-sm font-semibold px-3.5 cursor-pointer`}
+                onClick={() => setRound(2)}>
+                <span className='skew-x-12'>Vòng 2</span>
+              </div>
+              <div
+                className={`h-9 grid place-items-center rounded ${
+                  round == 3 ? 'bg-white text-black' : 'bg-gray-500 text-white'
+                } text-sm font-semibold px-3.5 cursor-pointer`}
+                onClick={() => setRound(3)}>
+                <span className='skew-x-12'>Vòng 3</span>
+              </div>
+            </div>
+            <div className='mt-4'>
+              {round == 1 ? (
+                <>
+                  <h3 className='font-bold mt-4'>Vòng 1: Your Artistic Voice - Tiếng nói nghệ thuật của bạn</h3>
+                  <h4 className='font-medium mt-1'>A/ Thời gian diễn ra:</h4>
+                  <p>- Từ 12/10 - 18/10</p>
+                  <h4 className='font-medium mt-1'>B/ Nội dung:</h4>
+                  <p>
+                    - Sau khi nhân vật bí ẩn tìm đến Thỏ Punka và Thỏ Min, họ cần thêm sự giúp đỡ để thành lập đội quân
+                    nghệ sĩ chống lại trí tuệ nhân tạo xấu trong tương lai. Người đó chính là bạn.
+                  </p>
+                  <h4 className='font-medium mt-1'>C/ Yêu cầu bài dự thi:</h4>
+                  <p>
+                    - Bài thi mẫu, thí sinh tham khảo{' '}
+                    <Link
+                      className='text-info-500'
+                      href='https://drive.google.com/drive/folders/1g9O2PBVOlLA6ZWnnxBb6KX1-bNMlXW-P?usp=drive_link'
+                      target='_blank'>
+                      TẠI ĐÂY
+                    </Link>
+                  </p>
+                  <p>
+                    - Template Vòng 1: Thí sinh vui lòng lấy{' '}
+                    <Link
+                      className='text-info-500'
+                      href='https://drive.google.com/drive/folders/1JS-exiM9ENtKKTk7y1P0lkT6uF3SJYO0?usp=drive_link'
+                      target='_blank'>
+                      TẠI ĐÂY
+                    </Link>
+                  </p>
+                  <p>
+                    - Nộp 01 trang A4 theo Template của BTC, giới thiệu nhân vật full body góc chính diện hoặc 3/4 và 01
+                    avatar nhân vật đó theo tỷ lệ 1:1 (1500x1500px) để tạo IP độc quyền trong IP room.
+                  </p>
+                  <p>
+                    - Ở bài dự thi trang A4, ghi chú thêm một vài thông tin: tên, nghề nghiệp, quan điểm sáng tạo nghệ
+                    thuật và phong cách nghệ thuật của nhân vật.
+                  </p>
+                  <p>- Tác phẩm bắt buộc có màu.</p>
+                  <p>- Bắt buộc nộp 02 bản ENG và VIE.</p>
+                  <p>- Sử dụng font tùy thích (số lượng chữ và kích thước cần dễ đọc).</p>
+                  <h4 className='font-medium mt-1'>D/ Lưu ý:</h4>
+                  <p>
+                    - Avatar của bạn trong Vòng 1 sẽ được lưu trữ tại IP room, khi click vào Avatar bạn cũng có thể xem
+                    được bài dự thi full Vòng 1 của mình.
+                  </p>
+                </>
+              ) : round == 2 ? (
+                <>
+                  <h3 className='font-bold mt-4'>Vòng 2: The Art of Storytelling - Nghệ thuật kể chuyện</h3>
+                  <h4 className='font-medium mt-1'>A/ Thời gian diễn ra:</h4>
+                  <p>- Từ 19/10 - 01/11</p>
+                  <h4 className='font-medium mt-1'>B/ Nội dung:</h4>
+                  <p>
+                    - Hãy chia sẻ về câu chuyện sáng tạo nghệ thuật hoặc những trải nghiệm của bạn trong quá trình sáng
+                    tạo nghệ thuật. Câu chuyện nên có sự trọn vẹn và truyền tải thông điệp mang tinh thần tích cực, thể
+                    hiện được quan điểm của cá nhân bạn về giá trị thuần túy mà nghệ thuật đem lại cho cuộc sống. Đây
+                    chính là chìa khóa để tạo ra những vũ khí mạnh mẽ.
+                  </p>
+                  <h4 className='font-medium mt-1'>C/ Yêu cầu bài dự thi:</h4>
+                  <p>- Bài dự thi từ 3-10 trang (không tính trang bìa).</p>
+                  <p>- Bài thi không có thoại (Silent manga) và chỉ được sử dụng hình ảnh để kể câu chuyện của mình.</p>
+                  <p>
+                    - Trong bài thi, bắt buộc phải có sự xuất hiện của "Lồng đèn cỏ 4 lá". Thí sinh có thể thỏa sức sáng
+                    tạo và thiết kế hình ảnh lồng đèn theo phong cách riêng của mình, hoặc có thể tham khảo và sử dụng
+                    hình ảnh mẫu của Ban Tổ Chức{' '}
+                    <Link
+                      className='text-info-500'
+                      href='https://drive.google.com/file/d/1mxDR8G9zfIjb_96xD8cz6w-1TmPXVjNS/view?usp=drive_link'
+                      target='_blank'>
+                      TẠI ĐÂY
+                    </Link>
+                  </p>
+                  <p>- Kích thước khổ A4, tối đa 1 trang đôi.</p>
+                  <p>- Không nhất thiết có màu.</p>
+                  <h4 className='font-medium mt-1'>D/ Lưu ý:</h4>
+                  <p>- Bài thi không có thoại và chỉ được sử dụng hình ảnh để kể câu chuyện của mình.</p>
+                  <p>
+                    - Mỗi thí sinh tham gia vòng 2 sẽ có luôn 03 Aura Point, bạn có thể dùng Aura Point đổi lấy nhân vật
+                    của thí sinh khác để cameo, mỗi nhân vật tương ứng 01 Aura Point. Vậy tối đa mỗi thí sinh được đổi
+                    lấy 03 nhân vật khác trong IP room để dùng cho bài dự thi của mình. Bên cạnh đó trong IP Room cũng
+                    có một vài IP miễn phí khác đến từ BTC và các đơn vị đồng hành, bạn đều có thể sử dụng chúng một
+                    cách miễn phí. Điểm tối đa là 09 điểm.
+                  </p>
+                  <p>
+                    - Mỗi IP xuất hiện trong truyện của bạn tại vòng 2 đều sẽ được tính thêm 1 điểm cộng vào tổng điểm
+                    Vòng 2 (bao gồm cả các IP miễn phí).
+                  </p>
+                  <p>
+                    - Bạn không cần tham gia Vòng 1 để được tham gia Vòng 2. Tuy nhiên để có cơ hội tham gia tranh giải
+                    chung cuộc, bạn buộc phải nộp bài Vòng 1.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <h3 className='font-bold mt-4'>Vòng 3: The meaning of Pure Art - Ý nghĩa của nghệ thuật thuần túy</h3>
+                  <h4 className='font-medium mt-1'>A/ Thời gian diễn ra:</h4>
+                  <p>- Từ ngày 02/11 - 09/11</p>
+                  <h4 className='font-medium mt-1'>B/ Nội dung:</h4>
+                  <p>
+                    - Khi kẻ địch đã suy yếu, một đòn dứt điểm là cần thiết. Đây chính là vũ khí mạnh nhất của những
+                    nghệ sĩ. Ở vòng này, hãy đúc kết những giá trị và thông điệp bạn muốn truyền tải xuyên suốt câu
+                    chuyện bạn đã kể ở vòng 2.
+                  </p>
+                  <h4 className='font-medium mt-1'>C/ Yêu cầu bài dự thi:</h4>
+                  <p>- Bài dự thi chỉ nộp 01 trang kích thước khổ A3 ngang.</p>
+                  <p>
+                    - Trong bài thi, bắt buộc phải có sự xuất hiện của "Lồng đèn cỏ 4 lá". Thí sinh có thể thỏa sức sáng
+                    tạo và thiết kế hình ảnh lồng đèn theo phong cách riêng của mình, hoặc có thể tham khảo và sử dụng
+                    hình ảnh mẫu của Ban Tổ Chức{' '}
+                    <Link
+                      className='text-info-500'
+                      href='https://drive.google.com/file/d/1mxDR8G9zfIjb_96xD8cz6w-1TmPXVjNS/view?usp=drive_link'
+                      target='_blank'>
+                      TẠI ĐÂY
+                    </Link>
+                    .
+                  </p>
+                  <p>- Khuyến khích có màu.</p>
+                  <h4 className='font-medium mt-1'>D/ Lưu ý:</h4>
+                  <p>
+                    - Bạn không cần tham gia Vòng 2 để được tham gia Vòng 3. Tuy nhiên, để có cơ hội tham gia tranh giải
+                    chung cuộc, bạn buộc phải nộp bài Vòng 2.
+                  </p>
+                  <p>- Những thí sinh tham gia đủ 3 Vòng sẽ dành được cơ hội tranh giải chung cuộc.</p>
+                </>
+              )}
+            </div>
           </div>
 
           <div className='mt-5'>
@@ -424,16 +464,24 @@ export default function Rules() {
             <p>- Top 1 bình chọn trên X: 1.000.000 VNĐ</p>
             <p>- Top 1 bình chọn trên Group Facebook: 1.000.000 VNĐ</p>
 
-            <h4 className='font-medium mt-1'>D/ Giải tương tác, đóng góp cho cộng đồng:</h4>
+            <h4 className='font-medium mt-1'>D/ Giải Most Collected IP:</h4>
+            <p>- Top 1 IP được sử dụng nhiều nhất: 3,000,000 VNĐ</p>
+            <p>- Top 2 IP được sử dụng nhiều nhất: 2,000,000 VNĐ</p>
+            <p>- Top 3 IP được sử dụng nhiều nhất: 1,000,000 VNĐ</p>
+
+            <h4 className='font-medium mt-1'>E/ Giải tương tác, đóng góp cho cộng đồng:</h4>
             <p>- Dành cho 10 bạn, mỗi giải 1.000.000 VNĐ</p>
 
-            <h4 className='font-medium mt-1'>E/ Giải thưởng chung cuộc:</h4>
+            <h4 className='font-medium mt-1'>F/ Giải thưởng chung cuộc:</h4>
             <p>- Lưu ý: Giải thưởng chung cuộc chỉ dành cho những bạn đã tham gia cả 3 Vòng thi.</p>
             <p>- 01 Giải Đặc Biệt: 30.000.000 VNĐ</p>
             <p>- 01 Giải Nhất: 15.000.000 VNĐ</p>
             <p>- 02 Giải Nhì: 10.000.000 VNĐ / giải</p>
             <p>- 03 Giải Ba: 3.000.000 VNĐ / giải</p>
             <p>- 10 Giải Khuyến Khích: 1.000.000 VNĐ / giải</p>
+            <h4 className='font-medium mt-1'>G/ Quest Campaign Award:</h4>
+            <p>- 1 Giải Top Leaderboard: 2,000,000 VNĐ</p>
+            <p>10 giải may mắn: 1,000,000 VNĐ/ giải</p>
           </div>
 
           <div className='mt-5'>

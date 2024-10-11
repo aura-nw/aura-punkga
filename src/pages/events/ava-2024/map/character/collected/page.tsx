@@ -49,6 +49,7 @@ export default function Event() {
       }
       setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1))
       setIsLiked((prevState) => !prevState)
+      mutate()
     } catch (error) {
       toast(error.message, {
         type: 'error',

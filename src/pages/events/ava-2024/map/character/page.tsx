@@ -22,6 +22,7 @@ import { Context } from 'src/context'
 import { eventService } from 'src/services/event.service'
 import { ModalContext } from 'src/context/modals'
 import { shorten } from 'src/utils'
+import Tooltip from 'components/Tooltip'
 
 export default function Event() {
   const { locale } = useRouter()
@@ -145,10 +146,12 @@ export default function Event() {
                   <div className='flex justify-between items-center h-10'>
                     <div className='text-3xl font-medium'>{t('Character')}</div>
                     <div className='flex gap-2.5'>
-                      <div className='h-10 rounded-md px-4 flex gap-2 items-center justify-center bg-[#191919]'>
-                        <Image src={Point} alt='' className='w-8 h-auto' />
-                        <span className='text-sm font-semibold'>{3 - (collectedCharacter?.length || 0)}</span>
-                      </div>
+                      <Tooltip label={t('Dream point')}>
+                        <div className='h-10 rounded-md px-4 flex gap-2 items-center justify-center bg-[#191919]'>
+                          <Image src={Point} alt='' className='w-8 h-auto' />
+                          <span className='text-sm font-semibold'>{3 - (collectedCharacter?.length || 0)}</span>
+                        </div>
+                      </Tooltip>
                       <Dropdown>
                         <DropdownToggle>
                           <div className='h-10 rounded-md px-4 flex gap-2 items-center justify-center bg-[#191919] cursor-pointer'>
@@ -215,6 +218,27 @@ export default function Event() {
                       </Dropdown>
                     </div>
                   </div>
+                  {locale == 'vn' ? (
+                    <p className='text-xs leading-[18px] mt-2 font-medium'>
+                      Đây là những nhân vật được sáng tạo bởi người tham gia cuộc thi. Bạn có thể thu thập tối đa 3 nhân
+                      vật để có quyền sử dụng hình ảnh của chúng trong truyện và tranh của bạn. Mỗi nhân vật sẽ tốn 1
+                      Dream để thu thập
+                      <br />
+                      Ngoài ra chúng tôi có những IP mặc định để bạn có thể sử dụng chúng miễn phí mà không cần thu thập
+                      <br />
+                      Tất cả các nhân vật đều được đăng ký là tài sản trí tuệ (IP) tại Story Protocol
+                    </p>
+                  ) : (
+                    <p className='text-xs leading-[18px] mt-2 font-medium'>
+                      Here are all the characters created by participants of the contest. You can collect up to 3 of
+                      them to have the right to use their images in your submission. Each character will cost you 1
+                      Clover.
+                      <br />
+                      Additionally, we offer some default IPs that you can use for free without needing to collect them.
+                      <br />
+                      All characters are registered as Intellectual Property (IP) on Story Protocol.
+                    </p>
+                  )}
                   <div className='grid grid-cols-2 md:grid-cols-4 gap-5 mt-6'>
                     {characters
                       ?.sort((a, b) =>
@@ -305,12 +329,12 @@ export default function Event() {
                         <div className='space-y-1.5 flex-1 min-w-0'>
                           {characterData?.is_default_character && <div className='text-sm mt-3'>{t('Free')}</div>}
                           <div className='font-jaro text-2xl line-clamp-2'>{characterData?.name}</div>
-                          {characterData.story_ip_asset?.ip_asset_id && (
+                          {characterData?.story_ip_asset?.ip_asset_id && (
                             <Link
-                              href={`https://explorer.story.foundation/ipa/${characterData.story_ip_asset?.ip_asset_id}`}
+                              href={`https://explorer.story.foundation/ipa/${characterData?.story_ip_asset?.ip_asset_id}`}
                               target='_blank'
                               className='text-brand-default text-sm'>
-                              {shorten(characterData.story_ip_asset?.ip_asset_id)}
+                              {shorten(characterData?.story_ip_asset?.ip_asset_id)}
                             </Link>
                           )}
                           <div className='text-sm font-medium'>
@@ -370,9 +394,11 @@ export default function Event() {
                         </div>
                       </div>
                       <div className='flex gap-1.5 mt-4'>
-                        {!(characterData?.is_default_character ||
+                        {!(
+                          characterData?.is_default_character ||
                           isCollected ||
-                          (collectedCharacter?.length || 0) >= 3) && (
+                          (collectedCharacter?.length || 0) >= 3
+                        ) && (
                           <Button
                             color='neautral'
                             size='sm'
@@ -433,12 +459,12 @@ export default function Event() {
                   <div className='space-y-1.5 flex-1 min-w-0'>
                     {characterData?.is_default_character && <div className='text-sm mt-3'>{t('Free')}</div>}
                     <div className='font-jaro text-2xl line-clamp-2'>{characterData?.name}</div>
-                    {characterData.story_ip_asset?.ip_asset_id && (
+                    {characterData?.story_ip_asset?.ip_asset_id && (
                       <Link
-                        href={`https://explorer.story.foundation/ipa/${characterData.story_ip_asset?.ip_asset_id}`}
+                        href={`https://explorer.story.foundation/ipa/${characterData?.story_ip_asset?.ip_asset_id}`}
                         target='_blank'
                         className='text-brand-default text-sm'>
-                        {shorten(characterData.story_ip_asset?.ip_asset_id)}
+                        {shorten(characterData?.story_ip_asset?.ip_asset_id)}
                       </Link>
                     )}
                     <div className='text-sm font-medium'>
@@ -514,7 +540,7 @@ export default function Event() {
           )}
         </Modal>
       )}
-      <Modal open={open} setOpen={setOpen} title='Collect IP License'>
+      <Modal open={open} setOpen={setOpen} title={t('Collect IP License')}>
         {characterData && (
           <div>
             <div className='p-4 rounded-xl flex flex-col gap-4 items-center bg-neautral-950'>
@@ -525,15 +551,17 @@ export default function Event() {
                 <Image src={Frame} alt='' className='w-32 relative rounded-mlg' />
               </div>
               <div className='text-sm font-semibold text-center'>
-                {`Sure to collect ${characterData?.name} with 1 Dream point?`}
+                {locale == 'en'
+                  ? `Sure to collect ${characterData?.name} with 1 Dream point?`
+                  : `Bạn có chắc chắn muốn thu thập ${characterData?.name} bằng 1 điểm Dream?`}
               </div>
             </div>
             <div className='flex gap-2.5 mt-4 w-full'>
               <Button color='neautral' size='sm' variant='outlined' className='!w-1/3' onClick={() => setOpen(false)}>
-                Cancel
+                {t('Cancel')}
               </Button>
               <Button size='sm' color='neautral' className='!w-2/3' onClick={collectHandler} loading={loading}>
-                Collect IP
+                {t('Collect IP')}
               </Button>
             </div>
           </div>
