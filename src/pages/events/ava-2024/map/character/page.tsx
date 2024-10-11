@@ -77,6 +77,7 @@ export default function Event() {
       toast('Collect character successfully', {
         type: 'success',
       })
+      mutate()
     } catch (error) {
       setLoading(false)
       toast(error.message, {
@@ -86,6 +87,10 @@ export default function Event() {
   }
   const likeHandler = async () => {
     try {
+      if (!account) {
+        setSignInOpen(true)
+        return
+      }
       if (isLiked) {
         await eventService.story.unlikeCharacter(characterData?.id)
       } else {
@@ -93,6 +98,7 @@ export default function Event() {
       }
       setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1))
       setIsLiked((prevState) => !prevState)
+      mutate()
     } catch (error) {
       toast(error.message, {
         type: 'error',
@@ -375,14 +381,23 @@ export default function Event() {
                             }
                           }}>
                           <div className='flex gap-1 w-full justify-between items-center'>
-                            <div>Collect IP License</div>
-                            <div className='flex items-center gap-1'>
-                              -1 <Image src={Point} alt='' className='h-5 w-auto ml-1' />
-                            </div>
+                            {isCollected ? (
+                              <>
+                                <div>{t('Collected')}</div>
+                                <div className='flex items-center gap-1'></div>
+                              </>
+                            ) : (
+                              <>
+                                <div>{t('Collect IP License')}</div>
+                                <div className='flex items-center gap-1'>
+                                  -1 <Image src={Point} alt='' className='h-5 w-auto ml-1' />
+                                </div>
+                              </>
+                            )}
                           </div>
                         </Button>
                         <Button size='sm' color='neautral' className='!w-full' onClick={likeHandler}>
-                          {isLiked ? 'Unlike' : 'Like'}
+                          {t(isLiked ? 'Unlike' : 'Like')}
                         </Button>
                       </div>
                     </div>
@@ -494,7 +509,7 @@ export default function Event() {
                     </div>
                   </Button>
                   <Button size='sm' color='neautral' className='!w-full' onClick={likeHandler}>
-                    {isLiked ? 'Unlike' : 'Like'}
+                    {t(isLiked ? 'Unlike' : 'Like')}
                   </Button>
                 </div>
               </div>
