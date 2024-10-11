@@ -20,11 +20,14 @@ import Link from 'next/link'
 import { toast } from 'react-toastify'
 import { Context } from 'src/context'
 import { eventService } from 'src/services/event.service'
+import { ModalContext } from 'src/context/modals'
+import { shorten } from 'src/utils'
 
 export default function Event() {
   const { locale } = useRouter()
   const { t } = useTranslation()
   const { account } = useContext(Context)
+  const { setSignInOpen } = useContext(ModalContext)
   const [open, setOpen] = useState(false)
   const [likeCount, setLikeCount] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -33,6 +36,7 @@ export default function Event() {
   const [isCollected, setIsCollected] = useState(false)
   const [collectedCount, setCollectedCount] = useState(0)
   const [page, setPage] = useState(1)
+  const [count, setCount] = useState(1)
   const [selectedCharacter, setSelectedCharacter] = useState<any>()
   const [sort, setSort] = useState('Created_At_Desc')
   const [characters, setCharacters] = useState([])
@@ -52,6 +56,7 @@ export default function Event() {
   useEffect(() => {
     if (data?.data?.data?.story_character) {
       setCharacters(data?.data?.data?.story_character)
+      setCount(Math.ceil((data?.data?.data?.story_character_aggregate?.aggregate?.count || 0) / 4))
     }
   }, [data?.data?.data?.story_character])
   useEffect(() => {
@@ -206,7 +211,9 @@ export default function Event() {
                   </div>
                   <div className='grid grid-cols-2 md:grid-cols-4 gap-5 mt-6'>
                     {characters
-                      ?.sort((a, b) => (b.is_default_character === a.is_default_character ? 0 : b.is_default_character ? 1 : -1))
+                      ?.sort((a, b) =>
+                        b.is_default_character === a.is_default_character ? 0 : b.is_default_character ? 1 : -1
+                      )
                       ?.map((character, index) => (
                         <div
                           className={`relative rounded-xl border-[3px] ${
@@ -225,8 +232,13 @@ export default function Event() {
                               width={300}
                               height={300}
                               alt=''
-                              className='w-full relative'
+                              className='w-full aspect-square object-cover relative'
                             />
+                            {character.is_default_character && (
+                              <div className='absolute top-3 right-3 text-xs text-black bg-white rounded-md px-1 font-semibold'>
+                                {t('Free')}
+                              </div>
+                            )}
                           </div>
                           <Image src={Frame} alt='' className='w-full  relative rounded-mlg' />
                         </div>
@@ -238,7 +250,7 @@ export default function Event() {
                       className='[&_.Mui-selected]:!bg-white [&_.Mui-selected]:!text-text-primary [&_.MuiPaginationItem-root:not(.Mui-selected)]:!text-text-quatenary'
                       page={page}
                       onChange={(e, p) => setPage(p)}
-                      count={Math.ceil((data?.data?.data?.story_character_aggregate?.aggregate?.count || 0) / 4)}
+                      count={count}
                     />
                   </div>
                 </div>
@@ -285,7 +297,14 @@ export default function Event() {
                       </div>
                       <div className='flex items-center gap-3 w-full overflow-hidden'>
                         <div className='space-y-1.5 flex-1 min-w-0'>
+                          {characterData?.is_default_character && <div className='text-sm mt-3'>{t('Free')}</div>}
                           <div className='font-jaro text-2xl line-clamp-2'>{characterData?.name}</div>
+                          <Link
+                            href={`https://explorer.story.foundation/ipa/${characterData.story_ip_asset.ip_asset_id}`}
+                            target='_blank'
+                            className='text-brand-default text-sm'>
+                            {shorten(characterData.story_ip_asset.ip_asset_id)}
+                          </Link>
                           <div className='text-sm font-medium'>
                             by <span className='text-brand-default'>{characterData?.authorizer_user.nickname}</span>
                           </div>
@@ -345,8 +364,16 @@ export default function Event() {
                           size='sm'
                           variant='outlined'
                           className='!w-2/3 shrink-0 [&>*]:w-full'
-                          disabled={isCollected || (collectedCharacter?.length || 0) >= 3}
-                          onClick={() => setOpen(true)}>
+                          disabled={
+                            characterData?.is_default_character || isCollected || (collectedCharacter?.length || 0) >= 3
+                          }
+                          onClick={() => {
+                            if (account) {
+                              setOpen(true)
+                            } else {
+                              setSignInOpen(true)
+                            }
+                          }}>
                           <div className='flex gap-1 w-full justify-between items-center'>
                             <div>Collect IP License</div>
                             <div className='flex items-center gap-1'>
@@ -391,7 +418,14 @@ export default function Event() {
                 </div>
                 <div className='flex items-center gap-3 w-full overflow-hidden'>
                   <div className='space-y-1.5 flex-1 min-w-0'>
+                    {characterData?.is_default_character && <div className='text-sm mt-3'>{t('Free')}</div>}
                     <div className='font-jaro text-2xl line-clamp-2'>{characterData?.name}</div>
+                    <Link
+                      href={`https://explorer.story.foundation/ipa/${characterData.story_ip_asset.ip_asset_id}`}
+                      target='_blank'
+                      className='text-brand-default text-sm'>
+                      {shorten(characterData.story_ip_asset.ip_asset_id)}
+                    </Link>
                     <div className='text-sm font-medium'>
                       by <span className='text-brand-default'>{characterData?.authorizer_user.nickname}</span>
                     </div>
@@ -441,10 +475,16 @@ export default function Event() {
                     size='sm'
                     variant='outlined'
                     className='!w-2/3 shrink-0 [&>*]:w-full'
-                    disabled={isCollected || (collectedCharacter?.length || 0) >= 3}
+                    disabled={
+                      characterData?.is_default_character || isCollected || (collectedCharacter?.length || 0) >= 3
+                    }
                     onClick={() => {
-                      setShowModal(false)
-                      setOpen(true)
+                      if (account) {
+                        setShowModal(false)
+                        setOpen(true)
+                      } else {
+                        setSignInOpen(true)
+                      }
                     }}>
                     <div className='flex gap-1 w-full justify-between items-center'>
                       <div>Collect IP License</div>
