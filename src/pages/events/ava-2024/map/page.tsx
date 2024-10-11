@@ -49,6 +49,7 @@ export default function Event() {
   const [artkeeper, setArtkeeper] = useState('')
   const [showGuide, setShowGuide] = useState(false)
   const guideContentRef = useRef<any>()
+  const contentRef = useRef<any>()
   useEffect(() => {
     if (characterRoomStep == 0) {
       displayGuide(
@@ -204,12 +205,10 @@ export default function Event() {
   }, [campainRoomStep])
 
   const displayGuide = (text: string) => {
+    if (!guideContentRef.current) return null
+    guideContentRef.current.innerHTML = ''
     let i = 0
     setShowGuide(true)
-    if (!guideContentRef.current) {
-      return null
-    }
-    guideContentRef.current.innerHTML = ''
     if (timeoutId.current) clearTimeout(timeoutId.current)
     function typeWriter() {
       if (guideContentRef.current) {
@@ -217,12 +216,29 @@ export default function Event() {
           guideContentRef.current.innerHTML += text.charAt(i)
           i++
           timeoutId.current = setTimeout(typeWriter, 20)
+          contentRef.current = text
+        } else {
+          contentRef.current = ''
+          timeoutId.current = undefined
         }
       } else {
         timeoutId.current = setTimeout(typeWriter, 200)
       }
     }
     typeWriter()
+  }
+
+  const handler = () => {
+    if (contentRef.current) {
+      if (timeoutId.current) {
+        clearTimeout(timeoutId.current)
+      }
+      guideContentRef.current.innerHTML = contentRef.current
+      contentRef.current = ''
+      timeoutId.current = undefined
+    } else {
+      currentSetStep.current((prev) => prev + 1)
+    }
   }
 
   return (
@@ -249,46 +265,68 @@ export default function Event() {
             </div>
           </div>
           <Button
-            // onClick={() => {
-            //   if (active == 2) {
-            //     currentSetStep.current = setArtRoomStep
-            //     setArtRoomStep(0)
-            //     setMangaRoomStep(-1)
-            //     setCampainRoomStep(-1)
-            //     setCharacterRoomStep(-1)
-            //   } else {
-            //     setActive(2)
-            //   }
-            // }}
+            onClick={() => {
+              if (active == 2) {
+                // currentSetStep.current = setArtRoomStep
+                // setArtRoomStep(0)
+                // setMangaRoomStep(-1)
+                // setCampainRoomStep(-1)
+                // setCharacterRoomStep(-1)
+              } else {
+                setActive(2)
+              }
+            }}
             className={`absolute top-0 left-[36.6%] w-[48%] ${active == 2 ? 'opacity-100' : 'opacity-0'}`}>
             <>
               <Image src={Room2} alt='' className='w-full h-full' />
               <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
-                <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
-                  <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='20'
+                  height='22'
+                  viewBox='0 0 20 22'
+                  fill='none'
+                  className='w-4 h-4'>
+                  <path
+                    fill-rule='evenodd'
+                    clip-rule='evenodd'
+                    d='M3.25 9.33501V7.15663C3.25 3.20413 6.27208 0 10 0C13.7279 0 16.75 3.20413 16.75 7.15663V9.33501C17.8648 9.42328 18.5907 9.64612 19.1213 10.2087C20 11.1403 20 12.6397 20 15.6386C20 18.6374 20 20.1368 19.1213 21.0684C18.2426 22 16.8284 22 14 22H6C3.17157 22 1.75736 22 0.87868 21.0684C0 20.1368 0 18.6374 0 15.6386C0 12.6397 0 11.1403 0.87868 10.2087C1.40931 9.64612 2.13525 9.42328 3.25 9.33501ZM4.75 7.15663C4.75 4.08246 7.10051 1.59036 10 1.59036C12.8995 1.59036 15.25 4.08246 15.25 7.15663V9.2809C14.867 9.27711 14.4515 9.27711 14 9.27711H6C5.54849 9.27711 5.13301 9.27711 4.75 9.2809V7.15663ZM12 15.6386C12 16.8097 11.1046 17.759 10 17.759C8.89543 17.759 8 16.8097 8 15.6386C8 14.4674 8.89543 13.5181 10 13.5181C11.1046 13.5181 12 14.4674 12 15.6386Z'
+                    fill='white'
+                  />
                 </svg>
                 {t('Unlock on round 3')}
               </div>
             </>
           </Button>
           <Button
-            // onClick={() => {
-            //   if (active == 3) {
-            //     currentSetStep.current = setMangaRoomStep
-            //     setMangaRoomStep(0)
-            //     setArtRoomStep(-1)
-            //     setCampainRoomStep(-1)
-            //     setCharacterRoomStep(-1)
-            //   } else {
-            //     setActive(3)
-            //   }
-            // }}
+            onClick={() => {
+              if (active == 3) {
+                // currentSetStep.current = setMangaRoomStep
+                // setMangaRoomStep(0)
+                // setArtRoomStep(-1)
+                // setCampainRoomStep(-1)
+                // setCharacterRoomStep(-1)
+              } else {
+                setActive(3)
+              }
+            }}
             className={`absolute top-[26%] right-[6.4%] w-[37.45%] ${active == 3 ? 'opacity-100' : 'opacity-0'}`}>
             <>
               <Image src={Room3} alt='' className='w-full h-full' />
-              <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
-                <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
-                  <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
+              <div className='font-jaro absolute whitespace-nowrap top-[40%] left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='20'
+                  height='22'
+                  viewBox='0 0 20 22'
+                  fill='none'
+                  className='w-4 h-4'>
+                  <path
+                    fill-rule='evenodd'
+                    clip-rule='evenodd'
+                    d='M3.25 9.33501V7.15663C3.25 3.20413 6.27208 0 10 0C13.7279 0 16.75 3.20413 16.75 7.15663V9.33501C17.8648 9.42328 18.5907 9.64612 19.1213 10.2087C20 11.1403 20 12.6397 20 15.6386C20 18.6374 20 20.1368 19.1213 21.0684C18.2426 22 16.8284 22 14 22H6C3.17157 22 1.75736 22 0.87868 21.0684C0 20.1368 0 18.6374 0 15.6386C0 12.6397 0 11.1403 0.87868 10.2087C1.40931 9.64612 2.13525 9.42328 3.25 9.33501ZM4.75 7.15663C4.75 4.08246 7.10051 1.59036 10 1.59036C12.8995 1.59036 15.25 4.08246 15.25 7.15663V9.2809C14.867 9.27711 14.4515 9.27711 14 9.27711H6C5.54849 9.27711 5.13301 9.27711 4.75 9.2809V7.15663ZM12 15.6386C12 16.8097 11.1046 17.759 10 17.759C8.89543 17.759 8 16.8097 8 15.6386C8 14.4674 8.89543 13.5181 10 13.5181C11.1046 13.5181 12 14.4674 12 15.6386Z'
+                    fill='white'
+                  />
                 </svg>
                 {t('Unlock on round 2')}
               </div>
@@ -297,11 +335,11 @@ export default function Event() {
           <Button
             onClick={() => {
               if (active == 4) {
-                currentSetStep.current = setCampainRoomStep
-                setCampainRoomStep(0)
-                setMangaRoomStep(-1)
-                setArtRoomStep(-1)
-                setCharacterRoomStep(-1)
+                // currentSetStep.current = setCampainRoomStep
+                // setCampainRoomStep(0)
+                // setMangaRoomStep(-1)
+                // setArtRoomStep(-1)
+                // setCharacterRoomStep(-1)
               } else {
                 setActive(4)
               }
@@ -310,10 +348,21 @@ export default function Event() {
             <>
               <Image src={Room4} alt='' className='h-full w-full' />
               <div className='font-jaro absolute whitespace-nowrap top-2/3 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
-                <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
-                  <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='20'
+                  height='22'
+                  viewBox='0 0 20 22'
+                  fill='none'
+                  className='w-4 h-4'>
+                  <path
+                    fill-rule='evenodd'
+                    clip-rule='evenodd'
+                    d='M3.25 9.33501V7.15663C3.25 3.20413 6.27208 0 10 0C13.7279 0 16.75 3.20413 16.75 7.15663V9.33501C17.8648 9.42328 18.5907 9.64612 19.1213 10.2087C20 11.1403 20 12.6397 20 15.6386C20 18.6374 20 20.1368 19.1213 21.0684C18.2426 22 16.8284 22 14 22H6C3.17157 22 1.75736 22 0.87868 21.0684C0 20.1368 0 18.6374 0 15.6386C0 12.6397 0 11.1403 0.87868 10.2087C1.40931 9.64612 2.13525 9.42328 3.25 9.33501ZM4.75 7.15663C4.75 4.08246 7.10051 1.59036 10 1.59036C12.8995 1.59036 15.25 4.08246 15.25 7.15663V9.2809C14.867 9.27711 14.4515 9.27711 14 9.27711H6C5.54849 9.27711 5.13301 9.27711 4.75 9.2809V7.15663ZM12 15.6386C12 16.8097 11.1046 17.759 10 17.759C8.89543 17.759 8 16.8097 8 15.6386C8 14.4674 8.89543 13.5181 10 13.5181C11.1046 13.5181 12 14.4674 12 15.6386Z'
+                    fill='white'
+                  />
                 </svg>
-                {t('Campaign')}
+                {t('Coming soon')}
               </div>
             </>
           </Button>
@@ -433,13 +482,12 @@ export default function Event() {
           </Button>
           <Button
             onClick={() => {
-              currentSetStep.current = setCharacterRoomStep
-              setCharacterRoomStep(0)
-              setCampainRoomStep(-1)
-              setMangaRoomStep(-1)
-              setArtRoomStep(-1)
-              return
               if (!characterDone) {
+                currentSetStep.current = setCharacterRoomStep
+                setCharacterRoomStep(0)
+                setCampainRoomStep(-1)
+                setMangaRoomStep(-1)
+                setArtRoomStep(-1)
               } else {
                 router.push(`/events/ava-2024/map/character`)
               }
@@ -530,7 +578,7 @@ export default function Event() {
             <div
               className='relative w-full h-auto min-h-[170px] cursor-pointer bg-no-repeat'
               style={{ backgroundImage: `url(${GuideBox.src})`, backgroundSize: '100% 100%' }}
-              onClick={() => currentSetStep.current((prev) => prev + 1)}>
+              onClick={handler}>
               <div className='absolute left-[3%] top-[10%] bottom-[20%] w-[94%]'>
                 <div className='h-full bg-[#111] rounded-md text-white p-5'>
                   <div ref={guideContentRef} className='h-full overflow-auto'></div>

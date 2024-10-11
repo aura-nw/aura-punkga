@@ -26,8 +26,9 @@ export default function Event() {
   const router = useRouter()
   const [step, setStep] = useState<number>(-1)
   const [isDone, setIsDone] = useLocalStorage<boolean>('onboarding-done', false)
-  const guideContentRef = useRef<any>()
   const timeoutId = useRef<any>()
+  const guideContentRef = useRef<any>()
+  const contentRef = useRef<any>()
   useEffect(() => {
     if (step == 0) {
       displayGuide(
@@ -88,97 +89,36 @@ export default function Event() {
   useEffect(() => {
     if (!isDone) setStep(0)
   }, [isDone])
-  const displayGuide = (text: string, immediately?: boolean) => {
+  const displayGuide = (text: string) => {
     if (!guideContentRef.current) return null
     guideContentRef.current.innerHTML = ''
-    if (immediately) {
-      clearTimeout(timeoutId.current)
-      timeoutId.current = undefined
-      guideContentRef.current.innerHTML = text
-    } else {
-      let i = 0
-      if (timeoutId.current) clearTimeout(timeoutId.current)
-      function typeWriter() {
-        if (guideContentRef.current) {
-          if (i < text.length) {
-            guideContentRef.current.innerHTML += text.charAt(i)
-            i++
-            timeoutId.current = setTimeout(typeWriter, 20)
-          } else {
-            timeoutId.current = undefined
-          }
+    let i = 0
+    if (timeoutId.current) clearTimeout(timeoutId.current)
+    function typeWriter() {
+      if (guideContentRef.current) {
+        if (i < text.length) {
+          guideContentRef.current.innerHTML += text.charAt(i)
+          i++
+          timeoutId.current = setTimeout(typeWriter, 20)
+          contentRef.current = text
         } else {
-          timeoutId.current = setTimeout(typeWriter, 200)
+          contentRef.current = ''
+          timeoutId.current = undefined
         }
+      } else {
+        timeoutId.current = setTimeout(typeWriter, 200)
       }
-      typeWriter()
     }
+    typeWriter()
   }
-  const displayGuideImmediately = () => {
-    if (step == 0) {
-      displayGuide(
-        locale == 'en'
-          ? `You wake up in a desolate area, the last thing lingering in your mind is touching the lamp in your room. Standing up and looking around, you see a strange structure unfolding before your eyes.`
-          : `Bạn tỉnh dậy ở một khu vực trống trải, điều cuối cùng còn tồn tại trong tâm trí là bạn đã chạm vào cây đèn trong phòng mình. Đứng dậy, nhìn quanh, bạn thấy một công trình kỳ lạ đang mở ra ngay trước mắt.`,
-        true
-      )
-    }
-    if (step == 1) {
-      displayGuide(
-        locale == 'en'
-          ? `Before you can decide whether to enter, you are startled by some "pip pip" sounds, like metal clanging together. Unconsciously, you move toward the warm light ahead.`
-          : `Trước khi đưa ra quyết định nên tiến vào đó không, bạn giật mình bởi một vài tiếng “pip pip” như tiếng kim loại va vào nhau. Trong vô thức, bạn bước đến nguồn ánh sáng ấm áp trước mặt.`,
-        true
-      )
-    }
-    if (step == 2) {
-      displayGuide(locale == 'en' ? `A strange voice echoes:` : `Một giọng nói xa lạ vang lên:`, true)
-    }
-    if (step == 3) {
-      displayGuide(
-        locale == 'en'
-          ? `Well... another one, huh. Hello, are you okay? Relax, I won’t harm you. I’m the Artkeeper... but just calling me Keeper is fine.`
-          : `Chà... lại một người nữa sao. Xin chào, cậu có sao không? Bình tĩnh, tôi không làm hại cậu. Tôi là Artkeeper... mà gọi tôi là Keeper là đủ.`,
-        true
-      )
-    }
-    if (step == 4) {
-      displayGuide(
-        locale == 'en'
-          ? `You look confused, don't you? This is the future, the year 3440. Artificial Intelligence has learned the wrong behaviors from humans, aiding in humanity’s downfall by taking over media, commerce, and people’s lives.`
-          : `Trông hoang mang quá nhỉ? Đây là tương lai năm 3440, Trí tuệ nhân tạo đã học theo những hành vi sai trái của con người và tiếp tay cho quá trình suy thoái của nhân loại, chiếm hữu truyền thông, thương mại và cuộc sống của con người.`,
-        true
-      )
-    }
-    if (step == 5) {
-      displayGuide(
-        locale == 'en'
-          ? `Now, outside this wall, machines have replaced humans. These machines and dozens of faulty robots are still trying to complete the tasks they were once assigned.`
-          : `Giờ đây, bên ngoài bức tường này, thay thế sự hiện diện của con người là các cỗ máy do thám và hàng tá robot lỗi đang tìm cách hoàn thành nhiệm vụ chúng đã từng được giao`,
-        true
-      )
-    }
-    if (step == 6) {
-      displayGuide(
-        locale == 'en'
-          ? `They are smart and perfect, but they lack what you possess: the creativity of the soul and the ability to listen. That’s why those two invited you here!`
-          : `Chúng thông minh và hoàn hảo, nhưng thiếu đi thứ cậu đang sở hữu, khả năng sáng tạo từ tâm hồn và lắng nghe mọi thứ. Đó chính là lý do tại sao hai tên kia lại mời cậu đến đây!`,
-        true
-      )
-    }
-    if (step == 7) {
-      displayGuide(
-        locale == 'en'
-          ? `Who are they, you ask? Punka and a brown-clad rabbit! Damn, did I make a mistake letting them out...? Sigh, anyway, you’re here now, so you must be able to help this world. Create genuine works of art to save it, let's go!`
-          : `Hai tên nào á… Punka và một con thỏ mặc áo nâu! Trời ạ, tôi có sai lầm khi thả họ ra không nhỉ… Haizz, dù sao thì cậu đã ở đây rồi, hẳn cậu sẽ giúp được thế giới này. Hãy sáng tạo nên những tác phẩm nghệ thuật chân chính để cứu lấy thế giới, đi thôi nào!`,
-        true
-      )
-    }
-  }
-
   const handler = () => {
-    if (timeoutId.current) {
-      displayGuideImmediately()
+    if (contentRef.current) {
+      if (timeoutId.current) {
+        clearTimeout(timeoutId.current)
+      }
+      guideContentRef.current.innerHTML = contentRef.current
+      contentRef.current = ''
+      timeoutId.current = undefined
     } else {
       if (step >= 0 && step <= 7) {
         setStep(step + 1)
