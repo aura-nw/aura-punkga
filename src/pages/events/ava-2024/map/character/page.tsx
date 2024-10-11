@@ -57,7 +57,7 @@ export default function Event() {
   useEffect(() => {
     if (data?.data?.data?.story_character) {
       setCharacters(data?.data?.data?.story_character)
-      setCount(Math.ceil((data?.data?.data?.story_character_aggregate?.aggregate?.count || 0) / 4))
+      setCount(Math.ceil((data?.data?.data?.story_character_aggregate?.aggregate?.count || 0) / 20))
     }
   }, [data?.data?.data?.story_character])
   useEffect(() => {

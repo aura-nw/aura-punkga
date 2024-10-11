@@ -5,12 +5,14 @@ import CopySvg from 'images/icons/copy.svg'
 import Warning from 'images/icons/warning.svg'
 import getConfig from 'next/config'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { QRCodeSVG } from 'qrcode.react'
 import { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import WCIcon from 'src/assets/images/wallet-connect.png'
 import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
+import { storyChain } from 'src/services/wagmi/config'
 import { isMetamaskInstalled, shorten } from 'src/utils'
 import { Connector, useAccount, useConnect, useDisconnect } from 'wagmi'
 
@@ -121,7 +123,12 @@ export default function ConnectModal() {
                       onClick={async () => {
                         try {
                           await wagmiConnect(
-                            { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
+                            {
+                              connector,
+                              chainId: location.pathname.includes('ava-2024')
+                                ? storyChain.id
+                                : getConfig().CHAIN_INFO.evmChainId,
+                            },
                             {
                               onSuccess: connectHandler,
                             }
@@ -149,7 +156,12 @@ export default function ConnectModal() {
                           setLoading(true)
                           setQRError('')
                           wagmiConnect(
-                            { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
+                            {
+                              connector,
+                              chainId: location.pathname.includes('ava-2024')
+                                ? storyChain.id
+                                : getConfig().CHAIN_INFO.evmChainId,
+                            },
                             {
                               onSuccess: (data) => {
                                 setLoading(false)
@@ -201,7 +213,12 @@ export default function ConnectModal() {
                             try {
                               setShowQRCode(false)
                               await wagmiConnect(
-                                { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
+                                {
+                                  connector,
+                                  chainId: location.pathname.includes('ava-2024')
+                                    ? storyChain.id
+                                    : getConfig().CHAIN_INFO.evmChainId,
+                                },
                                 {
                                   onSuccess: connectHandler,
                                 }
@@ -232,7 +249,12 @@ export default function ConnectModal() {
                               setLoading(true)
                               setQRError('')
                               wagmiConnect(
-                                { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
+                                {
+                                  connector,
+                                  chainId: location.pathname.includes('ava-2024')
+                                    ? storyChain.id
+                                    : getConfig().CHAIN_INFO.evmChainId,
+                                },
                                 {
                                   onSuccess: (data) => {
                                     setLoading(false)

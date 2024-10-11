@@ -67,7 +67,7 @@ export default function Header({ className }: { className?: string }) {
   const divRef = useRef<any>()
   const mref = useRef<any>()
   const mdivRef = useRef<any>()
-  const { isConnected, address } = useAccount()
+  const { isConnected, address, chain } = useAccount()
   useClickOutside(divRef, () => {
     if (window.innerWidth > 768) {
       setIsSearchFocused(false)
@@ -150,7 +150,7 @@ export default function Header({ className }: { className?: string }) {
     }, 1000)()
   }
   const handleOpenWalletOnExplorer = () => {
-    const url = new URL(`${config.CHAIN_INFO.explorer}/address/${account?.activeWalletAddress}`)
+    const url = new URL(`${chain.blockExplorers.default.url}/address/${account?.activeWalletAddress}`)
     window.open(url.toString(), '_blank')
   }
   return (
