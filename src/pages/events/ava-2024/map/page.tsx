@@ -32,7 +32,7 @@ export default function Event() {
   const { locale, push } = useRouter()
   const { t } = useTranslation()
   const router = useRouter()
-  const [seeMore, setSeeMore] = useLocalStorage('see-more-btn',true)
+  const [seeMore, setSeeMore] = useLocalStorage('see-more-btn', true)
   const [openRules, setOpenRules] = useState(false)
   const [openAward, setOpenAward] = useState(false)
   const currentSetStep = useRef<any>()
@@ -241,42 +241,58 @@ export default function Event() {
             }`}
             onClick={() => (active == 1 ? push(`/events/ava-2024/`) : setActive(1))}>
             <Image src={Room1} alt='' className='w-full h-full' />
+            <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
+              <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
+              </svg>
+              {t('Lobby')}
+            </div>
           </div>
           <Button
-            onClick={() => {
-              if (active == 2) {
-                currentSetStep.current = setArtRoomStep
-                setArtRoomStep(0)
-                setMangaRoomStep(-1)
-                setCampainRoomStep(-1)
-                setCharacterRoomStep(-1)
-              } else {
-                setActive(2)
-              }
-            }}>
-            <Image
-              src={Room2}
-              alt=''
-              className={`absolute top-0 left-[36.6%] w-[48%] ${active == 2 ? 'opacity-100' : 'opacity-0'}`}
-            />
+            // onClick={() => {
+            //   if (active == 2) {
+            //     currentSetStep.current = setArtRoomStep
+            //     setArtRoomStep(0)
+            //     setMangaRoomStep(-1)
+            //     setCampainRoomStep(-1)
+            //     setCharacterRoomStep(-1)
+            //   } else {
+            //     setActive(2)
+            //   }
+            // }}
+            className={`absolute top-0 left-[36.6%] w-[48%] ${active == 2 ? 'opacity-100' : 'opacity-0'}`}>
+            <>
+              <Image src={Room2} alt='' className='w-full h-full' />
+              <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
+                <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                  <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
+                </svg>
+                {t('Unlock on round 3')}
+              </div>
+            </>
           </Button>
           <Button
-            onClick={() => {
-              if (active == 3) {
-                currentSetStep.current = setMangaRoomStep
-                setMangaRoomStep(0)
-                setArtRoomStep(-1)
-                setCampainRoomStep(-1)
-                setCharacterRoomStep(-1)
-              } else {
-                setActive(3)
-              }
-            }}>
-            <Image
-              src={Room3}
-              alt=''
-              className={`absolute top-[26%] right-[6.4%] w-[37.45%] ${active == 3 ? 'opacity-100' : 'opacity-0'}`}
-            />
+            // onClick={() => {
+            //   if (active == 3) {
+            //     currentSetStep.current = setMangaRoomStep
+            //     setMangaRoomStep(0)
+            //     setArtRoomStep(-1)
+            //     setCampainRoomStep(-1)
+            //     setCharacterRoomStep(-1)
+            //   } else {
+            //     setActive(3)
+            //   }
+            // }}
+            className={`absolute top-[26%] right-[6.4%] w-[37.45%] ${active == 3 ? 'opacity-100' : 'opacity-0'}`}>
+            <>
+              <Image src={Room3} alt='' className='w-full h-full' />
+              <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
+                <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                  <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
+                </svg>
+                {t('Unlock on round 2')}
+              </div>
+            </>
           </Button>
           <Button
             onClick={() => {
@@ -289,14 +305,17 @@ export default function Event() {
               } else {
                 setActive(4)
               }
-            }}>
-            <Image
-              src={Room4}
-              alt=''
-              className={`absolute bottom-[18.3%] right-[17.25%] w-[46.9%] ${
-                active == 4 ? 'opacity-100' : 'opacity-0'
-              }`}
-            />
+            }}
+            className={`absolute bottom-[18.3%] right-[17.25%] w-[46.9%] ${active == 4 ? 'opacity-100' : 'opacity-0'}`}>
+            <>
+              <Image src={Room4} alt='' className='h-full w-full' />
+              <div className='font-jaro absolute whitespace-nowrap top-2/3 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
+                <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                  <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
+                </svg>
+                {t('Campaign')}
+              </div>
+            </>
           </Button>
           <Button
             onClick={() => {
@@ -313,83 +332,128 @@ export default function Event() {
               } else {
                 setActive(5)
               }
-            }}>
-            <Image
-              src={Room5}
-              alt=''
-              className='absolute bottom-[33.7%] left-[.8%] w-[52.7%] opacity-0 hover:opacity-100'
-            />
+            }}
+            className='absolute bottom-[33.7%] left-[.8%] w-[52.7%] opacity-0 hover:opacity-100'>
+            <>
+              <Image src={Room5} alt='' className='w-full h-full' />
+              <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
+                <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                  <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
+                </svg>
+                {t('Character')}
+              </div>
+            </>
           </Button>
         </div>
         <div
           className='absolute inset-x-[19%] bottom-[3%] translate-y-[15%] w-[60%] aspect-[1227/966] bg-no-repeat bg-contain hidden lg:block'
           style={{ backgroundImage: `url(${Map.src})` }}>
-          <Link href={`/events/ava-2024/`}>
-            <Image
-              src={Room1}
-              alt=''
-              className='absolute -top-[0.2%] left-[1.3%] w-[20.3%] opacity-0 hover:opacity-100'
-            />
+          <Link
+            href={`/events/ava-2024/`}
+            className='absolute -top-[0.2%] left-[1.3%] w-[20.3%] opacity-0 hover:opacity-100'>
+            <Image src={Room1} alt='' className='w-full h-full' />
+            <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
+              <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
+              </svg>
+              {t('Lobby')}
+            </div>
           </Link>
           <Button
-            onClick={() => {
-              currentSetStep.current = setArtRoomStep
-              setArtRoomStep(0)
-              setMangaRoomStep(-1)
-              setCampainRoomStep(-1)
-              setCharacterRoomStep(-1)
-            }}>
-            <Image
-              src={Room2}
-              alt=''
-              className='absolute top-[.7%] left-[34.6%] w-[33.75%] opacity-0 hover:opacity-100'
-            />
+            // onClick={() => {
+            //   currentSetStep.current = setArtRoomStep
+            //   setArtRoomStep(0)
+            //   setMangaRoomStep(-1)
+            //   setCampainRoomStep(-1)
+            //   setCharacterRoomStep(-1)
+            // }}
+            className='absolute top-[.7%] left-[34.6%] w-[33.75%] opacity-0 hover:opacity-100'>
+            <>
+              <Image src={Room2} alt='' className='w-full h-full' />
+              <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
+                <svg xmlns='http://www.w3.org/2000/svg' width='20' height='22' viewBox='0 0 20 22' fill='none'>
+                  <path
+                    fill-rule='evenodd'
+                    clip-rule='evenodd'
+                    d='M3.25 9.33501V7.15663C3.25 3.20413 6.27208 0 10 0C13.7279 0 16.75 3.20413 16.75 7.15663V9.33501C17.8648 9.42328 18.5907 9.64612 19.1213 10.2087C20 11.1403 20 12.6397 20 15.6386C20 18.6374 20 20.1368 19.1213 21.0684C18.2426 22 16.8284 22 14 22H6C3.17157 22 1.75736 22 0.87868 21.0684C0 20.1368 0 18.6374 0 15.6386C0 12.6397 0 11.1403 0.87868 10.2087C1.40931 9.64612 2.13525 9.42328 3.25 9.33501ZM4.75 7.15663C4.75 4.08246 7.10051 1.59036 10 1.59036C12.8995 1.59036 15.25 4.08246 15.25 7.15663V9.2809C14.867 9.27711 14.4515 9.27711 14 9.27711H6C5.54849 9.27711 5.13301 9.27711 4.75 9.2809V7.15663ZM12 15.6386C12 16.8097 11.1046 17.759 10 17.759C8.89543 17.759 8 16.8097 8 15.6386C8 14.4674 8.89543 13.5181 10 13.5181C11.1046 13.5181 12 14.4674 12 15.6386Z'
+                    fill='white'
+                  />
+                </svg>
+                {t('Unlock on round 3')}
+              </div>
+            </>
           </Button>
           <Button
-            onClick={() => {
-              currentSetStep.current = setMangaRoomStep
-              setMangaRoomStep(0)
-              setArtRoomStep(-1)
-              setCampainRoomStep(-1)
-              setCharacterRoomStep(-1)
-            }}>
-            <Image
-              src={Room3}
-              alt=''
-              className='absolute top-[.77%] -right-[.2%] w-[30.45%] opacity-0 hover:opacity-100'
-            />
+            // onClick={() => {
+            //   currentSetStep.current = setMangaRoomStep
+            //   setMangaRoomStep(0)
+            //   setArtRoomStep(-1)
+            //   setCampainRoomStep(-1)
+            //   setCharacterRoomStep(-1)
+            // }}
+            className='absolute top-[.77%] -right-[.2%] w-[30.45%] opacity-0 hover:opacity-100'>
+            <>
+              <Image src={Room3} alt='' className='w-full h-full' />
+              <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
+                <svg xmlns='http://www.w3.org/2000/svg' width='20' height='22' viewBox='0 0 20 22' fill='none'>
+                  <path
+                    fill-rule='evenodd'
+                    clip-rule='evenodd'
+                    d='M3.25 9.33501V7.15663C3.25 3.20413 6.27208 0 10 0C13.7279 0 16.75 3.20413 16.75 7.15663V9.33501C17.8648 9.42328 18.5907 9.64612 19.1213 10.2087C20 11.1403 20 12.6397 20 15.6386C20 18.6374 20 20.1368 19.1213 21.0684C18.2426 22 16.8284 22 14 22H6C3.17157 22 1.75736 22 0.87868 21.0684C0 20.1368 0 18.6374 0 15.6386C0 12.6397 0 11.1403 0.87868 10.2087C1.40931 9.64612 2.13525 9.42328 3.25 9.33501ZM4.75 7.15663C4.75 4.08246 7.10051 1.59036 10 1.59036C12.8995 1.59036 15.25 4.08246 15.25 7.15663V9.2809C14.867 9.27711 14.4515 9.27711 14 9.27711H6C5.54849 9.27711 5.13301 9.27711 4.75 9.2809V7.15663ZM12 15.6386C12 16.8097 11.1046 17.759 10 17.759C8.89543 17.759 8 16.8097 8 15.6386C8 14.4674 8.89543 13.5181 10 13.5181C11.1046 13.5181 12 14.4674 12 15.6386Z'
+                    fill='white'
+                  />
+                </svg>
+                {t('Unlock on round 2')}
+              </div>
+            </>
           </Button>
           <Button
-            onClick={() => {
-              currentSetStep.current = setCampainRoomStep
-              setCampainRoomStep(0)
-              setMangaRoomStep(-1)
-              setArtRoomStep(-1)
-              setCharacterRoomStep(-1)
-            }}>
-            <Image
-              src={Room4}
-              alt=''
-              className='absolute bottom-[14.3%] right-[32.25%] w-[38.9%] opacity-0 hover:opacity-100'
-            />
+            // onClick={() => {
+            //   currentSetStep.current = setCampainRoomStep
+            //   setCampainRoomStep(0)
+            //   setMangaRoomStep(-1)
+            //   setArtRoomStep(-1)
+            //   setCharacterRoomStep(-1)
+            // }}
+            className='absolute bottom-[14.3%] right-[32.25%] w-[38.9%] opacity-0 hover:opacity-100'>
+            <>
+              <Image src={Room4} alt='' className='w-full h-full' />
+              <div className='font-jaro absolute whitespace-nowrap top-2/3 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
+                <svg xmlns='http://www.w3.org/2000/svg' width='20' height='22' viewBox='0 0 20 22' fill='none'>
+                  <path
+                    fill-rule='evenodd'
+                    clip-rule='evenodd'
+                    d='M3.25 9.33501V7.15663C3.25 3.20413 6.27208 0 10 0C13.7279 0 16.75 3.20413 16.75 7.15663V9.33501C17.8648 9.42328 18.5907 9.64612 19.1213 10.2087C20 11.1403 20 12.6397 20 15.6386C20 18.6374 20 20.1368 19.1213 21.0684C18.2426 22 16.8284 22 14 22H6C3.17157 22 1.75736 22 0.87868 21.0684C0 20.1368 0 18.6374 0 15.6386C0 12.6397 0 11.1403 0.87868 10.2087C1.40931 9.64612 2.13525 9.42328 3.25 9.33501ZM4.75 7.15663C4.75 4.08246 7.10051 1.59036 10 1.59036C12.8995 1.59036 15.25 4.08246 15.25 7.15663V9.2809C14.867 9.27711 14.4515 9.27711 14 9.27711H6C5.54849 9.27711 5.13301 9.27711 4.75 9.2809V7.15663ZM12 15.6386C12 16.8097 11.1046 17.759 10 17.759C8.89543 17.759 8 16.8097 8 15.6386C8 14.4674 8.89543 13.5181 10 13.5181C11.1046 13.5181 12 14.4674 12 15.6386Z'
+                    fill='white'
+                  />
+                </svg>
+                {t('Coming soon')}
+              </div>
+            </>
           </Button>
           <Button
             onClick={() => {
               currentSetStep.current = setCharacterRoomStep
+              setCharacterRoomStep(0)
+              setCampainRoomStep(-1)
+              setMangaRoomStep(-1)
+              setArtRoomStep(-1)
+              return
               if (!characterDone) {
-                setCharacterRoomStep(0)
-                setCampainRoomStep(-1)
-                setMangaRoomStep(-1)
-                setArtRoomStep(-1)
               } else {
                 router.push(`/events/ava-2024/map/character`)
               }
-            }}>
-            <Image
-              src={Room5}
-              alt=''
-              className='absolute bottom-[46%] -left-[.2%] w-[29.7%] opacity-0 hover:opacity-100'
-            />
+            }}
+            className='absolute bottom-[46%] -left-[.2%] w-[29.7%] opacity-0 hover:opacity-100'>
+            <>
+              <Image src={Room5} alt='' className='w-full h-full' />
+              <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
+                <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                  <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
+                </svg>
+                {t('Character')}
+              </div>
+            </>
           </Button>
         </div>
 
@@ -420,17 +484,17 @@ export default function Event() {
               <div
                 onClick={() => setOpenRules(true)}
                 className='bg-neutral-100 border-[2px] border-neutral-black rounded-mlg p-2.5 w-[154px] font-semibold text-sm text-text-primary-on-brand text-center cursor-pointer'>
-                View Rule
+                {t('View Rule')}
               </div>
               <Link
                 href={`/events/ava-2024/map/submit-portal`}
                 className='block bg-neutral-100 border-[2px] border-neutral-black rounded-mlg p-2.5 w-[154px] font-semibold text-sm text-text-primary-on-brand text-center cursor-pointer'>
-                Submit
+                {t('submit2')}
               </Link>
               <div
                 onClick={() => setOpenAward(true)}
                 className='bg-neutral-100 border-[2px] border-neutral-black rounded-mlg p-2.5 w-[154px] font-semibold text-sm text-text-primary-on-brand text-center cursor-pointer'>
-                Award
+                {t('Award')}
               </div>
             </div>
           </div>
@@ -440,27 +504,11 @@ export default function Event() {
               !showGuide && 'hidden pointer-events-none'
             }`}>
             <div className='flex items-end gap-10 justify-end w-full'>
-              <svg
-                width='109'
-                height='38'
-                viewBox='0 0 109 38'
-                fill='none'
-                xmlns='http://www.w3.org/2000/svg'
-                className='cursor-pointer opacity-80 hover:opacity-100'
+              <div
+                className='cursor-pointer opacity-80 hover:opacity-100 text-white font-jaro border border-white py-1 px-5 text-2xl uppercase rounded-md bg-black'
                 onClick={() => currentSetStep.current(4)}>
-                <path
-                  d='M0.5 6C0.5 2.96243 2.96243 0.5 6 0.5H103C106.038 0.5 108.5 2.96243 108.5 6V32C108.5 35.0376 106.038 37.5 103 37.5H6C2.96243 37.5 0.5 35.0376 0.5 32V6Z'
-                  fill='#0E0E0F'
-                />
-                <path
-                  d='M0.5 6C0.5 2.96243 2.96243 0.5 6 0.5H103C106.038 0.5 108.5 2.96243 108.5 6V32C108.5 35.0376 106.038 37.5 103 37.5H6C2.96243 37.5 0.5 35.0376 0.5 32V6Z'
-                  stroke='white'
-                />
-                <path
-                  d='M39.6172 15.7812H37.2734V18.125H44.3047V27.5H32.5859V22.8125H37.2734V23.9844H39.6172V21.6406H32.5859V12.2656H44.3047V16.9531H39.6172V15.7812ZM52.5078 12.2656H57.1953V20.4688L54.8516 22.8125L57.1953 25.1562V27.5H52.5078V26.3281L50.1641 23.9844V27.5H45.4766V12.2656H50.1641V19.2969L52.5078 21.6406V12.2656ZM63.0547 12.2656V27.5H58.3672V12.2656H63.0547ZM68.9141 15.7812V18.125L71.2578 20.4688V15.7812H68.9141ZM71.2578 25.1562L68.9141 22.8125V27.5H64.2266V12.2656H75.9453V20.4688L71.2578 25.1562Z'
-                  fill='white'
-                />
-              </svg>
+                {t('Skip')}
+              </div>
               {artkeeper != '' && (
                 <Image
                   src={
@@ -489,7 +537,7 @@ export default function Event() {
                 </div>
               </div>
               <div className='text-text-brand-hover flex items-center gap-2 text-sm cursor-pointer justify-end w-full mt-2 absolute bottom-[5%] right-[2%]'>
-                Next
+                {t('Next')}
                 <svg
                   width='37'
                   height='23'
@@ -549,7 +597,7 @@ export default function Event() {
         </div>
       </Modal>
       <Modal open={openRules} setOpen={setOpenRules}>
-        <Rules/>
+        <Rules />
       </Modal>
     </>
   )

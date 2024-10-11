@@ -9,8 +9,10 @@ import { usePathname } from 'next/navigation'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Rules from './Rules'
+import { useTranslation } from 'react-i18next'
 
 export default function RuleAndAward() {
+  const { t } = useTranslation()
   const [seeMore, setSeeMore] = useState(false)
   const [openAward, setOpenAward] = useState(false)
   const [openRules, setOpenRules] = useState(false)
@@ -39,18 +41,22 @@ export default function RuleAndAward() {
           />
         </svg>
         <div className={`active space-y-2 absolute right-1/2 translate-x-1/4 top-[120%] ${seeMore ? '' : 'hidden'}`}>
-          <div onClick={() => setOpenRules(true)} className='bg-neutral-100 border-[2px] border-neutral-black rounded-mlg p-2.5 w-[154px] font-semibold text-sm text-text-primary-on-brand text-center cursor-pointer'>
-            View Rule
+          <div
+            onClick={() => setOpenRules(true)}
+            className='bg-neutral-100 border-[2px] border-neutral-black rounded-mlg p-2.5 w-[154px] font-semibold text-sm text-text-primary-on-brand text-center cursor-pointer'>
+            {t('View Rule')}
           </div>
           {pathname != '/events/ava-2024/map/submit-portal' && (
             <Link
               href={`/events/ava-2024/map/submit-portal`}
               className='block bg-neutral-100 border-[2px] border-neutral-black rounded-mlg p-2.5 w-[154px] font-semibold text-sm text-text-primary-on-brand text-center cursor-pointer'>
-              Submit
+              {t('submit2')}
             </Link>
           )}
-          <div onClick={() => setOpenAward(true)} className='bg-neutral-100 border-[2px] border-neutral-black rounded-mlg p-2.5 w-[154px] font-semibold text-sm text-text-primary-on-brand text-center cursor-pointer'>
-            Award
+          <div
+            onClick={() => setOpenAward(true)}
+            className='bg-neutral-100 border-[2px] border-neutral-black rounded-mlg p-2.5 w-[154px] font-semibold text-sm text-text-primary-on-brand text-center cursor-pointer'>
+            {t('Award')}
           </div>
         </div>
       </div>
@@ -98,7 +104,7 @@ export default function RuleAndAward() {
         </div>
       </Modal>
       <Modal open={openRules} setOpen={setOpenRules}>
-        <Rules/>
+        <Rules />
       </Modal>
     </>
   )
