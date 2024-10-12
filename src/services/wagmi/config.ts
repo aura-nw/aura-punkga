@@ -18,7 +18,7 @@ export const storyChain = {
   blockExplorers: {
     default: {
       name: 'Storyscan',
-      url: 'https://story.aurascan.io/',
+      url: 'https://testnet.storyscan.xyz/',
       apiUrl: 'https://explorer-api.dev.aura.network/api',
     },
   },
