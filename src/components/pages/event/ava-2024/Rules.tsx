@@ -39,7 +39,7 @@ export default function Rules() {
               + Submit on Facebook Group{' '}
               <Link target='_blank' className='text-info-400' href='https://www.facebook.com/groups/1245774482777852'>
                 "PunkgaMe - Vietnam Comic Artists Association"
-              </Link>
+              </Link>{' '}
               with hashtag <span className='text-info-400'>#PunkgaMe #AVA2024 #AVARound1</span>
             </p>
             <p className=''>
@@ -307,7 +307,7 @@ export default function Rules() {
               + Nộp bài trên Group Facebook{' '}
               <Link target='_blank' className='text-info-400' href='https://www.facebook.com/groups/1245774482777852'>
                 "PunkgaMe - Hội họa sĩ truyện tranh Việt Nam"
-              </Link>
+              </Link>{' '}
               kèm hashtag <span className='text-info-400'>#PunkgaMe #AVA2024 #AVARound1</span>
             </p>
             <p className=''>
