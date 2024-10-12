@@ -17,6 +17,7 @@ import { toast } from 'react-toastify'
 import { Context } from 'src/context'
 import { eventService } from 'src/services/event.service'
 import { useWindowSize } from 'usehooks-ts'
+import { shorten } from 'src/utils'
 
 export default function Event() {
   const { locale } = useRouter()
@@ -194,8 +195,19 @@ export default function Event() {
                         <div className='flex items-center gap-3 w-full overflow-hidden'>
                           <div className='space-y-1.5 flex-1 min-w-0'>
                             <div className='font-jaro text-2xl line-clamp-2'>{characterData.name}</div>
+                            {characterData?.story_ip_asset?.ip_asset_id && (
+                              <Link
+                                href={`https://explorer.story.foundation/ipa/${characterData?.story_ip_asset?.ip_asset_id}`}
+                                target='_blank'
+                                className='text-brand-default text-sm'>
+                                {shorten(characterData?.story_ip_asset?.ip_asset_id)}
+                              </Link>
+                            )}
                             <div className='text-sm font-medium'>
-                              {t('by')} <span className='text-brand-default'>{characterData.authorizer_user.nickname}</span>
+                              {t('by')}{' '}
+                              <span className='text-brand-default'>
+                                {characterData.authorizer_user.nickname || 'Punkga'}
+                              </span>
                             </div>
                           </div>
                           <div className='text-sm font-medium flex gap-1.5 shrink-0'>
@@ -286,8 +298,17 @@ export default function Event() {
               <div className='flex items-center gap-3 w-full overflow-hidden'>
                 <div className='space-y-1.5 flex-1 min-w-0'>
                   <div className='font-jaro text-2xl line-clamp-2'>{characterData.name}</div>
+                  {characterData?.story_ip_asset?.ip_asset_id && (
+                    <Link
+                      href={`https://explorer.story.foundation/ipa/${characterData?.story_ip_asset?.ip_asset_id}`}
+                      target='_blank'
+                      className='text-brand-default text-sm'>
+                      {shorten(characterData?.story_ip_asset?.ip_asset_id)}
+                    </Link>
+                  )}
                   <div className='text-sm font-medium'>
-                    {t('by')} <span className='text-brand-default'>{characterData.authorizer_user.nickname}</span>
+                    {t('by')}{' '}
+                    <span className='text-brand-default'>{characterData.authorizer_user.nickname || 'Punkga'}</span>
                   </div>
                 </div>
                 <div className='text-sm font-medium flex gap-1.5 shrink-0'>
