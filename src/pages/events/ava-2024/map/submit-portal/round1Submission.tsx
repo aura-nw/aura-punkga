@@ -37,7 +37,7 @@ export default function Round1Submission() {
           })
         } else {
           await mutate()
-          toast('Create new character successfully', {
+          toast(locale == 'vn' ? 'Tạo nhân vật thành công' : 'Create new character successfully', {
             type: 'success',
           })
           setName('')

@@ -75,7 +75,7 @@ export default function Event() {
       setLoading(false)
       setOpen(false)
       setIsCollected(true)
-      toast('Collect character successfully', {
+      toast(locale == 'vn' ? 'Thu thập nhân vật thành công' : 'Collect character successfully', {
         type: 'success',
       })
       mutate()
