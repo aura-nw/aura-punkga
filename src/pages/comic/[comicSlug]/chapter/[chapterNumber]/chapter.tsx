@@ -224,7 +224,7 @@ const Chapter: React.FC = ({
                   >
                     {t('sign in')}
                   </a>{' '}
-                  {t('to countinue reading')}!
+                  {t('to continue reading')}!
                 </p>
               </div>
             </div>

@@ -14,7 +14,7 @@ module.exports = {
         xxs: '10px',
       },
       borderRadius: {
-        'mlg':'10px'
+        mlg: '10px',
       },
       colors: {
         'light-gray': 'var(--light-gray)',
@@ -343,10 +343,11 @@ module.exports = {
         'text-teriary-on-brand': '#5d5d5d',
         'text-warning-primary-2': '#f4741b',
         'text-white': '#f6f6f6',
-        'text-daily-primary': '#9747FF'
+        'text-daily-primary': '#9747FF',
       },
       animation: {
         flash: 'flash 1s cubic-bezier(0, 0, 0.2, 1)',
+        blink: 'blink 1s steps(2,end) infinite',
         imageslide: 'imageslide 2s ease-in-out infinite',
       },
       keyframes: {
@@ -354,6 +355,14 @@ module.exports = {
           '75%, 100%': {
             transform: 'scale(1.8)',
             opacity: 0,
+          },
+        },
+        blink: {
+          '0%': {
+            transform: `rotate(-10deg)`,
+          },
+          '100%': {
+            transform: `rotate(20deg)`,
           },
         },
         imageslide: {

@@ -32,8 +32,9 @@ import { useClickOutside } from 'src/hooks/useClickOutside'
 import { search } from 'src/services'
 import { shorten } from 'src/utils'
 import TonWeb from 'tonweb'
-import { useAccount, useBalance } from 'wagmi'
-
+import { useAccount, useBalance, useChainId, useSwitchChain } from 'wagmi'
+import Bg from './assets/bg.svg'
+import { mainnet } from 'viem/chains'
 export const HEADER_HEIGHT = {
   MOBILE: '56px',
   DESKTOP: '80px',
@@ -61,10 +62,12 @@ export default function Header({ className }: { className?: string }) {
     address: account?.activeWalletAddress as any,
   })
   const ref = useRef<any>()
+  const { switchChain } = useSwitchChain()
+  const chainId = useChainId()
   const divRef = useRef<any>()
   const mref = useRef<any>()
   const mdivRef = useRef<any>()
-  const { isConnected, address } = useAccount()
+  const { isConnected, address, chain } = useAccount()
   useClickOutside(divRef, () => {
     if (window.innerWidth > 768) {
       setIsSearchFocused(false)
@@ -147,7 +150,7 @@ export default function Header({ className }: { className?: string }) {
     }, 1000)()
   }
   const handleOpenWalletOnExplorer = () => {
-    const url = new URL(`${config.CHAIN_INFO.explorer}/address/${account?.activeWalletAddress}`)
+    const url = new URL(`${chain.blockExplorers.default.url}/address/${account?.activeWalletAddress}`)
     window.open(url.toString(), '_blank')
   }
   return (
@@ -157,7 +160,7 @@ export default function Header({ className }: { className?: string }) {
           isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
         }`}></div>
       <header
-        className={`sticky w-full top-0 z-50 transition-all duration-300 bg-white ${className} lg:shadow-[0px_4px_4px_0px_#0000001A]`}>
+        className={`sticky w-full top-0 z-50 transition-all duration-300 lg:h-24 bg-neautral-black lg:bg-transparent ${className}`}>
         <nav className='lg:hidden pk-container z-10 w-full shadow-[0px_4px_4px_0px_#0000001A]'>
           <div className='flex justify-between items-center gap-2 w-full h-14'>
             <div onClick={() => router.push('/')}>
@@ -169,13 +172,13 @@ export default function Header({ className }: { className?: string }) {
                   (address != account?.activeWalletAddress || !isConnected) &&
                   account?.noncustodialWalletAddress && (
                     <div className='flex gap-3 items-center '>
-                      <Button size='xs' color='dark' onClick={() => setWalletConnectOpen(true)}>
+                      <Button size='xs' color='neautral' onClick={() => setWalletConnectOpen(true)}>
                         {t('Connect Wallet')}
                       </Button>
                     </div>
                   )
                 ) : (
-                  <Button size='xs' color='dark' onClick={() => setSignInOpen(true)}>
+                  <Button size='xs' color='neautral' onClick={() => setSignInOpen(true)}>
                     {t('Sign in')}
                   </Button>
                 )}
@@ -195,13 +198,13 @@ export default function Header({ className }: { className?: string }) {
                 <div className='flex justify-between pb-4 sticky top-0 bg-white'>
                   <Image src={Logo} alt='header logo' className='h-[29px] w-auto' />
                   <div className='flex items-center gap-4'>
-                    <Button
+                    {/* <Button
                       size='xs'
                       color='dark'
                       variant='outlined'
                       onClick={() => window.open(config.ADMIN_URL, '_blank')}>
                       Create Portal
-                    </Button>
+                    </Button> */}
                     <div
                       className='w-6 h-6 mt-2 relative'
                       onClick={() => {
@@ -234,6 +237,23 @@ export default function Header({ className }: { className?: string }) {
                         <div onClick={() => setTeleQrCodeOpen(true)}>
                           <Image src={QRCode} alt='' className='w-8 h-8' />
                         </div>
+                      </div>
+                      <div className='text-xs font-normal text-brand-2-defaul'>
+                        Connected chain: {chainId == config.CHAIN_INFO.evmChainId ? 'Aura' : 'Story'} •{' '}
+                        <span
+                          className='underline'
+                          onClick={() => {
+                            switchChain({
+                              chainId:
+                                chainId == config.CHAIN_INFO.evmChainId
+                                  ? config.CHAIN_INFO.evmChainId == 6322
+                                    ? mainnet.id
+                                    : 1513
+                                  : config.CHAIN_INFO.evmChainId,
+                            })
+                          }}>
+                          {chainId == config.CHAIN_INFO.evmChainId ? 'Switch to Story' : 'Switch to Aura'}
+                        </span>
                       </div>
                       <div>
                         <div
@@ -618,7 +638,12 @@ export default function Header({ className }: { className?: string }) {
           </div>
         </div>
 
-        <nav className={`pk-container gap-3 lg:flex items-center justify-between h-20 hidden`} aria-label='Global'>
+        <div className='hidden lg:block absolute inset-x-0 top-0 w-full h-[100px]'>
+          <Image src={Bg} alt='' className='w-full h-full object-cover' />
+        </div>
+        <nav
+          className={`pk-container gap-3 lg:flex items-center justify-between h-[86px] hidden text-neautral-white relative`}
+          aria-label='Global'>
           <div className='flex items-center gap-8'>
             <Link href='/' className='flex shrink-0'>
               <span className='sr-only'>Your Company</span>
@@ -724,37 +749,41 @@ export default function Header({ className }: { className?: string }) {
             </div>
           </div>
           <div className='flex lg:gap-[32px] lg:justify-end min-w-[430px] items-center'>
-            <div className='h-fit' onClick={() => router.push('/campaigns')}>
+            <div className='h-fit cursor-pointer' onClick={() => router.push('/campaigns')}>
               <span
                 style={{ fontWeight: '500' }}
-                className={`${pathname.includes('/campaigns') ? 'text-text-brand-defaul' : ''}`}>
+                className={`${pathname.includes('/campaigns') ? 'text-text-brand-focus' : ''}`}>
                 {t('Campaign')}
               </span>
             </div>
-            <div className='h-fit' onClick={() => router.push('/events')}>
+            <div className='h-fit cursor-pointer' onClick={() => router.push('/events')}>
               <span
                 style={{ fontWeight: '500' }}
-                className={`${pathname.includes('/events') ? 'text-text-brand-defaul' : ''}`}>
+                className={`${pathname.includes('/events') ? 'text-text-brand-focus' : ''}`}>
                 {t('Event')}
               </span>
             </div>
-            <div className='h-fit' onClick={() => router.push('/collections')}>
+            <div className='h-fit cursor-pointer' onClick={() => router.push('/collections')}>
               <span
                 style={{ fontWeight: '500' }}
-                className={`${pathname.includes('/collections') ? 'text-text-brand-defaul' : ''}`}>
+                className={`${pathname.includes('/collections') ? 'text-text-brand-focus' : ''}`}>
                 {t('Collection')}
               </span>
             </div>
-            <div className='h-fit' onClick={() => router.push('/about-us')}>
+            <div className='h-fit cursor-pointer' onClick={() => router.push('/about-us')}>
               <span
                 style={{ fontWeight: '500' }}
-                className={`${pathname.includes('/about-us') ? 'text-text-brand-defaul' : ''}`}>
+                className={`${pathname.includes('/about-us') ? 'text-text-brand-focus' : ''}`}>
                 {t('aboutUs')}
               </span>
             </div>
-            <Button size='sm' color='dark' variant='outlined' onClick={() => window.open(config.ADMIN_URL, '_blank')}>
+            {/* <Button
+              size='sm'
+              color='neautral'
+              variant='outlined'
+              onClick={() => window.open(config.ADMIN_URL, '_blank')}>
               Create Portal
-            </Button>
+            </Button> */}
             <div className='flex gap-[20px] ml-10 items-center cursor-pointer'>
               <div className='flex gap-4 items-center' onClick={switchLanguage}>
                 {locale == 'en' ? (
@@ -770,7 +799,24 @@ export default function Header({ className }: { className?: string }) {
                     {/* <MainButton hasAvatar style='secondary' leadingIcon={account?.image || Avatar}>
                       {account?.name}
                     </MainButton> */}
-                    <Image src={account?.noncustodialWalletAddress ? UserGreen : User} alt='user' />
+                    <div className='relative p-0.5'>
+                      <div className='absolute inset-0 bg-[conic-gradient(#009640_70deg,#6D6D6D_0)] rounded-xl rotate-180'></div>
+                      <div className='border border-neautral-black p-[1px] bg-neutral-500 rounded-mlg relative'>
+                        <div className='border border-neutral-800 rounded-lg overflow-hidden'>
+                          <Image
+                            src={account?.image || UserGreen}
+                            width={50}
+                            height={50}
+                            className='w-12 h-w-12'
+                            alt='user'
+                          />
+                        </div>
+                      </div>
+                      <div className='absolute bottom-0 w-full font-jaro text-center text-stroke -mb-1'>
+                        <div className='text-base'>{account.level}</div>
+                        <div className='text-xs -mt-2'>LEVEL</div>
+                      </div>
+                    </div>
                   </DropdownToggle>
 
                   <DropdownMenu customClass='right-0 !w-[405px] max-w-[405px] !overflow-visible mt-[26px]'>
@@ -787,6 +833,23 @@ export default function Header({ className }: { className?: string }) {
                         <div onClick={() => setTeleQrCodeOpen(true)}>
                           <Image src={QRCode} alt='' className='w-8 h-8' />
                         </div>
+                      </div>
+                      <div className='text-xs font-normal text-brand-2-defaul'>
+                        Connected chain: {chainId == config.CHAIN_INFO.evmChainId ? 'Aura' : 'Story'} •{' '}
+                        <span
+                          className='underline'
+                          onClick={() => {
+                            switchChain({
+                              chainId:
+                                chainId == config.CHAIN_INFO.evmChainId
+                                  ? config.CHAIN_INFO.evmChainId == 6322
+                                    ? mainnet.id
+                                    : 1513
+                                  : config.CHAIN_INFO.evmChainId,
+                            })
+                          }}>
+                          {chainId == config.CHAIN_INFO.evmChainId ? 'Switch to Story' : 'Switch to Aura'}
+                        </span>
                       </div>
                       <div className='text-text-primary text-sm font-semibold leading-5'>
                         <div
@@ -962,7 +1025,7 @@ export default function Header({ className }: { className?: string }) {
                   </DropdownMenu>
                 </Dropdown>
               ) : (
-                <Button size='sm' color='dark' onClick={() => setSignInOpen(true)}>
+                <Button size='sm' color='neautral' onClick={() => setSignInOpen(true)}>
                   {t('Sign in')}
                 </Button>
               )}
@@ -972,7 +1035,7 @@ export default function Header({ className }: { className?: string }) {
                 account?.noncustodialWalletAddress && (
                   <div className='flex gap-3 items-center '>
                     <div className='h-4 w-[1px] bg-[#E0E0E0]'></div>
-                    <Button size='sm' color='dark' onClick={() => setWalletConnectOpen(true)}>
+                    <Button size='sm' color='neautral' onClick={() => setWalletConnectOpen(true)}>
                       {t('Connect Wallet')}
                     </Button>
                   </div>

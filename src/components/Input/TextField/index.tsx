@@ -9,6 +9,7 @@ interface ITextField {
   onChange?: (value: string) => void
   value?: string
   type?: string
+  id?: string
   inputref?: any
   disabled?: boolean
 }
@@ -26,6 +27,7 @@ export default function TextField({
   value,
   inputref,
   disabled,
+  id,
 }: ITextField) {
   const ex = ['e', '-', '=', '*', '(', ')', '+', '.']
   const disabledStyle = disabled ? 'bg-[#F6F6F6]' : ''
@@ -55,9 +57,10 @@ export default function TextField({
           onChange={(event) => {
             onChange && onChange(event.target.value)
           }}
-          id='input-group-1'
-          className={`bg-transparent rounded-[6px] w-full p-[13px] placeholder-medium-gray focus:outline-none ${leadingComponent ? 'pl-[50px]' : ''
-            } ${trailingComponent ? 'pr-[45px]' : ''} ${disabledStyle}`}
+          id={id || 'input-group-1'}
+          className={`bg-transparent rounded-[6px] w-full p-[13px] placeholder-medium-gray focus:outline-none ${
+            leadingComponent ? 'pl-[50px]' : ''
+          } ${trailingComponent ? 'pr-[45px]' : ''} ${disabledStyle}`}
           placeholder={placeholder}></input>
         {trailingComponent && (
           <div className='absolute inset-y-0 right-0 flex items-center justify-center p-[13px] max-w-[50px]'>
@@ -92,9 +95,10 @@ export default function TextField({
           type={type}
           disabled={disabled}
           onChange={(event) => onChange && onChange(event.target.value)}
-          id='input-group-1'
-          className={`rounded-[8px] text-sm leading-6 w-full px-[13px] py-[2px] placeholder-medium-gray focus:outline-none ${leadingComponent ? 'pl-10' : ''
-            } ${className} ${disabledStyle}`}
+          id={id || 'input-group-1'}
+          className={`rounded-[8px] text-sm leading-6 w-full px-[13px] py-[2px] placeholder-medium-gray focus:outline-none ${
+            leadingComponent ? 'pl-10' : ''
+          } ${className} ${disabledStyle}`}
           placeholder={placeholder}></input>
         {trailingComponent && (
           <div className='absolute inset-y-0 right-[10px] flex items-center justify-center p-[13px] max-w-[50px]'>
@@ -129,16 +133,18 @@ export default function TextField({
           type={type}
           disabled={disabled}
           onChange={(event) => onChange && onChange(event.target.value)}
-          id='input-group-1'
-          className={`rounded-[8px] text-xs leading-6 w-full px-[13px] placeholder-medium-gray focus:outline-none ${leadingComponent ? 'pl-10' : ''
-            } ${className} ${disabledStyle}`}
+          id={id || 'input-group-1'}
+          className={`rounded-[8px] text-xs leading-6 w-full px-[13px] placeholder-medium-gray focus:outline-none ${
+            leadingComponent ? 'pl-10' : ''
+          } ${className} ${disabledStyle}`}
           placeholder={placeholder}></input>
       </div>
     )
   }
 
   return (
-    <div className={`relative w-full flex rounded-lg border-[#D1D1D1] hover:border-black border h-10 ${className} ${disabledStyle}`}>
+    <div
+      className={`relative w-full flex rounded-lg border-border-secondary hover:border-black border h-10 ${className} ${disabledStyle}`}>
       {leadingComponent && (
         <div className='absolute inset-y-0 left-0 flex items-center justify-center py-2.5 pl-3 pr-1.5 w-[38px] [&>*]:w-5 [&>*]:h-5'>
           {leadingComponent}
@@ -160,9 +166,10 @@ export default function TextField({
         type={type}
         disabled={disabled}
         onChange={(event) => onChange && onChange(event.target.value)}
-        id='input-group-1'
-        className={`bg-transparent w-full placeholder-text-quatenary text-sm font-normal focus:outline-none ${leadingComponent ? 'pl-[38px]' : ''
-          } ${trailingComponent ? 'pr-[45px]' : ''} ${disabledStyle}`}
+        id={id || 'input-group-1'}
+        className={`bg-transparent w-full placeholder-text-quatenary px-2.5 text-sm font-normal focus:outline-none ${
+          leadingComponent ? 'pl-[38px]' : ''
+        } ${trailingComponent ? 'pr-[45px]' : ''} ${disabledStyle}`}
         placeholder={placeholder}></input>
       {trailingComponent && (
         <div className='absolute inset-y-0 right-0 flex items-center justify-center pr-3 pl-1.5 w-[38px] [&>*]:w-5 [&>*]:h-5'>

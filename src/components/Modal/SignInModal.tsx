@@ -9,6 +9,7 @@ import Zalo from 'images/Zalo.png'
 import getConfig from 'next/config'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useRouter } from 'next/router'
 import { QRCodeSVG } from 'qrcode.react'
 import { useContext, useEffect, useRef, useState } from 'react'
@@ -17,6 +18,7 @@ import { useTranslation } from 'react-i18next'
 import WCIcon from 'src/assets/images/wallet-connect.png'
 import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
+import { storyChain } from 'src/services/wagmi/config'
 import { isMetamaskInstalled, validateEmail } from 'src/utils'
 import { Connector, useConnect, useDisconnect } from 'wagmi'
 export default function SignInModal() {
@@ -81,6 +83,7 @@ export default function SignInModal() {
 }
 
 const ByWallet = ({ step }) => {
+  
   const { t } = useTranslation()
   const { connectors, connectAsync: wagmiConnect } = useConnect()
   const { connectHandler } = useContext(Context)
@@ -93,7 +96,6 @@ const ByWallet = ({ step }) => {
   const [loading, setLoading] = useState(false)
   const [showQRCode, setShowQRCode] = useState(false)
   const [qrError, setQRError] = useState('')
-
   useEffect(() => {
     const setConnector = async () => {
       const installedWallet = [] as Connector[]
@@ -142,7 +144,10 @@ const ByWallet = ({ step }) => {
                     onClick={async () => {
                       try {
                         await wagmiConnect(
-                          { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
+                          {
+                            connector,
+                            chainId: location.pathname.includes('ava-2024') ? storyChain.id : getConfig().CHAIN_INFO.evmChainId,
+                          },
                           { onSuccess: connectHandler }
                         )
                         if (!isMetamaskInstalled()) {
@@ -169,7 +174,10 @@ const ByWallet = ({ step }) => {
                       try {
                         setShowQRCode(false)
                         await wagmiConnect(
-                          { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
+                          {
+                            connector,
+                            chainId: location.pathname.includes('ava-2024') ? storyChain.id : getConfig().CHAIN_INFO.evmChainId,
+                          },
                           {
                             onSuccess: connectHandler,
                           }
@@ -194,7 +202,10 @@ const ByWallet = ({ step }) => {
                         setLoading(true)
                         setQRError('')
                         wagmiConnect(
-                          { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
+                          {
+                            connector,
+                            chainId: location.pathname.includes('ava-2024') ? storyChain.id : getConfig().CHAIN_INFO.evmChainId,
+                          },
                           {
                             onSuccess: (data) => {
                               setLoading(false)

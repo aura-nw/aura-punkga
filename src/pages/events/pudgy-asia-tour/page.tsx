@@ -31,14 +31,6 @@ export default function Pudgy() {
   )
   return (
     <>
-      <style jsx global>
-        {`
-          .text-stroke {
-            -webkit-text-stroke-width: 1px;
-            -webkit-text-stroke-color: #000;
-          }
-        `}
-      </style>
       <div className='bg-[#F5FDFF] estedad-font'>
         <Image src={locale == 'vn' ? BannerMobileVN : BannerMobile} className='w-full lg:hidden h-auto' alt='' />
         <div className='pk-container hidden lg:block'>

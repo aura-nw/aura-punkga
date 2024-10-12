@@ -1,19 +1,34 @@
 import HeroBanner from 'components/pages/event/assets/allEvents/hero-banner.png'
-import HeroBannerVN from 'components/pages/event/assets/allEvents/hero-banner.png'
+import HeroBannerVN from 'components/pages/event/assets/allEvents/hero-banner-vn.png'
 import HeroBannerMobile from 'components/pages/event/assets/allEvents/hero-banner-mobile.png'
-import HeroBannerMobileVN from 'components/pages/event/assets/allEvents/hero-banner-mobile.png'
+import HeroBannerMobileVN from 'components/pages/event/assets/allEvents/hero-banner-mobile-vn.png'
 import WowYourselfImage from 'components/pages/event/assets/allEvents/wow-yourself.png'
 import KaiaEventImage from 'components/pages/event/assets/allEvents/Kaia.png'
 import KaiaEventImageVN from 'components/pages/event/assets/allEvents/Kaia-vn.png'
 import PudgyEventImage from 'components/pages/event/assets/allEvents/Pudgy.png'
+import AvaEventImage from 'components/pages/event/assets/allEvents/ava.png'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 const events = [
   {
-    url: '/events/pudgy-asia-tour',
+    url: '/events/ava-2024',
     isLive: true,
+    en: {
+      image: AvaEventImage,
+      title: `AVA Grand Contest 2024`,
+      subtitle: `12 Oct 2024 - 17 Nov 2024`,
+    },
+    vn: {
+      image: AvaEventImage,
+      title: `AVA Grand Contest 2024`,
+      subtitle: `12/10/2024 - 12/11/2024`,
+    },
+  },
+  {
+    url: '/events/pudgy-asia-tour',
+    isLive: false,
     en: {
       image: PudgyEventImage,
       title: `Pudgy Asia Tour`,
@@ -77,7 +92,11 @@ export default function EventPage() {
           {events.map((event) => (
             <Link key={event.url} href={event.url} className='rounded-mlg p-4 bg-white relative'>
               <div className='relative'>
-                <Image src={event[locale].image} alt='' className='w-full aspect-[310/166] object-cover' />
+                <Image
+                  src={event[locale].image}
+                  alt=''
+                  className='w-full aspect-[310/166] object-cover rounded-md overflow-hidden'
+                />
                 {event.isLive && (
                   <div className='absolute top-2.5 right-2.5 text-xxs font-semibold leading-[15px] bg-error-100 text-text-error-primary-3 flex items-center gap-1 rounded px-2.5 py-0.5'>
                     <svg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4' fill='none'>
