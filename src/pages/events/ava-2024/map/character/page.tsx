@@ -435,7 +435,7 @@ export default function Event() {
       {width < 1024 && (
         <Modal open={showModal} setOpen={setShowModal} className='[&_.static]:p-0'>
           {characterData && (
-            <div className='rounded-mlg border-[3px] relative border-black p-5 bg-[#191919] h-fit min-w-[350px] w-full'>
+            <div className='rounded-mlg border-[3px] relative border-black p-3 bg-[#191919] h-fit min-w-[350px] w-full'>
               <Skew className='absolute top-1.5 right-1.5' />
               <Skew className='absolute top-1.5 left-1.5' />
               <div className='relative'>
@@ -510,13 +510,13 @@ export default function Event() {
                     </svg>
                   </div>
                 </div>
-                <div className='flex gap-1.5 mt-4'>
+                <div className='flex gap-1.5 mt-4 flex-col'>
                   {!(characterData?.is_default_character || isCollected || (collectedCharacter?.length || 0) >= 3) && (
                     <Button
                       color='neautral'
                       size='sm'
                       variant='outlined'
-                      className='!w-2/3 shrink-0 [&>*]:w-full'
+                      className='!w-full shrink-0 [&>*]:w-full'
                       onClick={() => {
                         if (account) {
                           setShowModal(false)
