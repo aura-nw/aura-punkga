@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
 import Round1Submission from './round1Submission'
+import Round2Submission from './round2Submission'
 
 export default function Event() {
   const { account } = useContext(Context)
@@ -85,6 +86,15 @@ export default function Event() {
               {round == 1 ? (
                 <>
                   <Round1Submission />
+                </>
+              ) : round == 2 ? (
+                // <>
+                //   <Round2Submission />
+                // </>
+                <>
+                  <div className='font-jaro text-2xl w-full text-center h-[20vh] grid place-items-center'>
+                    {t('Coming soon')}!
+                  </div>
                 </>
               ) : (
                 <>

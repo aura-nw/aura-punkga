@@ -1,5 +1,4 @@
 import getConfig from 'next/config'
-import { mainnet } from 'viem/chains'
 import { createConfig, http } from 'wagmi'
 import { injected, metaMask, walletConnect } from 'wagmi/connectors'
 export const storyChain = {
@@ -47,11 +46,10 @@ export const getWagmiConfig = (projectId: string) => {
     },
   }
   return createConfig({
-    chains: [mainnet, storyChain, auraChain],
+    chains: [storyChain, auraChain],
     connectors: [walletConnect({ showQrModal: false, projectId }), metaMask(), injected()],
     transports: {
       [auraChain.id]: http(),
-      [mainnet.id]: http(),
       [storyChain.id]: http(),
     },
   })

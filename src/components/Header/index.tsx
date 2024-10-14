@@ -6,7 +6,6 @@ import LogOut from 'assets/images/icons/logout.svg'
 import MyProfile from 'assets/images/icons/myProfile.svg'
 import SearchIcon from 'assets/images/icons/search.svg'
 import PunkgaWallet from 'assets/images/punkga.png'
-import User from 'assets/images/user.svg'
 import UserGreen from 'assets/images/userGreen.svg'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import TextField from 'components/Input/TextField'
@@ -34,7 +33,6 @@ import { shorten } from 'src/utils'
 import TonWeb from 'tonweb'
 import { useAccount, useBalance, useChainId, useSwitchChain } from 'wagmi'
 import Bg from './assets/bg.svg'
-import { mainnet } from 'viem/chains'
 export const HEADER_HEIGHT = {
   MOBILE: '56px',
   DESKTOP: '80px',
@@ -246,9 +244,7 @@ export default function Header({ className }: { className?: string }) {
                             switchChain({
                               chainId:
                                 chainId == config.CHAIN_INFO.evmChainId
-                                  ? config.CHAIN_INFO.evmChainId == 6322
-                                    ? mainnet.id
-                                    : 1513
+                                  ?  1513
                                   : config.CHAIN_INFO.evmChainId,
                             })
                           }}>
@@ -842,9 +838,7 @@ export default function Header({ className }: { className?: string }) {
                             switchChain({
                               chainId:
                                 chainId == config.CHAIN_INFO.evmChainId
-                                  ? config.CHAIN_INFO.evmChainId == 6322
-                                    ? mainnet.id
-                                    : 1513
+                                  ? 1513
                                   : config.CHAIN_INFO.evmChainId,
                             })
                           }}>
