@@ -14,7 +14,13 @@ import Round2Submission from './round2Submission'
 import DecorLeft from 'components/pages/event/ava-2024/assets/decor-left.png'
 import DecorRight from 'components/pages/event/ava-2024/assets/decor-right.png'
 import DecorMiddle from 'components/pages/event/ava-2024/assets/decor-middle.png'
-export default function Event() {
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <Event {...props} />
+}
+function Event() {
   const { account } = useContext(Context)
   const { setSignInOpen } = useContext(ModalContext)
   const { t } = useTranslation()
