@@ -1,5 +1,8 @@
 import Background from 'components/pages/event/ava-2024/assets/Main_Map.png'
 import Decor from 'components/pages/event/ava-2024/assets/decor.svg'
+import DecorLeft from 'components/pages/event/ava-2024/assets/decor-left.png'
+import DecorRight from 'components/pages/event/ava-2024/assets/decor-right.png'
+import DecorMiddle from 'components/pages/event/ava-2024/assets/decor-middle.png'
 import Frame2 from 'components/pages/event/ava-2024/assets/frame-2.svg'
 import Frame from 'components/pages/event/ava-2024/assets/frame.svg'
 import Point from 'components/pages/event/ava-2024/assets/point.svg'
@@ -42,9 +45,10 @@ export default function Event() {
   const [sort, setSort] = useState('Created_At_Desc')
   const [characters, setCharacters] = useState([])
   const { width } = useWindowSize()
+  const [type, setType] = useState('all')
   const { data, mutate } = useSWR(
-    { ket: 'get-characters', userId: account?.id, page, sort },
-    ({ userId, page, sort }) => eventService.story.getCharacters(userId, page, sort),
+    { ket: 'get-characters', userId: account?.id, page, sort, type },
+    ({ userId, page, sort, type }) => eventService.story.getCharacters(userId, page, sort, type),
     {
       revalidateOnFocus: false,
     }
@@ -119,7 +123,10 @@ export default function Event() {
             />
           </svg>
         </div>
-        <Image src={Decor} alt='' className='absolute -top-[4%] inset-x-0 w-full' />
+        <Image src={DecorLeft} alt='' className='absolute top-16 left-0 w-[10%]' />
+        <Image src={DecorMiddle} alt='' className='absolute top-[48px] lg:top-[68px] left-[60%] w-[10%]' />
+        <Image src={DecorRight} alt='' className='absolute top-16 right-0 w-[10%]' />
+
         <div className='relative pk-container mx-auto pt-24 text-white'>
           <div className='lg:py-10'>
             {!!characters?.length && (
@@ -239,40 +246,69 @@ export default function Event() {
                       All characters are registered as Intellectual Property (IP) on Story Protocol.
                     </p>
                   )}
+                  <div className='mt-6 flex gap-2 -skew-x-12'>
+                    <div className='h-9 w-3 rounded bg-white'></div>
+                    <div
+                      className={`h-9 grid place-items-center rounded ${
+                        type == 'all' ? 'bg-white text-black' : 'bg-gray-500 text-white'
+                      } text-sm font-semibold px-3.5 cursor-pointer`}
+                      onClick={() => {
+                        setPage(1)
+                        setType('all')
+                      }}>
+                      <span className='skew-x-12'>{t('All')}</span>
+                    </div>
+                    <div
+                      className={`h-9 grid place-items-center rounded ${
+                        type == 'sponsored' ? 'bg-white text-black' : 'bg-gray-500 text-white'
+                      } text-sm font-semibold px-3.5 cursor-pointer`}
+                      onClick={() => {
+                        setPage(1)
+                        setType('sponsored')
+                      }}>
+                      <span className='skew-x-12'>{t('Sponsored')}</span>
+                    </div>
+                    <div
+                      className={`h-9 grid place-items-center rounded ${
+                        type == 'user' ? 'bg-white text-black' : 'bg-gray-500 text-white'
+                      } text-sm font-semibold px-3.5 cursor-pointer`}
+                      onClick={() => {
+                        setPage(1)
+                        setType('user')
+                      }}>
+                      <span className='skew-x-12'>{t('By contestants')}</span>
+                    </div>
+                  </div>
                   <div className='grid grid-cols-2 md:grid-cols-4 gap-5 mt-6'>
-                    {characters
-                      ?.sort((a, b) =>
-                        b.is_default_character === a.is_default_character ? 0 : b.is_default_character ? 1 : -1
-                      )
-                      ?.map((character, index) => (
-                        <div
-                          className={`relative rounded-xl border-[3px] ${
-                            characterData?.id == character.id ? 'border-brand-default' : 'border-black'
-                          } overflow-hidden cursor-pointer`}
-                          onClick={() => {
-                            setSelectedCharacter(character)
-                            if (width < 1024) {
-                              setShowModal(true)
-                            }
-                          }}
-                          key={character.id}>
-                          <div className='absolute bottom-0 inset-x-0 w-full'>
-                            <Image
-                              src={character.avatar_url}
-                              width={300}
-                              height={300}
-                              alt=''
-                              className='w-full aspect-square object-cover relative'
-                            />
-                            {character.is_default_character && (
-                              <div className='absolute top-3 right-3 text-xs text-black bg-white rounded-md px-1 font-semibold'>
-                                {t('Free')}
-                              </div>
-                            )}
-                          </div>
-                          <Image src={Frame} alt='' className='w-full  relative rounded-mlg' />
+                    {characters?.map((character, index) => (
+                      <div
+                        className={`relative rounded-xl border-[3px] ${
+                          characterData?.id == character.id ? 'border-brand-default' : 'border-black'
+                        } overflow-hidden cursor-pointer`}
+                        onClick={() => {
+                          setSelectedCharacter(character)
+                          if (width < 1024) {
+                            setShowModal(true)
+                          }
+                        }}
+                        key={character.id}>
+                        <div className='absolute bottom-0 inset-x-0 w-full'>
+                          <Image
+                            src={character.avatar_url}
+                            width={300}
+                            height={300}
+                            alt=''
+                            className='w-full aspect-square object-cover relative'
+                          />
+                          {character.is_default_character && (
+                            <div className='absolute top-3 right-3 text-xs text-black bg-white rounded-md px-1 font-semibold'>
+                              {t('Free')}
+                            </div>
+                          )}
                         </div>
-                      ))}
+                        <Image src={Frame} alt='' className='w-full  relative rounded-mlg' />
+                      </div>
+                    ))}
                   </div>
                   <div className='mt-8 flex justify-center'>
                     <Pagination

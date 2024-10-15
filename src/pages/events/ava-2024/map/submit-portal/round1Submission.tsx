@@ -71,7 +71,7 @@ export default function Round1Submission() {
               }>{`${name.length}/50`}</div>
           </div>
         </div>
-        <div className='mt-8 grid grid-cols-2 gap-10'>
+        <div className='mt-8 grid grid-cols-1 md:grid-cols-2 gap-10'>
           <div>
             <div className=''>
               <div className='text-sm font-medium'>

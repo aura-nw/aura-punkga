@@ -11,11 +11,17 @@ import { ModalContext } from 'src/context/modals'
 import Round1Submission from './round1Submission'
 import Round2Submission from './round2Submission'
 
+import DecorLeft from 'components/pages/event/ava-2024/assets/decor-left.png'
+import DecorRight from 'components/pages/event/ava-2024/assets/decor-right.png'
+import DecorMiddle from 'components/pages/event/ava-2024/assets/decor-middle.png'
 export default function Event() {
   const { account } = useContext(Context)
   const { setSignInOpen } = useContext(ModalContext)
   const { t } = useTranslation()
-  const [round, setRound] = useState(1)
+  const searchParams = new URLSearchParams(location.search)
+  const [round, setRound] = useState(
+    searchParams.get('tab') == 'round-3' ? 3 : searchParams.get('tab') == 'round-2' ? 2 : 1
+  )
   useEffect(() => {
     if (!account) {
       setSignInOpen(true)
@@ -41,7 +47,10 @@ export default function Event() {
             />
           </svg>
         </div>
-        <Image src={Decor} alt='' className='absolute -top-[4%] inset-x-0 w-full' />
+        <Image src={DecorLeft} alt='' className='absolute top-16 left-0 w-[10%]' />
+        <Image src={DecorMiddle} alt='' className='absolute top-[48px] lg:top-[68px] left-[60%] w-[10%]' />
+        <Image src={DecorRight} alt='' className='absolute top-16 right-0 w-[10%]' />
+
         <div className='relative pk-container mx-auto pt-24 text-white'>
           <div className='py-10'>
             <div className='flex w-full flex-col-reverse lg:flex-row gap-5 justify-between lg:items-center relative z-10'>

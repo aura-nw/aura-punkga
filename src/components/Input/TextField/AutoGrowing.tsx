@@ -11,6 +11,7 @@ interface IAutoGrowingTextField {
   className?: string
   maxLength?: number
   placeholderClassName?: string
+  id?: string
 }
 
 export default function AutoGrowingTextField({
@@ -24,6 +25,7 @@ export default function AutoGrowingTextField({
   r,
   maxLength,
   placeholderClassName,
+  id
 }: IAutoGrowingTextField) {
   const eRef = useRef<HTMLDivElement>(null)
   const ref = r || eRef
@@ -63,6 +65,7 @@ export default function AutoGrowingTextField({
       onKeyDown={handleKeyDown}
       onInput={handleInput}
       contentEditable={true}
+      id={id}
       className={`
         whitespace-pre-wrap break-words truncate hyphens-auto min-h-[26px] md:min-h-[32px] w-full 
         focus:outline-none text-[12px] leading-[20px] px-[10px] py-1 md:py-[7px] rounded-[8px] 
