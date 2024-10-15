@@ -70,6 +70,9 @@ export default function Event() {
     setIsLiked(!!characterData?.likes?.length)
     setIsCollected(!!characterData?.user_collect_characters?.length)
   }, [characterData?.id])
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [page])
   const collectHandler = async () => {
     try {
       setLoading(true)
