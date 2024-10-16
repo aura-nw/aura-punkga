@@ -4,6 +4,8 @@ export const eventService = {
   story: {
     createCharacter: async (payload) =>
       await privateAxios.post(`${getConfig().REST_API_URL}/story-event/submission/character`, payload),
+    getAvailableCharacter: async () =>
+      await privateAxios.get(`${getConfig().REST_API_URL}/story-event/character/available`),
     getCharacters: async (userId, page, sort, type) =>
       await privateAxios.get(
         `${getConfig().REST_API_URL}/story-event/character?limit=20&offset=${(page - 1) * 20}&order_by=${sort}${
@@ -19,5 +21,7 @@ export const eventService = {
     collectCharacter: async (id) =>
       await privateAxios.post(`${getConfig().REST_API_URL}/story-event/character/${id}/collect`),
     getSubmissions: async () => await privateAxios.get(`${getConfig().REST_API_URL}/story-event/submission`),
+    submitManga: async (payload) =>
+      await privateAxios.post(`${getConfig().REST_API_URL}/story-event/submission/manga`, payload),
   },
 }

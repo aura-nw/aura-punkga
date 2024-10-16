@@ -1,15 +1,15 @@
 import TextField from 'components/Input/TextField'
-import Image from 'next/image'
-import { useContext, useState } from 'react'
 import Frame from 'components/pages/event/ava-2024/assets/frame.svg'
 import Placeholder from 'components/pages/event/ava-2024/assets/placeholder.png'
-import { toast } from 'react-toastify'
-import { eventService } from 'src/services/event.service'
-import useSWR from 'swr'
-import moment from 'moment'
-import { useTranslation } from 'react-i18next'
-import { Context } from 'src/context'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { useContext, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+import { Context } from 'src/context'
+import { eventService } from 'src/services/eventService'
+import { mutate } from 'swr'
+import SubmissionTable from './submissionTable'
 export default function Round1Submission() {
   const [name, setName] = useState('')
   const { account } = useContext(Context)
@@ -19,9 +19,7 @@ export default function Round1Submission() {
   const [loading, setLoading] = useState(false)
   const [avatar, setAvatar] = useState<any>()
   const [error, setError] = useState()
-  const { data, mutate } = useSWR('get-submissions', eventService.story.getSubmissions, {
-    revalidateOnFocus: false,
-  })
+
   const submitHandler = async () => {
     try {
       if (name && name.length <= 50 && description && avatar && !loading) {
@@ -36,7 +34,7 @@ export default function Round1Submission() {
             type: 'error',
           })
         } else {
-          await mutate()
+          await mutate('get-submissions')
           toast(locale == 'vn' ? 'Tạo nhân vật thành công' : 'Create new character successfully', {
             type: 'success',
           })
@@ -53,7 +51,6 @@ export default function Round1Submission() {
       })
     }
   }
-  const submissions = data?.data?.data?.story_event_submission
   if (!account) return <div className='w-full text-center'>{t('Login to continue')}</div>
   return (
     <div className='grid grid-cols-1 lg:grid-cols-[3fr_4fr] gap-8'>
@@ -163,41 +160,8 @@ export default function Round1Submission() {
           {t(loading ? 'Submitting' : 'submit2')}
         </div>
       </div>
-      <div className='rounded-md border-[3px] border-neutral-black bg-neautral-950 p-6'>
-        <div className='text-lg font-semibold'>{t('My submission')}</div>
-        <div className='text-feedback-info-link-defaul text-xs mt-2'>
-          {t(
-            'Submitted artworks/mangas need to be approved by admin. This process may take upto 24 hours after you submitted'
-          )}
-          .{' '}
-        </div>
-        <div className='mt-6 p-6 rounded-[10px] bg-black'>
-          {submissions?.length ? (
-            <>
-              <div className='grid grid-cols-[12%_1fr_25%_25%] text-sm font-semibold border-b border-white'>
-                <div className='px-2 py-4'>{t('No')}</div>
-                <div className='p-4'>{t('Name')}</div>
-                <div className='p-4'>{t('Type')}</div>
-                <div className='p-4'>{t('Submitted at')}</div>
-              </div>
-              <div className='h-[260px] overflow-auto'>
-                {submissions?.map((submission, index) => (
-                  <div
-                    className='grid grid-cols-[12%_1fr_25%_25%] text-sm font-medium text-text-quatenary'
-                    key={submission.id}>
-                    <div className='px-2 py-4'>#{index + 1}</div>
-                    <div className='p-4 truncate'>{submission.name}</div>
-                    <div className='p-4 capitalize'>{submission.type}</div>
-                    <div className='p-4'>{moment(submission.created_at).format('HH:mm DD/MM/yyyy')}</div>
-                  </div>
-                ))}
-              </div>
-            </>
-          ) : (
-            <div className='text-center w-full h-full grid place-items-center'>{t('No submission found')}!</div>
-          )}
-        </div>
-      </div>
+
+      <SubmissionTable />
     </div>
   )
 }

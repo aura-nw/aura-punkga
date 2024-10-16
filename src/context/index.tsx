@@ -289,6 +289,7 @@ function ContextProvider({ children }: any) {
           email: res.email,
           name: res.nickname,
           image: res.picture,
+          creator: res.creator,
           verified: !!res.email_verified_at,
           id: res.id,
           gender: res.gender || '',

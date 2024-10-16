@@ -15,7 +15,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
 import { Context } from 'src/context'
-import { eventService } from 'src/services/event.service'
+import { eventService } from 'src/services/eventService'
 import { useWindowSize } from 'usehooks-ts'
 import { shorten } from 'src/utils'
 

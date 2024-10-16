@@ -7,6 +7,7 @@ export interface IUser {
   gender: string
   birthdate?: string
   bio?: string
+  creator?: any
   signupMethods: string
   custodialWalletAddress: string
   noncustodialWalletAddress?: string

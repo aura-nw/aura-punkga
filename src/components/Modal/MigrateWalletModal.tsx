@@ -121,7 +121,7 @@ export default function MigrateWalletModal() {
       return
     }
     if (data?.status == 'FAILED') {
-      toast('Migration failed', { type: 'error' })
+      // toast('Migration failed', { type: 'error' })
       setRequestId(undefined)
       return
     }

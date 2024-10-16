@@ -103,13 +103,8 @@ function Event() {
                   <Round1Submission />
                 </>
               ) : round == 2 ? (
-                // <>
-                //   <Round2Submission />
-                // </>
                 <>
-                  <div className='font-jaro text-2xl w-full text-center h-[20vh] grid place-items-center'>
-                    {t('Coming soon')}!
-                  </div>
+                  <Round2Submission />
                 </>
               ) : (
                 <>
