@@ -561,7 +561,7 @@ export default function Event() {
                       color='neautral'
                       size='sm'
                       variant='outlined'
-                      className='!w-full shrink-0 [&>*]:w-full'
+                      className='!w-full shrink-0 flex item-center justify-between'
                       onClick={() => {
                         if (account) {
                           setShowModal(false)
