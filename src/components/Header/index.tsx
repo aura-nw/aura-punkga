@@ -229,7 +229,7 @@ export default function Header({ className }: { className?: string }) {
                           width={32}
                           height={32}
                           alt=''
-                          className='rounded-full w-full aspect-square'
+                          className='rounded-full w-8 aspect-square'
                         />
                         <div className='text-sm font-medium text-text-primary w-full'>{account?.name}</div>
                         <div onClick={() => setTeleQrCodeOpen(true)}>

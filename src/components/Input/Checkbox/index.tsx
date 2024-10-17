@@ -1,4 +1,12 @@
-export default function Checkbox({ checked, onClick, label }) {
+export default function Checkbox({
+  checked,
+  onClick,
+  label,
+}: {
+  checked?: boolean
+  onClick?: () => void
+  label?: string
+}) {
   return (
     <div className={`text-sm font-medium cursor-pointer gap-3 flex items-center`} onClick={onClick}>
       <div className={`shrink-0`}>

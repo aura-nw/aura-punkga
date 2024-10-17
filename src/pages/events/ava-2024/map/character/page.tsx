@@ -190,7 +190,7 @@ export default function Event() {
                               <path
                                 d='M7 10L12.0008 14.58L17 10'
                                 stroke='white'
-                                stroke-width='1.5'
+                                strokeWidth='1.5'
                                 stroke-linecap='round'
                                 stroke-linejoin='round'
                               />
