@@ -1,24 +1,23 @@
+import Button from 'components/Button'
+import ActiveLamp from 'components/pages/event/ava-2024/assets/active-lamp.png'
+import ActiveMap from 'components/pages/event/ava-2024/assets/active-map.png'
+import ActiveSketch from 'components/pages/event/ava-2024/assets/active-sketch.png'
+import ArtkeeperAngry from 'components/pages/event/ava-2024/assets/Artkeeper-angry.png'
+import ArtkeeperNormal from 'components/pages/event/ava-2024/assets/Artkeeper-normal.png'
+import ArtkeeperSad from 'components/pages/event/ava-2024/assets/Artkeeper-sad.png'
+import Ghe from 'components/pages/event/ava-2024/assets/chair.png'
+import Door from 'components/pages/event/ava-2024/assets/door.svg'
+import GuideBox from 'components/pages/event/ava-2024/assets/guide-box.png'
+import Lamp from 'components/pages/event/ava-2024/assets/lamp.svg'
+import Logo from 'components/pages/event/ava-2024/assets/logo.svg'
+import Map from 'components/pages/event/ava-2024/assets/Map.svg'
+import Background from 'components/pages/event/ava-2024/assets/onboarding-bg.png'
+import Sketch from 'components/pages/event/ava-2024/assets/sketch.svg'
+import Ban from 'components/pages/event/ava-2024/assets/table.png'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import useSWR from 'swr'
-import Background from 'components/pages/event/ava-2024/assets/onboarding-bg.png'
-import Door from 'components/pages/event/ava-2024/assets/door.svg'
-import Ban from 'components/pages/event/ava-2024/assets/table.png'
-import Ghe from 'components/pages/event/ava-2024/assets/chair.png'
-import ActiveMap from 'components/pages/event/ava-2024/assets/active-map.png'
-import Map from 'components/pages/event/ava-2024/assets/Map.svg'
-import ActiveSketch from 'components/pages/event/ava-2024/assets/active-sketch.png'
-import Sketch from 'components/pages/event/ava-2024/assets/sketch.svg'
-import ActiveLamp from 'components/pages/event/ava-2024/assets/active-lamp.png'
-import Lamp from 'components/pages/event/ava-2024/assets/lamp.svg'
-import ArtkeeperNormal from 'components/pages/event/ava-2024/assets/Artkeeper-normal.png'
-import ArtkeeperSad from 'components/pages/event/ava-2024/assets/Artkeeper-sad.png'
-import ArtkeeperAngry from 'components/pages/event/ava-2024/assets/Artkeeper-angry.png'
-import GuideBox from 'components/pages/event/ava-2024/assets/guide-box.png'
-import Image from 'next/image'
-import Logo from 'components/pages/event/ava-2024/assets/logo.svg'
-import Button from 'components/Button'
 import { useLocalStorage } from 'usehooks-ts'
 export default function Event() {
   const { locale } = useRouter()
@@ -87,7 +86,6 @@ export default function Event() {
     }
   }, [step])
   useEffect(() => {
-    console.log(isDone)
     if (!isDone) setStep(0)
   }, [isDone])
   const displayGuide = (text: string) => {
