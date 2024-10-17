@@ -23,5 +23,9 @@ export const eventService = {
     getSubmissions: async () => await privateAxios.get(`${getConfig().REST_API_URL}/story-event/submission`),
     submitManga: async (payload) =>
       await privateAxios.post(`${getConfig().REST_API_URL}/story-event/submission/manga`, payload),
+    getManga: async (page) =>
+      await privateAxios.get(
+        `${getConfig().REST_API_URL}/story-event/manga?limit=20&offset=${(page - 1) * 20}`
+      ),
   },
 }

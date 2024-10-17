@@ -460,7 +460,7 @@ export default function Event() {
                           </Button>
                         )}
                         <Button size='sm' color='neautral' className='!w-full' onClick={likeHandler}>
-                          {t(isLiked ? 'Unlike' : 'Like')}
+                          {t(isLiked ? 'Liked' : 'Like')}
                         </Button>
                       </div>
                     </div>
@@ -571,7 +571,7 @@ export default function Event() {
                     </Button>
                   )}
                   <Button size='sm' color='neautral' className='!w-full' onClick={likeHandler}>
-                    {t(isLiked ? 'Unlike' : 'Like')}
+                    {t(isLiked ? 'Liked' : 'Like')}
                   </Button>
                 </div>
               </div>

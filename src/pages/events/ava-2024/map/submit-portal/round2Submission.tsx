@@ -93,20 +93,23 @@ export default function Round2Submission() {
                   language_id: data.mainLanguage.language_id,
                   is_main_language: true,
                   description: data.mainLanguage.description,
+                  image_url: data.mainLanguage.link,
                 },
                 {
-                  title: data.mainLanguage.title,
-                  language_id: data.mainLanguage.language_id,
+                  title: data.secondaryLanguage.title,
+                  language_id: data.secondaryLanguage.language_id,
                   is_main_language: false,
-                  description: data.mainLanguage.description,
+                  description: data.secondaryLanguage.description,
+                  image_url: data.secondaryLanguage.link,
                 },
               ]
-            : [
+              : [
                 {
                   title: data.mainLanguage.title,
                   language_id: data.mainLanguage.language_id,
                   is_main_language: true,
                   description: data.mainLanguage.description,
+                  image_url: data.mainLanguage.link,
                 },
               ]
         )
