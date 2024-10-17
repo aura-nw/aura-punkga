@@ -436,7 +436,7 @@ export default function Event() {
                         {!(
                           characterData?.is_default_character ||
                           isCollected ||
-                          account?.id == characterData.authorizer_user.id ||
+                          account?.id == characterData?.authorizer_user?.id ||
                           (collectedCharacter?.length || 0) >= 3
                         ) && (
                           <Button
@@ -553,7 +553,7 @@ export default function Event() {
                 <div className='flex gap-1.5 mt-4 flex-col'>
                   {!(
                     characterData?.is_default_character ||
-                    account?.id == characterData.authorizer_user.id ||
+                    account?.id == characterData?.authorizer_user?.id ||
                     isCollected ||
                     (collectedCharacter?.length || 0) >= 3
                   ) && (
