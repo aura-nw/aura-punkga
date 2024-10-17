@@ -473,7 +473,7 @@ function ContextProvider({ children }: any) {
       <QueryClientProvider client={queryClient}>
         <ApolloProvider client={client}>
           <ModalProvider>
-            <BackgroundAudio />
+            {location.pathname.includes('events/ava-2024') && <BackgroundAudio />}
             {children}
           </ModalProvider>
         </ApolloProvider>
