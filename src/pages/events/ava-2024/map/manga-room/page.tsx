@@ -46,11 +46,8 @@ export default function Page() {
       setSelected(data?.data?.data?.story_manga?.[0])
     }
   }, [data?.data?.data?.story_manga])
-  if (!data) {
-    return null
-  }
-  const mangas = data.data?.data?.story_manga
-  const count = Math.ceil((data.data?.data?.story_manga_aggregate?.aggregate?.count || 1) / 20)
+  const mangas = data?.data?.data?.story_manga
+  const count = Math.ceil((data?.data?.data?.story_manga_aggregate?.aggregate?.count || 1) / 20)
   return (
     <>
       <div
@@ -143,8 +140,8 @@ export default function Page() {
       </div>
       {width < 1024 && showModal && (
         <>
-        <div className='fixed inset-0' onClick={() => setShowModal(false)}></div>
-        <div className='fixed bottom-0 inset-x-0 z-10'>
+        <div className='fixed inset-0 bg-black/80 z-40' onClick={() => setShowModal(false)}></div>
+        <div className='fixed bottom-0 inset-x-0 z-50'>
           <div className='absolute -top-4 right-6' onClick={() => setShowModal(false)}>
             <svg
               width='45'
