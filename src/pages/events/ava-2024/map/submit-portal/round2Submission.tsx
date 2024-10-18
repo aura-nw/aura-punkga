@@ -178,6 +178,7 @@ export default function Round2Submission() {
             setLoading(false)
           } else {
             await getProfile()
+            window.scrollTo(0,0)
             toast('Update successfully, you are a Punkga Creator now', {
               type: 'success',
             })
