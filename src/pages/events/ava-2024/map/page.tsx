@@ -122,6 +122,7 @@ export default function Event() {
     if (mangaRoomStep == 4) {
       setShowGuide(false)
       setMangaDone(true)
+      router.push(`/events/ava-2024/map/manga-room`)
     }
   }, [mangaRoomStep])
   useEffect(() => {

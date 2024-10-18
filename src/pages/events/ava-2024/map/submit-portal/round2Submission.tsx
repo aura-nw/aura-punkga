@@ -430,7 +430,7 @@ export default function Round2Submission() {
                     {t('Manga title')} <span className='text-error-default'>*</span>
                   </label>
                   <TextField
-                    placeholder='Your manga name'
+                    placeholder={t('Your manga name')}
                     id='main-manga-title'
                     className='mt-2 bg-transparent !border-white'
                     {...field}
@@ -449,7 +449,7 @@ export default function Round2Submission() {
                   <textarea
                     id='main-manga-description'
                     className='mt-2 bg-transparent !border-white rounded-lg border text-sm p-2 min-h-20 w-full'
-                    placeholder='Enter description'
+                    placeholder={t('Enter description')}
                     value={field.value}
                     onChange={(e) => field.onChange(e.target.value)}
                   />
@@ -462,10 +462,10 @@ export default function Round2Submission() {
               render={({ field }) => (
                 <div className='w-full mt-4'>
                   <label className='text-sm font-medium' htmlFor='main-manga-link'>
-                    {t('Manga page images (URL)')} <span className='text-error-default'>*</span>
+                    {t('Manga page images (Driver link)')} <span className='text-error-default'>*</span>
                   </label>
                   <TextField
-                    placeholder='Enter a link'
+                    placeholder={t('Enter a link')}
                     id='main-manga-link'
                     className='mt-2 bg-transparent !border-white'
                     {...field}
@@ -520,7 +520,7 @@ export default function Round2Submission() {
                       {t('Manga title')} <span className='text-error-default'>*</span>
                     </label>
                     <TextField
-                      placeholder='Your manga name'
+                      placeholder={t('Your manga name')}
                       id='secondary-manga-title'
                       className='mt-2 bg-transparent !border-white'
                       {...field}
@@ -539,7 +539,7 @@ export default function Round2Submission() {
                     <textarea
                       id='secondary-manga-description'
                       className='mt-2 bg-transparent !border-white rounded-lg border text-sm p-2 min-h-20 w-full'
-                      placeholder='Enter description'
+                      placeholder={t('Enter description')}
                       value={field.value}
                       onChange={(e) => field.onChange(e.target.value)}
                     />
@@ -552,10 +552,10 @@ export default function Round2Submission() {
                 render={({ field }) => (
                   <div className='w-full mt-4'>
                     <label className='text-sm font-medium' htmlFor='secondary-manga-link'>
-                      {t('Manga page images (URL)')} <span className='text-error-default'>*</span>
+                      {t('Manga page images (Driver link)')} <span className='text-error-default'>*</span>
                     </label>
                     <TextField
-                      placeholder='Enter a link'
+                      placeholder={t('Enter a link')}
                       id='secondary-manga-link'
                       className='mt-2 bg-transparent !border-white'
                       {...field}

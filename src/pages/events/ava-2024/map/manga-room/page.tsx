@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next'
 import useSWR from 'swr'
 import { useWindowSize } from 'usehooks-ts'
 import MangaFrame from 'components/pages/event/ava-2024/assets/manga-frame.png'
+import CharacterFrame from 'components/pages/event/ava-2024/assets/character-frame.png'
 import { Pagination } from '@mui/material'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import Button from 'components/core/Button/Button'
@@ -38,16 +39,20 @@ export default function Page() {
   const [selected, setSelected] = useState<any>()
   const [page, setPage] = useState(1)
   const [type, setType] = useState('all')
-  const { data, mutate } = useSWR({ ket: 'get-ava-manga', page }, ({ page }) => eventService.story.getManga(page), {
-    revalidateOnFocus: false,
-  })
+  const { data, mutate, isLoading } = useSWR(
+    { ket: 'get-ava-manga', page },
+    ({ page }) => eventService.story.getManga(page),
+    {
+      revalidateOnFocus: false,
+    }
+  )
   useEffect(() => {
     if (data?.data?.data?.story_manga?.[0]) {
       setSelected(data?.data?.data?.story_manga?.[0])
     }
   }, [data?.data?.data?.story_manga])
   const mangas = data?.data?.data?.story_manga
-  const count = Math.ceil((data?.data?.data?.story_manga_aggregate?.aggregate?.count || 1) / 20)
+  const count = Math.ceil((data?.data?.data?.story_manga_aggregate?.aggregate?.count || 1) / 9)
   return (
     <>
       <div
@@ -67,78 +72,83 @@ export default function Page() {
 
         <div className='relative pk-container mx-auto pt-24 text-white'>
           <div className='lg:py-10'>
-            {!!mangas?.length && (
-              <div className='grid grid-cols-1 lg:grid-cols-[22fr_11fr] mt-4 gap-8 min-h-[1000px] relative'>
-                <div className='shrink-0 w-full'>
-                  <div className='flex justify-between relative z-20 items-center gap-10 h-10 lg:hidden mb-5 flex-row-reverse'>
-                    <div className='w-[10.5%]'>
-                      <RuleAndAward />
-                    </div>
-                    <Link
-                      href={`/events/ava-2024/map`}
-                      className='flex items-center text-sm font-semibold gap-2 whitespace-nowrap '>
-                      <Image src={Map} alt='' className='w-[50px]' />
-                      {t('Back to map')}
-                    </Link>
+            <div className='grid grid-cols-1 lg:grid-cols-[22fr_11fr] mt-4 gap-8 min-h-[1000px] relative'>
+              <div className='shrink-0 w-full'>
+                <div className='flex justify-between relative z-20 items-center gap-10 h-10 lg:hidden mb-5 flex-row-reverse'>
+                  <div className='w-[8.5%] mr-10'>
+                    <RuleAndAward />
                   </div>
-                  <div className='h-10'>
-                    <div className='text-3xl font-medium'>{t('Manga')}</div>
-                  </div>
-
-                  <div className='grid grid-cols-2 md:grid-cols-3 gap-5 mt-6'>
-                    {mangas.map((manga, index) => (
-                      <div
-                        className={`rounded-xl cursor-pointer relative overflow-hidden ${
-                          manga.id == selected?.id ? 'border-[#00E160]' : 'border-black'
-                        } border-[3px]`}
-                        key={index}
-                        onClick={() => {
-                          setSelected(manga)
-                          setShowModal(true)
-                        }}>
-                        <div className='absolute inset-0'>
-                          <Image
-                            src={manga.manga.poster}
-                            width={300}
-                            height={300}
-                            alt=''
-                            className='w-full h-full object-cover'
-                          />
+                  <Link
+                    href={`/events/ava-2024/map`}
+                    className='flex items-center text-sm font-semibold gap-2 whitespace-nowrap '>
+                    <Image src={Map} alt='' className='w-[50px]' />
+                    {t('Back to map')}
+                  </Link>
+                </div>
+                <div className='h-10'>
+                  <div className='text-3xl font-medium'>{t('Mangas')}</div>
+                </div>
+                {mangas?.length ? (
+                  <>
+                    <div className='grid grid-cols-2 md:grid-cols-3 gap-5 mt-6'>
+                      {mangas?.map((manga, index) => (
+                        <div
+                          className={`rounded-xl cursor-pointer relative overflow-hidden ${
+                            manga.id == selected?.id ? 'border-[#00E160]' : 'border-black'
+                          } border-[3px]`}
+                          key={index}
+                          onClick={() => {
+                            setSelected(manga)
+                            setShowModal(true)
+                          }}>
+                          <div className='absolute inset-0'>
+                            <Image
+                              src={manga.manga.poster}
+                              width={300}
+                              height={300}
+                              alt=''
+                              className='w-full h-full object-cover'
+                            />
+                          </div>
+                          <Image src={MangaFrame} alt='' className='w-full h-full relative' />
                         </div>
-                        <Image src={MangaFrame} alt='' className='w-full h-full relative' />
-                      </div>
-                    ))}
-                  </div>
-                  <div className='mt-8 flex justify-center'>
-                    <Pagination
-                      shape='rounded'
-                      className='[&_.Mui-selected]:!bg-white [&_.Mui-selected]:!text-text-primary [&_.MuiPaginationItem-root:not(.Mui-selected)]:!text-text-quatenary'
-                      page={page}
-                      onChange={(e, p) => setPage(p)}
-                      count={count}
-                    />
-                  </div>
-                </div>
-                <div className='sticky top-[12vh] h-fit hidden lg:block'>
-                  <div className='flex justify-between relative z-10 items-center gap-10 h-10'>
-                    <div className='w-[10.5%]'>
-                      <RuleAndAward />
+                      ))}
                     </div>
-                    <Link
-                      href={`/events/ava-2024/map`}
-                      className='flex items-center text-sm font-semibold gap-2 whitespace-nowrap '>
-                      <Image src={Map} alt='' className='w-[50px]' />
-                      {t('Back to map')}
-                    </Link>
-                  </div>
-                  <div className='relative z-0'>{selected && <Content selected={selected} />}</div>
-                </div>
+                    <div className='mt-8 flex justify-center'>
+                      <Pagination
+                        shape='rounded'
+                        className='[&_.Mui-selected]:!bg-white [&_.Mui-selected]:!text-text-primary [&_.MuiPaginationItem-root:not(.Mui-selected)]:!text-text-quatenary'
+                        page={page}
+                        onChange={(e, p) => setPage(p)}
+                        count={count}
+                      />
+                    </div>
+                  </>
+                ) : isLoading ? (
+                  <></>
+                ) : (
+                  <div>{t('No manga submitted')}</div>
+                )}
               </div>
-            )}
+              <div className='sticky top-[12vh] h-fit hidden lg:block'>
+                <div className='flex justify-between relative z-10 items-center gap-10 h-10'>
+                  <div className='w-[10.5%]'>
+                    <RuleAndAward />
+                  </div>
+                  <Link
+                    href={`/events/ava-2024/map`}
+                    className='flex items-center text-sm font-semibold gap-2 whitespace-nowrap '>
+                    <Image src={Map} alt='' className='w-[50px]' />
+                    {t('Back to map')}
+                  </Link>
+                </div>
+                <div className='relative z-0'>{selected && <Content selected={selected} />}</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      {width < 1024 && showModal && (
+      {width < 1024 && showModal && selected && (
         <>
           <div className='fixed inset-0 bg-black/80 z-40' onClick={() => setShowModal(false)}></div>
           <div className='fixed bottom-0 inset-x-0 z-50'>
@@ -230,8 +240,13 @@ export default function Page() {
 const Content = ({ selected }) => {
   const { locale, push } = useRouter()
   const { t } = useTranslation()
+  const mangaName =
+    (locale == 'en'
+      ? selected.manga.manga_languages.find((l) => l.language_id == 1)?.title
+      : selected.manga.manga_languages.find((l) => l.language_id == 2)?.title) &&
+    selected.manga.manga_languages.find((l) => l.is_main_language)?.title
   return (
-    <div className='mt-6 rounded-mlg border-[3px] overflow-hidden text-white relative border-black bg-[#191919] h-fit min-w-[350px] w-full'>
+    <div className='mt-6 rounded-mlg border-[3px] text-white relative border-black bg-[#191919] h-fit min-w-[350px] w-full max-h-[80vh] overflow-auto'>
       <Skew className='absolute top-1 left-1' />
       <Skew className='absolute top-1 right-1' />
       <Image
@@ -243,7 +258,7 @@ const Content = ({ selected }) => {
       />
       <div className='px-5 -mt-[58px] z-50 relative py-6 bg-[linear-gradient(0deg,#191919_68.29%,rgba(25,25,25,0.00)_100%)]'>
         <div className='space-y-1'>
-          <div className='font-jaro text-2xl'>Manga</div>
+          <div className='font-jaro text-2xl'>{mangaName}</div>
           <div className='flex w-full items-center justify-between'>
             <div>
               {selected?.story_ip_asset?.ip_asset_id && (
@@ -286,8 +301,31 @@ const Content = ({ selected }) => {
             onClick={() =>
               isMobile ? push(`/comic/${selected.manga.slug}`) : push(`/comic/${selected.manga.slug}/chapter/1`)
             }>
-            Read manga
+            {t('Read manga')}
           </Button>
+        </div>
+      </div>
+      <div className='mt-4 px-5 pb-5'>
+        <div className='font-jaro text-2xl'>{t('Character IP')}</div>
+        <div className='mt-4 grid grid-cols-3'>
+          {selected.story_manga_characters?.map((char, index) => (
+            <Link
+              href={`https://explorer.story.foundation/ipa/${char?.story_character?.story_ip_asset?.ip_asset_id}`}
+              target='_blank'
+              className={`rounded-xl relative overflow-hidden border-black border-[3px]`}
+              key={index}>
+              <div className='absolute inset-0'>
+                <Image
+                  src={char.story_character.avatar_url}
+                  width={300}
+                  height={300}
+                  alt=''
+                  className='w-full h-full object-cover'
+                />
+              </div>
+              <Image src={CharacterFrame} priority alt='' className='w-full h-full relative' />
+            </Link>
+          ))}
         </div>
       </div>
     </div>

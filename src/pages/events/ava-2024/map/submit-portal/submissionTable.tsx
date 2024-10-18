@@ -21,7 +21,7 @@ export default function SubmissionTable() {
       <div className='mt-6 p-6 rounded-[10px] bg-black overflow-auto w-full'>
         {submissions?.length ? (
           <div className='w-full min-w-[7 00px]'>
-            <div className='grid w-full grid-cols-[12%_1fr_15%_15%_25%] text-sm font-semibold border-b border-white'>
+            <div className='grid w-full grid-cols-[8%_1fr_15%_20%_25%] text-sm font-semibold border-b border-white'>
               <div className='px-2 py-4'>{t('No')}</div>
               <div className='p-4'>{t('Name')}</div>
               <div className='p-4'>{t('Type')}</div>
@@ -31,7 +31,7 @@ export default function SubmissionTable() {
             <div className='h-[260px] overflow-auto'>
               {submissions?.map((submission, index) => (
                 <div
-                  className='grid w-full grid-cols-[12%_1fr_15%_15%_25%] text-sm font-medium text-text-quatenary'
+                  className='grid w-full grid-cols-[8%_1fr_15%_20%_25%] text-sm font-medium text-text-quatenary'
                   key={submission.id}>
                   <div className='px-2 py-4'>#{index + 1}</div>
                   <div className='p-4 truncate'>{submission.name}</div>
@@ -44,7 +44,7 @@ export default function SubmissionTable() {
                         ? 'text-text-brand-hover'
                         : 'text-text-warning-primary-2'
                     }`}>
-                    {submission.status}
+                    {t(submission.status)}
                   </div>
                   <div className='p-4'>{moment(submission.created_at).format('HH:mm DD/MM/yyyy')}</div>
                 </div>
