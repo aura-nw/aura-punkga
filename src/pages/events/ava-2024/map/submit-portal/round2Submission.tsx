@@ -103,7 +103,7 @@ export default function Round2Submission() {
                   image_url: data.secondaryLanguage.link,
                 },
               ]
-              : [
+            : [
                 {
                   title: data.mainLanguage.title,
                   language_id: data.mainLanguage.language_id,
@@ -158,28 +158,30 @@ export default function Round2Submission() {
           type: 'error',
         })
       } else {
-        setLoading(true)
-        const formData = new FormData()
-        formData.append('avatar', data.avatar)
-        formData.append('pen_name', data.pen_name)
-        formData.append('bio', data.bio)
-        const res = await userService.updateArtistProfile(formData)
-        if (res.data.errors?.[0]?.message) {
-          toast(
-            res.data.errors?.[0]?.message.includes('creators_pen_name_key')
-              ? 'Your pen name has been already taken.'
-              : res.data.errors?.[0]?.message,
-            {
-              type: 'error',
-            }
-          )
-          setLoading(false)
-        } else {
-          await getProfile()
-          toast('Update successfully, you are a Punkga Creator now', {
-            type: 'success',
-          })
-          setLoading(false)
+        if (data.pen_name && data.pen_name.length <= 25 && data.bio && data.bio.length <= 150 && !loading) {
+          setLoading(true)
+          const formData = new FormData()
+          formData.append('avatar', data.avatar)
+          formData.append('pen_name', data.pen_name)
+          formData.append('bio', data.bio)
+          const res = await userService.updateArtistProfile(formData)
+          if (res.data.errors?.[0]?.message) {
+            toast(
+              res.data.errors?.[0]?.message.includes('creators_pen_name_key')
+                ? 'Your pen name has been already taken.'
+                : res.data.errors?.[0]?.message,
+              {
+                type: 'error',
+              }
+            )
+            setLoading(false)
+          } else {
+            await getProfile()
+            toast('Update successfully, you are a Punkga Creator now', {
+              type: 'success',
+            })
+            setLoading(false)
+          }
         }
       }
     } catch (error) {
@@ -671,8 +673,7 @@ const Character = ({ data, value, onChange, max }) => {
             href={`https://explorer.story.foundation/ipa/${data?.story_ip_asset?.ip_asset_id}`}
             target='_blank'
             className='mt-1 text-xs font-medium text-brand-default'
-            onClick={(e) => e.stopPropagation()}
-            >
+            onClick={(e) => e.stopPropagation()}>
             {shorten(data.story_ip_asset?.ip_asset_id)}
           </Link>
         )}

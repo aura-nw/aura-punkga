@@ -131,7 +131,7 @@ export default function Page() {
                       {t('Back to map')}
                     </Link>
                   </div>
-                  {selected && <Content selected={selected} />}
+                  <div className='relative z-0'>{selected && <Content selected={selected} />}</div>
                 </div>
               </div>
             )}
@@ -140,88 +140,88 @@ export default function Page() {
       </div>
       {width < 1024 && showModal && (
         <>
-        <div className='fixed inset-0 bg-black/80 z-40' onClick={() => setShowModal(false)}></div>
-        <div className='fixed bottom-0 inset-x-0 z-50'>
-          <div className='absolute -top-4 right-6' onClick={() => setShowModal(false)}>
-            <svg
-              width='45'
-              height='26'
-              viewBox='0 0 45 26'
-              fill='none'
-              className='absolute -bottom-2.5 -left-[50%] w-[200%]'
-              xmlns='http://www.w3.org/2000/svg'
-              xmlnsXlink='http://www.w3.org/1999/xlink'>
-              <rect width='45' height='26' fill='url(#paint0_linear_5355_21799)' />
-              <rect width='45' height='26' fill='url(#pattern0_5355_21799)' fillOpacity='0.1' />
-              <defs>
-                <pattern
-                  id='pattern0_5355_21799'
-                  patternContentUnits='objectBoundingBox'
-                  width='0.123563'
-                  height='0.115385'>
-                  <use xlinkHref='#image0_5355_21799' transform='scale(0.000287356 0.000497347)' />
-                </pattern>
-                <linearGradient
-                  id='paint0_linear_5355_21799'
-                  x1='22.5'
-                  y1='0'
-                  x2='22.5'
-                  y2='26'
-                  gradientUnits='userSpaceOnUse'>
-                  <stop stopColor='#00E161' stopOpacity='0' />
-                  <stop offset='1' stopColor='#00E161' stopOpacity='0.5' />
-                </linearGradient>
-                <image
-                  id='image0_5355_21799'
-                  width='430'
-                  height='232'
-                  xlinkHref='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAa4AAADoCAYAAAC3gwBfAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAIhSURBVHgB7dUBDQAgDMCwg3/PgI2FNpmGzQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwt/U6AwARewAgxLgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIg5QJRWAF7kuBzRgAAAABJRU5ErkJggg=='
-                />
-              </defs>
-            </svg>
+          <div className='fixed inset-0 bg-black/80 z-40' onClick={() => setShowModal(false)}></div>
+          <div className='fixed bottom-0 inset-x-0 z-50'>
+            <div className='absolute -top-4 right-6' onClick={() => setShowModal(false)}>
+              <svg
+                width='45'
+                height='26'
+                viewBox='0 0 45 26'
+                fill='none'
+                className='absolute -bottom-2.5 -left-[50%] w-[200%]'
+                xmlns='http://www.w3.org/2000/svg'
+                xmlnsXlink='http://www.w3.org/1999/xlink'>
+                <rect width='45' height='26' fill='url(#paint0_linear_5355_21799)' />
+                <rect width='45' height='26' fill='url(#pattern0_5355_21799)' fillOpacity='0.1' />
+                <defs>
+                  <pattern
+                    id='pattern0_5355_21799'
+                    patternContentUnits='objectBoundingBox'
+                    width='0.123563'
+                    height='0.115385'>
+                    <use xlinkHref='#image0_5355_21799' transform='scale(0.000287356 0.000497347)' />
+                  </pattern>
+                  <linearGradient
+                    id='paint0_linear_5355_21799'
+                    x1='22.5'
+                    y1='0'
+                    x2='22.5'
+                    y2='26'
+                    gradientUnits='userSpaceOnUse'>
+                    <stop stopColor='#00E161' stopOpacity='0' />
+                    <stop offset='1' stopColor='#00E161' stopOpacity='0.5' />
+                  </linearGradient>
+                  <image
+                    id='image0_5355_21799'
+                    width='430'
+                    height='232'
+                    xlinkHref='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAa4AAADoCAYAAAC3gwBfAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAIhSURBVHgB7dUBDQAgDMCwg3/PgI2FNpmGzQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwt/U6AwARewAgxLgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIg5QJRWAF7kuBzRgAAAABJRU5ErkJggg=='
+                  />
+                </defs>
+              </svg>
 
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              xmlnsXlink='http://www.w3.org/1999/xlink'
-              width='22'
-              height='22'
-              viewBox='0 0 22 22'
-              fill='none'>
-              <path
-                d='M3.87221 1.28569C3.15796 0.571438 1.99993 0.571438 1.28569 1.28569C0.571438 1.99994 0.571438 3.15796 1.28569 3.87221L8.41348 11L1.28569 18.1278C0.571438 18.842 0.571438 20.0001 1.28569 20.7143C1.99993 21.4286 3.15796 21.4286 3.87221 20.7143L11 13.5865L18.1278 20.7143C18.842 21.4286 20.0001 21.4286 20.7143 20.7143C21.4286 20.0001 21.4286 18.842 20.7143 18.1278L13.5865 11L20.7143 3.87221C21.4286 3.15796 21.4286 1.99994 20.7143 1.28569C20.0001 0.571438 18.842 0.571438 18.1278 1.28569L11 8.41348L3.87221 1.28569Z'
-                fill='#00E161'
-                fillOpacity='0.8'
-              />
-              <path
-                d='M3.87221 1.28569C3.15796 0.571438 1.99993 0.571438 1.28569 1.28569C0.571438 1.99994 0.571438 3.15796 1.28569 3.87221L8.41348 11L1.28569 18.1278C0.571438 18.842 0.571438 20.0001 1.28569 20.7143C1.99993 21.4286 3.15796 21.4286 3.87221 20.7143L11 13.5865L18.1278 20.7143C18.842 21.4286 20.0001 21.4286 20.7143 20.7143C21.4286 20.0001 21.4286 18.842 20.7143 18.1278L13.5865 11L20.7143 3.87221C21.4286 3.15796 21.4286 1.99994 20.7143 1.28569C20.0001 0.571438 18.842 0.571438 18.1278 1.28569L11 8.41348L3.87221 1.28569Z'
-                fill='url(#pattern0_5355_21800)'
-                fillOpacity='0.1'
-              />
-              <path
-                d='M3.87221 1.28569C3.15796 0.571438 1.99993 0.571438 1.28569 1.28569C0.571438 1.99994 0.571438 3.15796 1.28569 3.87221L8.41348 11L1.28569 18.1278C0.571438 18.842 0.571438 20.0001 1.28569 20.7143C1.99993 21.4286 3.15796 21.4286 3.87221 20.7143L11 13.5865L18.1278 20.7143C18.842 21.4286 20.0001 21.4286 20.7143 20.7143C21.4286 20.0001 21.4286 18.842 20.7143 18.1278L13.5865 11L20.7143 3.87221C21.4286 3.15796 21.4286 1.99994 20.7143 1.28569C20.0001 0.571438 18.842 0.571438 18.1278 1.28569L11 8.41348L3.87221 1.28569Z'
-                stroke='#00E161'
-                stroke-width='0.5'
-                stroke-linecap='round'
-              />
-              <defs>
-                <pattern
-                  id='pattern0_5355_21800'
-                  patternContentUnits='objectBoundingBox'
-                  width='0.15'
-                  height='0.0809302'>
-                  <use xlinkHref='#image0_5355_21800' transform='scale(0.000348837)' />
-                </pattern>
-                <image
-                  id='image0_5355_21800'
-                  width='430'
-                  height='232'
-                  xlinkHref='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAa4AAADoCAYAAAC3gwBfAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAIhSURBVHgB7dUBDQAgDMCwg3/PgI2FNpmGzQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwt/U6AwARewAgxLgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIg5QJRWAF7kuBzRgAAAABJRU5ErkJggg=='
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                xmlnsXlink='http://www.w3.org/1999/xlink'
+                width='22'
+                height='22'
+                viewBox='0 0 22 22'
+                fill='none'>
+                <path
+                  d='M3.87221 1.28569C3.15796 0.571438 1.99993 0.571438 1.28569 1.28569C0.571438 1.99994 0.571438 3.15796 1.28569 3.87221L8.41348 11L1.28569 18.1278C0.571438 18.842 0.571438 20.0001 1.28569 20.7143C1.99993 21.4286 3.15796 21.4286 3.87221 20.7143L11 13.5865L18.1278 20.7143C18.842 21.4286 20.0001 21.4286 20.7143 20.7143C21.4286 20.0001 21.4286 18.842 20.7143 18.1278L13.5865 11L20.7143 3.87221C21.4286 3.15796 21.4286 1.99994 20.7143 1.28569C20.0001 0.571438 18.842 0.571438 18.1278 1.28569L11 8.41348L3.87221 1.28569Z'
+                  fill='#00E161'
+                  fillOpacity='0.8'
                 />
-              </defs>
-            </svg>
+                <path
+                  d='M3.87221 1.28569C3.15796 0.571438 1.99993 0.571438 1.28569 1.28569C0.571438 1.99994 0.571438 3.15796 1.28569 3.87221L8.41348 11L1.28569 18.1278C0.571438 18.842 0.571438 20.0001 1.28569 20.7143C1.99993 21.4286 3.15796 21.4286 3.87221 20.7143L11 13.5865L18.1278 20.7143C18.842 21.4286 20.0001 21.4286 20.7143 20.7143C21.4286 20.0001 21.4286 18.842 20.7143 18.1278L13.5865 11L20.7143 3.87221C21.4286 3.15796 21.4286 1.99994 20.7143 1.28569C20.0001 0.571438 18.842 0.571438 18.1278 1.28569L11 8.41348L3.87221 1.28569Z'
+                  fill='url(#pattern0_5355_21800)'
+                  fillOpacity='0.1'
+                />
+                <path
+                  d='M3.87221 1.28569C3.15796 0.571438 1.99993 0.571438 1.28569 1.28569C0.571438 1.99994 0.571438 3.15796 1.28569 3.87221L8.41348 11L1.28569 18.1278C0.571438 18.842 0.571438 20.0001 1.28569 20.7143C1.99993 21.4286 3.15796 21.4286 3.87221 20.7143L11 13.5865L18.1278 20.7143C18.842 21.4286 20.0001 21.4286 20.7143 20.7143C21.4286 20.0001 21.4286 18.842 20.7143 18.1278L13.5865 11L20.7143 3.87221C21.4286 3.15796 21.4286 1.99994 20.7143 1.28569C20.0001 0.571438 18.842 0.571438 18.1278 1.28569L11 8.41348L3.87221 1.28569Z'
+                  stroke='#00E161'
+                  stroke-width='0.5'
+                  stroke-linecap='round'
+                />
+                <defs>
+                  <pattern
+                    id='pattern0_5355_21800'
+                    patternContentUnits='objectBoundingBox'
+                    width='0.15'
+                    height='0.0809302'>
+                    <use xlinkHref='#image0_5355_21800' transform='scale(0.000348837)' />
+                  </pattern>
+                  <image
+                    id='image0_5355_21800'
+                    width='430'
+                    height='232'
+                    xlinkHref='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAa4AAADoCAYAAAC3gwBfAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAIhSURBVHgB7dUBDQAgDMCwg3/PgI2FNpmGzQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwt/U6AwARewAgxLgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIgxbgASDEuAFKMC4AU4wIg5QJRWAF7kuBzRgAAAABJRU5ErkJggg=='
+                  />
+                </defs>
+              </svg>
+            </div>
+            <Content selected={selected} />
           </div>
-          <Content selected={selected} />
-        </div>
         </>
       )}
     </>
