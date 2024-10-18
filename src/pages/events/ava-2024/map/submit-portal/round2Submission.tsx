@@ -20,6 +20,7 @@ import SubmissionTable from './submissionTable'
 import Checkbox from 'components/Input/Checkbox'
 import { shorten } from 'src/utils'
 import Link from 'next/link'
+import DOMPurify from 'dompurify'
 
 export default function Round2Submission() {
   const { account, getProfile } = useContext(Context)
@@ -279,7 +280,7 @@ export default function Round2Submission() {
                           {t('Pen name')} <span className='text-error-default'>*</span>
                         </label>
                         <TextField
-                          placeholder='Enter your artist name'
+                          placeholder={t('Enter your artist name')}
                           id='pen-name'
                           className='mt-2 bg-transparent !border-white'
                           {...field}
@@ -306,7 +307,7 @@ export default function Round2Submission() {
                           <textarea
                             id='bio'
                             className='mt-2 bg-transparent !border-white rounded-lg border text-sm p-2 min-h-20'
-                            placeholder='Tell something about yourself'
+                            placeholder={t('Tell something about yourself')}
                             value={field.value}
                             onChange={(e) => field.onChange(e.target.value)}
                           />
@@ -350,7 +351,9 @@ export default function Round2Submission() {
             />
             <div>
               <div className='text-sm font-medium'>{account.creator.pen_name}</div>
-              <div className='text-xs text-text-quatenary line-clamp-2'>{account.creator.bio}</div>
+              <div
+                className='text-xs text-text-quatenary whitespace-pre-wrap line-clamp-3'
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(account.creator?.bio) }}></div>
             </div>
           </div>
           <div className='text-lg font-semibold w-full mt-6'>{t('Information')}</div>
