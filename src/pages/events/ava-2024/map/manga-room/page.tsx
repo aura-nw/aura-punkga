@@ -52,7 +52,7 @@ export default function Page() {
     }
   }, [data?.data?.data?.story_manga])
   const mangas = data?.data?.data?.story_manga
-  const count = Math.ceil((data?.data?.data?.story_manga_aggregate?.aggregate?.count || 1) / 9)
+  const count = Math.ceil((data?.data?.data?.story_manga_aggregate?.aggregate?.count || 1) / 6)
   return (
     <>
       <div
