@@ -371,7 +371,7 @@ export default function Round2Submission() {
                     {locale == 'vn' ? 'Khuyến khích 1240px x 1780px' : '1240px x 1780px recommended'}
                   </div>
                   <TextField
-                    placeholder='Enter a driver link '
+                    placeholder={t('Enter a driver link')}
                     id='cover'
                     className='mt-2 bg-transparent !border-white'
                     {...field}
@@ -391,7 +391,7 @@ export default function Round2Submission() {
                     {locale == 'vn' ? 'Khuyến khích 480px x 180px' : '480px x 180px recommended'}
                   </div>
                   <TextField
-                    placeholder='Enter a driver link '
+                    placeholder={t('Enter a driver link')}
                     id='banner'
                     className='mt-2 bg-transparent !border-white'
                     {...field}
