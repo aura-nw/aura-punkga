@@ -19,6 +19,7 @@ import { useAccount, useChainId, useDisconnect, useSignMessage, useSwitchChain }
 import ModalProvider from './modals'
 import { toast } from 'react-toastify'
 import { storyChain } from 'src/services/wagmi/config'
+import BackgroundAudio from 'components/pages/event/ava-2024/BackgroundAudio'
 const queryClient = new QueryClient()
 
 export const Context = createContext<{
@@ -78,7 +79,7 @@ function ContextProvider({ children }: any) {
     redirectURL: location.href || config.REDIRECT_URL,
     clientID: config.AUTHORIZER_CLIENT_ID,
   })
-  
+
   const httpLink = new HttpLink({
     uri: `${config.API_URL}/v1/graphql`,
   })
@@ -289,6 +290,7 @@ function ContextProvider({ children }: any) {
           email: res.email,
           name: res.nickname,
           image: res.picture,
+          creator: res.creator,
           verified: !!res.email_verified_at,
           id: res.id,
           gender: res.gender || '',
@@ -298,7 +300,8 @@ function ContextProvider({ children }: any) {
           custodialWalletAddress: res.authorizer_users_user_wallet?.address,
           xp: res.levels.find((level) => level.user_level_chain.punkga_config.reward_point_name == 'XP')?.xp || 0,
           kp: res.levels.find((level) => level.user_level_chain.punkga_config.reward_point_name == 'KP')?.xp || 0,
-          level: res.levels?.find((level) => level.user_level_chain.punkga_config.reward_point_name == 'XP')?.level || 0,
+          level:
+            res.levels?.find((level) => level.user_level_chain.punkga_config.reward_point_name == 'XP')?.level || 0,
           levels: res.levels?.map((v) => ({
             level: v.level,
             xp: v.xp,
@@ -469,7 +472,10 @@ function ContextProvider({ children }: any) {
       }}>
       <QueryClientProvider client={queryClient}>
         <ApolloProvider client={client}>
-          <ModalProvider>{children}</ModalProvider>
+          <ModalProvider>
+            {location.pathname.includes('events/ava-2024') && <BackgroundAudio />}
+            {children}
+          </ModalProvider>
         </ApolloProvider>
       </QueryClientProvider>
     </Context.Provider>

@@ -14,6 +14,7 @@ import Round2Submission from './round2Submission'
 import DecorLeft from 'components/pages/event/ava-2024/assets/decor-left.png'
 import DecorRight from 'components/pages/event/ava-2024/assets/decor-right.png'
 import DecorMiddle from 'components/pages/event/ava-2024/assets/decor-middle.png'
+import { useRouter } from 'next/router'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -28,12 +29,15 @@ function Event() {
   const [round, setRound] = useState(
     searchParams.get('tab') == 'round-3' ? 3 : searchParams.get('tab') == 'round-2' ? 2 : 1
   )
+  const { replace } = useRouter()
   useEffect(() => {
     if (!account) {
       setSignInOpen(true)
     }
   }, [account])
-  const guideContentRef = useRef<any>()
+  useEffect(() => {
+    replace(`${location.pathname}?tab=round-${round}`)
+  }, [round])
   return (
     <>
       <div
@@ -103,13 +107,8 @@ function Event() {
                   <Round1Submission />
                 </>
               ) : round == 2 ? (
-                // <>
-                //   <Round2Submission />
-                // </>
                 <>
-                  <div className='font-jaro text-2xl w-full text-center h-[20vh] grid place-items-center'>
-                    {t('Coming soon')}!
-                  </div>
+                  <Round2Submission />
                 </>
               ) : (
                 <>

@@ -229,7 +229,7 @@ export default function Header({ className }: { className?: string }) {
                           width={32}
                           height={32}
                           alt=''
-                          className='rounded-full'
+                          className='rounded-full w-8 aspect-square'
                         />
                         <div className='text-sm font-medium text-text-primary w-full'>{account?.name}</div>
                         <div onClick={() => setTeleQrCodeOpen(true)}>
@@ -803,7 +803,7 @@ export default function Header({ className }: { className?: string }) {
                             src={account?.image || UserGreen}
                             width={50}
                             height={50}
-                            className='w-12 h-w-12'
+                            className='w-12 h-12'
                             alt='user'
                           />
                         </div>

@@ -43,7 +43,7 @@ export default function TimeLine() {
                   <path
                     d='M7.75 2.5H4.75C3.50736 2.5 2.5 3.50735 2.5 4.74999V12.25C2.5 13.4926 3.50736 14.5 4.75 14.5H12.25C13.4926 14.5 14.5 13.4926 14.5 12.25V9.24996M10.7496 2.50018L14.5 2.5M14.5 2.5V5.87507M14.5 2.5L8.12445 8.87478'
                     stroke='#2D72FB'
-                    stroke-width='1.5'
+                    strokeWidth='1.5'
                     stroke-linecap='round'
                     stroke-linejoin='round'
                   />
@@ -84,7 +84,7 @@ export default function TimeLine() {
                   <path
                     d='M7.75 2.5H4.75C3.50736 2.5 2.5 3.50735 2.5 4.74999V12.25C2.5 13.4926 3.50736 14.5 4.75 14.5H12.25C13.4926 14.5 14.5 13.4926 14.5 12.25V9.24996M10.7496 2.50018L14.5 2.5M14.5 2.5V5.87507M14.5 2.5L8.12445 8.87478'
                     stroke='#2D72FB'
-                    stroke-width='1.5'
+                    strokeWidth='1.5'
                     stroke-linecap='round'
                     stroke-linejoin='round'
                   />

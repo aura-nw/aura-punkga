@@ -15,7 +15,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
 import { Context } from 'src/context'
-import { eventService } from 'src/services/event.service'
+import { eventService } from 'src/services/eventService'
 import { useWindowSize } from 'usehooks-ts'
 import { shorten } from 'src/utils'
 
@@ -261,7 +261,7 @@ export default function Event() {
                         </div>
                         <div className='flex gap-1.5 mt-4'>
                           <Button size='sm' color='neautral' className='!w-full' onClick={likeHandler}>
-                            {t(isLiked ? 'Unlike' : 'Like')}
+                            {t(isLiked ? 'Liked' : 'Like')}
                           </Button>
                         </div>
                       </div>
@@ -352,7 +352,7 @@ export default function Event() {
               </div>
               <div className='flex gap-1.5 mt-4'>
                 <Button size='sm' color='neautral' className='!w-full' onClick={likeHandler}>
-                  {t(isLiked ? 'Unlike' : 'Like')}
+                  {t(isLiked ? 'Liked' : 'Like')}
                 </Button>
               </div>
             </div>

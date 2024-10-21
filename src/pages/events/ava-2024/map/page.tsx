@@ -17,6 +17,7 @@ import Room4 from 'components/pages/event/ava-2024/assets/room4.png'
 import Room5 from 'components/pages/event/ava-2024/assets/room5.png'
 import Trai from 'components/pages/event/ava-2024/assets/trai.png'
 import Award from 'components/pages/event/ava-2024/Award'
+import { BackgroundAudioController } from 'components/pages/event/ava-2024/BackgroundAudio'
 import Modal from 'components/pages/event/ava-2024/Modal'
 import Rules from 'components/pages/event/ava-2024/Rules'
 import Image from 'next/image'
@@ -25,7 +26,13 @@ import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocalStorage } from 'usehooks-ts'
-export default function Event() {
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <Event {...props} />
+}
+function Event() {
   const { locale, push } = useRouter()
   const { t } = useTranslation()
   const router = useRouter()
@@ -37,8 +44,8 @@ export default function Event() {
   const [active, setActive] = useState(0)
   const [characterRoomStep, setCharacterRoomStep] = useState<number>(-1)
   const [characterDone, setCharacterDone, removeCharacterDone] = useLocalStorage<boolean>('character-done', false)
-  const [mangaRoomStep, setMangaRoomStep] = useState<number>(-1)
   const [mangaDone, setMangaDone, removeMangaDone] = useLocalStorage<boolean>('manga-done', false)
+  const [mangaRoomStep, setMangaRoomStep] = useState<number>(-1)
   const [artRoomStep, setArtRoomStep] = useState<number>(-1)
   const [artDone, setArtDone, removeArtDone] = useLocalStorage<boolean>('art-done', false)
   const [campainRoomStep, setCampainRoomStep] = useState<number>(-1)
@@ -122,6 +129,7 @@ export default function Event() {
     if (mangaRoomStep == 4) {
       setShowGuide(false)
       setMangaDone(true)
+      router.push(`/events/ava-2024/map/manga-room`)
     }
   }, [mangaRoomStep])
   useEffect(() => {
@@ -245,9 +253,13 @@ export default function Event() {
         style={{ backgroundImage: `url(${Background.src})` }}>
         <Image src={Trai} alt='' className='absolute bottom-0 left-0 w-[30vw]' />
         <Image src={Phai} alt='' className='absolute bottom-0 right-0 w-[30vw]' />
+
         <div
           className='absolute h-[90vh] top-28 aspect-[394/800] left-1/2 -translate-x-1/2 bg-no-repeat bg-contain lg:hidden'
           style={{ backgroundImage: `url(${MobileMap.src})` }}>
+          <div className='absolute top-0 right-0'>
+            <BackgroundAudioController />
+          </div>
           <div
             className={`absolute top-[24.8%] left-[2%] w-[32.8%] cursor-pointer ${
               active == 1 ? 'opacity-100' : 'opacity-0'
@@ -298,11 +310,15 @@ export default function Event() {
           <Button
             onClick={() => {
               if (active == 3) {
-                // currentSetStep.current = setMangaRoomStep
-                // setMangaRoomStep(0)
-                // setArtRoomStep(-1)
-                // setCampainRoomStep(-1)
-                // setCharacterRoomStep(-1)
+                currentSetStep.current = setMangaRoomStep
+                if (!characterDone) {
+                  setMangaRoomStep(0)
+                  setArtRoomStep(-1)
+                  setCampainRoomStep(-1)
+                  setCharacterRoomStep(-1)
+                } else {
+                  router.push(`/events/ava-2024/map/manga-room`)
+                }
               } else {
                 setActive(3)
               }
@@ -311,21 +327,10 @@ export default function Event() {
             <>
               <Image src={Room3} alt='' className='w-full h-full' />
               <div className='font-jaro absolute whitespace-nowrap top-[40%] left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='20'
-                  height='22'
-                  viewBox='0 0 20 22'
-                  fill='none'
-                  className='w-4 h-4'>
-                  <path
-                    fill-rule='evenodd'
-                    clip-rule='evenodd'
-                    d='M3.25 9.33501V7.15663C3.25 3.20413 6.27208 0 10 0C13.7279 0 16.75 3.20413 16.75 7.15663V9.33501C17.8648 9.42328 18.5907 9.64612 19.1213 10.2087C20 11.1403 20 12.6397 20 15.6386C20 18.6374 20 20.1368 19.1213 21.0684C18.2426 22 16.8284 22 14 22H6C3.17157 22 1.75736 22 0.87868 21.0684C0 20.1368 0 18.6374 0 15.6386C0 12.6397 0 11.1403 0.87868 10.2087C1.40931 9.64612 2.13525 9.42328 3.25 9.33501ZM4.75 7.15663C4.75 4.08246 7.10051 1.59036 10 1.59036C12.8995 1.59036 15.25 4.08246 15.25 7.15663V9.2809C14.867 9.27711 14.4515 9.27711 14 9.27711H6C5.54849 9.27711 5.13301 9.27711 4.75 9.2809V7.15663ZM12 15.6386C12 16.8097 11.1046 17.759 10 17.759C8.89543 17.759 8 16.8097 8 15.6386C8 14.4674 8.89543 13.5181 10 13.5181C11.1046 13.5181 12 14.4674 12 15.6386Z'
-                    fill='white'
-                  />
+                <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                  <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
                 </svg>
-                {t('Unlock on round 2')}
+                {t('Manga room')}
               </div>
             </>
           </Button>
@@ -396,12 +401,12 @@ export default function Event() {
             height='47'
             viewBox='0 0 57 47'
             fill='none'
-            className='absolute bottom-[46.7%] left-[20.8%] w-[52.7%]'>
+            className='absolute top-[25.7%] right-[3.8%]'>
             <path
               d='M19.4519 1H19.0949L18.8186 1.22604L2.36676 14.6867L1.76563 15.1785L2.09342 15.8826L12.1889 37.5692L12.3968 38.0159L12.8778 38.1232L18.4519 39.3663V43.7882V45.3971L19.8945 44.6849L26.6929 41.3288L47.772 43.3772L48.5356 43.4514L48.805 42.733L55.5353 24.7855L55.6537 24.4699L55.5568 24.147L48.8265 1.71265L48.6127 1H47.8687H19.4519Z'
               fill='white'
               stroke='black'
-              stroke-width='2'
+              strokeWidth='2'
             />
             <path
               d='M28.6635 23.9834C28.3518 23.9834 28.1748 23.8143 28.1323 23.4762L27.0062 6.54943C26.9637 6.18314 27.1407 6 27.5374 6H35.4626C35.8593 6 36.0363 6.18314 35.9938 6.54943L34.8677 23.4762C34.8252 23.8143 34.6482 23.9834 34.3365 23.9834H28.6635ZM28.2385 34C27.8844 34 27.7073 33.8169 27.7073 33.4506V26.8151C27.7073 26.4488 27.8844 26.2657 28.2385 26.2657H34.9315C35.2856 26.2657 35.4626 26.4488 35.4626 26.8151V33.4506C35.4626 33.8169 35.2856 34 34.9315 34H28.2385Z'
@@ -412,6 +417,9 @@ export default function Event() {
         <div
           className='absolute inset-x-[19%] bottom-[3%] translate-y-[15%] w-[60%] aspect-[1227/966] bg-no-repeat bg-contain hidden lg:block'
           style={{ backgroundImage: `url(${Map.src})` }}>
+          <div className='absolute -top-4 -right-4'>
+            <BackgroundAudioController />
+          </div>
           <Link
             href={`/events/ava-2024/`}
             className='absolute -top-[0.2%] left-[1.3%] w-[20.3%] opacity-0 hover:opacity-100'>
@@ -448,26 +456,25 @@ export default function Event() {
             </>
           </Button>
           <Button
-            // onClick={() => {
-            //   currentSetStep.current = setMangaRoomStep
-            //   setMangaRoomStep(0)
-            //   setArtRoomStep(-1)
-            //   setCampainRoomStep(-1)
-            //   setCharacterRoomStep(-1)
-            // }}
+            onClick={() => {
+              if (!mangaDone) {
+                currentSetStep.current = setMangaRoomStep
+                setMangaRoomStep(0)
+                setArtRoomStep(-1)
+                setCampainRoomStep(-1)
+                setCharacterRoomStep(-1)
+              } else {
+                router.push(`/events/ava-2024/map/manga-room`)
+              }
+            }}
             className='absolute top-[.77%] -right-[.2%] w-[30.45%] opacity-0 hover:opacity-100'>
             <>
               <Image src={Room3} alt='' className='w-full h-full' />
               <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
-                <svg xmlns='http://www.w3.org/2000/svg' width='20' height='22' viewBox='0 0 20 22' fill='none'>
-                  <path
-                    fill-rule='evenodd'
-                    clip-rule='evenodd'
-                    d='M3.25 9.33501V7.15663C3.25 3.20413 6.27208 0 10 0C13.7279 0 16.75 3.20413 16.75 7.15663V9.33501C17.8648 9.42328 18.5907 9.64612 19.1213 10.2087C20 11.1403 20 12.6397 20 15.6386C20 18.6374 20 20.1368 19.1213 21.0684C18.2426 22 16.8284 22 14 22H6C3.17157 22 1.75736 22 0.87868 21.0684C0 20.1368 0 18.6374 0 15.6386C0 12.6397 0 11.1403 0.87868 10.2087C1.40931 9.64612 2.13525 9.42328 3.25 9.33501ZM4.75 7.15663C4.75 4.08246 7.10051 1.59036 10 1.59036C12.8995 1.59036 15.25 4.08246 15.25 7.15663V9.2809C14.867 9.27711 14.4515 9.27711 14 9.27711H6C5.54849 9.27711 5.13301 9.27711 4.75 9.2809V7.15663ZM12 15.6386C12 16.8097 11.1046 17.759 10 17.759C8.89543 17.759 8 16.8097 8 15.6386C8 14.4674 8.89543 13.5181 10 13.5181C11.1046 13.5181 12 14.4674 12 15.6386Z'
-                    fill='white'
-                  />
+                <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                  <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
                 </svg>
-                {t('Unlock on round 2')}
+                {t('Manga room')}
               </div>
             </>
           </Button>
@@ -524,12 +531,12 @@ export default function Event() {
             height='47'
             viewBox='0 0 57 47'
             fill='none'
-            className='absolute bottom-[63%] left-[12%] w-[29.7%] '>
+            className='absolute top-[4%] -right-[2%]'>
             <path
               d='M19.4519 1H19.0949L18.8186 1.22604L2.36676 14.6867L1.76563 15.1785L2.09342 15.8826L12.1889 37.5692L12.3968 38.0159L12.8778 38.1232L18.4519 39.3663V43.7882V45.3971L19.8945 44.6849L26.6929 41.3288L47.772 43.3772L48.5356 43.4514L48.805 42.733L55.5353 24.7855L55.6537 24.4699L55.5568 24.147L48.8265 1.71265L48.6127 1H47.8687H19.4519Z'
               fill='white'
               stroke='black'
-              stroke-width='2'
+              strokeWidth='2'
             />
             <path
               d='M28.6635 23.9834C28.3518 23.9834 28.1748 23.8143 28.1323 23.4762L27.0062 6.54943C26.9637 6.18314 27.1407 6 27.5374 6H35.4626C35.8593 6 36.0363 6.18314 35.9938 6.54943L34.8677 23.4762C34.8252 23.8143 34.6482 23.9834 34.3365 23.9834H28.6635ZM28.2385 34C27.8844 34 27.7073 33.8169 27.7073 33.4506V26.8151C27.7073 26.4488 27.8844 26.2657 28.2385 26.2657H34.9315C35.2856 26.2657 35.4626 26.4488 35.4626 26.8151V33.4506C35.4626 33.8169 35.2856 34 34.9315 34H28.2385Z'
@@ -554,7 +561,7 @@ export default function Event() {
                 d='M19.0642 1.89453H18.7072L18.4309 2.12057L1.97907 15.5812L1.37793 16.073L1.70572 16.7772L11.8012 38.4637L12.0091 38.9105L12.4901 39.0177L18.0642 40.2608V44.6828V46.2917L19.5068 45.5795L26.3052 42.2233L47.3843 44.2717L48.1479 44.3459L48.4173 43.6275L55.1476 25.68L55.266 25.3644L55.1691 25.0415L48.4388 2.60718L48.225 1.89453H47.481H19.0642Z'
                 fill='white'
                 stroke='black'
-                stroke-width='2'
+                strokeWidth='2'
               />
               <path
                 d='M10.5969 24C10.4636 24 10.3969 23.9333 10.3969 23.8V15.128C10.3969 15.0053 10.4423 14.8987 10.5329 14.808L11.8689 13.464C11.9596 13.3787 12.0663 13.336 12.1889 13.336H14.0209C14.1436 13.336 14.2503 13.3787 14.3409 13.464L15.6849 14.816H16.0609L17.4049 13.464C17.4956 13.3787 17.6023 13.336 17.7249 13.336H19.5489C19.6769 13.336 19.7836 13.3787 19.8689 13.464L21.2129 14.808C21.3036 14.8987 21.3489 15.0053 21.3489 15.128V23.8C21.3489 23.9333 21.2823 24 21.1489 24H18.8529C18.7196 24 18.6529 23.9333 18.6529 23.8V15.52H17.2209V23.8C17.2209 23.9333 17.1543 24 17.0209 24H14.7329C14.5996 24 14.5329 23.9333 14.5329 23.8V15.52H13.0849V23.8C13.0849 23.9333 13.0183 24 12.8849 24H10.5969ZM25.2811 24C25.1584 24 25.0517 23.9547 24.9611 23.864L23.3611 22.264C23.2704 22.1787 23.2251 22.072 23.2251 21.944V15.384C23.2251 15.2613 23.2704 15.1547 23.3611 15.064L24.9611 13.464C25.0517 13.3787 25.1584 13.336 25.2811 13.336H28.4331C28.5611 13.336 28.6677 13.3787 28.7531 13.464L30.3531 15.064C30.4437 15.1547 30.4891 15.2613 30.4891 15.384V21.944C30.4891 22.072 30.4437 22.1787 30.3531 22.264L28.7531 23.864C28.6677 23.9547 28.5611 24 28.4331 24H25.2811ZM26.2491 21.824H27.4651C27.6891 21.824 27.8011 21.6747 27.8011 21.376V15.96C27.8011 15.656 27.6891 15.504 27.4651 15.504H26.2491C26.0304 15.504 25.9211 15.656 25.9211 15.96V21.376C25.9211 21.6747 26.0304 21.824 26.2491 21.824ZM32.5657 24C32.4324 24 32.3657 23.9333 32.3657 23.8V13.536C32.3657 13.4027 32.4324 13.336 32.5657 13.336H36.9257C37.0537 13.336 37.1604 13.3707 37.2457 13.44L39.0857 15.264C39.1444 15.3173 39.179 15.3627 39.1897 15.4C39.2057 15.4373 39.2137 15.4987 39.2137 15.584V17.776C39.2137 17.8453 39.1844 17.9067 39.1257 17.96L38.2457 18.824L37.5177 19.448L38.3817 20.6L39.2937 22.536C39.315 22.584 39.331 22.632 39.3417 22.68C39.3577 22.7227 39.3657 22.776 39.3657 22.84V23.8C39.3657 23.9333 39.299 24 39.1657 24H37.0377C36.9204 24 36.8404 23.9467 36.7977 23.84L35.5177 20.128H34.9337V23.8C34.9337 23.9333 34.867 24 34.7337 24H32.5657ZM35.7897 18.12C36.227 18.12 36.5257 18.0293 36.6857 17.848C36.8457 17.6667 36.9257 17.328 36.9257 16.832C36.9257 16.3253 36.8457 15.9813 36.6857 15.8C36.5257 15.6187 36.227 15.528 35.7897 15.528C35.363 15.528 35.067 15.6187 34.9017 15.8C34.7364 15.9813 34.6537 16.3253 34.6537 16.832C34.6537 17.328 34.7364 17.6667 34.9017 17.848C35.067 18.0293 35.363 18.12 35.7897 18.12ZM40.8157 24C40.6824 24 40.6157 23.9333 40.6157 23.8V13.536C40.6157 13.4027 40.6824 13.336 40.8157 13.336H46.3917C46.525 13.336 46.5917 13.4027 46.5917 13.536V15.304C46.5917 15.4373 46.525 15.504 46.3917 15.504H43.3037V17.72H46.1277C46.261 17.72 46.3277 17.7867 46.3277 17.92V19.416C46.3277 19.5493 46.261 19.616 46.1277 19.616H43.3037V21.824H46.3917C46.525 21.824 46.5917 21.8907 46.5917 22.024V23.8C46.5917 23.9333 46.525 24 46.3917 24H40.8157ZM23.0193 30.936C22.886 30.936 22.8193 30.864 22.8193 30.72V28.184C22.8193 28.04 22.886 27.968 23.0193 27.968H25.5793C25.7126 27.968 25.7793 28.04 25.7793 28.184V30.72C25.7793 30.864 25.7126 30.936 25.5793 30.936H23.0193ZM27.2224 30.936C27.0891 30.936 27.0224 30.864 27.0224 30.72V28.184C27.0224 28.04 27.0891 27.968 27.2224 27.968H29.7824C29.9158 27.968 29.9824 28.04 29.9824 28.184V30.72C29.9824 30.864 29.9158 30.936 29.7824 30.936H27.2224ZM31.4256 30.936C31.2922 30.936 31.2256 30.864 31.2256 30.72V28.184C31.2256 28.04 31.2922 27.968 31.4256 27.968H33.9856C34.1189 27.968 34.1856 28.04 34.1856 28.184V30.72C34.1856 30.864 34.1189 30.936 33.9856 30.936H31.4256Z'

@@ -22,12 +22,17 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
 import { Context } from 'src/context'
-import { eventService } from 'src/services/event.service'
+import { eventService } from 'src/services/eventService'
 import { ModalContext } from 'src/context/modals'
 import { shorten } from 'src/utils'
 import Tooltip from 'components/Tooltip'
-
-export default function Event() {
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <Event {...props} />
+}
+function Event() {
   const { locale } = useRouter()
   const { t } = useTranslation()
   const { account } = useContext(Context)
@@ -190,7 +195,7 @@ export default function Event() {
                               <path
                                 d='M7 10L12.0008 14.58L17 10'
                                 stroke='white'
-                                stroke-width='1.5'
+                                strokeWidth='1.5'
                                 stroke-linecap='round'
                                 stroke-linejoin='round'
                               />
@@ -461,7 +466,7 @@ export default function Event() {
                           </Button>
                         )}
                         <Button size='sm' color='neautral' className='!w-full' onClick={likeHandler}>
-                          {t(isLiked ? 'Unlike' : 'Like')}
+                          {t(isLiked ? 'Liked' : 'Like')}
                         </Button>
                       </div>
                     </div>
@@ -577,7 +582,7 @@ export default function Event() {
                     </Button>
                   )}
                   <Button size='sm' color='neautral' className='!w-full' onClick={likeHandler}>
-                    {t(isLiked ? 'Unlike' : 'Like')}
+                    {t(isLiked ? 'Liked' : 'Like')}
                   </Button>
                 </div>
               </div>
