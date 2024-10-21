@@ -35,7 +35,7 @@ export default function ForgotPasswordModal() {
   return (
     <div
       className={`flex flex-col p-6 transition-all duration-300 ${
-        isFirstStep ? ' w-[400px] h-[250px]' : ' w-[670px] h-[230px] pt-9'
+        isFirstStep ? 'w-[85vw] max-w-[400px] h-[250px]' : 'w-[85vw] max-w-[670px] h-[230px] pt-9'
       }`}>
       <p className='text-2xl leading-6 font-bold text-center'>{t('Forgot password')}?</p>
       <div className='h-full relative'>
@@ -47,11 +47,8 @@ export default function ForgotPasswordModal() {
           leaveFrom='opacity-100'
           leaveTo='opacity-0'>
           <div className='mt-1 mb-3'>
-            <p className='text-xs leading-[15px] text-center line-clamp-1'>
-              {t('Kindly enter the email linked to your account')},
-            </p>
-            <p className='text-xs leading-[15px] text-center line-clamp-1'>
-              {t('we’ll send you a link to reset password')}
+            <p className='text-xs leading-[15px] h-[30px] text-center line-clamp-2'>
+              {t('Kindly enter the email linked to your account')}
             </p>
           </div>
           <OutlineTextField
