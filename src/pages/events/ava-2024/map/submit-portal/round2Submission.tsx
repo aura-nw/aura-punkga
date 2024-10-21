@@ -367,13 +367,13 @@ export default function Round2Submission() {
               render={({ field }) => (
                 <div className='w-full'>
                   <label className='text-sm font-medium' htmlFor='cover'>
-                    {t('Manga cover picture (Driver link)')} <span className='text-error-default'>*</span>
+                    {t('Manga cover URL')} <span className='text-error-default'>*</span>
                   </label>
                   <div className='text-[10px] text-text-quatenary'>
                     {locale == 'vn' ? 'Khuyến khích 1240px x 1780px' : '1240px x 1780px recommended'}
                   </div>
                   <TextField
-                    placeholder={t('Enter a driver link')}
+                    placeholder={t('Enter a link')}
                     id='cover'
                     className='mt-2 bg-transparent !border-white'
                     {...field}
@@ -387,13 +387,13 @@ export default function Round2Submission() {
               render={({ field }) => (
                 <div className='w-full mt-4'>
                   <label className='text-sm font-medium' htmlFor='banner'>
-                    {t('Manga banner picture (Driver link)')} <span className='text-error-default'>*</span>
+                    {t('Manga banner URL')} <span className='text-error-default'>*</span>
                   </label>
                   <div className='text-[10px] text-text-quatenary'>
                     {locale == 'vn' ? 'Khuyến khích 480px x 180px' : '480px x 180px recommended'}
                   </div>
                   <TextField
-                    placeholder={t('Enter a driver link')}
+                    placeholder={t('Enter a link')}
                     id='banner'
                     className='mt-2 bg-transparent !border-white'
                     {...field}
@@ -436,7 +436,7 @@ export default function Round2Submission() {
                     {t('Manga title')} <span className='text-error-default'>*</span>
                   </label>
                   <TextField
-                    placeholder={t('Your manga name')}
+                    placeholder={t('Your manga name in English')}
                     id='main-manga-title'
                     className='mt-2 bg-transparent !border-white'
                     {...field}
@@ -450,7 +450,7 @@ export default function Round2Submission() {
               render={({ field }) => (
                 <div className='w-full mt-4'>
                   <label className='text-sm font-medium' htmlFor='main-manga-description'>
-                    {t('Manga description')} <span className='text-error-default'>*</span>
+                    {t('Description')} <span className='text-error-default'>*</span>
                   </label>
                   <textarea
                     id='main-manga-description'
@@ -468,7 +468,7 @@ export default function Round2Submission() {
               render={({ field }) => (
                 <div className='w-full mt-4'>
                   <label className='text-sm font-medium' htmlFor='main-manga-link'>
-                    {t('Manga page images (Driver link)')} <span className='text-error-default'>*</span>
+                    {t('Manga page images (Google Drive URL)')} <span className='text-error-default'>*</span>
                   </label>
                   <TextField
                     placeholder={t('Enter a link')}
@@ -540,7 +540,7 @@ export default function Round2Submission() {
                 render={({ field }) => (
                   <div className='w-full mt-4'>
                     <label className='text-sm font-medium' htmlFor='secondary-manga-description'>
-                      {t('Manga description')} <span className='text-error-default'>*</span>
+                      {t('Description')} <span className='text-error-default'>*</span>
                     </label>
                     <textarea
                       id='secondary-manga-description'
@@ -558,7 +558,7 @@ export default function Round2Submission() {
                 render={({ field }) => (
                   <div className='w-full mt-4'>
                     <label className='text-sm font-medium' htmlFor='secondary-manga-link'>
-                      {t('Manga page images (Driver link)')} <span className='text-error-default'>*</span>
+                      {t('Manga page images (Google Drive URL)')} <span className='text-error-default'>*</span>
                     </label>
                     <TextField
                       placeholder={t('Enter a link')}
@@ -575,7 +575,7 @@ export default function Round2Submission() {
       </div>
       <div className='w-full max-w-[1500px] mt-8'>
         <div className='rounded-md border-[3px] border-neutral-black bg-neautral-950 p-4 md:p-6'>
-          <div className='text-lg font-semibold'>{t('IP ID info (maximum 8)')}</div>
+          <div className='text-lg font-semibold'>{t('IP info (Maximum 8)')}</div>
           <div className='mt-6 space-y-8'>
             <Controller
               name='selectedsUserCharacter'
@@ -583,8 +583,8 @@ export default function Round2Submission() {
               render={({ field }) => (
                 <div className='space-y-8'>
                   <div>
-                    <div className='text-sm font-medium'>{t('Your IP used in this manga')}</div>
-                    <div className='text-xs text-text-quatenary'>{t('Select maximum 1 IP (optional)')}</div>
+                    <div className='text-sm font-medium'>{t('Self-created IPs (optional)')}</div>
+                    <div className='text-xs text-text-quatenary'>{t('Maximum 1 IP')}</div>
                   </div>
                   {availableCharacters?.user_ip.length ? (
                     <div className='grid bg-[#0B0B0B] rounded-lg p-6 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-8'>
@@ -607,9 +607,9 @@ export default function Round2Submission() {
                 <div className='space-y-8'>
                   <div>
                     <div className='text-sm font-medium'>
-                      {t('Other’s IP used in this manga')} <span className='text-error-default'>*</span>
+                      {t('IPs created by other contestants')} <span className='text-error-default'>*</span>
                     </div>
-                    <div className='text-xs text-text-quatenary'>{t('Select maximum 3 IPs (required)')}</div>
+                    <div className='text-xs text-text-quatenary'>{t('Maximum 3 IPs')}</div>
                   </div>
                   {availableCharacters?.collected.length ? (
                     <div className='grid bg-[#0B0B0B] rounded-lg p-6 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-8'>
@@ -661,7 +661,7 @@ export default function Round2Submission() {
               render={({ field }) => (
                 <div className='space-y-8'>
                   <div>
-                    <div className='text-sm font-medium'>{t('Punkga default IP')}</div>
+                    <div className='text-sm font-medium'>{t('Punkga.me featured IPs')}</div>
                   </div>
                   <div className='grid bg-[#0B0B0B] rounded-lg p-6 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-8'>
                     {availableCharacters?.default?.map((data, index) => (
