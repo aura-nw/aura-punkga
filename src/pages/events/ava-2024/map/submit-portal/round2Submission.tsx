@@ -589,7 +589,16 @@ export default function Round2Submission() {
                   {availableCharacters?.user_ip.length ? (
                     <div className='grid bg-[#0B0B0B] rounded-lg p-6 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-8'>
                       {availableCharacters?.user_ip?.map((data, index) => (
-                        <Character data={data} key={index} {...field} max={1} />
+                        <Character
+                          data={data}
+                          key={index}
+                          {...field}
+                          max={
+                            8 -
+                            (form.watch('selectedDefaultCharacter').length +
+                              form.watch('selectedCollectedCharacter').length)
+                          }
+                        />
                       ))}
                     </div>
                   ) : (
