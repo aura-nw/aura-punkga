@@ -3,13 +3,14 @@ import { useLocalStorage } from 'usehooks-ts'
 
 const BackgroundAudio = () => {
   const audioRef = useRef(null)
-  const [isMute] = useLocalStorage('ava-audio-mute', false)
+  const [isMute, setMute] = useLocalStorage('ava-audio-mute', false)
 
   useEffect(() => {
     const handleUserInteraction = () => {
       const audio = audioRef.current
       if (audio && !isMute) {
         audio.play().catch((err) => console.log('Autoplay failed:', err))
+        setMute(false)
       }
       // Remove event listener after first interaction
       document.removeEventListener('click', handleUserInteraction)
