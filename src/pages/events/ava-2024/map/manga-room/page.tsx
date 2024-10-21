@@ -246,7 +246,7 @@ const Content = ({ selected }) => {
   const mangaName =
     (locale == 'en'
       ? selected.manga.manga_languages.find((l) => l.language_id == 1)?.title
-      : selected.manga.manga_languages.find((l) => l.language_id == 2)?.title) &&
+      : selected.manga.manga_languages.find((l) => l.language_id == 2)?.title) ||
     selected.manga.manga_languages.find((l) => l.is_main_language)?.title
   return (
     <div className='mt-6 rounded-mlg border-[3px] text-white relative border-black bg-[#191919] h-fit min-w-[350px] w-full max-h-[80vh] overflow-auto'>
