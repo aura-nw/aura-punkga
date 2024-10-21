@@ -119,7 +119,10 @@ export default function Page() {
                         shape='rounded'
                         className='[&_.Mui-selected]:!bg-white [&_.Mui-selected]:!text-text-primary [&_.MuiPaginationItem-root:not(.Mui-selected)]:!text-text-quatenary'
                         page={page}
-                        onChange={(e, p) => setPage(p)}
+                        onChange={(e, p) => {
+                          window.scrollTo(0, 0)
+                          setPage(p)
+                        }}
                         count={count}
                       />
                     </div>
