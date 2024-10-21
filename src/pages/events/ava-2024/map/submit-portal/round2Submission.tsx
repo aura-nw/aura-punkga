@@ -436,7 +436,7 @@ export default function Round2Submission() {
                     {t('Manga title')} <span className='text-error-default'>*</span>
                   </label>
                   <TextField
-                    placeholder={t('Your manga name in English')}
+                    placeholder={t('Your manga name')}
                     id='main-manga-title'
                     className='mt-2 bg-transparent !border-white'
                     {...field}
