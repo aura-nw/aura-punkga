@@ -20,7 +20,7 @@ export default function SubmissionTable() {
       </div>
       <div className='mt-6 p-6 rounded-[10px] bg-black overflow-auto w-full'>
         {submissions?.length ? (
-          <div className='w-full min-w-[7 00px]'>
+          <div className='w-full min-w-[700px]'>
             <div className='grid w-full grid-cols-[8%_1fr_15%_20%_25%] text-sm font-semibold border-b border-white'>
               <div className='px-2 py-4'>{t('No')}</div>
               <div className='p-4'>{t('Name')}</div>

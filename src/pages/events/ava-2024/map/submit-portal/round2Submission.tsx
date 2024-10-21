@@ -75,7 +75,7 @@ export default function Round2Submission() {
           (!data.secondaryLanguage.title || !data.secondaryLanguage.description || !data.secondaryLanguage.link)) ||
         !data.selectedCollectedCharacter.length
       ) {
-        toast('Some field is missing. Please check again', {
+        toast(t('Some field is missing. Please check again'), {
           type: 'error',
         })
         return
@@ -138,7 +138,9 @@ export default function Round2Submission() {
       } else {
         await mutate('get-submissions')
         toast(
-          'Submit manga successfully. Your manga need to be approved by admin. This process may take upto 24 hours after you submitted',
+          t(
+            'Submit manga successfully. Your manga need to be approved by admin. This process may take upto 24 hours after you submitted'
+          ),
           {
             type: 'success',
           }
@@ -155,7 +157,7 @@ export default function Round2Submission() {
   const submitCreatorInformationHandler = async (data) => {
     try {
       if (!data.avatar || !data.pen_name || !data.bio) {
-        toast('Please fill your information', {
+        toast(t('Please fill your information'), {
           type: 'error',
         })
       } else {
@@ -169,7 +171,7 @@ export default function Round2Submission() {
           if (res.data.errors?.[0]?.message) {
             toast(
               res.data.errors?.[0]?.message.includes('creators_pen_name_key')
-                ? 'Your pen name has been already taken.'
+                ? t('Your pen name has been already taken')
                 : res.data.errors?.[0]?.message,
               {
                 type: 'error',
@@ -178,8 +180,8 @@ export default function Round2Submission() {
             setLoading(false)
           } else {
             await getProfile()
-            window.scrollTo(0,0)
-            toast('Update successfully, you are a Punkga Creator now', {
+            window.scrollTo(0, 0)
+            toast(t('Update successfully, you are a Punkga Creator now'), {
               type: 'success',
             })
             setLoading(false)
@@ -573,7 +575,7 @@ export default function Round2Submission() {
       </div>
       <div className='w-full max-w-[1500px] mt-8'>
         <div className='rounded-md border-[3px] border-neutral-black bg-neautral-950 p-4 md:p-6'>
-          <div className='text-lg font-semibold'>{t('IP ID info (maximum 5)')}</div>
+          <div className='text-lg font-semibold'>{t('IP ID info (maximum 8)')}</div>
           <div className='mt-6 space-y-8'>
             <Controller
               name='selectedsUserCharacter'
@@ -584,11 +586,17 @@ export default function Round2Submission() {
                     <div className='text-sm font-medium'>{t('Your IP used in this manga')}</div>
                     <div className='text-xs text-text-quatenary'>{t('Select maximum 1 IP (optional)')}</div>
                   </div>
-                  <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-8'>
-                    {availableCharacters?.user_ip?.map((data, index) => (
-                      <Character data={data} key={index} {...field} max={1} />
-                    ))}
-                  </div>
+                  {availableCharacters?.user_ip.length ? (
+                    <div className='grid bg-[#0B0B0B] rounded-lg p-6 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-8'>
+                      {availableCharacters?.user_ip?.map((data, index) => (
+                        <Character data={data} key={index} {...field} max={1} />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className='w-full text-center bg-[#0B0B0B] rounded-lg p-8  text-gray-400'>
+                      {t(`You don't own any IP`)}
+                    </div>
+                  )}
                 </div>
               )}
             />
@@ -603,11 +611,47 @@ export default function Round2Submission() {
                     </div>
                     <div className='text-xs text-text-quatenary'>{t('Select maximum 3 IPs (required)')}</div>
                   </div>
-                  <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-8'>
-                    {availableCharacters?.collected?.map((data, index) => (
-                      <Character data={data} key={index} {...field} max={3} />
-                    ))}
-                  </div>
+                  {availableCharacters?.collected.length ? (
+                    <div className='grid bg-[#0B0B0B] rounded-lg p-6 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-8'>
+                      {availableCharacters?.collected?.map((data, index) => (
+                        <Character
+                          data={data}
+                          key={index}
+                          {...field}
+                          max={
+                            5 -
+                              (form.watch('selectedsUserCharacter').length +
+                                form.watch('selectedDefaultCharacter').length) >
+                            3
+                              ? 3
+                              : 5 -
+                                (form.watch('selectedsUserCharacter').length +
+                                  form.watch('selectedDefaultCharacter').length)
+                          }
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className='w-full text-center bg-[#0B0B0B] rounded-lg p-8  text-gray-400'>
+                      {locale == 'en' ? (
+                        <span>
+                          You didn't collect any IP. Go to{' '}
+                          <Link href={`/events/ava-2024/map/character`} className='text-blue-400'>
+                            Character
+                          </Link>{' '}
+                          to collect IP
+                        </span>
+                      ) : (
+                        <span>
+                          Bạn chưa thu thập IP nào. Truy cập trang{' '}
+                          <Link href={`/events/ava-2024/map/character`} className='text-blue-400'>
+                            Nhân vật
+                          </Link>{' '}
+                          để thu thập IP
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
             />
@@ -618,11 +662,19 @@ export default function Round2Submission() {
                 <div className='space-y-8'>
                   <div>
                     <div className='text-sm font-medium'>{t('Punkga default IP')}</div>
-                    <div className='text-xs text-text-quatenary'>{t('Select maximum 1 IP (optional)')}</div>
                   </div>
-                  <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-8'>
+                  <div className='grid bg-[#0B0B0B] rounded-lg p-6 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-8'>
                     {availableCharacters?.default?.map((data, index) => (
-                      <Character data={data} key={index} {...field} max={1} />
+                      <Character
+                        data={data}
+                        key={index}
+                        {...field}
+                        max={
+                          5 -
+                          (form.watch('selectedsUserCharacter').length +
+                            form.watch('selectedCollectedCharacter').length)
+                        }
+                      />
                     ))}
                   </div>
                 </div>
@@ -651,7 +703,9 @@ const Character = ({ data, value, onChange, max }) => {
       onChange(value.filter((d) => d != data.id))
     } else {
       if (value.length >= max) {
-        onChange([...value.slice(1), data.id])
+        if (max != 0) {
+          onChange([...value.slice(1), data.id])
+        }
       } else {
         onChange(value?.length ? [...value, data.id] : [data.id])
       }
@@ -661,8 +715,8 @@ const Character = ({ data, value, onChange, max }) => {
     <div className='space-y-4 cursor-pointer' onClick={handler}>
       <Checkbox checked={selected} />
       <div
-        className={`rounded-xl border-[3px] ${
-          selected ? 'border-border-brand-hover' : 'border-[#191919]'
+        className={`rounded-xl bg-[#191919] border-[3px] ${
+          selected ? 'border-border-brand-hover' : 'border-[#3D3D3D]'
         } relative py-4 px-1`}>
         <Image
           alt=''

@@ -438,7 +438,7 @@
   "Enter a driver link": "Nhập link driver",
   "+ Add second language": "+ Thêm ngôn ngữ thứ 2",
   "Secondary language": "Ngôn ngữ thứ 2",
-  "IP ID info (maximum 5)": "Thông tin IP (tối đa 5)",
+  "IP ID info (maximum 8)": "Thông tin IP (tối đa 8)",
   "Your IP used in this manga": "IP của bạn được sử dụng trong truyện",
   "Select maximum 1 IP (optional)": "Chọn tối đa 1 IP (không bắt buộc)",
   "Other’s IP used in this manga": "IP của thí sinh khác được sử dụng trong truyện",
@@ -448,6 +448,12 @@
   "Pen name": "Nghệ danh",
   "Enter your artist name": "Nhập nghệ danh của bạn",
   "Tell something about yourself": "Mô tả về bản thân",
+  "Please fill your information": "Vui lòng điền đầy đủ thông tin",
+  "Your pen name has been already taken": "Nghệ danh của bạn đã được sử dụng",
+  "Update successfully, you are a Punkga Creator now": "Cập nhật thành công, bạn đã trở thành nhà sáng tạo nội dung của Punkga",
+  "Submit manga successfully. Your manga need to be approved by admin. This process may take upto 24 hours after you submitted": "Gửi tác phẩm thành công. Tác phẩm của bạn cần được phê duyệt bởi quản trị viên. Quá trình này có thể mất tới 24 giờ từ lúc bạn gửi tác phẩm",
+  "Some field is missing. Please check again": "Một số trường thông tin bị thiếu. Vui lòng kiểm tra lại",
+  "You don't own any IP": "Bạn không sở hữu IP nào",
   ".": "",
   "": ""
 }
