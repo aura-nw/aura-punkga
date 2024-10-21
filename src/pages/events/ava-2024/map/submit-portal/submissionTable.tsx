@@ -35,7 +35,7 @@ export default function SubmissionTable() {
                   key={submission.id}>
                   <div className='px-2 py-4'>#{index + 1}</div>
                   <div className='p-4 truncate'>{submission.name}</div>
-                  <div className='p-4 capitalize'>{submission.type}</div>
+                  <div className='p-4 capitalize'>{t(submission.type)}</div>
                   <div
                     className={`p-4 capitalize ${
                       submission.status == 'Submitted'
