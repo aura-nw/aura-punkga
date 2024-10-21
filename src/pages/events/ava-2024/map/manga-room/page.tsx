@@ -74,7 +74,7 @@ export default function Page() {
           <div className='lg:py-10'>
             <div className='grid grid-cols-1 lg:grid-cols-[22fr_11fr] mt-4 gap-8 min-h-[1000px] relative'>
               <div className='shrink-0 w-full'>
-                <div className='flex justify-between relative z-20 items-center gap-10 h-10 lg:hidden mb-5 flex-row-reverse'>
+                <div className='flex justify-end relative z-20 items-center gap-10 h-10 lg:hidden mb-5 flex-row-reverse'>
                   <div className='w-[8.5%] mr-10'>
                     <RuleAndAward />
                   </div>
@@ -131,7 +131,7 @@ export default function Page() {
                 )}
               </div>
               <div className='sticky top-[12vh] h-fit hidden lg:block'>
-                <div className='flex justify-between relative z-10 items-center gap-10 h-10'>
+                <div className='flex justify-end relative z-10 items-center gap-10 h-10'>
                   <div className='w-[10.5%]'>
                     <RuleAndAward />
                   </div>
@@ -299,7 +299,9 @@ const Content = ({ selected }) => {
             size='sm'
             className='w-full'
             onClick={() =>
-              isMobile ? push(`/comic/${selected.manga.slug}`) : push(`/comic/${selected.manga.slug}/chapter/1`)
+              isMobile
+                ? window.open(`/comic/${selected.manga.slug}`, '_blank')
+                : window.open(`/comic/${selected.manga.slug}/chapter/1`, '_blank')
             }>
             {t('Read manga')}
           </Button>

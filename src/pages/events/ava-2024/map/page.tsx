@@ -26,7 +26,13 @@ import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocalStorage } from 'usehooks-ts'
-export default function Event() {
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <Event {...props} />
+}
+function Event() {
   const { locale, push } = useRouter()
   const { t } = useTranslation()
   const router = useRouter()

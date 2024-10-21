@@ -26,8 +26,13 @@ import { eventService } from 'src/services/eventService'
 import { ModalContext } from 'src/context/modals'
 import { shorten } from 'src/utils'
 import Tooltip from 'components/Tooltip'
-
-export default function Event() {
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <Event {...props} />
+}
+function Event() {
   const { locale } = useRouter()
   const { t } = useTranslation()
   const { account } = useContext(Context)
