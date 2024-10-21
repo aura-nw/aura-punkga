@@ -14,6 +14,7 @@ import Map from 'components/pages/event/ava-2024/assets/Map.svg'
 import Background from 'components/pages/event/ava-2024/assets/onboarding-bg.png'
 import Sketch from 'components/pages/event/ava-2024/assets/sketch.svg'
 import Ban from 'components/pages/event/ava-2024/assets/table.png'
+import { BackgroundAudioController } from 'components/pages/event/ava-2024/BackgroundAudio'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
@@ -149,6 +150,9 @@ export default function Event() {
             </div>
           </>
         </Button>
+        <div className='absolute top-[100px] right-4'>
+          <BackgroundAudioController />
+        </div>
         <div className='[&:hover>.active]:visible [&:hover>:not(.active)]:invisible cursor-pointer absolute top-[260px] right-[16px] w-[240px] z-10'>
           <Image priority src={Sketch} alt='' className='w-full h-auto' />
           <Image src={ActiveSketch} alt='' className='active absolute inset-0 w-full h-auto invisible' />
@@ -192,6 +196,9 @@ export default function Event() {
             </div>
           </>
         </Button>
+        <div className='absolute top-4 right-4'>
+          <BackgroundAudioController />
+        </div>
         <div className='[&:hover>.active]:visible [&:hover>:not(.active)]:invisible cursor-pointer absolute top-[35%] right-[15%] w-[26%] z-10'>
           <Image priority src={Sketch} alt='' className='w-full h-auto' />
           <Image src={ActiveSketch} alt='' className='active absolute inset-0 w-full h-auto invisible' />

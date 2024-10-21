@@ -619,12 +619,12 @@ export default function Round2Submission() {
                           key={index}
                           {...field}
                           max={
-                            5 -
+                            8 -
                               (form.watch('selectedsUserCharacter').length +
                                 form.watch('selectedDefaultCharacter').length) >
                             3
                               ? 3
-                              : 5 -
+                              : 8 -
                                 (form.watch('selectedsUserCharacter').length +
                                   form.watch('selectedDefaultCharacter').length)
                           }
@@ -670,7 +670,7 @@ export default function Round2Submission() {
                         key={index}
                         {...field}
                         max={
-                          5 -
+                          8 -
                           (form.watch('selectedsUserCharacter').length +
                             form.watch('selectedCollectedCharacter').length)
                         }

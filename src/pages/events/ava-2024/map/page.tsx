@@ -17,6 +17,7 @@ import Room4 from 'components/pages/event/ava-2024/assets/room4.png'
 import Room5 from 'components/pages/event/ava-2024/assets/room5.png'
 import Trai from 'components/pages/event/ava-2024/assets/trai.png'
 import Award from 'components/pages/event/ava-2024/Award'
+import { BackgroundAudioController } from 'components/pages/event/ava-2024/BackgroundAudio'
 import Modal from 'components/pages/event/ava-2024/Modal'
 import Rules from 'components/pages/event/ava-2024/Rules'
 import Image from 'next/image'
@@ -246,9 +247,13 @@ export default function Event() {
         style={{ backgroundImage: `url(${Background.src})` }}>
         <Image src={Trai} alt='' className='absolute bottom-0 left-0 w-[30vw]' />
         <Image src={Phai} alt='' className='absolute bottom-0 right-0 w-[30vw]' />
+
         <div
           className='absolute h-[90vh] top-28 aspect-[394/800] left-1/2 -translate-x-1/2 bg-no-repeat bg-contain lg:hidden'
           style={{ backgroundImage: `url(${MobileMap.src})` }}>
+          <div className='absolute top-0 right-0'>
+            <BackgroundAudioController />
+          </div>
           <div
             className={`absolute top-[24.8%] left-[2%] w-[32.8%] cursor-pointer ${
               active == 1 ? 'opacity-100' : 'opacity-0'
@@ -406,6 +411,9 @@ export default function Event() {
         <div
           className='absolute inset-x-[19%] bottom-[3%] translate-y-[15%] w-[60%] aspect-[1227/966] bg-no-repeat bg-contain hidden lg:block'
           style={{ backgroundImage: `url(${Map.src})` }}>
+          <div className='absolute -top-4 -right-4'>
+            <BackgroundAudioController />
+          </div>
           <Link
             href={`/events/ava-2024/`}
             className='absolute -top-[0.2%] left-[1.3%] w-[20.3%] opacity-0 hover:opacity-100'>
