@@ -47,8 +47,12 @@ export default function ForgotPasswordModal() {
           leaveFrom='opacity-100'
           leaveTo='opacity-0'>
           <div className='mt-1 mb-3'>
-            <p className='text-xs leading-[15px] text-center'>{t('Kindly enter the email linked to your account')},</p>
-            <p className='text-xs leading-[15px] text-center'>{t('we’ll send you a link to reset password')}</p>
+            <p className='text-xs leading-[15px] text-center line-clamp-1'>
+              {t('Kindly enter the email linked to your account')},
+            </p>
+            <p className='text-xs leading-[15px] text-center line-clamp-1'>
+              {t('we’ll send you a link to reset password')}
+            </p>
           </div>
           <OutlineTextField
             label={t('Email')}
