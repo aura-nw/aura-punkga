@@ -53,7 +53,7 @@ export default function Round1Submission() {
   }
   if (!account) return <div className='w-full text-center'>{t('Login to continue')}</div>
   return (
-    <div className='grid grid-cols-1 lg:grid-cols-[3fr_4fr] gap-8'>
+    <div className='grid grid-cols-1 lg:grid-cols-[7fr_8fr] gap-8'>
       <div className='rounded-md border-[3px] border-neutral-black bg-neautral-950 p-6'>
         <div>
           <label className='text-sm font-medium' htmlFor='name'>
@@ -72,7 +72,7 @@ export default function Round1Submission() {
           <div>
             <div className=''>
               <div className='text-sm font-medium'>
-                {t('Upload Character Avatar')} (1:1) <span className='text-error-default'>*</span>
+                {t('Upload Avatar')} (1:1) <span className='text-error-default'>*</span>
               </div>
               <div className='text-[10px] text-text-quatenary'>
                 {locale == 'vn' ? 'Khuyến khích 1500px x 1500px' : '1500px x 1500px recommended'}
@@ -113,7 +113,7 @@ export default function Round1Submission() {
           <div>
             <div className=''>
               <div className='text-sm font-medium'>
-                {t('Upload description')} (A4) <span className='text-error-default'>*</span>
+                {t('Upload Description')} (A4) <span className='text-error-default'>*</span>
               </div>
               <div className='text-[10px] text-text-quatenary'>
                 {locale == 'vn' ? 'Khuyến khích 1500px x 2122px' : '1500px x 2122px recommended'}
