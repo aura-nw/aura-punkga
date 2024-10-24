@@ -36,6 +36,7 @@ import { IChapter } from 'src/models/chapter'
 import { IComicDetail } from 'src/models/comic'
 import { subscribe, unsubscribe } from 'src/services'
 import { getItem, setItem } from 'src/utils/localStorage'
+import { useLocalStorage } from 'usehooks-ts'
 export default function ReadingSection({
   openComments,
   setOpenComments,
@@ -67,7 +68,7 @@ export default function ReadingSection({
   commentNumber: number
   chapterLikes: number
 }) {
-  const [readingMode, setReadingMode] = useState('twoPage')
+  const [readingMode, setReadingMode] = useLocalStorage('reading-mode', 'onePage')
   const [currentPage, setCurrentPage] = useState(0)
   const [showChapterList, setShowChapterList] = useState(false)
   const mainLanguage = data?.languages?.find((l) => l.isMainLanguage).shortLang
@@ -104,7 +105,6 @@ export default function ReadingSection({
       }
       setReadingMode(mode)
     }
-    setItem('reading_mode', mode)
   }
 
   useEffect(() => {
@@ -145,13 +145,6 @@ export default function ReadingSection({
     window.addEventListener('wheel', _.throttle(pageHandler, 500, { trailing: false, leading: true }))
     window.addEventListener('keydown', pageHandler)
   }, [readingMode])
-
-  useEffect(() => {
-    const lsReadingMode = getItem('reading_mode')
-    if (lsReadingMode) {
-      setReadingMode(lsReadingMode)
-    }
-  }, [])
 
   useEffect(() => {
     setCurrentPage(0)
