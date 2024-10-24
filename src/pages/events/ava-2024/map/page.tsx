@@ -276,11 +276,15 @@ function Event() {
           <Button
             onClick={() => {
               if (active == 2) {
-                // currentSetStep.current = setArtRoomStep
-                // setArtRoomStep(0)
-                // setMangaRoomStep(-1)
-                // setCampainRoomStep(-1)
-                // setCharacterRoomStep(-1)
+                currentSetStep.current = setArtRoomStep
+                if (!artDone) {
+                  setArtRoomStep(0)
+                  setMangaRoomStep(-1)
+                  setCampainRoomStep(-1)
+                  setCharacterRoomStep(-1)
+                } else {
+                  router.push(`/events/ava-2024/map/manga-room`)
+                }
               } else {
                 setActive(2)
               }
@@ -289,21 +293,10 @@ function Event() {
             <>
               <Image src={Room2} alt='' className='w-full h-full' />
               <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='20'
-                  height='22'
-                  viewBox='0 0 20 22'
-                  fill='none'
-                  className='w-4 h-4'>
-                  <path
-                    fill-rule='evenodd'
-                    clip-rule='evenodd'
-                    d='M3.25 9.33501V7.15663C3.25 3.20413 6.27208 0 10 0C13.7279 0 16.75 3.20413 16.75 7.15663V9.33501C17.8648 9.42328 18.5907 9.64612 19.1213 10.2087C20 11.1403 20 12.6397 20 15.6386C20 18.6374 20 20.1368 19.1213 21.0684C18.2426 22 16.8284 22 14 22H6C3.17157 22 1.75736 22 0.87868 21.0684C0 20.1368 0 18.6374 0 15.6386C0 12.6397 0 11.1403 0.87868 10.2087C1.40931 9.64612 2.13525 9.42328 3.25 9.33501ZM4.75 7.15663C4.75 4.08246 7.10051 1.59036 10 1.59036C12.8995 1.59036 15.25 4.08246 15.25 7.15663V9.2809C14.867 9.27711 14.4515 9.27711 14 9.27711H6C5.54849 9.27711 5.13301 9.27711 4.75 9.2809V7.15663ZM12 15.6386C12 16.8097 11.1046 17.759 10 17.759C8.89543 17.759 8 16.8097 8 15.6386C8 14.4674 8.89543 13.5181 10 13.5181C11.1046 13.5181 12 14.4674 12 15.6386Z'
-                    fill='white'
-                  />
+                <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                  <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
                 </svg>
-                {t('Unlock on round 3')}
+                {t('Artwork room')}
               </div>
             </>
           </Button>
@@ -401,7 +394,7 @@ function Event() {
             height='47'
             viewBox='0 0 57 47'
             fill='none'
-            className='absolute top-[25.7%] right-[3.8%]'>
+            className='absolute top-[0%] scale-x-[-1] right-[47.8%]'>
             <path
               d='M19.4519 1H19.0949L18.8186 1.22604L2.36676 14.6867L1.76563 15.1785L2.09342 15.8826L12.1889 37.5692L12.3968 38.0159L12.8778 38.1232L18.4519 39.3663V43.7882V45.3971L19.8945 44.6849L26.6929 41.3288L47.772 43.3772L48.5356 43.4514L48.805 42.733L55.5353 24.7855L55.6537 24.4699L55.5568 24.147L48.8265 1.71265L48.6127 1H47.8687H19.4519Z'
               fill='white'
@@ -432,26 +425,25 @@ function Event() {
             </div>
           </Link>
           <Button
-            // onClick={() => {
-            //   currentSetStep.current = setArtRoomStep
-            //   setArtRoomStep(0)
-            //   setMangaRoomStep(-1)
-            //   setCampainRoomStep(-1)
-            //   setCharacterRoomStep(-1)
-            // }}
+            onClick={() => {
+              if (!artDone) {
+                currentSetStep.current = setArtRoomStep
+                setArtRoomStep(0)
+                setMangaRoomStep(-1)
+                setCampainRoomStep(-1)
+                setCharacterRoomStep(-1)
+              } else {
+                router.push(`/events/ava-2024/map/artwork-room`)
+              }
+            }}
             className='absolute top-[.7%] left-[34.6%] w-[33.75%] opacity-0 hover:opacity-100'>
             <>
               <Image src={Room2} alt='' className='w-full h-full' />
               <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
-                <svg xmlns='http://www.w3.org/2000/svg' width='20' height='22' viewBox='0 0 20 22' fill='none'>
-                  <path
-                    fill-rule='evenodd'
-                    clip-rule='evenodd'
-                    d='M3.25 9.33501V7.15663C3.25 3.20413 6.27208 0 10 0C13.7279 0 16.75 3.20413 16.75 7.15663V9.33501C17.8648 9.42328 18.5907 9.64612 19.1213 10.2087C20 11.1403 20 12.6397 20 15.6386C20 18.6374 20 20.1368 19.1213 21.0684C18.2426 22 16.8284 22 14 22H6C3.17157 22 1.75736 22 0.87868 21.0684C0 20.1368 0 18.6374 0 15.6386C0 12.6397 0 11.1403 0.87868 10.2087C1.40931 9.64612 2.13525 9.42328 3.25 9.33501ZM4.75 7.15663C4.75 4.08246 7.10051 1.59036 10 1.59036C12.8995 1.59036 15.25 4.08246 15.25 7.15663V9.2809C14.867 9.27711 14.4515 9.27711 14 9.27711H6C5.54849 9.27711 5.13301 9.27711 4.75 9.2809V7.15663ZM12 15.6386C12 16.8097 11.1046 17.759 10 17.759C8.89543 17.759 8 16.8097 8 15.6386C8 14.4674 8.89543 13.5181 10 13.5181C11.1046 13.5181 12 14.4674 12 15.6386Z'
-                    fill='white'
-                  />
+                <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                  <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
                 </svg>
-                {t('Unlock on round 3')}
+                {t('Artwork room')}
               </div>
             </>
           </Button>
@@ -531,7 +523,7 @@ function Event() {
             height='47'
             viewBox='0 0 57 47'
             fill='none'
-            className='absolute top-[4%] -right-[2%]'>
+            className='absolute top-[1%] right-[33%] animate-blink'>
             <path
               d='M19.4519 1H19.0949L18.8186 1.22604L2.36676 14.6867L1.76563 15.1785L2.09342 15.8826L12.1889 37.5692L12.3968 38.0159L12.8778 38.1232L18.4519 39.3663V43.7882V45.3971L19.8945 44.6849L26.6929 41.3288L47.772 43.3772L48.5356 43.4514L48.805 42.733L55.5353 24.7855L55.6537 24.4699L55.5568 24.147L48.8265 1.71265L48.6127 1H47.8687H19.4519Z'
               fill='white'
