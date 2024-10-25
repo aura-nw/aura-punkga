@@ -58,9 +58,13 @@ function Event() {
       revalidateOnFocus: false,
     }
   )
-  const collectedCharacters = useSWR('get-collected-characters', () => eventService.story.getCollectedCharacters(), {
-    revalidateOnFocus: false,
-  })
+  const collectedCharacters = useSWR(
+    { key: 'get-collected-characters', userId: account?.id },
+    ({ userId }) => (userId ? eventService.story.getCollectedCharacters() : null),
+    {
+      revalidateOnFocus: false,
+    }
+  )
   const collectedCharacter = collectedCharacters?.data?.data?.data?.user_collect_character
   const characterData = width < 1024 ? selectedCharacter : selectedCharacter || characters?.[0]
   useEffect(() => {
@@ -513,7 +517,7 @@ function Event() {
                       </Link>
                     )}
                     <div className='text-sm font-medium'>
-                      by <span className='text-brand-default'>{characterData?.authorizer_user.nickname}</span>
+                      {t('by')} <span className='text-brand-default'>{characterData?.authorizer_user.nickname}</span>
                     </div>
                   </div>
                   <div className='text-sm font-medium flex gap-1.5 shrink-0'>

@@ -28,6 +28,7 @@ import { ModalContext } from 'src/context/modals'
 import { shorten } from 'src/utils'
 import Tooltip from 'components/Tooltip'
 import { isMobile } from 'react-device-detect'
+import IPModal from 'components/pages/event/ava-2024/IPModal'
 
 export default function Page() {
   const { locale, push } = useRouter()
@@ -40,13 +41,20 @@ export default function Page() {
   const [page, setPage] = useState(1)
   const [type, setType] = useState('all')
   const { data, mutate, isLoading } = useSWR(
-    { ket: 'get-ava-manga', page },
-    ({ page }) => eventService.story.getManga(page),
+    { ket: 'get-ava-manga', page, userId: account?.id },
+    ({ page, userId }) => eventService.story.getManga(page, userId),
     {
       revalidateOnFocus: false,
     }
   )
   useEffect(() => {
+    if (selected) {
+      const character = data?.data?.data?.story_manga.find((char) => char.id == selected.id)
+      if (character) {
+        setSelected(character)
+        return
+      }
+    }
     if (data?.data?.data?.story_manga?.[0]) {
       setSelected(data?.data?.data?.story_manga?.[0])
     }
@@ -145,7 +153,7 @@ export default function Page() {
                     {t('Back to map')}
                   </Link>
                 </div>
-                <div className='relative z-0'>{selected && <Content selected={selected} />}</div>
+                <div className='relative z-0'>{selected && <Content selected={selected} mutate={mutate} />}</div>
               </div>
             </div>
           </div>
@@ -233,107 +241,110 @@ export default function Page() {
                 </defs>
               </svg>
             </div>
-            <Content selected={selected} />
+            <Content selected={selected} mutate={mutate} />
           </div>
         </>
       )}
     </>
   )
 }
-const Content = ({ selected }) => {
+const Content = ({ selected, mutate }) => {
   const { locale, push } = useRouter()
   const { t } = useTranslation()
+  const [selectedIP, setSelectedIP] = useState<any>()
   const mangaName =
     (locale == 'en'
       ? selected.manga.manga_languages.find((l) => l.language_id == 1)?.title
       : selected.manga.manga_languages.find((l) => l.language_id == 2)?.title) ||
     selected.manga.manga_languages.find((l) => l.is_main_language)?.title
   return (
-    <div className='mt-6 rounded-mlg border-[3px] text-white relative border-black bg-[#191919] h-fit min-w-[350px] w-full max-h-[80vh] overflow-auto'>
-      <Skew className='absolute top-1 left-1' />
-      <Skew className='absolute top-1 right-1' />
-      <Image
-        src={selected.manga.banner}
-        alt=''
-        width={300}
-        height={300}
-        className='w-full aspect-[452/170] object-cover relative z-40'
-      />
-      <div className='px-5 -mt-[58px] z-50 relative py-6 bg-[linear-gradient(0deg,#191919_68.29%,rgba(25,25,25,0.00)_100%)]'>
-        <div className='space-y-1'>
-          <div className='font-jaro text-2xl'>{mangaName}</div>
-          <div className='flex w-full items-center justify-between'>
-            <div>
-              {selected?.story_ip_asset?.ip_asset_id && (
-                <Link
-                  href={`https://explorer.story.foundation/ipa/${selected?.story_ip_asset?.ip_asset_id}`}
-                  target='_blank'
-                  className='text-brand-default text-sm'>
-                  {shorten(selected?.story_ip_asset?.ip_asset_id)}
-                </Link>
-              )}
-            </div>
-            <div className='flex items-center text-sm gap-1.5'>
-              {selected?.manga?.manga_total_likes?.likes || 0}
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='24'
-                height='24'
-                viewBox='0 0 24 24'
-                className='w-5 h-5'
-                fill='none'>
-                <path
-                  d='M23.01 5.87714C22.651 5.04581 22.1333 4.29247 21.4859 3.65928C20.8381 3.02421 20.0742 2.51953 19.2359 2.17268C18.3667 1.81159 17.4344 1.62676 16.4931 1.62893C15.1725 1.62893 13.8842 1.99053 12.7645 2.67357C12.4967 2.83696 12.2422 3.01643 12.0011 3.21196C11.76 3.01643 11.5056 2.83696 11.2377 2.67357C10.1181 1.99053 8.82969 1.62893 7.50915 1.62893C6.55826 1.62893 5.63683 1.81107 4.76629 2.17268C3.92522 2.52089 3.16719 3.02178 2.51629 3.65928C1.86807 4.29175 1.35025 5.04527 0.992188 5.87714C0.619866 6.74232 0.429688 7.66107 0.429688 8.6066C0.429688 9.49857 0.61183 10.428 0.973438 11.3736C1.27612 12.1637 1.71004 12.9834 2.26451 13.8111C3.14308 15.1209 4.35112 16.487 5.85112 17.8718C8.33683 20.1673 10.7984 21.753 10.9029 21.8173L11.5377 22.2245C11.819 22.4039 12.1806 22.4039 12.4618 22.2245L13.0967 21.8173C13.2011 21.7504 15.66 20.1673 18.1484 17.8718C19.6484 16.487 20.8565 15.1209 21.735 13.8111C22.2895 12.9834 22.7261 12.1637 23.0261 11.3736C23.3877 10.428 23.5699 9.49857 23.5699 8.6066C23.5725 7.66107 23.3824 6.74232 23.01 5.87714ZM12.0011 20.1057C12.0011 20.1057 2.4654 13.9959 2.4654 8.6066C2.4654 5.87714 4.72344 3.66464 7.50915 3.66464C9.46719 3.66464 11.1654 4.7575 12.0011 6.35392C12.8368 4.7575 14.535 3.66464 16.4931 3.66464C19.2788 3.66464 21.5368 5.87714 21.5368 8.6066C21.5368 13.9959 12.0011 20.1057 12.0011 20.1057Z'
-                  fill='white'
-                />
-              </svg>
-            </div>
-          </div>
-          <div className='text-sm font-medium'>
-            {t('by')}{' '}
-            <span className='text-brand-default'>
-              {selected?.manga?.manga_creators[0]?.creator?.pen_name || 'Punkga'}
-            </span>
-          </div>
-        </div>
-        <div className='mt-4 w-full'>
-          <Button
-            color='neautral'
-            size='sm'
-            className='w-full'
-            onClick={() =>
-              isMobile
-                ? window.open(`/comic/${selected.manga.slug}`, '_blank')
-                : window.open(`/comic/${selected.manga.slug}/chapter/1`, '_blank')
-            }>
-            {t('Read manga')}
-          </Button>
-        </div>
-      </div>
-      <div className='mt-4 px-5 pb-5'>
-        <div className='font-jaro text-2xl'>{t('Character IP')}</div>
-        <div className='mt-4 grid grid-cols-3'>
-          {selected.story_manga_characters?.map((char, index) => (
-            <Link
-              href={`https://explorer.story.foundation/ipa/${char?.story_character?.story_ip_asset?.ip_asset_id}`}
-              target='_blank'
-              className={`rounded-xl relative overflow-hidden border-black border-[3px]`}
-              key={index}>
-              <div className='absolute inset-0'>
-                <Image
-                  src={char.story_character.avatar_url}
-                  width={300}
-                  height={300}
-                  alt=''
-                  className='w-full h-full object-cover'
-                />
+    <>
+      <div className='mt-6 rounded-mlg border-[3px] text-white relative border-black bg-[#191919] h-fit min-w-[350px] w-full max-h-[80vh] overflow-auto'>
+        <Skew className='absolute top-1 left-1' />
+        <Skew className='absolute top-1 right-1' />
+        <Image
+          src={selected.manga.banner}
+          alt=''
+          width={300}
+          height={300}
+          className='w-full aspect-[452/170] object-cover relative z-40'
+        />
+        <div className='px-5 -mt-[58px] z-50 relative py-6 bg-[linear-gradient(0deg,#191919_68.29%,rgba(25,25,25,0.00)_100%)]'>
+          <div className='space-y-1'>
+            <div className='font-jaro text-2xl'>{mangaName}</div>
+            <div className='flex w-full items-center justify-between'>
+              <div>
+                {selected?.story_ip_asset?.ip_asset_id && (
+                  <Link
+                    href={`https://explorer.story.foundation/ipa/${selected?.story_ip_asset?.ip_asset_id}`}
+                    target='_blank'
+                    className='text-brand-default text-sm'>
+                    {shorten(selected?.story_ip_asset?.ip_asset_id)}
+                  </Link>
+                )}
               </div>
-              <Image src={CharacterFrame} priority alt='' className='w-full h-full relative' />
-            </Link>
-          ))}
+              <div className='flex items-center text-sm gap-1.5'>
+                {selected?.manga?.manga_total_likes?.likes || 0}
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='24'
+                  height='24'
+                  viewBox='0 0 24 24'
+                  className='w-5 h-5'
+                  fill='none'>
+                  <path
+                    d='M23.01 5.87714C22.651 5.04581 22.1333 4.29247 21.4859 3.65928C20.8381 3.02421 20.0742 2.51953 19.2359 2.17268C18.3667 1.81159 17.4344 1.62676 16.4931 1.62893C15.1725 1.62893 13.8842 1.99053 12.7645 2.67357C12.4967 2.83696 12.2422 3.01643 12.0011 3.21196C11.76 3.01643 11.5056 2.83696 11.2377 2.67357C10.1181 1.99053 8.82969 1.62893 7.50915 1.62893C6.55826 1.62893 5.63683 1.81107 4.76629 2.17268C3.92522 2.52089 3.16719 3.02178 2.51629 3.65928C1.86807 4.29175 1.35025 5.04527 0.992188 5.87714C0.619866 6.74232 0.429688 7.66107 0.429688 8.6066C0.429688 9.49857 0.61183 10.428 0.973438 11.3736C1.27612 12.1637 1.71004 12.9834 2.26451 13.8111C3.14308 15.1209 4.35112 16.487 5.85112 17.8718C8.33683 20.1673 10.7984 21.753 10.9029 21.8173L11.5377 22.2245C11.819 22.4039 12.1806 22.4039 12.4618 22.2245L13.0967 21.8173C13.2011 21.7504 15.66 20.1673 18.1484 17.8718C19.6484 16.487 20.8565 15.1209 21.735 13.8111C22.2895 12.9834 22.7261 12.1637 23.0261 11.3736C23.3877 10.428 23.5699 9.49857 23.5699 8.6066C23.5725 7.66107 23.3824 6.74232 23.01 5.87714ZM12.0011 20.1057C12.0011 20.1057 2.4654 13.9959 2.4654 8.6066C2.4654 5.87714 4.72344 3.66464 7.50915 3.66464C9.46719 3.66464 11.1654 4.7575 12.0011 6.35392C12.8368 4.7575 14.535 3.66464 16.4931 3.66464C19.2788 3.66464 21.5368 5.87714 21.5368 8.6066C21.5368 13.9959 12.0011 20.1057 12.0011 20.1057Z'
+                    fill='white'
+                  />
+                </svg>
+              </div>
+            </div>
+            <div className='text-sm font-medium'>
+              {t('by')}{' '}
+              <span className='text-brand-default'>
+                {selected?.manga?.manga_creators[0]?.creator?.pen_name || 'Punkga'}
+              </span>
+            </div>
+          </div>
+          <div className='mt-4 w-full'>
+            <Button
+              color='neautral'
+              size='sm'
+              className='w-full'
+              onClick={() =>
+                isMobile
+                  ? window.open(`/comic/${selected.manga.slug}`, '_blank')
+                  : window.open(`/comic/${selected.manga.slug}/chapter/1`, '_blank')
+              }>
+              {t('Read manga')}
+            </Button>
+          </div>
+        </div>
+        <div className='mt-4 px-5 pb-5'>
+          <div className='font-jaro text-2xl'>{t('Character IP')}</div>
+          <div className='mt-4 grid grid-cols-3'>
+            {selected.story_manga_characters?.map((char, index) => (
+              <div
+                onClick={() => setSelectedIP(char.story_character)}
+                className={`rounded-xl relative overflow-hidden cursor-pointer border-black border-[3px]`}
+                key={index}>
+                <div className='absolute inset-0'>
+                  <Image
+                    src={char.story_character.avatar_url}
+                    width={300}
+                    height={300}
+                    alt=''
+                    className='w-full h-full object-cover'
+                  />
+                </div>
+                <Image src={CharacterFrame} priority alt='' className='w-full h-full relative' />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+      <IPModal open={!!selectedIP} onClose={() => setSelectedIP(undefined)} data={selectedIP} mutate={mutate} />
+    </>
   )
 }
 const Skew = ({ className }) => {
