@@ -11,7 +11,7 @@ import Frame from 'components/pages/event/ava-2024/assets/artwork-frame.png'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
 import { eventService } from 'src/services/eventService'
@@ -19,6 +19,9 @@ import { shorten } from 'src/utils'
 import useSWR from 'swr'
 import { useWindowSize } from 'usehooks-ts'
 import IPModal from 'components/pages/event/ava-2024/IPModal'
+import { Context } from 'src/context'
+import { ModalContext } from 'src/context/modals'
+import { toast } from 'react-toastify'
 
 export default function Page() {
   const { t } = useTranslation()
@@ -26,13 +29,10 @@ export default function Page() {
   const [showModal, setShowModal] = useState(false)
   const [selected, setSelected] = useState<any>()
   const [page, setPage] = useState(1)
-  const { data, mutate, isLoading } = useSWR(
-    { ket: 'get-ava-artwork', page },
-    ({ page }) => eventService.story.getArtwork(page),
-    {
-      revalidateOnFocus: false,
-    }
-  )
+  const [showSlider, setShowSlider] = useState(false)
+  const { data, mutate, isLoading } = useSWR({ key: 'get-ava-artwork' }, () => eventService.story.getArtwork(), {
+    revalidateOnFocus: false,
+  })
   useEffect(() => {
     if (selected) {
       const ip = data?.data?.data?.story_artwork.find((char) => char.id == selected.id)
@@ -47,6 +47,20 @@ export default function Page() {
   }, [data?.data?.data?.story_artwork])
   const artworks = data?.data?.data?.story_artwork
   const count = Math.ceil((data?.data?.data?.story_artwork_aggregate?.aggregate?.count || 1) / 9)
+  const prevHandler = () => {
+    const currentIndex = artworks.findIndex((d) => d.id == selected.id)
+    if (currentIndex > 0) {
+      setSelected(artworks[currentIndex - 1])
+      setPage(Math.ceil((currentIndex - 1) / 12))
+    }
+  }
+  const nextHandler = () => {
+    const currentIndex = artworks.findIndex((d) => d.id == selected.id)
+    if (currentIndex < artworks.length - 1) {
+      setSelected(artworks[currentIndex + 1])
+      setPage(Math.ceil((currentIndex + 1) / 12))
+    }
+  }
   return (
     <>
       <div
@@ -68,7 +82,7 @@ export default function Page() {
           <div className='lg:py-10'>
             <div className='grid grid-cols-1 lg:grid-cols-[22fr_11fr] mt-4 gap-8 min-h-[1000px] relative'>
               <div className='shrink-0 w-full'>
-                <div className='flex justify-end relative z-20 items-center gap-10 h-10 lg:hidden mb-5 flex-row-reverse'>
+                <div className='flex justify-between relative z-20 items-center gap-10 h-10 lg:hidden mb-5 flex-row-reverse'>
                   <div className='w-[8.5%] mr-10'>
                     <RuleAndAward />
                   </div>
@@ -85,7 +99,7 @@ export default function Page() {
                 {artworks?.length ? (
                   <>
                     <div className='grid grid-cols-2 md:grid-cols-3 gap-5 mt-6'>
-                      {artworks?.map((artwork, index) => (
+                      {artworks?.slice((page - 1) * 12, page * 12)?.map((artwork, index) => (
                         <div
                           className={`rounded-xl cursor-pointer relative overflow-hidden ${
                             artwork.id == selected?.id ? 'border-[#00E160]' : 'border-black'
@@ -139,7 +153,11 @@ export default function Page() {
                     {t('Back to map')}
                   </Link>
                 </div>
-                <div className='relative z-0'>{selected && <Content selected={selected} mutate={mutate} />}</div>
+                <div className='relative z-0'>
+                  {selected && (
+                    <Content selected={selected} mutate={mutate} setShowSlider={() => setShowSlider(true)} />
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -227,17 +245,90 @@ export default function Page() {
                 </defs>
               </svg>
             </div>
-            <Content selected={selected} mutate={mutate} />
+            <Content
+              selected={selected}
+              mutate={mutate}
+              setShowSlider={() => {
+                setShowSlider(true)
+                setShowModal(false)
+              }}
+            />
           </div>
         </>
+      )}
+      {showSlider && (
+        <div className='fixed inset-0 z-50'>
+          <div className='absolute inset-0 bg-[#000000CC]' onClick={() => setShowSlider(false)}></div>
+          <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex items-center gap-4 w-[95vw] max-w-5xl'>
+            <div className='cursor-pointer' onClick={prevHandler}>
+              <svg width='24' height='25' viewBox='0 0 24 25' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                <g clip-path='url(#clip0_6205_29201)'>
+                  <path
+                    d='M5.33187 11.5635L16.0122 0.883412C16.2592 0.636194 16.5889 0.5 16.9406 0.5C17.2922 0.5 17.6219 0.636194 17.8689 0.883412L18.6555 1.66975C19.1673 2.18213 19.1673 3.01491 18.6555 3.52651L9.68695 12.495L18.6654 21.4735C18.9124 21.7207 19.0488 22.0503 19.0488 22.4017C19.0488 22.7535 18.9124 23.083 18.6654 23.3305L17.8789 24.1166C17.6317 24.3638 17.3021 24.5 16.9505 24.5C16.5989 24.5 16.2691 24.3638 16.0221 24.1166L5.33187 13.4267C5.08426 13.1787 4.94826 12.8476 4.94904 12.4956C4.94826 12.1422 5.08426 11.8113 5.33187 11.5635Z'
+                    fill='white'
+                  />
+                </g>
+                <defs>
+                  <clipPath id='clip0_6205_29201'>
+                    <rect width='24' height='24' fill='white' transform='matrix(-1 0 0 1 24 0.5)' />
+                  </clipPath>
+                </defs>
+              </svg>
+            </div>
+            <div className=' lg:bg-neutral-700 lg:p-8 lg:pt-4 lg:rounded-mlg'>
+              <div className='flex flex-col items-center gap-4 lg:rounded-xl lg:bg-neutral-950 lg:p-4 max-h-[90vh] overflow-auto'>
+                <Image src={selected.display_url} width={500} height={500} alt='' className='w-full' />
+                <div className='text-sm font-semibold text-white'>{selected.name}</div>
+              </div>
+            </div>
+            <div className='cursor-pointer' onClick={nextHandler}>
+              <svg width='24' height='25' viewBox='0 0 24 25' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                <g clip-path='url(#clip0_6205_29197)'>
+                  <path
+                    d='M18.6681 11.5635L7.98783 0.883412C7.74081 0.636194 7.41105 0.5 7.05945 0.5C6.70784 0.5 6.37809 0.636194 6.13106 0.883412L5.34453 1.66975C4.83273 2.18213 4.83273 3.01491 5.34453 3.52651L14.313 12.495L5.33458 21.4735C5.08756 21.7207 4.95117 22.0503 4.95117 22.4017C4.95117 22.7535 5.08756 23.083 5.33458 23.3305L6.12111 24.1166C6.36833 24.3638 6.69789 24.5 7.0495 24.5C7.4011 24.5 7.73086 24.3638 7.97788 24.1166L18.6681 13.4267C18.9157 13.1787 19.0517 12.8476 19.051 12.4956C19.0517 12.1422 18.9157 11.8113 18.6681 11.5635Z'
+                    fill='white'
+                  />
+                </g>
+                <defs>
+                  <clipPath id='clip0_6205_29197'>
+                    <rect width='24' height='24' fill='white' transform='translate(0 0.5)' />
+                  </clipPath>
+                </defs>
+              </svg>
+            </div>
+          </div>
+        </div>
       )}
     </>
   )
 }
-const Content = ({ selected, mutate }) => {
+const Content = ({ selected, mutate, setShowSlider }) => {
   const { t } = useTranslation()
+  const { account } = useContext(Context)
+  const { setSignInOpen } = useContext(ModalContext)
+  const [likeCount, setLikeCount] = useState(0)
+  const [isLiked, setIsLiked] = useState(false)
   const [selectedIP, setSelectedIP] = useState<any>()
-
+  const likeHandler = async () => {
+    try {
+      if (!account) {
+        setSignInOpen(true)
+        return
+      }
+      setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1))
+      setIsLiked((prevState) => !prevState)
+      if (isLiked) {
+        await eventService.story.unlikeArtwork(selected?.id)
+      } else {
+        await eventService.story.likeArtwork(selected?.id)
+      }
+      mutate()
+    } catch (error) {
+      toast(error.message, {
+        type: 'error',
+      })
+    }
+  }
   return (
     <>
       <div className='mt-6 rounded-mlg border-[3px] text-white relative border-black bg-[#191919] h-fit min-w-[350px] w-full max-h-[80vh] overflow-auto'>
@@ -251,24 +342,50 @@ const Content = ({ selected, mutate }) => {
           className='w-full aspect-[452/320] object-cover relative z-40'
         />
         <div className='px-5 -mt-[58px] z-50 relative py-6 bg-[linear-gradient(0deg,#191919_68.29%,rgba(25,25,25,0.00)_100%)]'>
-          <div className='space-y-1'>
-            <div className='font-jaro text-2xl'>{selected.name}</div>
-            <div>
-              {selected?.story_ip_asset?.ip_asset_id && (
-                <Link
-                  href={`https://explorer.story.foundation/ipa/${selected?.story_ip_asset?.ip_asset_id}`}
-                  target='_blank'
-                  className='text-brand-default text-sm'>
-                  {shorten(selected?.story_ip_asset?.ip_asset_id)}
-                </Link>
-              )}
+          <div className='flex justify-between items-center'>
+            <div className='space-y-1'>
+              <div className='font-jaro text-2xl'>{selected.name}</div>
+              <div>
+                {selected?.story_ip_asset?.ip_asset_id && (
+                  <Link
+                    href={`https://explorer.story.foundation/ipa/${selected?.story_ip_asset?.ip_asset_id}`}
+                    target='_blank'
+                    className='text-brand-default text-sm'>
+                    {shorten(selected?.story_ip_asset?.ip_asset_id)}
+                  </Link>
+                )}
+              </div>
+              <div className='text-sm font-medium'>
+                {t('by')}{' '}
+                <span className='text-brand-default'>
+                  {selected?.artwork?.creator?.pen_name || 'Punkga'}
+                </span>
+              </div>
             </div>
-            <div className='text-sm font-medium'>
-              {t('by')}{' '}
-              <span className='text-brand-default'>
-                {selected?.artwork?.manga_creators?.[0]?.creator?.pen_name || 'Punkga'}
-              </span>
+            <div className='flex items-center gap-1'>
+              <span>{likeCount}</span>
+              <svg width='21' height='21' viewBox='0 0 21 21' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                <g clip-path='url(#clip0_6200_28004)'>
+                  <path
+                    d='M19.5892 5.66515C19.2913 4.97545 18.8618 4.35044 18.3247 3.82512C17.7872 3.29823 17.1535 2.87952 16.458 2.59176C15.7368 2.29218 14.9633 2.13884 14.1824 2.14064C13.0868 2.14064 12.0179 2.44065 11.089 3.00732C10.8668 3.14288 10.6557 3.29177 10.4557 3.454C10.2557 3.29177 10.0445 3.14288 9.82231 3.00732C8.89341 2.44065 7.8245 2.14064 6.72892 2.14064C5.94001 2.14064 5.17555 2.29175 4.45332 2.59176C3.75553 2.88066 3.12662 3.29622 2.58661 3.82512C2.04882 4.34984 1.61921 4.975 1.32214 5.66515C1.01325 6.38295 0.855469 7.14518 0.855469 7.92964C0.855469 8.66966 1.00658 9.44078 1.30659 10.2252C1.5577 10.8808 1.91771 11.5608 2.37772 12.2475C3.10662 13.3342 4.10887 14.4676 5.35334 15.6165C7.4156 17.5209 9.45786 18.8365 9.54453 18.8899L10.0712 19.2276C10.3045 19.3765 10.6046 19.3765 10.8379 19.2276L11.3646 18.8899C11.4512 18.8343 13.4913 17.5209 15.5558 15.6165C16.8002 14.4676 17.8025 13.3342 18.5314 12.2475C18.9914 11.5608 19.3536 10.8808 19.6025 10.2252C19.9025 9.44078 20.0536 8.66966 20.0536 7.92964C20.0558 7.14518 19.8981 6.38295 19.5892 5.66515ZM10.4557 17.4698C10.4557 17.4698 2.54439 12.4008 2.54439 7.92964C2.54439 5.66515 4.41776 3.82956 6.72892 3.82956C8.35339 3.82956 9.76231 4.73625 10.4557 6.06072C11.149 4.73625 12.5579 3.82956 14.1824 3.82956C16.4936 3.82956 18.3669 5.66515 18.3669 7.92964C18.3669 12.4008 10.4557 17.4698 10.4557 17.4698Z'
+                    fill='white'
+                  />
+                </g>
+                <defs>
+                  <clipPath id='clip0_6200_28004'>
+                    <rect width='19.9115' height='19.9115' fill='white' transform='translate(0.498047 0.789062)' />
+                  </clipPath>
+                </defs>
+              </svg>
             </div>
+          </div>
+          <div className='mt-3 grid grid-cols-[2fr_1fr] gap-3'>
+            <Button size='sm' variant='outlined' color='neautral' className='w-full' onClick={setShowSlider}>
+              {t('View Artwork')}
+            </Button>
+            <Button size='sm' color='neautral' className='w-full' onClick={likeHandler}>
+              {t(isLiked ? 'Liked' : 'Like')}
+            </Button>
           </div>
         </div>
         <div className='mt-4 px-5 pb-5'>
