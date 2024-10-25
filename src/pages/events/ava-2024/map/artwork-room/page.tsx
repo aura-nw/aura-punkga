@@ -18,6 +18,7 @@ import { eventService } from 'src/services/eventService'
 import { shorten } from 'src/utils'
 import useSWR from 'swr'
 import { useWindowSize } from 'usehooks-ts'
+import IPModal from 'components/pages/event/ava-2024/IPModal'
 
 export default function Page() {
   const { t } = useTranslation()
@@ -33,6 +34,13 @@ export default function Page() {
     }
   )
   useEffect(() => {
+    if (selected) {
+      const ip = data?.data?.data?.story_artwork.find((char) => char.id == selected.id)
+      if (ip) {
+        setSelected(ip)
+        return
+      }
+    }
     if (data?.data?.data?.story_artwork?.[0]) {
       setSelected(data?.data?.data?.story_artwork?.[0])
     }
@@ -131,7 +139,7 @@ export default function Page() {
                     {t('Back to map')}
                   </Link>
                 </div>
-                <div className='relative z-0'>{selected && <Content selected={selected} />}</div>
+                <div className='relative z-0'>{selected && <Content selected={selected} mutate={mutate} />}</div>
               </div>
             </div>
           </div>
@@ -219,72 +227,75 @@ export default function Page() {
                 </defs>
               </svg>
             </div>
-            <Content selected={selected} />
+            <Content selected={selected} mutate={mutate} />
           </div>
         </>
       )}
     </>
   )
 }
-const Content = ({ selected }) => {
+const Content = ({ selected, mutate }) => {
   const { t } = useTranslation()
+  const [selectedIP, setSelectedIP] = useState<any>()
 
   return (
-    <div className='mt-6 rounded-mlg border-[3px] text-white relative border-black bg-[#191919] h-fit min-w-[350px] w-full max-h-[80vh] overflow-auto'>
-      <Skew className='absolute top-1 left-1' />
-      <Skew className='absolute top-1 right-1' />
-      <Image
-        src={selected.display_url}
-        alt=''
-        width={300}
-        height={300}
-        className='w-full aspect-[452/320] object-cover relative z-40'
-      />
-      <div className='px-5 -mt-[58px] z-50 relative py-6 bg-[linear-gradient(0deg,#191919_68.29%,rgba(25,25,25,0.00)_100%)]'>
-        <div className='space-y-1'>
-          <div className='font-jaro text-2xl'>{selected.name}</div>
-          <div>
-            {selected?.story_ip_asset?.ip_asset_id && (
-              <Link
-                href={`https://explorer.story.foundation/ipa/${selected?.story_ip_asset?.ip_asset_id}`}
-                target='_blank'
-                className='text-brand-default text-sm'>
-                {shorten(selected?.story_ip_asset?.ip_asset_id)}
-              </Link>
-            )}
-          </div>
-          <div className='text-sm font-medium'>
-            {t('by')}{' '}
-            <span className='text-brand-default'>
-              {selected?.artwork?.manga_creators?.[0]?.creator?.pen_name || 'Punkga'}
-            </span>
+    <>
+      <div className='mt-6 rounded-mlg border-[3px] text-white relative border-black bg-[#191919] h-fit min-w-[350px] w-full max-h-[80vh] overflow-auto'>
+        <Skew className='absolute top-1 left-1' />
+        <Skew className='absolute top-1 right-1' />
+        <Image
+          src={selected.display_url}
+          alt=''
+          width={300}
+          height={300}
+          className='w-full aspect-[452/320] object-cover relative z-40'
+        />
+        <div className='px-5 -mt-[58px] z-50 relative py-6 bg-[linear-gradient(0deg,#191919_68.29%,rgba(25,25,25,0.00)_100%)]'>
+          <div className='space-y-1'>
+            <div className='font-jaro text-2xl'>{selected.name}</div>
+            <div>
+              {selected?.story_ip_asset?.ip_asset_id && (
+                <Link
+                  href={`https://explorer.story.foundation/ipa/${selected?.story_ip_asset?.ip_asset_id}`}
+                  target='_blank'
+                  className='text-brand-default text-sm'>
+                  {shorten(selected?.story_ip_asset?.ip_asset_id)}
+                </Link>
+              )}
+            </div>
+            <div className='text-sm font-medium'>
+              {t('by')}{' '}
+              <span className='text-brand-default'>
+                {selected?.artwork?.manga_creators?.[0]?.creator?.pen_name || 'Punkga'}
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-      <div className='mt-4 px-5 pb-5'>
-        <div className='font-jaro text-2xl'>{t('Character IP')}</div>
-        <div className='mt-4 grid grid-cols-3'>
-          {selected.story_artwork_characters?.map((char, index) => (
-            <Link
-              href={`https://explorer.story.foundation/ipa/${char?.story_character?.story_ip_asset?.ip_asset_id}`}
-              target='_blank'
-              className={`rounded-xl relative overflow-hidden border-black border-[3px]`}
-              key={index}>
-              <div className='absolute inset-0'>
-                <Image
-                  src={char.story_character.avatar_url}
-                  width={300}
-                  height={300}
-                  alt=''
-                  className='w-full h-full object-cover'
-                />
+        <div className='mt-4 px-5 pb-5'>
+          <div className='font-jaro text-2xl'>{t('Character IP')}</div>
+          <div className='mt-4 grid grid-cols-3'>
+            {selected.story_artwork_characters?.map((char, index) => (
+              <div
+                onClick={() => setSelectedIP(char.story_character)}
+                className={`rounded-xl relative overflow-hidden border-black border-[3px]`}
+                key={index}>
+                <div className='absolute inset-0'>
+                  <Image
+                    src={char.story_character.avatar_url}
+                    width={300}
+                    height={300}
+                    alt=''
+                    className='w-full h-full object-cover'
+                  />
+                </div>
+                <Image src={CharacterFrame} priority alt='' className='w-full h-full relative' />
               </div>
-              <Image src={CharacterFrame} priority alt='' className='w-full h-full relative' />
-            </Link>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+      <IPModal open={!!selectedIP} onClose={() => setSelectedIP(undefined)} data={selectedIP} mutate={mutate} />
+    </>
   )
 }
 const Skew = ({ className }) => {
