@@ -30,9 +30,13 @@ export default function Event() {
   const [collectedCount, setCollectedCount] = useState(0)
   const [selectedCharacter, setSelectedCharacter] = useState<any>()
   const guideContentRef = useRef<any>()
-  const { data, mutate } = useSWR('get-collected-characters', () => eventService.story.getCollectedCharacters(), {
-    revalidateOnFocus: false,
-  })
+  const { data, mutate } = useSWR(
+    { key: 'get-collected-characters', userId: account?.id },
+    ({ userId }) => (userId ? eventService.story.getCollectedCharacters() : null),
+    {
+      revalidateOnFocus: false,
+    }
+  )
   const characters = data?.data?.data?.user_collect_character.map((c) => c.story_character)
   const characterData = selectedCharacter || characters?.[0]
   useEffect(() => {

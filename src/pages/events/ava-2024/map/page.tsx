@@ -257,7 +257,7 @@ function Event() {
         <div
           className='absolute h-[90vh] top-28 aspect-[394/800] left-1/2 -translate-x-1/2 bg-no-repeat bg-contain lg:hidden'
           style={{ backgroundImage: `url(${MobileMap.src})` }}>
-          <div className='absolute top-0 right-0'>
+          <div className='absolute top-0 right-0 z-10'>
             <BackgroundAudioController />
           </div>
           <div
@@ -410,7 +410,7 @@ function Event() {
         <div
           className='absolute inset-x-[19%] bottom-[3%] translate-y-[15%] w-[60%] aspect-[1227/966] bg-no-repeat bg-contain hidden lg:block'
           style={{ backgroundImage: `url(${Map.src})` }}>
-          <div className='absolute -top-4 -right-4'>
+          <div className='absolute -top-4 -right-4 z-10'>
             <BackgroundAudioController />
           </div>
           <Link

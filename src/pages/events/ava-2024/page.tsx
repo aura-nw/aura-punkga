@@ -156,7 +156,7 @@ function Event() {
             </div>
           </>
         </Button>
-        <div className='absolute top-[100px] right-4'>
+        <div className='absolute top-[100px] right-4 z-10'>
           <BackgroundAudioController />
         </div>
         <div className='[&:hover>.active]:visible [&:hover>:not(.active)]:invisible cursor-pointer absolute top-[260px] right-[16px] w-[240px] z-10'>
@@ -202,7 +202,7 @@ function Event() {
             </div>
           </>
         </Button>
-        <div className='absolute top-4 right-4'>
+        <div className='absolute top-4 right-4 z-10'>
           <BackgroundAudioController />
         </div>
         <div className='[&:hover>.active]:visible [&:hover>:not(.active)]:invisible cursor-pointer absolute top-[35%] right-[15%] w-[26%] z-10'>
