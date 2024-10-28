@@ -595,7 +595,7 @@ export default function Round2Submission() {
                           {...field}
                           max={
                             form.watch('selectedDefaultCharacter').length +
-                              form.watch('selectedCollectedCharacter').length <
+                              form.watch('selectedCollectedCharacter').length <=
                             7
                               ? 1
                               : 0
