@@ -52,6 +52,9 @@ export default function Round3Submission() {
         })
         return
       }
+      if (data.name.length > 150) {
+        return
+      }
       setLoading(true)
       const payload = new FormData()
       payload.append('name', data.name)
@@ -304,6 +307,12 @@ export default function Round3Submission() {
                     className='mt-2 bg-transparent !border-white'
                     {...field}
                   />
+                  <div className='mt-2 flex justify-end text-xs'>
+                    <div
+                      className={
+                        field.value.length > 150 ? 'text-text-error-primary-3' : 'text-text-teriary'
+                      }>{`${field.value.length}/150`}</div>
+                  </div>
                 </div>
               )}
             />

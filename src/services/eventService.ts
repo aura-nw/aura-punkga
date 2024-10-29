@@ -31,8 +31,10 @@ export const eventService = {
       ),
     submitArtwork: async (payload) =>
       await privateAxios.post(`${getConfig().REST_API_URL}/story-event/submission/artwork`, payload),
-    getArtwork: async () =>
-      await privateAxios.get(`${getConfig().REST_API_URL}/story-event/artwork?limit=9999&offset=0`),
+    getArtwork: async (userId) =>
+      await privateAxios.get(
+        `${getConfig().REST_API_URL}/story-event/artwork?limit=9999&offset=0${userId ? `&user_id=${userId}` : ``}`
+      ),
     likeArtwork: async (id) => await privateAxios.post(`${getConfig().REST_API_URL}/user/artwork/${id}/like`),
     unlikeArtwork: async (id) => await privateAxios.post(`${getConfig().REST_API_URL}/user/artwork/${id}/unlike`),
   },

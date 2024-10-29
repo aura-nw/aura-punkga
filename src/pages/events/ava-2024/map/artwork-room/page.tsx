@@ -26,13 +26,18 @@ import { toast } from 'react-toastify'
 export default function Page() {
   const { t } = useTranslation()
   const { width } = useWindowSize()
+  const { account } = useContext(Context)
   const [showModal, setShowModal] = useState(false)
   const [selected, setSelected] = useState<any>()
   const [page, setPage] = useState(1)
   const [showSlider, setShowSlider] = useState(false)
-  const { data, mutate, isLoading } = useSWR({ key: 'get-ava-artwork' }, () => eventService.story.getArtwork(), {
-    revalidateOnFocus: false,
-  })
+  const { data, mutate, isLoading } = useSWR(
+    { key: 'get-ava-artwork', user_id: account.id },
+    ({ user_id }) => eventService.story.getArtwork(user_id),
+    {
+      revalidateOnFocus: false,
+    }
+  )
   useEffect(() => {
     if (selected) {
       const ip = data?.data?.data?.story_artwork.find((char) => char.id == selected.id)
@@ -329,6 +334,7 @@ const Content = ({ selected, mutate, setShowSlider }) => {
       })
     }
   }
+  useEffect(() => {}, [])
   return (
     <>
       <div className='mt-6 rounded-mlg border-[3px] text-white relative border-black bg-[#191919] h-fit min-w-[350px] w-full max-h-[80vh] overflow-auto'>
@@ -356,10 +362,7 @@ const Content = ({ selected, mutate, setShowSlider }) => {
                 )}
               </div>
               <div className='text-sm font-medium'>
-                {t('by')}{' '}
-                <span className='text-brand-default'>
-                  {selected?.artwork?.creator?.pen_name || 'Punkga'}
-                </span>
+                {t('by')} <span className='text-brand-default'>{selected?.artwork?.creator?.pen_name || 'Punkga'}</span>
               </div>
             </div>
             <div className='flex items-center gap-1'>
