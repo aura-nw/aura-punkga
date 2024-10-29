@@ -5,24 +5,25 @@ import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
 export default function LeaderBoard({ data, userData, xpText }: { data: any[]; userData?: any; xpText?: string }) {
   const { t } = useTranslation()
+  console.log(data)
   return (
     <div className='overflow-auto'>
-      <div className='bg-neutral-white rounded-mlg mt-8 min-w-[300px] md:min-w-[400px]'>
-        <div className='py-3 md:py-4 px-4 md:px-[32px] w-full h-full flex flex-col'>
+      <div className='bg-[#191919] rounded-mlg mt-8 min-w-[300px] md:min-w-[400px]'>
+        <div className='w-full h-full flex flex-col py-4'>
           <div className={`font-semibold w-full text-center text-xl`}>{t('Campaign Leaderboard')}</div>
-          <div className='mt-8 flex px-4 pb-4 border-b border-border-primary font-semibold text-base'>
+          <div className='flex p-4 border-b border-neutral-900 my-4 font-semibold text-base'>
             <div className='w-9 mr-[10px] shrink-0'></div>
             <div className='w-full'>{t('User')}</div>
             <div className='w-12 shrink-0'>{xpText || 'XP'}</div>
           </div>
           <div className={`h-[420px] flex flex-col relative overflow-y-auto overflow-x-hidden`}>
-            <div className={`absolute inset-0 flex flex-col h-full py-2 md:py-3`}>
+            <div className={`absolute inset-0 flex flex-col h-full`}>
               {data?.map((item, index) => (
-                <div key={index} className='cursor-pointer bg-white rounded-[10px]'>
+                <div key={index} className={`cursor-pointer ${index%2==1?'bg-neutral-950':''}`}>
                   <Popover
                     freeMode
                     popoverRender={() => <ProfileCard hideEmail data={item.user_campaign_authorizer_user} />}>
-                    <div className='flex px-4 text-sm font-medium items-center border-b border-border-secondary h-[60px]'>
+                    <div className='flex px-4 text-sm font-medium items-center h-[60px]'>
                       <div className='w-9 mr-[10px] shrink-0'>#{index + 1}</div>
                       <div className='flex items-center gap-1.5 md:gap-[10px] justify-self-start w-full'>
                         <Image

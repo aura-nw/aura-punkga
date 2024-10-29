@@ -349,12 +349,24 @@ module.exports = {
         flash: 'flash 1s cubic-bezier(0, 0, 0.2, 1)',
         blink: 'blink 1s steps(2,end) infinite',
         imageslide: 'imageslide 2s ease-in-out infinite',
+        'claim-quest': 'claim-quest 10s linear infinite',
       },
       keyframes: {
         flash: {
           '75%, 100%': {
             transform: 'scale(1.8)',
             opacity: 0,
+          },
+        },
+        'claim-quest': {
+          '0%': {
+            backgroundPositionX: `0%`,
+          },
+          '50%': {
+            backgroundPositionX: `-100%`,
+          },
+          '100%': {
+            backgroundPositionX: `-200%`,
           },
         },
         blink: {

@@ -1,4 +1,5 @@
 import '@interchain-ui/react/styles'
+import '@radix-ui/themes/styles.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import axios from 'axios'
 import HeadComponent from 'components/Head'
@@ -8,10 +9,10 @@ import 'moment/locale/vi'
 import { appWithTranslation } from 'next-i18next'
 import { AppProps } from 'next/app'
 import getConfig, { setConfig } from 'next/config'
-import { Inter, Plus_Jakarta_Sans, Work_Sans } from 'next/font/google'
+import { Inter, Work_Sans } from 'next/font/google'
 import localFont from 'next/font/local'
 import { useRouter } from 'next/router'
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -20,10 +21,8 @@ import ContextProvider, { Context } from 'src/context'
 import { getWagmiConfig } from 'src/services/wagmi/config'
 import 'src/styles/globals.scss'
 import { WagmiProvider } from 'wagmi'
-import '@radix-ui/themes/styles.css'
-const pjs = Plus_Jakarta_Sans({ subsets: ['latin', 'vietnamese'] })
 const ws = Work_Sans({ subsets: ['latin', 'vietnamese'] })
-const inter = Inter({ subsets: ['latin', 'vietnamese'] })
+export const inter = Inter({ subsets: ['latin', 'vietnamese'] })
 const orbitron = localFont({
   src: [
     {

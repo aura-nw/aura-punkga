@@ -53,7 +53,7 @@ export default function Footer() {
                   placeholder={t('Enter your email')}
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
-                  className='text-sm leading-5 text-text-text-primary placeholder:text-text-quatenary outline-none rounded-l-mlg px-3.5 border-none w-full'
+                  className='text-sm leading-5 text-black placeholder:text-text-quatenary outline-none rounded-l-mlg px-3.5 border-none w-full'
                 />
                 <button
                   className='py-[10px] px-6 text-sm leading-5 text-text-white bg-gray-900 border-[1px] border-gray-900 font-semibold whitespace-nowrap rounded-r-[10px]'
@@ -119,7 +119,7 @@ export default function Footer() {
                 placeholder={t('Enter your email')}
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
-                className='text-sm rounded-l-mlg leading-5 text-text-text-primary bg-[#FDFDFD] placeholder:text-text-quatenary outline-none border-none w-full px-3.5'
+                className='text-sm rounded-l-mlg leading-5 text-black bg-[#FDFDFD] placeholder:text-text-quatenary outline-none border-none w-full px-3.5'
               />
               <button
                 className='py-[10px] px-6 text-sm leading-5 text-text-white bg-gray-900 border-[1px] border-gray-900 font-semibold whitespace-nowrap rounded-r-[10px]'
