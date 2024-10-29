@@ -4,6 +4,7 @@ import Button from 'components/core/Button/Button'
 import Chip, { PlaceholderChip } from 'components/core/Chip'
 import KPImage from 'components/pages/campaigns/assets/ic_Kp.svg'
 import XPImage from 'components/pages/campaigns/assets/illus.svg'
+import SFImage from 'components/pages/campaigns/assets/sf.png'
 import LeaderBoard from 'components/pages/campaigns/leaderboard'
 import NoImage from 'images/no_img.png'
 import moment from 'moment'
@@ -200,9 +201,10 @@ function CampaignDetail({}) {
   const isOngoing = moment(data.start_date).isBefore() && moment(data.end_date).isAfter()
   const isEnrolled = !!authData?.campaignQuests
   const isKP = data?.campaign_chain?.punkga_config?.reward_point_name == 'KP'
+  const isSF = data?.campaign_chain?.punkga_config?.reward_point_name == 'SF'
   const displayConfig = {
-    xpImageSrc: isKP ? KPImage : XPImage,
-    xpText: isKP ? 'KP' : 'XP',
+    xpImageSrc: isKP ? KPImage : isSF ? SFImage : XPImage,
+    xpText: isKP ? 'KP' : isSF ? 'SF' : 'XP',
   }
   const calcPercentage = (xp, level) => {
     const percentage =
@@ -413,7 +415,7 @@ function CampaignDetail({}) {
               ) : null}
             </div>
             {account &&
-              (isKP ? null : (
+              (isKP || isSF ? null : (
                 <div className='rounded-lg p-4 bg-[#191919] mt-4 md:mt-8'>
                   <div className='flex justify-between items-center'>
                     <div className='font-semibold '>
@@ -463,8 +465,7 @@ function CampaignDetail({}) {
               <div className='overflow-auto'>
                 <div className='bg-[#191919] rounded-mlg mt-8 min-w-[300px] md:min-w-[400px]'>
                   <div className='py-4 w-full h-full flex flex-col'>
-                    <div
-                      className={`leading-5 md:text-xl cursor-pointer font-semibold w-full text-center`}>
+                    <div className={`leading-5 md:text-xl cursor-pointer font-semibold w-full text-center`}>
                       {t('Campaign Leaderboard')}
                     </div>
                     <div className='flex p-4 my-4 border-b-[1px] border-border-primary font-semibold text-xs leading-[15px] md:text-base'>

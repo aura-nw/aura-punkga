@@ -3,6 +3,7 @@ import Button from 'components/core/Button/Button'
 import LabelChip from 'components/core/Chip/Label'
 import XPImage from 'components/pages/campaigns/assets/illus.svg'
 import KPImage from 'components/pages/campaigns/assets/ic_Kp.svg'
+import SFImage from 'components/pages/campaigns/assets/sf.png'
 import NoImage from 'images/no_img.png'
 import moment from 'moment'
 import Image from 'next/image'
@@ -84,7 +85,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
   useEffect(() => {
     if (open) setSeeMore(undefined)
   }, [open])
-  const xpImageSrc = quest.pointText == 'KP' ? KPImage : XPImage
+  const xpImageSrc = quest.pointText == 'KP' ? KPImage : quest.pointText == 'SF' ? SFImage : XPImage
   const xpText = quest.pointText
   return (
     <>
@@ -195,13 +196,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                   </div>
                 </>
               ) : (
-                <Image
-                  src={quest.pointText == 'KP' ? KPImage : XPImage}
-                  width={80}
-                  height={80}
-                  alt=''
-                  className='w-[80px] h-[80px] rounded-lg'
-                />
+                <Image src={xpImageSrc} width={80} height={80} alt='' className='w-[80px] h-[80px] rounded-lg' />
               )}
               {!!quest?.reward?.xp && quest?.reward?.nft?.nft_name ? (
                 <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${quest?.reward?.xp} ${xpText}`}</div>
@@ -263,7 +258,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
             <div className='flex flex-col items-center mt-8'>
               <div>
                 <Image
-                  src={quest.pointText == 'KP' ? KPImage : XPImage}
+                  src={xpImageSrc}
                   width={240}
                   height={240}
                   alt=''
@@ -369,19 +364,13 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                 </div>
               </>
             ) : (
-              <Image
-                src={quest.pointText == 'KP' ? KPImage : XPImage}
-                width={80}
-                height={80}
-                alt=''
-                className='w-[69px] h-[69px] rounded-lg'
-              />
+              <Image src={xpImageSrc} width={80} height={80} alt='' className='w-[69px] h-[69px] rounded-lg' />
             )}
             <div className='absolute bg-neutral-950 bottom-0 inset-x-0 w-full py-1.5 text-xs h-6 text-[#00E160] flex justify-center items-end gap-1'>
               <div className=' font-bold leading-3'>{`+ ${quest?.reward?.xp} ${xpText}`}</div>
               {!!quest?.reward?.xp && quest?.reward?.nft?.nft_name && (
                 <Image
-                  src={quest.pointText == 'KP' ? KPImage : XPImage}
+                  src={xpImageSrc}
                   width={28}
                   height={28}
                   alt=''
@@ -452,25 +441,29 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
               </div>
             </div>
           ) : quest.reward_status == 'CLAIMED' && quest.repeat == 'Daily' ? (
-            <div className='rounded-b-md py-1.5 px-3 bg-[#2b2b2b]'>
-              <div className='text-xs w-fit bg-[#DEDEDE] leading-[15px] font-bold text-medium-gray px-6 pt-1 pb-[5px] rounded-[20px]'>
-                <Countdown
-                  date={moment().add(1, 'd').startOf('day').toISOString()}
-                  renderer={({ hours, minutes, seconds }) => {
-                    if (locale == 'vn')
+            <div className='rounded-b-md flex justify-between items-center w-full py-1.5 px-3 gap-4 bg-[#2b2b2b]'>
+              <div className='text-text-quatenary text-xs font-medium line-clamp-1'>
+                <span>
+                  <Countdown
+                    date={moment().add(1, 'd').startOf('day').toISOString()}
+                    renderer={({ hours, minutes, seconds }) => {
+                      if (locale == 'vn')
+                        return (
+                          <span>
+                            Làm mới sau {zeroPad(hours)} giờ : {zeroPad(minutes)} phút : {zeroPad(seconds)} giây
+                          </span>
+                        )
                       return (
                         <span>
-                          Làm mới sau {zeroPad(hours)} giờ : {zeroPad(minutes)} phút : {zeroPad(seconds)} giây
+                          Reset in {zeroPad(hours)}h : {zeroPad(minutes)}m : {zeroPad(seconds)}s
                         </span>
                       )
-                    return (
-                      <span>
-                        Reset in {zeroPad(hours)}h : {zeroPad(minutes)}m : {zeroPad(seconds)}s
-                      </span>
-                    )
-                  }}
-                />
+                    }}
+                  />
+                </span>
+                <span> {t('to unlock')}</span>
               </div>
+              <div className='font-jaro text-[26px] text-text-teriary leading-[26px] uppercase'>{t('completed!')}</div>
             </div>
           ) : (
             <div

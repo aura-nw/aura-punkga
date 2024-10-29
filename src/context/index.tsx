@@ -300,6 +300,7 @@ function ContextProvider({ children }: any) {
           custodialWalletAddress: res.authorizer_users_user_wallet?.address,
           xp: res.levels.find((level) => level.user_level_chain.punkga_config.reward_point_name == 'XP')?.xp || 0,
           kp: res.levels.find((level) => level.user_level_chain.punkga_config.reward_point_name == 'KP')?.xp || 0,
+          sf: res.levels.find((level) => level.user_level_chain.punkga_config.reward_point_name == 'SF')?.xp || 0,
           level:
             res.levels?.find((level) => level.user_level_chain.punkga_config.reward_point_name == 'XP')?.level || 0,
           levels: res.levels?.map((v) => ({
