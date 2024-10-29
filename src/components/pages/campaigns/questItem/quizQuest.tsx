@@ -81,15 +81,17 @@ export default function QuizQuest({
   }
   return (
     <div className='mt-5 w-full'>
-      <div className='bg-neutral-50 rounded-mlg p-4 flex flex-col gap-4'>
-        <div className='text-base font-medium'>
-          {quest.requirement.quiz.multiple_choice[0].question}
-        </div>
+      <div className='bg-[#191919] rounded-mlg p-4 flex flex-col gap-4'>
+        <div className='text-base font-medium'>{quest.requirement.quiz.multiple_choice[0].question}</div>
         {answerList.map((answer, index) => {
           return (
             <div
-              className={`px-3 py-2 rounded-lg border border-border-secondary text-sm cursor-pointer relative flex items-center justify-between gap-1 ${
-                selectedAnswer == index ? 'bg-brand-2-50' : 'bg-white'
+              className={`px-3 py-2 rounded-lg text-sm cursor-pointer relative flex items-center justify-between bg-neutral-900 gap-1 ${
+                correctAnswerIndex == index
+                  ? 'outline outline-[2px] outline-brand-500'
+                  : selectedAnswer == index
+                  ? ' outline outline-[2px] outline-info-500'
+                  : ''
               }`}
               onClick={() => (correctAnswerIndex == -1 ? setSelectedAnswer(index) : null)}
               key={index}>
@@ -109,7 +111,7 @@ export default function QuizQuest({
                 <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
                   <path
                     d='M12.6183 8.31916L9.0625 11.875L7.85041 10.6629M10 2.5C5.85786 2.5 2.5 5.85786 2.5 10C2.5 14.1421 5.85786 17.5 10 17.5C14.1421 17.5 17.5 14.1421 17.5 10C17.5 5.85786 14.1421 2.5 10 2.5Z'
-                    stroke='#009640'
+                    stroke='#00e160'
                     strokeWidth='2'
                     strokeLinecap='round'
                     strokeLinejoin='round'

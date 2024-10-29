@@ -1,4 +1,3 @@
-import Modal from 'components/Modal'
 import Popover from 'components/Popover'
 import Button from 'components/core/Button/Button'
 import Chip, { PlaceholderChip } from 'components/core/Chip'
@@ -32,6 +31,7 @@ import {
 import { levelToXp } from 'src/utils'
 import useSWR, { useSWRConfig } from 'swr'
 import QuestList from '../../../components/pages/campaigns/questList'
+import Modal from 'components/core/modal'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -220,7 +220,7 @@ function CampaignDetail({}) {
             width={600}
             height={600}
             alt=''
-            className='max-w-[600px] w-[80vw] aspect-square rounded-lg object-contain bg-white'
+            className='max-w-[600px] w-[80vw] aspect-square rounded-lg object-contain'
           />
         </div>
       </Modal>
