@@ -340,7 +340,10 @@ const Content = ({ selected, mutate, setShowSlider }) => {
       })
     }
   }
-  useEffect(() => {}, [])
+  useEffect(() => {
+    setIsLiked(!!selected?.artwork?.likes?.length)
+    setLikeCount(selected?.artwork?.likes_aggregate?.aggregate?.count)
+  }, [selected.id])
   return (
     <>
       <div className='mt-6 rounded-mlg border-[3px] text-white relative border-black bg-[#191919] h-fit min-w-[350px] w-full max-h-[80vh] overflow-auto'>
