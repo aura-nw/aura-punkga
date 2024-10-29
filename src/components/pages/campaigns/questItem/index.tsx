@@ -1,4 +1,3 @@
-import Modal from 'components/Modal'
 import Button from 'components/core/Button/Button'
 import LabelChip from 'components/core/Chip/Label'
 import XPImage from 'components/pages/campaigns/assets/illus.svg'
@@ -23,6 +22,7 @@ import QuizQuest from './quizQuest'
 import Decor from '../assets/decor.svg'
 import Chip from 'components/core/Chip'
 import Popover from 'components/Popover'
+import Modal from 'components/core/modal'
 export default function QuestItem({ quest, refreshCallback }: { quest: Quest; refreshCallback?: () => void }) {
   const { getProfile } = useContext(Context)
   const [open, setOpen] = useState(false)
@@ -103,7 +103,11 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
         </Modal>
         <div className='p-5 pt-10 w-[90vw] max-w-[800px] lg:w-[644px] lg:grid-cols-[1fr_130px] lg:grid lg:gap-x-8 lg:grid-rows-[auto_1fr]'>
           <div>
-            {quest.repeat == 'Daily' && <LabelChip className='mb-1.5'>{t('Daily')}</LabelChip>}
+            {quest.repeat == 'Daily' && (
+              <Chip color='process' hasLeading variant='skew'>
+                {t('Daily')}
+              </Chip>
+            )}
             <div className='mt-1.5 text-lg leading-[26px] font-semibold'>
               {quest.type == 'Subscribe'
                 ? locale == 'vn'
@@ -131,10 +135,10 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
               <div
                 className={`${
                   quest.reward_status == 'OUT_OF_SLOT' ? 'opacity-20' : ''
-                } rounded-mlg bg-[#F0F0F0] p-2.5 w-[130px] shrink-0 min-h-[130px] gap-1.5 flex flex-col justify-center items-center`}>
+                } w-full max-w-[130px] aspect-square rounded-mlg overflow-hidden relative bg-[#191919] flex flex-col items-center`}>
                 {quest?.reward?.nft?.nft_name ? (
                   <>
-                    <div className='relative aspect-square w-[80px] h-[80px] rounded-lg'>
+                    <div className='relative aspect-square w-full rounded-lg'>
                       <Image
                         src={quest?.reward?.nft.img_url || NoImage}
                         alt=''
@@ -143,22 +147,26 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                         className='rounded-lg'
                       />
                     </div>
-                    <div className='text-xs leading-[18px] text-text-teriary w-[110px] truncate text-center'>
-                      {quest?.reward?.nft?.nft_name}
-                    </div>
                   </>
                 ) : (
-                  <Image src={xpImageSrc} width={80} height={80} alt='' className='w-[80px] h-[80px] rounded-lg' />
+                  <Image src={xpImageSrc} width={80} height={80} alt='' className='w-[96px] h-[96px] rounded-lg mt-1' />
                 )}
-                {!!quest?.reward?.xp && quest?.reward?.nft?.nft_name ? (
-                  <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${quest?.reward?.xp} ${xpText}`}</div>
-                ) : (
-                  <div className='text-text-teriary font-semibold'>{`+ ${quest?.reward?.xp} ${xpText}`}</div>
-                )}
+                <div className='absolute bg-neutral-950 bottom-0 inset-x-0 w-full py-1.5 text-xs h-6 text-[#00E160] flex justify-center items-end gap-1'>
+                  <div className=' font-bold leading-3'>{`+ ${quest?.reward?.xp} ${xpText}`}</div>
+                  {!!quest?.reward?.xp && quest?.reward?.nft?.nft_name && (
+                    <Image
+                      src={xpImageSrc}
+                      width={28}
+                      height={28}
+                      alt=''
+                      className='w-[28px] h-[28px] rounded-lg translate-y-1'
+                    />
+                  )}
+                </div>
               </div>
               {!!quest.reward.slots && (
                 <>
-                  <div className='flex flex-col items-center text-[10px] text-text-teriary leading-[13px] lg:text-xs lg:leading-[18px] mt-1.5'>
+                  <div className='flex flex-col items-center text-[10px] text-text-quatenary leading-[13px] lg:text-xs lg:leading-[18px] mt-1.5'>
                     <div>{`${
                       quest.repeat_quests?.[0]?.repeat_quest_reward_claimed == undefined
                         ? quest.quest_reward_claimed
@@ -170,7 +178,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
               )}
             </div>
             {!!quest[locale].description && (
-              <div className={`mt-3 text-text-teriary text-sm max-h-[120px] overflow-auto`}>
+              <div className={`mt-3 text-text-quatenary text-sm max-h-[120px] overflow-auto`}>
                 {ReactHtmlParser(quest[locale].description)}
               </div>
             )}
@@ -179,10 +187,10 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
             <div
               className={`${
                 quest.reward_status == 'OUT_OF_SLOT' ? 'opacity-20' : ''
-              } rounded-mlg bg-[#F0F0F0] p-2.5 w-[130px] shrink-0 min-h-[130px] gap-1.5 flex flex-col justify-center items-center`}>
+              } w-full aspect-square rounded-mlg overflow-hidden relative bg-[#191919] flex flex-col items-center`}>
               {quest?.reward?.nft?.nft_name ? (
                 <>
-                  <div className='relative aspect-square w-[80px] h-[80px] rounded-lg'>
+                  <div className='relative aspect-square w-full rounded-lg'>
                     <Image
                       src={quest?.reward?.nft.img_url || NoImage}
                       alt=''
@@ -191,22 +199,26 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                       className='rounded-lg'
                     />
                   </div>
-                  <div className='text-xs leading-[18px] text-text-teriary w-[110px] truncate text-center'>
-                    {quest?.reward?.nft?.nft_name}
-                  </div>
                 </>
               ) : (
-                <Image src={xpImageSrc} width={80} height={80} alt='' className='w-[80px] h-[80px] rounded-lg' />
+                <Image src={xpImageSrc} width={80} height={80} alt='' className='w-[96px] h-[96px] rounded-lg mt-1' />
               )}
-              {!!quest?.reward?.xp && quest?.reward?.nft?.nft_name ? (
-                <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${quest?.reward?.xp} ${xpText}`}</div>
-              ) : (
-                <div className='text-text-teriary font-semibold'>{`+ ${quest?.reward?.xp} ${xpText}`}</div>
-              )}
+              <div className='absolute bg-neutral-950 bottom-0 inset-x-0 w-full py-1.5 text-xs h-6 text-[#00E160] flex justify-center items-end gap-1'>
+                <div className=' font-bold leading-3'>{`+ ${quest?.reward?.xp} ${xpText}`}</div>
+                {!!quest?.reward?.xp && quest?.reward?.nft?.nft_name && (
+                  <Image
+                    src={xpImageSrc}
+                    width={28}
+                    height={28}
+                    alt=''
+                    className='w-[28px] h-[28px] rounded-lg translate-y-1'
+                  />
+                )}
+              </div>
             </div>
             {!!quest.reward.slots && (
               <>
-                <div className='flex flex-col items-center text-[10px] text-text-teriary leading-[13px] lg:text-xs lg:leading-[18px] mt-1.5'>
+                <div className='flex flex-col items-center text-[10px] text-text-quatenary leading-[13px] lg:text-xs lg:leading-[18px] mt-1.5'>
                   <div>{`${
                     quest.repeat_quests?.[0]?.repeat_quest_reward_claimed == undefined
                       ? quest.quest_reward_claimed
@@ -364,7 +376,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                 </div>
               </>
             ) : (
-              <Image src={xpImageSrc} width={80} height={80} alt='' className='w-[69px] h-[69px] rounded-lg' />
+              <Image src={xpImageSrc} width={80} height={80} alt='' className='w-[69px] h-[69px] rounded-lg mt-1' />
             )}
             <div className='absolute bg-neutral-950 bottom-0 inset-x-0 w-full py-1.5 text-xs h-6 text-[#00E160] flex justify-center items-end gap-1'>
               <div className=' font-bold leading-3'>{`+ ${quest?.reward?.xp} ${xpText}`}</div>
