@@ -23,7 +23,13 @@ import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
 import { toast } from 'react-toastify'
 
-export default function Page() {
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <PageDetail {...props} />
+}
+function PageDetail() {
   const { t } = useTranslation()
   const { width } = useWindowSize()
   const { account } = useContext(Context)

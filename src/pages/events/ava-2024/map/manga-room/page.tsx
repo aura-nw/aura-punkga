@@ -30,7 +30,14 @@ import Tooltip from 'components/Tooltip'
 import { isMobile } from 'react-device-detect'
 import IPModal from 'components/pages/event/ava-2024/IPModal'
 
-export default function Page() {
+
+export default function Page(props) {
+  if (props.justHead) {
+    return <></>
+  }
+  return <PageDetail {...props} />
+}
+function PageDetail() {
   const { locale, push } = useRouter()
   const { t } = useTranslation()
   const { width } = useWindowSize()
