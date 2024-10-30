@@ -266,7 +266,8 @@ function ContextProvider({ children }: any) {
         } else {
           const token = getItem('token')
           if (token) {
-            setLogoutTimeout(new Date(JSON.parse(token).exprire).getTime() - Date.now())
+            const t = localStorage.getItem('token') as string
+            setLogoutTimeout(new Date(JSON.parse(t).exprire).getTime() - Date.now())
             await getProfile(token)
           }
         }
