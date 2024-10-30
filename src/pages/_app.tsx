@@ -13,6 +13,7 @@ import { Inter, Work_Sans } from 'next/font/google'
 import localFont from 'next/font/local'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
+import { CookiesProvider } from 'react-cookie'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -152,9 +153,14 @@ function MyApp(props: AppProps) {
 
       <WagmiProvider config={wagmiConfig}>
         <QueryClientProvider client={new QueryClient()}>
-          <ContextProvider>
-            <App {...props} />
-          </ContextProvider>
+          <CookiesProvider
+            defaultSetOptions={{
+              path: '/',
+            }}>
+            <ContextProvider>
+              <App {...props} />
+            </ContextProvider>
+          </CookiesProvider>
         </QueryClientProvider>
       </WagmiProvider>
     </>

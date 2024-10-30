@@ -38,7 +38,7 @@ function PageDetail() {
   const [page, setPage] = useState(1)
   const [showSlider, setShowSlider] = useState(false)
   const { data, mutate, isLoading } = useSWR(
-    { key: 'get-ava-artwork', user_id: account.id },
+    { key: 'get-ava-artwork', user_id: account?.id },
     ({ user_id }) => eventService.story.getArtwork(user_id),
     {
       revalidateOnFocus: false,
