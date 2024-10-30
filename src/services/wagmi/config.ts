@@ -1,9 +1,10 @@
 import getConfig from 'next/config'
+import { Chain } from 'viem'
 import { createConfig, http } from 'wagmi'
 import { injected, metaMask, walletConnect } from 'wagmi/connectors'
-export const storyChain = {
-  id: 1513,
-  name: 'Story Iliad Network',
+export const storyChain: Chain = {
+  id: 1516,
+  name: 'Story Public Testnet',
   nativeCurrency: {
     name: 'IP',
     symbol: 'IP',
@@ -11,14 +12,13 @@ export const storyChain = {
   },
   rpcUrls: {
     default: {
-      http: ['https://story-testnet.aura.network'],
+      http: ['https://odyssey.storyrpc.io/'],
     },
   },
   blockExplorers: {
     default: {
       name: 'Storyscan',
-      url: 'https://testnet.storyscan.xyz/',
-      apiUrl: 'https://explorer-api.dev.aura.network/api',
+      url: 'https://odyssey-testnet-explorer.storyscan.xyz/',
     },
   },
 }

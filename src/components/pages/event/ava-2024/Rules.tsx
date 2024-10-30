@@ -123,7 +123,7 @@ export default function Rules() {
                 <>
                   <h3 className='text-red-500 font-semibold text-base'>Round 2: The Art of Storytelling</h3>
                   <h4 className='font-medium mt-1'>A/ Timeline:</h4>
-                  <p>- From October 19 to November 01</p>
+                  <p>- From October 19 to November 03</p>
                   <h4 className='font-medium mt-1'>B/ Story:</h4>
                   <p>
                     - Share your artistic journey or your creative experiences. The story should be complete and convey
@@ -392,7 +392,7 @@ export default function Rules() {
                 <>
                   <h3 className='font-bold mt-4'>Vòng 2: The Art of Storytelling - Nghệ thuật kể chuyện</h3>
                   <h4 className='font-medium mt-1'>A/ Thời gian diễn ra:</h4>
-                  <p>- Từ 19/10 - 01/11</p>
+                  <p>- Từ 19/10 - 03/11</p>
                   <h4 className='font-medium mt-1'>B/ Nội dung:</h4>
                   <p>
                     - Hãy chia sẻ về câu chuyện sáng tạo nghệ thuật hoặc những trải nghiệm của bạn trong quá trình sáng
