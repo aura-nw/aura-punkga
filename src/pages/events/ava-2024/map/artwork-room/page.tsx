@@ -329,9 +329,9 @@ const Content = ({ selected, mutate, setShowSlider }) => {
       setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1))
       setIsLiked((prevState) => !prevState)
       if (isLiked) {
-        await eventService.story.unlikeArtwork(selected?.id)
+        await eventService.story.unlikeArtwork(selected?.artwork?.id)
       } else {
-        await eventService.story.likeArtwork(selected?.id)
+        await eventService.story.likeArtwork(selected?.artwork?.id)
       }
       mutate()
     } catch (error) {
