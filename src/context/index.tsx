@@ -172,7 +172,7 @@ function ContextProvider({ children }: any) {
     }
   }
   const signConnectMessage = (data?: any) => {
-    const domain = window.location.host
+    const domain = window.location.hostname
     const origin = window.location.origin
     const statement = 'Sign in with Aura Network to the app.'
     const addr = data?.accounts[0] || address
@@ -222,7 +222,7 @@ function ContextProvider({ children }: any) {
         const token = res?.siwe?.access_token
         setItem('token', res?.siwe?.access_token)
         setCookie('token', token, {
-          domain: location.host.includes('localhost') ? '.dev.punkga.me' : `.${location.host}`,
+          domain: `.${location.hostname}`,
         })
         setLogoutTimeout(res?.siwe?.expires_in * 1000)
         await getProfile(token)
@@ -262,7 +262,7 @@ function ContextProvider({ children }: any) {
             new Date(Date.now() + (expiresInParam ? +expiresInParam * 1000 : 10800000))
           )
           setCookie('token', accessTokenParam, {
-            domain: location.host.includes('localhost') ? '.dev.punkga.me' : `.${location.host}`,
+            domain: `.${location.hostname}`,
           })
           setLogoutTimeout(expiresInParam ? +expiresInParam * 1000 : 10800000)
           router.push(location.pathname)
@@ -346,7 +346,7 @@ function ContextProvider({ children }: any) {
         callback && callback('success')
         setItem('token', res.access_token, new Date(Date.now() + res.expires_in * 1000))
         setCookie('token', res.access_token, {
-          domain: location.host.includes('localhost') ? '.dev.punkga.me' : `.${location.host}`,
+          domain: `.${location.hostname}`,
         })
         setLogoutTimeout(res.expires_in * 1000)
         getProfile(res.access_token)
