@@ -207,6 +207,7 @@ function Event() {
     if (campainRoomStep == 4) {
       setShowGuide(false)
       setCampainDone(true)
+      router.push(`/campaigns/story-odyssey-badge`)
     }
   }, [campainRoomStep])
 
@@ -364,7 +365,7 @@ function Event() {
                   setArtRoomStep(-1)
                   setCharacterRoomStep(-1)
                 } else {
-                  router.push(`/campaign`)
+                  router.push(`/campaigns/story-odyssey-badge`)
                 }
               } else {
                 setActive(4)

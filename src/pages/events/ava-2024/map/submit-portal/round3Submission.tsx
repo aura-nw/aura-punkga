@@ -31,7 +31,7 @@ export default function Round3Submission() {
     defaultValues: {
       name: '',
       image: undefined,
-      approveMint: true,
+      terms_agreed: true,
       selectedsUserCharacter: [],
       selectedCollectedCharacter: [],
       selectedDefaultCharacter: [],
@@ -62,6 +62,7 @@ export default function Round3Submission() {
       const payload = new FormData()
       payload.append('name', data.name)
       payload.append('artwork', data.image)
+      payload.append('terms_agreed', data.terms_agreed)
       payload.append(
         'artwork_characters',
         JSON.stringify([
@@ -509,7 +510,7 @@ export default function Round3Submission() {
             mattis augue facilisis a. Cras congue rhoncus odio. Learn more
           </div>
           <Controller
-            name='approveMint'
+            name='terms_agreed'
             control={form.control}
             render={({ field }) => (
               <div className='flex gap-2 items-start' onClick={() => field.onChange(!field.value)}>
@@ -522,10 +523,9 @@ export default function Round3Submission() {
               </div>
             )}
           />
-
           <button
-            type='submit'
-            className={`w-[217px] block rounded-md font-jaro text-2xl border border-white bg-black p-2.5 text-center cursor-pointer mt-6 ${
+            onClick={form.handleSubmit(submitHandler)}
+            className={`w-[217px] block rounded-md font-jaro text-2xl border border-white bg-black p-2.5 text-center cursor-pointer ${
               loading && 'opacity-70 pointer-events-none'
             }`}>
             {t(loading ? 'Submitting' : 'submit2')}
