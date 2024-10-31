@@ -201,7 +201,7 @@ export default function Event() {
                             <div className='font-jaro text-2xl line-clamp-2'>{characterData.name}</div>
                             {characterData?.story_ip_asset?.ip_asset_id && (
                               <Link
-                                href={`https://explorer.story.foundation/ipa/${characterData?.story_ip_asset?.ip_asset_id}`}
+                                href={`https://odyssey.explorer.story.foundation/ipa/${characterData?.story_ip_asset?.ip_asset_id}`}
                                 target='_blank'
                                 className='text-brand-default text-sm'>
                                 {shorten(characterData?.story_ip_asset?.ip_asset_id)}
@@ -304,7 +304,7 @@ export default function Event() {
                   <div className='font-jaro text-2xl line-clamp-2'>{characterData.name}</div>
                   {characterData?.story_ip_asset?.ip_asset_id && (
                     <Link
-                      href={`https://explorer.story.foundation/ipa/${characterData?.story_ip_asset?.ip_asset_id}`}
+                      href={`https://odyssey.explorer.story.foundation/ipa/${characterData?.story_ip_asset?.ip_asset_id}`}
                       target='_blank'
                       className='text-brand-default text-sm'>
                       {shorten(characterData?.story_ip_asset?.ip_asset_id)}

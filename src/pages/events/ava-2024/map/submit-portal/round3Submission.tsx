@@ -1,4 +1,3 @@
-import Checkbox from 'components/Input/Checkbox'
 import TextField from 'components/Input/TextField'
 import DOMPurify from 'dompurify'
 import Image from 'next/image'
@@ -17,10 +16,13 @@ import SubmissionTable from './submissionTable'
 
 import Frame from 'components/pages/event/ava-2024/assets/frame.svg'
 import Placeholder from 'components/pages/event/ava-2024/assets/placeholder.png'
+import Modal from 'components/core/modal'
+import Checkbox from 'components/core/Checkbox'
 export default function Round3Submission() {
   const { account, getProfile } = useContext(Context)
   const { t } = useTranslation()
   const { locale } = useRouter()
+  const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const { data } = useSWR('/story-event/character/available', eventService.story.getAvailableCharacter, {
     revalidateOnFocus: false,
@@ -29,6 +31,7 @@ export default function Round3Submission() {
     defaultValues: {
       name: '',
       image: undefined,
+      approveMint: true,
       selectedsUserCharacter: [],
       selectedCollectedCharacter: [],
       selectedDefaultCharacter: [],
@@ -489,15 +492,46 @@ export default function Round3Submission() {
         </div>
       </div>
       <div className='mb-8'>
-        <button
-          type='submit'
+        <div
+          onClick={() => setOpen(true)}
           className={`w-[217px] block rounded-md font-jaro text-2xl border border-white bg-black p-2.5 text-center cursor-pointer mt-6 ${
             loading && 'opacity-70 pointer-events-none'
           }`}>
           {t(loading ? 'Submitting' : 'submit2')}
-        </button>
+        </div>
       </div>
       <SubmissionTable />
+      <Modal open={open} setOpen={setOpen}>
+        <div className='flex flex-col gap-4 items-center max-w-xl px-8 py-4'>
+          <div className='text-lg font-semibold'>{t('Mint artwork into NFT')}</div>
+          <div className='text-sm font-medium'>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam et rutrum est. Nam lacinia quam metus, non
+            mattis augue facilisis a. Cras congue rhoncus odio. Learn more
+          </div>
+          <Controller
+            name='approveMint'
+            control={form.control}
+            render={({ field }) => (
+              <div className='flex gap-2 items-start' onClick={() => field.onChange(!field.value)}>
+                <Checkbox checked={field.value} />
+                <div className='text-xs font-medium'>
+                  {t(
+                    'I agree for PunkgaMe to mint this artwork into NFT and publish it on Access Protocol as subscriber reward.'
+                  )}
+                </div>
+              </div>
+            )}
+          />
+
+          <button
+            type='submit'
+            className={`w-[217px] block rounded-md font-jaro text-2xl border border-white bg-black p-2.5 text-center cursor-pointer mt-6 ${
+              loading && 'opacity-70 pointer-events-none'
+            }`}>
+            {t(loading ? 'Submitting' : 'submit2')}
+          </button>
+        </div>
+      </Modal>
     </form>
   )
 }
@@ -533,7 +567,7 @@ const Character = ({ data, value, onChange, max }) => {
         <div className='mt-2 font-jaro w-full truncate text-xl'>{data.name}</div>
         {data.story_ip_asset?.ip_asset_id && (
           <Link
-            href={`https://explorer.story.foundation/ipa/${data?.story_ip_asset?.ip_asset_id}`}
+            href={`https://odyssey.explorer.story.foundation/ipa/${data?.story_ip_asset?.ip_asset_id}`}
             target='_blank'
             className='mt-1 text-xs font-medium text-brand-default'
             onClick={(e) => e.stopPropagation()}>

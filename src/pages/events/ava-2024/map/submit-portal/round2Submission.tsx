@@ -739,7 +739,7 @@ const Character = ({ data, value, onChange, max }) => {
         <div className='mt-2 font-jaro w-full truncate text-xl'>{data.name}</div>
         {data.story_ip_asset?.ip_asset_id && (
           <Link
-            href={`https://explorer.story.foundation/ipa/${data?.story_ip_asset?.ip_asset_id}`}
+            href={`https://odyssey.explorer.story.foundation/ipa/${data?.story_ip_asset?.ip_asset_id}`}
             target='_blank'
             className='mt-1 text-xs font-medium text-brand-default'
             onClick={(e) => e.stopPropagation()}>

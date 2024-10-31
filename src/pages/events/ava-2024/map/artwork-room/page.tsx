@@ -363,7 +363,7 @@ const Content = ({ selected, mutate, setShowSlider }) => {
               <div>
                 {selected?.story_ip_asset?.ip_asset_id && (
                   <Link
-                    href={`https://explorer.story.foundation/ipa/${selected?.story_ip_asset?.ip_asset_id}`}
+                    href={`https://odyssey.explorer.story.foundation/ipa/${selected?.story_ip_asset?.ip_asset_id}`}
                     target='_blank'
                     className='text-brand-default text-sm'>
                     {shorten(selected?.story_ip_asset?.ip_asset_id)}
