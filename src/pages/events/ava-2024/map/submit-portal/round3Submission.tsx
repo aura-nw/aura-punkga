@@ -95,6 +95,7 @@ export default function Round3Submission() {
         )
         setLoading(false)
       }
+      setOpen(false)
     } catch (error) {
       setLoading(false)
       toast(error.message, {
