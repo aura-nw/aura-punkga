@@ -113,7 +113,7 @@ export default function IPModal({
                 <div
                   className='relative md:hidden bg-no-repeat pt-[72px] px-8 pb-4 aspect-[375/658] overflow-hidden h-[80dvh] w-[90vw] max-w-[395px] backdrop-blur-md'
                   style={{ backgroundImage: `url(${MobileBackground.src})`, backgroundSize: '100% 100%' }}>
-                  <div className='h-full w-full overflow-auto'>
+                  <div className='h-[calc(80dvh-88px)] w-full overflow-auto no-scrollbar'>
                     {collectedCharacters?.data && (
                       <div className='bg-[#002812] rounded-md py-0.5 pr-4 pl-1.5 mb-2.5  flex gap-2 items-center w-fit'>
                         <Image src={Point} alt='' />
