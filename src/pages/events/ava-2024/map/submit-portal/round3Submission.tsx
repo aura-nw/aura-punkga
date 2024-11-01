@@ -554,7 +554,7 @@ export default function Round3Submission() {
             render={({ field }) => (
               <div className='flex gap-2 items-start' onClick={() => field.onChange(!field.value)}>
                 <Checkbox checked={field.value} />
-                <div className='text-xs font-medium'>
+                <div className='text-sm font-medium'>
                   {locale == 'en'
                     ? 'I agree to PunkgaMe minting this artwork as an NFT on Access Protocol and distributing it as a reward for subscribers.'
                     : 'Tôi cho phép PunkgaMe sử dung nội dung này để tạo NFT trên Access Protocol và sử dụng làm phần thưởng cho người đăng ký kênh.'}

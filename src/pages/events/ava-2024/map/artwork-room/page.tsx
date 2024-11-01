@@ -58,7 +58,7 @@ function PageDetail() {
     }
   }, [data?.data?.data?.story_artwork])
   const artworks = data?.data?.data?.story_artwork
-  const count = Math.ceil((data?.data?.data?.story_artwork_aggregate?.aggregate?.count || 1) / 9)
+  const count = Math.ceil((data?.data?.data?.story_artwork_aggregate?.aggregate?.count || 1) / artworkPerPage)
   const prevHandler = () => {
     const currentIndex = artworks.findIndex((d) => d.id == selected.id)
     if (currentIndex > 0) {
