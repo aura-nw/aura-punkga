@@ -29,6 +29,7 @@ export default function Page(props) {
   }
   return <PageDetail {...props} />
 }
+const artworkPerPage = 12
 function PageDetail() {
   const { t } = useTranslation()
   const { width } = useWindowSize()
@@ -62,14 +63,14 @@ function PageDetail() {
     const currentIndex = artworks.findIndex((d) => d.id == selected.id)
     if (currentIndex > 0) {
       setSelected(artworks[currentIndex - 1])
-      setPage(Math.ceil((currentIndex - 1) / 12))
+      setPage(Math.ceil(currentIndex / artworkPerPage))
     }
   }
   const nextHandler = () => {
     const currentIndex = artworks.findIndex((d) => d.id == selected.id)
     if (currentIndex < artworks.length - 1) {
       setSelected(artworks[currentIndex + 1])
-      setPage(Math.ceil((currentIndex + 1) / 12))
+      setPage(Math.ceil((currentIndex + 2) / artworkPerPage))
     }
   }
   return (
@@ -110,7 +111,7 @@ function PageDetail() {
                 {artworks?.length ? (
                   <>
                     <div className='grid grid-cols-2 md:grid-cols-3 gap-5 mt-6'>
-                      {artworks?.slice((page - 1) * 12, page * 12)?.map((artwork, index) => (
+                      {artworks?.slice((page - 1) * artworkPerPage, page * artworkPerPage)?.map((artwork, index) => (
                         <div
                           className={`rounded-xl cursor-pointer relative overflow-hidden ${
                             artwork.id == selected?.id ? 'border-[#00E160]' : 'border-black'
@@ -270,8 +271,8 @@ function PageDetail() {
       {showSlider && (
         <div className='fixed inset-0 z-50'>
           <div className='absolute inset-0 bg-[#000000CC]' onClick={() => setShowSlider(false)}></div>
-          <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex items-center gap-4 w-[95vw] max-w-5xl'>
-            <div className='cursor-pointer' onClick={prevHandler}>
+          <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex items-center gap-4 w-[95vw] max-w-screen-md'>
+            <div className='cursor-pointer p-5' onClick={prevHandler}>
               <svg width='24' height='25' viewBox='0 0 24 25' fill='none' xmlns='http://www.w3.org/2000/svg'>
                 <g clip-path='url(#clip0_6205_29201)'>
                   <path
@@ -288,11 +289,17 @@ function PageDetail() {
             </div>
             <div className=' lg:bg-neutral-700 lg:p-8 lg:pt-4 lg:rounded-mlg'>
               <div className='flex flex-col items-center gap-4 lg:rounded-xl lg:bg-neutral-950 lg:p-4 max-h-[90vh] overflow-auto'>
-                <Image src={selected.display_url} width={500} height={500} alt='' className='w-full' />
+                <Image
+                  src={selected.display_url}
+                  width={500}
+                  height={500}
+                  alt=''
+                  className='w-full aspect-square object-cover'
+                />
                 <div className='text-sm font-semibold text-white'>{selected.name}</div>
               </div>
             </div>
-            <div className='cursor-pointer' onClick={nextHandler}>
+            <div className='cursor-pointer p-5' onClick={nextHandler}>
               <svg width='24' height='25' viewBox='0 0 24 25' fill='none' xmlns='http://www.w3.org/2000/svg'>
                 <g clip-path='url(#clip0_6205_29197)'>
                   <path
