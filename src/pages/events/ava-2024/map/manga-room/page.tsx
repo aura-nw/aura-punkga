@@ -266,7 +266,7 @@ const Content = ({ selected, mutate }) => {
     selected.manga.manga_languages.find((l) => l.is_main_language)?.title
   return (
     <>
-      <div className='mt-6 rounded-mlg border-[3px] text-white relative border-black bg-[#191919] h-fit min-w-[350px] w-full max-h-[80vh] overflow-auto'>
+      <div className='mt-6 rounded-mlg border-[3px] text-white relative border-black bg-[#191919] h-fit min-w-[350px] w-full max-h-[70vh] overflow-auto'>
         <Skew className='absolute top-1 left-1' />
         <Skew className='absolute top-1 right-1' />
         <Image

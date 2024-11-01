@@ -53,9 +53,13 @@ export default function Round3Submission() {
         toast(t('Some field is missing. Please check again'), {
           type: 'error',
         })
+        setOpen(false)
+
         return
       }
       if (data.name.length > 150) {
+        setOpen(false)
+
         return
       }
       setLoading(true)
@@ -503,12 +507,46 @@ export default function Round3Submission() {
         </div>
       </div>
       <SubmissionTable />
-      <Modal open={open} setOpen={setOpen}>
+      <Modal hideClose open={open} setOpen={setOpen}>
         <div className='flex flex-col gap-4 items-center max-w-xl px-8 py-4'>
-          <div className='text-lg font-semibold'>{t('Mint artwork into NFT')}</div>
+          <div className='text-lg font-semibold'>
+            {locale == 'en' ? 'Earn Rewards with Access Protocol!' : 'Cơ Hội Nhận Thưởng Cùng Access Protocol!'}
+          </div>
           <div className='text-sm font-medium'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam et rutrum est. Nam lacinia quam metus, non
-            mattis augue facilisis a. Cras congue rhoncus odio. Learn more
+            {locale == 'en' ? (
+              <>
+                PunkgaMe has partnered with AccessProtocol, a content aggregation and monetization platform that
+                empowers creators in the Web3 space.
+                <br />
+                <br />
+                By sharing your work on AccessProtocol through PunkgaMe, you’ll unlock new ways to earn, grow your
+                audience, and mint NFTs with ease. This is a perfect opportunity to boost your visibility and monetize
+                your talent within an engaged creative community.
+                <br />
+                <br />
+                Discover more about the benefits and program details!
+                <br />
+                <br />
+                Note: PunkgaMe will never use your creations for commercial purposes without your permission.
+              </>
+            ) : (
+              <>
+                PunkgaMe đã chính thức hợp tác với Access Protocol, nền tảng hỗ trợ sáng tạo nội dung giúp các họa sĩ mở
+                rộng thu nhập và tầm ảnh hưởng trong không gian Web3!
+                <br />
+                <br />
+                Khi đồng ý chia sẻ tác phẩm lên AccessProtocol thông qua PunkgaMe, bạn sẽ có cơ hội nhận thưởng, mở rộng
+                tệp khán giả và dễ dàng chuyển đổi tác phẩm của mình thành NFT. Đây là một cơ hội tuyệt vời để tăng độ
+                nhận diện cá nhân và cũng như thu nhập cho các họa sĩ.
+                <br />
+                <br />
+                Tìm hiểu thêm chi tiết chương trình!
+                <br />
+                <br />
+                Lưu ý: PunkgaMe tuyệt đối không sử dụng tác phẩm của bạn cho mục đích thương mại nếu chưa có sự đồng ý
+                của bạn!
+              </>
+            )}
           </div>
           <Controller
             name='terms_agreed'
@@ -517,9 +555,9 @@ export default function Round3Submission() {
               <div className='flex gap-2 items-start' onClick={() => field.onChange(!field.value)}>
                 <Checkbox checked={field.value} />
                 <div className='text-xs font-medium'>
-                  {t(
-                    'I agree for PunkgaMe to mint this artwork into NFT and publish it on Access Protocol as subscriber reward.'
-                  )}
+                  {locale == 'en'
+                    ? 'I agree to PunkgaMe minting this artwork as an NFT on Access Protocol and distributing it as a reward for subscribers.'
+                    : 'Tôi cho phép PunkgaMe sử dung nội dung này để tạo NFT trên Access Protocol và sử dụng làm phần thưởng cho người đăng ký kênh.'}
                 </div>
               </div>
             )}
