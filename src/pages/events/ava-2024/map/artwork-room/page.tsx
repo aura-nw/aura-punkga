@@ -378,7 +378,7 @@ const Content = ({ selected, mutate, setShowSlider }) => {
                 )}
               </div>
               <div className='text-sm font-medium'>
-                {t('by')} <span className='text-brand-default'>{selected?.artwork?.creator?.pen_name || 'Punkga'}</span>
+                {t('by')} <span className='text-brand-default'>{selected?.authorizer_user?.creator?.pen_name || 'Punkga'}</span>
               </div>
             </div>
             <div className='flex items-center gap-1'>
