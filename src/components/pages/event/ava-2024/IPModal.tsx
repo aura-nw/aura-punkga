@@ -111,7 +111,7 @@ export default function IPModal({
               leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'>
               <Dialog.Panel className='static transform text-white text-start transition-all'>
                 <div
-                  className='relative md:hidden bg-no-repeat pt-[72px] px-8 pb-4 aspect-[375/658] max-h-[70dvh] overflow-hidden w-[90vw] max-w-[395px] backdrop-blur-md'
+                  className='relative md:hidden bg-no-repeat pt-[72px] px-8 pb-4 aspect-[375/658] overflow-hidden w-[90vw] max-w-[395px] backdrop-blur-md'
                   style={{ backgroundImage: `url(${MobileBackground.src})`, backgroundSize: '100% 100%' }}>
                   <div className='w-full h-full overflow-auto no-scrollbar '>
                     {collectedCharacters?.data && (
