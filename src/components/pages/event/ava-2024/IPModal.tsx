@@ -111,9 +111,9 @@ export default function IPModal({
               leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'>
               <Dialog.Panel className='static transform text-white text-start transition-all'>
                 <div
-                  className='relative md:hidden bg-no-repeat pt-[72px] px-8 pb-4 aspect-[375/758] w-screen max-w-[395px] backdrop-blur-md'
+                  className='relative md:hidden bg-no-repeat pt-[72px] px-8 pb-4 aspect-[375/658] overflow-hidden h-[80dvh] w-[90vw] max-w-[395px] backdrop-blur-md'
                   style={{ backgroundImage: `url(${MobileBackground.src})`, backgroundSize: '100% 100%' }}>
-                  <div className='w-full h-full overflow-auto no-scrollbar '>
+                  <div className='h-[calc(80dvh-88px)] w-full overflow-auto no-scrollbar'>
                     {collectedCharacters?.data && (
                       <div className='bg-[#002812] rounded-md py-0.5 pr-4 pl-1.5 mb-2.5  flex gap-2 items-center w-fit'>
                         <Image src={Point} alt='' />
@@ -132,7 +132,7 @@ export default function IPModal({
                     <div className='font-jaro text-2xl line-clamp-2 mt-2.5'>{data?.name}</div>
                     {data?.story_ip_asset?.ip_asset_id && (
                       <Link
-                        href={`https://explorer.story.foundation/ipa/${data?.story_ip_asset?.ip_asset_id}`}
+                        href={`https://odyssey.explorer.story.foundation/ipa/${data?.story_ip_asset?.ip_asset_id}`}
                         target='_blank'
                         className=' text-sm mt-1'>
                         ID <span className='underline'>{shorten(data?.story_ip_asset?.ip_asset_id)}</span>
@@ -236,7 +236,7 @@ export default function IPModal({
                       <div className='font-jaro text-2xl line-clamp-2 mt-2.5'>{data?.name}</div>
                       {data?.story_ip_asset?.ip_asset_id && (
                         <Link
-                          href={`https://explorer.story.foundation/ipa/${data?.story_ip_asset?.ip_asset_id}`}
+                          href={`https://odyssey.explorer.story.foundation/ipa/${data?.story_ip_asset?.ip_asset_id}`}
                           target='_blank'
                           className=' text-sm mt-1'>
                           ID <span className='underline'>{shorten(data?.story_ip_asset?.ip_asset_id)}</span>

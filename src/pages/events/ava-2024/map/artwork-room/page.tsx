@@ -1,35 +1,27 @@
-import Background from 'components/pages/event/ava-2024/assets/Main_Map.png'
-import Decor from 'components/pages/event/ava-2024/assets/decor.svg'
-import DecorLeft from 'components/pages/event/ava-2024/assets/decor-left.png'
-import DecorRight from 'components/pages/event/ava-2024/assets/decor-right.png'
-import DecorMiddle from 'components/pages/event/ava-2024/assets/decor-middle.png'
-import Frame2 from 'components/pages/event/ava-2024/assets/frame-2.svg'
-import Frame from 'components/pages/event/ava-2024/assets/frame.svg'
-import Point from 'components/pages/event/ava-2024/assets/point.svg'
-import { useRouter } from 'next/router'
-import { useContext, useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import useSWR from 'swr'
-import { useWindowSize } from 'usehooks-ts'
-import MangaFrame from 'components/pages/event/ava-2024/assets/manga-frame.png'
-import CharacterFrame from 'components/pages/event/ava-2024/assets/character-frame.png'
 import { Pagination } from '@mui/material'
-import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import Button from 'components/core/Button/Button'
-import Modal from 'components/pages/event/ava-2024/Modal'
 import RuleAndAward from 'components/pages/event/ava-2024/RuleAndAward'
+import Background from 'components/pages/event/ava-2024/assets/Main_Map.png'
 import Map from 'components/pages/event/ava-2024/assets/Map.svg'
+import CharacterFrame from 'components/pages/event/ava-2024/assets/character-frame.png'
+import DecorLeft from 'components/pages/event/ava-2024/assets/decor-left.png'
+import DecorMiddle from 'components/pages/event/ava-2024/assets/decor-middle.png'
+import DecorRight from 'components/pages/event/ava-2024/assets/decor-right.png'
+import Frame from 'components/pages/event/ava-2024/assets/artwork-frame.png'
 import Image from 'next/image'
 import Link from 'next/link'
-import { toast } from 'react-toastify'
-import { Context } from 'src/context'
-import { eventService } from 'src/services/eventService'
-import { ModalContext } from 'src/context/modals'
-import { shorten } from 'src/utils'
-import Tooltip from 'components/Tooltip'
+import { useRouter } from 'next/router'
+import { useContext, useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
+import { useTranslation } from 'react-i18next'
+import { eventService } from 'src/services/eventService'
+import { shorten } from 'src/utils'
+import useSWR from 'swr'
+import { useWindowSize } from 'usehooks-ts'
 import IPModal from 'components/pages/event/ava-2024/IPModal'
-
+import { Context } from 'src/context'
+import { ModalContext } from 'src/context/modals'
+import { toast } from 'react-toastify'
 
 export default function Page(props) {
   if (props.justHead) {
@@ -37,37 +29,50 @@ export default function Page(props) {
   }
   return <PageDetail {...props} />
 }
+const artworkPerPage = 12
 function PageDetail() {
-  const { locale, push } = useRouter()
   const { t } = useTranslation()
   const { width } = useWindowSize()
   const { account } = useContext(Context)
-  const { setSignInOpen } = useContext(ModalContext)
   const [showModal, setShowModal] = useState(false)
   const [selected, setSelected] = useState<any>()
   const [page, setPage] = useState(1)
-  const [type, setType] = useState('all')
+  const [showSlider, setShowSlider] = useState(false)
   const { data, mutate, isLoading } = useSWR(
-    { ket: 'get-ava-manga', page, userId: account?.id },
-    ({ page, userId }) => eventService.story.getManga(page, userId),
+    { key: 'get-ava-artwork', user_id: account?.id },
+    ({ user_id }) => eventService.story.getArtwork(user_id),
     {
       revalidateOnFocus: false,
     }
   )
   useEffect(() => {
     if (selected) {
-      const character = data?.data?.data?.story_manga.find((char) => char.id == selected.id)
-      if (character) {
-        setSelected(character)
+      const ip = data?.data?.data?.story_artwork.find((char) => char.id == selected.id)
+      if (ip) {
+        setSelected(ip)
         return
       }
     }
-    if (data?.data?.data?.story_manga?.[0]) {
-      setSelected(data?.data?.data?.story_manga?.[0])
+    if (data?.data?.data?.story_artwork?.[0]) {
+      setSelected(data?.data?.data?.story_artwork?.[0])
     }
-  }, [data?.data?.data?.story_manga])
-  const mangas = data?.data?.data?.story_manga
-  const count = Math.ceil((data?.data?.data?.story_manga_aggregate?.aggregate?.count || 1) / 9)
+  }, [data?.data?.data?.story_artwork])
+  const artworks = data?.data?.data?.story_artwork
+  const count = Math.ceil((data?.data?.data?.story_artwork_aggregate?.aggregate?.count || 1) / artworkPerPage)
+  const prevHandler = () => {
+    const currentIndex = artworks.findIndex((d) => d.id == selected.id)
+    if (currentIndex > 0) {
+      setSelected(artworks[currentIndex - 1])
+      setPage(Math.ceil(currentIndex / artworkPerPage))
+    }
+  }
+  const nextHandler = () => {
+    const currentIndex = artworks.findIndex((d) => d.id == selected.id)
+    if (currentIndex < artworks.length - 1) {
+      setSelected(artworks[currentIndex + 1])
+      setPage(Math.ceil((currentIndex + 2) / artworkPerPage))
+    }
+  }
   return (
     <>
       <div
@@ -89,7 +94,7 @@ function PageDetail() {
           <div className='lg:py-10'>
             <div className='grid grid-cols-1 lg:grid-cols-[22fr_11fr] mt-4 gap-8 min-h-[1000px] relative'>
               <div className='shrink-0 w-full'>
-                <div className='flex justify-end relative z-20 items-center gap-10 h-10 lg:hidden mb-5 flex-row-reverse'>
+                <div className='flex justify-between relative z-20 items-center gap-10 h-10 lg:hidden mb-5 flex-row-reverse'>
                   <div className='w-[8.5%] mr-10'>
                     <RuleAndAward />
                   </div>
@@ -101,31 +106,31 @@ function PageDetail() {
                   </Link>
                 </div>
                 <div className='h-10'>
-                  <div className='text-3xl font-medium'>{t('Mangas')}</div>
+                  <div className='text-3xl font-medium'>{t('Artworks')}</div>
                 </div>
-                {mangas?.length ? (
+                {artworks?.length ? (
                   <>
                     <div className='grid grid-cols-2 md:grid-cols-3 gap-5 mt-6'>
-                      {mangas?.map((manga, index) => (
+                      {artworks?.slice((page - 1) * artworkPerPage, page * artworkPerPage)?.map((artwork, index) => (
                         <div
                           className={`rounded-xl cursor-pointer relative overflow-hidden ${
-                            manga.id == selected?.id ? 'border-[#00E160]' : 'border-black'
+                            artwork.id == selected?.id ? 'border-[#00E160]' : 'border-black'
                           } border-[3px]`}
                           key={index}
                           onClick={() => {
-                            setSelected(manga)
+                            setSelected(artwork)
                             setShowModal(true)
                           }}>
                           <div className='absolute inset-0'>
                             <Image
-                              src={manga.manga.poster}
+                              src={artwork.display_url}
                               width={300}
                               height={300}
                               alt=''
                               className='w-full h-full object-cover'
                             />
                           </div>
-                          <Image src={MangaFrame} alt='' className='w-full h-full relative' />
+                          <Image src={Frame} alt='' className='w-full h-full relative' />
                         </div>
                       ))}
                     </div>
@@ -145,7 +150,7 @@ function PageDetail() {
                 ) : isLoading ? (
                   <></>
                 ) : (
-                  <div>{t('No manga submitted')}</div>
+                  <div>{t('No artwork submitted')}</div>
                 )}
               </div>
               <div className='sticky top-[12vh] h-fit hidden lg:block'>
@@ -160,7 +165,11 @@ function PageDetail() {
                     {t('Back to map')}
                   </Link>
                 </div>
-                <div className='relative z-0'>{selected && <Content selected={selected} mutate={mutate} />}</div>
+                <div className='relative z-0'>
+                  {selected && (
+                    <Content selected={selected} mutate={mutate} setShowSlider={() => setShowSlider(true)} />
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -248,38 +257,116 @@ function PageDetail() {
                 </defs>
               </svg>
             </div>
-            <Content selected={selected} mutate={mutate} />
+            <Content
+              selected={selected}
+              mutate={mutate}
+              setShowSlider={() => {
+                setShowSlider(true)
+                setShowModal(false)
+              }}
+            />
           </div>
         </>
+      )}
+      {showSlider && (
+        <div className='fixed inset-0 z-50'>
+          <div className='absolute inset-0 bg-[#000000CC]' onClick={() => setShowSlider(false)}></div>
+          <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex items-center gap-4 w-[95vw] max-w-screen-md'>
+            <div className='cursor-pointer p-5' onClick={prevHandler}>
+              <svg width='24' height='25' viewBox='0 0 24 25' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                <g clip-path='url(#clip0_6205_29201)'>
+                  <path
+                    d='M5.33187 11.5635L16.0122 0.883412C16.2592 0.636194 16.5889 0.5 16.9406 0.5C17.2922 0.5 17.6219 0.636194 17.8689 0.883412L18.6555 1.66975C19.1673 2.18213 19.1673 3.01491 18.6555 3.52651L9.68695 12.495L18.6654 21.4735C18.9124 21.7207 19.0488 22.0503 19.0488 22.4017C19.0488 22.7535 18.9124 23.083 18.6654 23.3305L17.8789 24.1166C17.6317 24.3638 17.3021 24.5 16.9505 24.5C16.5989 24.5 16.2691 24.3638 16.0221 24.1166L5.33187 13.4267C5.08426 13.1787 4.94826 12.8476 4.94904 12.4956C4.94826 12.1422 5.08426 11.8113 5.33187 11.5635Z'
+                    fill='white'
+                  />
+                </g>
+                <defs>
+                  <clipPath id='clip0_6205_29201'>
+                    <rect width='24' height='24' fill='white' transform='matrix(-1 0 0 1 24 0.5)' />
+                  </clipPath>
+                </defs>
+              </svg>
+            </div>
+            <div className=' lg:bg-neutral-700 lg:p-8 lg:pt-4 lg:rounded-mlg'>
+              <div className='flex flex-col items-center gap-4 lg:rounded-xl lg:bg-neutral-950 lg:p-4 max-h-[90vh] overflow-auto'>
+                <Image
+                  src={selected.display_url}
+                  width={500}
+                  height={500}
+                  alt=''
+                  className='w-full aspect-square object-cover'
+                />
+                <div className='text-sm font-semibold text-white'>{selected.name}</div>
+              </div>
+            </div>
+            <div className='cursor-pointer p-5' onClick={nextHandler}>
+              <svg width='24' height='25' viewBox='0 0 24 25' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                <g clip-path='url(#clip0_6205_29197)'>
+                  <path
+                    d='M18.6681 11.5635L7.98783 0.883412C7.74081 0.636194 7.41105 0.5 7.05945 0.5C6.70784 0.5 6.37809 0.636194 6.13106 0.883412L5.34453 1.66975C4.83273 2.18213 4.83273 3.01491 5.34453 3.52651L14.313 12.495L5.33458 21.4735C5.08756 21.7207 4.95117 22.0503 4.95117 22.4017C4.95117 22.7535 5.08756 23.083 5.33458 23.3305L6.12111 24.1166C6.36833 24.3638 6.69789 24.5 7.0495 24.5C7.4011 24.5 7.73086 24.3638 7.97788 24.1166L18.6681 13.4267C18.9157 13.1787 19.0517 12.8476 19.051 12.4956C19.0517 12.1422 18.9157 11.8113 18.6681 11.5635Z'
+                    fill='white'
+                  />
+                </g>
+                <defs>
+                  <clipPath id='clip0_6205_29197'>
+                    <rect width='24' height='24' fill='white' transform='translate(0 0.5)' />
+                  </clipPath>
+                </defs>
+              </svg>
+            </div>
+          </div>
+        </div>
       )}
     </>
   )
 }
-const Content = ({ selected, mutate }) => {
-  const { locale, push } = useRouter()
+const Content = ({ selected, mutate, setShowSlider }) => {
   const { t } = useTranslation()
+  const { account } = useContext(Context)
+  const { setSignInOpen } = useContext(ModalContext)
+  const [likeCount, setLikeCount] = useState(0)
+  const [isLiked, setIsLiked] = useState(false)
   const [selectedIP, setSelectedIP] = useState<any>()
-  const mangaName =
-    (locale == 'en'
-      ? selected.manga.manga_languages.find((l) => l.language_id == 1)?.title
-      : selected.manga.manga_languages.find((l) => l.language_id == 2)?.title) ||
-    selected.manga.manga_languages.find((l) => l.is_main_language)?.title
+  const likeHandler = async () => {
+    try {
+      if (!account) {
+        setSignInOpen(true)
+        return
+      }
+      setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1))
+      setIsLiked((prevState) => !prevState)
+      if (isLiked) {
+        await eventService.story.unlikeArtwork(selected?.artwork?.id)
+      } else {
+        await eventService.story.likeArtwork(selected?.artwork?.id)
+      }
+      mutate()
+    } catch (error) {
+      toast(error.message, {
+        type: 'error',
+      })
+    }
+  }
+  useEffect(() => {
+    setIsLiked(!!selected?.artwork?.likes?.length)
+    setLikeCount(selected?.artwork?.likes_aggregate?.aggregate?.count)
+  }, [selected.id])
   return (
     <>
       <div className='mt-6 rounded-mlg border-[3px] text-white relative border-black bg-[#191919] h-fit min-w-[350px] w-full max-h-[70vh] overflow-auto'>
         <Skew className='absolute top-1 left-1' />
         <Skew className='absolute top-1 right-1' />
         <Image
-          src={selected.manga.banner}
+          src={selected.display_url}
           alt=''
           width={300}
           height={300}
-          className='w-full aspect-[452/170] object-cover relative z-40'
+          className='w-full aspect-[452/320] object-cover relative z-40'
         />
         <div className='px-5 -mt-[58px] z-50 relative py-6 bg-[linear-gradient(0deg,#191919_68.29%,rgba(25,25,25,0.00)_100%)]'>
-          <div className='space-y-1'>
-            <div className='font-jaro text-2xl'>{mangaName}</div>
-            <div className='flex w-full items-center justify-between'>
+          <div className='flex justify-between items-center'>
+            <div className='space-y-1'>
+              <div className='font-jaro text-2xl'>{selected.name}</div>
               <div>
                 {selected?.story_ip_asset?.ip_asset_id && (
                   <Link
@@ -290,50 +377,43 @@ const Content = ({ selected, mutate }) => {
                   </Link>
                 )}
               </div>
-              <div className='flex items-center text-sm gap-1.5'>
-                {selected?.manga?.manga_total_likes?.likes || 0}
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='24'
-                  height='24'
-                  viewBox='0 0 24 24'
-                  className='w-5 h-5'
-                  fill='none'>
-                  <path
-                    d='M23.01 5.87714C22.651 5.04581 22.1333 4.29247 21.4859 3.65928C20.8381 3.02421 20.0742 2.51953 19.2359 2.17268C18.3667 1.81159 17.4344 1.62676 16.4931 1.62893C15.1725 1.62893 13.8842 1.99053 12.7645 2.67357C12.4967 2.83696 12.2422 3.01643 12.0011 3.21196C11.76 3.01643 11.5056 2.83696 11.2377 2.67357C10.1181 1.99053 8.82969 1.62893 7.50915 1.62893C6.55826 1.62893 5.63683 1.81107 4.76629 2.17268C3.92522 2.52089 3.16719 3.02178 2.51629 3.65928C1.86807 4.29175 1.35025 5.04527 0.992188 5.87714C0.619866 6.74232 0.429688 7.66107 0.429688 8.6066C0.429688 9.49857 0.61183 10.428 0.973438 11.3736C1.27612 12.1637 1.71004 12.9834 2.26451 13.8111C3.14308 15.1209 4.35112 16.487 5.85112 17.8718C8.33683 20.1673 10.7984 21.753 10.9029 21.8173L11.5377 22.2245C11.819 22.4039 12.1806 22.4039 12.4618 22.2245L13.0967 21.8173C13.2011 21.7504 15.66 20.1673 18.1484 17.8718C19.6484 16.487 20.8565 15.1209 21.735 13.8111C22.2895 12.9834 22.7261 12.1637 23.0261 11.3736C23.3877 10.428 23.5699 9.49857 23.5699 8.6066C23.5725 7.66107 23.3824 6.74232 23.01 5.87714ZM12.0011 20.1057C12.0011 20.1057 2.4654 13.9959 2.4654 8.6066C2.4654 5.87714 4.72344 3.66464 7.50915 3.66464C9.46719 3.66464 11.1654 4.7575 12.0011 6.35392C12.8368 4.7575 14.535 3.66464 16.4931 3.66464C19.2788 3.66464 21.5368 5.87714 21.5368 8.6066C21.5368 13.9959 12.0011 20.1057 12.0011 20.1057Z'
-                    fill='white'
-                  />
-                </svg>
+              <div className='text-sm font-medium'>
+                {t('by')} <span className='text-brand-default'>{selected?.authorizer_user?.creator?.pen_name || 'Punkga'}</span>
               </div>
             </div>
-            <div className='text-sm font-medium'>
-              {t('by')}{' '}
-              <span className='text-brand-default'>
-                {selected?.manga?.manga_creators[0]?.creator?.pen_name || 'Punkga'}
-              </span>
+            <div className='flex items-center gap-1'>
+              <span>{likeCount}</span>
+              <svg width='21' height='21' viewBox='0 0 21 21' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                <g clip-path='url(#clip0_6200_28004)'>
+                  <path
+                    d='M19.5892 5.66515C19.2913 4.97545 18.8618 4.35044 18.3247 3.82512C17.7872 3.29823 17.1535 2.87952 16.458 2.59176C15.7368 2.29218 14.9633 2.13884 14.1824 2.14064C13.0868 2.14064 12.0179 2.44065 11.089 3.00732C10.8668 3.14288 10.6557 3.29177 10.4557 3.454C10.2557 3.29177 10.0445 3.14288 9.82231 3.00732C8.89341 2.44065 7.8245 2.14064 6.72892 2.14064C5.94001 2.14064 5.17555 2.29175 4.45332 2.59176C3.75553 2.88066 3.12662 3.29622 2.58661 3.82512C2.04882 4.34984 1.61921 4.975 1.32214 5.66515C1.01325 6.38295 0.855469 7.14518 0.855469 7.92964C0.855469 8.66966 1.00658 9.44078 1.30659 10.2252C1.5577 10.8808 1.91771 11.5608 2.37772 12.2475C3.10662 13.3342 4.10887 14.4676 5.35334 15.6165C7.4156 17.5209 9.45786 18.8365 9.54453 18.8899L10.0712 19.2276C10.3045 19.3765 10.6046 19.3765 10.8379 19.2276L11.3646 18.8899C11.4512 18.8343 13.4913 17.5209 15.5558 15.6165C16.8002 14.4676 17.8025 13.3342 18.5314 12.2475C18.9914 11.5608 19.3536 10.8808 19.6025 10.2252C19.9025 9.44078 20.0536 8.66966 20.0536 7.92964C20.0558 7.14518 19.8981 6.38295 19.5892 5.66515ZM10.4557 17.4698C10.4557 17.4698 2.54439 12.4008 2.54439 7.92964C2.54439 5.66515 4.41776 3.82956 6.72892 3.82956C8.35339 3.82956 9.76231 4.73625 10.4557 6.06072C11.149 4.73625 12.5579 3.82956 14.1824 3.82956C16.4936 3.82956 18.3669 5.66515 18.3669 7.92964C18.3669 12.4008 10.4557 17.4698 10.4557 17.4698Z'
+                    fill='white'
+                  />
+                </g>
+                <defs>
+                  <clipPath id='clip0_6200_28004'>
+                    <rect width='19.9115' height='19.9115' fill='white' transform='translate(0.498047 0.789062)' />
+                  </clipPath>
+                </defs>
+              </svg>
             </div>
           </div>
-          <div className='mt-4 w-full'>
-            <Button
-              color='neautral'
-              size='sm'
-              className='w-full'
-              onClick={() =>
-                isMobile
-                  ? window.open(`/comic/${selected.manga.slug}`, '_blank')
-                  : window.open(`/comic/${selected.manga.slug}/chapter/1`, '_blank')
-              }>
-              {t('Read manga')}
+          <div className='mt-3 grid grid-cols-[2fr_1fr] gap-3'>
+            <Button size='sm' variant='outlined' color='neautral' className='w-full' onClick={setShowSlider}>
+              {t('View Artwork')}
+            </Button>
+            <Button size='sm' color='neautral' className='w-full' onClick={likeHandler}>
+              {t(isLiked ? 'Liked' : 'Like')}
             </Button>
           </div>
         </div>
         <div className='mt-4 px-5 pb-5'>
           <div className='font-jaro text-2xl'>{t('Character IP')}</div>
           <div className='mt-4 grid grid-cols-3'>
-            {selected.story_manga_characters?.map((char, index) => (
+            {selected.story_artwork_characters?.map((char, index) => (
               <div
                 onClick={() => setSelectedIP(char.story_character)}
-                className={`rounded-xl relative overflow-hidden cursor-pointer border-black border-[3px]`}
+                className={`rounded-xl relative overflow-hidden border-black border-[3px]`}
                 key={index}>
                 <div className='absolute inset-0'>
                   <Image

@@ -168,6 +168,7 @@ function Event() {
     if (artRoomStep == 4) {
       setShowGuide(false)
       setArtDone(true)
+      router.push(`/events/ava-2024/map/artwork-room`)
     }
   }, [artRoomStep])
   useEffect(() => {
@@ -206,6 +207,7 @@ function Event() {
     if (campainRoomStep == 4) {
       setShowGuide(false)
       setCampainDone(true)
+      router.push(`/campaigns/story-odyssey-badge`)
     }
   }, [campainRoomStep])
 
@@ -276,35 +278,41 @@ function Event() {
           <Button
             onClick={() => {
               if (active == 2) {
-                // currentSetStep.current = setArtRoomStep
-                // setArtRoomStep(0)
-                // setMangaRoomStep(-1)
-                // setCampainRoomStep(-1)
-                // setCharacterRoomStep(-1)
+                currentSetStep.current = setArtRoomStep
+                if (!artDone) {
+                  setArtRoomStep(0)
+                  setMangaRoomStep(-1)
+                  setCampainRoomStep(-1)
+                  setCharacterRoomStep(-1)
+                } else {
+                  router.push(`/events/ava-2024/map/artwork-room`)
+                }
               } else {
                 setActive(2)
               }
             }}
-            className={`absolute top-0 left-[36.6%] w-[48%] ${active == 2 ? 'opacity-100' : 'opacity-0'}`}>
+            className={`absolute top-0 left-[36.6%] w-[48%]`}>
             <>
-              <Image src={Room2} alt='' className='w-full h-full' />
-              <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='20'
-                  height='22'
-                  viewBox='0 0 20 22'
-                  fill='none'
-                  className='w-4 h-4'>
-                  <path
-                    fill-rule='evenodd'
-                    clip-rule='evenodd'
-                    d='M3.25 9.33501V7.15663C3.25 3.20413 6.27208 0 10 0C13.7279 0 16.75 3.20413 16.75 7.15663V9.33501C17.8648 9.42328 18.5907 9.64612 19.1213 10.2087C20 11.1403 20 12.6397 20 15.6386C20 18.6374 20 20.1368 19.1213 21.0684C18.2426 22 16.8284 22 14 22H6C3.17157 22 1.75736 22 0.87868 21.0684C0 20.1368 0 18.6374 0 15.6386C0 12.6397 0 11.1403 0.87868 10.2087C1.40931 9.64612 2.13525 9.42328 3.25 9.33501ZM4.75 7.15663C4.75 4.08246 7.10051 1.59036 10 1.59036C12.8995 1.59036 15.25 4.08246 15.25 7.15663V9.2809C14.867 9.27711 14.4515 9.27711 14 9.27711H6C5.54849 9.27711 5.13301 9.27711 4.75 9.2809V7.15663ZM12 15.6386C12 16.8097 11.1046 17.759 10 17.759C8.89543 17.759 8 16.8097 8 15.6386C8 14.4674 8.89543 13.5181 10 13.5181C11.1046 13.5181 12 14.4674 12 15.6386Z'
-                    fill='white'
-                  />
-                </svg>
-                {t('Unlock on round 3')}
+              <div className={active == 2 ? 'opacity-100' : 'opacity-0'}>
+                <Image src={Room2} alt='' className='w-full h-full' />
+                <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                    <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
+                  </svg>
+                  {t('Artwork room')}
+                </div>
               </div>
+              <HelpBubble
+                className='absolute -right-[7%] top-[5%] cursor-help w-[20%]'
+                onClick={(e) => {
+                  currentSetStep.current = setArtRoomStep
+                  setArtRoomStep(0)
+                  setMangaRoomStep(-1)
+                  setCampainRoomStep(-1)
+                  setCharacterRoomStep(-1)
+                  e.stopPropagation()
+                }}
+              />
             </>
           </Button>
           <Button
@@ -323,49 +331,68 @@ function Event() {
                 setActive(3)
               }
             }}
-            className={`absolute top-[26%] right-[6.4%] w-[37.45%] ${active == 3 ? 'opacity-100' : 'opacity-0'}`}>
+            className={`absolute top-[26%] right-[6.4%] w-[37.45%]`}>
             <>
-              <Image src={Room3} alt='' className='w-full h-full' />
-              <div className='font-jaro absolute whitespace-nowrap top-[40%] left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
-                <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
-                  <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
-                </svg>
-                {t('Manga room')}
+              <div className={active == 3 ? 'opacity-100' : 'opacity-0'}>
+                <Image src={Room3} alt='' className='w-full h-full' />
+                <div className='font-jaro absolute whitespace-nowrap top-[40%] left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                    <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
+                  </svg>
+                  {t('Manga room')}
+                </div>
               </div>
+              <HelpBubble
+                className='absolute -right-[7%] top-[5%] cursor-help w-[20%]'
+                onClick={(e) => {
+                  currentSetStep.current = setMangaRoomStep
+                  setMangaRoomStep(0)
+                  setArtRoomStep(-1)
+                  setCampainRoomStep(-1)
+                  setCharacterRoomStep(-1)
+                  e.stopPropagation()
+                }}
+              />
             </>
           </Button>
           <Button
             onClick={() => {
               if (active == 4) {
-                // currentSetStep.current = setCampainRoomStep
-                // setCampainRoomStep(0)
-                // setMangaRoomStep(-1)
-                // setArtRoomStep(-1)
-                // setCharacterRoomStep(-1)
+                currentSetStep.current = setCampainRoomStep
+                if (!campainDone) {
+                  setCampainRoomStep(0)
+                  setMangaRoomStep(-1)
+                  setArtRoomStep(-1)
+                  setCharacterRoomStep(-1)
+                } else {
+                  router.push(`/campaigns/story-odyssey-badge`)
+                }
               } else {
                 setActive(4)
               }
             }}
-            className={`absolute bottom-[18.3%] right-[17.25%] w-[46.9%] ${active == 4 ? 'opacity-100' : 'opacity-0'}`}>
+            className={`absolute bottom-[18.3%] right-[17.25%] w-[46.9%]`}>
             <>
-              <Image src={Room4} alt='' className='h-full w-full' />
-              <div className='font-jaro absolute whitespace-nowrap top-2/3 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='20'
-                  height='22'
-                  viewBox='0 0 20 22'
-                  fill='none'
-                  className='w-4 h-4'>
-                  <path
-                    fill-rule='evenodd'
-                    clip-rule='evenodd'
-                    d='M3.25 9.33501V7.15663C3.25 3.20413 6.27208 0 10 0C13.7279 0 16.75 3.20413 16.75 7.15663V9.33501C17.8648 9.42328 18.5907 9.64612 19.1213 10.2087C20 11.1403 20 12.6397 20 15.6386C20 18.6374 20 20.1368 19.1213 21.0684C18.2426 22 16.8284 22 14 22H6C3.17157 22 1.75736 22 0.87868 21.0684C0 20.1368 0 18.6374 0 15.6386C0 12.6397 0 11.1403 0.87868 10.2087C1.40931 9.64612 2.13525 9.42328 3.25 9.33501ZM4.75 7.15663C4.75 4.08246 7.10051 1.59036 10 1.59036C12.8995 1.59036 15.25 4.08246 15.25 7.15663V9.2809C14.867 9.27711 14.4515 9.27711 14 9.27711H6C5.54849 9.27711 5.13301 9.27711 4.75 9.2809V7.15663ZM12 15.6386C12 16.8097 11.1046 17.759 10 17.759C8.89543 17.759 8 16.8097 8 15.6386C8 14.4674 8.89543 13.5181 10 13.5181C11.1046 13.5181 12 14.4674 12 15.6386Z'
-                    fill='white'
-                  />
-                </svg>
-                {t('Coming soon')}
+              <div className={active == 4 ? 'opacity-100' : 'opacity-0'}>
+                <Image src={Room4} alt='' className='h-full w-full' />
+                <div className='font-jaro absolute whitespace-nowrap top-2/3 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                    <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
+                  </svg>
+                  {t('Campaign')}
+                </div>
               </div>
+              <HelpBubble
+                className='absolute -right-[7%] top-[5%] cursor-help w-[20%]'
+                onClick={(e) => {
+                  currentSetStep.current = setCampainRoomStep
+                  setCampainRoomStep(0)
+                  setMangaRoomStep(-1)
+                  setArtRoomStep(-1)
+                  setCharacterRoomStep(-1)
+                  e.stopPropagation()
+                }}
+              />
             </>
           </Button>
           <Button
@@ -384,15 +411,28 @@ function Event() {
                 setActive(5)
               }
             }}
-            className='absolute bottom-[33.7%] left-[.8%] w-[52.7%] opacity-0 hover:opacity-100'>
+            className='absolute bottom-[33.7%] left-[.8%] w-[52.7%]'>
             <>
-              <Image src={Room5} alt='' className='w-full h-full' />
-              <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
-                <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
-                  <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
-                </svg>
-                {t('Character')}
+              <div className={active == 5 ? 'opacity-100' : 'opacity-0'}>
+                <Image src={Room5} alt='' className='w-full h-full' />
+                <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                    <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
+                  </svg>
+                  {t('Character')}
+                </div>
               </div>
+              <HelpBubble
+                className='absolute -right-[7%] top-[5%] cursor-help w-[20%]'
+                onClick={(e) => {
+                  currentSetStep.current = setCharacterRoomStep
+                  setCharacterRoomStep(0)
+                  setCampainRoomStep(-1)
+                  setMangaRoomStep(-1)
+                  setArtRoomStep(-1)
+                  e.stopPropagation()
+                }}
+              />
             </>
           </Button>
           <svg
@@ -401,7 +441,7 @@ function Event() {
             height='47'
             viewBox='0 0 57 47'
             fill='none'
-            className='absolute top-[25.7%] right-[3.8%]'>
+            className='absolute top-[0%] scale-x-[-1] right-[47.8%]'>
             <path
               d='M19.4519 1H19.0949L18.8186 1.22604L2.36676 14.6867L1.76563 15.1785L2.09342 15.8826L12.1889 37.5692L12.3968 38.0159L12.8778 38.1232L18.4519 39.3663V43.7882V45.3971L19.8945 44.6849L26.6929 41.3288L47.772 43.3772L48.5356 43.4514L48.805 42.733L55.5353 24.7855L55.6537 24.4699L55.5568 24.147L48.8265 1.71265L48.6127 1H47.8687H19.4519Z'
               fill='white'
@@ -432,27 +472,39 @@ function Event() {
             </div>
           </Link>
           <Button
-            // onClick={() => {
-            //   currentSetStep.current = setArtRoomStep
-            //   setArtRoomStep(0)
-            //   setMangaRoomStep(-1)
-            //   setCampainRoomStep(-1)
-            //   setCharacterRoomStep(-1)
-            // }}
-            className='absolute top-[.7%] left-[34.6%] w-[33.75%] opacity-0 hover:opacity-100'>
+            onClick={() => {
+              if (!artDone) {
+                currentSetStep.current = setArtRoomStep
+                setArtRoomStep(0)
+                setMangaRoomStep(-1)
+                setCampainRoomStep(-1)
+                setCharacterRoomStep(-1)
+              } else {
+                router.push(`/events/ava-2024/map/artwork-room`)
+              }
+            }}
+            className='absolute top-[.7%] left-[34.6%] w-[33.75%]'>
             <>
-              <Image src={Room2} alt='' className='w-full h-full' />
-              <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
-                <svg xmlns='http://www.w3.org/2000/svg' width='20' height='22' viewBox='0 0 20 22' fill='none'>
-                  <path
-                    fill-rule='evenodd'
-                    clip-rule='evenodd'
-                    d='M3.25 9.33501V7.15663C3.25 3.20413 6.27208 0 10 0C13.7279 0 16.75 3.20413 16.75 7.15663V9.33501C17.8648 9.42328 18.5907 9.64612 19.1213 10.2087C20 11.1403 20 12.6397 20 15.6386C20 18.6374 20 20.1368 19.1213 21.0684C18.2426 22 16.8284 22 14 22H6C3.17157 22 1.75736 22 0.87868 21.0684C0 20.1368 0 18.6374 0 15.6386C0 12.6397 0 11.1403 0.87868 10.2087C1.40931 9.64612 2.13525 9.42328 3.25 9.33501ZM4.75 7.15663C4.75 4.08246 7.10051 1.59036 10 1.59036C12.8995 1.59036 15.25 4.08246 15.25 7.15663V9.2809C14.867 9.27711 14.4515 9.27711 14 9.27711H6C5.54849 9.27711 5.13301 9.27711 4.75 9.2809V7.15663ZM12 15.6386C12 16.8097 11.1046 17.759 10 17.759C8.89543 17.759 8 16.8097 8 15.6386C8 14.4674 8.89543 13.5181 10 13.5181C11.1046 13.5181 12 14.4674 12 15.6386Z'
-                    fill='white'
-                  />
-                </svg>
-                {t('Unlock on round 3')}
+              <div className='opacity-0 hover:opacity-100'>
+                <Image src={Room2} alt='' className='w-full h-full' />
+                <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                    <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
+                  </svg>
+                  {t('Artwork room')}
+                </div>
               </div>
+              <HelpBubble
+                className='absolute -right-[5%] top-[15%] cursor-help'
+                onClick={(e) => {
+                  currentSetStep.current = setArtRoomStep
+                  setArtRoomStep(0)
+                  setMangaRoomStep(-1)
+                  setCampainRoomStep(-1)
+                  setCharacterRoomStep(-1)
+                  e.stopPropagation()
+                }}
+              />
             </>
           </Button>
           <Button
@@ -467,39 +519,64 @@ function Event() {
                 router.push(`/events/ava-2024/map/manga-room`)
               }
             }}
-            className='absolute top-[.77%] -right-[.2%] w-[30.45%] opacity-0 hover:opacity-100'>
+            className='absolute top-[.77%] -right-[.2%] w-[30.45%]'>
             <>
-              <Image src={Room3} alt='' className='w-full h-full' />
-              <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
-                <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
-                  <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
-                </svg>
-                {t('Manga room')}
+              <div className='opacity-0 hover:opacity-100'>
+                <Image src={Room3} alt='' className='w-full h-full' />
+                <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                    <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
+                  </svg>
+                  {t('Manga room')}
+                </div>
               </div>
+              <HelpBubble
+                className='absolute -right-[5%] top-[5%] cursor-help'
+                onClick={(e) => {
+                  currentSetStep.current = setMangaRoomStep
+                  setMangaRoomStep(0)
+                  setArtRoomStep(-1)
+                  setCampainRoomStep(-1)
+                  setCharacterRoomStep(-1)
+                  e.stopPropagation()
+                }}
+              />
             </>
           </Button>
           <Button
-            // onClick={() => {
-            //   currentSetStep.current = setCampainRoomStep
-            //   setCampainRoomStep(0)
-            //   setMangaRoomStep(-1)
-            //   setArtRoomStep(-1)
-            //   setCharacterRoomStep(-1)
-            // }}
-            className='absolute bottom-[14.3%] right-[32.25%] w-[38.9%] opacity-0 hover:opacity-100'>
+            onClick={() => {
+              if (!campainDone) {
+                currentSetStep.current = setCampainRoomStep
+                setCampainRoomStep(0)
+                setMangaRoomStep(-1)
+                setArtRoomStep(-1)
+                setCharacterRoomStep(-1)
+              } else {
+                router.push(`/campaign`)
+              }
+            }}
+            className='absolute bottom-[14.3%] right-[32.25%] w-[38.9%]'>
             <>
-              <Image src={Room4} alt='' className='w-full h-full' />
-              <div className='font-jaro absolute whitespace-nowrap top-2/3 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
-                <svg xmlns='http://www.w3.org/2000/svg' width='20' height='22' viewBox='0 0 20 22' fill='none'>
-                  <path
-                    fill-rule='evenodd'
-                    clip-rule='evenodd'
-                    d='M3.25 9.33501V7.15663C3.25 3.20413 6.27208 0 10 0C13.7279 0 16.75 3.20413 16.75 7.15663V9.33501C17.8648 9.42328 18.5907 9.64612 19.1213 10.2087C20 11.1403 20 12.6397 20 15.6386C20 18.6374 20 20.1368 19.1213 21.0684C18.2426 22 16.8284 22 14 22H6C3.17157 22 1.75736 22 0.87868 21.0684C0 20.1368 0 18.6374 0 15.6386C0 12.6397 0 11.1403 0.87868 10.2087C1.40931 9.64612 2.13525 9.42328 3.25 9.33501ZM4.75 7.15663C4.75 4.08246 7.10051 1.59036 10 1.59036C12.8995 1.59036 15.25 4.08246 15.25 7.15663V9.2809C14.867 9.27711 14.4515 9.27711 14 9.27711H6C5.54849 9.27711 5.13301 9.27711 4.75 9.2809V7.15663ZM12 15.6386C12 16.8097 11.1046 17.759 10 17.759C8.89543 17.759 8 16.8097 8 15.6386C8 14.4674 8.89543 13.5181 10 13.5181C11.1046 13.5181 12 14.4674 12 15.6386Z'
-                    fill='white'
-                  />
-                </svg>
-                {t('Coming soon')}
+              <div className='opacity-0 hover:opacity-100'>
+                <Image src={Room4} alt='' className='w-full h-full' />
+                <div className='font-jaro absolute whitespace-nowrap top-2/3 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                    <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
+                  </svg>
+                  {t('Campaign')}
+                </div>
               </div>
+              <HelpBubble
+                className='absolute right-[0%] top-[15%] cursor-help'
+                onClick={(e) => {
+                  currentSetStep.current = setCampainRoomStep
+                  setCampainRoomStep(0)
+                  setMangaRoomStep(-1)
+                  setArtRoomStep(-1)
+                  setCharacterRoomStep(-1)
+                  e.stopPropagation()
+                }}
+              />
             </>
           </Button>
           <Button
@@ -514,15 +591,28 @@ function Event() {
                 router.push(`/events/ava-2024/map/character`)
               }
             }}
-            className='absolute bottom-[46%] -left-[.2%] w-[29.7%] opacity-0 hover:opacity-100'>
+            className='absolute bottom-[46%] -left-[.2%] w-[29.7%]'>
             <>
-              <Image src={Room5} alt='' className='w-full h-full' />
-              <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
-                <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
-                  <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
-                </svg>
-                {t('Character')}
+              <div className='opacity-0 hover:opacity-100'>
+                <Image src={Room5} alt='' className='w-full h-full' />
+                <div className='font-jaro absolute whitespace-nowrap top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                    <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
+                  </svg>
+                  {t('Character')}
+                </div>
               </div>
+              <HelpBubble
+                className='absolute right-[0%] top-[15%] cursor-help'
+                onClick={(e) => {
+                  currentSetStep.current = setCharacterRoomStep
+                  setCharacterRoomStep(0)
+                  setCampainRoomStep(-1)
+                  setMangaRoomStep(-1)
+                  setArtRoomStep(-1)
+                  e.stopPropagation()
+                }}
+              />
             </>
           </Button>
           <svg
@@ -531,7 +621,25 @@ function Event() {
             height='47'
             viewBox='0 0 57 47'
             fill='none'
-            className='absolute top-[4%] -right-[2%]'>
+            className='absolute top-[1%] right-[33%] animate-blink'>
+            <path
+              d='M19.4519 1H19.0949L18.8186 1.22604L2.36676 14.6867L1.76563 15.1785L2.09342 15.8826L12.1889 37.5692L12.3968 38.0159L12.8778 38.1232L18.4519 39.3663V43.7882V45.3971L19.8945 44.6849L26.6929 41.3288L47.772 43.3772L48.5356 43.4514L48.805 42.733L55.5353 24.7855L55.6537 24.4699L55.5568 24.147L48.8265 1.71265L48.6127 1H47.8687H19.4519Z'
+              fill='white'
+              stroke='black'
+              strokeWidth='2'
+            />
+            <path
+              d='M28.6635 23.9834C28.3518 23.9834 28.1748 23.8143 28.1323 23.4762L27.0062 6.54943C26.9637 6.18314 27.1407 6 27.5374 6H35.4626C35.8593 6 36.0363 6.18314 35.9938 6.54943L34.8677 23.4762C34.8252 23.8143 34.6482 23.9834 34.3365 23.9834H28.6635ZM28.2385 34C27.8844 34 27.7073 33.8169 27.7073 33.4506V26.8151C27.7073 26.4488 27.8844 26.2657 28.2385 26.2657H34.9315C35.2856 26.2657 35.4626 26.4488 35.4626 26.8151V33.4506C35.4626 33.8169 35.2856 34 34.9315 34H28.2385Z'
+              fill='black'
+            />
+          </svg>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='57'
+            height='47'
+            viewBox='0 0 57 47'
+            fill='none'
+            className='absolute bottom-[41%] right-[32%] animate-blink'>
             <path
               d='M19.4519 1H19.0949L18.8186 1.22604L2.36676 14.6867L1.76563 15.1785L2.09342 15.8826L12.1889 37.5692L12.3968 38.0159L12.8778 38.1232L18.4519 39.3663V43.7882V45.3971L19.8945 44.6849L26.6929 41.3288L47.772 43.3772L48.5356 43.4514L48.805 42.733L55.5353 24.7855L55.6537 24.4699L55.5568 24.147L48.8265 1.71265L48.6127 1H47.8687H19.4519Z'
               fill='white'
@@ -648,5 +756,34 @@ function Event() {
         <Rules />
       </Modal>
     </>
+  )
+}
+const HelpBubble = ({ className, onClick }) => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='57'
+      height='47'
+      viewBox='0 0 57 47'
+      fill='none'
+      className={className}
+      onClick={onClick}>
+      <path
+        d='M19.4519 1H19.0949L18.8186 1.22604L2.36676 14.6867L1.76563 15.1785L2.09342 15.8826L12.1889 37.5692L12.3968 38.0159L12.8778 38.1232L18.4519 39.3663V43.7882V45.3971L19.8945 44.6849L26.6929 41.3288L47.772 43.3772L48.5356 43.4514L48.805 42.733L55.5353 24.7855L55.6537 24.4699L55.5568 24.147L48.8265 1.71265L48.6127 1H47.8687H19.4519Z'
+        fill='white'
+        stroke='#009640'
+        strokeWidth='2'
+      />
+      <path
+        d='M27.0812 16.4327L27.5315 16.4991L27.6398 16.057C28.1247 14.0777 29.9016 12.6938 31.9087 12.6938C32.1217 12.6938 32.3369 12.7092 32.5539 12.7413L32.5542 12.7413C34.9593 13.096 36.6262 15.3429 36.2727 17.7633C35.951 19.965 34.0686 21.5457 31.9212 21.5457C31.7606 21.5457 31.5984 21.5368 31.435 21.5186L28.331 21.0611L27.8357 20.9882L27.7633 21.4835L26.6022 29.4283L26.53 29.9224L27.0241 29.9953L30.1699 30.4589L30.6652 30.5319L30.7376 30.0365L31.3684 25.719C31.555 25.7312 31.7408 25.7372 31.9254 25.7372C36.1166 25.7372 39.7814 22.6565 40.4073 18.3716C41.096 13.664 37.8537 9.28413 33.1617 8.59245L33.1616 8.59243C32.7395 8.53031 32.3198 8.5 31.9049 8.5C27.8773 8.5 24.3371 11.3483 23.5102 15.3722L23.4038 15.8903L23.9271 15.9675L27.0812 16.4327ZM33.0888 9.08709L33.0888 9.0871L33.0888 9.08709Z'
+        fill='#00C04D'
+        stroke='#009640'
+      />
+      <path
+        d='M28.3837 32.3868L28.383 32.3867C28.2576 32.3684 28.1327 32.3594 28.0089 32.3594C26.757 32.3594 25.6641 33.2795 25.4775 34.5565L25.4775 34.5566C25.2729 35.9587 26.2383 37.2658 27.6396 37.4721L27.6401 37.4722C27.7655 37.4905 27.8904 37.4995 28.0142 37.4995C29.2662 37.4995 30.3591 36.5789 30.5456 35.3024L30.5456 35.3023C30.7503 33.9001 29.7847 32.5936 28.3837 32.3868Z'
+        fill='#00C04D'
+        stroke='#009640'
+      />
+    </svg>
   )
 }

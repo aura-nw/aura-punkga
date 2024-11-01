@@ -1,6 +1,7 @@
+import Chip from 'components/core/Chip'
+import LabelChip from 'components/core/Chip/Label'
 import Checkbox from 'components/Input/Checkbox'
-import StatusLabel from 'components/Label/Status'
-import Tag from 'components/Label/Tag'
+import Mascot3 from 'components/pages/campaigns/assets/Mascot3.svg'
 import DOMPurify from 'dompurify'
 import NoImage from 'images/no_img.png'
 import moment from 'moment'
@@ -10,15 +11,13 @@ import { useContext, useEffect, useState } from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
 import { useTranslation } from 'react-i18next'
 import { Context } from 'src/context'
+import { ModalContext } from 'src/context/modals'
 import { Campaign } from 'src/models/campaign'
 import { getCampaigns } from 'src/services'
 import useSWR from 'swr'
-import PunkgaXPImage from './assets/illus.svg'
 import KPImage from './assets/ic_Kp.svg'
-import Mascot3 from 'components/pages/campaigns/assets/Mascot3.svg'
-import { ModalContext } from 'src/context/modals'
-import Chip from 'components/core/Chip'
-import LabelChip from 'components/core/Chip/Label'
+import PunkgaXPImage from './assets/illus.svg'
+import SFImage from './assets/sf.png'
 
 export default function CampaignPage() {
   const { account } = useContext(Context)
@@ -150,7 +149,12 @@ export default function CampaignPage() {
       {list.length > 0 ? (
         <div className='grid mt-0.5 grid-cols-1 lg:grid-cols-2 gap-4 xl:gap-x-8 xl:gap-y-4 xl:grid-cols-3'>
           {list?.map((campaign, index) => {
-            const isKP = campaign.campaign_chain?.punkga_config?.reward_point_name == 'KP'
+            const expImage =
+              campaign.campaign_chain?.punkga_config?.reward_point_name == 'KP'
+                ? KPImage
+                : campaign.campaign_chain?.punkga_config?.reward_point_name == 'SF'
+                ? SFImage
+                : PunkgaXPImage
             return (
               <div
                 key={index}
@@ -263,21 +267,13 @@ export default function CampaignPage() {
                         </div>
                       </>
                     ) : (
-                      <Image
-                        src={isKP ? KPImage : PunkgaXPImage}
-                        width={80}
-                        height={80}
-                        alt=''
-                        className='w-[80px] h-[80px] rounded-lg'
-                      />
+                      <Image src={expImage} width={80} height={80} alt='' className='w-[80px] h-[80px] rounded-lg' />
                     )}
                     {!!campaign?.reward?.xp && campaign?.reward?.nft?.nft_name ? (
-                      <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${
-                        campaign?.reward?.xp
-                      } ${isKP ? 'KP' : 'XP'}`}</div>
+                      <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${campaign?.reward?.xp} ${campaign.campaign_chain?.punkga_config?.reward_point_name}`}</div>
                     ) : (
                       <div className='text-text-teriary text-center font-semibold'>{`+ ${campaign?.reward?.xp || 0} ${
-                        isKP ? 'KP' : 'XP'
+                        campaign.campaign_chain?.punkga_config?.reward_point_name
                       }`}</div>
                     )}
                   </div>

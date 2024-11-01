@@ -10,6 +10,7 @@ import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
 import Round1Submission from './round1Submission'
 import Round2Submission from './round2Submission'
+import Round3Submission from './round3Submission'
 
 import DecorLeft from 'components/pages/event/ava-2024/assets/decor-left.png'
 import DecorRight from 'components/pages/event/ava-2024/assets/decor-right.png'
@@ -112,9 +113,7 @@ function Event() {
                 </>
               ) : (
                 <>
-                  <div className='font-jaro text-2xl w-full text-center h-[20vh] grid place-items-center'>
-                    {t('Coming soon')}!
-                  </div>
+                  <Round3Submission />
                 </>
               )}
             </div>

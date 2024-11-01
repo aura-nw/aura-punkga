@@ -20,6 +20,7 @@ import ModalProvider from './modals'
 import { toast } from 'react-toastify'
 import { storyChain } from 'src/services/wagmi/config'
 import BackgroundAudio from 'components/pages/event/ava-2024/BackgroundAudio'
+import { useCookies } from 'react-cookie'
 const queryClient = new QueryClient()
 
 export const Context = createContext<{
@@ -73,7 +74,7 @@ function ContextProvider({ children }: any) {
   const accessTokenParam = searchParams.get('access_token') || searchParams.get('token')
   const expiresInParam = searchParams.get('expires_in')
   const config = getConfig()
-
+  const [cookies, setCookie, removeCookie] = useCookies(['token'])
   const authorizerRef = new Authorizer({
     authorizerURL: config.AUTHORIZER_URL,
     redirectURL: location.href || config.REDIRECT_URL,
@@ -171,7 +172,7 @@ function ContextProvider({ children }: any) {
     }
   }
   const signConnectMessage = (data?: any) => {
-    const domain = window.location.host
+    const domain = window.location.hostname
     const origin = window.location.origin
     const statement = 'Sign in with Aura Network to the app.'
     const addr = data?.accounts[0] || address
@@ -220,6 +221,9 @@ function ContextProvider({ children }: any) {
       if (res?.siwe?.access_token) {
         const token = res?.siwe?.access_token
         setItem('token', res?.siwe?.access_token)
+        setCookie('token', token, {
+          domain: `.${location.hostname}`,
+        })
         setLogoutTimeout(res?.siwe?.expires_in * 1000)
         await getProfile(token)
       }
@@ -247,6 +251,7 @@ function ContextProvider({ children }: any) {
       if (location.pathname.includes('reset_password') || location.pathname.includes('verified')) {
         await authorizerRef.logout()
         removeItem('token')
+        removeCookie('token')
         removeItem('current_reading_manga')
         setAccount(undefined)
       } else {
@@ -256,6 +261,9 @@ function ContextProvider({ children }: any) {
             accessTokenParam,
             new Date(Date.now() + (expiresInParam ? +expiresInParam * 1000 : 10800000))
           )
+          setCookie('token', accessTokenParam, {
+            domain: `.${location.hostname}`,
+          })
           setLogoutTimeout(expiresInParam ? +expiresInParam * 1000 : 10800000)
           router.push(location.pathname)
         } else {
@@ -300,6 +308,7 @@ function ContextProvider({ children }: any) {
           custodialWalletAddress: res.authorizer_users_user_wallet?.address,
           xp: res.levels.find((level) => level.user_level_chain.punkga_config.reward_point_name == 'XP')?.xp || 0,
           kp: res.levels.find((level) => level.user_level_chain.punkga_config.reward_point_name == 'KP')?.xp || 0,
+          sf: res.levels.find((level) => level.user_level_chain.punkga_config.reward_point_name == 'SF')?.xp || 0,
           level:
             res.levels?.find((level) => level.user_level_chain.punkga_config.reward_point_name == 'XP')?.level || 0,
           levels: res.levels?.map((v) => ({
@@ -317,10 +326,12 @@ function ContextProvider({ children }: any) {
       }
       if (!res.email_verified_at && res.email) {
         removeItem('token')
+        removeCookie('token')
       }
       return res
     } catch (error) {
       removeItem('token')
+      removeCookie('token')
       console.log('getProfile', error)
     }
   }
@@ -334,6 +345,9 @@ function ContextProvider({ children }: any) {
       if (res && !res?.user?.roles?.includes('admin')) {
         callback && callback('success')
         setItem('token', res.access_token, new Date(Date.now() + res.expires_in * 1000))
+        setCookie('token', res.access_token, {
+          domain: `.${location.hostname}`,
+        })
         setLogoutTimeout(res.expires_in * 1000)
         getProfile(res.access_token)
       } else {
@@ -363,6 +377,7 @@ function ContextProvider({ children }: any) {
       await authorizerRef.logout()
       await disconnectAsync()
       removeItem('token')
+      removeCookie('token')
       removeItem('current_reading_manga')
       setAccount(undefined)
       router.push(location.origin + location.pathname)

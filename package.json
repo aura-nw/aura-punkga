@@ -53,6 +53,7 @@
     "qrcode.react": "^3.1.0",
     "ramda": "^0.29.0",
     "react": "18.2.0",
+    "react-cookie": "^7.2.2",
     "react-countdown": "^2.3.5",
     "react-datepicker": "^4.16.0",
     "react-device-detect": "^2.2.3",

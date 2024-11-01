@@ -1,13 +1,13 @@
-import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
-import Checkbox from 'components/Input/Checkbox'
+import CheckboxDropdown from 'components/CheckBox/CheckBoxDropDown'
 import Mascot2 from 'components/pages/campaigns/assets/Mascot2.svg'
 import Mascot3 from 'components/pages/campaigns/assets/Mascot3.svg'
 import Image from 'next/image'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Quest } from 'src/models/campaign'
 import QuestItem from './questItem'
-import { useTranslation } from 'react-i18next'
-import CheckboxDropdown from 'components/CheckBox/CheckBoxDropDown'
+import Checkbox from 'components/core/Checkbox'
+import MultipleSelect from 'components/core/Select/MultipleSelect'
 export default function QuestList({
   quests,
   isEnded,
@@ -76,7 +76,7 @@ export default function QuestList({
             </div>
             <span className='h-4 w-[1px] bg-border-primary'></span>
             <div>
-              <CheckboxDropdown
+              <MultipleSelect
                 selected={filter}
                 onChange={setFilter}
                 options={[

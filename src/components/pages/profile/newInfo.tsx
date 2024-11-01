@@ -47,6 +47,7 @@ export default function NewInfo() {
   const [changingPasswordModalOpen, setChangingPasswordModalOpen] = useState(false)
   const [KP, setKP] = useState(0)
   const [XP, setXP] = useState(0)
+  const [SF, setSF] = useState(0)
   const [userLevel, setUserLevel] = useState(0)
 
   useEffect(() => {
@@ -68,11 +69,12 @@ export default function NewInfo() {
           ? { key: 'Other', value: t('Other') }
           : { key: account.gender, value: t(account.gender) }
       )
-      setKP(account.levels.find(level => level.chain == 'KP')?.xp || 0)
-      setXP(account.levels.find(level => level.chain == 'XP')?.xp || 0)
+      setKP(account.levels.find((level) => level.chain == 'KP')?.xp || 0)
+      setSF(account.levels.find((level) => level.chain == 'SF')?.xp || 0)
+      setXP(account.levels.find((level) => level.chain == 'XP')?.xp || 0)
       setBirthdate(account.birthdate ? new Date(account.birthdate).getTime() : undefined)
       setBio(account.bio)
-      setUserLevel(account.levels.find(level => level.chain == 'XP')?.level || 0)
+      setUserLevel(account.levels.find((level) => level.chain == 'XP')?.level || 0)
     }
   }, [account])
   const copyAddress = async () => {
@@ -83,57 +85,69 @@ export default function NewInfo() {
     }, 1000)()
   }
 
-  const [anchorElEditProfile, setAnchorElEditProfile] = React.useState<HTMLElement | null>(null);
-  const [anchorElChangePassword, setAnchorElChangePassword] = React.useState<HTMLElement | null>(null);
+  const [anchorElEditProfile, setAnchorElEditProfile] = React.useState<HTMLElement | null>(null)
+  const [anchorElChangePassword, setAnchorElChangePassword] = React.useState<HTMLElement | null>(null)
 
   const handlePopoverEditProfileOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElEditProfile(event.currentTarget);
-  };
+    setAnchorElEditProfile(event.currentTarget)
+  }
   const handlePopoverChangePasswordOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElChangePassword(event.currentTarget);
-  };
+    setAnchorElChangePassword(event.currentTarget)
+  }
 
   const handlePopoverEditProfileClose = () => {
-    setAnchorElEditProfile(null);
-  };
+    setAnchorElEditProfile(null)
+  }
   const handlePopoverChangePasswordClose = () => {
-    setAnchorElChangePassword(null);
-  };
+    setAnchorElChangePassword(null)
+  }
   const handleEditProfile = () => {
     router.push('/profile/edit-profile')
   }
-  const [anchorElXP, setAnchorElXP] = React.useState<HTMLElement | null>(null);
-  const [anchorElKP, setAnchorElKP] = React.useState<HTMLElement | null>(null);
+  const [anchorElXP, setAnchorElXP] = React.useState<HTMLElement | null>(null)
+  const [anchorElKP, setAnchorElKP] = React.useState<HTMLElement | null>(null)
+  const [anchorElSF, setAnchorElSF] = React.useState<HTMLElement | null>(null)
 
   const handlePopoverXPOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElXP(event.currentTarget);
-  };
+    setAnchorElXP(event.currentTarget)
+  }
 
   const handlePopoverXPClose = () => {
-    setAnchorElXP(null);
-  };
+    setAnchorElXP(null)
+  }
 
   const handlePopoverKPOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElKP(event.currentTarget);
-  };
+    setAnchorElKP(event.currentTarget)
+  }
 
   const handlePopoverKPClose = () => {
-    setAnchorElKP(null);
-  };
+    setAnchorElKP(null)
+  }
+  const handlePopoverSFClose = () => {
+    setAnchorElSF(null)
+  }
 
-  const openPopoverXP = Boolean(anchorElXP);
-  const openPopoverKP = Boolean(anchorElKP);
+  const openPopoverXP = Boolean(anchorElXP)
+  const openPopoverKP = Boolean(anchorElKP)
+  const openPopoverSF = Boolean(anchorElSF)
 
-  const openPopoverEditProfile = Boolean(anchorElEditProfile);
-  const openPopoverChangePassword = Boolean(anchorElChangePassword);
+  const openPopoverEditProfile = Boolean(anchorElEditProfile)
+  const openPopoverChangePassword = Boolean(anchorElChangePassword)
   return (
     <>
       <div className='w-full p-8 bg-white rounded-[10px] relative'>
-
         <div className='absolute top-5 right-[17px]'>
           <div className='flex gap-3'>
-
-            <Image className='cursor-pointer' onClick={handleEditProfile} src={EditProfile} alt='edit profile' width={32} height={32} onMouseEnter={handlePopoverEditProfileOpen} onMouseLeave={handlePopoverEditProfileClose} />
+            <Image
+              className='cursor-pointer'
+              onClick={handleEditProfile}
+              src={EditProfile}
+              alt='edit profile'
+              width={32}
+              height={32}
+              onMouseEnter={handlePopoverEditProfileOpen}
+              onMouseLeave={handlePopoverEditProfileClose}
+            />
 
             <Image
               className='cursor-pointer'
@@ -142,7 +156,13 @@ export default function NewInfo() {
                   ? setChangingPasswordModalOpen(true)
                   : setSettingPasswordModalOpen(true)
               }
-              src={ChangePassword} alt='change password' width={32} height={32} onMouseEnter={handlePopoverChangePasswordOpen} onMouseLeave={handlePopoverChangePasswordClose} />
+              src={ChangePassword}
+              alt='change password'
+              width={32}
+              height={32}
+              onMouseEnter={handlePopoverChangePasswordOpen}
+              onMouseLeave={handlePopoverChangePasswordClose}
+            />
             <Popover
               className=''
               sx={{
@@ -179,12 +199,13 @@ export default function NewInfo() {
               }}
               onClose={handlePopoverChangePasswordClose}
               disableRestoreFocus>
-              <div className='bg-[#323339B2] rounded-[4px] py-2 px-4 text-[#FDFDFD] text-xs'>{t(account?.signupMethods?.includes('basic_auth') ? 'Change password' : 'Set password')}</div>
+              <div className='bg-[#323339B2] rounded-[4px] py-2 px-4 text-[#FDFDFD] text-xs'>
+                {t(account?.signupMethods?.includes('basic_auth') ? 'Change password' : 'Set password')}
+              </div>
             </Popover>
           </div>
         </div>
         <div className='flex flex-col justify-center items-center gap-3'>
-
           <div className='w-[146px] shrink-0 h-[146px]'>
             <Image
               src={preview || account.image || NoImg.src}
@@ -206,12 +227,10 @@ export default function NewInfo() {
             <div className='flex justify-center items-center w-full gap-2 font-medium text-text-primary leading-5'>
               <div>{t(account.gender)}</div>
               <div>{account.gender ? '•' : ''}</div>
-              <div>
-                {account?.birthdate ? formatDate(account.birthdate.replace(/-/g, '/')) : ''}
-              </div>
-
+              <div>{account?.birthdate ? formatDate(account.birthdate.replace(/-/g, '/')) : ''}</div>
             </div>
-            <div className='w-full text-sm leading-5 text-text-primary text-left'
+            <div
+              className='w-full text-sm leading-5 text-text-primary text-left'
               style={{
                 textOverflow: 'ellipsis',
                 overflow: 'hidden',
@@ -228,33 +247,64 @@ export default function NewInfo() {
           <div>
             <div className='flex items-center justify-between'>
               <div className='text-md font-semibold leading-6 text-text-primary'>Lv. {userLevel}</div>
-              <div className='text-xs leading-[15px] text-text-primary'>{`${Math.round((levelToXp(userLevel + 1) - levelToXp(userLevel) - (
-                XP - levelToXp(userLevel))))} ${t('XP to level')} ${userLevel + 1
-                }`}</div>
+              <div className='text-xs leading-[15px] text-text-primary'>{`${Math.round(
+                levelToXp(userLevel + 1) - levelToXp(userLevel) - (XP - levelToXp(userLevel))
+              )} ${t('XP to level')} ${userLevel + 1}`}</div>
             </div>
             <div className='mt-2'>
-              <BorderLinearProgress variant="determinate"
-                value={((XP - levelToXp(userLevel)) / (levelToXp(userLevel + 1) - levelToXp(userLevel))) * 100} />
+              <BorderLinearProgress
+                variant='determinate'
+                value={((XP - levelToXp(userLevel)) / (levelToXp(userLevel + 1) - levelToXp(userLevel))) * 100}
+              />
             </div>
           </div>
           <div className='rounded-[10px] p-3 bg-[#F6F6F6]'>
             <div className='flex flex-col py-2 border-b-[1px] border-light-medium-grey gap-3'>
               <div className='flex items-center justify-between'>
-                <div className='flex text-sm font-medium leading-5 text-text-teriary'>{t('XP')}
-                  <Image className='ml-[3px]' src={Info} alt='info' width={10.5} height={10.5} onMouseEnter={handlePopoverXPOpen}
-                    onMouseLeave={handlePopoverXPClose} />
+                <div className='flex text-sm font-medium leading-5 text-text-teriary'>
+                  {t('XP')}
+                  <Image
+                    className='ml-[3px]'
+                    src={Info}
+                    alt='info'
+                    width={10.5}
+                    height={10.5}
+                    onMouseEnter={handlePopoverXPOpen}
+                    onMouseLeave={handlePopoverXPClose}
+                  />
                 </div>
-                <div className='text-sm font-semibold leading-5 text-text-primary'>{XP}
-
-                </div>
+                <div className='text-sm font-semibold leading-5 text-text-primary'>{XP}</div>
               </div>
               <div className='flex items-center justify-between'>
-                <div className='flex text-sm font-medium leading-5 text-text-teriary'>{t('KP')}
-                  <Image className='ml-[3px]' src={Info} alt='info' width={10.5} height={10.5} onMouseEnter={handlePopoverKPOpen}
-                    onMouseLeave={handlePopoverKPClose} /></div>
+                <div className='flex text-sm font-medium leading-5 text-text-teriary'>
+                  {t('KP')}
+                  <Image
+                    className='ml-[3px]'
+                    src={Info}
+                    alt='info'
+                    width={10.5}
+                    height={10.5}
+                    onMouseEnter={handlePopoverKPOpen}
+                    onMouseLeave={handlePopoverKPClose}
+                  />
+                </div>
                 <div className='text-sm font-semibold leading-5 text-text-primary'>{KP}</div>
               </div>
-
+              <div className='flex items-center justify-between'>
+                <div className='flex text-sm font-medium leading-5 text-text-teriary'>
+                  {t('SF')}
+                  <Image
+                    className='ml-[3px]'
+                    src={Info}
+                    alt='info'
+                    width={10.5}
+                    height={10.5}
+                    onMouseEnter={handlePopoverKPOpen}
+                    onMouseLeave={handlePopoverSFClose}
+                  />
+                </div>
+                <div className='text-sm font-semibold leading-5 text-text-primary'>{SF}</div>
+              </div>
             </div>
             <Popover
               sx={{
@@ -271,8 +321,7 @@ export default function NewInfo() {
                 horizontal: 'center',
               }}
               onClose={handlePopoverXPClose}
-              disableRestoreFocus
-            >
+              disableRestoreFocus>
               <div className='bg-[#323339B2] rounded-[4px] py-2 px-4 text-[#FDFDFD] text-xs'>
                 {t('The core experience points that contribute to your level on PunkgaMe')}
               </div>
@@ -293,10 +342,29 @@ export default function NewInfo() {
                 horizontal: 'center',
               }}
               onClose={handlePopoverKPClose}
-              disableRestoreFocus
-            >
+              disableRestoreFocus>
               <div className='bg-[#323339B2] rounded-[4px] py-2 px-4 text-[#FDFDFD] text-xs'>
                 {t('Reward points earned from Klaytn network quests')}
+              </div>
+            </Popover>
+            <Popover
+              sx={{
+                pointerEvents: 'none',
+              }}
+              open={openPopoverSF}
+              anchorEl={anchorElSF}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              onClose={handlePopoverSFClose}
+              disableRestoreFocus>
+              <div className='bg-[#323339B2] rounded-[4px] py-2 px-4 text-[#FDFDFD] text-xs'>
+                {t('Reward points earned from Story network quests')}
               </div>
             </Popover>
             <div className='flex items-center justify-between mt-2'>
