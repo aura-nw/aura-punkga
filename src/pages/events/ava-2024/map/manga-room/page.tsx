@@ -1,35 +1,27 @@
-import Background from 'components/pages/event/ava-2024/assets/Main_Map.png'
-import Decor from 'components/pages/event/ava-2024/assets/decor.svg'
-import DecorLeft from 'components/pages/event/ava-2024/assets/decor-left.png'
-import DecorRight from 'components/pages/event/ava-2024/assets/decor-right.png'
-import DecorMiddle from 'components/pages/event/ava-2024/assets/decor-middle.png'
-import Frame2 from 'components/pages/event/ava-2024/assets/frame-2.svg'
-import Frame from 'components/pages/event/ava-2024/assets/frame.svg'
-import Point from 'components/pages/event/ava-2024/assets/point.svg'
-import { useRouter } from 'next/router'
-import { useContext, useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import useSWR from 'swr'
-import { useWindowSize } from 'usehooks-ts'
-import MangaFrame from 'components/pages/event/ava-2024/assets/manga-frame.png'
-import CharacterFrame from 'components/pages/event/ava-2024/assets/character-frame.png'
 import { Pagination } from '@mui/material'
-import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import Button from 'components/core/Button/Button'
-import Modal from 'components/pages/event/ava-2024/Modal'
+import IPModal from 'components/pages/event/ava-2024/IPModal'
 import RuleAndAward from 'components/pages/event/ava-2024/RuleAndAward'
+import Background from 'components/pages/event/ava-2024/assets/Main_Map.png'
 import Map from 'components/pages/event/ava-2024/assets/Map.svg'
+import CharacterFrame from 'components/pages/event/ava-2024/assets/character-frame.png'
+import DecorLeft from 'components/pages/event/ava-2024/assets/decor-left.png'
+import DecorMiddle from 'components/pages/event/ava-2024/assets/decor-middle.png'
+import DecorRight from 'components/pages/event/ava-2024/assets/decor-right.png'
+import MangaFrame from 'components/pages/event/ava-2024/assets/manga-frame.png'
 import Image from 'next/image'
 import Link from 'next/link'
-import { toast } from 'react-toastify'
-import { Context } from 'src/context'
-import { eventService } from 'src/services/eventService'
-import { ModalContext } from 'src/context/modals'
-import { shorten } from 'src/utils'
-import Tooltip from 'components/Tooltip'
+import { useRouter } from 'next/router'
+import { useContext, useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
-import IPModal from 'components/pages/event/ava-2024/IPModal'
-
+import { useTranslation } from 'react-i18next'
+import { Context } from 'src/context'
+import { ModalContext } from 'src/context/modals'
+import usePage from 'src/hooks/usePage'
+import { eventService } from 'src/services/eventService'
+import { shorten } from 'src/utils'
+import useSWR from 'swr'
+import { useWindowSize } from 'usehooks-ts'
 
 export default function Page(props) {
   if (props.justHead) {
@@ -45,7 +37,7 @@ function PageDetail() {
   const { setSignInOpen } = useContext(ModalContext)
   const [showModal, setShowModal] = useState(false)
   const [selected, setSelected] = useState<any>()
-  const [page, setPage] = useState(1)
+  const [page, setPage] = usePage()
   const [type, setType] = useState('all')
   const { data, mutate, isLoading } = useSWR(
     { ket: 'get-ava-manga', page, userId: account?.id },

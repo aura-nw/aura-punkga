@@ -26,6 +26,7 @@ import { eventService } from 'src/services/eventService'
 import { ModalContext } from 'src/context/modals'
 import { shorten } from 'src/utils'
 import Tooltip from 'components/Tooltip'
+import usePage from 'src/hooks/usePage'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -44,7 +45,7 @@ function Event() {
   const [showModal, setShowModal] = useState(false)
   const [isCollected, setIsCollected] = useState(false)
   const [collectedCount, setCollectedCount] = useState(0)
-  const [page, setPage] = useState(1)
+  const [page, setPage] = usePage()
   const [count, setCount] = useState(1)
   const [selectedCharacter, setSelectedCharacter] = useState<any>()
   const [sort, setSort] = useState('Created_At_Desc')

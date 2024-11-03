@@ -22,6 +22,7 @@ import IPModal from 'components/pages/event/ava-2024/IPModal'
 import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
 import { toast } from 'react-toastify'
+import usePage from 'src/hooks/usePage'
 
 export default function Page(props) {
   if (props.justHead) {
@@ -36,7 +37,7 @@ function PageDetail() {
   const { account } = useContext(Context)
   const [showModal, setShowModal] = useState(false)
   const [selected, setSelected] = useState<any>()
-  const [page, setPage] = useState(1)
+  const [page, setPage] = usePage()
   const [showSlider, setShowSlider] = useState(false)
   const { data, mutate, isLoading } = useSWR(
     { key: 'get-ava-artwork', user_id: account?.id },
