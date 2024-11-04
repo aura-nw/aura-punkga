@@ -15,6 +15,7 @@ import ConnectModal from 'components/Modal/ConnectModal'
 import { removeItem } from 'src/utils/localStorage'
 import AddTonWalletModal from 'components/Modal/AddTonWalletModal'
 import TeleQrCodeModal from 'components/Modal/TeleQrCodeModal'
+import { useSearchParams } from 'next/navigation'
 export const ModalContext = createContext<{
   signUpSuccessOpen: boolean
   forgotPasswordOpen: boolean
@@ -72,7 +73,8 @@ function ModalProvider({ children }) {
   const [emailNeedVerify, setEmailNeedVerify] = useState('')
   const [identifier, setIdentifier] = useState('')
   const { t } = useTranslation()
-
+  const searchParams = new URLSearchParams(location.search)
+  const portalCallbackUrlParam = searchParams.get('login_callback_url')
   useEffect(() => {
     setErrorMsg('')
   }, [name])
@@ -82,8 +84,16 @@ function ModalProvider({ children }) {
   }, [email])
 
   useEffect(() => {
-    if (account && isConnected) {
+    if (account) {
       setSignInOpen(false)
+      setSignUpOpen(false)
+    } else {
+      if (isConnected) {
+        setSignInOpen(false)
+      }
+      if (portalCallbackUrlParam) {
+        setSignInOpen(true)
+      }
     }
   }, [account, isConnected])
 
@@ -93,12 +103,6 @@ function ModalProvider({ children }) {
     }
   }, [signUpSuccessOpen])
 
-  useEffect(() => {
-    if (account) {
-      setSignInOpen(false)
-      setSignUpOpen(false)
-    }
-  }, [account])
   useEffect(() => {
     setOpen(true)
   }, [account])

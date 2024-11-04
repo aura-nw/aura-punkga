@@ -4,23 +4,20 @@ import { getMainDefinition } from '@apollo/client/utilities'
 import { Authorizer } from '@authorizerdev/authorizer-js'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import axios from 'axios'
+import BackgroundAudio from 'components/pages/event/ava-2024/BackgroundAudio'
 import { createClient } from 'graphql-ws'
 import getConfig from 'next/config'
-import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
-import { createContext, useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { createContext, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import { SiweMessage, generateNonce } from 'siwe'
 import { IUser } from 'src/models/user'
 import { getProfile as getProfileService } from 'src/services'
+import { storyChain } from 'src/services/wagmi/config'
 import { oauthLogin } from 'src/utils'
 import { getItem, removeItem, setItem } from 'src/utils/localStorage'
 import { useAccount, useChainId, useDisconnect, useSignMessage, useSwitchChain } from 'wagmi'
 import ModalProvider from './modals'
-import { toast } from 'react-toastify'
-import { storyChain } from 'src/services/wagmi/config'
-import BackgroundAudio from 'components/pages/event/ava-2024/BackgroundAudio'
-import { useCookies } from 'react-cookie'
 const queryClient = new QueryClient()
 
 export const Context = createContext<{
@@ -66,15 +63,14 @@ function ContextProvider({ children }: any) {
   const { disconnectAsync } = useDisconnect()
   const [account, setAccount] = useState<IUser>()
   const [wallet, setWallet] = useState<string>()
-  const [level, setLevel] = useState(undefined)
+  const [, setLevel] = useState(undefined)
   const [isSettingUp, setIsSettingUp] = useState(true)
   const router = useRouter()
-  const { t } = useTranslation()
-  const searchParams = useSearchParams()
+  const searchParams = new URLSearchParams(location.search)
   const accessTokenParam = searchParams.get('access_token') || searchParams.get('token')
   const expiresInParam = searchParams.get('expires_in')
+  const portalCallbackUrlParam = searchParams.get('login_callback_url')
   const config = getConfig()
-  const [cookies, setCookie, removeCookie] = useCookies(['token'])
   const authorizerRef = new Authorizer({
     authorizerURL: config.AUTHORIZER_URL,
     redirectURL: location.href || config.REDIRECT_URL,
@@ -221,9 +217,6 @@ function ContextProvider({ children }: any) {
       if (res?.siwe?.access_token) {
         const token = res?.siwe?.access_token
         setItem('token', res?.siwe?.access_token)
-        setCookie('token', token, {
-          domain: `.${location.hostname}`,
-        })
         setLogoutTimeout(res?.siwe?.expires_in * 1000)
         await getProfile(token)
       }
@@ -251,7 +244,6 @@ function ContextProvider({ children }: any) {
       if (location.pathname.includes('reset_password') || location.pathname.includes('verified')) {
         await authorizerRef.logout()
         removeItem('token')
-        removeCookie('token')
         removeItem('current_reading_manga')
         setAccount(undefined)
       } else {
@@ -261,11 +253,12 @@ function ContextProvider({ children }: any) {
             accessTokenParam,
             new Date(Date.now() + (expiresInParam ? +expiresInParam * 1000 : 10800000))
           )
-          setCookie('token', accessTokenParam, {
-            domain: `.${location.hostname}`,
-          })
           setLogoutTimeout(expiresInParam ? +expiresInParam * 1000 : 10800000)
-          router.push(location.pathname)
+          if (portalCallbackUrlParam) {
+            router.replace(portalCallbackUrlParam)
+          } else {
+            router.replace(location.pathname)
+          }
         } else {
           const token = getItem('token')
           if (token) {
@@ -284,6 +277,9 @@ function ContextProvider({ children }: any) {
 
   const getProfile = async (token?: string) => {
     try {
+      if (portalCallbackUrlParam) {
+        router.replace(portalCallbackUrlParam)
+      }
       const t = token || getItem('token')
       if (!t) {
         throw new Error('Unauthorized access token')
@@ -326,12 +322,10 @@ function ContextProvider({ children }: any) {
       }
       if (!res.email_verified_at && res.email) {
         removeItem('token')
-        removeCookie('token')
       }
       return res
     } catch (error) {
       removeItem('token')
-      removeCookie('token')
       console.log('getProfile', error)
     }
   }
@@ -345,9 +339,6 @@ function ContextProvider({ children }: any) {
       if (res && !res?.user?.roles?.includes('admin')) {
         callback && callback('success')
         setItem('token', res.access_token, new Date(Date.now() + res.expires_in * 1000))
-        setCookie('token', res.access_token, {
-          domain: `.${location.hostname}`,
-        })
         setLogoutTimeout(res.expires_in * 1000)
         getProfile(res.access_token)
       } else {
@@ -377,7 +368,6 @@ function ContextProvider({ children }: any) {
       await authorizerRef.logout()
       await disconnectAsync()
       removeItem('token')
-      removeCookie('token')
       removeItem('current_reading_manga')
       setAccount(undefined)
       router.push(location.origin + location.pathname)
@@ -467,6 +457,9 @@ function ContextProvider({ children }: any) {
       console.log('resendVerifyEmail', error)
       return null
     }
+  }
+  if (isSettingUp) {
+    return null
   }
   return (
     <Context.Provider
