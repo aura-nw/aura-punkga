@@ -300,6 +300,10 @@ function ContextProvider({ children }: any) {
           gender: res.gender || '',
           birthdate: res.birthdate,
           bio: res.bio,
+          socialAccount: {
+            twitter: res.authorizer_users_twitter_accounts[0],
+            discord: res.authorizer_users_discord_accounts[0],
+          },
           signupMethods: res.signup_methods,
           custodialWalletAddress: res.authorizer_users_user_wallet?.address,
           xp: res.levels.find((level) => level.user_level_chain.punkga_config.reward_point_name == 'XP')?.xp || 0,

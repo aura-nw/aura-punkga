@@ -47,7 +47,7 @@ export type Quest = {
   id: string
   pointText?: string
   repeat: 'Once' | 'Daily'
-  type: 'Read' | 'Comment' | 'Subscribe' | 'Like' | 'Poll' | 'Quiz' | 'Empty'
+  type: 'Read' | 'Comment' | 'Subscribe' | 'Like' | 'Poll' | 'Quiz' | 'Empty' | 'xfollow' | 'xrepost' | 'dc_join'
   reward_status: 'NOT_SATISFY' | 'CAN_CLAIM' | 'CLAIMED' | 'OUT_OF_SLOT'
   status: string
   created_at: string

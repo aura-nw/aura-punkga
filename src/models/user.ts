@@ -12,6 +12,10 @@ export interface IUser {
   custodialWalletAddress: string
   noncustodialWalletAddress?: string
   tonWalletAddress?: string
+  socialAccount: {
+    twitter?: any
+    discord?: any
+  }
   xp: number
   kp: number
   level: number

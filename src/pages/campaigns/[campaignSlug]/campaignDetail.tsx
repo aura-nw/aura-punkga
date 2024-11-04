@@ -72,9 +72,9 @@ function CampaignDetail({}) {
     { revalidateOnFocus: true }
   )
   const { data: userData } = useSWR(
-    { key: `get_leaderboard_${data?.id}_user_rank`, id: data?.id },
-    async ({ id }) => {
-      if (id) {
+    { key: `get_leaderboard_${data?.id}_user_rank`, id: data?.id, user: account?.id },
+    async ({ id, user }) => {
+      if (id && user) {
         const data = await getUserRankInCampaign(id)
         return data?.data?.user_campaign?.[0]
       } else {

@@ -201,7 +201,7 @@ export default function IPModal({
                               setSignInOpen(true)
                             }
                           }}>
-                          <div>{t('Collect IP License')}</div>
+                          <div>{t('Collect IP')}</div>
                           <div className='flex items-center gap-1'>
                             -1 <Image src={Point} alt='' className='h-5 w-auto ml-1' />
                           </div>
@@ -315,7 +315,7 @@ export default function IPModal({
                                 setSignInOpen(true)
                               }
                             }}>
-                            <div>{t('Collect IP License')}</div>
+                            <div>{t('Collect IP')}</div>
                             <div className='flex items-center gap-1'>
                               -1 <Image src={Point} alt='' className='h-5 w-auto ml-1' />
                             </div>

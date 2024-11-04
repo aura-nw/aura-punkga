@@ -1,10 +1,12 @@
 import Button from 'components/core/Button/Button'
-import LabelChip from 'components/core/Chip/Label'
-import XPImage from 'components/pages/campaigns/assets/illus.svg'
+import Chip from 'components/core/Chip'
+import Modal from 'components/core/modal'
 import KPImage from 'components/pages/campaigns/assets/ic_Kp.svg'
+import XPImage from 'components/pages/campaigns/assets/illus.svg'
+import NFTPackage from 'components/pages/campaigns/assets/nft-package.png'
 import SFImage from 'components/pages/campaigns/assets/sf.png'
 import XPPackage from 'components/pages/campaigns/assets/xp-package.png'
-import NFTPackage from 'components/pages/campaigns/assets/nft-package.png'
+import Popover from 'components/Popover'
 import NoImage from 'images/no_img.png'
 import moment from 'moment'
 import Image from 'next/image'
@@ -18,13 +20,10 @@ import { toast } from 'react-toastify'
 import { Context } from 'src/context'
 import { Quest } from 'src/models/campaign'
 import { claimQuest, getRequestLog } from 'src/services'
-import BasicQuest from './basicQuest'
+import Decor from '../assets/decor.svg'
+import RefQuest from './refQuest'
 import FreeQuest from './freeQuest'
 import QuizQuest from './quizQuest'
-import Decor from '../assets/decor.svg'
-import Chip from 'components/core/Chip'
-import Popover from 'components/Popover'
-import Modal from 'components/core/modal'
 export default function QuestItem({ quest, refreshCallback }: { quest: Quest; refreshCallback?: () => void }) {
   const { getProfile } = useContext(Context)
   const [open, setOpen] = useState(false)
@@ -110,29 +109,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                 {t('Daily')}
               </Chip>
             )}
-            <div className='mt-1.5 text-lg leading-[26px] font-semibold'>
-              {quest.type == 'Subscribe'
-                ? locale == 'vn'
-                  ? `Đăng ký theo dõi truyện ${quest.requirement.subscribe.manga.title} để nhận phần thưởng`
-                  : `Subscribe to manga ${quest.requirement.subscribe.manga.title} to claim your reward`
-                : quest.type == 'Like'
-                ? locale == 'vn'
-                  ? `Thích truyện ${quest.requirement.like.manga.title} để nhận phần thưởng`
-                  : `Like manga ${quest.requirement.like.manga.title} to claim your reward`
-                : quest.type == 'Read'
-                ? locale == 'vn'
-                  ? `Đọc chương ${quest.requirement.read.chapter.number} của truyện ${quest.requirement.read.manga.title} để nhận phần thưởng`
-                  : `Read chapter ${quest.requirement.read.chapter.number} of manga ${quest.requirement.read.manga.title} to claim your reward`
-                : quest.type == 'Comment'
-                ? locale == 'vn'
-                  ? `Bình luận về chương ${quest.requirement.comment.chapter.number} của truyện ${quest.requirement.comment.manga.title} để nhận phần thưởng`
-                  : `Comment on chapter ${quest.requirement.comment.chapter.number} of manga ${quest.requirement.comment.manga.title} to claim your reward`
-                : quest.type == 'Empty'
-                ? t(`Free reward`)
-                : quest.type == 'Quiz'
-                ? t(`Answer a quiz`)
-                : ``}
-            </div>
+            <div className='mt-1.5 text-lg leading-[26px] font-semibold'>{quest[locale].name}</div>
             <div className='mt-3 flex flex-col items-center md:hidden'>
               <div
                 className={`${
@@ -231,8 +208,8 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
               </>
             )}
           </div>
-          {(quest.type == 'Comment' || quest.type == 'Like' || quest.type == 'Subscribe' || quest.type == 'Read') && (
-            <BasicQuest quest={quest} loading={loading} claimQuestHandler={claimQuestHandler} />
+          {['Comment', 'Like', 'Subscribe', 'Read', 'xfollow', 'xrepost', 'dc_join'].includes(quest.type) && (
+            <RefQuest quest={quest} loading={loading} claimQuestHandler={claimQuestHandler} />
           )}
           {quest.type == 'Empty' && <FreeQuest quest={quest} loading={loading} claimQuestHandler={claimQuestHandler} />}
           {quest.type == 'Quiz' && (

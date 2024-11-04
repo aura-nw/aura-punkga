@@ -4,7 +4,15 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
 import { Launchpad } from 'src/models/launchpad'
 import { getLaunchPadDetail, mintNfts } from 'src/services'
-import { useAccount, useBalance, useReadContract, useWaitForTransactionReceipt, useWriteContract } from 'wagmi'
+import {
+  useAccount,
+  useBalance,
+  useChainId,
+  useReadContract,
+  useSwitchChain,
+  useWaitForTransactionReceipt,
+  useWriteContract,
+} from 'wagmi'
 import useSWR from 'swr'
 import { abi } from 'src/services/abi/launchpad'
 import moment from 'moment'
@@ -21,6 +29,7 @@ import { ModalContext } from 'src/context/modals'
 import _ from 'lodash'
 import { isMobile } from 'react-device-detect'
 import { parseEther } from 'viem'
+import getConfig from 'next/config'
 
 export default function Page(props) {
   if (props.justHead) {
@@ -41,6 +50,8 @@ function CollectionDetail() {
   const walletBalance = useBalance({
     address: account?.activeWalletAddress as any,
   })
+  const chainId = useChainId()
+  const { switchChain } = useSwitchChain()
   const balance = +walletBalance?.data?.formatted || 0
   const [showSeeMore, setShowSeeMore] = useState(true)
   const [seeMore, setSeeMore] = useState(false)
@@ -75,6 +86,14 @@ function CollectionDetail() {
       setShowSeeMore(false)
     }
   }, [locale])
+
+  useEffect(() => {
+    if (chainId != getConfig().CHAIN_INFO.evmChainId) {
+      switchChain({
+        chainId: getConfig().CHAIN_INFO.evmChainId,
+      })
+    }
+  }, [])
 
   useEffect(() => {
     console.log('hash result', result)

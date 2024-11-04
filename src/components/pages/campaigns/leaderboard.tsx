@@ -5,7 +5,6 @@ import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
 export default function LeaderBoard({ data, userData, xpText }: { data: any[]; userData?: any; xpText?: string }) {
   const { t } = useTranslation()
-  console.log(data)
   return (
     <div className='overflow-auto'>
       <div className='bg-[#191919] rounded-mlg mt-8 min-w-[300px] md:min-w-[400px]'>

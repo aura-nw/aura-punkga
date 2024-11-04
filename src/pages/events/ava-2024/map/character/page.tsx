@@ -463,7 +463,7 @@ function Event() {
                               }
                             }}>
                             <div className='flex items-center justify-between'>
-                              <div>{t('Collect IP License')}</div>
+                              <div>{t('Collect IP')}</div>
                               <div className='flex items-center gap-1'>
                                 -1 <Image src={Point} alt='' className='h-5 w-auto ml-1' />
                               </div>
@@ -580,7 +580,7 @@ function Event() {
                           setSignInOpen(true)
                         }
                       }}>
-                      <div>{t('Collect IP License')}</div>
+                      <div>{t('Collect IP')}</div>
                       <div className='flex items-center gap-1'>
                         -1 <Image src={Point} alt='' className='h-5 w-auto ml-1' />
                       </div>
@@ -595,7 +595,7 @@ function Event() {
           )}
         </Modal>
       )}
-      <Modal open={open} setOpen={setOpen} title={t('Collect IP License')}>
+      <Modal open={open} setOpen={setOpen} title={t('Collect IP')}>
         {characterData && (
           <div>
             <div className='p-4 rounded-xl flex flex-col gap-4 items-center bg-neautral-950'>
