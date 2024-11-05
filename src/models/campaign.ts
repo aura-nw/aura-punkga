@@ -47,7 +47,20 @@ export type Quest = {
   id: string
   pointText?: string
   repeat: 'Once' | 'Daily'
-  type: 'Read' | 'Comment' | 'Subscribe' | 'Like' | 'Poll' | 'Quiz' | 'Empty' | 'xfollow' | 'xrepost' | 'dc_join'
+  type:
+    | 'Read'
+    | 'Comment'
+    | 'Subscribe'
+    | 'Like'
+    | 'Poll'
+    | 'Quiz'
+    | 'Empty'
+    | 'FollowX'
+    | 'RepostX'
+    | 'JoinDiscord'
+    | 'EngagesEventManga'
+    | 'LikeEventArtwork'
+    | 'CollectIP'
   reward_status: 'NOT_SATISFY' | 'CAN_CLAIM' | 'CLAIMED' | 'OUT_OF_SLOT'
   status: string
   created_at: string
@@ -106,6 +119,10 @@ export type Quest = {
         wrong_answer: string[]
       }[]
     }
+    xfollow?: { target_name: string }
+    xrepost?: { post_id: string }
+    dc_join?: { guild_id: string; invite_link?: string }
+    engages_event_manga?: { manga_tag_id: string; href: string }
   }
   reward: {
     nft?: {

@@ -52,7 +52,7 @@ function CampaignDetail({}) {
   const { mutate } = useSWRConfig()
   const { t } = useTranslation()
 
-  const { data: authData } = useSWR(
+  const { data: authData, isLoading } = useSWR(
     { key: 'fetch_campaign_auth_data', slug, account: account?.id },
     ({ key, slug, account }) => (account ? getCampaignAuthorizedData(slug) : null),
     {
@@ -317,7 +317,7 @@ function CampaignDetail({}) {
               </div>
               <div className='hidden lg:block'>
                 {/* Enroll button */}
-                {isUpcoming ? (
+                {isLoading ? null : isUpcoming ? (
                   <Popover
                     popoverRender={() => (
                       <div className='shadow-[0px_4px_15px_0px_#00000026] rounded-xl p-2 m-3 text-xs whitespace-nowrap bg-[#191919]'>

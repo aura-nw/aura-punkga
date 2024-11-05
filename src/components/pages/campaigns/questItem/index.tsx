@@ -208,9 +208,18 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
               </>
             )}
           </div>
-          {['Comment', 'Like', 'Subscribe', 'Read', 'xfollow', 'xrepost', 'dc_join'].includes(quest.type) && (
-            <RefQuest quest={quest} loading={loading} claimQuestHandler={claimQuestHandler} />
-          )}
+          {[
+            'Comment',
+            'Like',
+            'Subscribe',
+            'Read',
+            'xfollow',
+            'RepostX',
+            'JoinDiscord',
+            'EngagesEventManga',
+            'LikeEventArtwork',
+            'CollectIP',
+          ].includes(quest.type) && <RefQuest quest={quest} loading={loading} claimQuestHandler={claimQuestHandler} />}
           {quest.type == 'Empty' && <FreeQuest quest={quest} loading={loading} claimQuestHandler={claimQuestHandler} />}
           {quest.type == 'Quiz' && (
             <QuizQuest

@@ -23,7 +23,18 @@ export default function BasicQuest({
   const config = getConfig()
   const RefButton = () => {
     switch (quest.type) {
-      case 'xfollow':
+      case 'EngagesEventManga':
+        return (
+          <Link
+            className='w-full grid place-items-center'
+            target='_blank'
+            href={`${quest.requirement['engages_event_manga'].href}`}>
+            <Button className='w-full' size='sm'>
+              {t('Go to page')}
+            </Button>
+          </Link>
+        )
+      case 'FollowX':
         if (!account.socialAccount.twitter) {
           return (
             <Link
@@ -47,9 +58,7 @@ export default function BasicQuest({
           <Link
             className='w-full grid place-items-center'
             target='_blank'
-            href={`https://twitter.com/intent/follow?screen_name=${
-              quest.requirement[quest.type.toLowerCase()].target_name
-            }`}>
+            href={`https://twitter.com/intent/follow?screen_name=${quest.requirement['xfollow'].target_name}`}>
             <Button className='w-full' size='sm'>
               <div className='w-full flex items-center gap-1'>
                 <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
@@ -64,7 +73,7 @@ export default function BasicQuest({
           </Link>
         )
 
-      case 'xrepost':
+      case 'RepostX':
         if (!account.socialAccount.twitter) {
           return (
             <Link
@@ -88,7 +97,7 @@ export default function BasicQuest({
           <Link
             className='w-full grid place-items-center'
             target='_blank'
-            href={`https://twitter.com/intent/retweet?tweet_id=${quest.requirement[quest.type.toLowerCase()].post_id}`}>
+            href={`https://twitter.com/intent/retweet?tweet_id=${quest.requirement['xrepost'].post_id}`}>
             <Button className='w-full' size='sm'>
               <div className='w-full flex items-center gap-1'>
                 <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
@@ -102,7 +111,7 @@ export default function BasicQuest({
             </Button>
           </Link>
         )
-      case 'dc_join':
+      case 'JoinDiscord':
         if (!account.socialAccount.discord) {
           return (
             <Link
@@ -126,7 +135,7 @@ export default function BasicQuest({
           <Link
             className='w-full grid place-items-center'
             target='_blank'
-            href={`${quest.requirement[quest.type.toLowerCase()].invite_link}`}>
+            href={`${quest.requirement['dc_join'].invite_link}`}>
             <Button className='w-full' size='sm'>
               <div className='w-full flex items-center gap-1'>
                 <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
