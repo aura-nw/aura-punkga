@@ -18,6 +18,7 @@ import { oauthLogin } from 'src/utils'
 import { getItem, removeItem, setItem } from 'src/utils/localStorage'
 import { useAccount, useChainId, useDisconnect, useSignMessage, useSwitchChain } from 'wagmi'
 import ModalProvider from './modals'
+import { useCookies } from 'react-cookie'
 const queryClient = new QueryClient()
 
 export const Context = createContext<{
@@ -70,6 +71,7 @@ function ContextProvider({ children }: any) {
   const accessTokenParam = searchParams.get('access_token') || searchParams.get('token')
   const expiresInParam = searchParams.get('expires_in')
   const portalCallbackUrlParam = searchParams.get('login_callback_url')
+  const [cookie, setCookie, removeCookie] = useCookies(['token'])
   const config = getConfig()
   const authorizerRef = new Authorizer({
     authorizerURL: config.AUTHORIZER_URL,
@@ -216,7 +218,10 @@ function ContextProvider({ children }: any) {
       })
       if (res?.siwe?.access_token) {
         const token = res?.siwe?.access_token
-        setItem('token', res?.siwe?.access_token)
+        setItem('token', res?.siwe?.access_token, new Date(Date.now() + res?.siwe?.expires_in * 1000))
+        setCookie('token', res?.siwe?.access_token, {
+          expires: new Date(Date.now() + res?.siwe?.expires_in * 1000),
+        })
         setLogoutTimeout(res?.siwe?.expires_in * 1000)
         await getProfile(token)
       }
@@ -244,6 +249,7 @@ function ContextProvider({ children }: any) {
       if (location.pathname.includes('reset_password') || location.pathname.includes('verified')) {
         await authorizerRef.logout()
         removeItem('token')
+        removeCookie('token')
         removeItem('current_reading_manga')
         setAccount(undefined)
       } else {
@@ -253,6 +259,9 @@ function ContextProvider({ children }: any) {
             accessTokenParam,
             new Date(Date.now() + (expiresInParam ? +expiresInParam * 1000 : 10800000))
           )
+          setCookie('token', accessTokenParam, {
+            expires: new Date(Date.now() + (expiresInParam ? +expiresInParam * 1000 : 10800000)),
+          })
           setLogoutTimeout(expiresInParam ? +expiresInParam * 1000 : 10800000)
           if (portalCallbackUrlParam) {
             router.replace(portalCallbackUrlParam)
@@ -261,7 +270,7 @@ function ContextProvider({ children }: any) {
           }
         } else {
           const token = getItem('token')
-          if (token) {
+          if (token && cookie['token']) {
             const t = localStorage.getItem('token') as string
             setLogoutTimeout(new Date(JSON.parse(t).exprire).getTime() - Date.now())
             await getProfile(token)
@@ -326,10 +335,12 @@ function ContextProvider({ children }: any) {
       }
       if (!res.email_verified_at && res.email) {
         removeItem('token')
+        removeCookie('token')
       }
       return res
     } catch (error) {
       removeItem('token')
+      removeCookie('token')
       console.log('getProfile', error)
     }
   }
@@ -343,6 +354,9 @@ function ContextProvider({ children }: any) {
       if (res && !res?.user?.roles?.includes('admin')) {
         callback && callback('success')
         setItem('token', res.access_token, new Date(Date.now() + res.expires_in * 1000))
+        setCookie('token', res.access_token, {
+          expires: new Date(Date.now() + res.expires_in * 1000),
+        })
         setLogoutTimeout(res.expires_in * 1000)
         getProfile(res.access_token)
       } else {
@@ -372,6 +386,7 @@ function ContextProvider({ children }: any) {
       await authorizerRef.logout()
       await disconnectAsync()
       removeItem('token')
+      removeCookie('token')
       removeItem('current_reading_manga')
       setAccount(undefined)
       router.push(location.origin + location.pathname)

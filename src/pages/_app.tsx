@@ -156,6 +156,8 @@ function MyApp(props: AppProps) {
           <CookiesProvider
             defaultSetOptions={{
               path: '/',
+              domain:
+                location.hostname == 'localhost' ? 'localhost' : getConfig().REDIRECT_URL.replace('https://', '.'),
             }}>
             <ContextProvider>
               <App {...props} />
