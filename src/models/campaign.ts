@@ -123,6 +123,8 @@ export type Quest = {
     xrepost?: { post_id: string }
     dc_join?: { guild_id: string; invite_link?: string }
     engages_event_manga?: { manga_tag_id: string; href: string }
+    like_event_artwork?: { href: string }
+    collect_ip?: { href: string }
   }
   reward: {
     nft?: {

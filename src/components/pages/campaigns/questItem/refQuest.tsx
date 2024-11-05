@@ -24,11 +24,17 @@ export default function BasicQuest({
   const RefButton = () => {
     switch (quest.type) {
       case 'EngagesEventManga':
+      case 'CollectIP':
+      case 'LikeEventArtwork':
         return (
           <Link
             className='w-full grid place-items-center'
             target='_blank'
-            href={`${quest.requirement['engages_event_manga'].href}`}>
+            href={`${
+              quest.requirement['engages_event_manga']?.href ||
+              quest.requirement['like_event_artwork']?.href ||
+              quest.requirement['collect_ip']?.href
+            }`}>
             <Button className='w-full' size='sm'>
               {t('Go to page')}
             </Button>

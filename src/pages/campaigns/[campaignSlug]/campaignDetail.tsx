@@ -317,7 +317,11 @@ function CampaignDetail({}) {
               </div>
               <div className='hidden lg:block'>
                 {/* Enroll button */}
-                {isLoading ? null : isUpcoming ? (
+                {isLoading ? (
+                  <Button size='sm' disabled className='w-full'>
+                    {t('Loading')}
+                  </Button>
+                ) : isUpcoming ? (
                   <Popover
                     popoverRender={() => (
                       <div className='shadow-[0px_4px_15px_0px_#00000026] rounded-xl p-2 m-3 text-xs whitespace-nowrap bg-[#191919]'>
@@ -353,7 +357,11 @@ function CampaignDetail({}) {
             ) : null}
 
             {/* Enroll button */}
-            {isUpcoming ? (
+            {isLoading ? (
+              <Button size='sm' disabled className='w-full'>
+                {t('Loading')}
+              </Button>
+            ) : isUpcoming ? (
               <div className='mt-10 lg:hidden'>
                 <Button size='sm' disabled className='w-full'>
                   {t('Enroll now')}
