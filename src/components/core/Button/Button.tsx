@@ -123,18 +123,7 @@ const Button: React.FC<ButtonProps> = ({
       {loading ? (
         <div className='relative'>
           <div className='absolute inset-0 grid place-items-center'>
-            <Spinner
-              size={iconSize}
-              color={
-                variant === 'filled'
-                  ? color === 'green'
-                    ? '#0B0B0B'
-                    : '#F6F6F6'
-                  : color === 'green'
-                  ? '#183442'
-                  : '#009640'
-              }
-            />
+            <Spinner size={iconSize} color={'#F6F6F6'} />
           </div>
           <span className='px-1 opacity-0'>{children}</span>
         </div>
