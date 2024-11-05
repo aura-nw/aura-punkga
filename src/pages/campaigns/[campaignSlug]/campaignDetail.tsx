@@ -358,9 +358,11 @@ function CampaignDetail({}) {
 
             {/* Enroll button */}
             {isLoading ? (
-              <Button size='sm' disabled className='w-full'>
-                {t('Loading')}
-              </Button>
+              <div className='mt-10 lg:hidden'>
+                <Button size='sm' disabled className='w-full'>
+                  {t('Loading')}
+                </Button>
+              </div>
             ) : isUpcoming ? (
               <div className='mt-10 lg:hidden'>
                 <Button size='sm' disabled className='w-full'>

@@ -203,7 +203,12 @@ export default function BasicQuest({
           />
         </Button>
       ) : (
-        <RefButton />
+        <div className='grid grid-cols-[60%_1fr] gap-5'>
+          <RefButton />
+          <Button size='sm' className='w-full'>
+            {t('Check')}
+          </Button>
+        </div>
       )}
     </div>
   )

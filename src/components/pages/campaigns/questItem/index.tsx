@@ -213,7 +213,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
             'Like',
             'Subscribe',
             'Read',
-            'xfollow',
+            'FollowX',
             'RepostX',
             'JoinDiscord',
             'EngagesEventManga',
