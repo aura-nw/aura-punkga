@@ -1,11 +1,10 @@
 import Button from 'components/core/Button/Button'
-import Modal from 'components/Modal'
+import Modal from 'components/core/Modal'
 import Spinner from 'components/Spinner'
 import CopySvg from 'images/icons/copy.svg'
 import Warning from 'images/icons/warning.svg'
 import getConfig from 'next/config'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
 import { QRCodeSVG } from 'qrcode.react'
 import { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -119,7 +118,7 @@ export default function ConnectModal() {
                 {installed.map((connector) => (
                   <div key={connector.id}>
                     <div
-                      className='flex gap-2 w-full items-center hover:bg-[#f0f0f0] bg-[#f0f0f0] md:bg-white cursor-pointer p-2 md:py-3 md:px-4 rounded-lg border-[1px] border-[#DEDEDE]'
+                      className='flex gap-2 w-full items-center hover:bg-gray-900 bg-gray-900 md:bg-white cursor-pointer p-2 md:py-3 md:px-4 rounded-lg border-[1px] border-[#DEDEDE]'
                       onClick={async () => {
                         try {
                           await wagmiConnect(
@@ -149,7 +148,7 @@ export default function ConnectModal() {
                 {otherWallet.map((connector) => (
                   <div key={connector.id}>
                     <div
-                      className='flex gap-2 w-full items-center hover:bg-[#f0f0f0] bg-[#f0f0f0] md:bg-white cursor-pointer p-2 md:py-3 md:px-4 rounded-lg border-[1px] border-[#DEDEDE]'
+                      className='flex gap-2 w-full items-center hover:bg-gray-900 bg-gray-900 md:bg-white cursor-pointer p-2 md:py-3 md:px-4 rounded-lg border-[1px] border-[#DEDEDE]'
                       onClick={async () => {
                         try {
                           setShowQRCode(!showQRCode)
@@ -208,7 +207,7 @@ export default function ConnectModal() {
                     {installed.map((connector) => (
                       <div key={connector.id}>
                         <div
-                          className='flex gap-2 w-full items-center hover:bg-[#f0f0f0] cursor-pointer py-3 px-4 rounded-[4px]'
+                          className='flex gap-2 w-full items-center hover:bg-gray-900 cursor-pointer py-3 px-4 rounded-[4px]'
                           onClick={async () => {
                             try {
                               setShowQRCode(false)
@@ -242,7 +241,7 @@ export default function ConnectModal() {
                     {otherWallet.map((connector) => (
                       <div key={connector.id}>
                         <div
-                          className='flex gap-2 w-full items-center hover:bg-[#f0f0f0] cursor-pointer py-3 px-4 rounded-[4px]'
+                          className='flex gap-2 w-full items-center hover:bg-gray-900 cursor-pointer py-3 px-4 rounded-[4px]'
                           onClick={async () => {
                             try {
                               setShowQRCode(!showQRCode)
@@ -312,7 +311,7 @@ export default function ConnectModal() {
                     </div>
                     <div className='flex flex-col items-center'>
                       {loading ? (
-                        <div className='w-[290px] bg-[#f0f0f0] rounded-lg aspect-square flex justify-center items-center'>
+                        <div className='w-[290px] bg-gray-900 rounded-lg aspect-square flex justify-center items-center'>
                           <Spinner className='w-8 h-8' />
                         </div>
                       ) : (

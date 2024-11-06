@@ -61,6 +61,7 @@ export type Quest = {
     | 'EngagesEventManga'
     | 'LikeEventArtwork'
     | 'CollectIP'
+    | 'MintBadge'
   reward_status: 'NOT_SATISFY' | 'CAN_CLAIM' | 'CLAIMED' | 'OUT_OF_SLOT'
   status: string
   created_at: string
@@ -125,6 +126,7 @@ export type Quest = {
     engages_event_manga?: { manga_tag_id: string; href: string }
     like_event_artwork?: { href: string }
     collect_ip?: { href: string }
+    mint_nft?: { contract_address: string }
   }
   reward: {
     nft?: {

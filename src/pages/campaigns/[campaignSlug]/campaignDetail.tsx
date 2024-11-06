@@ -98,6 +98,15 @@ function CampaignDetail({}) {
       setSignInOpen(true)
     }
   }, [account, data])
+
+  useEffect(() => {
+    if (location.search.includes('connect_error')) {
+      toast(t('An error occurred when trying to connect your account. Please try again!'), {
+        type: 'error',
+      })
+    }
+  }, [])
+
   const fetchData = async () => {
     try {
       const data = await getCampaignDetail(slug)

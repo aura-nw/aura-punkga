@@ -788,3 +788,10 @@ export const checkQuestStatus = async (id: string) => {
     throw error
   }
 }
+export const getMintNftSignature = async (id: string) => {
+  try {
+    return await privateAxios.post(`${getConfig().REST_API_URL}/quest/${id}/mint-badge`)
+  } catch (error) {
+    throw error
+  }
+}

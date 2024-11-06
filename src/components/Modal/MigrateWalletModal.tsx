@@ -1,7 +1,6 @@
 import Mascot from 'assets/images/Mascot_5_1.png'
-import MainButton from 'components/Button/MainButton'
 import Button from 'components/core/Button/Button'
-import Modal from 'components/Modal'
+import Modal from 'components/core/modal'
 import Spinner from 'components/Spinner'
 import getConfig from 'next/config'
 import Image from 'next/image'
@@ -142,9 +141,9 @@ export default function MigrateWalletModal() {
             <div className='my-4 grid place-items-center w-full'>
               <Image src={Mascot} alt='' />
             </div>
-            <MainButton className='w-fit mx-auto' onClick={() => setOpen(false)}>
+            <Button size='sm' className='w-fit mx-auto' onClick={() => setOpen(false)}>
               {t('Done')}
-            </MainButton>
+            </Button>
           </div>
         ) : success === false ? (
           <div className='flex flex-col gap-2 max-w-[452px]'>
@@ -154,8 +153,10 @@ export default function MigrateWalletModal() {
             <p className='text-center text-sm leading-[18px] my-4'>
               {t('This wallet has been linked to another account.')}
             </p>
-            <MainButton
+            <Button
               className='w-fit mx-auto'
+              size='sm'
+              variant='outlined'
               onClick={() => {
                 setOpen(false)
                 setTimeout(() => setSuccess(undefined), 300)
@@ -163,7 +164,7 @@ export default function MigrateWalletModal() {
                 wagmiDisconnect()
               }}>
               {t('Close')}
-            </MainButton>
+            </Button>
           </div>
         ) : address ? (
           <div className='flex flex-col gap-3'>
@@ -173,20 +174,23 @@ export default function MigrateWalletModal() {
             <p className='text-center text-sm leading-[18px] -mt-1'>
               {t('All of your assets on Punkga will be transferred to your wallet')}
             </p>
-            <div className='my-3 p-3 rounded-md bg-[#F2F2F2] text-[#1FAB5E] text-sm leading-[18px] w-fit mx-auto'>
+            <div className='my-3 p-3 rounded-md bg-gray-900 text-[#1FAB5E] text-sm leading-[18px] w-fit mx-auto'>
               {address}
             </div>
             <div className='flex justify-center gap-6 items-center'>
-              <MainButton
-                style='secondary'
+              <Button
+                variant='outlined'
+                size='sm'
                 onClick={() => {
                   setOpen(false)
                   setTimeout(disconnect, 400)
                   wagmiDisconnect()
                 }}>
                 {t('Cancel')}
-              </MainButton>
-              <MainButton onClick={linkWalletHandler}>{t('Confirm')}</MainButton>
+              </Button>
+              <Button size='sm' onClick={linkWalletHandler}>
+                {t('Confirm')}
+              </Button>
             </div>
           </div>
         ) : step == 1 ? (
@@ -194,7 +198,7 @@ export default function MigrateWalletModal() {
             <p className='text-center text-base leading-6 font-semibold md:text-lg md:leading-[23px]'>
               {t('Migrate your wallet')}
             </p>
-            <div className='p-6 text-xs leading-[15px] text-subtle-dark bg-light-gray rounded-2xl'>
+            <div className='p-4 text-xs leading-[15px] text-white bg-gray-900 rounded-2xl'>
               <span>
                 {t(
                   'You currently use a custodial wallet which only valid on Punkga. Migrating your own wallet allows you to:'
@@ -206,7 +210,7 @@ export default function MigrateWalletModal() {
                 <li>{t('Trade NFTs on marketplaces')}</li>
               </ul>
             </div>
-            <Button className='w-fit mx-auto' onClick={() => setStep(2)}>
+            <Button size='sm' className='w-fit mx-auto' onClick={() => setStep(2)}>
               {t('Connect Wallet')}
             </Button>
           </div>
@@ -223,7 +227,7 @@ export default function MigrateWalletModal() {
                     {installed.map((connector) => (
                       <div key={connector.id}>
                         <div
-                          className='flex gap-2 w-full items-center hover:bg-[#f0f0f0] cursor-pointer py-3 px-4 rounded-[4px]'
+                          className='flex gap-2 w-full items-center hover:bg-gray-900 cursor-pointer py-3 px-4 rounded-[4px]'
                           onClick={async () => {
                             try {
                               setShowQRCode(false)
@@ -247,7 +251,7 @@ export default function MigrateWalletModal() {
                     {otherWallet.map((connector) => (
                       <div key={connector.id}>
                         <div
-                          className='flex gap-2 w-full items-center hover:bg-[#f0f0f0] cursor-pointer py-3 px-4 rounded-[4px]'
+                          className='flex gap-2 w-full items-center hover:bg-gray-900 cursor-pointer py-3 px-4 rounded-[4px]'
                           onClick={async () => {
                             try {
                               setShowQRCode(!showQRCode)

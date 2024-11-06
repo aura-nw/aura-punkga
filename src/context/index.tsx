@@ -249,7 +249,7 @@ function ContextProvider({ children }: any) {
       if (location.pathname.includes('reset_password') || location.pathname.includes('verified')) {
         await authorizerRef.logout()
         removeItem('token')
-        removeCookie('token')
+        removeTokenCookie()
         removeItem('current_reading_manga')
         setAccount(undefined)
       } else {
@@ -335,12 +335,12 @@ function ContextProvider({ children }: any) {
       }
       if (!res.email_verified_at && res.email) {
         removeItem('token')
-        removeCookie('token')
+        removeTokenCookie()
       }
       return res
     } catch (error) {
       removeItem('token')
-      removeCookie('token')
+      removeTokenCookie()
       console.log('getProfile', error)
     }
   }
@@ -386,7 +386,7 @@ function ContextProvider({ children }: any) {
       await authorizerRef.logout()
       await disconnectAsync()
       removeItem('token')
-      removeCookie('token')
+      removeTokenCookie()
       removeItem('current_reading_manga')
       setAccount(undefined)
       router.push(location.origin + location.pathname)
@@ -477,6 +477,13 @@ function ContextProvider({ children }: any) {
       return null
     }
   }
+
+  const removeTokenCookie = () => {
+    removeCookie('token', { path: '/', domain: '.punkga.me' })
+    removeCookie('token', { path: '/', domain: '.staging.punkga.me' })
+    removeCookie('token', { path: '/', domain: '.dev.punkga.me' })
+  }
+
   if (isSettingUp) {
     return null
   }
