@@ -1,6 +1,6 @@
 import Button from 'components/core/Button/Button'
 import Chip from 'components/core/Chip'
-import Modal from 'components/core/modal'
+import Modal from 'components/core/Modal'
 import KPImage from 'components/pages/campaigns/assets/ic_Kp.svg'
 import XPImage from 'components/pages/campaigns/assets/illus.svg'
 import NFTPackage from 'components/pages/campaigns/assets/nft-package.png'

@@ -16,7 +16,7 @@ import SubmissionTable from './submissionTable'
 
 import Frame from 'components/pages/event/ava-2024/assets/frame.svg'
 import Placeholder from 'components/pages/event/ava-2024/assets/placeholder.png'
-import Modal from 'components/core/modal'
+import Modal from 'components/core/Modal'
 import Checkbox from 'components/core/Checkbox'
 export default function Round3Submission() {
   const { account, getProfile } = useContext(Context)

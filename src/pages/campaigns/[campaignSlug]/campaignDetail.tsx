@@ -31,7 +31,7 @@ import {
 import { levelToXp } from 'src/utils'
 import useSWR, { useSWRConfig } from 'swr'
 import QuestList from '../../../components/pages/campaigns/questList'
-import Modal from 'components/core/modal'
+import Modal from 'components/core/Modal'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
