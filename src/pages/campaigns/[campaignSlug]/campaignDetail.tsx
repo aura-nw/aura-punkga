@@ -56,7 +56,7 @@ function CampaignDetail({}) {
     { key: 'fetch_campaign_auth_data', slug, account: account?.id },
     ({ key, slug, account }) => (account ? getCampaignAuthorizedData(slug) : null),
     {
-      revalidateOnFocus: true,
+      revalidateOnFocus: false,
     }
   )
   const { data: leaderboardData } = useSWR(
