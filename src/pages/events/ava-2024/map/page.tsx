@@ -207,7 +207,7 @@ function Event() {
     if (campainRoomStep == 4) {
       setShowGuide(false)
       setCampainDone(true)
-      // router.push(`/campaigns/story-odyssey-badge`)
+      router.push(`/campaigns/story-odyssey-badge`)
     }
   }, [campainRoomStep])
 
@@ -358,15 +358,15 @@ function Event() {
           <Button
             onClick={() => {
               if (active == 4) {
-                // currentSetStep.current = setCampainRoomStep
-                // if (!campainDone) {
-                //   setCampainRoomStep(0)
-                //   setMangaRoomStep(-1)
-                //   setArtRoomStep(-1)
-                //   setCharacterRoomStep(-1)
-                // } else {
-                //   router.push(`/campaigns/story-odyssey-badge`)
-                // }
+                currentSetStep.current = setCampainRoomStep
+                if (!campainDone) {
+                  setCampainRoomStep(0)
+                  setMangaRoomStep(-1)
+                  setArtRoomStep(-1)
+                  setCharacterRoomStep(-1)
+                } else {
+                  router.push(`/campaigns/story-odyssey-badge`)
+                }
               } else {
                 setActive(4)
               }
@@ -555,17 +555,17 @@ function Event() {
             </>
           </Button>
           <Button
-            // onClick={() => {
-            //   if (!campainDone) {
-            //     currentSetStep.current = setCampainRoomStep
-            //     setCampainRoomStep(0)
-            //     setMangaRoomStep(-1)
-            //     setArtRoomStep(-1)
-            //     setCharacterRoomStep(-1)
-            //   } else {
-            //     router.push(`/campaigns/story-odyssey-badge`)
-            //   }
-            // }}
+            onClick={() => {
+              if (!campainDone) {
+                currentSetStep.current = setCampainRoomStep
+                setCampainRoomStep(0)
+                setMangaRoomStep(-1)
+                setArtRoomStep(-1)
+                setCharacterRoomStep(-1)
+              } else {
+                router.push(`/campaigns/story-odyssey-badge`)
+              }
+            }}
             className='absolute bottom-[14.3%] right-[32.25%] w-[38.9%]'>
             <>
               <div className='opacity-0 hover:opacity-100'>
