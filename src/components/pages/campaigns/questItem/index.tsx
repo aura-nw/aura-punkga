@@ -150,7 +150,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                   )}
                 </div>
               )}
-              <div className='text-sm lg:text-base font-semibold line-clamp-2 lg:leading-[23px] h-[46px]'>
+              <div className='text-sm lg:text-base font-semibold line-clamp-2 lg:leading-[23px]'>
                 {quest[locale].name}
               </div>
             </div>
