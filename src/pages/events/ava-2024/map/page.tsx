@@ -376,24 +376,13 @@ function Event() {
               <div className={active == 4 ? 'opacity-100' : 'opacity-0'}>
                 <Image src={Room4} alt='' className='h-full w-full' />
                 <div className='font-jaro absolute whitespace-nowrap top-2/3 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='20'
-                    height='22'
-                    viewBox='0 0 20 22'
-                    fill='none'
-                    className='w-4 h-4'>
-                    <path
-                      fill-rule='evenodd'
-                      clip-rule='evenodd'
-                      d='M3.25 9.33501V7.15663C3.25 3.20413 6.27208 0 10 0C13.7279 0 16.75 3.20413 16.75 7.15663V9.33501C17.8648 9.42328 18.5907 9.64612 19.1213 10.2087C20 11.1403 20 12.6397 20 15.6386C20 18.6374 20 20.1368 19.1213 21.0684C18.2426 22 16.8284 22 14 22H6C3.17157 22 1.75736 22 0.87868 21.0684C0 20.1368 0 18.6374 0 15.6386C0 12.6397 0 11.1403 0.87868 10.2087C1.40931 9.64612 2.13525 9.42328 3.25 9.33501ZM4.75 7.15663C4.75 4.08246 7.10051 1.59036 10 1.59036C12.8995 1.59036 15.25 4.08246 15.25 7.15663V9.2809C14.867 9.27711 14.4515 9.27711 14 9.27711H6C5.54849 9.27711 5.13301 9.27711 4.75 9.2809V7.15663ZM12 15.6386C12 16.8097 11.1046 17.759 10 17.759C8.89543 17.759 8 16.8097 8 15.6386C8 14.4674 8.89543 13.5181 10 13.5181C11.1046 13.5181 12 14.4674 12 15.6386Z'
-                      fill='white'
-                    />
+                  <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                    <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
                   </svg>
                   {t('Campaign')}
                 </div>
               </div>
-              {/* <HelpBubble
+              <HelpBubble
                 className='absolute -right-[7%] top-[5%] cursor-help w-[20%]'
                 onClick={(e) => {
                   currentSetStep.current = setCampainRoomStep
@@ -403,7 +392,7 @@ function Event() {
                   setCharacterRoomStep(-1)
                   e.stopPropagation()
                 }}
-              /> */}
+              />
             </>
           </Button>
           <Button
@@ -571,24 +560,13 @@ function Event() {
               <div className='opacity-0 hover:opacity-100'>
                 <Image src={Room4} alt='' className='w-full h-full' />
                 <div className='font-jaro absolute whitespace-nowrap top-2/3 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-white bg-black px-2 rounded-md text-white flex items-center gap-1 lg:gap-2 text-sm lg:text-2xl'>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='20'
-                    height='22'
-                    viewBox='0 0 20 22'
-                    fill='none'
-                    className='w-4 h-4'>
-                    <path
-                      fill-rule='evenodd'
-                      clip-rule='evenodd'
-                      d='M3.25 9.33501V7.15663C3.25 3.20413 6.27208 0 10 0C13.7279 0 16.75 3.20413 16.75 7.15663V9.33501C17.8648 9.42328 18.5907 9.64612 19.1213 10.2087C20 11.1403 20 12.6397 20 15.6386C20 18.6374 20 20.1368 19.1213 21.0684C18.2426 22 16.8284 22 14 22H6C3.17157 22 1.75736 22 0.87868 21.0684C0 20.1368 0 18.6374 0 15.6386C0 12.6397 0 11.1403 0.87868 10.2087C1.40931 9.64612 2.13525 9.42328 3.25 9.33501ZM4.75 7.15663C4.75 4.08246 7.10051 1.59036 10 1.59036C12.8995 1.59036 15.25 4.08246 15.25 7.15663V9.2809C14.867 9.27711 14.4515 9.27711 14 9.27711H6C5.54849 9.27711 5.13301 9.27711 4.75 9.2809V7.15663ZM12 15.6386C12 16.8097 11.1046 17.759 10 17.759C8.89543 17.759 8 16.8097 8 15.6386C8 14.4674 8.89543 13.5181 10 13.5181C11.1046 13.5181 12 14.4674 12 15.6386Z'
-                      fill='white'
-                    />
+                  <svg xmlns='http://www.w3.org/2000/svg' width='10' height='12' viewBox='0 0 10 12' fill='none'>
+                    <path d='M10 6L0.25 11.6292L0.250001 0.370834L10 6Z' fill='white' />
                   </svg>
                   {t('Campaign')}
                 </div>
               </div>
-              {/* <HelpBubble
+              <HelpBubble
                 className='absolute right-[0%] top-[15%] cursor-help'
                 onClick={(e) => {
                   currentSetStep.current = setCampainRoomStep
@@ -598,7 +576,7 @@ function Event() {
                   setCharacterRoomStep(-1)
                   e.stopPropagation()
                 }}
-              /> */}
+              />
             </>
           </Button>
           <Button
