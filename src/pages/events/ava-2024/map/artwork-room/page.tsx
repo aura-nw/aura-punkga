@@ -379,7 +379,13 @@ const Content = ({ selected, mutate, setShowSlider }) => {
                 )}
               </div>
               <div className='text-sm font-medium'>
-                {t('by')} <span className='text-brand-default'>{selected?.authorizer_user?.creator?.pen_name || 'Punkga'}</span>
+                {t('by')}{' '}
+                <Link
+                  target='_blank'
+                  href={`/artist/${selected?.authorizer_user?.creator?.slug}`}
+                  className='text-brand-default'>
+                  {selected?.authorizer_user?.creator?.pen_name || 'Punkga'}
+                </Link>
               </div>
             </div>
             <div className='flex items-center gap-1'>
