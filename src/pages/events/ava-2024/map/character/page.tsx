@@ -34,7 +34,8 @@ export default function Page(props) {
   return <Event {...props} />
 }
 function Event() {
-  const { locale } = useRouter()
+  const { locale, replace } = useRouter()
+  const searchParams = new URLSearchParams(location.search)
   const { t } = useTranslation()
   const { account } = useContext(Context)
   const { setSignInOpen } = useContext(ModalContext)
@@ -51,7 +52,7 @@ function Event() {
   const [sort, setSort] = useState('Created_At_Desc')
   const [characters, setCharacters] = useState([])
   const { width } = useWindowSize()
-  const [type, setType] = useState('all')
+  const [type, setType] = useState(searchParams.get('type') || 'all')
   const { data, mutate } = useSWR(
     { ket: 'get-characters', userId: account?.id, page, sort, type },
     ({ userId, page, sort, type }) => eventService.story.getCharacters(userId, page, sort, type),
