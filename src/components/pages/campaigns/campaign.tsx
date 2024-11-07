@@ -270,10 +270,10 @@ export default function CampaignPage() {
                       <Image src={expImage} width={80} height={80} alt='' className='w-[80px] h-[80px] rounded-lg' />
                     )}
                     {!!campaign?.reward?.xp && campaign?.reward?.nft?.nft_name ? (
-                      <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${campaign?.reward?.xp} ${campaign.campaign_chain?.punkga_config?.reward_point_name}`}</div>
+                      <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${campaign?.reward?.xp} ${campaign.campaign_chain?.punkga_config?.reward_point_name||'XP'}`}</div>
                     ) : (
                       <div className='text-text-teriary text-center font-semibold'>{`+ ${campaign?.reward?.xp || 0} ${
-                        campaign.campaign_chain?.punkga_config?.reward_point_name
+                        campaign.campaign_chain?.punkga_config?.reward_point_name || 'XP'
                       }`}</div>
                     )}
                   </div>
