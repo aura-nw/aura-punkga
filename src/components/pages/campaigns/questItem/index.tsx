@@ -250,7 +250,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
                   <span> {t('to unlock')}</span>
                 </div>
               </Popover>
-              <div className='font-jaro text-[26px] text-text-teriary leading-[26px] uppercase'>{t('Locked')}</div>
+              <div className='font-jaro text-[26px] text-text-teriary leading-[26px] uppercase'>{t('Lock')}</div>
             </div>
           ) : quest.reward_status == 'CAN_CLAIM' ? (
             <div
