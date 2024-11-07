@@ -126,7 +126,7 @@ export default function ConnectModal() {
                               connector,
                               chainId: location.pathname.includes('ava-2024')
                                 ? storyChain.id
-                                : getConfig().CHAIN_INFO.evmChainId,
+                                : getConfig().DEFAULT_CHAIN_ID,
                             },
                             {
                               onSuccess: connectHandler,
@@ -159,7 +159,7 @@ export default function ConnectModal() {
                               connector,
                               chainId: location.pathname.includes('ava-2024')
                                 ? storyChain.id
-                                : getConfig().CHAIN_INFO.evmChainId,
+                                : getConfig().DEFAULT_CHAIN_ID,
                             },
                             {
                               onSuccess: (data) => {
@@ -216,7 +216,7 @@ export default function ConnectModal() {
                                   connector,
                                   chainId: location.pathname.includes('ava-2024')
                                     ? storyChain.id
-                                    : getConfig().CHAIN_INFO.evmChainId,
+                                    : getConfig().DEFAULT_CHAIN_ID,
                                 },
                                 {
                                   onSuccess: connectHandler,
@@ -252,7 +252,7 @@ export default function ConnectModal() {
                                   connector,
                                   chainId: location.pathname.includes('ava-2024')
                                     ? storyChain.id
-                                    : getConfig().CHAIN_INFO.evmChainId,
+                                    : getConfig().DEFAULT_CHAIN_ID,
                                 },
                                 {
                                   onSuccess: (data) => {

@@ -146,7 +146,9 @@ const ByWallet = ({ step }) => {
                         await wagmiConnect(
                           {
                             connector,
-                            chainId: location.pathname.includes('ava-2024') ? storyChain.id : getConfig().CHAIN_INFO.evmChainId,
+                            chainId: location.pathname.includes('ava-2024')
+                              ? storyChain.id
+                              : getConfig().DEFAULT_CHAIN_ID,
                           },
                           { onSuccess: connectHandler }
                         )
@@ -176,7 +178,9 @@ const ByWallet = ({ step }) => {
                         await wagmiConnect(
                           {
                             connector,
-                            chainId: location.pathname.includes('ava-2024') ? storyChain.id : getConfig().CHAIN_INFO.evmChainId,
+                            chainId: location.pathname.includes('ava-2024')
+                              ? storyChain.id
+                              : getConfig().DEFAULT_CHAIN_ID,
                           },
                           {
                             onSuccess: connectHandler,
@@ -204,7 +208,9 @@ const ByWallet = ({ step }) => {
                         wagmiConnect(
                           {
                             connector,
-                            chainId: location.pathname.includes('ava-2024') ? storyChain.id : getConfig().CHAIN_INFO.evmChainId,
+                            chainId: location.pathname.includes('ava-2024')
+                              ? storyChain.id
+                              : getConfig().DEFAULT_CHAIN_ID,
                           },
                           {
                             onSuccess: (data) => {
