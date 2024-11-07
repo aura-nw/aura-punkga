@@ -12,7 +12,7 @@ export const storyChain: Chain = {
   },
   rpcUrls: {
     default: {
-      http: ['https://odyssey.storyrpc.io/'],
+      http: ['https://odyssey-evm.spidernode.net/'],
     },
   },
   blockExplorers: {
