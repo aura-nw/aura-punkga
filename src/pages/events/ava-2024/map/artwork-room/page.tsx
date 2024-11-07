@@ -272,8 +272,8 @@ function PageDetail() {
       {showSlider && (
         <div className='fixed inset-0 z-50'>
           <div className='absolute inset-0 bg-[#000000CC]' onClick={() => setShowSlider(false)}></div>
-          <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex items-center gap-4 w-[95vw] max-w-screen-md'>
-            <div className='cursor-pointer p-5' onClick={prevHandler}>
+          <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex items-center gap-4 justify-center max-w-[95vw] w-full lg:w-fit'>
+            <div className='cursor-pointer p-1' onClick={prevHandler}>
               <svg width='24' height='25' viewBox='0 0 24 25' fill='none' xmlns='http://www.w3.org/2000/svg'>
                 <g clip-path='url(#clip0_6205_29201)'>
                   <path
@@ -295,12 +295,12 @@ function PageDetail() {
                   width={500}
                   height={500}
                   alt=''
-                  className='w-full aspect-square object-cover'
+                  className='w-full object-contain h-full max-h-[80vh]'
                 />
                 <div className='text-sm font-semibold text-white'>{selected.name}</div>
               </div>
             </div>
-            <div className='cursor-pointer p-5' onClick={nextHandler}>
+            <div className='cursor-pointer p-1' onClick={nextHandler}>
               <svg width='24' height='25' viewBox='0 0 24 25' fill='none' xmlns='http://www.w3.org/2000/svg'>
                 <g clip-path='url(#clip0_6205_29197)'>
                   <path
