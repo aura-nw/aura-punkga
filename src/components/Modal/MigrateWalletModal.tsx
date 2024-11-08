@@ -49,7 +49,11 @@ export default function MigrateWalletModal() {
           if (connector.id === 'injected') {
             mobile.push(connector)
           }
-          connector.icon && installedWallet.push(connector)
+          if (connector.id == 'app.subwallet') {
+            connector.icon && installedWallet.unshift(connector)
+          } else {
+            connector.icon && installedWallet.push(connector)
+          }
         } else if (connector.type === 'walletConnect') {
           otherWallet.push(connector)
         }

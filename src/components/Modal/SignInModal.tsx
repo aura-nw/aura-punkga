@@ -83,7 +83,6 @@ export default function SignInModal() {
 }
 
 const ByWallet = ({ step }) => {
-  
   const { t } = useTranslation()
   const { connectors, connectAsync: wagmiConnect } = useConnect()
   const { connectHandler } = useContext(Context)
@@ -104,12 +103,15 @@ const ByWallet = ({ step }) => {
 
       for (let i = 0; i < connectors.length; i++) {
         const connector = connectors[i]
-
         if (connector.type === 'injected') {
           if (connector.id === 'injected') {
             mobile.push(connector)
           }
-          connector.icon && installedWallet.push(connector)
+          if (connector.id == 'app.subwallet') {
+            connector.icon && installedWallet.unshift(connector)
+          } else {
+            connector.icon && installedWallet.push(connector)
+          }
         } else if (connector.type === 'walletConnect') {
           otherWallet.push(connector)
         }
