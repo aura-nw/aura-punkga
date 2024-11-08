@@ -93,11 +93,6 @@ function CampaignDetail({}) {
   useEffect(() => {
     fetchData()
   }, [account])
-  useEffect(() => {
-    if (data && !account) {
-      setSignInOpen(true)
-    }
-  }, [account, data])
 
   useEffect(() => {
     if (location.search.includes('connect_error')) {
