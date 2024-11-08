@@ -63,7 +63,8 @@ export default function SignInModal() {
           {step == 1 && (
             <>
               <div className='flex-1'>
-                <ByWallet step={step} />
+                <div className='font-semibold text-[#414141]'>{t('Under maintenance')}</div>
+                //<ByWallet step={step} />
               </div>
               <div className='w-[1px] h-[400px] bg-[#F0F0F0] hidden md:block'></div>
               <div className='md:hidden flex gap-[18px] items-center w-full'>
