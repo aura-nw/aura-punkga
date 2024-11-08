@@ -102,16 +102,16 @@ export default function ConnectModal() {
                 </div>
               </div>
               <div className='flex flex-col gap-3 mt-8'>
-                <p className='text-[#414141] text-sm leading-[18px]'>
+                <p className='text-white text-sm leading-[18px]'>
                   {t('To continue, connect to your linked wallet')}
                 </p>
                 <div className='w-full flex items-center justify-between px-2 py-3 border-[#DEDEDE] border-[1px] rounded-[4px]'>
-                  <div className='flex md:hidden text-[#ABABAB] text-sm font-semibold'>{`${shorten(
+                  <div className='flex md:hidden text-white text-sm font-semibold'>{`${shorten(
                     account?.activeWalletAddress,
                     8,
                     8
                   )}`}</div>
-                  <div className='md:flex hidden text-[#ABABAB] text-sm font-semibold'>
+                  <div className='md:flex hidden text-white text-sm font-semibold'>
                     {account?.activeWalletAddress}
                   </div>
 
