@@ -6,6 +6,7 @@ import DecorMiddle from 'components/pages/event/ava-2024/assets/decor-middle.png
 import Frame2 from 'components/pages/event/ava-2024/assets/frame-2.svg'
 import Frame from 'components/pages/event/ava-2024/assets/frame.svg'
 import Point from 'components/pages/event/ava-2024/assets/point.svg'
+import DarkPoint from 'components/pages/event/ava-2024/assets/dark-point.svg'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -34,7 +35,8 @@ export default function Page(props) {
   return <Event {...props} />
 }
 function Event() {
-  const { locale } = useRouter()
+  const { locale, replace } = useRouter()
+  const searchParams = new URLSearchParams(location.search)
   const { t } = useTranslation()
   const { account } = useContext(Context)
   const { setSignInOpen } = useContext(ModalContext)
@@ -51,7 +53,7 @@ function Event() {
   const [sort, setSort] = useState('Created_At_Desc')
   const [characters, setCharacters] = useState([])
   const { width } = useWindowSize()
-  const [type, setType] = useState('all')
+  const [type, setType] = useState(searchParams.get('type') || 'all')
   const { data, mutate } = useSWR(
     { ket: 'get-characters', userId: account?.id, page, sort, type },
     ({ userId, page, sort, type }) => eventService.story.getCharacters(userId, page, sort, type),
@@ -452,7 +454,6 @@ function Event() {
                           <Button
                             color='neautral'
                             size='sm'
-                            variant='outlined'
                             className='!w-2/3 shrink-0 [&>*]:w-full'
                             onClick={() => {
                               if (account) {
@@ -465,12 +466,12 @@ function Event() {
                             <div className='flex items-center justify-between'>
                               <div>{t('Collect IP')}</div>
                               <div className='flex items-center gap-1'>
-                                -1 <Image src={Point} alt='' className='h-5 w-auto ml-1' />
+                                -1 <Image src={DarkPoint} alt='' className='h-5 w-auto ml-1' />
                               </div>
                             </div>
                           </Button>
                         )}
-                        <Button size='sm' color='neautral' className='!w-full' onClick={likeHandler}>
+                        <Button size='sm' color='neautral' variant='outlined' className='!w-full' onClick={likeHandler}>
                           {t(isLiked ? 'Liked' : 'Like')}
                         </Button>
                       </div>
@@ -570,8 +571,7 @@ function Event() {
                     <Button
                       color='neautral'
                       size='sm'
-                      variant='outlined'
-                      className='!w-full shrink-0 flex item-center justify-between'
+                      className='!w-full shrink-0 flex item-center justify-between [&>*]:w-full'
                       onClick={() => {
                         if (account) {
                           setShowModal(false)
@@ -580,13 +580,15 @@ function Event() {
                           setSignInOpen(true)
                         }
                       }}>
-                      <div>{t('Collect IP')}</div>
-                      <div className='flex items-center gap-1'>
-                        -1 <Image src={Point} alt='' className='h-5 w-auto ml-1' />
+                      <div className='flex items-center justify-between'>
+                        <div>{t('Collect IP')}</div>
+                        <div className='flex items-center gap-1'>
+                          -1 <Image src={DarkPoint} alt='' className='h-5 w-auto ml-1' />
+                        </div>
                       </div>
                     </Button>
                   )}
-                  <Button size='sm' color='neautral' className='!w-full' onClick={likeHandler}>
+                  <Button size='sm' color='neautral' variant='outlined' className='!w-full' onClick={likeHandler}>
                     {t(isLiked ? 'Liked' : 'Like')}
                   </Button>
                 </div>

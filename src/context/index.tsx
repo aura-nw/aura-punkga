@@ -148,7 +148,7 @@ function ContextProvider({ children }: any) {
 
   const connectHandler = async (data: any) => {
     try {
-      let targetChainId = config.CHAIN_INFO.evmChainId
+      let targetChainId = config.DEFAULT_CHAIN_ID
       if (location.pathname.includes('ava-2024')) {
         targetChainId = storyChain.id
       }
@@ -172,7 +172,8 @@ function ContextProvider({ children }: any) {
   const signConnectMessage = (data?: any) => {
     const domain = window.location.hostname
     const origin = window.location.origin
-    const statement = 'Sign in with Aura Network to the app.'
+    const statement =
+      chainId == storyChain.id ? 'Sign in with Story Network to the app.' : 'Sign in with Aura Network to the app.'
     const addr = data?.accounts[0] || address
     const siweMessage = new SiweMessage({
       scheme: undefined,

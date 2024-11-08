@@ -33,6 +33,7 @@ import { shorten } from 'src/utils'
 import TonWeb from 'tonweb'
 import { useAccount, useBalance, useChainId, useSwitchChain } from 'wagmi'
 import Bg from './assets/bg.svg'
+import { storyChain } from 'src/services/wagmi/config'
 export const HEADER_HEIGHT = {
   MOBILE: '56px',
   DESKTOP: '80px',
@@ -243,9 +244,7 @@ export default function Header({ className }: { className?: string }) {
                           onClick={() => {
                             switchChain({
                               chainId:
-                                chainId == config.CHAIN_INFO.evmChainId
-                                  ?  1513
-                                  : config.CHAIN_INFO.evmChainId,
+                                chainId == config.CHAIN_INFO.evmChainId ? storyChain.id : config.CHAIN_INFO.evmChainId,
                             })
                           }}>
                           {chainId == config.CHAIN_INFO.evmChainId ? 'Switch to Story' : 'Switch to Aura'}
@@ -837,9 +836,7 @@ export default function Header({ className }: { className?: string }) {
                           onClick={() => {
                             switchChain({
                               chainId:
-                                chainId == config.CHAIN_INFO.evmChainId
-                                  ? 1513
-                                  : config.CHAIN_INFO.evmChainId,
+                                chainId == config.CHAIN_INFO.evmChainId ? storyChain.id : config.CHAIN_INFO.evmChainId,
                             })
                           }}>
                           {chainId == config.CHAIN_INFO.evmChainId ? 'Switch to Story' : 'Switch to Aura'}

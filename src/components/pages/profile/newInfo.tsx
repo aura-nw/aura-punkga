@@ -119,10 +119,15 @@ export default function NewInfo() {
   const handlePopoverKPOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElKP(event.currentTarget)
   }
-
+  
   const handlePopoverKPClose = () => {
     setAnchorElKP(null)
   }
+
+  const handlePopoverSFOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElKP(event.currentTarget)
+  }
+
   const handlePopoverSFClose = () => {
     setAnchorElSF(null)
   }
@@ -299,7 +304,7 @@ export default function NewInfo() {
                     alt='info'
                     width={10.5}
                     height={10.5}
-                    onMouseEnter={handlePopoverKPOpen}
+                    onMouseEnter={handlePopoverSFOpen}
                     onMouseLeave={handlePopoverSFClose}
                   />
                 </div>

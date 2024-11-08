@@ -123,7 +123,7 @@ export default function QuestList({
       ) : (
         <div className='grid grid-cols-1 xl:grid-cols-2 gap-4 mt-4 lg:mt-8'>
           {questList
-            .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+            .sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
             .sort((a, b) => a.weight - b.weight)
             .filter(
               (quest) =>

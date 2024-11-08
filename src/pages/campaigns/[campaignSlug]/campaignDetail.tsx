@@ -93,11 +93,6 @@ function CampaignDetail({}) {
   useEffect(() => {
     fetchData()
   }, [account])
-  useEffect(() => {
-    if (data && !account) {
-      setSignInOpen(true)
-    }
-  }, [account, data])
 
   useEffect(() => {
     if (location.search.includes('connect_error')) {
@@ -140,7 +135,7 @@ function CampaignDetail({}) {
           setEnrollLoading(false)
           return
         }
-        toast(`Enroll successful`, {
+        toast(t(`Enroll successful`), {
           type: 'success',
           position: toast.POSITION.BOTTOM_RIGHT,
           hideProgressBar: true,
@@ -151,7 +146,7 @@ function CampaignDetail({}) {
     } catch (error) {
       refresh()
       setEnrollLoading(false)
-      toast(`Enroll failed`, {
+      toast(t(`Enroll failed`), {
         type: 'error',
         position: toast.POSITION.BOTTOM_RIGHT,
         hideProgressBar: true,

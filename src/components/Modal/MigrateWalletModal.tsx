@@ -49,7 +49,11 @@ export default function MigrateWalletModal() {
           if (connector.id === 'injected') {
             mobile.push(connector)
           }
-          connector.icon && installedWallet.push(connector)
+          if (connector.id == 'app.subwallet') {
+            connector.icon && installedWallet.unshift(connector)
+          } else {
+            connector.icon && installedWallet.push(connector)
+          }
         } else if (connector.type === 'walletConnect') {
           otherWallet.push(connector)
         }
@@ -224,68 +228,72 @@ export default function MigrateWalletModal() {
               <>
                 {!showQRCode ? (
                   <div>
-                    {installed.map((connector) => (
-                      <div key={connector.id}>
-                        <div
-                          className='flex gap-2 w-full items-center hover:bg-gray-900 cursor-pointer py-3 px-4 rounded-[4px]'
-                          onClick={async () => {
-                            try {
-                              setShowQRCode(false)
-                              await wagmiConnect({ connector, chainId: getConfig().CHAIN_INFO.evmChainId })
-                            } catch (error: any) {
-                              console.error(error)
-                              wagmiDisconnect()
-                            }
-                          }}>
-                          <Image
-                            src={connector.icon}
-                            alt={`${connector.name}-Icon`}
-                            className=''
-                            height={32}
-                            width={32}
-                          />
-                          <div className=' font-semibold'>{connector.name}</div>
+                    {
+                      installed.map((connector) => (
+                        <div key={connector.id}>
+                          <div
+                            className='flex gap-2 w-full items-center hover:bg-gray-900 cursor-pointer py-3 px-4 rounded-[4px]'
+                            onClick={async () => {
+                              try {
+                                setShowQRCode(false)
+                                await wagmiConnect({ connector, chainId: getConfig().DEFAULT_CHAIN_ID })
+                              } catch (error: any) {
+                                console.error(error)
+                                wagmiDisconnect()
+                              }
+                            }}>
+                            <Image
+                              src={connector.icon}
+                              alt={`${connector.name}-Icon`}
+                              className=''
+                              height={32}
+                              width={32}
+                            />
+                            <div className=' font-semibold'>{connector.name}</div>
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                    {otherWallet.map((connector) => (
-                      <div key={connector.id}>
-                        <div
-                          className='flex gap-2 w-full items-center hover:bg-gray-900 cursor-pointer py-3 px-4 rounded-[4px]'
-                          onClick={async () => {
-                            try {
-                              setShowQRCode(!showQRCode)
-                              setLoading(true)
-                              setQRError('')
-                              wagmiConnect(
-                                { connector, chainId: getConfig().CHAIN_INFO.evmChainId },
-                                {
-                                  onSuccess: (data) => {
-                                    setLoading(false)
-                                  },
+                      ))
+                    }
+                    {
+                      otherWallet.map((connector) => (
+                        <div key={connector.id}>
+                          <div
+                            className='flex gap-2 w-full items-center hover:bg-gray-900 cursor-pointer py-3 px-4 rounded-[4px]'
+                            onClick={async () => {
+                              try {
+                                setShowQRCode(!showQRCode)
+                                setLoading(true)
+                                setQRError('')
+                                wagmiConnect(
+                                  { connector, chainId: getConfig().DEFAULT_CHAIN_ID },
+                                  {
+                                    onSuccess: (data) => {
+                                      setLoading(false)
+                                    },
 
-                                  onError: (props) => {
-                                    setQRError(props.message)
-                                  },
-                                }
-                              )
-                              const provider = (await connector.getProvider()) as any
-                              const deepLink = await new Promise<string>((resolve) => {
-                                provider.on('display_uri', (uri: string) => {
-                                  resolve(uri)
+                                    onError: (props) => {
+                                      setQRError(props.message)
+                                    },
+                                  }
+                                )
+                                const provider = (await connector.getProvider()) as any
+                                const deepLink = await new Promise<string>((resolve) => {
+                                  provider.on('display_uri', (uri: string) => {
+                                    resolve(uri)
+                                  })
                                 })
-                              })
-                              setLoading(false)
-                              setQrCode(deepLink)
-                            } catch (error: any) {
-                              wagmiDisconnect()
-                            }
-                          }}>
-                          <Image src={WCIcon} alt={`${connector.name}-Icon`} height={30} width={30} />
-                          <div className='font-semibold'>{connector.name}</div>
+                                setLoading(false)
+                                setQrCode(deepLink)
+                              } catch (error: any) {
+                                wagmiDisconnect()
+                              }
+                            }}>
+                            <Image src={WCIcon} alt={`${connector.name}-Icon`} height={30} width={30} />
+                            <div className='font-semibold'>{connector.name}</div>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))
+                    }
                   </div>
                 ) : (
                   <div className='flex flex-col gap-6'>

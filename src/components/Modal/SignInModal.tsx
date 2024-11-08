@@ -63,7 +63,8 @@ export default function SignInModal() {
           {step == 1 && (
             <>
               <div className='flex-1'>
-                <ByWallet step={step} />
+                <div className='font-semibold text-[#414141]'>{t('Under maintenance')}</div>
+                //<ByWallet step={step} />
               </div>
               <div className='w-[1px] h-[400px] bg-[#F0F0F0] hidden md:block'></div>
               <div className='md:hidden flex gap-[18px] items-center w-full'>
@@ -83,7 +84,6 @@ export default function SignInModal() {
 }
 
 const ByWallet = ({ step }) => {
-  
   const { t } = useTranslation()
   const { connectors, connectAsync: wagmiConnect } = useConnect()
   const { connectHandler } = useContext(Context)
@@ -104,12 +104,15 @@ const ByWallet = ({ step }) => {
 
       for (let i = 0; i < connectors.length; i++) {
         const connector = connectors[i]
-
         if (connector.type === 'injected') {
           if (connector.id === 'injected') {
             mobile.push(connector)
           }
-          connector.icon && installedWallet.push(connector)
+          if (connector.id == 'app.subwallet') {
+            connector.icon && installedWallet.unshift(connector)
+          } else {
+            connector.icon && installedWallet.push(connector)
+          }
         } else if (connector.type === 'walletConnect') {
           otherWallet.push(connector)
         }
@@ -146,7 +149,9 @@ const ByWallet = ({ step }) => {
                         await wagmiConnect(
                           {
                             connector,
-                            chainId: location.pathname.includes('ava-2024') ? storyChain.id : getConfig().CHAIN_INFO.evmChainId,
+                            chainId: location.pathname.includes('ava-2024')
+                              ? storyChain.id
+                              : getConfig().DEFAULT_CHAIN_ID,
                           },
                           { onSuccess: connectHandler }
                         )
@@ -176,7 +181,9 @@ const ByWallet = ({ step }) => {
                         await wagmiConnect(
                           {
                             connector,
-                            chainId: location.pathname.includes('ava-2024') ? storyChain.id : getConfig().CHAIN_INFO.evmChainId,
+                            chainId: location.pathname.includes('ava-2024')
+                              ? storyChain.id
+                              : getConfig().DEFAULT_CHAIN_ID,
                           },
                           {
                             onSuccess: connectHandler,
@@ -204,7 +211,9 @@ const ByWallet = ({ step }) => {
                         wagmiConnect(
                           {
                             connector,
-                            chainId: location.pathname.includes('ava-2024') ? storyChain.id : getConfig().CHAIN_INFO.evmChainId,
+                            chainId: location.pathname.includes('ava-2024')
+                              ? storyChain.id
+                              : getConfig().DEFAULT_CHAIN_ID,
                           },
                           {
                             onSuccess: (data) => {

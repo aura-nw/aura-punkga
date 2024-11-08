@@ -300,9 +300,12 @@ const Content = ({ selected, mutate }) => {
             </div>
             <div className='text-sm font-medium'>
               {t('by')}{' '}
-              <span className='text-brand-default'>
+              <Link
+                target='_blank'
+                href={`/artist/${selected?.manga?.manga_creators[0]?.creator?.slug}`}
+                className='text-brand-default'>
                 {selected?.manga?.manga_creators[0]?.creator?.pen_name || 'Punkga'}
-              </span>
+              </Link>
             </div>
           </div>
           <div className='mt-4 w-full'>

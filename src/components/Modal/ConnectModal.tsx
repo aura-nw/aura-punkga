@@ -45,7 +45,11 @@ export default function ConnectModal() {
           if (connector.id === 'injected') {
             mobile.push(connector)
           }
-          connector.icon && installedWallet.push(connector)
+          if (connector.id == 'app.subwallet') {
+            connector.icon && installedWallet.unshift(connector)
+          } else {
+            connector.icon && installedWallet.push(connector)
+          }
         } else if (connector.type === 'walletConnect') {
           otherWallet.push(connector)
         }
@@ -126,7 +130,7 @@ export default function ConnectModal() {
                               connector,
                               chainId: location.pathname.includes('ava-2024')
                                 ? storyChain.id
-                                : getConfig().CHAIN_INFO.evmChainId,
+                                : getConfig().DEFAULT_CHAIN_ID,
                             },
                             {
                               onSuccess: connectHandler,
@@ -159,7 +163,7 @@ export default function ConnectModal() {
                               connector,
                               chainId: location.pathname.includes('ava-2024')
                                 ? storyChain.id
-                                : getConfig().CHAIN_INFO.evmChainId,
+                                : getConfig().DEFAULT_CHAIN_ID,
                             },
                             {
                               onSuccess: (data) => {
@@ -216,7 +220,7 @@ export default function ConnectModal() {
                                   connector,
                                   chainId: location.pathname.includes('ava-2024')
                                     ? storyChain.id
-                                    : getConfig().CHAIN_INFO.evmChainId,
+                                    : getConfig().DEFAULT_CHAIN_ID,
                                 },
                                 {
                                   onSuccess: connectHandler,
@@ -252,7 +256,7 @@ export default function ConnectModal() {
                                   connector,
                                   chainId: location.pathname.includes('ava-2024')
                                     ? storyChain.id
-                                    : getConfig().CHAIN_INFO.evmChainId,
+                                    : getConfig().DEFAULT_CHAIN_ID,
                                 },
                                 {
                                   onSuccess: (data) => {

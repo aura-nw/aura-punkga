@@ -162,6 +162,9 @@ export default function ClamQuestSuccessModal({ quest, openClaimSuccessModal, se
             </div>
           </div>
         )}
+        <Button size='sm' className='w-full mt-5' onClick={() => setClaimSuccessModalOpen(false)}>
+          {t('Done')}
+        </Button>
       </div>
     </Modal>
   )
