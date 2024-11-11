@@ -40,8 +40,8 @@ function PageDetail() {
   const [page, setPage] = usePage()
   const [showSlider, setShowSlider] = useState(false)
   const { data, mutate, isLoading } = useSWR(
-    { key: 'get-ava-artwork', user_id: account?.id },
-    ({ user_id }) => eventService.story.getArtwork(user_id),
+    { key: 'get-ava-artwork', user_id: account?.id, page },
+    ({ user_id, page }) => eventService.story.getArtwork(user_id, page),
     {
       revalidateOnFocus: false,
     }
@@ -112,7 +112,7 @@ function PageDetail() {
                 {artworks?.length ? (
                   <>
                     <div className='grid grid-cols-2 md:grid-cols-3 gap-5 mt-6'>
-                      {artworks?.slice((page - 1) * artworkPerPage, page * artworkPerPage)?.map((artwork, index) => (
+                      {artworks?.map((artwork, index) => (
                         <div
                           className={`rounded-xl cursor-pointer relative overflow-hidden ${
                             artwork.id == selected?.id ? 'border-[#00E160]' : 'border-black'
@@ -273,7 +273,7 @@ function PageDetail() {
         <div className='fixed inset-0 z-50'>
           <div className='absolute inset-0 bg-[#000000CC]' onClick={() => setShowSlider(false)}></div>
           <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex items-center gap-4 justify-center max-w-[95vw] w-full lg:w-fit'>
-            <div className='cursor-pointer p-1' onClick={prevHandler}>
+            {/* <div className='cursor-pointer p-1' onClick={prevHandler}>
               <svg width='24' height='25' viewBox='0 0 24 25' fill='none' xmlns='http://www.w3.org/2000/svg'>
                 <g clip-path='url(#clip0_6205_29201)'>
                   <path
@@ -287,7 +287,7 @@ function PageDetail() {
                   </clipPath>
                 </defs>
               </svg>
-            </div>
+            </div> */}
             <div className=' lg:bg-neutral-700 lg:p-8 lg:pt-4 lg:rounded-mlg'>
               <div className='flex flex-col items-center gap-4 lg:rounded-xl lg:bg-neutral-950 lg:p-4 max-h-[90vh] overflow-auto'>
                 <Image
@@ -300,7 +300,7 @@ function PageDetail() {
                 <div className='text-sm font-semibold text-white'>{selected.name}</div>
               </div>
             </div>
-            <div className='cursor-pointer p-1' onClick={nextHandler}>
+            {/* <div className='cursor-pointer p-1' onClick={nextHandler}>
               <svg width='24' height='25' viewBox='0 0 24 25' fill='none' xmlns='http://www.w3.org/2000/svg'>
                 <g clip-path='url(#clip0_6205_29197)'>
                   <path
@@ -314,7 +314,7 @@ function PageDetail() {
                   </clipPath>
                 </defs>
               </svg>
-            </div>
+            </div> */}
           </div>
         </div>
       )}
