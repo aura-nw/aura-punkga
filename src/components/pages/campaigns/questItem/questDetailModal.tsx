@@ -167,7 +167,7 @@ export default function QuestDetailModal({
             'LikeEventArtwork',
             'CollectIP',
             'StakeIP',
-          ].includes(quest.type) && <RefQuest quest={quest} loading={loading} claimQuestHandler={claimQuestHandler} />}
+          ].includes(quest.type) && <RefQuest quest={quest} loading={loading} claimQuestHandler={claimQuestHandler} setOpen={setOpen} />}
           {quest.type == 'Empty' && <FreeQuest quest={quest} loading={loading} claimQuestHandler={claimQuestHandler} />}
           {quest.type == 'MintBadge' && (
             <MintQuest

@@ -8,24 +8,30 @@ import Countdown, { zeroPad } from 'react-countdown'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Context } from 'src/context'
+import { ModalContext } from 'src/context/modals'
 import { Quest } from 'src/models/campaign'
 import { checkQuestStatus } from 'src/services'
 import { mutate } from 'swr'
+import { useAccount } from 'wagmi'
 export default function BasicQuest({
   quest,
   loading,
   claimQuestHandler,
+  setOpen,
 }: {
   quest: Quest
   loading: boolean
   claimQuestHandler: () => void
+  setOpen: (v: boolean) => void
 }) {
   const { t } = useTranslation()
   const { locale, query } = useRouter()
   const { account } = useContext(Context)
+  const { setMigrateWalletOpen, setWalletConnectOpen } = useContext(ModalContext)
   const config = getConfig()
   const [status, setStatus] = useState(quest.reward_status)
   const [checking, setChecking] = useState(false)
+  const { isConnected } = useAccount()
   const slug = query.campaignSlug as string
   const checkQuestHandler = async () => {
     try {
@@ -51,7 +57,6 @@ export default function BasicQuest({
       case 'EngagesEventManga':
       case 'CollectIP':
       case 'LikeEventArtwork':
-      case 'StakeIP':
         return (
           <Link
             className='w-full grid place-items-center'
@@ -59,9 +64,45 @@ export default function BasicQuest({
             href={`${
               quest.requirement['engages_event_manga']?.href ||
               quest.requirement['like_event_artwork']?.href ||
-              quest.requirement['collect_ip']?.href ||
-              quest.requirement['stake_ip']?.href
+              quest.requirement['collect_ip']?.href
             }`}>
+            <Button className='w-full' size='sm'>
+              {t('Go to page')}
+            </Button>
+          </Link>
+        )
+      case 'StakeIP':
+        if (!account.noncustodialWalletAddress) {
+          return (
+            <Button
+              className='w-full'
+              size='sm'
+              onClick={() => {
+                setOpen(false)
+                setMigrateWalletOpen(true)
+              }}>
+              {t('Connect Wallet')}
+            </Button>
+          )
+        }
+        if (!isConnected) {
+          return (
+            <Button
+              className='w-full'
+              size='sm'
+              onClick={() => {
+                setOpen(false)
+                setWalletConnectOpen(true)
+              }}>
+              {t('Connect Wallet')}
+            </Button>
+          )
+        }
+        return (
+          <Link
+            className='w-full grid place-items-center'
+            target='_blank'
+            href={`${quest.requirement['stake_ip']?.href}`}>
             <Button className='w-full' size='sm'>
               {t('Go to page')}
             </Button>
