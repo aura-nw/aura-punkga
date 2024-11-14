@@ -1,48 +1,27 @@
 import Button from 'components/core/Button/Button'
 import moment from 'moment'
 import { useRouter } from 'next/router'
-import { useContext, useState } from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-import { Context } from 'src/context'
 import { Quest } from 'src/models/campaign'
-import { checkQuestStatus } from 'src/services'
-import { mutate } from 'swr'
 export default function FreeQuest({
   quest,
   loading,
   claimQuestHandler,
+  checkQuestHandler,
+  checking,
+  status
 }: {
   quest: Quest
   loading: boolean
+  checking: boolean
+  status: any
+  checkQuestHandler: () => void
   claimQuestHandler: () => void
 }) {
   const { t } = useTranslation()
-  const { locale, query } = useRouter()
-  const [status, setStatus] = useState(quest.reward_status)
-  const [checking, setChecking] = useState(false)
-  const { account } = useContext(Context)
-  const slug = query.campaignSlug as string
-  const checkQuestHandler = async () => {
-    try {
-      if (checking) return
-      setChecking(true)
-      const res = await checkQuestStatus(quest.id)
-      if (res.data) {
-        setStatus(res.data.reward_status)
-        mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
-      }
-      setChecking(false)
-      console.log(res)
-    } catch (error) {
-      setChecking(false)
-      toast(error?.message || 'Claim failed. Please try again later.', {
-        type: 'error',
-      })
-      console.error(error)
-    }
-  }
+  const { locale} = useRouter()
+
   return (
     <div className='mt-5 w-full'>
       {status == 'CAN_CLAIM' ? (

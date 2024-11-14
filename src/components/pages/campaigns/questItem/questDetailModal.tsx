@@ -6,7 +6,7 @@ import SFImage from 'components/pages/campaigns/assets/sf.png'
 import NoImage from 'images/no_img.png'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import ReactHtmlParser from 'react-html-parser'
 import { useTranslation } from 'react-i18next'
 import { Quest } from 'src/models/campaign'
@@ -15,6 +15,11 @@ import MintBadgeSuccessModal from './mintBadgeSuccessModal'
 import MintQuest from './mintQuest'
 import QuizQuest from './quizQuest'
 import RefQuest from './refQuest'
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
+import { toast } from 'react-toastify'
+import { checkQuestStatus } from 'src/services'
+import { mutate } from 'swr'
+import { Context } from 'src/context'
 export default function QuestDetailModal({
   quest,
   open,
@@ -30,10 +35,44 @@ export default function QuestDetailModal({
 }) {
   const [openNFTPreview, setOpenNFTPreview] = useState(false)
   const { t } = useTranslation()
-  const { locale } = useRouter()
+  const { account } = useContext(Context)
   const [hash, setHash] = useState('')
   const xpImageSrc = quest.pointText == 'KP' ? KPImage : quest.pointText == 'SF' ? SFImage : XPImage
   const xpText = quest.pointText
+  const { executeRecaptcha } = useGoogleReCaptcha()
+  const [status, setStatus] = useState(quest.status)
+  const [checking, setChecking] = useState(false)
+  const { query, locale } = useRouter()
+  const slug = query.campaignSlug as string
+  const checkQuestHandler = useCallback(async () => {
+    try {
+      if (!executeRecaptcha) {
+        console.log('Execute recaptcha not yet available')
+        return
+      }
+      const token = await executeRecaptcha('check-status')
+      if (!token) {
+        toast('Verify failed by reCAPCHA. Please reload and try again!', {
+          type: 'error',
+        })
+        return
+      }
+      if (checking) return
+      setChecking(true)
+      const res = await checkQuestStatus(quest.id, token)
+      if (res.data) {
+        setStatus(res.data.reward_status)
+        mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
+      }
+      setChecking(false)
+    } catch (error) {
+      setChecking(false)
+      toast(error?.message || 'Claim failed. Please try again later.', {
+        type: 'error',
+      })
+      console.error(error)
+    }
+  }, [executeRecaptcha])
   return (
     <>
       <MintBadgeSuccessModal hash={hash} setHash={setHash} />
@@ -167,8 +206,27 @@ export default function QuestDetailModal({
             'LikeEventArtwork',
             'CollectIP',
             'StakeIP',
-          ].includes(quest.type) && <RefQuest quest={quest} loading={loading} claimQuestHandler={claimQuestHandler} setOpen={setOpen} />}
-          {quest.type == 'Empty' && <FreeQuest quest={quest} loading={loading} claimQuestHandler={claimQuestHandler} />}
+          ].includes(quest.type) && (
+            <RefQuest
+              quest={quest}
+              loading={loading}
+              claimQuestHandler={claimQuestHandler}
+              setOpen={setOpen}
+              checkQuestHandler={checkQuestHandler}
+              checking={checking}
+              status={status}
+            />
+          )}
+          {quest.type == 'Empty' && (
+            <FreeQuest
+              quest={quest}
+              loading={loading}
+              claimQuestHandler={claimQuestHandler}
+              checkQuestHandler={checkQuestHandler}
+              checking={checking}
+              status={status}
+            />
+          )}
           {quest.type == 'MintBadge' && (
             <MintQuest
               quest={quest}
@@ -176,6 +234,9 @@ export default function QuestDetailModal({
               loading={loading}
               setOpen={setOpen}
               claimQuestHandler={claimQuestHandler}
+              checkQuestHandler={checkQuestHandler}
+              checking={checking}
+              status={status}
             />
           )}
           {quest.type == 'Quiz' && (

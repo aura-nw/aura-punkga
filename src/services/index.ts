@@ -355,10 +355,8 @@ export const getQuestDetail = async (questId: string, accountId?: string) => {
   })
   return data
 }
-export const claimQuest = async (questId: string, token: string) => {
-  const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/quest/${questId}/claim`, {
-    token
-  })
+export const claimQuest = async (questId: string) => {
+  const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/quest/${questId}/claim`)
   return data
 }
 export const readChapter = async (chapterId: string) => {
@@ -783,9 +781,11 @@ export const updateProfile = async (data) => {
     throw error // Re-throw the error so it can be caught in the component
   }
 }
-export const checkQuestStatus = async (id: string) => {
+export const checkQuestStatus = async (id: string, token: string) => {
   try {
-    return await privateAxios.post(`${getConfig().REST_API_URL}/quest/${id}/check-status`)
+    return await privateAxios.post(`${getConfig().REST_API_URL}/quest/${id}/check-status`, {
+      token,
+    })
   } catch (error) {
     throw error
   }
