@@ -48,7 +48,7 @@ export default function QuestDetailModal({
       
       if (checking) return
       setChecking(true)
-      const res = await checkQuestStatus(quest.id, token)
+      const res = await checkQuestStatus(quest.id)
       if (res.data) {
         setStatus(res.data.reward_status)
         mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
