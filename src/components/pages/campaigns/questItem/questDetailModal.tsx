@@ -166,6 +166,7 @@ export default function QuestDetailModal({
             'EngagesEventManga',
             'LikeEventArtwork',
             'CollectIP',
+            'StakeIP',
           ].includes(quest.type) && <RefQuest quest={quest} loading={loading} claimQuestHandler={claimQuestHandler} />}
           {quest.type == 'Empty' && <FreeQuest quest={quest} loading={loading} claimQuestHandler={claimQuestHandler} />}
           {quest.type == 'MintBadge' && (

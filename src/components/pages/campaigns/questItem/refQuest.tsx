@@ -51,6 +51,7 @@ export default function BasicQuest({
       case 'EngagesEventManga':
       case 'CollectIP':
       case 'LikeEventArtwork':
+      case 'StakeIP':
         return (
           <Link
             className='w-full grid place-items-center'
@@ -58,7 +59,8 @@ export default function BasicQuest({
             href={`${
               quest.requirement['engages_event_manga']?.href ||
               quest.requirement['like_event_artwork']?.href ||
-              quest.requirement['collect_ip']?.href
+              quest.requirement['collect_ip']?.href ||
+              quest.requirement['stake_ip']?.href
             }`}>
             <Button className='w-full' size='sm'>
               {t('Go to page')}

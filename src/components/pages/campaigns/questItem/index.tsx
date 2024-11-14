@@ -1,11 +1,7 @@
-import Button from 'components/core/Button/Button'
 import Chip from 'components/core/Chip'
-import Modal from 'components/core/Modal'
 import KPImage from 'components/pages/campaigns/assets/ic_Kp.svg'
 import XPImage from 'components/pages/campaigns/assets/illus.svg'
-import NFTPackage from 'components/pages/campaigns/assets/nft-package.png'
 import SFImage from 'components/pages/campaigns/assets/sf.png'
-import XPPackage from 'components/pages/campaigns/assets/xp-package.png'
 import Popover from 'components/Popover'
 import NoImage from 'images/no_img.png'
 import moment from 'moment'
@@ -13,22 +9,20 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
-import { isMobile } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Context } from 'src/context'
 import { Quest } from 'src/models/campaign'
 import { claimQuest, getRequestLog } from 'src/services'
 import Decor from '../assets/decor.svg'
-import QuestDetailModal from './questDetailModal'
 import ClamQuestSuccessModal from './claimQuestSuccessModal'
+import QuestDetailModal from './questDetailModal'
 export default function QuestItem({ quest, refreshCallback }: { quest: Quest; refreshCallback?: () => void }) {
   const { getProfile } = useContext(Context)
   const [open, setOpen] = useState(false)
   const [openClaimSuccessModal, setClaimSuccessModalOpen] = useState(false)
   const [seeMore, setSeeMore] = useState(undefined)
   const [loading, setLoading] = useState(false)
-  const limitChar = isMobile ? 20 : 30
   const { t } = useTranslation()
   const { locale } = useRouter()
   const revealResult = async (id: string) => {
