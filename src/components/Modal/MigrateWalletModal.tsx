@@ -21,7 +21,6 @@ export default function MigrateWalletModal() {
   const { t } = useTranslation()
   const [success, setSuccess] = useState(undefined)
   const [requestId, setRequestId] = useLocalStorage('request_id', undefined)
-  const [step, setStep] = useState(1)
   const { connectors, connectAsync: wagmiConnect } = useConnect()
   const { address } = useAccount()
   const { disconnect } = useDisconnect()
@@ -64,13 +63,6 @@ export default function MigrateWalletModal() {
 
     setConnector()
   }, [connectors])
-  useEffect(() => {
-    let id
-    if (!open) {
-      id = setTimeout(() => setStep(1), 400)
-    }
-    return () => (id ? clearTimeout(id) : undefined)
-  }, [open])
   const linkWalletHandler = async () => {
     try {
       const domain = window.location.host
@@ -137,7 +129,7 @@ export default function MigrateWalletModal() {
         {success ? (
           <div className='flex flex-col gap-2 max-w-[452px]'>
             <p className='text-center text-base leading-6 font-semibold md:text-lg md:leading-[23px]'>
-              {t('Wallet migration successful!')}
+              {t('Confirm to link wallet')}
             </p>
             <p className='text-center text-sm leading-[18px] -mt-1'>
               {t('Transferring asset may takes a few minutes. Now you can explore Punkga using your wallet.')}
@@ -164,7 +156,6 @@ export default function MigrateWalletModal() {
               onClick={() => {
                 setOpen(false)
                 setTimeout(() => setSuccess(undefined), 300)
-                setStep(1)
                 wagmiDisconnect()
               }}>
               {t('Close')}
@@ -173,7 +164,7 @@ export default function MigrateWalletModal() {
         ) : address ? (
           <div className='flex flex-col gap-3'>
             <p className='text-center text-base leading-6 font-semibold md:text-lg md:leading-[23px]'>
-              {t('Confirm to migrate assets')}
+              {t('Confirm to link wallet')}
             </p>
             <p className='text-center text-sm leading-[18px] -mt-1'>
               {t('All of your assets on Punkga will be transferred to your wallet')}
@@ -197,30 +188,9 @@ export default function MigrateWalletModal() {
               </Button>
             </div>
           </div>
-        ) : step == 1 ? (
+        ) : (
           <div className='max-w-[354px] flex flex-col gap-3'>
-            <p className='text-center text-base leading-6 font-semibold md:text-lg md:leading-[23px]'>
-              {t('Migrate your wallet')}
-            </p>
-            <div className='p-4 text-xs leading-[15px] text-white bg-gray-900 rounded-2xl'>
-              <span>
-                {t(
-                  'You currently use a custodial wallet which only valid on Punkga. Migrating your own wallet allows you to:'
-                )}
-              </span>
-              <ul className='list-outside list-disc pl-6 mt-5'>
-                <li>{t('Using your wallet to log in')}</li>
-                <li>{t('Access special content without transferring NFTs to the Punkga wallet')}</li>
-                <li>{t('Trade NFTs on marketplaces')}</li>
-              </ul>
-            </div>
-            <Button size='sm' className='w-fit mx-auto' onClick={() => setStep(2)}>
-              {t('Connect Wallet')}
-            </Button>
-          </div>
-        ) : step == 2 ? (
-          <div className='max-w-[354px] flex flex-col gap-3'>
-            <p className='text-center text-base leading-6 font-semibold'>{t('Migrate your wallet')}</p>
+            <p className='text-center text-base leading-6 font-semibold'>{t('Connect Wallet')}</p>
             <div className='text-xs leading-[15px] text-center'>
               {t('If you don’t have a wallet yet, you can select a provider and create one now.')}
             </div>
@@ -228,72 +198,68 @@ export default function MigrateWalletModal() {
               <>
                 {!showQRCode ? (
                   <div>
-                    {
-                      installed.map((connector) => (
-                        <div key={connector.id}>
-                          <div
-                            className='flex gap-2 w-full items-center hover:bg-gray-900 cursor-pointer py-3 px-4 rounded-[4px]'
-                            onClick={async () => {
-                              try {
-                                setShowQRCode(false)
-                                await wagmiConnect({ connector, chainId: getConfig().DEFAULT_CHAIN_ID })
-                              } catch (error: any) {
-                                console.error(error)
-                                wagmiDisconnect()
-                              }
-                            }}>
-                            <Image
-                              src={connector.icon}
-                              alt={`${connector.name}-Icon`}
-                              className=''
-                              height={32}
-                              width={32}
-                            />
-                            <div className=' font-semibold'>{connector.name}</div>
-                          </div>
+                    {installed.map((connector) => (
+                      <div key={connector.id}>
+                        <div
+                          className='flex gap-2 w-full items-center hover:bg-gray-900 cursor-pointer py-3 px-4 rounded-[4px]'
+                          onClick={async () => {
+                            try {
+                              setShowQRCode(false)
+                              await wagmiConnect({ connector, chainId: getConfig().DEFAULT_CHAIN_ID })
+                            } catch (error: any) {
+                              console.error(error)
+                              wagmiDisconnect()
+                            }
+                          }}>
+                          <Image
+                            src={connector.icon}
+                            alt={`${connector.name}-Icon`}
+                            className=''
+                            height={32}
+                            width={32}
+                          />
+                          <div className=' font-semibold'>{connector.name}</div>
                         </div>
-                      ))
-                    }
-                    {
-                      otherWallet.map((connector) => (
-                        <div key={connector.id}>
-                          <div
-                            className='flex gap-2 w-full items-center hover:bg-gray-900 cursor-pointer py-3 px-4 rounded-[4px]'
-                            onClick={async () => {
-                              try {
-                                setShowQRCode(!showQRCode)
-                                setLoading(true)
-                                setQRError('')
-                                wagmiConnect(
-                                  { connector, chainId: getConfig().DEFAULT_CHAIN_ID },
-                                  {
-                                    onSuccess: (data) => {
-                                      setLoading(false)
-                                    },
+                      </div>
+                    ))}
+                    {otherWallet.map((connector) => (
+                      <div key={connector.id}>
+                        <div
+                          className='flex gap-2 w-full items-center hover:bg-gray-900 cursor-pointer py-3 px-4 rounded-[4px]'
+                          onClick={async () => {
+                            try {
+                              setShowQRCode(!showQRCode)
+                              setLoading(true)
+                              setQRError('')
+                              wagmiConnect(
+                                { connector, chainId: getConfig().DEFAULT_CHAIN_ID },
+                                {
+                                  onSuccess: (data) => {
+                                    setLoading(false)
+                                  },
 
-                                    onError: (props) => {
-                                      setQRError(props.message)
-                                    },
-                                  }
-                                )
-                                const provider = (await connector.getProvider()) as any
-                                const deepLink = await new Promise<string>((resolve) => {
-                                  provider.on('display_uri', (uri: string) => {
-                                    resolve(uri)
-                                  })
+                                  onError: (props) => {
+                                    setQRError(props.message)
+                                  },
+                                }
+                              )
+                              const provider = (await connector.getProvider()) as any
+                              const deepLink = await new Promise<string>((resolve) => {
+                                provider.on('display_uri', (uri: string) => {
+                                  resolve(uri)
                                 })
-                                setLoading(false)
-                                setQrCode(deepLink)
-                              } catch (error: any) {
-                                wagmiDisconnect()
-                              }
-                            }}>
-                            <Image src={WCIcon} alt={`${connector.name}-Icon`} height={30} width={30} />
-                            <div className='font-semibold'>{connector.name}</div>
-                          </div>
+                              })
+                              setLoading(false)
+                              setQrCode(deepLink)
+                            } catch (error: any) {
+                              wagmiDisconnect()
+                            }
+                          }}>
+                          <Image src={WCIcon} alt={`${connector.name}-Icon`} height={30} width={30} />
+                          <div className='font-semibold'>{connector.name}</div>
                         </div>
-                      ))
-                    }
+                      </div>
+                    ))}
                   </div>
                 ) : (
                   <div className='flex flex-col gap-6'>
@@ -335,8 +301,6 @@ export default function MigrateWalletModal() {
               </>
             </div>
           </div>
-        ) : (
-          <></>
         )}
       </div>
     </Modal>
