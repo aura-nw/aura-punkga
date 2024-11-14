@@ -1,6 +1,5 @@
 import Button from 'components/core/Button/Button'
 import moment from 'moment'
-import getConfig from 'next/config'
 
 import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'
@@ -10,10 +9,9 @@ import { toast } from 'react-toastify'
 import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
 import { Quest } from 'src/models/campaign'
-import { checkQuestStatus, getMintNftSignature } from 'src/services'
+import { getMintNftSignature } from 'src/services'
 import { storyBadgeAbi } from 'src/services/abi/storyBadgeAbi'
 import { storyChain } from 'src/services/wagmi/config'
-import { mutate } from 'swr'
 import { useAccount, useChainId, useSwitchChain, useWriteContract } from 'wagmi'
 export default function MintQuest({
   quest,
@@ -21,45 +19,29 @@ export default function MintQuest({
   claimQuestHandler,
   setOpen,
   setHash,
+  checkQuestHandler,
+  checking,
+  status,
 }: {
   quest: Quest
   loading: boolean
   claimQuestHandler: () => void
   setOpen: (v: boolean) => void
   setHash: (v: string) => void
+  checking: boolean
+  status: any
+  checkQuestHandler: () => void
 }) {
   const { t } = useTranslation()
-  const { locale, query } = useRouter()
+  const { locale } = useRouter()
   const { account } = useContext(Context)
   const { setMigrateWalletOpen, setWalletConnectOpen } = useContext(ModalContext)
-  const config = getConfig()
-  const [status, setStatus] = useState(quest.reward_status)
-  const [checking, setChecking] = useState(false)
   const [minting, setMinting] = useState(false)
   const chainId = useChainId()
   const { writeContractAsync } = useWriteContract()
   const { switchChainAsync } = useSwitchChain()
   const { isConnected } = useAccount()
-  const slug = query.campaignSlug as string
-  const checkQuestHandler = async () => {
-    try {
-      if (checking) return
-      setChecking(true)
-      const res = await checkQuestStatus(quest.id)
-      if (res.data) {
-        setStatus(res.data.reward_status)
-        mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
-      }
-      setChecking(false)
-      console.log(res)
-    } catch (error) {
-      setChecking(false)
-      toast(error?.message || 'Claim failed. Please try again later.', {
-        type: 'error',
-      })
-      console.error(error)
-    }
-  }
+
   const mintHandler = async () => {
     try {
       if (minting) return

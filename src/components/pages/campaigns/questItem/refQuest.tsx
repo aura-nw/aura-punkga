@@ -6,46 +6,35 @@ import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
 import { Context } from 'src/context'
+import { ModalContext } from 'src/context/modals'
 import { Quest } from 'src/models/campaign'
-import { checkQuestStatus } from 'src/services'
-import { mutate } from 'swr'
+import { useAccount } from 'wagmi'
 export default function BasicQuest({
   quest,
   loading,
   claimQuestHandler,
+  setOpen,
+  checkQuestHandler,
+  checking,
+  status,
 }: {
   quest: Quest
   loading: boolean
   claimQuestHandler: () => void
+  setOpen: (v: boolean) => void
+
+  checking: boolean
+  status: any
+  checkQuestHandler: () => void
 }) {
   const { t } = useTranslation()
-  const { locale, query } = useRouter()
+  const { locale } = useRouter()
   const { account } = useContext(Context)
+  const { setMigrateWalletOpen, setWalletConnectOpen } = useContext(ModalContext)
   const config = getConfig()
-  const [status, setStatus] = useState(quest.reward_status)
-  const [checking, setChecking] = useState(false)
-  const slug = query.campaignSlug as string
-  const checkQuestHandler = async () => {
-    try {
-      if (checking) return
-      setChecking(true)
-      const res = await checkQuestStatus(quest.id)
-      if (res.data) {
-        setStatus(res.data.reward_status)
-        mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
-      }
-      setChecking(false)
-      console.log(res)
-    } catch (error) {
-      setChecking(false)
-      toast(error?.message || 'Claim failed. Please try again later.', {
-        type: 'error',
-      })
-      console.error(error)
-    }
-  }
+  const { isConnected } = useAccount()
+
   const RefButton = () => {
     switch (quest.type) {
       case 'EngagesEventManga':
@@ -60,6 +49,43 @@ export default function BasicQuest({
               quest.requirement['like_event_artwork']?.href ||
               quest.requirement['collect_ip']?.href
             }`}>
+            <Button className='w-full' size='sm'>
+              {t('Go to page')}
+            </Button>
+          </Link>
+        )
+      case 'StakeIP':
+        if (!account.noncustodialWalletAddress) {
+          return (
+            <Button
+              className='w-full'
+              size='sm'
+              onClick={() => {
+                setOpen(false)
+                setMigrateWalletOpen(true)
+              }}>
+              {t('Connect Wallet')}
+            </Button>
+          )
+        }
+        if (!isConnected) {
+          return (
+            <Button
+              className='w-full'
+              size='sm'
+              onClick={() => {
+                setOpen(false)
+                setWalletConnectOpen(true)
+              }}>
+              {t('Connect Wallet')}
+            </Button>
+          )
+        }
+        return (
+          <Link
+            className='w-full grid place-items-center'
+            target='_blank'
+            href={`${quest.requirement['stake_ip']?.href}`}>
             <Button className='w-full' size='sm'>
               {t('Go to page')}
             </Button>
