@@ -15,7 +15,6 @@ import MintBadgeSuccessModal from './mintBadgeSuccessModal'
 import MintQuest from './mintQuest'
 import QuizQuest from './quizQuest'
 import RefQuest from './refQuest'
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
 import { toast } from 'react-toastify'
 import { checkQuestStatus } from 'src/services'
 import { mutate } from 'swr'
@@ -39,24 +38,14 @@ export default function QuestDetailModal({
   const [hash, setHash] = useState('')
   const xpImageSrc = quest.pointText == 'KP' ? KPImage : quest.pointText == 'SF' ? SFImage : XPImage
   const xpText = quest.pointText
-  const { executeRecaptcha } = useGoogleReCaptcha()
+
   const [status, setStatus] = useState(quest.status)
   const [checking, setChecking] = useState(false)
   const { query, locale } = useRouter()
   const slug = query.campaignSlug as string
   const checkQuestHandler = useCallback(async () => {
     try {
-      if (!executeRecaptcha) {
-        console.log('Execute recaptcha not yet available')
-        return
-      }
-      const token = await executeRecaptcha('checkStatus')
-      if (!token) {
-        toast('Verify failed by reCAPCHA. Please reload and try again!', {
-          type: 'error',
-        })
-        return
-      }
+      
       if (checking) return
       setChecking(true)
       const res = await checkQuestStatus(quest.id, token)
@@ -72,7 +61,7 @@ export default function QuestDetailModal({
       })
       console.error(error)
     }
-  }, [executeRecaptcha])
+  }, [])
   return (
     <>
       <MintBadgeSuccessModal hash={hash} setHash={setHash} />
