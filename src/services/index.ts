@@ -355,8 +355,10 @@ export const getQuestDetail = async (questId: string, accountId?: string) => {
   })
   return data
 }
-export const claimQuest = async (questId: string) => {
-  const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/quest/${questId}/claim`)
+export const claimQuest = async (questId: string, token: string) => {
+  const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/quest/${questId}/claim`, {
+    token
+  })
   return data
 }
 export const readChapter = async (chapterId: string) => {

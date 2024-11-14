@@ -19,6 +19,7 @@ import { getItem, removeItem, setItem } from 'src/utils/localStorage'
 import { useAccount, useChainId, useDisconnect, useSignMessage, useSwitchChain } from 'wagmi'
 import ModalProvider from './modals'
 import { useCookies } from 'react-cookie'
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3'
 const queryClient = new QueryClient()
 
 export const Context = createContext<{
@@ -489,31 +490,33 @@ function ContextProvider({ children }: any) {
     return null
   }
   return (
-    <Context.Provider
-      value={{
-        account,
-        wallet,
-        login,
-        oauth,
-        logout,
-        signUp,
-        isSettingUp,
-        updateProfile,
-        resendVerifyEmail,
-        getProfile,
-        forgotPassword,
-        resetPassword,
-        connectHandler,
-      }}>
-      <QueryClientProvider client={queryClient}>
-        <ApolloProvider client={client}>
-          <ModalProvider>
-            {location.pathname.includes('events/ava-2024') && <BackgroundAudio />}
-            {children}
-          </ModalProvider>
-        </ApolloProvider>
-      </QueryClientProvider>
-    </Context.Provider>
+    <GoogleReCaptchaProvider reCaptchaKey='6LfnV34qAAAAAJNtCDsCuDWVDS0VWhjXd5Pu7fub'>
+      <Context.Provider
+        value={{
+          account,
+          wallet,
+          login,
+          oauth,
+          logout,
+          signUp,
+          isSettingUp,
+          updateProfile,
+          resendVerifyEmail,
+          getProfile,
+          forgotPassword,
+          resetPassword,
+          connectHandler,
+        }}>
+        <QueryClientProvider client={queryClient}>
+          <ApolloProvider client={client}>
+            <ModalProvider>
+              {location.pathname.includes('events/ava-2024') && <BackgroundAudio />}
+              {children}
+            </ModalProvider>
+          </ApolloProvider>
+        </QueryClientProvider>
+      </Context.Provider>
+    </GoogleReCaptchaProvider>
   )
 }
 export default ContextProvider

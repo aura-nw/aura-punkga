@@ -7,7 +7,7 @@ import NoImage from 'images/no_img.png'
 import moment from 'moment'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -17,6 +17,7 @@ import { claimQuest, getRequestLog } from 'src/services'
 import Decor from '../assets/decor.svg'
 import ClamQuestSuccessModal from './claimQuestSuccessModal'
 import QuestDetailModal from './questDetailModal'
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
 export default function QuestItem({ quest, refreshCallback }: { quest: Quest; refreshCallback?: () => void }) {
   const { getProfile } = useContext(Context)
   const [open, setOpen] = useState(false)
@@ -25,6 +26,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
   const [loading, setLoading] = useState(false)
   const { t } = useTranslation()
   const { locale } = useRouter()
+  const { executeRecaptcha } = useGoogleReCaptcha()
   const revealResult = async (id: string) => {
     const data = await getRequestLog(id)
     if (data?.status == 'SUCCEEDED') {
@@ -51,11 +53,22 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
     setTimeout(() => revealResult(id), 4000)
   }
 
-  const claimQuestHandler = async () => {
+  const claimQuestHandler = useCallback(async () => {
     try {
+      if (!executeRecaptcha) {
+        console.log('Execute recaptcha not yet available')
+        return
+      }
+      const token = await executeRecaptcha('claim-quest')
+      if (!token) {
+        toast('Recapcat failed.', {
+          type: 'error',
+        })
+        return
+      }
       if (loading) return
       setLoading(true)
-      const res = await claimQuest(quest.id)
+      const res = await claimQuest(quest.id, token)
       if (res?.requestId) {
         revealResult(res?.requestId)
       } else {
@@ -72,7 +85,7 @@ export default function QuestItem({ quest, refreshCallback }: { quest: Quest; re
     } catch (error) {
       console.error(error)
     }
-  }
+  }, [executeRecaptcha])
 
   useEffect(() => {
     if (open) setSeeMore(undefined)

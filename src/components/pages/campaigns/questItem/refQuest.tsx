@@ -43,7 +43,6 @@ export default function BasicQuest({
         mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
       }
       setChecking(false)
-      console.log(res)
     } catch (error) {
       setChecking(false)
       toast(error?.message || 'Claim failed. Please try again later.', {
