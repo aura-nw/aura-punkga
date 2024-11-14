@@ -19,7 +19,7 @@ import { getItem, removeItem, setItem } from 'src/utils/localStorage'
 import { useAccount, useChainId, useDisconnect, useSignMessage, useSwitchChain } from 'wagmi'
 import ModalProvider from './modals'
 import { useCookies } from 'react-cookie'
-import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3'
+
 const queryClient = new QueryClient()
 
 export const Context = createContext<{
@@ -490,7 +490,7 @@ function ContextProvider({ children }: any) {
     return null
   }
   return (
-    <GoogleReCaptchaProvider reCaptchaKey='6LfnV34qAAAAAJNtCDsCuDWVDS0VWhjXd5Pu7fub'>
+   
       <Context.Provider
         value={{
           account,
@@ -516,7 +516,7 @@ function ContextProvider({ children }: any) {
           </ApolloProvider>
         </QueryClientProvider>
       </Context.Provider>
-    </GoogleReCaptchaProvider>
+    
   )
 }
 export default ContextProvider
