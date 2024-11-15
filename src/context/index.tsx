@@ -19,6 +19,7 @@ import { getItem, removeItem, setItem } from 'src/utils/localStorage'
 import { useAccount, useChainId, useDisconnect, useSignMessage, useSwitchChain } from 'wagmi'
 import ModalProvider from './modals'
 import { useCookies } from 'react-cookie'
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3'
 
 const queryClient = new QueryClient()
 
@@ -516,7 +517,7 @@ function ContextProvider({ children }: any) {
           </ApolloProvider>
         </QueryClientProvider>
       </Context.Provider>
-    
+    </GoogleReCaptchaProvider>
   )
 }
 export default ContextProvider

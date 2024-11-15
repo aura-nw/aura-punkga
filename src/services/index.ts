@@ -781,9 +781,11 @@ export const updateProfile = async (data) => {
     throw error // Re-throw the error so it can be caught in the component
   }
 }
-export const checkQuestStatus = async (id: string) => {
+export const checkQuestStatus = async (id: string, token: string) => {
   try {
-    return await privateAxios.post(`${getConfig().REST_API_URL}/quest/${id}/check-status`)
+    return await privateAxios.post(`${getConfig().REST_API_URL}/quest/${id}/check-status`, {
+      token,
+    })
   } catch (error) {
     throw error
   }
