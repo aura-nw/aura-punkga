@@ -122,7 +122,7 @@ export default function ConnectModal() {
                 {installed.map((connector) => (
                   <div key={connector.id}>
                     <div
-                      className='flex gap-2 w-full items-center hover:bg-gray-900 bg-gray-900 md:bg-white cursor-pointer p-2 md:py-3 md:px-4 rounded-lg border-[1px] border-[#DEDEDE]'
+                      className='flex gap-2 w-full items-center hover:bg-gray-900 bg-gray-900 cursor-pointer p-2 md:py-3 md:px-4 rounded-lg border-[1px] border-[#DEDEDE]'
                       onClick={async () => {
                         try {
                           await wagmiConnect(
@@ -152,7 +152,7 @@ export default function ConnectModal() {
                 {otherWallet.map((connector) => (
                   <div key={connector.id}>
                     <div
-                      className='flex gap-2 w-full items-center hover:bg-gray-900 bg-gray-900 md:bg-white cursor-pointer p-2 md:py-3 md:px-4 rounded-lg border-[1px] border-[#DEDEDE]'
+                      className='flex gap-2 w-full items-center hover:bg-gray-900 bg-gray-900 cursor-pointer p-2 md:py-3 md:px-4 rounded-lg border-[1px] border-[#DEDEDE]'
                       onClick={async () => {
                         try {
                           setShowQRCode(!showQRCode)
