@@ -15,11 +15,11 @@ import MintBadgeSuccessModal from './mintBadgeSuccessModal'
 import MintQuest from './mintQuest'
 import QuizQuest from './quizQuest'
 import RefQuest from './refQuest'
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
 import { toast } from 'react-toastify'
 import { checkQuestStatus } from 'src/services'
 import { mutate } from 'swr'
 import { Context } from 'src/context'
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
 export default function QuestDetailModal({
   quest,
   open,
@@ -39,11 +39,12 @@ export default function QuestDetailModal({
   const [hash, setHash] = useState('')
   const xpImageSrc = quest.pointText == 'KP' ? KPImage : quest.pointText == 'SF' ? SFImage : XPImage
   const xpText = quest.pointText
-  const { executeRecaptcha } = useGoogleReCaptcha()
+
   const [status, setStatus] = useState(quest.status)
   const [checking, setChecking] = useState(false)
   const { query, locale } = useRouter()
   const slug = query.campaignSlug as string
+  const { executeRecaptcha } = useGoogleReCaptcha()
   const checkQuestHandler = useCallback(async () => {
     try {
       if (!executeRecaptcha) {
