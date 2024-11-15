@@ -29,6 +29,9 @@
   --medium-red: #ff5c00;
   user-select:none;
 }
+.grecaptcha-badge { 
+    visibility: hidden;
+}
 #__next {
   background: #fff;
 }

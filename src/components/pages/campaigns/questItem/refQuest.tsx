@@ -29,7 +29,7 @@ export default function BasicQuest({
   checkQuestHandler: () => void
 }) {
   const { t } = useTranslation()
-  const { locale } = useRouter()
+  const { locale, pathname } = useRouter()
   const { account } = useContext(Context)
   const { setMigrateWalletOpen, setWalletConnectOpen } = useContext(ModalContext)
   const config = getConfig()
@@ -96,9 +96,7 @@ export default function BasicQuest({
           return (
             <Link
               className='w-full grid place-items-center'
-              href={`${config.REST_API_URL}/twitter/connect/${encodeURIComponent(
-                location.origin + location.pathname
-              )}`}>
+              href={`${config.REST_API_URL}/twitter/connect/${encodeURIComponent(location.origin + pathname)}`}>
               <Button className='w-full' size='sm'>
                 <div className='w-full flex items-center gap-1'>
                   <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
@@ -137,9 +135,7 @@ export default function BasicQuest({
           return (
             <Link
               className='w-full grid place-items-center'
-              href={`${config.REST_API_URL}/twitter/connect/${encodeURIComponent(
-                location.origin + location.pathname
-              )}`}>
+              href={`${config.REST_API_URL}/twitter/connect/${encodeURIComponent(location.origin + pathname)}`}>
               <Button className='w-full' size='sm'>
                 <div className='w-full flex items-center gap-1'>
                   <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
@@ -177,9 +173,7 @@ export default function BasicQuest({
           return (
             <Link
               className='w-full grid place-items-center'
-              href={`${config.REST_API_URL}/discord/connect/${encodeURIComponent(
-                location.origin + location.pathname
-              )}`}>
+              href={`${config.REST_API_URL}/discord/connect/${encodeURIComponent(location.origin + pathname)}`}>
               <Button className='w-full' size='sm'>
                 <div className='w-full flex items-center gap-1'>
                   <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
