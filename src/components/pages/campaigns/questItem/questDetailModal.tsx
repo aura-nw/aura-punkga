@@ -60,14 +60,18 @@ export default function QuestDetailModal({
       if (checking) return
       setChecking(true)
       const res = await checkQuestStatus(quest.id, token)
-      if (res.data) {
+      if (res.data.reward_status) {
         setStatus(res.data.reward_status)
         mutate({ key: 'fetch_campaign_auth_data', slug, account: account?.id })
+      } else {
+        if (res.data?.errors?.message == 'check Captcha Error')
+          throw new Error(t('Verify failed by reCAPCHA. Please reload and try again!'))
+        else throw new Error()
       }
       setChecking(false)
     } catch (error) {
       setChecking(false)
-      toast(error?.message || 'Claim failed. Please try again later.', {
+      toast(error?.message || 'Check quest status failed. Please try again later.', {
         type: 'error',
       })
       console.error(error)
