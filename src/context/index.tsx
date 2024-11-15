@@ -490,7 +490,7 @@ function ContextProvider({ children }: any) {
     return null
   }
   return (
-    <GoogleReCaptchaProvider reCaptchaKey='6LcJcX4qAAAAACrqfajq94z62YvH_i2EXb2eSsnh'>
+    <GoogleReCaptchaProvider reCaptchaKey='6LdHgn4qAAAAAMUPupCUp2q0nBdy9hl7qnILdbL5'>
       <Context.Provider
         value={{
           account,

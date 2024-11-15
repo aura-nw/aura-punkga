@@ -50,7 +50,7 @@ export default function QuestDetailModal({
         console.log('Execute recaptcha not yet available')
         return
       }
-      const token = await executeRecaptcha('checkStatus')
+      const token = await executeRecaptcha('check_status')
       if (!token) {
         toast('Verify failed by reCAPCHA. Please reload and try again!', {
           type: 'error',
