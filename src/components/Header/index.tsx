@@ -94,8 +94,8 @@ export default function Header({ className }: { className?: string }) {
           isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
         }`}></div>
       <header
-        className={`sticky w-full top-0 z-50 transition-all duration-300 lg:h-20 bg-neautral-black lg:bg-transparent ${className}`}>
-        <nav className='lg:hidden pk-container z-10 w-full shadow-[0px_4px_4px_0px_#0000001A]'>
+        className={`sticky w-full top-0 z-50 transition-all duration-300 xl:h-20 bg-neautral-black xl:bg-transparent ${className}`}>
+        <nav className='xl:hidden pk-container z-10 w-full shadow-[0px_4px_4px_0px_#0000001A]'>
           <div className='flex justify-between items-center gap-2 w-full h-14'>
             <div onClick={() => router.push('/')}>
               <Image src={Logo} alt='header logo' className='h-[30px] w-auto' />
@@ -129,10 +129,10 @@ export default function Header({ className }: { className?: string }) {
         </nav>
 
         <div
-          className={`lg:hidden pk-container py-[10px] px-5 pb-4 bg-[#F4F3F7] ${
+          className={`xl:hidden pk-container py-[10px] px-5 pb-4 bg-[#F4F3F7] ${
             router.pathname == '/' ? '' : 'hidden'
           }`}>
-          <div ref={divRef} className={`${isSearchFocused ? 'z-30' : ''} w-full lg:max-w-max relative`}>
+          <div ref={divRef} className={`${isSearchFocused ? 'z-30' : ''} w-full xl:max-w-max relative`}>
             <TextField
               inputref={ref}
               onChange={_.debounce(setSearchValue, 500)}
@@ -168,7 +168,7 @@ export default function Header({ className }: { className?: string }) {
             {!!searchComic.data?.length && (
               <div
                 className={`absolute bg-light-gray transition-all -bottom-6 translate-y-full duration-500 rounded-[20px] max-h-[40vh] overflow-hidden ${
-                  isSearchFocused ? 'opacity-100 lg:w-[160%]' : 'pointer-events-none opacity-0 w-full'
+                  isSearchFocused ? 'opacity-100 xl:w-[160%]' : 'pointer-events-none opacity-0 w-full'
                 }`}>
                 <div className={`max-h-[40vh] overflow-auto  flex flex-col gap-7  p-5`}>
                   {searchComic.data?.map((manga, index) => (
@@ -227,11 +227,11 @@ export default function Header({ className }: { className?: string }) {
           </div>
         </div>
 
-        <div className='hidden lg:block absolute inset-x-0 top-0 w-full h-[100px]'>
+        <div className='hidden xl:block absolute inset-x-0 top-0 w-full h-[100px]'>
           <Image src={Bg} alt='' className='w-full h-full object-cover' />
         </div>
         <nav
-          className={`pk-container gap-3 lg:flex items-center justify-between h-[86px] hidden text-neautral-white relative`}
+          className={`pk-container gap-3 xl:flex items-center justify-between h-[86px] hidden text-neautral-white relative`}
           aria-label='Global'>
           <div className='flex items-center gap-8'>
             <Link href='/' className='flex shrink-0'>
@@ -243,7 +243,7 @@ export default function Header({ className }: { className?: string }) {
               ref={divRef}
               className={`${
                 isSearchFocused ? 'z-30' : ''
-              } w-full md:max-w-[170px] lg:max-w-[200px] xl:max-w-[300px] 2xl:max-w-[500px] relative`}>
+              } w-full md:max-w-[170px] xl:max-w-[200px] xl:max-w-[300px] 2xl:max-w-[500px] relative`}>
               <TextField
                 inputref={ref}
                 onChange={_.debounce(setSearchValue, 500)}
@@ -337,7 +337,7 @@ export default function Header({ className }: { className?: string }) {
               )}
             </div>
           </div>
-          <div className='flex lg:gap-[32px] lg:justify-end min-w-[430px] items-center'>
+          <div className='flex xl:gap-[32px] xl:justify-end min-w-[430px] items-center'>
             <div className='h-fit cursor-pointer' onClick={() => router.push('/campaigns')}>
               <span
                 style={{ fontWeight: '500' }}

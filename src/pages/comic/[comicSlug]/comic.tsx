@@ -1,77 +1,74 @@
-import { Tab } from '@headlessui/react';
-import { BellAlertIcon, BellIcon, EyeIcon, HeartIcon } from '@heroicons/react/20/solid';
-import { BellAlertIcon as BellAlertIconOutline } from '@heroicons/react/24/outline';
-import FilledButton from 'components/Button/FilledButton';
-import OutlineButton from 'components/Button/OutlineButton';
-import { HEADER_HEIGHT } from 'components/Header';
-import Tag from 'components/Label/Tag';
-import ChapterList from 'components/pages/comic/ChapterList';
-import Introduction from 'components/pages/comic/Introduction';
-import NFTsList from 'components/pages/comic/NFTsList';
-import Ninja from 'images/ninja-2.svg';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { Fragment, useContext, useEffect, useState } from 'react';
-import { isMobile } from 'react-device-detect';
-import { useTranslation } from 'react-i18next';
-import mockAvar from 'src/assets/images/mockup4.png';
-import { LanguageType } from 'src/constants/global.types';
-import { Context } from 'src/context';
-import { ModalContext } from 'src/context/modals';
-import { subscribe, unsubscribe } from 'src/services';
+import { Tab } from '@headlessui/react'
+import { BellAlertIcon, BellIcon, EyeIcon, HeartIcon } from '@heroicons/react/20/solid'
+import { BellAlertIcon as BellAlertIconOutline } from '@heroicons/react/24/outline'
+import FilledButton from 'components/Button/FilledButton'
+import OutlineButton from 'components/Button/OutlineButton'
+import { HEADER_HEIGHT } from 'components/Header'
+import Tag from 'components/Label/Tag'
+import ChapterList from 'components/pages/comic/ChapterList'
+import Introduction from 'components/pages/comic/Introduction'
+import NFTsList from 'components/pages/comic/NFTsList'
+import Ninja from 'images/ninja-2.svg'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { Fragment, useContext, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import mockAvar from 'src/assets/images/mockup4.png'
+import { LanguageType } from 'src/constants/global.types'
+import { Context } from 'src/context'
+import { ModalContext } from 'src/context/modals'
+import { subscribe, unsubscribe } from 'src/services'
+import { useWindowSize } from 'usehooks-ts'
 export default function Page(props) {
   if (props.justHead) {
-    return <></>;
+    return <></>
   }
-  return <Comic {...props} />;
+  return <Comic {...props} />
 }
 function Comic({ comicDetails, like, unlike }) {
-  const {setSignInOpen} = useContext(ModalContext)
-  const { t } = useTranslation();
-  const { locale } = useRouter();
-  const [language, setLanguage] = useState<LanguageType>(
-    locale as LanguageType,
-  );
-  const [isSubscribe, setIsSubscribe] = useState(
-    comicDetails.data?.isSubscribe,
-  );
-  const [comicLikes, setComicLikes] = useState(0);
-  const { account } = useContext(Context);
-  const router = useRouter();
+  const { setSignInOpen } = useContext(ModalContext)
+  const { t } = useTranslation()
+  const { locale } = useRouter()
+  const { width } = useWindowSize()
+  const [language, setLanguage] = useState<LanguageType>(locale as LanguageType)
+  const [isSubscribe, setIsSubscribe] = useState(comicDetails.data?.isSubscribe)
+  const [comicLikes, setComicLikes] = useState(0)
+  const { account } = useContext(Context)
+  const router = useRouter()
   useEffect(() => {
-    setIsSubscribe(comicDetails.data?.isSubscribe);
-  }, [comicDetails.data?.isSubscribe]);
+    setIsSubscribe(comicDetails.data?.isSubscribe)
+  }, [comicDetails.data?.isSubscribe])
   useEffect(() => {
     if (comicDetails.data) {
-      setComicLikes(comicDetails.data.likes);
+      if (width > 1280) {
+        router.push(`/comic/${comicDetails.data.slug}/chapter/1`)
+        return
+      }
+      setComicLikes(comicDetails.data.likes)
     }
-  }, [comicDetails.data]);
-  if (!isMobile) {
-    router.push(`${location.pathname}/chapter/1`);
+  }, [comicDetails.data])
+  if (comicDetails.loading) {
+    return <></>
   }
-  if (comicDetails.loading || !isMobile) {
-    return <></>;
-  }
-  const data = comicDetails.data;
-  if (!data) return <></>;
+  const data = comicDetails.data
+  if (!data) return <></>
 
   const selectedLanguage =
-    data.languages.find((l) => l.shortLang == language) ||
-    data.languages.find((l) => l.isMainLanguage);
+    data.languages.find((l) => l.shortLang == language) || data.languages.find((l) => l.isMainLanguage)
 
   const subscribeHandler = (isSub: boolean) => {
     if (account?.verified && account?.name) {
       if (isSub) {
-        subscribe(data.id);
+        subscribe(data.id)
       } else {
-        unsubscribe(data.id);
+        unsubscribe(data.id)
       }
-      setIsSubscribe(isSub);
+      setIsSubscribe(isSub)
     } else {
-      setSignInOpen(true);
+      setSignInOpen(true)
     }
-  };
+  }
   return (
     <>
       <div className={`bg-black fixed  left-0 right-0 bottom-0`} style={{ top: HEADER_HEIGHT.MOBILE }}>
@@ -86,9 +83,7 @@ function Comic({ comicDetails, like, unlike }) {
           <div className='absolute inset-0 bg-gradient-to-r from-[28%] from-[#000]/80 to-[#00000000]'></div>
         </div>
       </div>
-      <div
-        className={`flex flex-col -mb-[8vh]`}
-        style={{ minHeight: `calc(100vh - ${HEADER_HEIGHT.MOBILE})` }}>
+      <div className={`flex flex-col -mb-[8vh]`} style={{ minHeight: `calc(100vh - ${HEADER_HEIGHT.MOBILE})` }}>
         <div className='min-h-[211px] w-full relative'>
           <div className='w-full h-full z-10 relative flex'>
             <div className='w-full h-full z-10 flex flex-col p-6 gap-6'>
@@ -194,16 +189,14 @@ function Comic({ comicDetails, like, unlike }) {
               </Tab.Panel>
               <Tab.Panel className='h-full flex-1 flex flex-col'>
                 {!!comicDetails.data.collections.length ? (
-                  <NFTsList
-                    collections={comicDetails.data.collections}
-                  />
+                  <NFTsList collections={comicDetails.data.collections} />
                 ) : (
-                <div className='flex-1 w-full flex flex-col items-center justify-center'>
-                  <Image src={Ninja} alt='' className='h-[260px] aspect-square mx-auto opacity-60' />
-                  <div className='font-extrabold text-2xl leading-6 text-subtle-dark mt-[10px]'>
-                    {t('Artist Composing')}
+                  <div className='flex-1 w-full flex flex-col items-center justify-center'>
+                    <Image src={Ninja} alt='' className='h-[260px] aspect-square mx-auto opacity-60' />
+                    <div className='font-extrabold text-2xl leading-6 text-subtle-dark mt-[10px]'>
+                      {t('Artist Composing')}
+                    </div>
                   </div>
-                </div>
                 )}
               </Tab.Panel>
               <Tab.Panel className='h-full flex-1 flex flex-col'>

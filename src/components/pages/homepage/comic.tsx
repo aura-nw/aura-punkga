@@ -24,7 +24,7 @@ export default function Comic(props: IComic) {
   }, [])
   return (
     <div className={`${props.status.text == 'Upcoming' ? '[&_a:not(.author)]:pointer-events-none' : ''}`}>
-      <div className='hidden md:grid md:grid-cols-[180px_1fr] gap-[20px]'>
+      <div className='hidden lg:grid lg:grid-cols-[180px_1fr] gap-[20px]'>
         <div>
           <Link href={`/comic/${props.slug}`} className=' xl:hidden block w-full h-fit aspect-[180/240] mx-auto'>
             <Image
@@ -121,7 +121,7 @@ export default function Comic(props: IComic) {
           )}
         </div>
       </div>
-      <div className='md:hidden h-full max-w-[180px] mx-auto'>
+      <div className='lg:hidden h-full max-w-[180px] mx-auto'>
         <div
           onClick={() => {
             props.status.text == 'Upcoming' ? null : router.push(`/comic/${props.slug}`)
