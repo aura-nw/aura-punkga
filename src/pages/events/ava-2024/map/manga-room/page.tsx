@@ -251,6 +251,7 @@ const Content = ({ selected, mutate }) => {
   const { locale, push } = useRouter()
   const { t } = useTranslation()
   const [selectedIP, setSelectedIP] = useState<any>()
+  const { width } = useWindowSize()
   const mangaName =
     (locale == 'en'
       ? selected.manga.manga_languages.find((l) => l.language_id == 1)?.title
@@ -314,7 +315,7 @@ const Content = ({ selected, mutate }) => {
               size='sm'
               className='w-full'
               onClick={() =>
-                isMobile
+                width < 1280
                   ? window.open(`/comic/${selected.manga.slug}`, '_blank')
                   : window.open(`/comic/${selected.manga.slug}/chapter/1`, '_blank')
               }>
