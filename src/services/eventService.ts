@@ -40,4 +40,8 @@ export const eventService = {
     likeArtwork: async (id) => await privateAxios.post(`${getConfig().REST_API_URL}/user/artwork/${id}/like`),
     unlikeArtwork: async (id) => await privateAxios.post(`${getConfig().REST_API_URL}/user/artwork/${id}/unlike`),
   },
+  punktober: {
+    getAllTopic: async () => await privateAxios.get(`${getConfig().REST_API_URL}/artwork-topic`),
+    getTopic: async (id: string) => await privateAxios.get(`${getConfig().REST_API_URL}/artwork-topic/${id}`),
+  },
 }

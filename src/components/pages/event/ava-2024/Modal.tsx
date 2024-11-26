@@ -68,7 +68,7 @@ export default function Modal({
                     xmlns='http://www.w3.org/2000/svg'
                     onClick={() => setOpen(false)}
                     className='cursor-pointer'>
-                    <path d='M16 8L8 16M16 16L8 8' stroke='white' strokeWidth='1.5' stroke-linecap='round' />
+                    <path d='M16 8L8 16M16 16L8 8' stroke='white' strokeWidth='1.5' strokeLinecap='round' />
                   </svg>
                 </div>
                 {title && <div className='text-lg font-semibold w-full text-center relative my-4'>{title}</div>}

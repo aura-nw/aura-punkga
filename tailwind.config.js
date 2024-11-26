@@ -386,6 +386,9 @@ module.exports = {
           },
         },
       },
+      fontFamily: {
+        roboto: ['var(--font-roboto)'],
+      }
     },
   },
   plugins: [require('@headlessui/tailwindcss')],

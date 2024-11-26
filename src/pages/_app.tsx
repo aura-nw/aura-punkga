@@ -24,6 +24,7 @@ import 'src/styles/globals.scss'
 import { WagmiProvider } from 'wagmi'
 const ws = Work_Sans({ subsets: ['latin', 'vietnamese'] })
 export const inter = Inter({ subsets: ['latin', 'vietnamese'] })
+
 const orbitron = localFont({
   src: [
     {

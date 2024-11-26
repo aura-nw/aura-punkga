@@ -231,12 +231,12 @@ export default function Header({ className }: { className?: string }) {
           <Image src={Bg} alt='' className='w-full h-full object-cover' />
         </div>
         <nav
-          className={`pk-container gap-3 xl:flex items-center justify-between h-[86px] hidden text-neautral-white relative`}
+          className={`px-[84px] gap-3 xl:flex items-center justify-between h-[86px] hidden text-neautral-white relative`}
           aria-label='Global'>
-          <div className='flex items-center gap-8'>
+          <div className='flex items-center gap-14'>
             <Link href='/' className='flex shrink-0'>
               <span className='sr-only'>Your Company</span>
-              <Image src={Logo} alt='header logo' className='w-[72px]' />
+              <Image src={Logo} alt='header logo' className='w-[104px]' />
             </Link>
 
             <div
@@ -248,29 +248,28 @@ export default function Header({ className }: { className?: string }) {
                 inputref={ref}
                 onChange={_.debounce(setSearchValue, 500)}
                 onFocus={() => setIsSearchFocused(true)}
-                className={`transition-[width] duration-500 ${isSearchFocused ? '!w-[160%]' : ''}`}
+                className={`transition-[width] bg-neutral-950 border-none w-[384px] duration-500 ${
+                  isSearchFocused ? '!w-[160%]' : ''
+                }`}
                 placeholder={t('Search by title')}
-                leadingComponent={
-                  <Image
-                    width={20}
-                    height={20}
-                    src={SearchIcon}
-                    alt=''
-                    onClick={() => {
-                      if (ref.current.value) {
-                        setIsSearchFocused(false)
-                        router.push(`/search?keyword=${ref.current.value}`)
-                      }
-                    }}
-                  />
-                }
                 trailingComponent={
                   searchComic.loading ? (
                     <div>
                       <Spinner size={20} className='w-5 h-5' />
                     </div>
                   ) : (
-                    <div></div>
+                    <Image
+                      width={20}
+                      height={20}
+                      src={SearchIcon}
+                      alt=''
+                      onClick={() => {
+                        if (ref.current.value) {
+                          setIsSearchFocused(false)
+                          router.push(`/search?keyword=${ref.current.value}`)
+                        }
+                      }}
+                    />
                   )
                 }
               />
@@ -337,36 +336,24 @@ export default function Header({ className }: { className?: string }) {
               )}
             </div>
           </div>
-          <div className='flex xl:gap-[32px] xl:justify-end min-w-[430px] items-center'>
-            <div className='h-fit cursor-pointer' onClick={() => router.push('/campaigns')}>
-              <span
-                style={{ fontWeight: '500' }}
-                className={`${pathname.includes('/campaigns') ? 'text-text-brand-focus' : ''}`}>
+          <div className='flex xl:gap-6 xl:justify-end min-w-[430px] items-center text-sm'>
+            <div className='h-fit cursor-pointer font-semibold' onClick={() => router.push('/campaigns')}>
+              <span className={`${pathname.includes('/campaigns') ? 'text-text-brand-focus' : ''}`}>
                 {t('Campaign')}
               </span>
             </div>
-            <div className='h-fit cursor-pointer' onClick={() => router.push('/events')}>
-              <span
-                style={{ fontWeight: '500' }}
-                className={`${pathname.includes('/events') ? 'text-text-brand-focus' : ''}`}>
-                {t('Event')}
-              </span>
+            <div className='h-fit cursor-pointer font-semibold' onClick={() => router.push('/events')}>
+              <span className={`${pathname.includes('/events') ? 'text-text-brand-focus' : ''}`}>{t('Event')}</span>
             </div>
-            <div className='h-fit cursor-pointer' onClick={() => router.push('/collections')}>
-              <span
-                style={{ fontWeight: '500' }}
-                className={`${pathname.includes('/collections') ? 'text-text-brand-focus' : ''}`}>
+            <div className='h-fit cursor-pointer font-semibold' onClick={() => router.push('/collections')}>
+              <span className={`${pathname.includes('/collections') ? 'text-text-brand-focus' : ''}`}>
                 {t('Collection')}
               </span>
             </div>
-            <div className='h-fit cursor-pointer' onClick={() => router.push('/about-us')}>
-              <span
-                style={{ fontWeight: '500' }}
-                className={`${pathname.includes('/about-us') ? 'text-text-brand-focus' : ''}`}>
-                {t('aboutUs')}
-              </span>
+            <div className='h-fit cursor-pointer font-semibold' onClick={() => router.push('/about-us')}>
+              <span className={`${pathname.includes('/about-us') ? 'text-text-brand-focus' : ''}`}>{t('aboutUs')}</span>
             </div>
-            <div className='flex gap-[20px] ml-10 items-center cursor-pointer'>
+            <div className='flex gap-[20px] ml-8 items-center cursor-pointer'>
               <div className='flex gap-4 items-center' onClick={switchLanguage}>
                 {locale == 'en' ? (
                   <div className='text-text-brand-defaul font-medium'>EN</div>

@@ -167,7 +167,7 @@ export default function TextField({
         disabled={disabled}
         onChange={(event) => onChange && onChange(event.target.value)}
         id={id || 'input-group-1'}
-        className={`bg-transparent w-full placeholder-text-quatenary px-2.5 text-sm font-normal focus:outline-none ${
+        className={`bg-transparent w-full placeholder-text-quatenary px-3 text-sm font-normal focus:outline-none ${
           leadingComponent ? 'pl-[38px]' : ''
         } ${trailingComponent ? 'pr-[45px]' : ''} ${disabledStyle}`}
         placeholder={placeholder}></input>
