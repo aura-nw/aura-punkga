@@ -38,10 +38,10 @@ export default function LeaderBoard({ data, userData, xpText }: { data: any[]; u
           {userData && (
             <div className='flex justify-between py-2 md:py-0 md:pt-5 px-3 md:px-[10px] border-t font-medium border-border-primary text-sm'>
               <div>
-                {t('Your rank')}:{' '}
+                {/* {t('Your rank')}:{' '}
                 <strong className='text-text-brand-defaul'>
                   {userData?.user_campaign_rank ? '#' + userData?.user_campaign_rank : '--'}
-                </strong>
+                </strong> */}
               </div>
 
               <div>
