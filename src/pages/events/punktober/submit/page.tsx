@@ -2,7 +2,7 @@ import TextField from 'components/Input/TextField'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -29,8 +29,14 @@ function PageContent() {
   const { t } = useTranslation()
   const [loading, setLoading] = useState(false)
   const { account, getProfile } = useContext(Context)
-  const { locale } = useRouter()
+  const { locale, replace } = useRouter()
   const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    if (moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz('2025-01-01', 'Asia/Ho_Chi_Minh'))) {
+      replace('/events/punktober/home')
+    }
+  }, [])
 
   const creatorForm = useForm({
     defaultValues: {

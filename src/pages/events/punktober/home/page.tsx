@@ -32,6 +32,8 @@ function PageContent() {
   const [date, setDate] = useState<Moment>(
     searchParams.get('day')
       ? moment.tz(`2024-12-${searchParams.get('day')}`, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh')
+      : moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz('2025-01-01', 'Asia/Ho_Chi_Minh'))
+      ? moment.tz('2024-12-01', 'Asia/Ho_Chi_Minh')
       : moment().tz('Asia/Ho_Chi_Minh')
   )
   const { width } = useWindowSize()
