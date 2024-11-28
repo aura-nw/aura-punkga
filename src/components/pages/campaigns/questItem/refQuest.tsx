@@ -37,6 +37,40 @@ export default function BasicQuest({
 
   const RefButton = () => {
     switch (quest.type) {
+      case 'YTLike':
+      case 'YTSubscribe':
+      case 'YTWatch':
+        return (
+          <Link
+            className='w-full grid place-items-center'
+            target='_blank'
+            href={`${
+              quest.requirement['yt_like']?.href ||
+              quest.requirement['yt_subscribe']?.href ||
+              quest.requirement['yt_watch']?.href
+            }`}>
+            <Button className='w-full' size='sm'>
+              {t('Go to Youtube')}
+            </Button>
+          </Link>
+        )
+      case 'TTFollow':
+      case 'TTLike':
+      case 'TTWatch':
+        return (
+          <Link
+            className='w-full grid place-items-center'
+            target='_blank'
+            href={`${
+              quest.requirement['tt_follow']?.href ||
+              quest.requirement['tt_like']?.href ||
+              quest.requirement['tt_watch']?.href
+            }`}>
+            <Button className='w-full' size='sm'>
+              {t('Go to Tiktok')}
+            </Button>
+          </Link>
+        )
       case 'EngagesEventManga':
       case 'CollectIP':
       case 'LikeEventArtwork':
