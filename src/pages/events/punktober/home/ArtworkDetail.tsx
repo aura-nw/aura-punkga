@@ -12,6 +12,8 @@ import Image1 from 'components/pages/event/punktober/assets/image719.png'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import Link from 'next/link'
 import Modal from 'components/pages/event/punktober/Modal'
+import ReactHtmlParser from 'react-html-parser'
+
 export default function ArtworkDetail({ id }) {
   const { account } = useContext(Context)
   const { setSignInOpen } = useContext(ModalContext)
@@ -67,6 +69,7 @@ export default function ArtworkDetail({ id }) {
     setIsLiked(!!artworkData?.artwork?.likes?.length)
     setLikeCount(artworkData?.artwork?.likes_aggregate?.aggregate?.count || 0)
   }, [id])
+
   if (!artworkData) {
     return (
       <div className='grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-9'>
@@ -153,16 +156,29 @@ export default function ArtworkDetail({ id }) {
                 </Dropdown>
               </div>
               <div className='w-fit'>
-                by <span className='text-text-brand-defaul'>{artworkData?.artwork?.creator?.pen_name}</span>
+                by{' '}
+                <Link
+                  target='_blank'
+                  href={`/artist/${artworkData?.artwork?.creator?.slug}`}
+                  className='text-text-brand-defaul'>
+                  {artworkData?.artwork?.creator?.pen_name}
+                </Link>
               </div>
               <div className='h-[18px] flex items-center gap-1.5 leading-tight'>
                 IP ID:{' '}
-                <span className='text-text-brand-defaul'>{shorten(artworkData?.story_ip_asset?.ip_asset_id)}</span>{' '}
+                <Link
+                  target='_blank'
+                  href={`https://odyssey.explorer.story.foundation/ipa/${artworkData?.story_ip_asset?.ip_asset_id}`}
+                  className='text-text-brand-defaul'>
+                  {shorten(artworkData?.story_ip_asset?.ip_asset_id)}
+                </Link>{' '}
                 <Copy2Clipboard text={artworkData?.story_ip_asset?.ip_asset_id} />
               </div>
             </div>
-            <div className='text-sm w-full text-start mt-4'>{artworkData?.artwork?.description}</div>
-            <div className='flex items-center gap-1 mt-3' onClick={likeHandler}>
+            <p className='text-sm w-full mt-4 whitespace-pre-wrap'>
+              {ReactHtmlParser((artworkData?.artwork?.description))}
+            </p>
+            <div className='flex items-center gap-1 mt-3 cursor-pointer w-fit' onClick={likeHandler}>
               <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
                 <path
                   fillRule='evenodd'
@@ -186,7 +202,13 @@ export default function ArtworkDetail({ id }) {
           <div className='w-full space-y-1.5'>
             <div className='text-lg font-medium'>{artworkData?.artwork?.name}</div>
             <div className='w-fit text-xs'>
-              by <span className='text-text-brand-defaul'>{artworkData?.artwork?.creator?.pen_name}</span>
+              by{' '}
+              <Link
+                target='_blank'
+                href={`/artist/${artworkData?.artwork?.creator?.slug}`}
+                className='text-text-brand-defaul'>
+                {artworkData?.artwork?.creator?.pen_name}
+              </Link>
             </div>
           </div>
           <textarea
