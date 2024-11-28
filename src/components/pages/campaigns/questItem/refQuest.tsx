@@ -34,6 +34,7 @@ export default function BasicQuest({
   const { setMigrateWalletOpen, setWalletConnectOpen } = useContext(ModalContext)
   const config = getConfig()
   const { isConnected } = useAccount()
+  const [showCheckButton, setShowCheckButton] = useState(false)
 
   const RefButton = () => {
     switch (quest.type) {
@@ -49,7 +50,7 @@ export default function BasicQuest({
               quest.requirement['yt_subscribe']?.href ||
               quest.requirement['yt_watch']?.href
             }`}>
-            <Button className='w-full' size='sm'>
+            <Button className='w-full' size='sm' onClick={() => setTimeout(() => setShowCheckButton(true), 2000)}>
               {t('Go to Youtube')}
             </Button>
           </Link>
@@ -66,7 +67,7 @@ export default function BasicQuest({
               quest.requirement['tt_like']?.href ||
               quest.requirement['tt_watch']?.href
             }`}>
-            <Button className='w-full' size='sm'>
+            <Button className='w-full' size='sm' onClick={() => setTimeout(() => setShowCheckButton(true), 2000)}>
               {t('Go to Tiktok')}
             </Button>
           </Link>
@@ -83,7 +84,7 @@ export default function BasicQuest({
               quest.requirement['like_event_artwork']?.href ||
               quest.requirement['collect_ip']?.href
             }`}>
-            <Button className='w-full' size='sm'>
+            <Button className='w-full' size='sm' onClick={() => setTimeout(() => setShowCheckButton(true), 2000)}>
               {t('Go to page')}
             </Button>
           </Link>
@@ -120,7 +121,7 @@ export default function BasicQuest({
             className='w-full grid place-items-center'
             target='_blank'
             href={`${quest.requirement['stake_ip']?.href}`}>
-            <Button className='w-full' size='sm'>
+            <Button className='w-full' size='sm' onClick={() => setTimeout(() => setShowCheckButton(true), 2000)}>
               {t('Go to page')}
             </Button>
           </Link>
@@ -152,7 +153,7 @@ export default function BasicQuest({
             className='w-full grid place-items-center'
             target='_blank'
             href={`https://twitter.com/intent/follow?screen_name=${quest.requirement['xfollow'].target_name}`}>
-            <Button className='w-full' size='sm'>
+            <Button className='w-full' size='sm' onClick={() => setTimeout(() => setShowCheckButton(true), 2000)}>
               <div className='w-full flex items-center gap-1'>
                 <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
                   <path
@@ -193,7 +194,7 @@ export default function BasicQuest({
             className='w-full grid place-items-center'
             target='_blank'
             href={`https://twitter.com/intent/retweet?tweet_id=${quest.requirement['xrepost'].post_id}`}>
-            <Button className='w-full' size='sm'>
+            <Button className='w-full' size='sm' onClick={() => setTimeout(() => setShowCheckButton(true), 2000)}>
               <div className='w-full flex items-center gap-1'>
                 <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
                   <path
@@ -233,7 +234,7 @@ export default function BasicQuest({
             className='w-full grid place-items-center'
             target='_blank'
             href={`${quest.requirement['dc_join'].invite_link}`}>
-            <Button className='w-full' size='sm'>
+            <Button className='w-full' size='sm' onClick={() => setTimeout(() => setShowCheckButton(true), 2000)}>
               <div className='w-full flex items-center gap-1'>
                 <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
                   <path
@@ -257,7 +258,7 @@ export default function BasicQuest({
                 ? `/chapter/${quest.requirement[quest.type.toLowerCase()].chapter.number}`
                 : ''
             }`}>
-            <Button className='w-full' size='sm'>
+            <Button className='w-full' size='sm' onClick={() => setTimeout(() => setShowCheckButton(true), 2000)}>
               {t('Go to page')}
             </Button>
           </Link>
@@ -294,11 +295,18 @@ export default function BasicQuest({
           />
         </Button>
       ) : (
-        <div className='grid grid-cols-[60%_1fr] gap-5'>
+        <div className='flex gap-5'>
           <RefButton />
-          <Button size='sm' className='w-full' variant='outlined' onClick={checkQuestHandler} loading={checking}>
-            {t('Check')}
-          </Button>
+          {showCheckButton && (
+            <Button
+              size='sm'
+              className='!w-1/3 shrink-0'
+              variant='outlined'
+              onClick={checkQuestHandler}
+              loading={checking}>
+              {t('Check')}
+            </Button>
+          )}
         </div>
       )}
     </div>
