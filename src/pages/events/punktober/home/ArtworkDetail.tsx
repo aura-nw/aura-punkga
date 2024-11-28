@@ -39,9 +39,9 @@ export default function ArtworkDetail({ id }) {
       setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1))
       setIsLiked((prevState) => !prevState)
       if (isLiked) {
-        await eventService.story.unlikeArtwork(id)
+        await eventService.story.unlikeArtwork(artworkData.artwork.id)
       } else {
-        await eventService.story.likeArtwork(id)
+        await eventService.story.likeArtwork(artworkData.artwork.id)
       }
     } catch (error) {
       toast(error.message, {

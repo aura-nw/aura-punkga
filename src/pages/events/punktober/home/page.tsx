@@ -207,12 +207,9 @@ function PageContent() {
               </div>
             )}
           </div>
-          <div className='w-full h-[92px] relative bg-neutral-black hidden lg:block'>
-            <Image src={Mockup2} alt='' className='h-[79px] absolute bottom-0 left-0' />
-            <div className='font-roboto absolute top-0 text-white font-bold text-[22px] uppercase pt-3 pl-4'>
-              {t('Complete quest and get dreams')}
-            </div>
-            <div className='flex items-center justify-end h-full px-10'>
+          <div className='w-full relative bg-neutral-black hidden lg:block'>
+            <Image src={Mockup2} alt='' className='w-full' />
+            <div className='flex items-center h-full px-10 absolute right-0 top-0'>
               <Link
                 href='/events/punktober/submit'
                 className={`p-2.5 text-center text-[20px] uppercase font-bold text-neutral-black font-roboto bg-white flex items-center w-fit`}>
