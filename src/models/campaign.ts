@@ -63,6 +63,12 @@ export type Quest = {
     | 'CollectIP'
     | 'MintBadge'
     | 'StakeIP'
+    | 'YTSubscribe'
+    | 'YTWatch'
+    | 'YTLike'
+    | 'TTFollow'
+    | 'TTWatch'
+    | 'TTLike'
   reward_status: 'NOT_SATISFY' | 'CAN_CLAIM' | 'CLAIMED' | 'OUT_OF_SLOT'
   status: string
   created_at: string
@@ -129,6 +135,24 @@ export type Quest = {
     collect_ip?: { href: string }
     stake_ip?: { href: string }
     mint_nft?: { contract_address: string }
+    yt_subscribe?: {
+      href: string
+    }
+    yt_watch?: {
+      href: string
+    }
+    yt_like?: {
+      href: string
+    }
+    tt_follow?: {
+      href: string
+    }
+    tt_watch?: {
+      href: string
+    }
+    tt_like?: {
+      href: string
+    }
   }
   reward: {
     nft?: {
