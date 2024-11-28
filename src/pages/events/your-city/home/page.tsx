@@ -1,10 +1,10 @@
 import LazyImage from 'components/Image'
 import TextField from 'components/Input/TextField'
-import Logo from 'components/pages/event/punktober/assets/logo.svg'
-import Mockup2 from 'components/pages/event/punktober/assets/mock.png'
-import Point from 'components/pages/event/punktober/assets/point.svg'
-import Calendar from 'components/pages/event/punktober/Calendar'
-import Modal from 'components/pages/event/punktober/Modal'
+import Logo from 'components/pages/event/your-city/assets/logo.svg'
+import Mockup2 from 'components/pages/event/your-city/assets/mock.png'
+import Point from 'components/pages/event/your-city/assets/point.svg'
+import Calendar from 'components/pages/event/your-city/Calendar'
+import Modal from 'components/pages/event/your-city/Modal'
 import Spinner from 'components/Spinner'
 import moment, { Moment } from 'moment-timezone'
 import Image from 'next/image'
@@ -183,7 +183,7 @@ function PageContent() {
                 </div>
                 <div className='w-full flex flex-col items-center gap-3'>
                   <Link
-                    href='/events/punktober/submit'
+                    href='/events/your-city/submit'
                     className={`p-2.5 text-center font-roboto text-[22px] uppercase font-bold bg-neutral-black w-full ${
                       moment(date).format('YYYY-MM-DD') == moment().format('YYYY-MM-DD')
                         ? 'text-white'
@@ -211,7 +211,7 @@ function PageContent() {
             <Image src={Mockup2} alt='' className='w-full' />
             <div className='flex items-center h-full px-10 absolute right-0 top-0'>
               <Link
-                href='/events/punktober/submit'
+                href='/events/your-city/submit'
                 className={`p-2.5 text-center text-[20px] uppercase font-bold text-neutral-black font-roboto bg-white flex items-center w-fit`}>
                 {t('Join Now')}
                 <Image src={Point} alt='' className='w-5 h-5 ml-2' />

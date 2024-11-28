@@ -8,10 +8,10 @@ import { ModalContext } from 'src/context/modals'
 import { eventService } from 'src/services/eventService'
 import { formatNumber, shorten } from 'src/utils'
 import useSWR from 'swr'
-import Image1 from 'components/pages/event/punktober/assets/image719.png'
+import Image1 from 'components/pages/event/your-city/assets/image719.png'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import Link from 'next/link'
-import Modal from 'components/pages/event/punktober/Modal'
+import Modal from 'components/pages/event/your-city/Modal'
 import ReactHtmlParser from 'react-html-parser'
 
 export default function ArtworkDetail({ id }) {

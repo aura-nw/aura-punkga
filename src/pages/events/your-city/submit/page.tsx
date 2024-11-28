@@ -8,8 +8,8 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Context } from 'src/context'
 import { userService } from 'src/services/userService'
-import Image1 from 'components/pages/event/punktober/assets/image718.png'
-import Image2 from 'components/pages/event/punktober/assets/image719.png'
+import Image1 from 'components/pages/event/your-city/assets/image718.png'
+import Image2 from 'components/pages/event/your-city/assets/image719.png'
 import Countdown, { zeroPad } from 'react-countdown'
 import moment from 'moment-timezone'
 import DOMPurify from 'dompurify'
@@ -17,7 +17,7 @@ import useSWR, { mutate } from 'swr'
 import { eventService } from 'src/services/eventService'
 import SubmissionTable from './submissionTable'
 import Checkbox from 'components/core/Checkbox'
-import Modal from 'components/pages/event/punktober/Modal'
+import Modal from 'components/pages/event/your-city/Modal'
 import axios from 'axios'
 export default function Page(props) {
   if (props.justHead) {
@@ -34,7 +34,7 @@ function PageContent() {
 
   useEffect(() => {
     if (moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz('2025-01-01', 'Asia/Ho_Chi_Minh'))) {
-      replace('/events/punktober/home')
+      replace('/events/your-city/home')
     }
   }, [])
 
@@ -154,7 +154,7 @@ function PageContent() {
       <>
         <div className='bg-[#DBDBDB] min-h-screen relative py-12'>
           <Link
-            href='/events/punktober/home'
+            href='/events/your-city/home'
             className='absolute top-12 left-[4%] flex items-center font-medium text-sm'>
             <svg width='33' height='32' viewBox='0 0 33 32' fill='none' xmlns='http://www.w3.org/2000/svg'>
               <path
@@ -307,7 +307,7 @@ function PageContent() {
   return (
     <div>
       <div className='bg-[#DBDBDB] min-h-screen relative py-12'>
-        <Link href='/events/punktober/home' className='fixed top-32 left-[4%] flex items-center font-medium text-sm'>
+        <Link href='/events/your-city/home' className='fixed top-32 left-[4%] flex items-center font-medium text-sm'>
           <svg width='33' height='32' viewBox='0 0 33 32' fill='none' xmlns='http://www.w3.org/2000/svg'>
             <path
               d='M20.3996 22.7969L13.5996 15.9969L20.3996 9.19688'

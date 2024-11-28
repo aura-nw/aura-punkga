@@ -1,7 +1,7 @@
-import Image1 from 'components/pages/event/punktober/assets/onboarding.png'
-import Image2 from 'components/pages/event/punktober/assets/image716.png'
+import Image1 from 'components/pages/event/your-city/assets/onboarding.png'
+import Image2 from 'components/pages/event/your-city/assets/image716.png'
 import Image from 'next/image'
-import Logo from 'components/pages/event/punktober/assets/logo.svg'
+import Logo from 'components/pages/event/your-city/assets/logo.svg'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
 
@@ -45,7 +45,7 @@ function PageContent() {
             />
           </svg>
         </div>
-        <Link href='/events/punktober/home' className='p-2.5 text-center font-roboto text-[22px] uppercase font-bold bg-neutral-black text-white w-full lg:w-[418px] mt-20'>
+        <Link href='/events/your-city/home' className='p-2.5 text-center font-roboto text-[22px] uppercase font-bold bg-neutral-black text-white w-full lg:w-[418px] mt-20'>
           {t('START')}
         </Link>
       </div>
