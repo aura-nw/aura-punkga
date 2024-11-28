@@ -16,6 +16,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
     revalidateOnFocus: false,
   })
   const topics = data?.data?.data?.artwork_topics
+  const isEnded = moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz('2025-01-01', 'Asia/Ho_Chi_Minh'))
   return (
     <>
       <div className=' w-full mx-auto max-w-96'>
@@ -116,13 +117,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
         </div>
         <div className='mt-4 text-lg font-medium'>
           <div className='grid grid-cols-7 [&>div]:cursor-pointer place-items-center gap-4'>
-            <div className={new Date().getDay() == 0 ? 'font-bold text-neutral-black' : ''}>{t('Sun')}</div>
-            <div className={new Date().getDay() == 1 ? 'font-bold text-neutral-black' : ''}>{t('Mon')}</div>
-            <div className={new Date().getDay() == 2 ? 'font-bold text-neutral-black' : ''}>{t('Tue')}</div>
-            <div className={new Date().getDay() == 3 ? 'font-bold text-neutral-black' : ''}>{t('Wed')}</div>
-            <div className={new Date().getDay() == 4 ? 'font-bold text-neutral-black' : ''}>{t('Thu')}</div>
-            <div className={new Date().getDay() == 5 ? 'font-bold text-neutral-black' : ''}>{t('Fri')}</div>
-            <div className={new Date().getDay() == 6 ? 'font-bold text-neutral-black' : ''}>{t('Sat')}</div>
+            <div className={moment().day() == 0 ? 'font-bold text-neutral-black' : ''}>{t('Sun')}</div>
+            <div className={moment().day() == 1 ? 'font-bold text-neutral-black' : ''}>{t('Mon')}</div>
+            <div className={moment().day() == 2 ? 'font-bold text-neutral-black' : ''}>{t('Tue')}</div>
+            <div className={moment().day() == 3 ? 'font-bold text-neutral-black' : ''}>{t('Wed')}</div>
+            <div className={moment().day() == 4 ? 'font-bold text-neutral-black' : ''}>{t('Thu')}</div>
+            <div className={moment().day() == 5 ? 'font-bold text-neutral-black' : ''}>{t('Fri')}</div>
+            <div className={moment().day() == 6 ? 'font-bold text-neutral-black' : ''}>{t('Sat')}</div>
           </div>
           <div
             className='mt-4 overflow-hidden h-20 relative [&_.selected-date]:text-neutral-black [&_.selected-date]:bg-feedback-success-defaul [&_.selected-date]:w-7 [&_.selected-date]:h-7 [&_.selected-date]:grid [&_.selected-date]:place-items-center [&_.selected-date]:rounded-full
@@ -137,10 +138,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 1
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 1
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 1
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 1 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 1
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('1')}
@@ -150,10 +153,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 2
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 2
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 2
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 2 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 2
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('2')}
@@ -163,10 +168,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 3
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 3
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 3
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 3 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 3
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('3')}
@@ -176,10 +183,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 4
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 4
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 4
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 4 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 4
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('4')}
@@ -189,10 +198,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 5
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 5
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 5
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 5 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 5
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('5')}
@@ -202,10 +213,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 6
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 6
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 6
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 6 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 6
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('6')}
@@ -215,10 +228,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 7
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 7
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 7
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 7 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 7
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('7')}
@@ -230,10 +245,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 8
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 8
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 8
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 8 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 8
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('8')}
@@ -243,10 +260,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 9
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 9
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 9
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 9 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 9
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('9')}
@@ -256,10 +275,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 10
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 10
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 10
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 10 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 10
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('10')}
@@ -269,10 +290,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 11
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 11
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 11
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 11 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 11
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('11')}
@@ -282,10 +305,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 12
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 12
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 12
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 12 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 12
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('12')}
@@ -295,10 +320,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 13
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 13
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 13
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 13 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 13
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('13')}
@@ -308,10 +335,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 14
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 14
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 14
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 14 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 14
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('14')}
@@ -328,10 +357,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 15
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 15
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 15
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 15 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 15
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('15')}
@@ -341,10 +372,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 16
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 16
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 16
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 16 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 16
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('16')}
@@ -354,10 +387,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 17
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 17
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 17
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 17 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 17
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('17')}
@@ -367,10 +402,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 18
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 18
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 18
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 18 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 18
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('18')}
@@ -380,10 +417,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 19
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 19
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 19
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 19 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 19
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('19')}
@@ -393,10 +432,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 20
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 20
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 20
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 20 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 20
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('20')}
@@ -406,10 +447,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 21
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 21
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 21
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 21 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 21
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('21')}
@@ -421,10 +464,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 22
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 22
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 22
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 22 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 22
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('22')}
@@ -434,10 +479,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 23
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 23
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 23
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 23 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 23
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('23')}
@@ -447,10 +494,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 24
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 24
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 24
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 24 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 24
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('24')}
@@ -460,10 +509,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 25
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 25
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 25
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 25 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 25
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('25')}
@@ -473,10 +524,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 26
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 26
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 26
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 26 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 26
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('26')}
@@ -486,10 +539,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 27
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 27
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 27
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 27 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 27
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('27')}
@@ -499,10 +554,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 28
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 28
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 28
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 28 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 28
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('28')}
@@ -516,10 +573,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 22
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 22
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 22
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 22 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 22
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('22')}
@@ -529,10 +588,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 23
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 23
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 23
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 23 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 23
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('23')}
@@ -542,10 +603,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 24
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 24
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 24
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 24 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 24
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('24')}
@@ -555,10 +618,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 25
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 25
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 25
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 25 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 25
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('25')}
@@ -568,10 +633,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 26
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 26
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 26
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 26 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 26
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('26')}
@@ -581,10 +648,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 27
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 27
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 27
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 27 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 27
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('27')}
@@ -594,10 +663,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 28
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 28
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 28
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 28 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 28
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('28')}
@@ -609,10 +680,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 29
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 29
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 29
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 29 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 29
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('29')}
@@ -622,10 +695,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 30
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 30
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 30
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 30 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 30
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('30')}
@@ -635,10 +710,12 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                   className={
                     date.date() == 31
                       ? 'selected-date'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() == 31
+                      : !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 31
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          moment().tz('Asia/Ho_Chi_Minh').date() >= 31 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          isEnded || moment().tz('Asia/Ho_Chi_Minh').date() >= 31
+                            ? ''
+                            : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('31')}
@@ -699,12 +776,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-1', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 1
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 1
                       ? 'bg-green-100'
                       : date.date() == 1
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 1 &&
-                        topics.find((topic) => topic.date == '2024-12-01')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 1 &&
+                          topics.find((topic) => topic.date == '2024-12-01'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -740,12 +818,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-2', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 2
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 2
                       ? 'bg-green-100'
                       : date.date() == 2
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 2 &&
-                        topics.find((topic) => topic.date == '2024-12-02')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 2 &&
+                          topics.find((topic) => topic.date == '2024-12-02'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -781,12 +860,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-3', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 3
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 3
                       ? 'bg-green-100'
                       : date.date() == 3
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 3 &&
-                        topics.find((topic) => topic.date == '2024-12-03')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 3 &&
+                          topics.find((topic) => topic.date == '2024-12-03'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -822,12 +902,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-4', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 4
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 4
                       ? 'bg-green-100'
                       : date.date() == 4
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 4 &&
-                        topics.find((topic) => topic.date == '2024-12-04')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 4 &&
+                          topics.find((topic) => topic.date == '2024-12-04'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -863,12 +944,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-5', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 5
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 5
                       ? 'bg-green-100'
                       : date.date() == 5
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 5 &&
-                        topics.find((topic) => topic.date == '2024-12-05')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 5 &&
+                          topics.find((topic) => topic.date == '2024-12-05'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -904,12 +986,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-6', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 6
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 6
                       ? 'bg-green-100'
                       : date.date() == 6
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 6 &&
-                        topics.find((topic) => topic.date == '2024-12-06')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 6 &&
+                          topics.find((topic) => topic.date == '2024-12-06'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -945,12 +1028,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-7', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 7
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 7
                       ? 'bg-green-100'
                       : date.date() == 7
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 7 &&
-                        topics.find((topic) => topic.date == '2024-12-07')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 7 &&
+                          topics.find((topic) => topic.date == '2024-12-07'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -988,12 +1072,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-8', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 8
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 8
                       ? 'bg-green-100'
                       : date.date() == 8
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 8 &&
-                        topics.find((topic) => topic.date == '2024-12-08')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 8 &&
+                          topics.find((topic) => topic.date == '2024-12-08'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1029,12 +1114,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-9', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 9
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 9
                       ? 'bg-green-100'
                       : date.date() == 9
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 9 &&
-                        topics.find((topic) => topic.date == '2024-12-09')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 9 &&
+                          topics.find((topic) => topic.date == '2024-12-09'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1070,12 +1156,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-10', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 10
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 10
                       ? 'bg-green-100'
                       : date.date() == 10
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 10 &&
-                        topics.find((topic) => topic.date == '2024-12-10')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 10 &&
+                          topics.find((topic) => topic.date == '2024-12-10'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1111,12 +1198,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-11', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 11
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 11
                       ? 'bg-green-100'
                       : date.date() == 11
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 11 &&
-                        topics.find((topic) => topic.date == '2024-12-11')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 11 &&
+                          topics.find((topic) => topic.date == '2024-12-11'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1152,12 +1240,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-12', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 12
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 12
                       ? 'bg-green-100'
                       : date.date() == 12
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 12 &&
-                        topics.find((topic) => topic.date == '2024-12-12')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 12 &&
+                          topics.find((topic) => topic.date == '2024-12-12'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1193,12 +1282,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-13', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 13
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 13
                       ? 'bg-green-100'
                       : date.date() == 13
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 13 &&
-                        topics.find((topic) => topic.date == '2024-12-13')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 13 &&
+                          topics.find((topic) => topic.date == '2024-12-13'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1234,12 +1324,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-14', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 14
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 14
                       ? 'bg-green-100'
                       : date.date() == 14
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 14 &&
-                        topics.find((topic) => topic.date == '2024-12-14')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 14 &&
+                          topics.find((topic) => topic.date == '2024-12-14'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1277,12 +1368,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-15', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 15
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 15
                       ? 'bg-green-100'
                       : date.date() == 15
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 15 &&
-                        topics.find((topic) => topic.date == '2024-12-15')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 15 &&
+                          topics.find((topic) => topic.date == '2024-12-15'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1318,12 +1410,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-16', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 16
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 16
                       ? 'bg-green-100'
                       : date.date() == 16
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 16 &&
-                        topics.find((topic) => topic.date == '2024-12-16')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 16 &&
+                          topics.find((topic) => topic.date == '2024-12-16'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1359,12 +1452,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-17', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 17
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 17
                       ? 'bg-green-100'
                       : date.date() == 17
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 17 &&
-                        topics.find((topic) => topic.date == '2024-12-17')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 17 &&
+                          topics.find((topic) => topic.date == '2024-12-17'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1400,12 +1494,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-18', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 18
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 18
                       ? 'bg-green-100'
                       : date.date() == 18
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 18 &&
-                        topics.find((topic) => topic.date == '2024-12-18')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 18 &&
+                          topics.find((topic) => topic.date == '2024-12-18'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1441,12 +1536,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-19', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 19
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 19
                       ? 'bg-green-100'
                       : date.date() == 19
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 19 &&
-                        topics.find((topic) => topic.date == '2024-12-19')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 19 &&
+                          topics.find((topic) => topic.date == '2024-12-19'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1482,12 +1578,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-20', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 20
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 20
                       ? 'bg-green-100'
                       : date.date() == 20
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 20 &&
-                        topics.find((topic) => topic.date == '2024-12-20')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 20 &&
+                          topics.find((topic) => topic.date == '2024-12-20'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1523,12 +1620,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-21', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 21
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 21
                       ? 'bg-green-100'
                       : date.date() == 21
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 21 &&
-                        topics.find((topic) => topic.date == '2024-12-21')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 21 &&
+                          topics.find((topic) => topic.date == '2024-12-21'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1566,12 +1664,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-22', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 22
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 22
                       ? 'bg-green-100'
                       : date.date() == 22
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 22 &&
-                        topics.find((topic) => topic.date == '2024-12-22')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 22 &&
+                          topics.find((topic) => topic.date == '2024-12-22'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1607,12 +1706,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-23', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 23
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 23
                       ? 'bg-green-100'
                       : date.date() == 23
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 23 &&
-                        topics.find((topic) => topic.date == '2024-12-23')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 23 &&
+                          topics.find((topic) => topic.date == '2024-12-23'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1648,12 +1748,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-24', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 24
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 24
                       ? 'bg-green-100'
                       : date.date() == 24
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 24 &&
-                        topics.find((topic) => topic.date == '2024-12-24')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 24 &&
+                          topics.find((topic) => topic.date == '2024-12-24'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5 relative`}>
@@ -1690,12 +1791,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-25', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 25
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 25
                       ? 'bg-green-100'
                       : date.date() == 25
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 25 &&
-                        topics.find((topic) => topic.date == '2024-12-25')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 25 &&
+                          topics.find((topic) => topic.date == '2024-12-25'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5 relative`}>
@@ -1733,12 +1835,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-26', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 26
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 26
                       ? 'bg-green-100'
                       : date.date() == 26
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 26 &&
-                        topics.find((topic) => topic.date == '2024-12-26')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 26 &&
+                          topics.find((topic) => topic.date == '2024-12-26'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5 relative`}>
@@ -1774,12 +1877,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-27', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 27
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 27
                       ? 'bg-green-100'
                       : date.date() == 27
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 27 &&
-                        topics.find((topic) => topic.date == '2024-12-27')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 27 &&
+                          topics.find((topic) => topic.date == '2024-12-27'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1815,12 +1919,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-28', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 28
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 28
                       ? 'bg-green-100'
                       : date.date() == 28
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 28 &&
-                        topics.find((topic) => topic.date == '2024-12-28')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 28 &&
+                          topics.find((topic) => topic.date == '2024-12-28'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1858,12 +1963,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-29', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 29
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 29
                       ? 'bg-green-100'
                       : date.date() == 29
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 29 &&
-                        topics.find((topic) => topic.date == '2024-12-29')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 29 &&
+                          topics.find((topic) => topic.date == '2024-12-29'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1899,12 +2005,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-30', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 30
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 30
                       ? 'bg-green-100'
                       : date.date() == 30
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 30 &&
-                        topics.find((topic) => topic.date == '2024-12-30')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 30 &&
+                          topics.find((topic) => topic.date == '2024-12-30'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1940,12 +2047,13 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div
                   onClick={() => setDate(moment.tz('2024-11-31', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    moment().tz('Asia/Ho_Chi_Minh').date() == 31
+                    !isEnded && moment().tz('Asia/Ho_Chi_Minh').date() == 31
                       ? 'bg-green-100'
                       : date.date() == 31
                       ? 'bg-neutral-200'
-                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 31 &&
-                        topics.find((topic) => topic.date == '2024-12-31')
+                      : isEnded ||
+                        (moment().tz('Asia/Ho_Chi_Minh').date() >= 31 &&
+                          topics.find((topic) => topic.date == '2024-12-31'))
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5 relative`}>

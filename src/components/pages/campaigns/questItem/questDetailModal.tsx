@@ -211,6 +211,12 @@ export default function QuestDetailModal({
             'LikeEventArtwork',
             'CollectIP',
             'StakeIP',
+            'YTSubscribe',
+            'YTWatch',
+            'YTLike',
+            'TTFollow',
+            'TTWatch',
+            'TTLike',
           ].includes(quest.type) && (
             <RefQuest
               quest={quest}
