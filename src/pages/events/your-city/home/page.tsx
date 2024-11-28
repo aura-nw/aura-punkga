@@ -78,7 +78,7 @@ function PageContent() {
   if (!topics?.length) return <div></div>
   return (
     <>
-      <div className='bg-[#DBDBDB] min-h-screen px-4 flex flex-col lg:justify-center gap-10 lg:flex-row w-full lg:px-[85px] lg:gap-14'>
+      <div className='bg-[#ffffff] min-h-screen px-4 flex flex-col lg:justify-center gap-10 lg:flex-row w-full lg:px-[85px] lg:gap-14'>
         <div className='flex flex-col items-center pb-3.5 lg:pb-8 w-full lg:w-[663px] lg:sticky lg:top-[120px] pt-3 lg:h-[calc(100vh-120px)] justify-between'>
           <div className='flex flex-col items-center lg:gap-[4vh]'>
             <div className='flex items-center gap-8 flex-col md:flex-row'>
@@ -226,7 +226,7 @@ function PageContent() {
         ) : (
           !!topicData?.story_artworks?.length && (
             <div className='lg:flex-1'>
-              <div className='w-full flex lg:justify-end bg-[#DBDBDB] lg:pt-10 lg:sticky z-10 lg:top-[82px] pb-5'>
+              <div className='w-full flex lg:justify-end bg-[#ffffff] lg:pt-10 lg:sticky z-10 lg:top-[82px] pb-5'>
                 <TextField
                   value={search}
                   onChange={setSearch}
@@ -296,7 +296,7 @@ function PageContent() {
                 />
               </svg>
             </div>
-            <div className='flex-1 rounded-lg bg-[#DBDBDB] p-8'>
+            <div className='flex-1 rounded-lg bg-[#ffffff] p-8'>
               <ArtworkDetail id={selectedArtwork?.id} />
             </div>
             <div
@@ -319,7 +319,7 @@ function PageContent() {
       ) : (
         openArtworkDetail && (
           <Modal open={openArtworkDetail} setOpen={setOpenArtworkDetail}>
-            <div className='fixed bg-[#DBDBDB] top-14 left-0 w-screen h-[calc(100vh-56px)] flex flex-col'>
+            <div className='fixed bg-[#ffffff] top-14 left-0 w-screen h-[calc(100vh-56px)] flex flex-col'>
               <div className='flex-1 overflow-auto p-4'>
                 <div className='flex justify-end'>
                   <svg

@@ -18,7 +18,8 @@ import { eventService } from 'src/services/eventService'
 import SubmissionTable from './submissionTable'
 import Checkbox from 'components/core/Checkbox'
 import Modal from 'components/pages/event/your-city/Modal'
-import axios from 'axios'
+import UserGreen from 'assets/images/userGreen.svg'
+
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -152,7 +153,7 @@ function PageContent() {
   if (!account.creator) {
     return (
       <>
-        <div className='bg-[#DBDBDB] min-h-screen relative py-12'>
+        <div className='bg-[#ffffff] min-h-screen relative py-12'>
           <Link
             href='/events/your-city/home'
             className='absolute top-12 left-[4%] flex items-center font-medium text-sm'>
@@ -306,7 +307,7 @@ function PageContent() {
   }
   return (
     <div>
-      <div className='bg-[#DBDBDB] min-h-screen relative py-12'>
+      <div className='bg-[#ffffff] min-h-screen relative py-12'>
         <Link href='/events/your-city/home' className='fixed top-32 left-[4%] flex items-center font-medium text-sm'>
           <svg width='33' height='32' viewBox='0 0 33 32' fill='none' xmlns='http://www.w3.org/2000/svg'>
             <path
@@ -352,7 +353,7 @@ function PageContent() {
             <div className='grid grid-cols-[auto_1fr] gap-4'>
               <div className='rounded-3xl border-[2px] border-neutral-500 outline outline-2 outline-neutral-black'>
                 <div className='aspect-square rounded-[22px] border-[2px] border-neutral-800 overflow-hidden'>
-                  <Image src={account.creator.avatar_url} alt='creator avatar' width={120} height={120} />
+                  <Image src={account.creator.avatar_url || UserGreen} alt='creator avatar' width={120} height={120} />
                 </div>
               </div>
               <div>
@@ -495,7 +496,7 @@ function PageContent() {
                 {t('Submit')}
               </div>
               <Modal hideClose open={open} setOpen={setOpen}>
-                <div className='flex flex-col gap-4 items-center max-w-xl px-8 py-4 bg-[#DBDBDB] text-neutral-black rounded-mlg border-[3px] border-neutral-black'>
+                <div className='flex flex-col gap-4 items-center max-w-xl px-8 py-4 bg-[#ffffff] text-neutral-black rounded-mlg border-[3px] border-neutral-black'>
                   <div className='text-lg font-semibold'>
                     {locale == 'en' ? 'Earn Rewards with Access Protocol!' : 'Cơ Hội Nhận Thưởng Cùng Access Protocol!'}
                   </div>

@@ -197,7 +197,7 @@ export default function ArtworkDetail({ id }) {
         </div>
       </div>
       <Modal open={openReport} setOpen={setOpenReport}>
-        <div className='flex flex-col gap-4 items-center max-w-xl px-8 py-4 bg-[#DBDBDB] text-neutral-black rounded-mlg border-[3px] border-neutral-black w-screen'>
+        <div className='flex flex-col gap-4 items-center max-w-xl px-8 py-4 bg-[#ffffff] text-neutral-black rounded-mlg border-[3px] border-neutral-black w-screen'>
           <div className='text-lg font-semibold w-full text-center'>REPORT THIS ARTWORK</div>
           <div className='w-full space-y-1.5'>
             <div className='text-lg font-medium'>{artworkData?.artwork?.name}</div>

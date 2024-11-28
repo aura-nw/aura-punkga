@@ -14,7 +14,7 @@ export default function Page(props) {
 function PageContent() {
   const { t } = useTranslation()
   return (
-    <div className='bg-[#DBDBDB] min-h-screen relative px-4 lg:px-32 py-10'>
+    <div className='bg-[#ffffff] min-h-screen relative px-4 lg:px-32 py-10'>
       <Image src={Image1} alt='' className='absolute top-0 w-[40%] h-full right-0 hidden lg:block' />
       <div className='flex flex-col items-center w-full mx-auto max-w-sm lg:mx-0 lg:max-w-none lg:w-1/2'>
         <Image src={Image2} alt='' className='w-full' />
