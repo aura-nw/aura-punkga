@@ -52,7 +52,7 @@ export default function ArtworkDetail({ id }) {
   const reportHandler = async () => {
     try {
       await eventService.report({
-        artwork_id: id,
+        artwork_id: artworkData.artwork.id,
         reason,
       })
       toast('Report successfully', {
