@@ -28,6 +28,7 @@ export default function Page(props) {
 }
 function PageContent() {
   const searchParams = new URLSearchParams(location.search)
+  const artworkIdParam = searchParams.get('artwork_id')
   const router = useRouter()
   const [date, setDate] = useState<Moment>(
     searchParams.get('day')
@@ -75,6 +76,15 @@ function PageContent() {
       )
     )
   }, [topicData?.story_artworks?.length, search])
+  useEffect(() => {
+    if (artworkIdParam) {
+      const artwork = list.find((artwork) => artwork.id == artworkIdParam)
+      if (artwork) {
+        setSelectedArtwork(artwork)
+        setOpenArtworkDetail(true)
+      }
+    }
+  }, [list.length])
   if (!topics?.length) return <div></div>
   return (
     <>

@@ -68,7 +68,7 @@ export default function ArtworkDetail({ id }) {
   useEffect(() => {
     setIsLiked(!!artworkData?.artwork?.likes?.length)
     setLikeCount(artworkData?.artwork?.likes_aggregate?.aggregate?.count || 0)
-  }, [id])
+  }, [artworkData?.artwork?.likes?.length])
 
   if (!artworkData) {
     return (
@@ -135,11 +135,13 @@ export default function ArtworkDetail({ id }) {
                     <div className='p-4 rounded-lg bg-white text-black space-y-4 text-xs'>
                       <div
                         className='cursor-pointer'
-                        onClick={() =>
+                        onClick={() => {
+                          const searchParam = new URLSearchParams(location.search)
+                          searchParam.set('artwork_id', id)
                           navigator.share({
-                            url: window.location.href,
+                            url: location.origin + location.pathname + '?' + searchParam.toString(),
                           })
-                        }>
+                        }}>
                         Share
                       </div>
                       <div className='cursor-pointer' onClick={() => setOpenReport(true)}>
@@ -176,7 +178,7 @@ export default function ArtworkDetail({ id }) {
               </div>
             </div>
             <p className='text-sm w-full mt-4 whitespace-pre-wrap'>
-              {ReactHtmlParser((artworkData?.artwork?.description))}
+              {ReactHtmlParser(artworkData?.artwork?.description)}
             </p>
             <div className='flex items-center gap-1 mt-3 cursor-pointer w-fit' onClick={likeHandler}>
               <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
