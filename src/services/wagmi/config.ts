@@ -47,7 +47,7 @@ export const getWagmiConfig = (projectId: string) => {
   }
   return createConfig({
     chains: [storyChain, auraChain],
-    connectors: [walletConnect({ showQrModal: false, projectId }), metaMask(), injected()],
+    connectors: [ metaMask(), injected()],
     transports: {
       [auraChain.id]: http(),
       [storyChain.id]: http(),

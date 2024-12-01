@@ -20,6 +20,7 @@ export default function Page(props) {
 }
 function PageContent() {
   const [date, setDate] = useState(new Date())
+  const [search, setSearch] = useState('')
   const { t } = useTranslation()
   const { data } = useSWR('get-all-topic', () => eventService.punktober.getAllTopic(), {
     revalidateOnFocus: false,
@@ -94,7 +95,7 @@ function PageContent() {
                 <Link
                   href='/events/punktober/submit'
                   className={`p-2.5 text-center font-roboto text-[22px] uppercase font-bold bg-neutral-black w-full ${
-                    date == new Date() ? 'text-white' : 'text-text-teriary-on-brand pointer-events-none'
+                    moment(date).format('YYYY-MM-DD') == moment().format('YYYY-MM-DD') ? 'text-white' : 'text-text-teriary-on-brand pointer-events-none'
                   }`}>
                   {t('SUBMIT artwork')}
                 </Link>
@@ -136,8 +137,10 @@ function PageContent() {
       ) : (
         !!topicData?.story_artworks?.length && (
           <div className='lg:flex-1'>
-            <div className='w-full flex lg:justify-end bg-[#DBDBDB] lg:pt-10 lg:sticky lg:top-[82px] pb-5'>
+            <div className='w-full flex lg:justify-end bg-[#DBDBDB] lg:pt-10 lg:sticky z-10 lg:top-[82px] pb-5'>
               <TextField
+                value={search}
+                onChange={setSearch}
                 className='bg-neutral-300 border-none [&_input::placeholder]:!text-text-secondary-on-brand lg:max-w-96'
                 placeholder={t('Search by title, name artist')}
                 trailingComponent={
@@ -152,29 +155,36 @@ function PageContent() {
                 }
               />
             </div>
-            <div className='grid grid-cols-2 xl:grid-cols-3 gap-4'>
-              {topicData.story_artworks.map((artwork, index) => (
-                <div key={index} className='relative rounded-lg overflow-hidden [&:hover>div]:block'>
-                  <Image
-                    src={artwork.display_url}
-                    width={500}
-                    height={500}
-                    alt=''
-                    className='w-full aspect-square object-cover'
-                  />
-                  <div className='absolute hidden w-full bottom-0 p-2 lg:pt-10 lg:p-4 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_6.71%,#000_76.24%)]'>
-                    <div className='text-sm font-bold text-white'>
-                      {artwork?.artwork?.name || 'Unknown artwork title'}
-                    </div>
-                    <div className='text-sm font-medium text-white'>
-                      by{' '}
-                      <span className='text-text-brand-hover'>
-                        {artwork?.artwork?.creator?.pen_name || 'Unknown creator'}
-                      </span>
+            <div className='grid grid-cols-2 xl:grid-cols-3 gap-4 relative'>
+              {topicData.story_artworks
+                .filter(
+                  (artwork) =>
+                    !search ||
+                    artwork?.artwork?.name?.toLowerCase()?.includes(search.toLowerCase()) ||
+                    artwork?.artwork?.creator?.pen_name?.toLowerCase()?.includes(search.toLowerCase())
+                )
+                .map((artwork, index) => (
+                  <div key={index} className='relative rounded-lg overflow-hidden [&:hover>div]:block'>
+                    <Image
+                      src={artwork.display_url}
+                      width={500}
+                      height={500}
+                      alt=''
+                      className='w-full aspect-square object-cover'
+                    />
+                    <div className='absolute hidden w-full bottom-0 p-2 lg:pt-10 lg:p-4 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_6.71%,#000_76.24%)]'>
+                      <div className='text-sm font-bold text-white'>
+                        {artwork?.artwork?.name || 'Unknown artwork title'}
+                      </div>
+                      <div className='text-sm font-medium text-white'>
+                        by{' '}
+                        <span className='text-text-brand-hover'>
+                          {artwork?.artwork?.creator?.pen_name || 'Unknown creator'}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         )

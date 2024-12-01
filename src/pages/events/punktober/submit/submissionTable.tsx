@@ -31,7 +31,7 @@ export default function SubmissionTable() {
             <div className='h-[260px] overflow-auto'>
               {submissions?.map((submission, index) => (
                 <div
-                  className='grid w-full grid-cols-[8%_1fr_15%_20%_25%] text-sm font-medium text-text-quatenary'
+                  className='grid w-full grid-cols-[8%_1fr_15%_20%_25%] text-sm font-medium text-neutral-black'
                   key={submission.id}>
                   <div className='px-2 py-4'>#{index + 1}</div>
                   <div className='p-4 truncate'>{submission.name}</div>

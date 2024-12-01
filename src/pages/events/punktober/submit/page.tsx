@@ -13,9 +13,11 @@ import Image2 from 'components/pages/event/punktober/assets/image719.png'
 import Countdown, { zeroPad } from 'react-countdown'
 import moment from 'moment'
 import DOMPurify from 'dompurify'
-import { mutate } from 'swr'
+import useSWR, { mutate } from 'swr'
 import { eventService } from 'src/services/eventService'
 import SubmissionTable from './submissionTable'
+import Modal from 'components/core/Modal'
+import Checkbox from 'components/core/Checkbox'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -27,6 +29,7 @@ function PageContent() {
   const [loading, setLoading] = useState(false)
   const { account, getProfile } = useContext(Context)
   const { locale } = useRouter()
+  const [open, setOpen] = useState(false)
 
   const creatorForm = useForm({
     defaultValues: {
@@ -35,6 +38,19 @@ function PageContent() {
       bio: '',
     },
   })
+  const form = useForm({
+    defaultValues: {
+      name: '',
+      description: '',
+      artwork: undefined,
+      terms_agreed: true,
+    },
+  })
+  const { data } = useSWR('get-all-topic', () => eventService.punktober.getAllTopic(), {
+    revalidateOnFocus: false,
+  })
+  const topics = data?.data?.data?.artwork_topics
+  const currentTopic = topics?.find((topic) => topic.date == moment().format('YYYY-MM-DD'))
   const submitCreatorInformationHandler = async (data) => {
     try {
       if (!data.avatar || !data.pen_name || !data.bio) {
@@ -78,19 +94,26 @@ function PageContent() {
   }
   const submitHandler = async (data) => {
     try {
-      if (!data.name || !data.image || !data.selectedCollectedCharacter.length) {
+      if (!data.name || !data.artwork || !data.description) {
         toast(t('Some field is missing. Please check again'), {
           type: 'error',
         })
+        setOpen(false)
+
         return
       }
       if (data.name.length > 150) {
+        setOpen(false)
+
         return
       }
       setLoading(true)
       const payload = new FormData()
       payload.append('name', data.name)
-      payload.append('artwork', data.image)
+      payload.append('artwork', data.artwork)
+      payload.append('description', data.description)
+      payload.append('contest_id', '3')
+      payload.append('artwork_topic_id', currentTopic.id)
       const res = await eventService.story.submitArtwork(payload)
       if (res.data.errors?.[0]?.message) {
         toast(res.data.errors?.[0]?.message, {
@@ -107,8 +130,11 @@ function PageContent() {
             type: 'success',
           }
         )
+        form.reset()
         setLoading(false)
       }
+      setOpen(false)
+
     } catch (error) {
       setLoading(false)
       toast(error.message, {
@@ -116,6 +142,7 @@ function PageContent() {
       })
     }
   }
+  if (!currentTopic) return null
   if (!account) return <div className='w-full text-center py-12'>{t('Login to continue')}</div>
   if (!account.creator) {
     return (
@@ -289,7 +316,7 @@ function PageContent() {
         </Link>
         <div className='w-full flex flex-col items-center gap-1.5'>
           <div className='text-sm font-medium text-neutral-default'>{t('Topic of the day')}</div>
-          <div className='uppercase text-neutral-black font-roboto text-[40px] font-bold'>{t('NAME TOPIC')}</div>
+          <div className='uppercase text-neutral-black font-roboto text-[40px] font-bold'>{currentTopic?.title}</div>
           <div className='flex items-center gap-1.5 font-medium text-xl text-gray-950'>
             <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>
               <path
@@ -341,11 +368,11 @@ function PageContent() {
                 )}
               </div>
             </div>
-            <form onSubmit={creatorForm.handleSubmit(submitHandler)} className='flex flex-col items-center gap-14 mt-4'>
+            <form onSubmit={form.handleSubmit(submitHandler)} className='flex flex-col items-center gap-14 mt-4'>
               <div className='w-full border-[3px] border-gray-black p-6 rounded-md bg-neutral-100 text-neutral-black grid gap-11 grid-cols-[auto_1fr]'>
                 <Controller
-                  name='avatar'
-                  control={creatorForm.control}
+                  name='artwork'
+                  control={form.control}
                   render={({ field }) => (
                     <div className='min-w-[209px] flex flex-col items-center'>
                       <div className='flex flex-col items-center'>
@@ -402,8 +429,8 @@ function PageContent() {
 
                 <div className='w-full -mt-0.5'>
                   <Controller
-                    name='pen_name'
-                    control={creatorForm.control}
+                    name='name'
+                    control={form.control}
                     render={({ field }) => (
                       <div className='w-full'>
                         <label className='text-sm font-medium' htmlFor='pen-name'>
@@ -426,8 +453,8 @@ function PageContent() {
                     )}
                   />
                   <Controller
-                    name='bio'
-                    control={creatorForm.control}
+                    name='description'
+                    control={form.control}
                     render={({ field }) => (
                       <div className='w-full mt-2'>
                         <div className='flex flex-col gap-1'>
@@ -454,14 +481,78 @@ function PageContent() {
                   />
                 </div>
               </div>
-              <button
-                type='submit'
+              <div
+                onClick={() => setOpen(true)}
                 className='p-2.5 text-center font-roboto text-[22px] uppercase font-bold text-neutral-black bg-white w-64'>
                 {t('Submit')}
-              </button>
+              </div>
+              <Modal hideClose open={open} setOpen={setOpen}>
+                <div className='flex flex-col gap-4 items-center max-w-xl px-8 py-4'>
+                  <div className='text-lg font-semibold'>
+                    {locale == 'en' ? 'Earn Rewards with Access Protocol!' : 'Cơ Hội Nhận Thưởng Cùng Access Protocol!'}
+                  </div>
+                  <div className='text-sm font-medium'>
+                    {locale == 'en' ? (
+                      <>
+                        PunkgaMe has partnered with AccessProtocol, a content aggregation and monetization platform that
+                        empowers creators in the Web3 space.
+                        <br />
+                        <br />
+                        By sharing your work on AccessProtocol through PunkgaMe, you’ll unlock new ways to earn, grow
+                        your audience, and mint NFTs with ease. This is a perfect opportunity to boost your visibility
+                        and monetize your talent within an engaged creative community.
+                        <br />
+                        <br />
+                        Discover more about the benefits and program details!
+                        <br />
+                        <br />
+                        Note: PunkgaMe will never use your creations for commercial purposes without your permission.
+                      </>
+                    ) : (
+                      <>
+                        PunkgaMe đã chính thức hợp tác với Access Protocol, nền tảng hỗ trợ sáng tạo nội dung giúp các
+                        họa sĩ mở rộng thu nhập và tầm ảnh hưởng trong không gian Web3!
+                        <br />
+                        <br />
+                        Khi đồng ý chia sẻ tác phẩm lên AccessProtocol thông qua PunkgaMe, bạn sẽ có cơ hội nhận thưởng,
+                        mở rộng tệp khán giả và dễ dàng chuyển đổi tác phẩm của mình thành NFT. Đây là một cơ hội tuyệt
+                        vời để tăng độ nhận diện cá nhân và cũng như thu nhập cho các họa sĩ.
+                        <br />
+                        <br />
+                        Tìm hiểu thêm chi tiết chương trình!
+                        <br />
+                        <br />
+                        Lưu ý: PunkgaMe tuyệt đối không sử dụng tác phẩm của bạn cho mục đích thương mại nếu chưa có sự
+                        đồng ý của bạn!
+                      </>
+                    )}
+                  </div>
+                  <Controller
+                    name='terms_agreed'
+                    control={form.control}
+                    render={({ field }) => (
+                      <div className='flex gap-2 items-start' onClick={() => field.onChange(!field.value)}>
+                        <Checkbox checked={field.value} />
+                        <div className='text-sm font-medium'>
+                          {locale == 'en'
+                            ? 'I agree to PunkgaMe minting this artwork as an NFT on Access Protocol and distributing it as a reward for subscribers.'
+                            : 'Tôi cho phép PunkgaMe sử dung nội dung này để tạo NFT trên Access Protocol và sử dụng làm phần thưởng cho người đăng ký kênh.'}
+                        </div>
+                      </div>
+                    )}
+                  />
+                  <button
+                    onClick={form.handleSubmit(submitHandler)}
+                    className={`w-[217px] block rounded-md font-jaro text-2xl border border-white bg-black p-2.5 text-center cursor-pointer ${
+                      loading && 'opacity-70 pointer-events-none'
+                    }`}>
+                    {t(loading ? 'Submitting' : 'submit2')}
+                  </button>
+                </div>
+              </Modal>
             </form>
             <div className='mt-14'>
-              <SubmissionTable/>
+              <SubmissionTable />
             </div>
           </div>
         </div>

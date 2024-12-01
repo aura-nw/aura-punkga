@@ -14,7 +14,6 @@ import Nft from './assets/nft.svg'
 import Xp from './assets/xp.svg'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/router'
-
 export default function LeaderBoard() {
   const [active, setActive] = useState(2)
   const { t } = useTranslation();

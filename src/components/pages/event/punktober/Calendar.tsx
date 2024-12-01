@@ -4,7 +4,9 @@ import Modal from './Modal'
 import useSWR from 'swr'
 import { eventService } from 'src/services/eventService'
 import Image from 'next/image'
-
+import O1 from './assets/OBJECTS.svg'
+import O2 from './assets/OBJECTS2.svg'
+import O3 from './assets/OBJECTS3.svg'
 export default function Calendar({ date, setDate }: { date: Date; setDate: (date: Date) => void }) {
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
@@ -137,7 +139,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 1
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 1 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 1 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('1')}
@@ -150,7 +152,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 2
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 2 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 2 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('2')}
@@ -163,7 +165,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 3
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 3 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 3 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('3')}
@@ -176,7 +178,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 4
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 4 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 4 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('4')}
@@ -189,7 +191,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 5
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 5 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 5 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('5')}
@@ -202,7 +204,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 6
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 6 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 6 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('6')}
@@ -215,7 +217,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 7
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 7 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 7 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('7')}
@@ -230,7 +232,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 8
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 8 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 8 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('8')}
@@ -243,7 +245,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 9
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 9 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 9 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('9')}
@@ -256,7 +258,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 10
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 10 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 10 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('10')}
@@ -269,7 +271,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 11
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 11 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 11 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('11')}
@@ -282,7 +284,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 12
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 12 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 12 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('12')}
@@ -295,7 +297,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 13
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 13 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 13 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('13')}
@@ -308,7 +310,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 14
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 14 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 14 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('14')}
@@ -328,7 +330,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 15
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 15 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 15 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('15')}
@@ -341,7 +343,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 16
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 16 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 16 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('16')}
@@ -354,7 +356,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 17
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 17 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 17 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('17')}
@@ -367,7 +369,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 18
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 18 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 18 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('18')}
@@ -380,7 +382,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 19
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 19 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 19 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('19')}
@@ -393,7 +395,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 20
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 20 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 20 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('20')}
@@ -406,7 +408,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 21
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 21 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 21 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('21')}
@@ -421,7 +423,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 22
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 22 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 22 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('22')}
@@ -434,7 +436,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 23
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 23 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 23 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('23')}
@@ -447,7 +449,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 24
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 24 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 24 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('24')}
@@ -460,7 +462,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 25
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 25 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 25 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('25')}
@@ -473,7 +475,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 26
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 26 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 26 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('26')}
@@ -486,7 +488,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 27
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 27 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 27 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('27')}
@@ -499,7 +501,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 28
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 28 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 28 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('28')}
@@ -516,7 +518,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 22
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 22 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 22 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('22')}
@@ -529,7 +531,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 23
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 23 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 23 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('23')}
@@ -542,7 +544,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 24
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 24 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 24 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('24')}
@@ -555,7 +557,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 25
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 25 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 25 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('25')}
@@ -568,7 +570,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 26
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 26 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 26 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('26')}
@@ -581,7 +583,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 27
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 27 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 27 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('27')}
@@ -594,7 +596,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 28
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 28 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 28 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('28')}
@@ -609,7 +611,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 29
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 29 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 29 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('29')}
@@ -622,7 +624,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 30
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 30 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 30 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('30')}
@@ -635,7 +637,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       : new Date().getDate() == 31
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 31 ? '' : 'pointer-events-none opacity-50'
+                          new Date().getDate() >= 31 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('31')}
@@ -680,7 +682,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
               xmlns='http://www.w3.org/2000/svg'
               className='cursor-pointer absolute left-full top-0 ml-4'
               onClick={() => setOpen(false)}>
-              <path d='M16 8L8 16M16 16L8 8' stroke='white' stroke-width='1.5' stroke-linecap='round' />
+              <path d='M16 8L8 16M16 16L8 8' stroke='white' strokeWidth='1.5' strokeLinecap='round' />
             </svg>
             <div className='mt-4 rounded-lg bg-white divide-y-[1px] lg:mt-11 relative'>
               <div className='grid grid-cols-7 items-center divide-x-[1px] lg:text-xl [&>div]:p-3 [&>div]:font-medium [&>div]:text-neutral-400 [&>div:first-child]:text-red-500'>
@@ -702,7 +704,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 1 && topics.find((topic) => topic.date == '2024-12-01')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>01</div>
                   {topics.find((topic) => topic.date == '2024-12-01') ? (
@@ -742,7 +744,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 2 && topics.find((topic) => topic.date == '2024-12-02')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>02</div>
                   {topics.find((topic) => topic.date == '2024-12-02') ? (
@@ -782,7 +784,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 3 && topics.find((topic) => topic.date == '2024-12-03')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>03</div>
                   {topics.find((topic) => topic.date == '2024-12-03') ? (
@@ -822,7 +824,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 4 && topics.find((topic) => topic.date == '2024-12-04')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>04</div>
                   {topics.find((topic) => topic.date == '2024-12-04') ? (
@@ -862,7 +864,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 5 && topics.find((topic) => topic.date == '2024-12-05')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>05</div>
                   {topics.find((topic) => topic.date == '2024-12-05') ? (
@@ -902,7 +904,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 6 && topics.find((topic) => topic.date == '2024-12-06')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>06</div>
                   {topics.find((topic) => topic.date == '2024-12-06') ? (
@@ -942,7 +944,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 7 && topics.find((topic) => topic.date == '2024-12-07')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>07</div>
                   {topics.find((topic) => topic.date == '2024-12-07') ? (
@@ -984,7 +986,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 8 && topics.find((topic) => topic.date == '2024-12-08')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>08</div>
                   {topics.find((topic) => topic.date == '2024-12-08') ? (
@@ -1024,7 +1026,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 9 && topics.find((topic) => topic.date == '2024-12-09')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>09</div>
                   {topics.find((topic) => topic.date == '2024-12-09') ? (
@@ -1064,7 +1066,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 10 && topics.find((topic) => topic.date == '2024-12-10')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>10</div>
                   {topics.find((topic) => topic.date == '2024-12-10') ? (
@@ -1104,7 +1106,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 11 && topics.find((topic) => topic.date == '2024-12-11')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>11</div>
                   {topics.find((topic) => topic.date == '2024-12-11') ? (
@@ -1144,7 +1146,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 12 && topics.find((topic) => topic.date == '2024-12-12')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>12</div>
                   {topics.find((topic) => topic.date == '2024-12-12') ? (
@@ -1184,7 +1186,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 13 && topics.find((topic) => topic.date == '2024-12-13')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>13</div>
                   {topics.find((topic) => topic.date == '2024-12-13') ? (
@@ -1224,7 +1226,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 14 && topics.find((topic) => topic.date == '2024-12-14')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>14</div>
                   {topics.find((topic) => topic.date == '2024-12-14') ? (
@@ -1266,7 +1268,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 15 && topics.find((topic) => topic.date == '2024-12-15')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>15</div>
                   {topics.find((topic) => topic.date == '2024-12-15') ? (
@@ -1306,7 +1308,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 16 && topics.find((topic) => topic.date == '2024-12-16')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>16</div>
                   {topics.find((topic) => topic.date == '2024-12-16') ? (
@@ -1346,7 +1348,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 17 && topics.find((topic) => topic.date == '2024-12-17')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>17</div>
                   {topics.find((topic) => topic.date == '2024-12-17') ? (
@@ -1386,7 +1388,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 18 && topics.find((topic) => topic.date == '2024-12-18')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>18</div>
                   {topics.find((topic) => topic.date == '2024-12-18') ? (
@@ -1426,7 +1428,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 19 && topics.find((topic) => topic.date == '2024-12-19')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>19</div>
                   {topics.find((topic) => topic.date == '2024-12-19') ? (
@@ -1466,7 +1468,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 20 && topics.find((topic) => topic.date == '2024-12-20')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>20</div>
                   {topics.find((topic) => topic.date == '2024-12-20') ? (
@@ -1506,7 +1508,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 21 && topics.find((topic) => topic.date == '2024-12-21')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>21</div>
                   {topics.find((topic) => topic.date == '2024-12-21') ? (
@@ -1548,7 +1550,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 22 && topics.find((topic) => topic.date == '2024-12-22')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>22</div>
                   {topics.find((topic) => topic.date == '2024-12-22') ? (
@@ -1588,7 +1590,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 23 && topics.find((topic) => topic.date == '2024-12-23')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>23</div>
                   {topics.find((topic) => topic.date == '2024-12-23') ? (
@@ -1628,8 +1630,9 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 24 && topics.find((topic) => topic.date == '2024-12-24')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
-                  } flex flex-col items-center gap-1.5`}>
+                      : 'pointer-events-none [&_div]:opacity-50'
+                  } flex flex-col items-center gap-1.5 relative`}>
+                  <Image src={O1} alt='' className='absolute right-0 top-0 -translate-y-1/2 w-1/2 lg:w-auto' />
                   <div className='date'>24</div>
                   {topics.find((topic) => topic.date == '2024-12-24') ? (
                     <>
@@ -1668,8 +1671,10 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 25 && topics.find((topic) => topic.date == '2024-12-25')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
-                  } flex flex-col items-center gap-1.5`}>
+                      : 'pointer-events-none [&_div]:opacity-50'
+                  } flex flex-col items-center gap-1.5 relative`}>
+                  <Image src={O2} alt='' className='absolute right-0 top-0 -translate-y-1/2 w-1/2 lg:w-auto' />
+
                   <div className='date'>25</div>
                   {topics.find((topic) => topic.date == '2024-12-25') ? (
                     <>
@@ -1708,8 +1713,8 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 26 && topics.find((topic) => topic.date == '2024-12-26')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
-                  } flex flex-col items-center gap-1.5`}>
+                      : 'pointer-events-none [&_div]:opacity-50'
+                  } flex flex-col items-center gap-1.5 relative`}>
                   <div className='date'>26</div>
                   {topics.find((topic) => topic.date == '2024-12-26') ? (
                     <>
@@ -1748,7 +1753,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 27 && topics.find((topic) => topic.date == '2024-12-27')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>27</div>
                   {topics.find((topic) => topic.date == '2024-12-27') ? (
@@ -1788,7 +1793,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 28 && topics.find((topic) => topic.date == '2024-12-28')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>28</div>
                   {topics.find((topic) => topic.date == '2024-12-28') ? (
@@ -1830,7 +1835,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 29 && topics.find((topic) => topic.date == '2024-12-29')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>29</div>
                   {topics.find((topic) => topic.date == '2024-12-29') ? (
@@ -1870,7 +1875,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 30 && topics.find((topic) => topic.date == '2024-12-30')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
+                      : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
                   <div className='date'>30</div>
                   {topics.find((topic) => topic.date == '2024-12-30') ? (
@@ -1910,8 +1915,10 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                       ? 'bg-neutral-200'
                       : new Date().getDate() >= 31 && topics.find((topic) => topic.date == '2024-12-31')
                       ? 'cursor-pointer'
-                      : 'pointer-events-none opacity-50'
-                  } flex flex-col items-center gap-1.5`}>
+                      : 'pointer-events-none [&_div]:opacity-50'
+                  } flex flex-col items-center gap-1.5 relative`}>
+                  <Image src={O3} alt='' className='absolute right-0 top-0 -translate-y-1/2 w-1/2 lg:w-auto' />
+
                   <div className='date'>31</div>
                   {topics.find((topic) => topic.date == '2024-12-31') ? (
                     <>
