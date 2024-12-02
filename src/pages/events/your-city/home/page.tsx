@@ -254,11 +254,11 @@ function PageContent() {
                   }
                 />
               </div>
-              <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 relative pb-20'>
+              <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 relative pb-20 pt-0.5'>
                 {list.map((artwork, index) => (
                   <div
                     key={index}
-                    className='relative rounded-lg overflow-hidden [&:hover>div]:block cursor-pointer'
+                    className='relative rounded-lg overflow-hidden [&:hover>div]:block cursor-pointer border-[3px] border-neutral-black'
                     onClick={() => {
                       setSelectedArtwork(artwork)
                       setOpenArtworkDetail(true)
