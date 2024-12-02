@@ -240,7 +240,7 @@ function PageContent() {
                 <TextField
                   value={search}
                   onChange={setSearch}
-                  className='bg-neutral-300 border-none [&_input::placeholder]:!text-text-secondary-on-brand lg:max-w-96'
+                  className='bg-neutral-100 border-none [&_input::placeholder]:!text-text-secondary-on-brand lg:max-w-96'
                   placeholder={t('Search by title, name artist')}
                   trailingComponent={
                     <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
@@ -254,7 +254,7 @@ function PageContent() {
                   }
                 />
               </div>
-              <div className='grid grid-cols-2 xl:grid-cols-3 gap-4 relative pb-20'>
+              <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 relative pb-20'>
                 {list.map((artwork, index) => (
                   <div
                     key={index}

@@ -21,21 +21,21 @@ export default function SubmissionTable() {
       <div className='mt-6 p-6 rounded-[10px] bg-gray-100 text-neutral-black overflow-auto w-full'>
         {submissions?.length ? (
           <div className='w-full min-w-[700px]'>
-            <div className='grid w-full grid-cols-[8%_1fr_15%_20%_25%] text-sm font-semibold border-b border-white'>
-              <div className='px-2 py-4'>{t('No')}</div>
+            <div className='grid w-full grid-cols-[1fr_25%_10%_15%_10%_15%] text-sm font-semibold border-b border-white'>
               <div className='p-4'>{t('Name')}</div>
-              <div className='p-4'>{t('Type')}</div>
-              <div className='p-4'>{t('Submission')}</div>
+              <div className='p-4'>{t('Topic')}</div>
+              <div className='p-4'>{t('Status')}</div>
               <div className='p-4'>{t('Submitted at')}</div>
+              <div className='p-4'>{t('Reward')}</div>
+              <div className='p-4'>{t('Received at')}</div>
             </div>
             <div className='h-[260px] overflow-auto'>
               {submissions?.map((submission, index) => (
                 <div
-                  className='grid w-full grid-cols-[8%_1fr_15%_20%_25%] text-sm font-medium text-neutral-black'
+                  className='grid w-full grid-cols-[1fr_25%_10%_15%_10%_15%] text-sm font-medium text-neutral-black'
                   key={submission.id}>
-                  <div className='px-2 py-4'>#{index + 1}</div>
                   <div className='p-4 truncate'>{submission.name}</div>
-                  <div className='p-4 capitalize'>{t(submission.type)}</div>
+                  <div className='p-4 truncate'>{submission?.artwork_topic?.title}</div>
                   <div
                     className={`p-4 capitalize ${
                       submission.status == 'Submitted'
@@ -47,6 +47,18 @@ export default function SubmissionTable() {
                     {t(submission.status)}
                   </div>
                   <div className='p-4'>{moment(submission.created_at).format('HH:mm DD/MM/yyyy')}</div>
+                  <div className='p-4 truncate'>
+                    {submission.artwork_topic?.user_artwork_topics?.[0]?.reward_amount
+                      ? submission.artwork_topic?.user_artwork_topics?.[0]?.reward_amount + ' DP'
+                      : '-'}
+                  </div>
+                  <div className='p-4'>
+                    {submission.artwork_topic?.user_artwork_topics?.[0]?.created_at
+                      ? moment(submission.artwork_topic?.user_artwork_topics?.[0]?.created_at).format(
+                          'HH:mm DD/MM/yyyy'
+                        )
+                      : '-'}
+                  </div>
                 </div>
               ))}
             </div>
