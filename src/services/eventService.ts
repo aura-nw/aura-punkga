@@ -1,8 +1,7 @@
 import getConfig from 'next/config'
 import { privateAxios } from 'src/context'
 export const eventService = {
-  report: async (payload) =>
-    await privateAxios.post(`${getConfig().REST_API_URL}/report`, payload),
+  report: async (payload) => await privateAxios.post(`${getConfig().REST_API_URL}/report`, payload),
   story: {
     createCharacter: async (payload) =>
       await privateAxios.post(`${getConfig().REST_API_URL}/story-event/submission/character`, payload),
@@ -22,7 +21,10 @@ export const eventService = {
       await privateAxios.delete(`${getConfig().API_URL}/api/rest/user/story-event/characters/${id}/likes`),
     collectCharacter: async (id) =>
       await privateAxios.post(`${getConfig().REST_API_URL}/story-event/character/${id}/collect`),
-    getSubmissions: async () => await privateAxios.get(`${getConfig().REST_API_URL}/story-event/submission`),
+    getSubmissions: async (contest_id?: string | number) =>
+      await privateAxios.get(`${getConfig().REST_API_URL}/story-event/submission`, {
+        params: contest_id && { contest_id: contest_id },
+      }),
     submitManga: async (payload) =>
       await privateAxios.post(`${getConfig().REST_API_URL}/story-event/submission/manga`, payload),
     getManga: async (page, userId) =>
