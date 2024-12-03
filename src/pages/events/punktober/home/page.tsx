@@ -6,7 +6,7 @@ import Point from 'components/pages/event/punktober/assets/point.svg'
 import Calendar from 'components/pages/event/punktober/Calendar'
 import Modal from 'components/pages/event/punktober/Modal'
 import Spinner from 'components/Spinner'
-import moment from 'moment'
+import moment, { Moment } from 'moment-timezone'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -29,7 +29,11 @@ export default function Page(props) {
 function PageContent() {
   const searchParams = new URLSearchParams(location.search)
   const router = useRouter()
-  const [date, setDate] = useState(searchParams.get('day') ? new Date(2024, 11, +searchParams.get('day')) : new Date())
+  const [date, setDate] = useState<Moment>(
+    searchParams.get('day')
+      ? moment.tz(`2024-12-${searchParams.get('day')}`, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh')
+      : moment().tz('Asia/Ho_Chi_Minh')
+  )
   const { width } = useWindowSize()
   const [search, setSearch] = useState('')
   const [selectedArtwork, setSelectedArtwork] = useState(null)
@@ -106,7 +110,7 @@ function PageContent() {
               <Calendar
                 date={date}
                 setDate={(d) => {
-                  router.replace({ search: `?day=${d.getDate()}` })
+                  router.replace({ search: `?day=${d.date()}` })
                   setDate(d)
                 }}
               />

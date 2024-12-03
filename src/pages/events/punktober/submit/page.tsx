@@ -11,13 +11,14 @@ import { userService } from 'src/services/userService'
 import Image1 from 'components/pages/event/punktober/assets/image718.png'
 import Image2 from 'components/pages/event/punktober/assets/image719.png'
 import Countdown, { zeroPad } from 'react-countdown'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import DOMPurify from 'dompurify'
 import useSWR, { mutate } from 'swr'
 import { eventService } from 'src/services/eventService'
 import SubmissionTable from './submissionTable'
 import Checkbox from 'components/core/Checkbox'
 import Modal from 'components/pages/event/punktober/Modal'
+import axios from 'axios'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -141,7 +142,6 @@ function PageContent() {
       })
     }
   }
-  if (!currentTopic) return null
   if (!account) return <div className='w-full text-center py-12'>{t('Login to continue')}</div>
   if (!account.creator) {
     return (
@@ -315,7 +315,9 @@ function PageContent() {
         </Link>
         <div className='w-full flex flex-col items-center gap-1.5'>
           <div className='text-sm font-medium text-neutral-default'>{t('Topic of the day')}</div>
-          <div className='uppercase text-neutral-black font-roboto text-[40px] font-bold'>{currentTopic?.title}</div>
+          <div className='uppercase text-neutral-black font-roboto text-[40px] font-bold'>
+            {currentTopic?.title || 'No topic'}
+          </div>
           <div className='flex items-center gap-1.5 font-medium text-xl text-gray-950'>
             <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>
               <path
@@ -328,7 +330,8 @@ function PageContent() {
               />
             </svg>
             <Countdown
-              date={new Date(2024, 11, new Date().getDate() + 1)}
+              date={moment().tz('Asia/Ho_Chi_Minh').add(1, 'day').startOf('day').valueOf()}
+              now={() => moment().tz('Asia/Ho_Chi_Minh').valueOf()}
               renderer={({ hours, minutes, seconds }) => {
                 return (
                   <span className='text-feedback-error-defaul'>{`${zeroPad(hours)}:${zeroPad(minutes)}:${zeroPad(
@@ -337,7 +340,7 @@ function PageContent() {
                 )
               }}
             />
-            <span>{moment().format('ddd, DD MMMM')}</span>
+            <span>{moment().tz('Asia/Ho_Chi_Minh').format('ddd, DD MMMM')} GMT +7</span>
           </div>
           <div className='w-full max-w-[1129px] rounded-lg p-6 bg-neutral-900 mt-9'>
             <div className='grid grid-cols-[auto_1fr] gap-4'>

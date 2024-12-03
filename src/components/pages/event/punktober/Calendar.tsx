@@ -7,10 +7,11 @@ import Image from 'next/image'
 import O1 from './assets/OBJECTS.svg'
 import O2 from './assets/OBJECTS2.svg'
 import O3 from './assets/OBJECTS3.svg'
-export default function Calendar({ date, setDate }: { date: Date; setDate: (date: Date) => void }) {
+import moment, { Moment } from 'moment-timezone'
+export default function Calendar({ date, setDate }: { date: Moment; setDate: (date: Moment) => void }) {
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
-  const [week, setWeeks] = useState(Math.floor((date.getDate() - 1) / 14))
+  const [week, setWeeks] = useState(Math.floor((date.date() - 1) / 14))
   const { data } = useSWR('get-all-topic', () => eventService.punktober.getAllTopic(), {
     revalidateOnFocus: false,
   })
@@ -132,92 +133,92 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
               }`}>
               <div className='grid grid-cols-7 [&>div]:cursor-pointer place-items-center gap-4'>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 1))}
+                  onClick={() => setDate(moment.tz('2024-12-1', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 1
+                    date.date() == 1
                       ? 'selected-date'
-                      : new Date().getDate() == 1
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 1
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 1 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 1 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('1')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 2))}
+                  onClick={() => setDate(moment.tz('2024-11-2', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 2
+                    date.date() == 2
                       ? 'selected-date'
-                      : new Date().getDate() == 2
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 2
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 2 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 2 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('2')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 3))}
+                  onClick={() => setDate(moment.tz('2024-11-3', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 3
+                    date.date() == 3
                       ? 'selected-date'
-                      : new Date().getDate() == 3
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 3
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 3 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 3 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('3')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 4))}
+                  onClick={() => setDate(moment.tz('2024-11-4', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 4
+                    date.date() == 4
                       ? 'selected-date'
-                      : new Date().getDate() == 4
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 4
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 4 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 4 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('4')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 5))}
+                  onClick={() => setDate(moment.tz('2024-11-5', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 5
+                    date.date() == 5
                       ? 'selected-date'
-                      : new Date().getDate() == 5
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 5
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 5 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 5 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('5')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 6))}
+                  onClick={() => setDate(moment.tz('2024-11-6', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 6
+                    date.date() == 6
                       ? 'selected-date'
-                      : new Date().getDate() == 6
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 6
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 6 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 6 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('6')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 7))}
+                  onClick={() => setDate(moment.tz('2024-11-7', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 7
+                    date.date() == 7
                       ? 'selected-date'
-                      : new Date().getDate() == 7
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 7
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 7 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 7 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('7')}
@@ -225,92 +226,92 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
               </div>
               <div className='grid grid-cols-7 [&>div]:cursor-pointer place-items-center gap-4'>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 8))}
+                  onClick={() => setDate(moment.tz('2024-11-8', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 8
+                    date.date() == 8
                       ? 'selected-date'
-                      : new Date().getDate() == 8
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 8
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 8 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 8 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('8')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 9))}
+                  onClick={() => setDate(moment.tz('2024-11-9', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 9
+                    date.date() == 9
                       ? 'selected-date'
-                      : new Date().getDate() == 9
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 9
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 9 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 9 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('9')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 10))}
+                  onClick={() => setDate(moment.tz('2024-11-10', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 10
+                    date.date() == 10
                       ? 'selected-date'
-                      : new Date().getDate() == 10
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 10
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 10 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 10 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('10')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 11))}
+                  onClick={() => setDate(moment.tz('2024-11-11', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 11
+                    date.date() == 11
                       ? 'selected-date'
-                      : new Date().getDate() == 11
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 11
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 11 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 11 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('11')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 12))}
+                  onClick={() => setDate(moment.tz('2024-11-12', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 12
+                    date.date() == 12
                       ? 'selected-date'
-                      : new Date().getDate() == 12
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 12
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 12 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 12 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('12')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 13))}
+                  onClick={() => setDate(moment.tz('2024-11-13', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 13
+                    date.date() == 13
                       ? 'selected-date'
-                      : new Date().getDate() == 13
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 13
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 13 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 13 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('13')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 14))}
+                  onClick={() => setDate(moment.tz('2024-11-14', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 14
+                    date.date() == 14
                       ? 'selected-date'
-                      : new Date().getDate() == 14
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 14
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 14 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 14 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('14')}
@@ -323,92 +324,92 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
               }`}>
               <div className='grid grid-cols-7 [&>div]:cursor-pointer place-items-center gap-4'>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 15))}
+                  onClick={() => setDate(moment.tz('2024-11-15', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 15
+                    date.date() == 15
                       ? 'selected-date'
-                      : new Date().getDate() == 15
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 15
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 15 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 15 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('15')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 16))}
+                  onClick={() => setDate(moment.tz('2024-11-16', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 16
+                    date.date() == 16
                       ? 'selected-date'
-                      : new Date().getDate() == 16
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 16
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 16 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 16 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('16')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 17))}
+                  onClick={() => setDate(moment.tz('2024-11-17', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 17
+                    date.date() == 17
                       ? 'selected-date'
-                      : new Date().getDate() == 17
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 17
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 17 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 17 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('17')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 18))}
+                  onClick={() => setDate(moment.tz('2024-11-18', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 18
+                    date.date() == 18
                       ? 'selected-date'
-                      : new Date().getDate() == 18
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 18
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 18 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 18 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('18')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 19))}
+                  onClick={() => setDate(moment.tz('2024-11-19', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 19
+                    date.date() == 19
                       ? 'selected-date'
-                      : new Date().getDate() == 19
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 19
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 19 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 19 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('19')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 20))}
+                  onClick={() => setDate(moment.tz('2024-11-20', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 20
+                    date.date() == 20
                       ? 'selected-date'
-                      : new Date().getDate() == 20
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 20
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 20 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 20 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('20')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 21))}
+                  onClick={() => setDate(moment.tz('2024-11-21', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 21
+                    date.date() == 21
                       ? 'selected-date'
-                      : new Date().getDate() == 21
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 21
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 21 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 21 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('21')}
@@ -416,92 +417,92 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
               </div>
               <div className='grid grid-cols-7 [&>div]:cursor-pointer place-items-center gap-4'>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 22))}
+                  onClick={() => setDate(moment.tz('2024-11-22', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 22
+                    date.date() == 22
                       ? 'selected-date'
-                      : new Date().getDate() == 22
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 22
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 22 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 22 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('22')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 23))}
+                  onClick={() => setDate(moment.tz('2024-11-23', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 23
+                    date.date() == 23
                       ? 'selected-date'
-                      : new Date().getDate() == 23
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 23
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 23 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 23 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('23')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 24))}
+                  onClick={() => setDate(moment.tz('2024-11-24', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 24
+                    date.date() == 24
                       ? 'selected-date'
-                      : new Date().getDate() == 24
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 24
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 24 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 24 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('24')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 25))}
+                  onClick={() => setDate(moment.tz('2024-11-25', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 25
+                    date.date() == 25
                       ? 'selected-date'
-                      : new Date().getDate() == 25
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 25
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 25 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 25 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('25')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 26))}
+                  onClick={() => setDate(moment.tz('2024-11-26', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 26
+                    date.date() == 26
                       ? 'selected-date'
-                      : new Date().getDate() == 26
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 26
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 26 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 26 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('26')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 27))}
+                  onClick={() => setDate(moment.tz('2024-11-27', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 27
+                    date.date() == 27
                       ? 'selected-date'
-                      : new Date().getDate() == 27
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 27
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 27 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 27 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('27')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 28))}
+                  onClick={() => setDate(moment.tz('2024-11-28', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 28
+                    date.date() == 28
                       ? 'selected-date'
-                      : new Date().getDate() == 28
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 28
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 28 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 28 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('28')}
@@ -511,92 +512,92 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
             <div className={`transition-all space-y-4 duration-500 ${week != 2 ? 'translate-x-full' : ''}`}>
               <div className='grid grid-cols-7 [&>div]:cursor-pointer place-items-center gap-4'>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 22))}
+                  onClick={() => setDate(moment.tz('2024-11-22', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 22
+                    date.date() == 22
                       ? 'selected-date'
-                      : new Date().getDate() == 22
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 22
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 22 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 22 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('22')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 23))}
+                  onClick={() => setDate(moment.tz('2024-11-23', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 23
+                    date.date() == 23
                       ? 'selected-date'
-                      : new Date().getDate() == 23
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 23
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 23 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 23 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('23')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 24))}
+                  onClick={() => setDate(moment.tz('2024-11-24', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 24
+                    date.date() == 24
                       ? 'selected-date'
-                      : new Date().getDate() == 24
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 24
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 24 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 24 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('24')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 25))}
+                  onClick={() => setDate(moment.tz('2024-11-25', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 25
+                    date.date() == 25
                       ? 'selected-date'
-                      : new Date().getDate() == 25
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 25
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 25 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 25 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('25')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 26))}
+                  onClick={() => setDate(moment.tz('2024-11-26', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 26
+                    date.date() == 26
                       ? 'selected-date'
-                      : new Date().getDate() == 26
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 26
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 26 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 26 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('26')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 27))}
+                  onClick={() => setDate(moment.tz('2024-11-27', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 27
+                    date.date() == 27
                       ? 'selected-date'
-                      : new Date().getDate() == 27
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 27
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 27 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 27 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('27')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 28))}
+                  onClick={() => setDate(moment.tz('2024-11-28', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 28
+                    date.date() == 28
                       ? 'selected-date'
-                      : new Date().getDate() == 28
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 28
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 28 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 28 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('28')}
@@ -604,40 +605,40 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
               </div>
               <div className='grid grid-cols-7 [&>div]:cursor-pointer place-items-center gap-4'>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 29))}
+                  onClick={() => setDate(moment.tz('2024-11-29', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 29
+                    date.date() == 29
                       ? 'selected-date'
-                      : new Date().getDate() == 29
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 29
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 29 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 29 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('29')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 30))}
+                  onClick={() => setDate(moment.tz('2024-11-30', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 30
+                    date.date() == 30
                       ? 'selected-date'
-                      : new Date().getDate() == 30
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 30
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 30 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 30 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('30')}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 31))}
+                  onClick={() => setDate(moment.tz('2024-11-31', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={
-                    date.getDate() == 31
+                    date.date() == 31
                       ? 'selected-date'
-                      : new Date().getDate() == 31
+                      : moment().tz('Asia/Ho_Chi_Minh').date() == 31
                       ? 'current-date'
                       : `aspect-square h-full grid place-items-center ${
-                          new Date().getDate() >= 31 ? '' : 'pointer-events-none [&_div]:opacity-50'
+                          moment().tz('Asia/Ho_Chi_Minh').date() >= 31 ? '' : 'pointer-events-none [&_div]:opacity-50'
                         }`
                   }>
                   {t('31')}
@@ -696,13 +697,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
               </div>
               <div className='grid grid-cols-7 items-center divide-x-[1px] text-gray-black font-medium [&>div]:h-full text-[8px] lg:text-xs [&>div:first-child>.date]:text-red-500 [&_.date]:text-sm lg:[&_.date]:text-lg [&_.date]:font-semibold [&>div]:p-3'>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 1))}
+                  onClick={() => setDate(moment.tz('2024-11-1', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 1
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 1
                       ? 'bg-green-100'
-                      : date.getDate() == 1
+                      : date.date() == 1
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 1 && topics.find((topic) => topic.date == '2024-12-01')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 1 &&
+                        topics.find((topic) => topic.date == '2024-12-01')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -736,13 +738,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 2))}
+                  onClick={() => setDate(moment.tz('2024-11-2', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 2
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 2
                       ? 'bg-green-100'
-                      : date.getDate() == 2
+                      : date.date() == 2
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 2 && topics.find((topic) => topic.date == '2024-12-02')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 2 &&
+                        topics.find((topic) => topic.date == '2024-12-02')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -776,13 +779,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 3))}
+                  onClick={() => setDate(moment.tz('2024-11-3', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 3
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 3
                       ? 'bg-green-100'
-                      : date.getDate() == 3
+                      : date.date() == 3
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 3 && topics.find((topic) => topic.date == '2024-12-03')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 3 &&
+                        topics.find((topic) => topic.date == '2024-12-03')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -816,13 +820,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 4))}
+                  onClick={() => setDate(moment.tz('2024-11-4', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 4
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 4
                       ? 'bg-green-100'
-                      : date.getDate() == 4
+                      : date.date() == 4
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 4 && topics.find((topic) => topic.date == '2024-12-04')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 4 &&
+                        topics.find((topic) => topic.date == '2024-12-04')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -856,13 +861,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 5))}
+                  onClick={() => setDate(moment.tz('2024-11-5', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 5
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 5
                       ? 'bg-green-100'
-                      : date.getDate() == 5
+                      : date.date() == 5
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 5 && topics.find((topic) => topic.date == '2024-12-05')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 5 &&
+                        topics.find((topic) => topic.date == '2024-12-05')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -896,13 +902,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 6))}
+                  onClick={() => setDate(moment.tz('2024-11-6', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 6
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 6
                       ? 'bg-green-100'
-                      : date.getDate() == 6
+                      : date.date() == 6
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 6 && topics.find((topic) => topic.date == '2024-12-06')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 6 &&
+                        topics.find((topic) => topic.date == '2024-12-06')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -936,13 +943,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 7))}
+                  onClick={() => setDate(moment.tz('2024-11-7', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 7
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 7
                       ? 'bg-green-100'
-                      : date.getDate() == 7
+                      : date.date() == 7
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 7 && topics.find((topic) => topic.date == '2024-12-07')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 7 &&
+                        topics.find((topic) => topic.date == '2024-12-07')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -978,13 +986,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
               </div>
               <div className='grid grid-cols-7 items-center divide-x-[1px] text-gray-black font-medium [&>div]:h-full text-[8px] lg:text-xs [&>div:first-child>.date]:text-red-500 [&_.date]:text-sm lg:[&_.date]:text-lg [&_.date]:font-semibold [&>div]:p-3'>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 8))}
+                  onClick={() => setDate(moment.tz('2024-11-8', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 8
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 8
                       ? 'bg-green-100'
-                      : date.getDate() == 8
+                      : date.date() == 8
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 8 && topics.find((topic) => topic.date == '2024-12-08')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 8 &&
+                        topics.find((topic) => topic.date == '2024-12-08')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1018,13 +1027,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 9))}
+                  onClick={() => setDate(moment.tz('2024-11-9', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 9
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 9
                       ? 'bg-green-100'
-                      : date.getDate() == 9
+                      : date.date() == 9
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 9 && topics.find((topic) => topic.date == '2024-12-09')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 9 &&
+                        topics.find((topic) => topic.date == '2024-12-09')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1058,13 +1068,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 10))}
+                  onClick={() => setDate(moment.tz('2024-11-10', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 10
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 10
                       ? 'bg-green-100'
-                      : date.getDate() == 10
+                      : date.date() == 10
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 10 && topics.find((topic) => topic.date == '2024-12-10')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 10 &&
+                        topics.find((topic) => topic.date == '2024-12-10')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1098,13 +1109,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 11))}
+                  onClick={() => setDate(moment.tz('2024-11-11', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 11
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 11
                       ? 'bg-green-100'
-                      : date.getDate() == 11
+                      : date.date() == 11
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 11 && topics.find((topic) => topic.date == '2024-12-11')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 11 &&
+                        topics.find((topic) => topic.date == '2024-12-11')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1138,13 +1150,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 12))}
+                  onClick={() => setDate(moment.tz('2024-11-12', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 12
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 12
                       ? 'bg-green-100'
-                      : date.getDate() == 12
+                      : date.date() == 12
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 12 && topics.find((topic) => topic.date == '2024-12-12')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 12 &&
+                        topics.find((topic) => topic.date == '2024-12-12')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1178,13 +1191,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 13))}
+                  onClick={() => setDate(moment.tz('2024-11-13', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 13
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 13
                       ? 'bg-green-100'
-                      : date.getDate() == 13
+                      : date.date() == 13
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 13 && topics.find((topic) => topic.date == '2024-12-13')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 13 &&
+                        topics.find((topic) => topic.date == '2024-12-13')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1218,13 +1232,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 14))}
+                  onClick={() => setDate(moment.tz('2024-11-14', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 14
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 14
                       ? 'bg-green-100'
-                      : date.getDate() == 14
+                      : date.date() == 14
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 14 && topics.find((topic) => topic.date == '2024-12-14')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 14 &&
+                        topics.find((topic) => topic.date == '2024-12-14')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1260,13 +1275,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
               </div>
               <div className='grid grid-cols-7 items-center divide-x-[1px] text-gray-black font-medium [&>div]:h-full text-[8px] lg:text-xs [&>div:first-child>.date]:text-red-500 [&_.date]:text-sm lg:[&_.date]:text-lg [&_.date]:font-semibold [&>div]:p-3'>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 15))}
+                  onClick={() => setDate(moment.tz('2024-11-15', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 15
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 15
                       ? 'bg-green-100'
-                      : date.getDate() == 15
+                      : date.date() == 15
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 15 && topics.find((topic) => topic.date == '2024-12-15')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 15 &&
+                        topics.find((topic) => topic.date == '2024-12-15')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1300,13 +1316,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 16))}
+                  onClick={() => setDate(moment.tz('2024-11-16', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 16
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 16
                       ? 'bg-green-100'
-                      : date.getDate() == 16
+                      : date.date() == 16
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 16 && topics.find((topic) => topic.date == '2024-12-16')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 16 &&
+                        topics.find((topic) => topic.date == '2024-12-16')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1340,13 +1357,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 17))}
+                  onClick={() => setDate(moment.tz('2024-11-17', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 17
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 17
                       ? 'bg-green-100'
-                      : date.getDate() == 17
+                      : date.date() == 17
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 17 && topics.find((topic) => topic.date == '2024-12-17')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 17 &&
+                        topics.find((topic) => topic.date == '2024-12-17')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1380,13 +1398,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 18))}
+                  onClick={() => setDate(moment.tz('2024-11-18', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 18
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 18
                       ? 'bg-green-100'
-                      : date.getDate() == 18
+                      : date.date() == 18
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 18 && topics.find((topic) => topic.date == '2024-12-18')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 18 &&
+                        topics.find((topic) => topic.date == '2024-12-18')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1420,13 +1439,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 19))}
+                  onClick={() => setDate(moment.tz('2024-11-19', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 19
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 19
                       ? 'bg-green-100'
-                      : date.getDate() == 19
+                      : date.date() == 19
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 19 && topics.find((topic) => topic.date == '2024-12-19')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 19 &&
+                        topics.find((topic) => topic.date == '2024-12-19')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1460,13 +1480,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 20))}
+                  onClick={() => setDate(moment.tz('2024-11-20', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 20
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 20
                       ? 'bg-green-100'
-                      : date.getDate() == 20
+                      : date.date() == 20
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 20 && topics.find((topic) => topic.date == '2024-12-20')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 20 &&
+                        topics.find((topic) => topic.date == '2024-12-20')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1500,13 +1521,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 21))}
+                  onClick={() => setDate(moment.tz('2024-11-21', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 21
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 21
                       ? 'bg-green-100'
-                      : date.getDate() == 21
+                      : date.date() == 21
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 21 && topics.find((topic) => topic.date == '2024-12-21')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 21 &&
+                        topics.find((topic) => topic.date == '2024-12-21')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1542,13 +1564,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
               </div>
               <div className='grid grid-cols-7 items-center divide-x-[1px] text-gray-black font-medium [&>div]:h-full text-[8px] lg:text-xs [&>div:first-child>.date]:text-red-500 [&_.date]:text-sm lg:[&_.date]:text-lg [&_.date]:font-semibold [&>div]:p-3'>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 22))}
+                  onClick={() => setDate(moment.tz('2024-11-22', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 22
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 22
                       ? 'bg-green-100'
-                      : date.getDate() == 22
+                      : date.date() == 22
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 22 && topics.find((topic) => topic.date == '2024-12-22')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 22 &&
+                        topics.find((topic) => topic.date == '2024-12-22')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1582,13 +1605,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 23))}
+                  onClick={() => setDate(moment.tz('2024-11-23', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 23
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 23
                       ? 'bg-green-100'
-                      : date.getDate() == 23
+                      : date.date() == 23
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 23 && topics.find((topic) => topic.date == '2024-12-23')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 23 &&
+                        topics.find((topic) => topic.date == '2024-12-23')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1622,13 +1646,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 24))}
+                  onClick={() => setDate(moment.tz('2024-11-24', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 24
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 24
                       ? 'bg-green-100'
-                      : date.getDate() == 24
+                      : date.date() == 24
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 24 && topics.find((topic) => topic.date == '2024-12-24')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 24 &&
+                        topics.find((topic) => topic.date == '2024-12-24')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5 relative`}>
@@ -1663,13 +1688,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 25))}
+                  onClick={() => setDate(moment.tz('2024-11-25', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 25
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 25
                       ? 'bg-green-100'
-                      : date.getDate() == 25
+                      : date.date() == 25
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 25 && topics.find((topic) => topic.date == '2024-12-25')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 25 &&
+                        topics.find((topic) => topic.date == '2024-12-25')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5 relative`}>
@@ -1705,13 +1731,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 26))}
+                  onClick={() => setDate(moment.tz('2024-11-26', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 26
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 26
                       ? 'bg-green-100'
-                      : date.getDate() == 26
+                      : date.date() == 26
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 26 && topics.find((topic) => topic.date == '2024-12-26')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 26 &&
+                        topics.find((topic) => topic.date == '2024-12-26')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5 relative`}>
@@ -1745,13 +1772,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 27))}
+                  onClick={() => setDate(moment.tz('2024-11-27', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 27
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 27
                       ? 'bg-green-100'
-                      : date.getDate() == 27
+                      : date.date() == 27
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 27 && topics.find((topic) => topic.date == '2024-12-27')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 27 &&
+                        topics.find((topic) => topic.date == '2024-12-27')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1785,13 +1813,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 28))}
+                  onClick={() => setDate(moment.tz('2024-11-28', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 28
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 28
                       ? 'bg-green-100'
-                      : date.getDate() == 28
+                      : date.date() == 28
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 28 && topics.find((topic) => topic.date == '2024-12-28')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 28 &&
+                        topics.find((topic) => topic.date == '2024-12-28')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1827,13 +1856,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
               </div>
               <div className='grid grid-cols-7 items-center divide-x-[1px] text-gray-black font-medium [&>div]:h-full text-[8px] lg:text-xs [&>div:first-child>.date]:text-red-500 [&_.date]:text-sm lg:[&_.date]:text-lg [&_.date]:font-semibold [&>div]:p-3'>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 29))}
+                  onClick={() => setDate(moment.tz('2024-11-29', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 29
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 29
                       ? 'bg-green-100'
-                      : date.getDate() == 29
+                      : date.date() == 29
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 29 && topics.find((topic) => topic.date == '2024-12-29')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 29 &&
+                        topics.find((topic) => topic.date == '2024-12-29')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1867,13 +1897,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 30))}
+                  onClick={() => setDate(moment.tz('2024-11-30', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 30
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 30
                       ? 'bg-green-100'
-                      : date.getDate() == 30
+                      : date.date() == 30
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 30 && topics.find((topic) => topic.date == '2024-12-30')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 30 &&
+                        topics.find((topic) => topic.date == '2024-12-30')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5`}>
@@ -1907,13 +1938,14 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
                   )}
                 </div>
                 <div
-                  onClick={() => setDate(new Date(2024, 11, 31))}
+                  onClick={() => setDate(moment.tz('2024-11-31', 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
                   className={`${
-                    new Date().getDate() == 31
+                    moment().tz('Asia/Ho_Chi_Minh').date() == 31
                       ? 'bg-green-100'
-                      : date.getDate() == 31
+                      : date.date() == 31
                       ? 'bg-neutral-200'
-                      : new Date().getDate() >= 31 && topics.find((topic) => topic.date == '2024-12-31')
+                      : moment().tz('Asia/Ho_Chi_Minh').date() >= 31 &&
+                        topics.find((topic) => topic.date == '2024-12-31')
                       ? 'cursor-pointer'
                       : 'pointer-events-none [&_div]:opacity-50'
                   } flex flex-col items-center gap-1.5 relative`}>
