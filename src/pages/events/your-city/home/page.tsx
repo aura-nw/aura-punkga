@@ -20,6 +20,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import useSWR from 'swr'
 import { useWindowSize } from 'usehooks-ts'
 import ArtworkDetail from './ArtworkDetail'
+import { XMarkIcon } from '@heroicons/react/24/outline'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -31,16 +32,17 @@ function PageContent() {
   const artworkIdParam = searchParams.get('artwork_id')
   const router = useRouter()
   const [date, setDate] = useState<Moment>(
-    searchParams.get('day')
-      ? moment.tz(`2024-12-${searchParams.get('day')}`, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh')
-      : moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz('2025-01-01', 'Asia/Ho_Chi_Minh'))
-      ? moment.tz('2024-12-01', 'Asia/Ho_Chi_Minh')
+    searchParams.get('date')
+      ? moment.tz(`${searchParams.get('date')}`, 'DD-MM-YYYY', 'Asia/Ho_Chi_Minh')
+      : moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz('2025-01-09', 'Asia/Ho_Chi_Minh'))
+      ? moment.tz('2024-12-08', 'Asia/Ho_Chi_Minh')
       : moment().tz('Asia/Ho_Chi_Minh')
   )
   const { width } = useWindowSize()
   const [search, setSearch] = useState('')
   const [selectedArtwork, setSelectedArtwork] = useState(null)
   const [openArtworkDetail, setOpenArtworkDetail] = useState(false)
+  const [showContestRule, setShowContestRule] = useState(false)
   const [list, setList] = useState([])
   const swiperRef = useRef<any>()
   const { t } = useTranslation()
@@ -122,7 +124,7 @@ function PageContent() {
               <Calendar
                 date={date}
                 setDate={(d) => {
-                  router.replace({ search: `?day=${d.date()}` })
+                  router.replace({ search: `?date=${d.format('DD-MM-YYYY')}` })
                   setDate(d)
                 }}
               />
@@ -201,7 +203,9 @@ function PageContent() {
                     }`}>
                     {t('SUBMIT artwork')}
                   </Link>
-                  <div className='flex items-center gap-1.5 text-sm text-neutral-black font-medium'>
+                  <div
+                    className='flex items-center gap-1.5 text-sm text-neutral-black font-medium cursor-pointer'
+                    onClick={() => setShowContestRule(true)}>
                     <svg xmlns='http://www.w3.org/2000/svg' width='25' height='24' viewBox='0 0 25 24' fill='none'>
                       <path
                         d='M12.5 12L12.5 16.5M12.5 8.66455V8.625M3.5 12C3.5 7.02944 7.52944 3 12.5 3C17.4706 3 21.5 7.02944 21.5 12C21.5 16.9706 17.4706 21 12.5 21C7.52944 21 3.5 16.9706 3.5 12Z'
@@ -288,6 +292,69 @@ function PageContent() {
           )
         )}
       </div>
+      <Modal open={showContestRule} setOpen={setShowContestRule}>
+        <div className='px-8 py-4 rounded-mlg bg-white w-full max-w-screen-sm space-y-4 relative'>
+          <div className='lg:hidden absolute top-3 right-3' onClick={() => setShowContestRule(false)}>
+            <XMarkIcon width={20} height={20}/>
+          </div>
+          <div className='text-center w-full font-semibold text-lg'>{t('CONTEST RULES')}</div>
+          <div className='p-4 rounded-md bg-neutral-50 text-sm space-y-4'>
+            <p>
+              <span className='font-semibold'>🎨 Event Theme:</span>
+              <i>Your City</i>
+            </p>
+            <p>
+              <span className='font-semibold'>📅 Duration:</span>
+              <i>31 Days (December 9nd - January 8st)</i>
+            </p>
+            <p>
+              <span className='font-semibold'>🌟 Celebrate Your Creativity:</span>
+            </p>
+            <p>
+              Unleash your imagination and showcase the essence of your city! Every day brings a fresh, inspiring topic
+              tied to the main theme, giving you 31 opportunities to let your art shine.
+            </p>
+            <p>
+              <span className='font-semibold'>📜Know What’s Coming:</span>
+            </p>
+            <p>
+              Stay ahead of the game! Each daily topic will be revealed 2 days in advance, giving you time to brainstorm
+              and perfect your masterpiece.
+            </p>
+            <p>
+              <span className='font-semibold'>🖌️ Submit & Shine:</span>
+            </p>
+            <ul className='list-disc list-inside '>
+              <li>
+                Share <span className='font-semibold'>one masterpiece per day</span> and watch your art take center
+                stage!
+              </li>
+              <li>
+                Changed your mind or made a last-minute tweak? No worries—your latest submission will always be the one
+                that counts.
+              </li>
+            </ul>
+            <p>
+              <span className='font-semibold'>💎 Win Dream Points (DP):</span>
+            </p>
+            <ul className='list-disc list-inside '>
+              <li>
+                <span className='font-semibold'>Daily Rewards:</span>
+                Each day, a prize pool of <span className='font-semibold'>Dream Points (DP)</span> - sponsored by{' '}
+                <span className='font-semibold'>Punkga.me</span> and our amazing partners—awaits!
+              </li>
+              <li>
+                <span className='font-semibold'>Fair Sharing:</span> All approved artworks of the day will equally split
+                the pool, giving every participating artist a piece of the reward.
+              </li>
+              <li>The DP prize amounts change daily. Prepare yourself and make your own tactic!</li>
+            </ul>
+            <p>
+              Let the world see <i>Your City</i> through your eyes!
+            </p>
+          </div>
+        </div>
+      </Modal>
       {width >= 768 ? (
         <Modal open={openArtworkDetail} setOpen={setOpenArtworkDetail}>
           <div className='w-screen max-w-screen-xl relative mx-auto flex items-center gap-4'>
