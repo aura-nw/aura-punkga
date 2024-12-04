@@ -10,15 +10,15 @@ export default function SubmissionTable() {
   })
   const submissions = data?.data?.data?.story_event_submission
   return (
-    <div className='text-white'>
+    <div className=''>
       <div className='text-lg font-semibold'>{t('My submission')}</div>
-      <div className='text-text-quatenary text-sm mt-2'>
+      <div className=' text-sm mt-2'>
         {t(
           'Submitted artworks/mangas need to be approved by admin. This process may take upto 24 hours after you submitted'
         )}
         .{' '}
       </div>
-      <div className='mt-6 p-6 rounded-[10px] bg-gray-100 text-neutral-black overflow-auto w-full'>
+      <div className='mt-6 p-6 rounded-[10px] text-text-primary overflow-auto w-full border border-border-primary'>
         {submissions?.length ? (
           <div className='w-full min-w-[700px]'>
             <div className='grid w-full grid-cols-[1fr_25%_10%_15%_10%_15%] text-sm font-semibold border-b border-white'>
@@ -32,7 +32,7 @@ export default function SubmissionTable() {
             <div className='h-[260px] overflow-auto'>
               {submissions?.map((submission, index) => (
                 <div
-                  className='grid w-full grid-cols-[1fr_25%_10%_15%_10%_15%] text-sm font-medium text-neutral-black'
+                  className='grid w-full grid-cols-[1fr_25%_10%_15%_10%_15%] text-sm font-medium text-text-primary'
                   key={submission.id}>
                   <div className='p-4 truncate'>{submission.name}</div>
                   <div className='p-4 truncate'>{submission?.artwork_topic?.title}</div>
