@@ -156,6 +156,7 @@ function PageContent() {
       payload.append('description', data.description)
       payload.append('contest_id', '4')
       payload.append('artwork_topic_id', currentTopic.id)
+      payload.append('terms_agreed', data.terms_agreed)
       payload.append(
         'artwork_characters',
         JSON.stringify([
