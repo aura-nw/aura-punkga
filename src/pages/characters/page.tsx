@@ -56,7 +56,7 @@ function PageContent() {
       <div className='flex justify-center mb-14 items-center w-full'>
         <TextField
           onChange={debounce(setSearchValue, 1000)}
-          className='bg-neutral-100 max-w-lg [&_input::placeholder]:!text-text-quatenary '
+          className='bg-neutral-100 text-black max-w-lg [&_input::placeholder]:!text-text-quatenary '
           placeholder={t('Search by character name, creator, IP')}
         />
       </div>
