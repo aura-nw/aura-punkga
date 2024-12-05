@@ -543,7 +543,7 @@ function PageContent() {
                 name='selectedIP'
                 control={form.control}
                 render={({ field }) => (
-                  <div className='w-full space-y-8' ref={searchRef}>
+                  <div className='w-full space-y-8'>
                     <div className='flex flex-col gap-4 relative z-10 lg:flex-row lg:justify-between lg:items-center'>
                       <div>
                         <div className='text-lg font-semibold'>{t('Attach character')}</div>
@@ -551,7 +551,7 @@ function PageContent() {
                           {t('Select maximum 4 characters, minimum 1 sponsored character.')}
                         </div>
                       </div>
-                      <div className='relative w-full lg:max-w-[500px]'>
+                      <div className='relative w-full lg:max-w-[500px]' ref={searchRef}>
                         <TextField
                           onChange={debounce(fetchSearch, 1000)}
                           onFocus={() => setShowSearch(true)}
