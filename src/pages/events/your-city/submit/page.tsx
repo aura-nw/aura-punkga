@@ -2,7 +2,7 @@ import TextField from 'components/Input/TextField'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -21,6 +21,7 @@ import Modal from 'components/pages/event/your-city/Modal'
 import UserGreen from 'assets/images/userGreen.svg'
 import { debounce, set } from 'lodash'
 import { XMarkIcon } from '@heroicons/react/24/outline'
+import { useOnClickOutside } from 'usehooks-ts'
 
 export default function Page(props) {
   if (props.justHead) {
@@ -33,9 +34,13 @@ function PageContent() {
   const [loading, setLoading] = useState(false)
   const { account, getProfile } = useContext(Context)
   const { locale, replace } = useRouter()
+  const searchRef = useRef()
   const [open, setOpen] = useState(false)
-  const [IPList, setIPList] = useState([])
   const [showSearch, setShowSearch] = useState(false)
+  useOnClickOutside([searchRef], () => {
+    setShowSearch(false)
+  })
+  const [IPList, setIPList] = useState([])
   useEffect(() => {
     if (moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz('2025-01-01', 'Asia/Ho_Chi_Minh'))) {
       replace('/events/your-city/home')
@@ -44,7 +49,7 @@ function PageContent() {
   const { data: submissionData } = useSWR('get-submissions', () => eventService.story.getSubmissions(4), {
     revalidateOnFocus: false,
   })
-  const submissions = submissionData?.data?.data?.story_event_submission as any[] || []
+  const submissions = (submissionData?.data?.data?.story_event_submission as any[]) || []
   const creatorForm = useForm({
     defaultValues: {
       avatar: undefined,
@@ -538,7 +543,7 @@ function PageContent() {
                 name='selectedIP'
                 control={form.control}
                 render={({ field }) => (
-                  <div className='w-full space-y-8'>
+                  <div className='w-full space-y-8' ref={searchRef}>
                     <div className='flex flex-col gap-4 relative z-10 lg:flex-row lg:justify-between lg:items-center'>
                       <div>
                         <div className='text-lg font-semibold'>{t('Attach character')}</div>
@@ -550,7 +555,6 @@ function PageContent() {
                         <TextField
                           onChange={debounce(fetchSearch, 1000)}
                           onFocus={() => setShowSearch(true)}
-                          onBlur={() => setTimeout(() => setShowSearch(false), 100)}
                           className='border border-border-primary [&_input::placeholder]:!text-text-secondary-on-brand '
                           placeholder={t('Search by character name, creator, IP')}
                           trailingComponent={
