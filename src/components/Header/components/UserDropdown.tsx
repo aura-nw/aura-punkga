@@ -83,7 +83,7 @@ export default function UserDropdown() {
                     </MainButton> */}
         <div className='relative p-0.5'>
           <div className='absolute inset-0 bg-[conic-gradient(#009640_70deg,#6D6D6D_0)] rounded-xl rotate-180'></div>
-          <div className='border border-neautral-black p-[1px] bg-neutral-500 rounded-mlg relative'>
+          <div className='border border-neutral-black p-[1px] bg-neutral-500 rounded-mlg relative'>
             <div className='border border-neutral-800 rounded-lg overflow-hidden'>
               <Image src={account?.image || UserGreen} width={50} height={50} className='w-12 h-12' alt='user' />
             </div>

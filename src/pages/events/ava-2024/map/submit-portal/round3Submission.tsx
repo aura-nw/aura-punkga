@@ -155,7 +155,7 @@ export default function Round3Submission() {
       <form onSubmit={creatorForm.handleSubmit(submitCreatorInformationHandler)} className=''>
         <div className='grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-8'>
           <div>
-            <div className='rounded-md border-[3px] border-neutral-black bg-neautral-950 p-4 md:p-6'>
+            <div className='rounded-md border-[3px] border-neutral-black bg-neutral-950 p-4 md:p-6'>
               <div className='text-lg font-semibold w-full'>{t('Creator’s information')}</div>
               <div className='bg-black rounded-md px-4 py-6 flex flex-col items-center mt-6 md:flex-row md:items-start gap-5 md:gap-3'>
                 <Controller
@@ -285,7 +285,7 @@ export default function Round3Submission() {
   return (
     <form onSubmit={form.handleSubmit(submitHandler)}>
       <div className='grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-8 mt-8'>
-        <div className='rounded-md border-[3px] border-neutral-black bg-neautral-950 p-4 md:p-6'>
+        <div className='rounded-md border-[3px] border-neutral-black bg-neutral-950 p-4 md:p-6'>
           <div className='grid grid-cols-[70px_1fr] gap-4'>
             <Image
               src={account.creator.avatar_url}
@@ -377,7 +377,7 @@ export default function Round3Submission() {
       </div>
 
       <div className='w-full max-w-[1500px] mt-8'>
-        <div className='rounded-md border-[3px] border-neutral-black bg-neautral-950 p-4 md:p-6'>
+        <div className='rounded-md border-[3px] border-neutral-black bg-neutral-950 p-4 md:p-6'>
           <div className='text-lg font-semibold'>{t('IP info (Maximum 8)')}</div>
           <div className='mt-6 space-y-8'>
             <Controller

@@ -311,7 +311,7 @@ const Content = ({ selected, mutate }) => {
           </div>
           <div className='mt-4 w-full'>
             <Button
-              color='neautral'
+              color='neutral'
               size='sm'
               className='w-full'
               onClick={() =>

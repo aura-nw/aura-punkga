@@ -1,14 +1,11 @@
+import Logo from 'assets/images/neautral-logo.svg'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { postSubscribeEmail } from 'src/services'
 import { validateEmail } from 'src/utils'
-import Link from 'next/link'
-import Logo from 'assets/images/neautral-logo.svg'
-import Facebook from 'assets/images/facebook-logo.svg'
-import Youtube from 'assets/images/youtube-logo.svg'
-import X from 'assets/images/x-logo.svg'
 
 export default function Footer() {
   const router = useRouter()
@@ -38,14 +35,14 @@ export default function Footer() {
   }, [value])
   return (
     <>
-      <div className='w-full relative z-10 pb-[114px] pt-6 md:pb-0 md:pt-0 bg-neautral-black text-neutral-white'>
+      <div className='w-full relative z-10 pb-[114px] pt-6 md:pb-0 md:pt-0 bg-neutral-black text-neutral-white'>
         <div className='pk-container pt-6 pb-6 hidden md:flex flex-col gap-5 lg:pb-[74px] lg:pt-8'>
           <div className='flex justify-between border-b-[1px] border-border-primary'>
             <div onClick={() => router.push('/')} className='pt-[13px]'>
               <Image src={Logo} alt='footer logo' className='h-[60px] w-auto' />
             </div>
             <div className='flex flex-col gap-1.5'>
-              <div className='text-xs leading-[18px] font-medium text-neautral-50 flex items-start'>
+              <div className='text-xs leading-[18px] font-medium text-neutral-50 flex items-start'>
                 {t('Subscribe to get fresh news update')}
               </div>
               <div className='flex max-w-md'>
@@ -101,7 +98,7 @@ export default function Footer() {
                 </svg>
               </Link>
             </div>
-            <div className='text-neautral-50 opacity-60 text-sm leading-5'>
+            <div className='text-neutral-50 opacity-60 text-sm leading-5'>
               {`© ${new Date().getFullYear()} ${t('Punkga.me . All rights reserved')}.`}
             </div>
           </div>
@@ -111,7 +108,7 @@ export default function Footer() {
             <Image src={Logo} alt='footer logo' className='h-[60px] w-auto' />
           </div>
           <div className='flex flex-col gap-1.5'>
-            <div className='text-xs leading-[18px] font-medium text-neautral-50 flex items-start'>
+            <div className='text-xs leading-[18px] font-medium text-neutral-50 flex items-start'>
               {t('Subscribe to get fresh news update')}
             </div>
             <div className='flex max-w-md'>
@@ -136,7 +133,7 @@ export default function Footer() {
             ) : (
               <div className='h-[32px] mt-[5px]'></div>
             )}
-            <div className='text-neautral-50 opacity-60 text-sm leading-5 flex justify-center'>
+            <div className='text-neutral-50 opacity-60 text-sm leading-5 flex justify-center'>
               {`© ${new Date().getFullYear()} ${t('Punkga.me . All rights reserved')}.`}
             </div>
             <div className='items-center justify-center gap-4 flex mt-4'>

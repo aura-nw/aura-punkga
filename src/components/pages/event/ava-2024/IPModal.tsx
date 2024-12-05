@@ -189,7 +189,7 @@ export default function IPModal({
                         (collectedCharacter?.length || 0) >= 3
                       ) && (
                         <Button
-                          color='neautral'
+                          color='neutral'
                           size='sm'
                           variant='outlined'
                           disabled={loading}
@@ -207,7 +207,7 @@ export default function IPModal({
                           </div>
                         </Button>
                       )}
-                      <Button size='sm' color='neautral' className='!w-full' onClick={likeHandler}>
+                      <Button size='sm' color='neutral' className='!w-full' onClick={likeHandler}>
                         {t(isLiked ? 'Liked' : 'Like')}
                       </Button>
                     </div>
@@ -303,7 +303,7 @@ export default function IPModal({
                           (collectedCharacter?.length || 0) >= 3
                         ) && (
                           <Button
-                            color='neautral'
+                            color='neutral'
                             size='sm'
                             variant='outlined'
                             disabled={loading}
@@ -321,7 +321,7 @@ export default function IPModal({
                             </div>
                           </Button>
                         )}
-                        <Button size='sm' color='neautral' className='!w-full' onClick={likeHandler}>
+                        <Button size='sm' color='neutral' className='!w-full' onClick={likeHandler}>
                           {t(isLiked ? 'Liked' : 'Like')}
                         </Button>
                       </div>

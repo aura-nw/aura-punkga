@@ -1,3 +1,4 @@
+import { search } from 'src/services'
 import getConfig from 'next/config'
 import { privateAxios } from 'src/context'
 export const eventService = {
@@ -13,12 +14,17 @@ export const eventService = {
       await privateAxios.post(`${getConfig().REST_API_URL}/story-event/submission/character`, payload),
     getAvailableCharacter: async () =>
       await privateAxios.get(`${getConfig().REST_API_URL}/story-event/character/available`),
-    getCharacters: async (userId, page, sort, type) =>
-      await privateAxios.get(
-        `${getConfig().REST_API_URL}/story-event/character?limit=20&offset=${(page - 1) * 20}&order_by=${sort}${
-          userId ? `&user_id=${userId}` : ``
-        }${type == 'sponsored' ? '&is_default=true' : type == 'user' ? '&is_default=false' : ''}`
-      ),
+    getCharacters: async (userId, page, sort, type, search?: string) =>
+      await privateAxios.get(`${getConfig().REST_API_URL}/story-event/character`, {
+        params: {
+          limit: 20,
+          offset: (page - 1) * 20,
+          order_by: sort,
+          user_id: userId,
+          is_default: type == 'sponsored' ? true : type == 'user' ? false : undefined,
+          search: search,
+        },
+      }),
     getCollectedCharacters: async () =>
       await privateAxios.get(`${getConfig().REST_API_URL}/story-event/character/collected`),
     likeCharacter: async (id) =>

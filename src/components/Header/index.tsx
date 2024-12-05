@@ -94,7 +94,7 @@ export default function Header({ className }: { className?: string }) {
           isSearchFocused ? 'z-20 opacity-25' : '-z-20 opacity-0'
         }`}></div>
       <header
-        className={`sticky w-full top-0 z-50 transition-all duration-300 xl:h-20 bg-neautral-black xl:bg-transparent ${className}`}>
+        className={`sticky w-full top-0 z-50 transition-all duration-300 xl:h-20 bg-neutral-black xl:bg-transparent ${className}`}>
         <nav className='xl:hidden pk-container z-10 w-full shadow-[0px_4px_4px_0px_#0000001A]'>
           <div className='flex justify-between items-center gap-2 w-full h-14'>
             <div onClick={() => router.push('/')}>
@@ -104,18 +104,18 @@ export default function Header({ className }: { className?: string }) {
               <div className='flex items-center gap-4'>
                 {account?.verified && account?.name ? (
                   !account?.noncustodialWalletAddress ? (
-                    <Button size='xs' color='neautral' onClick={() => setMigrateWalletOpen(true)}>
+                    <Button size='xs' color='neutral' onClick={() => setMigrateWalletOpen(true)}>
                       {t('Connect Wallet')}
                     </Button>
                   ) : (
                     (address != account?.activeWalletAddress || !isConnected) && (
-                      <Button size='xs' color='neautral' onClick={() => setWalletConnectOpen(true)}>
+                      <Button size='xs' color='neutral' onClick={() => setWalletConnectOpen(true)}>
                         {t('Connect Wallet')}
                       </Button>
                     )
                   )
                 ) : (
-                  <Button size='xs' color='neautral' onClick={() => setSignInOpen(true)}>
+                  <Button size='xs' color='neutral' onClick={() => setSignInOpen(true)}>
                     {t('Sign in')}
                   </Button>
                 )}
@@ -231,7 +231,7 @@ export default function Header({ className }: { className?: string }) {
           <Image src={Bg} alt='' className='w-full h-full object-cover' />
         </div>
         <nav
-          className={`px-[84px] gap-3 xl:flex items-center justify-between h-[86px] hidden text-neautral-white relative`}
+          className={`px-[84px] gap-3 xl:flex items-center justify-between h-[86px] hidden text-neutral-white relative`}
           aria-label='Global'>
           <div className='flex items-center gap-14'>
             <Link href='/' className='flex shrink-0'>
@@ -337,6 +337,11 @@ export default function Header({ className }: { className?: string }) {
             </div>
           </div>
           <div className='flex xl:gap-6 xl:justify-end min-w-[430px] items-center text-sm'>
+            <div className='h-fit cursor-pointer font-semibold' onClick={() => router.push('/characters')}>
+              <span className={`${pathname.includes('/characters') ? 'text-text-brand-focus' : ''}`}>
+                {t('Characters')}
+              </span>
+            </div>
             <div className='h-fit cursor-pointer font-semibold' onClick={() => router.push('/campaigns')}>
               <span className={`${pathname.includes('/campaigns') ? 'text-text-brand-focus' : ''}`}>
                 {t('Campaign')}
@@ -365,7 +370,7 @@ export default function Header({ className }: { className?: string }) {
               {account?.verified && account?.name ? (
                 <UserDropdown />
               ) : (
-                <Button size='sm' color='neautral' onClick={() => setSignInOpen(true)}>
+                <Button size='sm' color='neutral' onClick={() => setSignInOpen(true)}>
                   {t('Sign in')}
                 </Button>
               )}
@@ -374,7 +379,7 @@ export default function Header({ className }: { className?: string }) {
                 (!account?.noncustodialWalletAddress ? (
                   <div className='flex gap-3 items-center '>
                     <div className='h-4 w-[1px] bg-[#E0E0E0]'></div>
-                    <Button size='sm' color='neautral' onClick={() => setMigrateWalletOpen(true)}>
+                    <Button size='sm' color='neutral' onClick={() => setMigrateWalletOpen(true)}>
                       {t('Connect Wallet')}
                     </Button>
                   </div>
@@ -382,7 +387,7 @@ export default function Header({ className }: { className?: string }) {
                   (address != account?.activeWalletAddress || !isConnected) && (
                     <div className='flex gap-3 items-center '>
                       <div className='h-4 w-[1px] bg-[#E0E0E0]'></div>
-                      <Button size='sm' color='neautral' onClick={() => setWalletConnectOpen(true)}>
+                      <Button size='sm' color='neutral' onClick={() => setWalletConnectOpen(true)}>
                         {t('Connect Wallet')}
                       </Button>
                     </div>

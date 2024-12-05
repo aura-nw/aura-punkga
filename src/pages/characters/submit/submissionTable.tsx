@@ -5,7 +5,7 @@ import useSWR from 'swr'
 
 export default function SubmissionTable() {
   const { t } = useTranslation()
-  const { data } = useSWR('get-submissions', () => eventService.story.getSubmissions('3'), {
+  const { data } = useSWR('get-submissions', () => eventService.story.getSubmissions(), {
     revalidateOnFocus: false,
   })
   const submissions = data?.data?.data?.story_event_submission

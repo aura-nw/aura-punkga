@@ -325,6 +325,15 @@ export default function Drawer({ openNavigation, setOpenNavigation }) {
             className='flex gap-3 items-center py-3 text-sm leading-[18px] font-medium'
             onClick={() => {
               setOpenNavigation(false)
+              router.push('/characters')
+            }}>
+            <Image src={AboutUs} alt='' className='w-5 h-5' />
+            {t('Characters')}
+          </div>
+          <div
+            className='flex gap-3 items-center py-3 text-sm leading-[18px] font-medium'
+            onClick={() => {
+              setOpenNavigation(false)
               router.push('/campaigns')
             }}>
             <Image src={Campaign} alt='' className='w-5 h-5' />

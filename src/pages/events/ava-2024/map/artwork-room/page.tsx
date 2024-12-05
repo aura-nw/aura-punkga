@@ -406,10 +406,10 @@ const Content = ({ selected, mutate, setShowSlider }) => {
             </div>
           </div>
           <div className='mt-3 grid grid-cols-[2fr_1fr] gap-3'>
-            <Button size='sm' variant='outlined' color='neautral' className='w-full' onClick={setShowSlider}>
+            <Button size='sm' variant='outlined' color='neutral' className='w-full' onClick={setShowSlider}>
               {t('View Artwork')}
             </Button>
-            <Button size='sm' color='neautral' className='w-full' onClick={likeHandler}>
+            <Button size='sm' color='neutral' className='w-full' onClick={likeHandler}>
               {t(isLiked ? 'Liked' : 'Like')}
             </Button>
           </div>

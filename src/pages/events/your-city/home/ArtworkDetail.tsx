@@ -131,7 +131,7 @@ export default function ArtworkDetail({ id }) {
                       />
                     </svg>
                   </DropdownToggle>
-                  <DropdownMenu>
+                  <DropdownMenu customClass='right-0'>
                     <div className='p-4 rounded-lg bg-white text-black space-y-4 text-xs'>
                       <div
                         className='cursor-pointer'

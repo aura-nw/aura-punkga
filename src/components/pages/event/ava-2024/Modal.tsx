@@ -40,7 +40,7 @@ export default function Modal({
               leave='ease-in duration-200'
               leaveFrom='opacity-100 translate-y-0 sm:scale-100'
               leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'>
-              <Dialog.Panel className='static max-w-[570px] transform p-8 pt-4 text-white overflow-hidden rounded-2xl bg-neautral-700 text-left shadow-[0px_20px_60px_0px_rgba(0,0,0,0.20)] transition-all sm:my-8'>
+              <Dialog.Panel className='static max-w-[570px] transform p-8 pt-4 text-white overflow-hidden rounded-2xl bg-neutral-700 text-left shadow-[0px_20px_60px_0px_rgba(0,0,0,0.20)] transition-all sm:my-8'>
                 <svg
                   width='207'
                   height='135'
