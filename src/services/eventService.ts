@@ -22,7 +22,7 @@ export const eventService = {
           order_by: sort,
           user_id: userId,
           is_default: type == 'sponsored' ? true : type == 'user' ? false : undefined,
-          search: search,
+          text: search,
         },
       }),
     getCollectedCharacters: async () =>

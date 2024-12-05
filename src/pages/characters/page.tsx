@@ -29,7 +29,7 @@ function PageContent() {
   const { t } = useTranslation()
   const fetchData = async (isRefresh?: boolean) => {
     try {
-      const data = await eventService.story.getCharacters(account?.id, isRefresh ? 1 : page, 'Created_At_Desc', type)
+      const data = await eventService.story.getCharacters(account?.id, isRefresh ? 1 : page, 'Created_At_Desc', type, searchValue)
       if (data?.data?.data?.story_character.length) {
         const newList = isRefresh
           ? data?.data?.data?.story_character
