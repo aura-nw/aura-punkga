@@ -654,9 +654,7 @@ function PageContent() {
                   </div>
                 )}
               />
-              {submissions.findIndex(
-                (sub) => moment(sub.created_at).format('YYYY-MM-D') == moment().format('YYYY-MM-D')
-              ) != -1 ? (
+              {submissions.findIndex((sub) => sub.artwork_topic.date == moment().format('YYYY-MM-DD')) != -1 ? (
                 <div className='flex items-center gap-1.5 text-feedback-warning-500 bg-carot-100 p-2.5 rounded text-xs mt-4 font-semibold w-full'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
