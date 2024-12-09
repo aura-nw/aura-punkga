@@ -154,7 +154,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                             ? 'current-date'
                             : `aspect-square h-full grid place-items-center ${
                                 isEnded ||
-                                moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))
+                                topics.find((topic) => topic.date == d)
                                   ? ''
                                   : 'pointer-events-none opacity-50'
                               }`
@@ -179,7 +179,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                             ? 'current-date'
                             : `aspect-square h-full grid place-items-center ${
                                 isEnded ||
-                                moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))
+                                topics.find((topic) => topic.date == d)
                                   ? ''
                                   : 'pointer-events-none opacity-50'
                               }`
@@ -209,7 +209,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                             ? 'current-date'
                             : `aspect-square h-full grid place-items-center ${
                                 isEnded ||
-                                moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))
+                                topics.find((topic) => topic.date == d)
                                   ? ''
                                   : 'pointer-events-none opacity-50'
                               }`
@@ -234,7 +234,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                             ? 'current-date'
                             : `aspect-square h-full grid place-items-center ${
                                 isEnded ||
-                                moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))
+                                topics.find((topic) => topic.date == d)
                                   ? ''
                                   : 'pointer-events-none opacity-50'
                               }`
@@ -261,7 +261,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                             ? 'current-date'
                             : `aspect-square h-full grid place-items-center ${
                                 isEnded ||
-                                moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))
+                                topics.find((topic) => topic.date == d)
                                   ? ''
                                   : 'pointer-events-none opacity-50'
                               }`
@@ -286,7 +286,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                             ? 'current-date'
                             : `aspect-square h-full grid place-items-center ${
                                 isEnded ||
-                                moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))
+                                topics.find((topic) => topic.date == d)
                                   ? ''
                                   : 'pointer-events-none opacity-50'
                               }`
@@ -358,9 +358,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                           ? 'bg-green-100'
                           : date.format('YYYY-MM-DD') == d
                           ? 'bg-neutral-200'
-                          : isEnded ||
-                            (moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh')) &&
-                              topics.find((topic) => topic.date == d))
+                          : isEnded || topics.find((topic) => topic.date == d)
                           ? 'cursor-pointer'
                           : 'pointer-events-none opacity-50'
                       } flex flex-col items-center gap-1.5 min-h-28`}>
@@ -417,11 +415,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                             ? 'bg-green-100'
                             : date.format('YYYY-MM-DD') == d
                             ? 'bg-neutral-200'
-                            : isEnded ||
-                              (moment()
-                                .tz('Asia/Ho_Chi_Minh')
-                                .isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh')) &&
-                                topics.find((topic) => topic.date == d))
+                            : isEnded || topics.find((topic) => topic.date == d)
                             ? 'cursor-pointer'
                             : 'pointer-events-none opacity-50'
                         } flex flex-col items-center gap-1.5 min-h-28`}>
@@ -479,11 +473,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                             ? 'bg-green-100'
                             : date.format('YYYY-MM-DD') == d
                             ? 'bg-neutral-200'
-                            : isEnded ||
-                              (moment()
-                                .tz('Asia/Ho_Chi_Minh')
-                                .isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh')) &&
-                                topics.find((topic) => topic.date == d))
+                            : isEnded || topics.find((topic) => topic.date == d)
                             ? 'cursor-pointer'
                             : 'pointer-events-none opacity-50'
                         } flex flex-col items-center gap-1.5 min-h-28 relative`}>
@@ -555,11 +545,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                             ? 'bg-green-100'
                             : date.format('YYYY-MM-DD') == d
                             ? 'bg-neutral-200'
-                            : isEnded ||
-                              (moment()
-                                .tz('Asia/Ho_Chi_Minh')
-                                .isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh')) &&
-                                topics.find((topic) => topic.date == d))
+                            : isEnded || topics.find((topic) => topic.date == d)
                             ? 'cursor-pointer'
                             : 'pointer-events-none opacity-50'
                         } flex flex-col items-center gap-1.5 min-h-28 relative`}>
@@ -618,11 +604,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                             ? 'bg-green-100'
                             : date.format('YYYY-MM-DD') == d
                             ? 'bg-neutral-200'
-                            : isEnded ||
-                              (moment()
-                                .tz('Asia/Ho_Chi_Minh')
-                                .isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh')) &&
-                                topics.find((topic) => topic.date == d))
+                            : isEnded || topics.find((topic) => topic.date == d)
                             ? 'cursor-pointer'
                             : 'pointer-events-none opacity-50'
                         } flex flex-col items-center gap-1.5 min-h-28 relative`}>
@@ -669,74 +651,70 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 )}
               </div>
               <div className='grid grid-cols-7 items-center divide-x-[1px] text-gray-black font-medium [&>div]:h-full text-[8px] lg:text-xs [&>div:first-child>.date]:text-red-500 [&_.date]:text-sm lg:[&_.date]:text-lg [&_.date]:font-semibold [&>div]:p-3'>
-                {['2025-01-12', '2025-01-13', '', '', '', '', ''].map(
-                  (d, index) => {
-                    if (!d) return <div key={index} />
-                    return (
-                      <div
-                        key={index}
-                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))}
-                        className={`${
-                          !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') == d
-                            ? 'bg-green-100'
-                            : date.format('YYYY-MM-DD') == d
-                            ? 'bg-neutral-200'
-                            : isEnded ||
-                              (moment()
-                                .tz('Asia/Ho_Chi_Minh')
-                                .isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh')) &&
-                                topics.find((topic) => topic.date == d))
-                            ? 'cursor-pointer'
-                            : 'pointer-events-none opacity-50'
-                        } flex flex-col items-center gap-1.5 min-h-28 relative`}>
-                        {d == '2025-01-13' && (
-                          <Image
-                            src={O3}
-                            alt=''
-                            className='absolute top-0 right-0 -translate-y-1/2 w-5 h-5 lg:w-auto lg:h-auto'
-                          />
-                        )}
-                        <div className='date relative z-10'>
-                          {moment
-                            .tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh')
-                            .format(width < 1024 && d != '2025-01-01' ? 'DD' : 'DD/MM')}
-                        </div>
-                        {topics.find((topic) => topic.date == d) ? (
-                          <>
-                            <div className='line-clamp-2 lg:line-clamp-1'>
-                              {topics.find((topic) => topic.date == d)?.title}
-                            </div>
-                            <div className='w-[30px] h-[30px]'>
-                              {topics.find((topic) => topic.date == d)?.sponser_logo ? (
-                                <Image
-                                  alt=''
-                                  className='w-full aspect-square object-cover rounded-full'
-                                  width={30}
-                                  height={30}
-                                  src={topics.find((topic) => topic.date == d)?.sponser_logo}
-                                />
-                              ) : null}
-                            </div>
-                          </>
-                        ) : (
-                          <div className='h-full grid place-items-center '>
-                            <svg
-                              width='15'
-                              height='25'
-                              viewBox='0 0 15 25'
-                              fill='none'
-                              xmlns='http://www.w3.org/2000/svg'>
-                              <path
-                                d='M4.80859 17.3068V17.0909C4.82375 15.6818 4.9639 14.5606 5.22905 13.7273C5.50178 12.8939 5.88814 12.2197 6.38814 11.7045C6.88814 11.1894 7.49041 10.7197 8.19496 10.2955C8.6495 10.0076 9.05859 9.68561 9.42223 9.32955C9.78587 8.97348 10.0737 8.56439 10.2859 8.10227C10.498 7.64015 10.604 7.12879 10.604 6.56818C10.604 5.89394 10.445 5.31061 10.1268 4.81818C9.80859 4.32576 9.38435 3.94697 8.85405 3.68182C8.33132 3.40909 7.74799 3.27273 7.10405 3.27273C6.52072 3.27273 5.9639 3.39394 5.43359 3.63636C4.90329 3.87879 4.4639 4.25758 4.11541 4.77273C3.76693 5.2803 3.56617 5.93561 3.51314 6.73864H0.0585938C0.111624 5.375 0.456321 4.22348 1.09268 3.28409C1.72905 2.33712 2.56996 1.62121 3.61541 1.13636C4.66844 0.651514 5.83132 0.40909 7.10405 0.40909C8.49799 0.40909 9.71769 0.670454 10.7631 1.19318C11.8086 1.70833 12.6192 2.43182 13.195 3.36364C13.7783 4.28788 14.07 5.36742 14.07 6.60227C14.07 7.45076 13.9374 8.21591 13.6722 8.89773C13.4071 9.57197 13.0283 10.1742 12.5359 10.7045C12.051 11.2348 11.4677 11.7045 10.7859 12.1136C10.1419 12.5152 9.6192 12.9318 9.21768 13.3636C8.82375 13.7955 8.53587 14.3068 8.35405 14.8977C8.17223 15.4886 8.07375 16.2197 8.05859 17.0909V17.3068H4.80859ZM6.5245 24.2159C5.90329 24.2159 5.3692 23.9962 4.92223 23.5568C4.47526 23.1098 4.25178 22.572 4.25178 21.9432C4.25178 21.322 4.47526 20.7917 4.92223 20.3523C5.3692 19.9053 5.90329 19.6818 6.5245 19.6818C7.13814 19.6818 7.66844 19.9053 8.11541 20.3523C8.56996 20.7917 8.79723 21.322 8.79723 21.9432C8.79723 22.3598 8.69117 22.7424 8.47905 23.0909C8.2745 23.4318 8.00178 23.7045 7.66087 23.9091C7.31996 24.1136 6.94117 24.2159 6.5245 24.2159Z'
-                                fill='#067537'
-                              />
-                            </svg>
-                          </div>
-                        )}
+                {['2025-01-12', '2025-01-13', '', '', '', '', ''].map((d, index) => {
+                  if (!d) return <div key={index} />
+                  return (
+                    <div
+                      key={index}
+                      onClick={() => setDate(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))}
+                      className={`${
+                        !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') == d
+                          ? 'bg-green-100'
+                          : date.format('YYYY-MM-DD') == d
+                          ? 'bg-neutral-200'
+                          : isEnded ||
+                            (topics.find((topic) => topic.date == d) &&
+                              topics.find((topic) => topic.date == d))
+                          ? 'cursor-pointer'
+                          : 'pointer-events-none opacity-50'
+                      } flex flex-col items-center gap-1.5 min-h-28 relative`}>
+                      {d == '2025-01-13' && (
+                        <Image
+                          src={O3}
+                          alt=''
+                          className='absolute top-0 right-0 -translate-y-1/2 w-5 h-5 lg:w-auto lg:h-auto'
+                        />
+                      )}
+                      <div className='date relative z-10'>
+                        {moment
+                          .tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh')
+                          .format(width < 1024 && d != '2025-01-01' ? 'DD' : 'DD/MM')}
                       </div>
-                    )
-                  }
-                )}
+                      {topics.find((topic) => topic.date == d) ? (
+                        <>
+                          <div className='line-clamp-2 lg:line-clamp-1'>
+                            {topics.find((topic) => topic.date == d)?.title}
+                          </div>
+                          <div className='w-[30px] h-[30px]'>
+                            {topics.find((topic) => topic.date == d)?.sponser_logo ? (
+                              <Image
+                                alt=''
+                                className='w-full aspect-square object-cover rounded-full'
+                                width={30}
+                                height={30}
+                                src={topics.find((topic) => topic.date == d)?.sponser_logo}
+                              />
+                            ) : null}
+                          </div>
+                        </>
+                      ) : (
+                        <div className='h-full grid place-items-center '>
+                          <svg
+                            width='15'
+                            height='25'
+                            viewBox='0 0 15 25'
+                            fill='none'
+                            xmlns='http://www.w3.org/2000/svg'>
+                            <path
+                              d='M4.80859 17.3068V17.0909C4.82375 15.6818 4.9639 14.5606 5.22905 13.7273C5.50178 12.8939 5.88814 12.2197 6.38814 11.7045C6.88814 11.1894 7.49041 10.7197 8.19496 10.2955C8.6495 10.0076 9.05859 9.68561 9.42223 9.32955C9.78587 8.97348 10.0737 8.56439 10.2859 8.10227C10.498 7.64015 10.604 7.12879 10.604 6.56818C10.604 5.89394 10.445 5.31061 10.1268 4.81818C9.80859 4.32576 9.38435 3.94697 8.85405 3.68182C8.33132 3.40909 7.74799 3.27273 7.10405 3.27273C6.52072 3.27273 5.9639 3.39394 5.43359 3.63636C4.90329 3.87879 4.4639 4.25758 4.11541 4.77273C3.76693 5.2803 3.56617 5.93561 3.51314 6.73864H0.0585938C0.111624 5.375 0.456321 4.22348 1.09268 3.28409C1.72905 2.33712 2.56996 1.62121 3.61541 1.13636C4.66844 0.651514 5.83132 0.40909 7.10405 0.40909C8.49799 0.40909 9.71769 0.670454 10.7631 1.19318C11.8086 1.70833 12.6192 2.43182 13.195 3.36364C13.7783 4.28788 14.07 5.36742 14.07 6.60227C14.07 7.45076 13.9374 8.21591 13.6722 8.89773C13.4071 9.57197 13.0283 10.1742 12.5359 10.7045C12.051 11.2348 11.4677 11.7045 10.7859 12.1136C10.1419 12.5152 9.6192 12.9318 9.21768 13.3636C8.82375 13.7955 8.53587 14.3068 8.35405 14.8977C8.17223 15.4886 8.07375 16.2197 8.05859 17.0909V17.3068H4.80859ZM6.5245 24.2159C5.90329 24.2159 5.3692 23.9962 4.92223 23.5568C4.47526 23.1098 4.25178 22.572 4.25178 21.9432C4.25178 21.322 4.47526 20.7917 4.92223 20.3523C5.3692 19.9053 5.90329 19.6818 6.5245 19.6818C7.13814 19.6818 7.66844 19.9053 8.11541 20.3523C8.56996 20.7917 8.79723 21.322 8.79723 21.9432C8.79723 22.3598 8.69117 22.7424 8.47905 23.0909C8.2745 23.4318 8.00178 23.7045 7.66087 23.9091C7.31996 24.1136 6.94117 24.2159 6.5245 24.2159Z'
+                              fill='#067537'
+                            />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
               </div>
             </div>
           </div>

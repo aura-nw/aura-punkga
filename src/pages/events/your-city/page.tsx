@@ -176,6 +176,10 @@ function PageContent() {
                   </div>
                 </div>
                 <div className='font-roboto font-bold text-[40px] uppercase text-black'>{selectedTopic.title}</div>
+                <div className='flex items-center gap-2.5'>
+                  <Image src={selectedTopic.sponser_logo} width={60} height={60} className='w-[30px] aspect-square rounded-full object-cover' alt='' />
+                  <div className='text-xs font-medium text-neutral-950'>{selectedTopic.sponser_name}</div>
+                </div>
               </div>
               <div className='grid grid-cols-[1fr_auto_1fr] gap-10 w-full'>
                 <div className='flex flex-col items-center gap-2.5'>
@@ -303,7 +307,7 @@ function PageContent() {
             </p>
             <p>
               <span className='font-semibold'>📅 Duration: </span>
-              <i>31 Days (December 9nd - January 8st)</i>
+              <i>31 Days (December 14th - January 13th)</i>
             </p>
             <p>
               <span className='font-semibold'>🌟 Celebrate Your Creativity:</span>
