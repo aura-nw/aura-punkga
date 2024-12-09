@@ -21,8 +21,8 @@ export const getServerSideProps = async (context) => {
   const props = {
     image:
       context.locale == 'vn'
-        ? 'assets/images/kaia-island-thumb-vn.png'
-        : 'assets/images/kaia-island-thumb.png',
+        ? '/assets/images/kaia-island-thumb-vn.png'
+        : '/assets/images/kaia-island-thumb.png',
     title:
       context.locale == 'vn'
         ? `Cuộc Thi Vẽ Tranh Về Truyền Thuyết Đảo Kaia`

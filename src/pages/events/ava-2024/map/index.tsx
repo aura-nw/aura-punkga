@@ -21,8 +21,8 @@ export const getServerSideProps = async (context) => {
   const props = {
     image:
       context.locale == 'vn'
-        ? 'assets/images/ava-thumb.png'
-        : 'assets/images/ava-thumb.png',
+        ? '/assets/images/ava-thumb.png'
+        : '/assets/images/ava-thumb.png',
     title:
       context.locale == 'vn'
         ? `AVA Grand Contest 2024 - Find Your Artistic Voice`
