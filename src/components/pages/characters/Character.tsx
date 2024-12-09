@@ -29,9 +29,9 @@ export default function Character({ data }) {
       setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1))
       setIsLiked((prevState) => !prevState)
       if (isLiked) {
-        await eventService.story.unlikeArtwork(data.id)
+        await eventService.story.unlikeCharacter(data.id)
       } else {
-        await eventService.story.likeArtwork(data.id)
+        await eventService.story.likeCharacter(data.id)
       }
     } catch (error) {
       toast(error.message, {

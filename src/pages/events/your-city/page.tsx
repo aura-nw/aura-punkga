@@ -90,137 +90,135 @@ function PageContent() {
   if (!topics?.length) return <div></div>
   return (
     <>
-      <div className='bg-[#ffffff] min-h-screen px-4 flex flex-col lg:justify-center gap-10 lg:flex-row w-full lg:px-[85px] lg:gap-14'>
-        <div className='flex flex-col items-center pb-3.5 lg:pb-8 w-full lg:w-[663px] lg:sticky lg:top-[120px] pt-3 lg:h-[calc(100vh-120px)] justify-between'>
-          <div className='flex flex-col items-center lg:gap-[4vh]'>
-            <div className='flex items-center gap-8 flex-col md:flex-row'>
-              <div className='relative'>
-                <Image src={Logo} alt='' className='w-[132px] md:w-[269px]' />
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='18'
-                  height='18'
-                  viewBox='0 0 18 18'
-                  fill='none'
-                  className='animate-pulse absolute bottom-0 right-0'>
-                  <path
-                    d='M9.15055 0.617188L9.64284 3.60593C10.0831 6.27907 12.1783 8.3742 14.8514 8.8145L17.8402 9.3068L14.8514 9.79909C12.1783 10.2394 10.0831 12.3345 9.64284 15.0077L9.15055 17.9964L8.65825 15.0077C8.21795 12.3345 6.12281 10.2394 3.44968 9.79909L0.460938 9.3068L3.44968 8.8145C6.12282 8.3742 8.21795 6.27906 8.65825 3.60593L9.15055 0.617188Z'
-                    fill='#0B0B0B'
-                  />
-                </svg>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='12'
-                  height='13'
-                  viewBox='0 0 12 13'
-                  fill='none'
-                  className='absolute top-10 left-0 -translate-x-1/2 animate-[pulse_1.5s_ease-in-out_infinite]'>
-                  <path
-                    d='M5.90893 0.867188L6.24369 2.89953C6.5431 4.71727 7.96779 6.14195 9.78552 6.44136L11.8179 6.77612L9.78552 7.11088C7.96779 7.41029 6.5431 8.83498 6.24369 10.6527L5.90893 12.6851L5.57417 10.6527C5.27477 8.83498 3.85008 7.41029 2.03234 7.11088L0 6.77612L2.03235 6.44136C3.85008 6.14195 5.27477 4.71726 5.57417 2.89953L5.90893 0.867188Z'
-                    fill='#0B0B0B'
-                  />
-                </svg>
-              </div>
-              <Calendar
-                date={date}
-                setDate={(d) => {
-                  router.replace({ search: `?date=${d.format('DD-MM-YYYY')}` })
-                  setDate(d)
-                }}
-              />
+      <div className='bg-[#ffffff] min-h-screen px-4 flex flex-col xl:justify-center gap-10 xl:flex-row w-full lg:px-[85px] lg:gap-14'>
+        <div className='flex flex-col items-center pb-3.5 lg:pb-8 w-full xl:w-[663px] xl:sticky xl:top-[120px] pt-3 xl:h-[calc(100vh-120px)] gap-20 xl:gap-0 justify-between'>
+          <div className='flex items-center gap-8 flex-col md:flex-row'>
+            <div className='relative'>
+              <Image src={Logo} alt='' className='w-[132px] md:w-[269px]' />
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='18'
+                height='18'
+                viewBox='0 0 18 18'
+                fill='none'
+                className='animate-pulse absolute bottom-0 right-0'>
+                <path
+                  d='M9.15055 0.617188L9.64284 3.60593C10.0831 6.27907 12.1783 8.3742 14.8514 8.8145L17.8402 9.3068L14.8514 9.79909C12.1783 10.2394 10.0831 12.3345 9.64284 15.0077L9.15055 17.9964L8.65825 15.0077C8.21795 12.3345 6.12281 10.2394 3.44968 9.79909L0.460938 9.3068L3.44968 8.8145C6.12282 8.3742 8.21795 6.27906 8.65825 3.60593L9.15055 0.617188Z'
+                  fill='#0B0B0B'
+                />
+              </svg>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='12'
+                height='13'
+                viewBox='0 0 12 13'
+                fill='none'
+                className='absolute top-10 left-0 -translate-x-1/2 animate-[pulse_1.5s_ease-in-out_infinite]'>
+                <path
+                  d='M5.90893 0.867188L6.24369 2.89953C6.5431 4.71727 7.96779 6.14195 9.78552 6.44136L11.8179 6.77612L9.78552 7.11088C7.96779 7.41029 6.5431 8.83498 6.24369 10.6527L5.90893 12.6851L5.57417 10.6527C5.27477 8.83498 3.85008 7.41029 2.03234 7.11088L0 6.77612L2.03235 6.44136C3.85008 6.14195 5.27477 4.71726 5.57417 2.89953L5.90893 0.867188Z'
+                  fill='#0B0B0B'
+                />
+              </svg>
             </div>
-            {selectedTopic && (
-              <div className='flex flex-col items-center gap-10 mt-8 w-full'>
-                <div className='flex flex-col items-center gap-1.5'>
-                  <div className='text-neutral-default font-medium text-sm flex items-center gap-1.5'>
-                    {t('Topic of the day')}{' '}
-                    <div
-                      className='w-4 h-4 grid place-items-center bg-feedback-info-link-defaul rounded cursor-pointer'
-                      onClick={() => navigator.share({ url: location.href })}>
-                      <svg xmlns='http://www.w3.org/2000/svg' width='9' height='10' viewBox='0 0 9 10' fill='none'>
-                        <path
-                          d='M6.85827 3.36497C7.51134 3.36497 8.04076 2.83556 8.04076 2.18249C8.04076 1.52942 7.51134 1 6.85827 1C6.2052 1 5.67578 1.52942 5.67578 2.18249C5.67578 2.83556 6.2052 3.36497 6.85827 3.36497Z'
-                          stroke='white'
-                          strokeWidth='0.666667'
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                        />
-                        <path
-                          d='M2.1278 6.12279C2.78087 6.12279 3.31029 5.59337 3.31029 4.9403C3.31029 4.28723 2.78087 3.75781 2.1278 3.75781C1.47473 3.75781 0.945312 4.28723 0.945312 4.9403C0.945312 5.59337 1.47473 6.12279 2.1278 6.12279Z'
-                          stroke='white'
-                          strokeWidth='0.666667'
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                        />
-                        <path
-                          d='M6.85827 8.8806C7.51134 8.8806 8.04076 8.35118 8.04076 7.69811C8.04076 7.04504 7.51134 6.51562 6.85827 6.51562C6.2052 6.51562 5.67578 7.04504 5.67578 7.69811C5.67578 8.35118 6.2052 8.8806 6.85827 8.8806Z'
-                          stroke='white'
-                          strokeWidth='0.666667'
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                        />
-                        <path
-                          d='M3.14844 5.53906L5.84057 7.10783'
-                          stroke='white'
-                          strokeWidth='0.666667'
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                        />
-                        <path
-                          d='M5.83662 2.78125L3.14844 4.35002'
-                          stroke='white'
-                          strokeWidth='0.666667'
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                  <div className='font-roboto font-bold text-[40px] uppercase text-black'>{selectedTopic.title}</div>
-                </div>
-                <div className='grid grid-cols-[1fr_auto_1fr] gap-10 w-full'>
-                  <div className='flex flex-col items-center gap-2.5'>
-                    <div className='text-gray-800 text-sm'>{t('Total reward')}</div>
-                    <div className='text-gray-black text-xl font-semibold'>
-                      {formatNumber(selectedTopic.total_reward)} DP
-                    </div>
-                  </div>
-                  <div className='w-[1px] h-14 bg-neutral-black'></div>
-                  <div className='flex flex-col items-center gap-2.5'>
-                    <div className='text-gray-800 text-sm'>{t('Participants')}</div>
-                    <div className='text-gray-black text-xl font-semibold'>
-                      {formatNumber(selectedTopic.participants.aggregate.count || 0)}
-                    </div>
-                  </div>
-                </div>
-                <div className='w-full flex flex-col items-center gap-3'>
-                  <Link
-                    href='/events/your-city/submit'
-                    className={`p-2.5 text-center font-roboto text-[22px] uppercase font-bold bg-neutral-black w-full ${
-                      moment(date).format('YYYY-MM-DD') == moment().format('YYYY-MM-DD')
-                        ? 'text-white'
-                        : 'text-text-teriary-on-brand pointer-events-none'
-                    }`}>
-                    {t('SUBMIT artwork')}
-                  </Link>
+            <Calendar
+              date={date}
+              setDate={(d) => {
+                router.replace({ search: `?date=${d.format('DD-MM-YYYY')}` })
+                setDate(d)
+              }}
+            />
+          </div>
+          {selectedTopic && (
+            <div className='flex flex-col items-center gap-5 w-full'>
+              <div className='flex flex-col items-center gap-1.5'>
+                <div className='text-neutral-default font-medium text-sm flex items-center gap-1.5'>
+                  {t('Topic of the day')}{' '}
                   <div
-                    className='flex items-center gap-1.5 text-sm text-neutral-black font-medium cursor-pointer'
-                    onClick={() => setShowContestRule(true)}>
-                    <svg xmlns='http://www.w3.org/2000/svg' width='25' height='24' viewBox='0 0 25 24' fill='none'>
+                    className='w-4 h-4 grid place-items-center bg-feedback-info-link-defaul rounded cursor-pointer'
+                    onClick={() => navigator.share({ url: location.href })}>
+                    <svg xmlns='http://www.w3.org/2000/svg' width='9' height='10' viewBox='0 0 9 10' fill='none'>
                       <path
-                        d='M12.5 12L12.5 16.5M12.5 8.66455V8.625M3.5 12C3.5 7.02944 7.52944 3 12.5 3C17.4706 3 21.5 7.02944 21.5 12C21.5 16.9706 17.4706 21 12.5 21C7.52944 21 3.5 16.9706 3.5 12Z'
-                        stroke='black'
-                        strokeWidth='1.5'
+                        d='M6.85827 3.36497C7.51134 3.36497 8.04076 2.83556 8.04076 2.18249C8.04076 1.52942 7.51134 1 6.85827 1C6.2052 1 5.67578 1.52942 5.67578 2.18249C5.67578 2.83556 6.2052 3.36497 6.85827 3.36497Z'
+                        stroke='white'
+                        strokeWidth='0.666667'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                      />
+                      <path
+                        d='M2.1278 6.12279C2.78087 6.12279 3.31029 5.59337 3.31029 4.9403C3.31029 4.28723 2.78087 3.75781 2.1278 3.75781C1.47473 3.75781 0.945312 4.28723 0.945312 4.9403C0.945312 5.59337 1.47473 6.12279 2.1278 6.12279Z'
+                        stroke='white'
+                        strokeWidth='0.666667'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                      />
+                      <path
+                        d='M6.85827 8.8806C7.51134 8.8806 8.04076 8.35118 8.04076 7.69811C8.04076 7.04504 7.51134 6.51562 6.85827 6.51562C6.2052 6.51562 5.67578 7.04504 5.67578 7.69811C5.67578 8.35118 6.2052 8.8806 6.85827 8.8806Z'
+                        stroke='white'
+                        strokeWidth='0.666667'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                      />
+                      <path
+                        d='M3.14844 5.53906L5.84057 7.10783'
+                        stroke='white'
+                        strokeWidth='0.666667'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                      />
+                      <path
+                        d='M5.83662 2.78125L3.14844 4.35002'
+                        stroke='white'
+                        strokeWidth='0.666667'
                         strokeLinecap='round'
                         strokeLinejoin='round'
                       />
                     </svg>
-                    {t('Contest rules')}
+                  </div>
+                </div>
+                <div className='font-roboto font-bold text-[40px] uppercase text-black'>{selectedTopic.title}</div>
+              </div>
+              <div className='grid grid-cols-[1fr_auto_1fr] gap-10 w-full'>
+                <div className='flex flex-col items-center gap-2.5'>
+                  <div className='text-gray-800 text-sm'>{t('Total reward')}</div>
+                  <div className='text-gray-black text-xl font-semibold'>
+                    {formatNumber(selectedTopic.total_reward)} DP
+                  </div>
+                </div>
+                <div className='w-[1px] h-14 bg-neutral-black'></div>
+                <div className='flex flex-col items-center gap-2.5'>
+                  <div className='text-gray-800 text-sm'>{t('Participants')}</div>
+                  <div className='text-gray-black text-xl font-semibold'>
+                    {formatNumber(selectedTopic.participants.aggregate.count || 0)}
                   </div>
                 </div>
               </div>
-            )}
-          </div>
+              <div className='w-full flex flex-col items-center gap-3'>
+                <Link
+                  href='/events/your-city/submit'
+                  className={`p-2.5 text-center font-roboto text-[22px] uppercase font-bold bg-neutral-black w-full ${
+                    moment(date).format('YYYY-MM-DD') == moment().format('YYYY-MM-DD')
+                      ? 'text-white'
+                      : 'text-text-teriary-on-brand pointer-events-none'
+                  }`}>
+                  {t('SUBMIT artwork')}
+                </Link>
+                <div
+                  className='flex items-center gap-1.5 text-sm text-neutral-black font-medium cursor-pointer'
+                  onClick={() => setShowContestRule(true)}>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='25' height='24' viewBox='0 0 25 24' fill='none'>
+                    <path
+                      d='M12.5 12L12.5 16.5M12.5 8.66455V8.625M3.5 12C3.5 7.02944 7.52944 3 12.5 3C17.4706 3 21.5 7.02944 21.5 12C21.5 16.9706 17.4706 21 12.5 21C7.52944 21 3.5 16.9706 3.5 12Z'
+                      stroke='black'
+                      strokeWidth='1.5'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                  </svg>
+                  {t('Contest rules')}
+                </div>
+              </div>
+            </div>
+          )}
           <div className='w-full relative bg-neutral-black hidden lg:block'>
             <Image src={Mockup2} alt='' className='w-full' />
             <div className='flex items-center h-full px-10 absolute right-0 top-0'>
@@ -295,16 +293,16 @@ function PageContent() {
       <Modal open={showContestRule} setOpen={setShowContestRule}>
         <div className='px-8 py-4 rounded-mlg bg-white w-full max-w-screen-sm space-y-4 relative'>
           <div className='lg:hidden absolute top-3 right-3' onClick={() => setShowContestRule(false)}>
-            <XMarkIcon width={20} height={20}/>
+            <XMarkIcon width={20} height={20} />
           </div>
           <div className='text-center w-full font-semibold text-lg'>{t('CONTEST RULES')}</div>
           <div className='p-4 rounded-md bg-neutral-50 text-sm space-y-4'>
             <p>
-              <span className='font-semibold'>🎨 Event Theme:</span>
+              <span className='font-semibold'>🎨 Event Theme: </span>
               <i>Your City</i>
             </p>
             <p>
-              <span className='font-semibold'>📅 Duration:</span>
+              <span className='font-semibold'>📅 Duration: </span>
               <i>31 Days (December 9nd - January 8st)</i>
             </p>
             <p>
@@ -339,7 +337,7 @@ function PageContent() {
             </p>
             <ul className='list-disc list-inside '>
               <li>
-                <span className='font-semibold'>Daily Rewards:</span>
+                <span className='font-semibold'>Daily Rewards: </span>
                 Each day, a prize pool of <span className='font-semibold'>Dream Points (DP)</span> - sponsored by{' '}
                 <span className='font-semibold'>Punkga.me</span> and our amazing partners—awaits!
               </li>

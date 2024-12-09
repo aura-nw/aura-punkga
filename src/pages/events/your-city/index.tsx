@@ -1,6 +1,6 @@
 import HeadComponent from 'components/Head'
-import Layout from 'components/Layout'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Layout from 'components/Layout'
 import Event from './page'
 
 export default function Page(props) {
@@ -25,6 +25,7 @@ export const getServerSideProps = async (context) => {
     },
   }
 }
+
 export const pageMetadata = (context) => ({
   image:
     context.locale == 'vn'
