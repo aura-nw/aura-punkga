@@ -27,10 +27,7 @@ export const getServerSideProps = async (context) => {
 }
 
 export const pageMetadata = (context) => ({
-  image:
-    context.locale == 'vn'
-      ? `https://${context.req.headers.host}/assets/images/your-city-thumb.png`
-      : `https://${context.req.headers.host}/assets/images/your-city-thumb.png`,
+  image: context.locale == 'vn' ? `assets/images/your-city-thumb.png` : `assets/images/your-city-thumb.png`,
   title: context?.locale == 'en' ? 'Your City: Your Dream, Your Color' : 'Thành phố của bạn: Nhịp tim của ký ức',
   description:
     context?.locale == 'en'

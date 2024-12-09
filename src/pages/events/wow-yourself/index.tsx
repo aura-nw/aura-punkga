@@ -19,7 +19,7 @@ Page.getLayout = function getLayout(page) {
 }
 export const getServerSideProps = async (context) => {
   const props = {
-    image: 'https://punkga.me/assets/images/wow-yourself-thumb.png',
+    image: 'assets/images/wow-yourself-thumb.png',
     title: 'WoW YOURSELF - Cá Chép Hoá Rồng',
     description:
       ' WoW YOURSELF - theo dấu hành trình vượt Vũ Môn của hoạ sĩ, đắm mình trong mùa hè sáng tạo với các tác phẩm dự thi xuất sắc cùng Punkga Me nhé!',
