@@ -16,8 +16,8 @@ import DOMPurify from 'dompurify'
 import useSWR, { mutate } from 'swr'
 import { eventService } from 'src/services/eventService'
 import SubmissionTable from './submissionTable'
-import Modal from 'components/core/Modal'
 import Checkbox from 'components/core/Checkbox'
+import Modal from 'components/pages/event/punktober/Modal'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -112,7 +112,7 @@ function PageContent() {
       payload.append('name', data.name)
       payload.append('artwork', data.artwork)
       payload.append('description', data.description)
-      payload.append('contest_id', '3')
+      payload.append('contest_id', '4')
       payload.append('artwork_topic_id', currentTopic.id)
       const res = await eventService.story.submitArtwork(payload)
       if (res.data.errors?.[0]?.message) {
@@ -486,7 +486,7 @@ function PageContent() {
                 {t('Submit')}
               </div>
               <Modal hideClose open={open} setOpen={setOpen}>
-                <div className='flex flex-col gap-4 items-center max-w-xl px-8 py-4'>
+                <div className='flex flex-col gap-4 items-center max-w-xl px-8 py-4 bg-[#DBDBDB] text-neutral-black rounded-mlg border-[3px] border-neutral-black'>
                   <div className='text-lg font-semibold'>
                     {locale == 'en' ? 'Earn Rewards with Access Protocol!' : 'Cơ Hội Nhận Thưởng Cùng Access Protocol!'}
                   </div>
@@ -542,7 +542,7 @@ function PageContent() {
                   />
                   <button
                     onClick={form.handleSubmit(submitHandler)}
-                    className={`p-2.5 text-center font-roboto text-[22px] uppercase font-bold text-neutral-black bg-white w-64 ${
+                    className={`p-2.5 text-center font-roboto text-[22px] uppercase font-bold text-white bg-neutral-black w-64 ${
                       loading && 'opacity-70 pointer-events-none'
                     }`}>
                     {t(loading ? 'Submitting' : 'submit2')}

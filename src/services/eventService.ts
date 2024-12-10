@@ -1,6 +1,8 @@
 import getConfig from 'next/config'
 import { privateAxios } from 'src/context'
 export const eventService = {
+  report: async (payload) =>
+    await privateAxios.post(`${getConfig().REST_API_URL}/report`, payload),
   story: {
     createCharacter: async (payload) =>
       await privateAxios.post(`${getConfig().REST_API_URL}/story-event/submission/character`, payload),
@@ -37,11 +39,25 @@ export const eventService = {
           userId ? `&user_id=${userId}` : ``
         }`
       ),
+    getArtworkDetail: async (userId, id) =>
+      await privateAxios.get(`${getConfig().REST_API_URL}/story-event/artwork/${id}`, {
+        params: userId
+          ? {
+              user_id: userId,
+            }
+          : undefined,
+      }),
     likeArtwork: async (id) => await privateAxios.post(`${getConfig().REST_API_URL}/user/artwork/${id}/like`),
     unlikeArtwork: async (id) => await privateAxios.post(`${getConfig().REST_API_URL}/user/artwork/${id}/unlike`),
   },
   punktober: {
     getAllTopic: async () => await privateAxios.get(`${getConfig().REST_API_URL}/artwork-topic`),
-    getTopic: async (id: string) => await privateAxios.get(`${getConfig().REST_API_URL}/artwork-topic/${id}`),
+    getTopic: async (id: string) =>
+      await privateAxios.get(`${getConfig().REST_API_URL}/artwork-topic/${id}`, {
+        params: {
+          limit: 999,
+          offset: 0,
+        },
+      }),
   },
 }
