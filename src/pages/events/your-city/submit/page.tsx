@@ -41,7 +41,10 @@ function PageContent() {
       replace('/events/your-city/home')
     }
   }, [])
-
+  const { data: submissionData } = useSWR('get-submissions', () => eventService.story.getSubmissions(4), {
+    revalidateOnFocus: false,
+  })
+  const submissions = submissionData?.data?.data?.story_event_submission as any[] || []
   const creatorForm = useForm({
     defaultValues: {
       avatar: undefined,
@@ -111,12 +114,34 @@ function PageContent() {
           type: 'error',
         })
         setOpen(false)
-
         return
       }
-      if (data.name.length > 150) {
+      if (data.description.length > 150) {
+        toast(t('The description is too long'), {
+          type: 'error',
+        })
         setOpen(false)
-
+        return
+      }
+      if (data.name.length > 25) {
+        toast(t('The artwork name is too long'), {
+          type: 'error',
+        })
+        setOpen(false)
+        return
+      }
+      if (data.selectedIP.length > 4) {
+        toast(t('You can only select a maximum of 4 characters. Please remove some characters.'), {
+          type: 'error',
+        })
+        setOpen(false)
+        return
+      }
+      if (data.selectedIP.every((ip) => !ip.is_default_character)) {
+        toast(t('You must select at least one sponsored character.'), {
+          type: 'error',
+        })
+        setOpen(false)
         return
       }
       setLoading(true)
@@ -523,7 +548,7 @@ function PageContent() {
                       </div>
                       <div className='relative w-full lg:max-w-[500px]'>
                         <TextField
-                          onChange={debounce(fetchSearch, 200)}
+                          onChange={debounce(fetchSearch, 1000)}
                           onFocus={() => setShowSearch(true)}
                           onBlur={() => setTimeout(() => setShowSearch(false), 100)}
                           className='border border-border-primary [&_input::placeholder]:!text-text-secondary-on-brand '
@@ -549,7 +574,7 @@ function PageContent() {
                             {IPList.map((ip, index) => (
                               <div
                                 key={index}
-                                className='flex gap-4 rounded-lg w-full cursor-pointer'
+                                className='flex gap-4 rounded-lg w-full cursor-pointer relative'
                                 onClick={() => {
                                   if (field.value.findIndex((i) => i.id === ip.id) === -1) {
                                     field.onChange([...field.value, ip])
@@ -563,6 +588,11 @@ function PageContent() {
                                   className='w-20 aspect-square object-cover border border-black'
                                 />
                                 <div className='text-sm'>
+                                  {ip.is_default_character && (
+                                    <div className='bg-neutral-black text-white w-fit rounded-sm px-1 text-[8px] leading-none py-1 font-medium'>
+                                      Sponsor
+                                    </div>
+                                  )}
                                   <div className='font-bold'>{ip.name}</div>
                                   <div className='mt-0.5'>
                                     by <span className='text-text-brand-defaul'>{ip.authorizer_user.nickname}</span>
@@ -587,6 +617,11 @@ function PageContent() {
                                   alt=''
                                   className='rounded-lg border-[3px] border-black'
                                 />
+                                {ip.is_default_character && (
+                                  <div className='bg-neutral-black text-white w-fit rounded-sm px-1 text-[8px] leading-none py-1 font-medium absolute top-2 left-2'>
+                                    Sponsor
+                                  </div>
+                                )}
                                 <div
                                   className='absolute top-2 right-2 w-[18px] h-[18px] bg-white grid place-items-center rounded cursor-pointer'
                                   onClick={() => {
@@ -614,36 +649,56 @@ function PageContent() {
                   </div>
                 )}
               />
-              <div className='flex flex-col items-center gap-4'>
-                <div className='flex items-center gap-1'>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>
+              {submissions.findIndex(
+                (sub) => moment(sub.created_at).format('YYYY-MM-D') == moment().format('YYYY-MM-D')
+              ) != -1 ? (
+                <div className='flex items-center gap-1.5 text-feedback-warning-500 bg-carot-100 p-2.5 rounded text-xs mt-4 font-semibold w-full'>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='20'
+                    height='21'
+                    viewBox='0 0 20 21'
+                    fill='none'
+                    className='shrink-0'>
                     <path
-                      d='M13.1201 14.2565C13.1201 14.9737 12.5387 15.5552 11.8214 15.5552C11.1042 15.5552 10.5227 14.9737 10.5227 14.2565C10.5227 13.5392 11.1042 12.9578 11.8214 12.9578C12.5387 12.9578 13.1201 13.5392 13.1201 14.2565Z'
-                      fill='#D9D9D9'
-                    />
-                    <path
-                      d='M19.5415 3.37082C19.151 2.98029 18.5178 2.98029 18.1273 3.37082C17.7368 3.76134 17.7368 4.3945 18.1273 4.78503L19.5415 3.37082ZM20.465 7.12269C20.8555 7.51322 21.4887 7.51322 21.8792 7.12269C22.2697 6.73217 22.2697 6.099 21.8792 5.70848L20.465 7.12269ZM12.8214 9.84091C12.8214 9.28862 12.3737 8.84091 11.8214 8.84091C11.2691 8.84091 10.8214 9.28862 10.8214 9.84091H12.8214ZM10.8214 13.2175C10.8214 13.7698 11.2691 14.2175 11.8214 14.2175C12.3737 14.2175 12.8214 13.7698 12.8214 13.2175H10.8214ZM9.22403 1C8.67174 1 8.22403 1.44772 8.22403 2C8.22403 2.55228 8.67174 3 9.22403 3V1ZM14.1591 3C14.7114 3 15.1591 2.55228 15.1591 2C15.1591 1.44772 14.7114 1 14.1591 1V3ZM17.3481 6.4877C16.9576 6.87822 16.9576 7.51139 17.3481 7.90191C17.7386 8.29244 18.3718 8.29244 18.7623 7.90191L17.3481 6.4877ZM20.0032 5.24675L20.7104 4.53965L20.0032 5.24675ZM10.8214 9.84091V13.2175H12.8214V9.84091H10.8214ZM9.22403 3H14.1591V1H9.22403V3ZM18.7623 7.90191L20.7104 5.95386L19.2961 4.53965L17.3481 6.4877L18.7623 7.90191ZM19.3929 13.4286C19.3929 17.6102 16.003 21 11.8214 21V23C17.1076 23 21.3929 18.7147 21.3929 13.4286H19.3929ZM11.8214 21C7.63984 21 4.25 17.6102 4.25 13.4286H2.25C2.25 18.7147 6.53527 23 11.8214 23V21ZM4.25 13.4286C4.25 9.24699 7.63984 5.85714 11.8214 5.85714V3.85714C6.53527 3.85714 2.25 8.14242 2.25 13.4286H4.25ZM11.8214 5.85714C16.003 5.85714 19.3929 9.24699 19.3929 13.4286H21.3929C21.3929 8.14242 17.1076 3.85714 11.8214 3.85714V5.85714ZM12.1201 14.2565C12.1201 14.4215 11.9864 14.5552 11.8214 14.5552V16.5552C13.091 16.5552 14.1201 15.526 14.1201 14.2565H12.1201ZM11.8214 14.5552C11.6565 14.5552 11.5227 14.4215 11.5227 14.2565H9.52273C9.52273 15.526 10.5519 16.5552 11.8214 16.5552V14.5552ZM11.5227 14.2565C11.5227 14.0915 11.6565 13.9578 11.8214 13.9578V11.9578C10.5519 11.9578 9.52273 12.987 9.52273 14.2565H11.5227ZM11.8214 13.9578C11.9864 13.9578 12.1201 14.0915 12.1201 14.2565H14.1201C14.1201 12.987 13.091 11.9578 11.8214 11.9578V13.9578ZM18.1273 4.78503L19.2961 5.95386L20.7104 4.53965L19.5415 3.37082L18.1273 4.78503ZM19.2961 5.95386L20.465 7.12269L21.8792 5.70848L20.7104 4.53965L19.2961 5.95386Z'
-                      fill='black'
+                      d='M17.542 15.9895L10.8845 3.62617C10.4127 2.74961 9.15564 2.74961 8.68337 3.62617L2.02634 15.9895C1.92388 16.1797 1.87252 16.3934 1.87725 16.6094C1.88199 16.8255 1.94267 17.0366 2.05336 17.2223C2.16406 17.4079 2.32099 17.5616 2.50884 17.6685C2.69669 17.7754 2.90904 17.8317 3.12517 17.832H16.4412C16.6575 17.8321 16.8701 17.776 17.0582 17.6692C17.2463 17.5625 17.4035 17.4088 17.5144 17.2231C17.6254 17.0374 17.6862 16.8261 17.691 16.6099C17.6959 16.3937 17.6445 16.1799 17.542 15.9895ZM9.78415 15.918C9.62963 15.918 9.47859 15.8721 9.35011 15.7863C9.22164 15.7005 9.1215 15.5784 9.06237 15.4357C9.00324 15.2929 8.98777 15.1359 9.01791 14.9843C9.04806 14.8328 9.12246 14.6936 9.23172 14.5843C9.34098 14.475 9.48019 14.4006 9.63174 14.3705C9.78328 14.3403 9.94037 14.3558 10.0831 14.4149C10.2259 14.4741 10.3479 14.5742 10.4337 14.7027C10.5196 14.8312 10.5654 14.9822 10.5654 15.1367C10.5654 15.3439 10.4831 15.5426 10.3366 15.6891C10.1901 15.8357 9.99135 15.918 9.78415 15.918ZM10.6326 8.06055L10.4084 12.8262C10.4084 12.9919 10.3425 13.1509 10.2253 13.2681C10.1081 13.3853 9.94913 13.4512 9.78337 13.4512C9.61761 13.4512 9.45864 13.3853 9.34143 13.2681C9.22422 13.1509 9.15837 12.9919 9.15837 12.8262L8.93415 8.0625C8.92911 7.94867 8.94704 7.83499 8.98688 7.72823C9.02671 7.62148 9.08763 7.52383 9.166 7.44112C9.24437 7.35841 9.33859 7.29233 9.44305 7.24681C9.5475 7.20129 9.66006 7.17727 9.774 7.17617H9.7822C9.89691 7.17611 10.0105 7.1993 10.116 7.24432C10.2215 7.28935 10.3168 7.35528 10.3961 7.43815C10.4754 7.52102 10.5371 7.6191 10.5775 7.72647C10.6179 7.83385 10.6361 7.94829 10.631 8.06289L10.6326 8.06055Z'
+                      fill='#f4741b'
                     />
                   </svg>
-                  <Countdown
-                    date={moment().tz('Asia/Ho_Chi_Minh').add(1, 'day').startOf('day').valueOf()}
-                    now={() => moment().tz('Asia/Ho_Chi_Minh').valueOf()}
-                    renderer={({ hours, minutes, seconds }) => {
-                      return (
-                        <span className='text-feedback-error-defaul'>{`${zeroPad(hours)}:${zeroPad(minutes)}:${zeroPad(
-                          seconds
-                        )}`}</span>
-                      )
-                    }}
-                  />
+                  {t('You’ve already submitted your artwork for today. Please comeback tomorrow.')}
                 </div>
-                <div
-                  onClick={() => setOpen(true)}
-                  className='p-2.5 text-center font-roboto text-[22px] uppercase font-bold  text-white bg-neutral-black w-64'>
-                  {t('Submit')}
+              ) : (
+                <div className='flex flex-col items-center gap-4'>
+                  <div className='flex items-center gap-1'>
+                    <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>
+                      <path
+                        d='M13.1201 14.2565C13.1201 14.9737 12.5387 15.5552 11.8214 15.5552C11.1042 15.5552 10.5227 14.9737 10.5227 14.2565C10.5227 13.5392 11.1042 12.9578 11.8214 12.9578C12.5387 12.9578 13.1201 13.5392 13.1201 14.2565Z'
+                        fill='#D9D9D9'
+                      />
+                      <path
+                        d='M19.5415 3.37082C19.151 2.98029 18.5178 2.98029 18.1273 3.37082C17.7368 3.76134 17.7368 4.3945 18.1273 4.78503L19.5415 3.37082ZM20.465 7.12269C20.8555 7.51322 21.4887 7.51322 21.8792 7.12269C22.2697 6.73217 22.2697 6.099 21.8792 5.70848L20.465 7.12269ZM12.8214 9.84091C12.8214 9.28862 12.3737 8.84091 11.8214 8.84091C11.2691 8.84091 10.8214 9.28862 10.8214 9.84091H12.8214ZM10.8214 13.2175C10.8214 13.7698 11.2691 14.2175 11.8214 14.2175C12.3737 14.2175 12.8214 13.7698 12.8214 13.2175H10.8214ZM9.22403 1C8.67174 1 8.22403 1.44772 8.22403 2C8.22403 2.55228 8.67174 3 9.22403 3V1ZM14.1591 3C14.7114 3 15.1591 2.55228 15.1591 2C15.1591 1.44772 14.7114 1 14.1591 1V3ZM17.3481 6.4877C16.9576 6.87822 16.9576 7.51139 17.3481 7.90191C17.7386 8.29244 18.3718 8.29244 18.7623 7.90191L17.3481 6.4877ZM20.0032 5.24675L20.7104 4.53965L20.0032 5.24675ZM10.8214 9.84091V13.2175H12.8214V9.84091H10.8214ZM9.22403 3H14.1591V1H9.22403V3ZM18.7623 7.90191L20.7104 5.95386L19.2961 4.53965L17.3481 6.4877L18.7623 7.90191ZM19.3929 13.4286C19.3929 17.6102 16.003 21 11.8214 21V23C17.1076 23 21.3929 18.7147 21.3929 13.4286H19.3929ZM11.8214 21C7.63984 21 4.25 17.6102 4.25 13.4286H2.25C2.25 18.7147 6.53527 23 11.8214 23V21ZM4.25 13.4286C4.25 9.24699 7.63984 5.85714 11.8214 5.85714V3.85714C6.53527 3.85714 2.25 8.14242 2.25 13.4286H4.25ZM11.8214 5.85714C16.003 5.85714 19.3929 9.24699 19.3929 13.4286H21.3929C21.3929 8.14242 17.1076 3.85714 11.8214 3.85714V5.85714ZM12.1201 14.2565C12.1201 14.4215 11.9864 14.5552 11.8214 14.5552V16.5552C13.091 16.5552 14.1201 15.526 14.1201 14.2565H12.1201ZM11.8214 14.5552C11.6565 14.5552 11.5227 14.4215 11.5227 14.2565H9.52273C9.52273 15.526 10.5519 16.5552 11.8214 16.5552V14.5552ZM11.5227 14.2565C11.5227 14.0915 11.6565 13.9578 11.8214 13.9578V11.9578C10.5519 11.9578 9.52273 12.987 9.52273 14.2565H11.5227ZM11.8214 13.9578C11.9864 13.9578 12.1201 14.0915 12.1201 14.2565H14.1201C14.1201 12.987 13.091 11.9578 11.8214 11.9578V13.9578ZM18.1273 4.78503L19.2961 5.95386L20.7104 4.53965L19.5415 3.37082L18.1273 4.78503ZM19.2961 5.95386L20.465 7.12269L21.8792 5.70848L20.7104 4.53965L19.2961 5.95386Z'
+                        fill='black'
+                      />
+                    </svg>
+                    <Countdown
+                      date={moment().tz('Asia/Ho_Chi_Minh').add(1, 'day').startOf('day').valueOf()}
+                      now={() => moment().tz('Asia/Ho_Chi_Minh').valueOf()}
+                      renderer={({ hours, minutes, seconds }) => {
+                        return (
+                          <span className='text-feedback-error-defaul'>{`${zeroPad(hours)}:${zeroPad(
+                            minutes
+                          )}:${zeroPad(seconds)}`}</span>
+                        )
+                      }}
+                    />
+                  </div>
+                  <div
+                    onClick={() => setOpen(true)}
+                    className='p-2.5 text-center font-roboto text-[22px] uppercase font-bold  text-white bg-neutral-black w-64'>
+                    {t('Submit')}
+                  </div>
                 </div>
-              </div>
+              )}
               <Modal hideClose open={open} setOpen={setOpen}>
                 <div className='flex flex-col gap-4 items-center max-w-xl px-8 py-4 bg-[#ffffff]  rounded-mlg border border-neutral-black'>
                   <div className='text-lg font-semibold'>
