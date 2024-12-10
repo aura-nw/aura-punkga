@@ -77,7 +77,7 @@ function PageContent() {
           artwork?.artwork?.creator?.pen_name?.toLowerCase()?.includes(search.toLowerCase())
       )
     )
-  }, [topicData?.story_artworks?.length, search])
+  }, [topicData?.story_artworks?.[0]?.id, search])
   useEffect(() => {
     if (artworkIdParam) {
       const artwork = list.find((artwork) => artwork.id == artworkIdParam)
