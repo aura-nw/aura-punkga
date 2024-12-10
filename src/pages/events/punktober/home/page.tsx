@@ -12,6 +12,8 @@ import { eventService } from 'src/services/eventService'
 import moment from 'moment'
 import { formatNumber } from 'src/utils'
 import Spinner from 'components/Spinner'
+import LazyImage from 'components/Image'
+import { useRouter } from 'next/router'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -19,7 +21,9 @@ export default function Page(props) {
   return <PageContent {...props} />
 }
 function PageContent() {
-  const [date, setDate] = useState(new Date())
+  const searchParams = new URLSearchParams(location.search)
+  const router = useRouter()
+  const [date, setDate] = useState(searchParams.get('day') ? new Date(2024, 11, +searchParams.get('day')) : new Date())
   const [search, setSearch] = useState('')
   const { t } = useTranslation()
   const { data } = useSWR('get-all-topic', () => eventService.punktober.getAllTopic(), {
@@ -68,12 +72,61 @@ function PageContent() {
                 />
               </svg>
             </div>
-            <Calendar date={date} setDate={setDate} />
+            <Calendar
+              date={date}
+              setDate={(d) => {
+                router.replace({ search: `?day=${d.getDate()}` })
+                setDate(d)
+              }}
+            />
           </div>
           {selectedTopic && (
             <div className='flex flex-col items-center gap-10 mt-8 w-full'>
               <div className='flex flex-col items-center gap-1.5'>
-                <div className='text-neutral-default font-medium text-sm'>{t('Topic of the day')}</div>
+                <div className='text-neutral-default font-medium text-sm flex items-center gap-1.5'>
+                  {t('Topic of the day')}{' '}
+                  <div
+                    className='w-4 h-4 grid place-items-center bg-feedback-info-link-defaul rounded cursor-pointer'
+                    onClick={() => navigator.share({ url: location.href })}>
+                    <svg xmlns='http://www.w3.org/2000/svg' width='9' height='10' viewBox='0 0 9 10' fill='none'>
+                      <path
+                        d='M6.85827 3.36497C7.51134 3.36497 8.04076 2.83556 8.04076 2.18249C8.04076 1.52942 7.51134 1 6.85827 1C6.2052 1 5.67578 1.52942 5.67578 2.18249C5.67578 2.83556 6.2052 3.36497 6.85827 3.36497Z'
+                        stroke='white'
+                        strokeWidth='0.666667'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                      />
+                      <path
+                        d='M2.1278 6.12279C2.78087 6.12279 3.31029 5.59337 3.31029 4.9403C3.31029 4.28723 2.78087 3.75781 2.1278 3.75781C1.47473 3.75781 0.945312 4.28723 0.945312 4.9403C0.945312 5.59337 1.47473 6.12279 2.1278 6.12279Z'
+                        stroke='white'
+                        strokeWidth='0.666667'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                      />
+                      <path
+                        d='M6.85827 8.8806C7.51134 8.8806 8.04076 8.35118 8.04076 7.69811C8.04076 7.04504 7.51134 6.51562 6.85827 6.51562C6.2052 6.51562 5.67578 7.04504 5.67578 7.69811C5.67578 8.35118 6.2052 8.8806 6.85827 8.8806Z'
+                        stroke='white'
+                        strokeWidth='0.666667'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                      />
+                      <path
+                        d='M3.14844 5.53906L5.84057 7.10783'
+                        stroke='white'
+                        strokeWidth='0.666667'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                      />
+                      <path
+                        d='M5.83662 2.78125L3.14844 4.35002'
+                        stroke='white'
+                        strokeWidth='0.666667'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                      />
+                    </svg>
+                  </div>
+                </div>
                 <div className='font-roboto font-bold text-[40px] uppercase text-black'>{selectedTopic.title}</div>
               </div>
               <div className='grid grid-cols-[1fr_auto_1fr] gap-10 w-full'>
@@ -95,7 +148,9 @@ function PageContent() {
                 <Link
                   href='/events/punktober/submit'
                   className={`p-2.5 text-center font-roboto text-[22px] uppercase font-bold bg-neutral-black w-full ${
-                    moment(date).format('YYYY-MM-DD') == moment().format('YYYY-MM-DD') ? 'text-white' : 'text-text-teriary-on-brand pointer-events-none'
+                    moment(date).format('YYYY-MM-DD') == moment().format('YYYY-MM-DD')
+                      ? 'text-white'
+                      : 'text-text-teriary-on-brand pointer-events-none'
                   }`}>
                   {t('SUBMIT artwork')}
                 </Link>
@@ -155,7 +210,7 @@ function PageContent() {
                 }
               />
             </div>
-            <div className='grid grid-cols-2 xl:grid-cols-3 gap-4 relative'>
+            <div className='grid grid-cols-2 xl:grid-cols-3 gap-4 relative pb-20'>
               {topicData.story_artworks
                 .filter(
                   (artwork) =>
@@ -165,7 +220,7 @@ function PageContent() {
                 )
                 .map((artwork, index) => (
                   <div key={index} className='relative rounded-lg overflow-hidden [&:hover>div]:block'>
-                    <Image
+                    <LazyImage
                       src={artwork.display_url}
                       width={500}
                       height={500}

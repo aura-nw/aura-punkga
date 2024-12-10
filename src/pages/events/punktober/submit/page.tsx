@@ -134,7 +134,6 @@ function PageContent() {
         setLoading(false)
       }
       setOpen(false)
-
     } catch (error) {
       setLoading(false)
       toast(error.message, {
@@ -543,7 +542,7 @@ function PageContent() {
                   />
                   <button
                     onClick={form.handleSubmit(submitHandler)}
-                    className={`w-[217px] block rounded-md font-jaro text-2xl border border-white bg-black p-2.5 text-center cursor-pointer ${
+                    className={`p-2.5 text-center font-roboto text-[22px] uppercase font-bold text-neutral-black bg-white w-64 ${
                       loading && 'opacity-70 pointer-events-none'
                     }`}>
                     {t(loading ? 'Submitting' : 'submit2')}

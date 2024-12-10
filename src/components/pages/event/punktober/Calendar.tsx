@@ -124,7 +124,7 @@ export default function Calendar({ date, setDate }: { date: Date; setDate: (date
             <div className={new Date().getDay() == 6 ? 'font-bold text-neutral-black' : ''}>{t('Sat')}</div>
           </div>
           <div
-            className='mt-4 overflow-hidden relative [&_.selected-date]:text-neutral-black [&_.selected-date]:bg-feedback-success-defaul [&_.selected-date]:w-7 [&_.selected-date]:h-7 [&_.selected-date]:grid [&_.selected-date]:place-items-center [&_.selected-date]:rounded-full
+            className='mt-4 overflow-hidden h-20 relative [&_.selected-date]:text-neutral-black [&_.selected-date]:bg-feedback-success-defaul [&_.selected-date]:w-7 [&_.selected-date]:h-7 [&_.selected-date]:grid [&_.selected-date]:place-items-center [&_.selected-date]:rounded-full
         [&_.current-date]:border [&_.current-date]:border-feedback-success-700 [&_.current-date]:text-feedback-success-700 [&_.current-date]:w-7 [&_.current-date]:h-7 [&_.current-date]:grid [&_.current-date]:place-items-center [&_.current-date]:rounded-full'>
             <div
               className={`transition-all space-y-4 absolute inset-0 duration-500 ${
