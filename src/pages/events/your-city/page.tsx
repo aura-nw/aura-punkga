@@ -185,7 +185,7 @@ function PageContent() {
                       {formatNumber(selectedTopic.total_reward)} DP
                     </div>
                   </div>
-                  <div className='w-[1px] h-full bg-neutral-black'></div>
+                  <div className='w-[1px] h-14 bg-neutral-black'></div>
                   <div className='flex flex-col items-center gap-2.5'>
                     <div className='text-gray-800 text-sm'>{t('Participants')}</div>
                     <div className='text-gray-black text-xl font-semibold'>

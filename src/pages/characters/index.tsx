@@ -21,6 +21,11 @@ Page.getLayout = function getLayout(page) {
 export const getServerSideProps = async (context) => {
   return {
     props: {
+      metadata: {
+        title: 'PunkgaMe: Colorful Adventures with Unique Characters',
+        description:
+          'Explore a colorful world and embark on exciting adventures with unique characters created by talented artists!',
+      },
       ...(await serverSideTranslations(context?.locale!, ['common'])),
     },
   }
