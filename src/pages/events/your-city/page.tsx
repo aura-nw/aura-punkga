@@ -60,13 +60,20 @@ function PageContent() {
   )
   const topicData = topicDT?.data?.data?.artwork_topics_by_pk
   useEffect(() => {
-    if (width < 768) {
-      if (openArtworkDetail) {
-        const index = list.findIndex((artwork) => artwork.id == selectedArtwork.id)
-        swiperRef.current.slideTo(index)
-      }
+    if (openArtworkDetail && selectedArtwork?.id) {
+      searchParams.set('artwork_id', selectedArtwork.id)
+      router.replace({
+        pathname: router.pathname,
+        search: searchParams.toString(),
+      })
+    } else {
+      searchParams.delete('artwork_id')
+      router.replace({
+        pathname: router.pathname,
+        search: searchParams.toString(),
+      })
     }
-  }, [openArtworkDetail])
+  }, [openArtworkDetail, selectedArtwork?.id])
   useEffect(() => {
     if (!topicData?.story_artworks?.length) return
     setList(
@@ -91,7 +98,7 @@ function PageContent() {
   return (
     <>
       <div className='bg-[#ffffff] min-h-screen px-4 flex flex-col xl:justify-center gap-10 xl:flex-row w-full lg:px-[85px] lg:gap-14'>
-        <div className='flex flex-col items-center pb-3.5 lg:pb-8 w-full xl:w-[663px] xl:sticky xl:top-[120px] pt-3 xl:h-[calc(100vh-120px)] gap-20 xl:gap-0 justify-between'>
+        <div className='flex flex-col items-center pb-3.5 lg:pb-8 w-full xl:w-[663px] xl:sticky xl:top-[120px] pt-3 xl:h-[calc(100vh-120px)] xl:min-h-[800px] gap-20 xl:gap-0 justify-between'>
           <div className='flex items-center gap-8 flex-col md:flex-row'>
             <div className='relative'>
               <Image src={Logo} alt='' className='w-[132px] md:w-[269px]' />
@@ -177,7 +184,13 @@ function PageContent() {
                 </div>
                 <div className='font-roboto font-bold text-[40px] uppercase text-black'>{selectedTopic.title}</div>
                 <div className='flex items-center gap-2.5'>
-                  <Image src={selectedTopic.sponser_logo} width={60} height={60} className='w-[30px] aspect-square rounded-full object-cover' alt='' />
+                  <Image
+                    src={selectedTopic.sponser_logo}
+                    width={60}
+                    height={60}
+                    className='w-[30px] aspect-square rounded-full object-cover'
+                    alt=''
+                  />
                   <div className='text-xs font-medium text-neutral-950'>{selectedTopic.sponser_name}</div>
                 </div>
               </div>
@@ -359,7 +372,7 @@ function PageContent() {
       </Modal>
       {width >= 768 ? (
         <Modal open={openArtworkDetail} setOpen={setOpenArtworkDetail}>
-          <div className='w-screen max-w-screen-xl relative mx-auto flex items-center gap-4'>
+          <div className='w-screen max-w-screen-2xl relative mx-auto flex items-center gap-4'>
             <div
               className='cursor-pointer'
               onClick={() => {
@@ -375,7 +388,7 @@ function PageContent() {
                 />
               </svg>
             </div>
-            <div className='flex-1 rounded-lg bg-[#ffffff] p-8'>
+            <div className='bg-[#ffffff] p-8 h-full w-full'>
               <ArtworkDetail id={selectedArtwork?.id} />
             </div>
             <div
@@ -412,61 +425,6 @@ function PageContent() {
                   </svg>
                 </div>
                 <ArtworkDetail id={selectedArtwork?.id} />
-              </div>
-              <div className='h-[86px] shrink-0 bg-neutral-black flex items-center w-full relative gap-1.5 justify-center'>
-                <div onClick={() => swiperRef.current?.slidePrev()} className='shrink-0 block'>
-                  <svg width='25' height='25' viewBox='0 0 25 25' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                    <path
-                      d='M15.7363 17.4375L10.7363 12.4375L15.7363 7.4375'
-                      stroke='white'
-                      strokeWidth='1.5'
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                    />
-                  </svg>
-                </div>
-                <div className='max-w-[298px] w-full '>
-                  <Swiper
-                    spaceBetween={6}
-                    slidesPerView={4}
-                    centeredSlides
-                    onSwiper={(swiper) => (swiperRef.current = swiper)}
-                    onSlideChange={(swiper) => setSelectedArtwork(list[swiper.activeIndex])}>
-                    {list.map((artwork, index) => (
-                      <SwiperSlide
-                        key={index}
-                        className='flex justify-center'
-                        onClick={() => swiperRef.current.slideTo(index)}>
-                        <Image
-                          src={artwork.display_url}
-                          width={500}
-                          height={500}
-                          alt=''
-                          className={`w-full aspect-square object-cover ${
-                            selectedArtwork?.id == artwork.id ? '' : 'opacity-60'
-                          }`}
-                        />
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
-                </div>
-                <div onClick={() => swiperRef.current?.slideNext()}>
-                  <svg
-                    width='25'
-                    height='25'
-                    viewBox='0 0 25 25'
-                    fill='none'
-                    xmlns='http://www.w3.org/2000/svg'
-                    className=' shrink-0'>
-                    <path
-                      d='M10.2637 7.4375L15.2637 12.4375L10.2637 17.4375'
-                      stroke='white'
-                      strokeWidth='1.5'
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                    />
-                  </svg>
-                </div>
               </div>
             </div>
           </Modal>

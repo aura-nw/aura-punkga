@@ -72,28 +72,32 @@ export default function ArtworkDetail({ id }) {
 
   if (!artworkData) {
     return (
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-9'>
-        <Skeleton className='!h-full !transform-none w-full aspect-square rounded-lg' />
-        <div className=''>
-          <Skeleton />
-          <Skeleton className='w-1/2' />
-          <Skeleton className='w-1/3' />
-          <Skeleton className='w-1/3' />
-          <Skeleton className='w-full !h-40 !transform-none' />
+      <div className='mt-3 md:mt-0 text-start md:h-full'>
+        <div className='grid grid-cols-1 gap-4 md:grid-cols-[70%_auto] md:gap-9 md:h-full'>
+          <div className='w-full aspect-square max-h-[90vh]'>
+            <Skeleton className='w-full !h-full !transform-none' />
+          </div>
+          <div className=''>
+            <Skeleton />
+            <Skeleton className='w-1/2' />
+            <Skeleton className='w-1/3' />
+            <Skeleton className='w-1/3' />
+            <Skeleton className='w-full !h-40 !transform-none' />
+          </div>
         </div>
       </div>
     )
   }
   return (
     <>
-      <div className='mt-3 md:mt-0 text-start'>
-        <div className='grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-9'>
+      <div className='mt-3 md:mt-0 text-start md:h-full'>
+        <div className='grid grid-cols-1 gap-4 md:grid-cols-[60%_auto] md:gap-9 md:h-full'>
           <Image
             src={artworkData?.artwork?.url}
             alt=''
-            width={446}
-            height={446}
-            className='rounded-lg w-full aspect-square border-[3px] border-neutral-black object-cover'
+            width={1080}
+            height={1080}
+            className='rounded-lg w-full max-h-[90vh] aspect-square border-[3px] border-neutral-black object-cover'
           />
           <div className='relative'>
             <div className='text-xs font-medium space-y-1.5'>
@@ -136,10 +140,8 @@ export default function ArtworkDetail({ id }) {
                       <div
                         className='cursor-pointer'
                         onClick={() => {
-                          const searchParam = new URLSearchParams(location.search)
-                          searchParam.set('artwork_id', id)
                           navigator.share({
-                            url: location.origin + location.pathname + '?' + searchParam.toString(),
+                            url: location.href,
                           })
                         }}>
                         Share
@@ -194,7 +196,25 @@ export default function ArtworkDetail({ id }) {
               </svg>
               <span className='text-sm font-semibold'>{formatNumber(likeCount)}</span>
             </div>
-            <Image src={Image1} alt='' className='absolute bottom-0 right-0 w-3/5' />
+            <div className='mt-4 text-lg font-semibold'>Characters</div>
+            <div className='overflow-auto no-scrollbar -mx-4 mt-4 w-screen md:w-full flex [&>*]:ml-4'>
+              {artworkData?.story_artwork_characters?.map(({ story_character }) => (
+                <Link href={`/characters/${story_character.id}`} key={story_character.id} className='shrink-0'>
+                  <Image
+                    src={story_character.avatar_url}
+                    alt=''
+                    width={100}
+                    height={100}
+                    className='w-[100px] border-[3px] border-neutral-black aspect-square rounded-md'
+                  />
+                  <div className='mt-4 text-xs font-medium'>{story_character.name}</div>
+                  <div className='mt-0.5 text-xs font-medium'>
+                    by <span className='text-text-brand-defaul'>{story_character.authorizer_user.nickname}</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <Image src={Image1} alt='' className='absolute bottom-0 right-0 w-3/5 hidden lg:block' />
           </div>
         </div>
       </div>
