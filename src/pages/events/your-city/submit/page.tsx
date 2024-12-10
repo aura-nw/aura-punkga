@@ -70,7 +70,7 @@ function PageContent() {
     revalidateOnFocus: false,
   })
   const topics = data?.data?.data?.artwork_topics
-  const currentTopic = topics?.find((topic) => topic.date == moment().format('YYYY-MM-DD'))
+  const currentTopic = topics?.find((topic) => topic?.date == moment().format('YYYY-MM-DD'))
   const submitCreatorInformationHandler = async (data) => {
     try {
       if (!data.avatar || !data.pen_name || !data.bio) {
@@ -654,7 +654,7 @@ function PageContent() {
                   </div>
                 )}
               />
-              {submissions.findIndex((sub) => sub.artwork_topic.date == moment().format('YYYY-MM-DD')) != -1 ? (
+              {submissions.findIndex((sub) => sub.artwork_topic?.date == moment().format('YYYY-MM-DD')) != -1 ? (
                 <div className='flex items-center gap-1.5 text-feedback-warning-500 bg-carot-100 p-2.5 rounded text-xs mt-4 font-semibold w-full'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
