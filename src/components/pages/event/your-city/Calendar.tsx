@@ -14,7 +14,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
   const [open, setOpen] = useState(false)
   const { width } = useWindowSize()
   const [week, setWeeks] = useState(
-    date.date() >= 9 && date.date() <= 21 ? 0 : date.date() >= 22 && date.date() <= 4 ? 1 : 2
+    date.date() >= 9 && date.date() <= 21 ? 0 : date.date() >= 22 || date.date() <= 4 ? 1 : 2
   )
   const { data } = useSWR('get-all-topic', () => eventService.punktober.getAllTopic(), {
     revalidateOnFocus: false,
