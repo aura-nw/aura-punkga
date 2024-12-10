@@ -19,21 +19,17 @@ Page.getLayout = function getLayout(page) {
 }
 
 export const getServerSideProps = async (context) => {
+  const props = {
+    title: 'Events',
+    description:
+      context?.locale == 'en'
+        ? 'Collection of super hot events taking place on Punkga Me. Explore now!'
+        : 'Tổng hợp các sự kiện siêu hấp dẫn trên Punkga Me. Khám phá ngay!',
+  }
   return {
     props: {
-      metadata: pageMetadata(context),
+      metadata: props,
       ...(await serverSideTranslations(context?.locale!, ['common'])),
     },
   }
 }
-export const pageMetadata = (context) => ({
-  image:
-    context.locale == 'vn'
-      ? 'https://punkga.me/assets/images/your-city-thumb.png'
-      : 'https://punkga.me/assets/images/your-city-thumb.png',
-  title: context?.locale == 'en' ? 'Your city: The heartbeat of memories' : 'Thành phố của bạn: Nhịp tim của ký ức',
-  description:
-    context?.locale == 'en'
-      ? 'Ready to draw your own city, a place where your imagination knows no bounds and your dreams can soar.'
-      : 'Sẵn sàng vẽ thành phố của riêng bạn, một nơi mà trí tưởng tượng của bạn không có giới hạn và ước mơ của bạn có thể bay cao.',
-})

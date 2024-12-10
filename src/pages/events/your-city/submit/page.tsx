@@ -43,7 +43,7 @@ function PageContent() {
   const [IPList, setIPList] = useState([])
   useEffect(() => {
     if (moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz('2025-01-01', 'Asia/Ho_Chi_Minh'))) {
-      replace('/events/your-city/home')
+      replace('/events/your-city')
     }
   }, [])
   const { data: submissionData } = useSWR('get-submissions', () => eventService.story.getSubmissions(4), {
@@ -219,7 +219,7 @@ function PageContent() {
       <>
         <div className='bg-[#ffffff] min-h-screen relative py-12'>
           <Link
-            href='/events/your-city/home'
+            href='/events/your-city'
             className='absolute top-12 left-[4%] flex items-center font-medium text-sm'>
             <svg width='33' height='32' viewBox='0 0 33 32' fill='none' xmlns='http://www.w3.org/2000/svg'>
               <path
@@ -373,7 +373,7 @@ function PageContent() {
     <div>
       <div className='bg-[#ffffff] min-h-screen relative pt-12 pb-40 px-4'>
         <Link
-          href='/events/your-city/home'
+          href='/events/your-city'
           className='fixed top-16 lg:top-32 left-[4%] flex items-center font-medium text-sm'>
           <svg width='33' height='32' viewBox='0 0 33 32' fill='none' xmlns='http://www.w3.org/2000/svg'>
             <path

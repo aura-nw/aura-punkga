@@ -137,27 +137,27 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 week != 0 ? '-translate-x-full' : ''
               }`}>
               <div className='grid grid-cols-7 [&>div]:cursor-pointer place-items-center gap-4'>
-                {['2024-12-8', '2024-12-9', '2024-12-10', '2024-12-11', '2024-12-12', '2024-12-13', '2024-12-14'].map(
+                {['2024-12-08', '2024-12-09', '2024-12-10', '2024-12-11', '2024-12-12', '2024-12-13', '2024-12-14'].map(
                   (d, index) => {
                     return (
                       <div
                         key={index}
-                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
+                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))}
                         className={
-                          moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh').date() == 8
+                          moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh').date() == 8
                             ? 'pointer-events-none opacity-50'
-                            : date.format('YYYY-MM-D') == d
+                            : date.format('YYYY-MM-DD') == d
                             ? 'selected-date'
-                            : !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-D') == d
+                            : !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') == d
                             ? 'current-date'
                             : `aspect-square h-full grid place-items-center ${
                                 isEnded ||
-                                moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))
+                                moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))
                                   ? ''
                                   : 'pointer-events-none opacity-50'
                               }`
                         }>
-                        {moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh').date()}
+                        {moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh').date()}
                       </div>
                     )
                   }
@@ -169,20 +169,20 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                     return (
                       <div
                         key={index}
-                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
+                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))}
                         className={
-                          date.format('YYYY-MM-D') == d
+                          date.format('YYYY-MM-DD') == d
                             ? 'selected-date'
-                            : !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-D') == d
+                            : !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') == d
                             ? 'current-date'
                             : `aspect-square h-full grid place-items-center ${
                                 isEnded ||
-                                moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))
+                                moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))
                                   ? ''
                                   : 'pointer-events-none opacity-50'
                               }`
                         }>
-                        {moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh').date()}
+                        {moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh').date()}
                       </div>
                     )
                   }
@@ -199,45 +199,45 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                     return (
                       <div
                         key={index}
-                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
+                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))}
                         className={
-                          date.format('YYYY-MM-D') == d
+                          date.format('YYYY-MM-DD') == d
                             ? 'selected-date'
-                            : !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-D') == d
+                            : !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') == d
                             ? 'current-date'
                             : `aspect-square h-full grid place-items-center ${
                                 isEnded ||
-                                moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))
+                                moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))
                                   ? ''
                                   : 'pointer-events-none opacity-50'
                               }`
                         }>
-                        {moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh').date()}
+                        {moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh').date()}
                       </div>
                     )
                   }
                 )}
               </div>
               <div className='grid grid-cols-7 [&>div]:cursor-pointer place-items-center gap-4'>
-                {['2024-12-29', '2024-12-30', '2024-12-31', '2025-01-1', '2025-01-2', '2025-01-3', '2025-01-4'].map(
+                {['2024-12-29', '2024-12-30', '2024-12-31', '2025-01-01', '2025-01-02', '2025-01-03', '2025-01-04'].map(
                   (d, index) => {
                     return (
                       <div
                         key={index}
-                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
+                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))}
                         className={
-                          date.format('YYYY-MM-D') == d
+                          date.format('YYYY-MM-DD') == d
                             ? 'selected-date'
-                            : !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-D') == d
+                            : !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') == d
                             ? 'current-date'
                             : `aspect-square h-full grid place-items-center ${
                                 isEnded ||
-                                moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))
+                                moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))
                                   ? ''
                                   : 'pointer-events-none opacity-50'
                               }`
                         }>
-                        {moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh').date()}
+                        {moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh').date()}
                       </div>
                     )
                   }
@@ -246,50 +246,50 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
             </div>
             <div className={`transition-all space-y-4 duration-500 ${week != 2 ? 'translate-x-full' : ''}`}>
               <div className='grid grid-cols-7 [&>div]:cursor-pointer place-items-center gap-4'>
-                {['2024-12-29', '2024-12-30', '2024-12-31', '2025-01-1', '2025-01-2', '2025-01-3', '2025-01-4'].map(
+                {['2024-12-29', '2024-12-30', '2024-12-31', '2025-01-01', '2025-01-02', '2025-01-03', '2025-01-04'].map(
                   (d, index) => {
                     return (
                       <div
                         key={index}
-                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
+                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))}
                         className={
-                          date.format('YYYY-MM-D') == d
+                          date.format('YYYY-MM-DD') == d
                             ? 'selected-date'
-                            : !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-D') == d
+                            : !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') == d
                             ? 'current-date'
                             : `aspect-square h-full grid place-items-center ${
                                 isEnded ||
-                                moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))
+                                moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))
                                   ? ''
                                   : 'pointer-events-none opacity-50'
                               }`
                         }>
-                        {moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh').date()}
+                        {moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh').date()}
                       </div>
                     )
                   }
                 )}
               </div>
               <div className='grid grid-cols-7 [&>div]:cursor-pointer place-items-center gap-4'>
-                {['2025-01-5', '2025-01-6', '2025-01-7', '2025-01-8', '2025-01-9', '2025-01-10', '2025-01-11'].map(
+                {['2025-01-05', '2025-01-06', '2025-01-07', '2025-01-08', '2025-01-09', '2025-01-10', '2025-01-11'].map(
                   (d, index) => {
                     return (
                       <div
                         key={index}
-                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
+                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))}
                         className={
-                          date.format('YYYY-MM-D') == d
+                          date.format('YYYY-MM-DD') == d
                             ? 'selected-date'
-                            : !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-D') == d
+                            : !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') == d
                             ? 'current-date'
                             : `aspect-square h-full grid place-items-center ${
                                 isEnded ||
-                                moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))
+                                moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))
                                   ? ''
                                   : 'pointer-events-none opacity-50'
                               }`
                         }>
-                        {moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh').date()}
+                        {moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh').date()}
                       </div>
                     )
                   }
@@ -343,7 +343,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 <div className='text-center w-full'>S</div>
               </div>
               <div className='grid grid-cols-7 items-center divide-x-[1px] text-gray-black font-medium [&>div]:h-full text-[8px] lg:text-xs [&>div:first-child>.date]:text-red-500 [&_.date]:text-sm lg:[&_.date]:text-lg [&_.date]:font-semibold [&>div]:p-3'>
-                {['', '2024-12-9', '2024-12-10', '2024-12-11', '2024-12-12', '2024-12-13', '2024-12-14'].map(
+                {['', '2024-12-09', '2024-12-10', '2024-12-11', '2024-12-12', '2024-12-13', '2024-12-14'].map(
                   (d, index) => {
                     if (d == '') {
                       return <div key={index}></div>
@@ -351,20 +351,20 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                     return (
                       <div
                         key={index}
-                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
+                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))}
                         className={`${
-                          !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-D') == d
+                          !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') == d
                             ? 'bg-green-100'
-                            : date.format('YYYY-MM-D') == d
+                            : date.format('YYYY-MM-DD') == d
                             ? 'bg-neutral-200'
                             : isEnded ||
-                              (moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh')) &&
+                              (moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh')) &&
                                 topics.find((topic) => topic.date == d))
                             ? 'cursor-pointer'
                             : 'pointer-events-none opacity-50'
                         } flex flex-col items-center gap-1.5 min-h-28`}>
                         <div className='date'>
-                          {moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh').format(width < 1024 && d != '2025-01-1' ? 'DD' : 'DD/MM')}
+                          {moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh').format(width < 1024 && d != '2025-01-01' ? 'DD' : 'DD/MM')}
                         </div>
                         {topics.find((topic) => topic.date == d) ? (
                           <>
@@ -409,20 +409,20 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                     return (
                       <div
                         key={index}
-                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
+                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))}
                         className={`${
-                          !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-D') == d
+                          !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') == d
                             ? 'bg-green-100'
-                            : date.format('YYYY-MM-D') == d
+                            : date.format('YYYY-MM-DD') == d
                             ? 'bg-neutral-200'
                             : isEnded ||
-                              (moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh')) &&
+                              (moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh')) &&
                                 topics.find((topic) => topic.date == d))
                             ? 'cursor-pointer'
                             : 'pointer-events-none opacity-50'
                         } flex flex-col items-center gap-1.5 min-h-28`}>
                         <div className='date'>
-                          {moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh').format(width < 1024 && d != '2025-01-1' ? 'DD' : 'DD/MM')}
+                          {moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh').format(width < 1024 && d != '2025-01-01' ? 'DD' : 'DD/MM')}
                         </div>
                         {topics.find((topic) => topic.date == d) ? (
                           <>
@@ -467,14 +467,14 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                     return (
                       <div
                         key={index}
-                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
+                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))}
                         className={`${
-                          !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-D') == d
+                          !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') == d
                             ? 'bg-green-100'
-                            : date.format('YYYY-MM-D') == d
+                            : date.format('YYYY-MM-DD') == d
                             ? 'bg-neutral-200'
                             : isEnded ||
-                              (moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh')) &&
+                              (moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh')) &&
                                 topics.find((topic) => topic.date == d))
                             ? 'cursor-pointer'
                             : 'pointer-events-none opacity-50'
@@ -486,7 +486,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                           <Image src={O2} alt='' className='absolute top-0 right-0 -translate-y-1/2 w-5 h-5 lg:w-auto lg:h-auto' />
                         )}
                         <div className='date'>
-                          {moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh').format(width < 1024 && d != '2025-01-1' ? 'DD' : 'DD/MM')}
+                          {moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh').format(width < 1024 && d != '2025-01-01' ? 'DD' : 'DD/MM')}
                         </div>
                         {topics.find((topic) => topic.date == d) ? (
                           <>
@@ -526,25 +526,25 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 )}
               </div>
               <div className='grid grid-cols-7 items-center divide-x-[1px] text-gray-black font-medium [&>div]:h-full text-[8px] lg:text-xs [&>div:first-child>.date]:text-red-500 [&_.date]:text-sm lg:[&_.date]:text-lg [&_.date]:font-semibold [&>div]:p-3'>
-                {['2024-12-29', '2024-12-30', '2024-12-31', '2025-01-1', '2025-01-2', '2025-01-3', '2025-01-4'].map(
+                {['2024-12-29', '2024-12-30', '2024-12-31', '2025-01-01', '2025-01-02', '2025-01-03', '2025-01-04'].map(
                   (d, index) => {
                     return (
                       <div
                         key={index}
-                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
+                        onClick={() => setDate(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))}
                         className={`${
-                          !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-D') == d
+                          !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') == d
                             ? 'bg-green-100'
-                            : date.format('YYYY-MM-D') == d
+                            : date.format('YYYY-MM-DD') == d
                             ? 'bg-neutral-200'
                             : isEnded ||
-                              (moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh')) &&
+                              (moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh')) &&
                                 topics.find((topic) => topic.date == d))
                             ? 'cursor-pointer'
                             : 'pointer-events-none opacity-50'
                         } flex flex-col items-center gap-1.5 min-h-28 relative`}>
                         <div className='date'>
-                          {moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh').format(width < 1024 && d != '2025-01-1' ? 'DD' : 'DD/MM')}
+                          {moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh').format(width < 1024 && d != '2025-01-01' ? 'DD' : 'DD/MM')}
                         </div>
                         {topics.find((topic) => topic.date == d) ? (
                           <>
@@ -584,30 +584,30 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                 )}
               </div>
               <div className='grid grid-cols-7 items-center divide-x-[1px] text-gray-black font-medium [&>div]:h-full text-[8px] lg:text-xs [&>div:first-child>.date]:text-red-500 [&_.date]:text-sm lg:[&_.date]:text-lg [&_.date]:font-semibold [&>div]:p-3'>
-                {['2025-01-5', '2025-01-6', '2025-01-7', '2025-01-8', '', '', ''].map((d, index) => {
+                {['2025-01-05', '2025-01-06', '2025-01-07', '2025-01-08', '', '', ''].map((d, index) => {
                   if (!d) return <div key={index} />
                   return (
                     <div
                       key={index}
-                      onClick={() => setDate(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh'))}
+                      onClick={() => setDate(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))}
                       className={`${
-                        !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-D') == d
+                        !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') == d
                           ? 'bg-green-100'
-                          : date.format('YYYY-MM-D') == d
+                          : date.format('YYYY-MM-DD') == d
                           ? 'bg-neutral-200'
                           : isEnded ||
-                            (moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh')) &&
+                            (moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh')) &&
                               topics.find((topic) => topic.date == d))
                           ? 'cursor-pointer'
                           : 'pointer-events-none opacity-50'
                       } flex flex-col items-center gap-1.5 min-h-28 relative`}>
-                      {d == '2025-01-8' && (
+                      {d == '2025-01-08' && (
                         <Image src={O3} alt='' className='absolute top-0 right-0 -translate-y-1/2 w-5 h-5 lg:w-auto lg:h-auto' />
                       )}
                       <div className='date relative z-10'>
                         {moment
-                          .tz(d, 'YYYY-MM-D', 'Asia/Ho_Chi_Minh')
-                          .format(width < 1024 && d != '2025-01-1' ? 'DD' : 'DD/MM')}
+                          .tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh')
+                          .format(width < 1024 && d != '2025-01-01' ? 'DD' : 'DD/MM')}
                       </div>
                       {topics.find((topic) => topic.date == d) ? (
                         <>
