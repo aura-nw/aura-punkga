@@ -18,10 +18,10 @@ export default function SubmissionTable() {
         )}
         .{' '}
       </div>
-      <div className='mt-6 p-6 rounded-[10px] text-text-primary overflow-auto w-full border border-border-primary'>
+      <div className='mt-6 p-3 lg:p-6 rounded-[10px] text-text-primary overflow-auto w-full border border-border-primary'>
         {submissions?.length ? (
           <div className='w-full min-w-[700px]'>
-            <div className='grid w-full grid-cols-[1fr_25%_10%_15%_10%_15%] text-sm font-semibold border-b border-white'>
+            <div className='grid w-full grid-cols-[1fr_25%_12%_15%_10%_20%] text-sm font-semibold border-b border-white'>
               <div className='p-4'>{t('Name')}</div>
               <div className='p-4'>{t('Topic')}</div>
               <div className='p-4'>{t('Status')}</div>
@@ -32,7 +32,7 @@ export default function SubmissionTable() {
             <div className='h-[260px] overflow-auto'>
               {submissions?.map((submission, index) => (
                 <div
-                  className='grid w-full grid-cols-[1fr_25%_10%_15%_10%_15%] text-sm font-medium text-text-primary'
+                  className='grid w-full grid-cols-[1fr_25%_12%_15%_10%_20%] text-sm font-medium text-text-primary'
                   key={submission.id}>
                   <div className='p-4 truncate'>{submission.name}</div>
                   <div className='p-4 truncate'>{submission?.artwork_topic?.title}</div>
@@ -46,7 +46,7 @@ export default function SubmissionTable() {
                     }`}>
                     {t(submission.status)}
                   </div>
-                  <div className='p-4'>{moment(submission.created_at).format('HH:mm DD/MM/yyyy')}</div>
+                  <div className='p-4'>{moment(submission.created_at).format('DD/MM/yyyy')}</div>
                   <div className='p-4 truncate'>
                     {submission.artwork_topic?.user_artwork_topics?.[0]?.reward_amount
                       ? submission.artwork_topic?.user_artwork_topics?.[0]?.reward_amount + ' DP'
@@ -55,7 +55,7 @@ export default function SubmissionTable() {
                   <div className='p-4'>
                     {submission.artwork_topic?.user_artwork_topics?.[0]?.created_at
                       ? moment(submission.artwork_topic?.user_artwork_topics?.[0]?.created_at).format(
-                          'HH:mm DD/MM/yyyy'
+                          'DD/MM/yyyy'
                         )
                       : '-'}
                   </div>
