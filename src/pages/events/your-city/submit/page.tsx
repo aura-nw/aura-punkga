@@ -156,7 +156,7 @@ function PageContent() {
       payload.append('description', data.description)
       payload.append('contest_id', '4')
       payload.append('artwork_topic_id', currentTopic.id)
-      payload.append('terms_agreed', data.terms_agreed)
+      payload.append('terms_agreed', data.terms_agreed ? '1' : '0')
       payload.append(
         'artwork_characters',
         JSON.stringify([
@@ -218,9 +218,7 @@ function PageContent() {
     return (
       <>
         <div className='bg-[#ffffff] min-h-screen relative py-12'>
-          <Link
-            href='/events/your-city'
-            className='absolute top-12 left-[4%] flex items-center font-medium text-sm'>
+          <Link href='/events/your-city' className='absolute top-12 left-[4%] flex items-center font-medium text-sm'>
             <svg width='33' height='32' viewBox='0 0 33 32' fill='none' xmlns='http://www.w3.org/2000/svg'>
               <path
                 d='M20.3996 22.7969L13.5996 15.9969L20.3996 9.19688'

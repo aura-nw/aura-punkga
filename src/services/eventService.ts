@@ -61,6 +61,14 @@ export const eventService = {
             }
           : undefined,
       }),
+    getCharacterDetail: async (userId, id) =>
+      await privateAxios.get(`${getConfig().REST_API_URL}/story-event/character/${id}`, {
+        params: userId
+          ? {
+              user_id: userId,
+            }
+          : undefined,
+      }),
     likeArtwork: async (id) => await privateAxios.post(`${getConfig().REST_API_URL}/user/artwork/${id}/like`),
     unlikeArtwork: async (id) => await privateAxios.post(`${getConfig().REST_API_URL}/user/artwork/${id}/unlike`),
   },

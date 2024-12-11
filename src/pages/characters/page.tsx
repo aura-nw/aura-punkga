@@ -2,13 +2,17 @@ import UploadUpIcon from 'assets/images/icons/upload-up.svg'
 import Button from 'components/core/Button/Button'
 import TextField from 'components/Input/TextField'
 import Character from 'components/pages/characters/Character'
+import CharacterDetail from 'components/pages/characters/CharacterDetail'
+import Modal from 'components/pages/characters/Modal'
 import { debounce } from 'lodash'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { toast } from 'react-toastify'
 import { Context } from 'src/context'
+import { ListContext } from 'src/context/list'
 import { eventService } from 'src/services/eventService'
 import { useWindowSize } from 'usehooks-ts'
 export default function Page(props) {
@@ -18,42 +22,63 @@ export default function Page(props) {
   return <PageContent {...props} />
 }
 function PageContent() {
+  const search = new URLSearchParams(window.location.search)
   const [showSearch, setShowSearch] = useState(false)
   const { account } = useContext(Context)
   const [searchValue, setSearchValue] = useState('')
   const [type, setType] = useState('all')
-  const [page, setPage] = useState(1)
   const { width } = useWindowSize()
-  const [characters, setCharacters] = useState([])
-  const [remaining, setRemaining] = useState(true)
+  const { characterData, setCharacterData } = useContext(ListContext)
   const { t } = useTranslation()
-  const fetchData = async (isRefresh?: boolean) => {
+  const [isFirstRender, setIsFirstRender] = useState(true)
+  const [openCharacterDetail, setOpenCharacterDetail] = useState(search.has('character_id'))
+  const [selectedCharacter, setSelectedCharacter] = useState(null)
+  const router = useRouter()
+  const fetchCharacters = async (isRefresh?: boolean) => {
     try {
-      const data = await eventService.story.getCharacters(account?.id, isRefresh ? 1 : page, 'Created_At_Desc', type, searchValue)
-      if (data?.data?.data?.story_character.length) {
-        const newList = isRefresh
-          ? data?.data?.data?.story_character
-          : [...characters, ...data?.data?.data?.story_character]
-        setCharacters(newList)
-        setPage(isRefresh ? 2 : page + 1)
-        if (data?.data?.data?.story_character_aggregate?.aggregate?.count <= newList.length) {
-          setRemaining(false)
-        } else {
-          setRemaining(true)
-        }
-      } else {
-        setRemaining(false)
-      }
+      const response = await eventService.story.getCharacters(
+        account?.id,
+        isRefresh ? 1 : characterData.page,
+        'Created_At_Desc',
+        type,
+        searchValue
+      )
+      const newCharacters = response.data.data.story_character
+      const newPage = isRefresh ? 2 : characterData.page + 1
+      const newRemaining = response.data.data.story_character_aggregate.aggregate.count > newCharacters.length
+      setCharacterData({
+        list: isRefresh ? newCharacters : [...characterData.list, ...newCharacters],
+        page: newPage,
+        remaining: newRemaining,
+      })
     } catch (error) {
       toast(error.message, { type: 'error' })
     }
   }
   useEffect(() => {
-    fetchData(true)
+    if (characterData.list.length === 0) {
+      fetchCharacters()
+    }
+    setIsFirstRender(false)
+  }, [])
+  useEffect(() => {
+    if (!isFirstRender) {
+      fetchCharacters(true)
+    }
   }, [searchValue, type])
+  useEffect(() => {
+    if (!isFirstRender) {
+      if (selectedCharacter?.id && openCharacterDetail) {
+        search.set('character_id', selectedCharacter.id)
+        router.replace(`/characters?${search.toString()}`, undefined, { shallow: true })
+      } else {
+        router.replace('/characters', undefined, { shallow: true })
+      }
+    }
+  }, [selectedCharacter, openCharacterDetail])
   return (
     <div className='p-4 bg-background min-h-screen text-white lg:px-[84px] xl:pt-10'>
-      <div className='flex justify-center mb-14 items-center w-full'>
+      <div className='justify-center mb-14 items-center w-full hidden lg:flex'>
         <TextField
           onChange={debounce(setSearchValue, 1000)}
           className='bg-neutral-100 text-black max-w-lg [&_input::placeholder]:!text-text-quatenary '
@@ -126,15 +151,52 @@ function PageContent() {
       <div className='mt-8'>
         <InfiniteScroll
           loader={<h4>Loading...</h4>}
-          next={fetchData}
-          dataLength={characters.length}
-          className='gap-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
-          hasMore={remaining}>
-          {characters.map((character) => (
-            <Character data={character} key={character.id} />
+          next={fetchCharacters}
+          dataLength={characterData.list.length}
+          className='lg:gap-8 gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
+          hasMore={characterData.remaining}>
+          {characterData.list.map((character) => (
+            <div
+              key={character.id}
+              onClick={() => {
+                setSelectedCharacter(character)
+                setOpenCharacterDetail(true)
+              }}>
+              <Character data={character} />
+            </div>
           ))}
         </InfiniteScroll>
       </div>
+      {width >= 768 ? (
+        <Modal open={openCharacterDetail} setOpen={setOpenCharacterDetail}>
+          <div className='w-screen max-w-screen-2xl relative mx-auto flex items-center gap-4'>
+            <div className='bg-[#1C1C1C] text-white p-8 h-full w-full'>
+              <CharacterDetail id={selectedCharacter?.id || search.get('character_id')} />
+            </div>
+          </div>
+        </Modal>
+      ) : (
+        openCharacterDetail && (
+          <Modal open={openCharacterDetail} setOpen={setOpenCharacterDetail}>
+            <div className='fixed bg-[#1C1C1C] text-white top-14 left-0 w-screen h-[calc(100vh-56px)] flex flex-col'>
+              <div className='flex-1 overflow-auto p-4'>
+                <div className='flex justify-end'>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='24'
+                    height='24'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    onClick={() => setOpenCharacterDetail(false)}>
+                    <path d='M16 8L8 16M16 16L8 8' stroke='#fff' stroke-width='1.5' stroke-linecap='round' />
+                  </svg>
+                </div>
+                <CharacterDetail id={selectedCharacter?.id || search.get('character_id')} />
+              </div>
+            </div>
+          </Modal>
+        )
+      )}
     </div>
   )
 }

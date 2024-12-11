@@ -20,6 +20,7 @@ import { useAccount, useChainId, useDisconnect, useSignMessage, useSwitchChain }
 import ModalProvider from './modals'
 import { useCookies } from 'react-cookie'
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3'
+import ListProvider from './list'
 
 const queryClient = new QueryClient()
 
@@ -511,8 +512,10 @@ function ContextProvider({ children }: any) {
         <QueryClientProvider client={queryClient}>
           <ApolloProvider client={client}>
             <ModalProvider>
-              {location.pathname.includes('events/ava-2024') && <BackgroundAudio />}
-              {children}
+              <ListProvider>
+                {location.pathname.includes('events/ava-2024') && <BackgroundAudio />}
+                {children}
+              </ListProvider>
             </ModalProvider>
           </ApolloProvider>
         </QueryClientProvider>
