@@ -5,7 +5,7 @@ export const eventService = {
   report: async (payload) => await privateAxios.post(`${getConfig().REST_API_URL}/report`, payload),
   story: {
     searchCharacter: async (search: string) =>
-      await privateAxios.get(`${getConfig().REST_API_URL}/story-event/character/search`, {
+      await privateAxios.get(`${getConfig().REST_API_URL}/story-event/character/search-by-id`, {
         params: {
           text: search,
         },
