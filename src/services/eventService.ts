@@ -62,7 +62,7 @@ export const eventService = {
           : undefined,
       }),
     getCharacterDetail: async (userId, id) =>
-      await privateAxios.get(`${getConfig().REST_API_URL}/story-event/character/search-by-id/${id}`, {
+      await privateAxios.get(`${getConfig().REST_API_URL}/story-event/character/get-by-id/${id}`, {
         params: userId
           ? {
               user_id: userId,
