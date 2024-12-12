@@ -4,6 +4,7 @@ export const ListContext = createContext<{
     list: any[]
     page: number
     remaining: boolean
+    search: string
   }
   setCharacterData?: (characterData: any) => void
 }>({
@@ -11,6 +12,7 @@ export const ListContext = createContext<{
     list: [],
     page: 0,
     remaining: true,
+    search: '',
   },
   setCharacterData: () => {},
 })
@@ -19,6 +21,7 @@ function ListProvider({ children }) {
     list: [],
     page: 1,
     remaining: true,
+    search: '',
   })
   return (
     <ListContext.Provider

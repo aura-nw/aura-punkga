@@ -22,16 +22,16 @@ export default function Page(props) {
   return <PageContent {...props} />
 }
 function PageContent() {
-  const search = new URLSearchParams(window.location.search)
+  const searchParams = new URLSearchParams(window.location.search)
+  const { characterData, setCharacterData } = useContext(ListContext)
   const [showSearch, setShowSearch] = useState(false)
   const { account } = useContext(Context)
   const [searchValue, setSearchValue] = useState('')
   const [type, setType] = useState('all')
   const { width } = useWindowSize()
-  const { characterData, setCharacterData } = useContext(ListContext)
   const { t } = useTranslation()
   const [isFirstRender, setIsFirstRender] = useState(true)
-  const [openCharacterDetail, setOpenCharacterDetail] = useState(search.has('character_id'))
+  const [openCharacterDetail, setOpenCharacterDetail] = useState(searchParams.has('character_id'))
   const [selectedCharacter, setSelectedCharacter] = useState(null)
   const router = useRouter()
   const fetchCharacters = async (isRefresh?: boolean) => {
@@ -50,6 +50,7 @@ function PageContent() {
         list: isRefresh ? newCharacters : [...characterData.list, ...newCharacters],
         page: newPage,
         remaining: newRemaining,
+        search: searchValue,
       })
     } catch (error) {
       toast(error.message, { type: 'error' })
@@ -69,8 +70,8 @@ function PageContent() {
   useEffect(() => {
     if (!isFirstRender) {
       if (selectedCharacter?.id && openCharacterDetail) {
-        search.set('character_id', selectedCharacter.id)
-        router.replace(`/characters?${search.toString()}`, undefined, { shallow: true })
+        searchParams.set('character_id', selectedCharacter.id)
+        router.replace(`/characters?${searchParams.toString()}`, undefined, { shallow: true })
       } else {
         router.replace('/characters', undefined, { shallow: true })
       }
@@ -80,6 +81,7 @@ function PageContent() {
     <div className='p-4 bg-background min-h-screen text-white lg:px-[84px] xl:pt-10'>
       <div className='justify-center mb-14 items-center w-full hidden lg:flex'>
         <TextField
+          defaultValue={characterData.search}
           onChange={debounce(setSearchValue, 1000)}
           className='bg-neutral-100 text-black max-w-lg [&_input::placeholder]:!text-text-quatenary '
           placeholder={t('Search by character name, creator, IP')}
@@ -171,7 +173,7 @@ function PageContent() {
         <Modal open={openCharacterDetail} setOpen={setOpenCharacterDetail}>
           <div className='w-screen max-w-screen-2xl relative mx-auto flex items-center gap-4'>
             <div className='bg-[#1C1C1C] text-white p-8 h-full w-full'>
-              <CharacterDetail id={selectedCharacter?.id || search.get('character_id')} />
+              <CharacterDetail id={selectedCharacter?.id || searchParams.get('character_id')} />
             </div>
           </div>
         </Modal>
@@ -191,7 +193,7 @@ function PageContent() {
                     <path d='M16 8L8 16M16 16L8 8' stroke='#fff' stroke-width='1.5' stroke-linecap='round' />
                   </svg>
                 </div>
-                <CharacterDetail id={selectedCharacter?.id || search.get('character_id')} />
+                <CharacterDetail id={selectedCharacter?.id || searchParams.get('character_id')} />
               </div>
             </div>
           </Modal>

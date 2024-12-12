@@ -12,6 +12,7 @@ interface ITextField {
   id?: string
   inputref?: any
   disabled?: boolean
+  defaultValue?: string
 }
 
 export default function TextField({
@@ -28,6 +29,7 @@ export default function TextField({
   inputref,
   disabled,
   id,
+  defaultValue,
 }: ITextField) {
   const ex = ['e', '-', '=', '*', '(', ')', '+', '.']
   const disabledStyle = disabled ? 'bg-[#F6F6F6]' : ''
@@ -41,6 +43,7 @@ export default function TextField({
           </div>
         )}
         <input
+          defaultValue={defaultValue}
           ref={inputref}
           onFocus={onFocus}
           onBlur={onBlur}
@@ -80,6 +83,7 @@ export default function TextField({
           </div>
         )}
         <input
+          defaultValue={defaultValue}
           onKeyDown={(event) => {
             if (type == 'number' && ex.includes(event.key)) {
               event.preventDefault()
@@ -118,6 +122,7 @@ export default function TextField({
           </div>
         )}
         <input
+          defaultValue={defaultValue}
           onKeyDown={(event) => {
             if (type == 'number' && ex.includes(event.key)) {
               event.preventDefault()
@@ -151,6 +156,7 @@ export default function TextField({
         </div>
       )}
       <input
+        defaultValue={defaultValue}
         onKeyDown={(event) => {
           if (type == 'number' && ex.includes(event.key)) {
             event.preventDefault()
