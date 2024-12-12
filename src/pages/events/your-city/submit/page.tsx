@@ -544,7 +544,7 @@ function PageContent() {
                   control={form.control}
                   render={({ field }) => (
                     <div className='w-full space-y-8'>
-                      <div className='space-y-4'>
+                      <div className='space-y-4 relative z-10'>
                         <div className='flex flex-col gap-1.5 relative z-10 lg:flex-row lg:justify-between lg:items-center'>
                           <div>
                             <div className='text-lg font-semibold'>{t('Attach character')}</div>
