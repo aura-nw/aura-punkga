@@ -1,19 +1,15 @@
 import { Skeleton } from '@mui/material'
-import Copy2Clipboard from 'components/Copy2Clipboard'
+import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useContext, useEffect, useState } from 'react'
+import ReactHtmlParser from 'react-html-parser'
+import InfiniteScroll from 'react-infinite-scroll-component'
 import { toast } from 'react-toastify'
 import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
 import { eventService } from 'src/services/eventService'
 import { formatNumber, shorten } from 'src/utils'
-import useSWR from 'swr'
-import Image1 from 'components/pages/event/your-city/assets/image719.png'
-import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
-import Link from 'next/link'
-import Modal from 'components/pages/event/your-city/Modal'
-import ReactHtmlParser from 'react-html-parser'
-import InfiniteScroll from 'react-infinite-scroll-component'
 
 export default function CharacterDetail({ id }) {
   const { account } = useContext(Context)
@@ -24,12 +20,10 @@ export default function CharacterDetail({ id }) {
   const [page, setPage] = useState(1)
   const [likeCount, setLikeCount] = useState(0)
   const [isLiked, setIsLiked] = useState(false)
-  const [openReport, setOpenReport] = useState(false)
-  const [reason, setReason] = useState('')
   const fetchCharacterData = async (isInit?: boolean) => {
     try {
       const res = await eventService.story.getCharacterDetail(account.id, id, page)
-      if (res.data.data.story_character_by_pk) {
+      if (res?.data?.data?.story_character_by_pk) {
         if (isInit) {
           setCharacterData(res.data.data.story_character_by_pk)
         }
@@ -61,9 +55,9 @@ export default function CharacterDetail({ id }) {
       setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1))
       setIsLiked((prevState) => !prevState)
       if (isLiked) {
-        await eventService.story.unlikeArtwork(id)
+        await eventService.story.unlikeCharacter(id)
       } else {
-        await eventService.story.likeArtwork(id)
+        await eventService.story.likeCharacter(id)
       }
     } catch (error) {
       toast(error.message, {
@@ -71,23 +65,6 @@ export default function CharacterDetail({ id }) {
       })
     }
   }
-  const reportHandler = async () => {
-    try {
-      await eventService.report({
-        artwork_id: id,
-        reason,
-      })
-      toast('Report successfully', {
-        type: 'success',
-      })
-      setOpenReport(false)
-    } catch (error) {
-      toast(error.message, {
-        type: 'error',
-      })
-    }
-  }
-
   useEffect(() => {
     fetchCharacterData(true)
   }, [])
@@ -167,9 +144,6 @@ export default function CharacterDetail({ id }) {
                           })
                         }}>
                         Share
-                      </div>
-                      <div className='cursor-pointer' onClick={() => setOpenReport(true)}>
-                        Report
                       </div>
                       <Link
                         className='block'
@@ -254,37 +228,6 @@ export default function CharacterDetail({ id }) {
           </div>
         </div>
       </div>
-      <Modal open={openReport} setOpen={setOpenReport}>
-        <div className='flex flex-col gap-4 items-center max-w-xl px-8 py-4 bg-[#ffffff] text-neutral-black rounded-mlg border-[3px] border-neutral-black w-screen'>
-          <div className='text-lg font-semibold w-full text-center'>REPORT THIS ARTWORK</div>
-          <div className='w-full space-y-1.5'>
-            <div className='text-lg font-medium'>{characterData?.name}</div>
-            <div className='w-fit text-xs'>
-              by{' '}
-              {characterData?.authorizer_user?.creator ? (
-                <Link
-                  target='_blank'
-                  href={`/artist/${characterData?.authorizer_user?.creator?.slug}`}
-                  className='text-text-brand-defaul'>
-                  {characterData?.creator?.authorizer_user?.pen_name}
-                </Link>
-              ) : (
-                <span className='text-text-brand-defaul'>{characterData?.authorizer_user?.nickname}</span>
-              )}
-            </div>
-          </div>
-          <textarea
-            className='bg-white border border-black rounded-lg text-sm placeholder:text-neutral-600 px-4 py-2 w-full min-h-40'
-            value={reason}
-            onChange={(e) => setReason(e.target.value)}
-          />
-          <div
-            onClick={reportHandler}
-            className='p-2.5 text-center font-roboto text-[22px] uppercase font-bold text-white bg-neutral-black w-64 cursor-pointer'>
-            {'Submit'}
-          </div>
-        </div>
-      </Modal>
     </>
   )
 }
