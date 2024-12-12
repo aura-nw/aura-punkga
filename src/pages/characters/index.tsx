@@ -25,6 +25,7 @@ export const getServerSideProps = async (context) => {
         title: 'PunkgaMe: Colorful Adventures with Unique Characters',
         description:
           'Explore a colorful world and embark on exciting adventures with unique characters created by talented artists!',
+        image: `/assets/images/characters-thumbnail.png`,
       },
       ...(await serverSideTranslations(context?.locale!, ['common'])),
     },

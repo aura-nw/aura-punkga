@@ -144,17 +144,16 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                         key={index}
                         onClick={() => setDate(moment.tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))}
                         className={
-                          moment()
-                            .tz('Asia/Ho_Chi_Minh')
-                            .isBefore(moment.tz('2024-12-14', 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))
+                          moment
+                            .tz(d, 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh')
+                            .isBefore(moment.tz('2024-12-12', 'YYYY-MM-DD', 'Asia/Ho_Chi_Minh'))
                             ? 'pointer-events-none opacity-50'
                             : date.format('YYYY-MM-DD') == d
                             ? 'selected-date'
                             : !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') == d
                             ? 'current-date'
                             : `aspect-square h-full grid place-items-center ${
-                                isEnded ||
-                                topics.find((topic) => topic.date == d)
+                                isEnded || topics.find((topic) => topic.date == d)
                                   ? ''
                                   : 'pointer-events-none opacity-50'
                               }`
@@ -178,8 +177,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                             : !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') == d
                             ? 'current-date'
                             : `aspect-square h-full grid place-items-center ${
-                                isEnded ||
-                                topics.find((topic) => topic.date == d)
+                                isEnded || topics.find((topic) => topic.date == d)
                                   ? ''
                                   : 'pointer-events-none opacity-50'
                               }`
@@ -208,8 +206,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                             : !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') == d
                             ? 'current-date'
                             : `aspect-square h-full grid place-items-center ${
-                                isEnded ||
-                                topics.find((topic) => topic.date == d)
+                                isEnded || topics.find((topic) => topic.date == d)
                                   ? ''
                                   : 'pointer-events-none opacity-50'
                               }`
@@ -233,8 +230,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                             : !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') == d
                             ? 'current-date'
                             : `aspect-square h-full grid place-items-center ${
-                                isEnded ||
-                                topics.find((topic) => topic.date == d)
+                                isEnded || topics.find((topic) => topic.date == d)
                                   ? ''
                                   : 'pointer-events-none opacity-50'
                               }`
@@ -260,8 +256,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                             : !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') == d
                             ? 'current-date'
                             : `aspect-square h-full grid place-items-center ${
-                                isEnded ||
-                                topics.find((topic) => topic.date == d)
+                                isEnded || topics.find((topic) => topic.date == d)
                                   ? ''
                                   : 'pointer-events-none opacity-50'
                               }`
@@ -285,8 +280,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                             : !isEnded && moment().tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') == d
                             ? 'current-date'
                             : `aspect-square h-full grid place-items-center ${
-                                isEnded ||
-                                topics.find((topic) => topic.date == d)
+                                isEnded || topics.find((topic) => topic.date == d)
                                   ? ''
                                   : 'pointer-events-none opacity-50'
                               }`
@@ -663,8 +657,7 @@ export default function Calendar({ date, setDate }: { date: Moment; setDate: (da
                           : date.format('YYYY-MM-DD') == d
                           ? 'bg-neutral-200'
                           : isEnded ||
-                            (topics.find((topic) => topic.date == d) &&
-                              topics.find((topic) => topic.date == d))
+                            (topics.find((topic) => topic.date == d) && topics.find((topic) => topic.date == d))
                           ? 'cursor-pointer'
                           : 'pointer-events-none opacity-50'
                       } flex flex-col items-center gap-1.5 min-h-28 relative`}>
