@@ -44,7 +44,7 @@ function PageContent() {
   const [openArtworkDetail, setOpenArtworkDetail] = useState(false)
   const [showContestRule, setShowContestRule] = useState(false)
   const [list, setList] = useState([])
-  const swiperRef = useRef<any>()
+  const [isFirstRender, setIsFirstRender] = useState(true)
   const { t } = useTranslation()
   const { data } = useSWR('get-all-topic', () => eventService.punktober.getAllTopic(), {
     revalidateOnFocus: false,
@@ -60,19 +60,22 @@ function PageContent() {
   )
   const topicData = topicDT?.data?.data?.artwork_topics_by_pk
   useEffect(() => {
-    if (openArtworkDetail && selectedArtwork?.id) {
-      searchParams.set('artwork_id', selectedArtwork.id)
-      router.replace({
-        pathname: router.pathname,
-        search: searchParams.toString(),
-      })
-    } else {
-      searchParams.delete('artwork_id')
-      router.replace({
-        pathname: router.pathname,
-        search: searchParams.toString(),
-      })
+    if (!isFirstRender) {
+      if (openArtworkDetail && selectedArtwork?.id) {
+        searchParams.set('artwork_id', selectedArtwork.id)
+        router.replace({
+          pathname: router.pathname,
+          search: searchParams.toString(),
+        })
+      } else {
+        searchParams.delete('artwork_id')
+        router.replace({
+          pathname: router.pathname,
+          search: searchParams.toString(),
+        })
+      }
     }
+    setIsFirstRender(false)
   }, [openArtworkDetail, selectedArtwork?.id])
   useEffect(() => {
     if (!topicData?.story_artworks?.length) return

@@ -13,23 +13,45 @@ import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import Link from 'next/link'
 import Modal from 'components/pages/event/your-city/Modal'
 import ReactHtmlParser from 'react-html-parser'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 export default function CharacterDetail({ id }) {
   const { account } = useContext(Context)
   const { setSignInOpen } = useContext(ModalContext)
-  const { data } = useSWR(
-    {
-      key: 'get character detail',
-      id,
-      userId: account?.id,
-    },
-    ({ id, userId }) => eventService.story.getCharacterDetail(userId, id)
-  )
-  const characterData = data?.data?.data?.story_character_by_pk
+  const [characterData, setCharacterData] = useState(null)
+  const [artworks, setArtworks] = useState([])
+  const [remaining, setRemaining] = useState(true)
+  const [page, setPage] = useState(1)
   const [likeCount, setLikeCount] = useState(0)
   const [isLiked, setIsLiked] = useState(false)
   const [openReport, setOpenReport] = useState(false)
   const [reason, setReason] = useState('')
+  const fetchCharacterData = async (isInit?: boolean) => {
+    try {
+      const res = await eventService.story.getCharacterDetail(account.id, id, page)
+      if (res.data.data.story_character_by_pk) {
+        if (isInit) {
+          setCharacterData(res.data.data.story_character_by_pk)
+        }
+        setIsLiked(res.data.data.story_character_by_pk.likes?.length)
+        setLikeCount(res.data.data.story_character_by_pk.likes_aggregate?.aggregate?.count || 0)
+        const newArtworks = [...artworks, ...(res.data.data.story_character_by_pk.story_artwork_characters || [])]
+        setArtworks(newArtworks)
+        if (
+          res.data.data.story_character_by_pk.story_artwork_characters_aggregate.aggregate.count > newArtworks.length
+        ) {
+          setRemaining(true)
+          setPage((prev) => prev + 1)
+        } else {
+          setRemaining(false)
+        }
+      }
+    } catch (error) {
+      toast(error.message, {
+        type: 'error',
+      })
+    }
+  }
   const likeHandler = async () => {
     try {
       if (!account) {
@@ -65,10 +87,10 @@ export default function CharacterDetail({ id }) {
       })
     }
   }
+
   useEffect(() => {
-    setIsLiked(!!characterData?.likes?.length)
-    setLikeCount(characterData?.likes_aggregate?.aggregate?.count || 0)
-  }, [characterData?.likes?.length])
+    fetchCharacterData(true)
+  }, [])
 
   if (!characterData) {
     return (
@@ -198,27 +220,36 @@ export default function CharacterDetail({ id }) {
               <span className='text-sm font-semibold'>{formatNumber(likeCount)}</span>
             </div>
             <div className='mt-4 text-lg font-semibold'>Artworks</div>
-            <div className='overflow-auto flex gap-4 flex-col w-full mt-4 max-h-[450px] md:max-h-[70vh] md:h-fit md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-              {characterData?.story_artwork_characters?.map(({ story_artwork }) => (
-                <div key={story_artwork.id} className='shrink-0 flex gap-2 md:flex-col'>
-                  <Image
-                    src={story_artwork.display_url}
-                    alt=''
-                    width={100}
-                    height={100}
-                    className='w-[100px] md:w-full border-[3px] border-neutral-black aspect-square rounded-md'
-                  />
-                  <div>
-                    <div className='text-xs font-medium'>{story_artwork.name}</div>
-                    <div className='mt-0.5 text-xs font-medium'>
-                      by{' '}
-                      <span className='text-text-brand-defaul'>
-                        {story_artwork?.authorizer_user?.creator?.pen_name || story_artwork?.authorizer_user?.nickname}
-                      </span>
+            <div id='artwork-list' className='w-full mt-4 max-h-[450px] md:max-h-[70vh] md:h-fit overflow-auto'>
+              <InfiniteScroll
+                loader={<h4>Loading...</h4>}
+                scrollableTarget='artwork-list'
+                next={fetchCharacterData}
+                dataLength={artworks.length}
+                className=' flex gap-4 flex-col md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 !overflow-x-hidden'
+                hasMore={remaining}>
+                {artworks?.map(({ story_artwork }) => (
+                  <div key={story_artwork.id} className='shrink-0 flex gap-2 md:flex-col'>
+                    <Image
+                      src={story_artwork.display_url}
+                      alt=''
+                      width={100}
+                      height={100}
+                      className='w-[100px] md:w-full border-[3px] border-neutral-black aspect-square rounded-md'
+                    />
+                    <div>
+                      <div className='text-xs font-medium'>{story_artwork.name}</div>
+                      <div className='mt-0.5 text-xs font-medium'>
+                        by{' '}
+                        <span className='text-text-brand-defaul'>
+                          {story_artwork?.authorizer_user?.creator?.pen_name ||
+                            story_artwork?.authorizer_user?.nickname}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </InfiniteScroll>
             </div>
           </div>
         </div>

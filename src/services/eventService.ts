@@ -1,4 +1,3 @@
-import { search } from 'src/services'
 import getConfig from 'next/config'
 import { privateAxios } from 'src/context'
 export const eventService = {
@@ -61,13 +60,13 @@ export const eventService = {
             }
           : undefined,
       }),
-    getCharacterDetail: async (userId, id) =>
+    getCharacterDetail: async (userId, id, page) =>
       await privateAxios.get(`${getConfig().REST_API_URL}/story-event/character/get-by-id/${id}`, {
-        params: userId
-          ? {
-              user_id: userId,
-            }
-          : undefined,
+        params: {
+          limit: 24,
+          offset: (page - 1) * 24,
+          ...(userId ? { user_id: userId } : {}),
+        },
       }),
     likeArtwork: async (id) => await privateAxios.post(`${getConfig().REST_API_URL}/user/artwork/${id}/like`),
     unlikeArtwork: async (id) => await privateAxios.post(`${getConfig().REST_API_URL}/user/artwork/${id}/unlike`),

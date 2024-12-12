@@ -199,7 +199,10 @@ export default function ArtworkDetail({ id }) {
             <div className='mt-4 text-lg font-semibold'>Characters</div>
             <div className='overflow-auto no-scrollbar -mx-4 mt-4 w-screen md:w-full flex [&>*]:ml-4'>
               {artworkData?.story_artwork_characters?.map(({ story_character }) => (
-                <Link href={`/characters/${story_character.id}`} key={story_character.id} className='shrink-0'>
+                <Link
+                  href={`/characters?character_id=${story_character.id}`}
+                  key={story_character.id}
+                  className='shrink-0'>
                   <Image
                     src={story_character.avatar_url}
                     alt=''
