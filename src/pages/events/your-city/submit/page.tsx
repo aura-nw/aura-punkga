@@ -634,7 +634,7 @@ function PageContent() {
                                     width={500}
                                     height={500}
                                     alt=''
-                                    className='rounded-lg border-[3px] border-black'
+                                    className='rounded-lg border-[3px] border-black w-full aspect-square object-cover'
                                   />
                                   {ip.is_default_character && (
                                     <div className='bg-neutral-black text-white w-fit rounded-sm px-1 text-[8px] leading-none py-1 font-medium absolute top-2 left-2'>
