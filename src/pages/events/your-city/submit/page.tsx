@@ -142,13 +142,6 @@ function PageContent() {
         setOpen(false)
         return
       }
-      if (data.selectedIP.length && data.selectedIP.every((ip) => !ip.is_default_character)) {
-        toast(t('You must select at least one sponsored character.'), {
-          type: 'error',
-        })
-        setOpen(false)
-        return
-      }
       setLoading(true)
       const payload = new FormData()
       payload.append('name', data.name)
