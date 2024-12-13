@@ -53,10 +53,8 @@ export default function SubmissionTable() {
                       : '-'}
                   </div>
                   <div className='p-4'>
-                    {submission.artwork_topic?.user_artwork_topics?.[0]?.created_at
-                      ? moment(submission.artwork_topic?.user_artwork_topics?.[0]?.created_at).format(
-                          'DD/MM/yyyy'
-                        )
+                    {submission.artwork_topic?.distribute_reward_time
+                      ? moment(submission.artwork_topic?.distribute_reward_time).format('DD/MM/yyyy')
                       : '-'}
                   </div>
                 </div>
