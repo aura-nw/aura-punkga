@@ -101,7 +101,7 @@ function PageContent() {
   return (
     <>
       <div className='bg-[#ffffff] min-h-screen px-4 flex flex-col xl:justify-center gap-10 xl:flex-row w-full lg:px-[85px] lg:gap-14'>
-        <div className='flex flex-col items-center pb-3.5 lg:pb-8 w-full xl:w-[663px] xl:sticky xl:top-[120px] pt-3 xl:h-[calc(100vh-120px)] xl:min-h-[800px] gap-20 xl:gap-0 justify-between'>
+        <div className='flex flex-col items-center pb-3.5 lg:pb-8 w-full xl:w-[663px] xl:sticky xl:top-[120px] pt-3 xl:h-[calc(100dvh-120px)] xl:min-h-[800px] gap-20 xl:gap-0 justify-between'>
           <div className='flex items-center gap-8 flex-col md:flex-row'>
             <div className='relative'>
               <Image src={Logo} alt='' className='w-[132px] md:w-[269px]' />
@@ -443,7 +443,7 @@ function PageContent() {
       ) : (
         openArtworkDetail && (
           <Modal open={openArtworkDetail} setOpen={setOpenArtworkDetail}>
-            <div className='fixed bg-[#ffffff] top-14 left-0 w-screen h-[calc(100vh-56px)] flex flex-col'>
+            <div className='fixed bg-[#ffffff] top-14 left-0 w-screen h-[calc(100dvh-56px)] flex flex-col'>
               <div className='flex-1 overflow-auto p-4'>
                 <div className='flex justify-end'>
                   <svg

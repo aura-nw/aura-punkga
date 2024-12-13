@@ -26,7 +26,6 @@ function PageContent() {
   const { characterData, setCharacterData } = useContext(ListContext)
   const [showSearch, setShowSearch] = useState(false)
   const { account } = useContext(Context)
-  const [searchValue, setSearchValue] = useState('')
   const [type, setType] = useState('all')
   const { width } = useWindowSize()
   const { t } = useTranslation()
@@ -41,7 +40,7 @@ function PageContent() {
         isRefresh ? 1 : characterData.page,
         'Created_At_Desc',
         type,
-        searchValue
+        characterData.search
       )
       const newCharacters = response.data.data.story_character
       const newPage = isRefresh ? 2 : characterData.page + 1
@@ -50,7 +49,6 @@ function PageContent() {
         list: isRefresh ? newCharacters : [...characterData.list, ...newCharacters],
         page: newPage,
         remaining: newRemaining,
-        search: searchValue,
       })
     } catch (error) {
       toast(error.message, { type: 'error' })
@@ -66,7 +64,7 @@ function PageContent() {
     if (!isFirstRender) {
       fetchCharacters(true)
     }
-  }, [searchValue, type])
+  }, [characterData.search, type])
   useEffect(() => {
     if (!isFirstRender) {
       if (selectedCharacter?.id && openCharacterDetail) {
@@ -82,7 +80,7 @@ function PageContent() {
       <div className='justify-center mb-14 items-center w-full hidden lg:flex'>
         <TextField
           defaultValue={characterData.search}
-          onChange={debounce(setSearchValue, 1000)}
+          onChange={debounce((v) => setCharacterData({ search: v.trim() }), 1000)}
           className='bg-neutral-100 text-black max-w-lg [&_input::placeholder]:!text-text-quatenary '
           placeholder={t('Search by character name, creator, IP')}
         />
@@ -113,7 +111,7 @@ function PageContent() {
         {showSearch && (
           <div className='mt-4 w-full'>
             <TextField
-              onChange={debounce(setSearchValue, 1000)}
+              onChange={debounce((v) => setCharacterData({ search: v.trim() }), 1000)}
               className='!border-x-0 !border-t-0 !rounded-none !border-b !border-border-primary text-neutral-white [&_input::placeholder]:!text-text-quatenary '
               placeholder={t('Search by character name, creator, IP')}
             />
@@ -180,7 +178,7 @@ function PageContent() {
       ) : (
         openCharacterDetail && (
           <Modal open={openCharacterDetail} setOpen={setOpenCharacterDetail}>
-            <div className='fixed bg-[#1C1C1C] text-white top-14 left-0 w-screen h-[calc(100vh-56px)] flex flex-col'>
+            <div className='fixed bg-[#1C1C1C] text-white top-14 left-0 w-screen h-[calc(100dvh-56px)] flex flex-col'>
               <div className='flex-1 overflow-auto p-4'>
                 <div className='flex justify-end'>
                   <svg

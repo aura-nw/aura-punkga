@@ -85,12 +85,12 @@ button {
   color: var(--medium-gray);
 }
 .page-content {
-  min-height: calc(100vh - 96px - 433px);
+  min-height: calc(100dvh - 96px - 433px);
   @media (min-width: 768px) {
-    min-height: calc(100vh - 96px - 529px);
+    min-height: calc(100dvh - 96px - 529px);
   }
   @media (min-width: 1024px) {
-    min-height: calc(100vh - 96px - 519px);
+    min-height: calc(100dvh - 96px - 519px);
   }
 }
 .pk-container {

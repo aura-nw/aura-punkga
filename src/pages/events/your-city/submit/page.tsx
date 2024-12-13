@@ -568,7 +568,7 @@ function PageContent() {
                         </div>
                         <div className='relative w-full lg:max-w-[500px]' ref={searchRef}>
                           <TextField
-                            onChange={debounce(fetchSearch, 1000)}
+                            onChange={debounce((v) => fetchSearch(v.trim()), 1000)}
                             onFocus={() => setShowSearch(true)}
                             className='border border-border-primary [&_input::placeholder]:!text-text-secondary-on-brand '
                             placeholder={t('Search by character name, creator, IP')}
