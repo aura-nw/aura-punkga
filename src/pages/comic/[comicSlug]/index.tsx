@@ -22,7 +22,14 @@ Page.getLayout = function getLayout(page) {
 }
 export const getServerSideProps = async (context) => {
   if (context.params?.comicSlug) {
-    const res = await fetch(`https://api.punkga.me/manga/${context.params?.comicSlug}`)
+    const host = context.req.headers.host || context.req.headers.Host
+    const res = await fetch(
+      host.includes('dev')
+        ? `https://api.dev.punkga.me/manga/${context.params?.comicSlug}`
+        : host.includes('staging')
+        ? `https://api.staging.punkga.me/manga/${context.params?.comicSlug}`
+        : `https://api.punkga.me/manga/${context.params?.comicSlug}`
+    )
     const data = await res.json()
     const manga = data?.data?.manga?.[0]
     if (!manga)

@@ -213,7 +213,7 @@ export default function Round2Submission() {
       <form onSubmit={creatorForm.handleSubmit(submitCreatorInformationHandler)} className=''>
         <div className='grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-8'>
           <div>
-            <div className='rounded-md border-[3px] border-neutral-black bg-neautral-950 p-4 md:p-6'>
+            <div className='rounded-md border-[3px] border-neutral-black bg-neutral-950 p-4 md:p-6'>
               <div className='text-lg font-semibold w-full'>{t('Creator’s information')}</div>
               <div className='bg-black rounded-md px-4 py-6 flex flex-col items-center mt-6 md:flex-row md:items-start gap-5 md:gap-3'>
                 <Controller
@@ -254,8 +254,8 @@ export default function Round2Submission() {
                                   d='M8.79349 43.081L29.9302 23.1877L39.8768 33.1344M8.79349 43.081H33.6602C37.7802 43.081 41.1201 39.7411 41.1201 35.621V23.1877M8.79349 43.081C4.67345 43.081 1.3335 39.7411 1.3335 35.621V10.7544C1.3335 6.63435 4.67345 3.2944 8.79349 3.2944H24.9568M38.6335 15.3011L38.6335 8.26772M38.6335 8.26772L38.6335 1.23438M38.6335 8.26772L31.6001 8.26773M38.6335 8.26772L45.6668 8.26773M16.2535 14.4844C16.2535 16.5444 14.5835 18.2144 12.5235 18.2144C10.4635 18.2144 8.79349 16.5444 8.79349 14.4844C8.79349 12.4244 10.4635 10.7544 12.5235 10.7544C14.5835 10.7544 16.2535 12.4244 16.2535 14.4844Z'
                                   stroke='#E7E7E7'
                                   strokeWidth='2'
-                                  stroke-linecap='round'
-                                  stroke-linejoin='round'
+                                  strokeLinecap='round'
+                                  strokeLinejoin='round'
                                 />
                               </svg>
                             )}
@@ -343,7 +343,7 @@ export default function Round2Submission() {
   return (
     <form onSubmit={form.handleSubmit(submitHandler)}>
       <div className='grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-8 mt-8'>
-        <div className='rounded-md border-[3px] border-neutral-black bg-neautral-950 p-4 md:p-6'>
+        <div className='rounded-md border-[3px] border-neutral-black bg-neutral-950 p-4 md:p-6'>
           <div className='grid grid-cols-[70px_1fr] gap-4'>
             <Image
               src={account.creator.avatar_url}
@@ -405,7 +405,7 @@ export default function Round2Submission() {
         </div>
       </div>
       <div className='grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-8 mt-8'>
-        <div className='rounded-md border-[3px] border-neutral-black bg-neautral-950 p-4 md:p-6'>
+        <div className='rounded-md border-[3px] border-neutral-black bg-neutral-950 p-4 md:p-6'>
           <div className='text-lg font-semibold w-full'>{t('Main language')}</div>
           <div className='bg-black rounded-md px-4 py-6 flex flex-col items-center mt-6'>
             <Controller
@@ -482,14 +482,14 @@ export default function Round2Submission() {
           </div>
           {!hasSecondaryLanguage && (
             <div className='mt-4 w-full flex justify-end'>
-              <Button color='neautral' size='xs' onClick={() => setHasSecondaryLanguage(true)}>
+              <Button color='neutral' size='xs' onClick={() => setHasSecondaryLanguage(true)}>
                 {t('+ Add second language')}
               </Button>
             </div>
           )}
         </div>
         {hasSecondaryLanguage && (
-          <div className='rounded-md border-[3px] border-neutral-black bg-neautral-950 p-4 md:p-6'>
+          <div className='rounded-md border-[3px] border-neutral-black bg-neutral-950 p-4 md:p-6'>
             <div className='flex justify-between items-center'>
               <div className='text-lg font-semibold w-full'>{t('Secondary language')}</div>
               <XMarkIcon
@@ -574,7 +574,7 @@ export default function Round2Submission() {
         )}
       </div>
       <div className='w-full max-w-[1500px] mt-8'>
-        <div className='rounded-md border-[3px] border-neutral-black bg-neautral-950 p-4 md:p-6'>
+        <div className='rounded-md border-[3px] border-neutral-black bg-neutral-950 p-4 md:p-6'>
           <div className='text-lg font-semibold'>{t('IP info (Maximum 8)')}</div>
           <div className='mt-6 space-y-8'>
             <Controller

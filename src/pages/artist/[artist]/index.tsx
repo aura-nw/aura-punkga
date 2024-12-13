@@ -59,7 +59,14 @@ const authorSeo = [
 ]
 export const getServerSideProps = async (context) => {
   if (context.params?.artist) {
-    const res = await fetch(`https://api.punkga.me/creator/${context.params?.artist}`)
+    const host = context.req.headers.host || context.req.headers.Host
+    const res = await fetch(
+      host.includes('dev')
+        ? `https://api.dev.punkga.me/creator/${context.params?.artist}`
+        : host.includes('staging')
+        ? `https://api.staging.punkga.me/creator/${context.params?.artist}`
+        : `https://api.punkga.me/creator/${context.params?.artist}`
+    )
     const data = await res.json()
     const creator = data?.data?.creators?.[0]
     if (!creator)

@@ -30,7 +30,7 @@ export default function Round1Submission() {
         payload.append('description', description)
         const res = await eventService.story.createCharacter(payload)
         if (res.data?.errors?.message) {
-          toast(res.data.errors.message, {
+          toast(res.data.errors.message||res.data.errors?.[0]?.message, {
             type: 'error',
           })
         } else {
@@ -54,7 +54,7 @@ export default function Round1Submission() {
   if (!account) return <div className='w-full text-center'>{t('Login to continue')}</div>
   return (
     <div className='grid grid-cols-1 lg:grid-cols-[7fr_8fr] gap-8'>
-      <div className='rounded-md border-[3px] border-neutral-black bg-neautral-950 p-6'>
+      <div className='rounded-md border-[3px] border-neutral-black bg-neutral-950 p-6'>
         <div>
           <label className='text-sm font-medium' htmlFor='name'>
             {t('Character name')} <span className='text-error-default'>*</span>

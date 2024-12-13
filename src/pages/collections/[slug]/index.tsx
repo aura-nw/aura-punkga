@@ -19,7 +19,14 @@ Page.getLayout = function getLayout(page) {
 }
 export const getServerSideProps = async (context) => {
   if (context.params?.slug) {
-    const res = await fetch(`https://api.punkga.me/launchpad/slug/${context.params?.slug}`)
+    const host = context.req.headers.host || context.req.headers.Host
+    const res = await fetch(
+      host.includes('dev')
+        ? `https://api.dev.punkga.me/launchpad/slug/${context.params?.slug}`
+        : host.includes('staging')
+        ? `https://api.staging.punkga.me/launchpad/slug/${context.params?.slug}`
+        : `https://api.punkga.me/launchpad/slug/${context.params?.slug}`
+    )
     const data = await res.json()
     const launchpad = data?.data?.launchpad?.[0]
     if (!launchpad)
@@ -35,8 +42,7 @@ export const getServerSideProps = async (context) => {
       canonical: `https://punkga.me/launchpad/slug/${context.params?.slug}`,
     }
     if (context.locale == 'en') {
-      const languages =
-        launchpad.launchpad_i18ns.find((ml) => ml.language_id == 1)
+      const languages = launchpad.launchpad_i18ns.find((ml) => ml.language_id == 1)
 
       props.image = languages?.data?.thumbnail_url
       props.title = languages?.data?.name

@@ -85,12 +85,12 @@ button {
   color: var(--medium-gray);
 }
 .page-content {
-  min-height: calc(100vh - 96px - 433px);
+  min-height: calc(100dvh - 96px - 433px);
   @media (min-width: 768px) {
-    min-height: calc(100vh - 96px - 529px);
+    min-height: calc(100dvh - 96px - 529px);
   }
   @media (min-width: 1024px) {
-    min-height: calc(100vh - 96px - 519px);
+    min-height: calc(100dvh - 96px - 519px);
   }
 }
 .pk-container {
@@ -228,6 +228,15 @@ input[type='number'] {
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
 }
+.Toastify__toast--info {
+  background: #228eb9 !important;
+  color: #fff !important;
+  font-family: inherit !important;
+  border-radius: 8px 0px 0px 8px !important;
+  align-items: center !important;
+  padding: 24px 16px !important;
+  margin-bottom: 0px !important;
+}
 .Toastify__toast--success {
   background: #1fab5e !important;
   color: #fff !important;
@@ -247,6 +256,7 @@ input[type='number'] {
   margin-bottom: 0px !important;
 }
 .Toastify__toast-icon {
+  --toastify-icon-color-info: #c6f6ff;
   --toastify-icon-color-success: #c6ffde;
   --toastify-icon-color-error: #ffbe99;
 }

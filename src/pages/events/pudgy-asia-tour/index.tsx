@@ -98,8 +98,8 @@ export const getServerSideProps = async (context) => {
   const props = {
     image:
       context.locale == 'vn'
-        ? 'https://punkga.me/assets/images/pudgy-thumb.png'
-        : 'https://punkga.me/assets/images/pudgy-thumb.png',
+        ? '/assets/images/pudgy-thumb.png'
+        : '/assets/images/pudgy-thumb.png',
     title: context.locale == 'vn' ? `CUỘC THI VẼ PUDGY ASIA ART` : `Pudgy Asia Art Contest`,
     description:
       context.locale == 'vn'

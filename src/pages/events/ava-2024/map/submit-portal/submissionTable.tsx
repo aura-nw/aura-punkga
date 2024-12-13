@@ -5,12 +5,12 @@ import useSWR from 'swr'
 
 export default function SubmissionTable() {
   const { t } = useTranslation()
-  const { data } = useSWR('get-submissions', eventService.story.getSubmissions, {
+  const { data } = useSWR('get-submissions', () => eventService.story.getSubmissions('3'), {
     revalidateOnFocus: false,
   })
   const submissions = data?.data?.data?.story_event_submission
   return (
-    <div className='rounded-md border-[3px] border-neutral-black bg-neautral-950 p-6 h-fit'>
+    <div className='rounded-md border-[3px] border-neutral-black bg-neutral-950 p-6 h-fit'>
       <div className='text-lg font-semibold'>{t('My submission')}</div>
       <div className='text-feedback-info-link-defaul text-xs mt-2'>
         {t(

@@ -264,7 +264,7 @@ export default function Event() {
                           </div>
                         </div>
                         <div className='flex gap-1.5 mt-4'>
-                          <Button size='sm' color='neautral' className='!w-full' onClick={likeHandler}>
+                          <Button size='sm' color='neutral' className='!w-full' onClick={likeHandler}>
                             {t(isLiked ? 'Liked' : 'Like')}
                           </Button>
                         </div>
@@ -355,7 +355,7 @@ export default function Event() {
                 </div>
               </div>
               <div className='flex gap-1.5 mt-4'>
-                <Button size='sm' color='neautral' className='!w-full' onClick={likeHandler}>
+                <Button size='sm' color='neutral' className='!w-full' onClick={likeHandler}>
                   {t(isLiked ? 'Liked' : 'Like')}
                 </Button>
               </div>

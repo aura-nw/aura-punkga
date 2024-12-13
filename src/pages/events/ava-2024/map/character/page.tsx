@@ -150,7 +150,7 @@ function Event() {
                   <div className='flex justify-between relative z-10 items-center gap-10 h-10 lg:hidden mb-5 flex-row-reverse'>
                     <div>
                       <Link href={!collectedCharacter?.length ? '#' : '/events/ava-2024/map/character/collected'}>
-                        <Button color='neautral' size='sm' className='h-10' disabled={!collectedCharacter?.length}>
+                        <Button color='neutral' size='sm' className='h-10' disabled={!collectedCharacter?.length}>
                           {t('Your collected')}
                         </Button>
                       </Link>
@@ -203,8 +203,8 @@ function Event() {
                                 d='M7 10L12.0008 14.58L17 10'
                                 stroke='white'
                                 strokeWidth='1.5'
-                                stroke-linecap='round'
-                                stroke-linejoin='round'
+                                strokeLinecap='round'
+                                strokeLinejoin='round'
                               />
                             </svg>
                           </div>
@@ -340,7 +340,7 @@ function Event() {
                     <div className='flex-1'>
                       {account && (
                         <Link href={!collectedCharacter?.length ? '#' : '/events/ava-2024/map/character/collected'}>
-                          <Button color='neautral' size='sm' className='h-10' disabled={!collectedCharacter?.length}>
+                          <Button color='neutral' size='sm' className='h-10' disabled={!collectedCharacter?.length}>
                             {t('Your collected')}
                           </Button>
                         </Link>
@@ -452,7 +452,7 @@ function Event() {
                           (collectedCharacter?.length || 0) >= 3
                         ) && (
                           <Button
-                            color='neautral'
+                            color='neutral'
                             size='sm'
                             className='!w-2/3 shrink-0 [&>*]:w-full'
                             onClick={() => {
@@ -471,7 +471,7 @@ function Event() {
                             </div>
                           </Button>
                         )}
-                        <Button size='sm' color='neautral' variant='outlined' className='!w-full' onClick={likeHandler}>
+                        <Button size='sm' color='neutral' variant='outlined' className='!w-full' onClick={likeHandler}>
                           {t(isLiked ? 'Liked' : 'Like')}
                         </Button>
                       </div>
@@ -569,7 +569,7 @@ function Event() {
                     (collectedCharacter?.length || 0) >= 3
                   ) && (
                     <Button
-                      color='neautral'
+                      color='neutral'
                       size='sm'
                       className='!w-full shrink-0 flex item-center justify-between [&>*]:w-full'
                       onClick={() => {
@@ -588,7 +588,7 @@ function Event() {
                       </div>
                     </Button>
                   )}
-                  <Button size='sm' color='neautral' variant='outlined' className='!w-full' onClick={likeHandler}>
+                  <Button size='sm' color='neutral' variant='outlined' className='!w-full' onClick={likeHandler}>
                     {t(isLiked ? 'Liked' : 'Like')}
                   </Button>
                 </div>
@@ -600,7 +600,7 @@ function Event() {
       <Modal open={open} setOpen={setOpen} title={t('Collect IP')}>
         {characterData && (
           <div>
-            <div className='p-4 rounded-xl flex flex-col gap-4 items-center bg-neautral-950'>
+            <div className='p-4 rounded-xl flex flex-col gap-4 items-center bg-neutral-950'>
               <div className='relative rounded-xl border-[3px] overflow-hidden border-black  cursor-pointer'>
                 <div className='absolute bottom-0 inset-x-0 w-full'>
                   <Image src={characterData?.avatar_url} width={200} height={200} alt='' className='w-full  relative' />
@@ -614,10 +614,10 @@ function Event() {
               </div>
             </div>
             <div className='flex gap-2.5 mt-4 w-full'>
-              <Button color='neautral' size='sm' variant='outlined' className='!w-1/3' onClick={() => setOpen(false)}>
+              <Button color='neutral' size='sm' variant='outlined' className='!w-1/3' onClick={() => setOpen(false)}>
                 {t('Cancel')}
               </Button>
-              <Button size='sm' color='neautral' className='!w-2/3' onClick={collectHandler} loading={loading}>
+              <Button size='sm' color='neutral' className='!w-2/3' onClick={collectHandler} loading={loading}>
                 {t('Collect IP')}
               </Button>
             </div>

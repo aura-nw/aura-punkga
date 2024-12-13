@@ -83,8 +83,8 @@ function Comic({ comicDetails, like, unlike }) {
           <div className='absolute inset-0 bg-gradient-to-r from-[28%] from-[#000]/80 to-[#00000000]'></div>
         </div>
       </div>
-      <div className={`flex flex-col -mb-[8vh]`} style={{ minHeight: `calc(100vh - ${HEADER_HEIGHT.MOBILE})` }}>
-        <div className='min-h-[211px] w-full relative'>
+      <div className={`flex flex-col -mb-[8vh]`} style={{ minHeight: `calc(100dvh - ${HEADER_HEIGHT.MOBILE})` }}>
+        <div className='min-h-[228px] w-full relative'>
           <div className='w-full h-full z-10 relative flex'>
             <div className='w-full h-full z-10 flex flex-col p-6 gap-6'>
               <div className='flex gap-2 flex-wrap'>

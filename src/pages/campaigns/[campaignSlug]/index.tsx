@@ -20,7 +20,14 @@ Page.getLayout = function getLayout(page) {
 }
 export const getServerSideProps = async (context) => {
   if (context.params?.campaignSlug) {
-    const res = await fetch(`https://api.punkga.me/campaign/${context.params?.campaignSlug}`)
+    const host = context.req.headers.host || context.req.headers.Host
+    const res = await fetch(
+      host.includes('dev')
+        ? `https://api.dev.punkga.me/campaign/${context.params?.campaignSlug}`
+        : host.includes('staging')
+        ? `https://api.staging.punkga.me/campaign/${context.params?.campaignSlug}`
+        : `https://api.punkga.me/campaign/${context.params?.campaignSlug}`
+    )
     const data = await res.json()
     const campaign = data?.data?.campaign?.[0]
     if (!campaign)

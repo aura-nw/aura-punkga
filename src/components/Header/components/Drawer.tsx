@@ -87,31 +87,19 @@ export default function Drawer({ openNavigation, setOpenNavigation }) {
     <>
       <div className='fixed inset-0 z-10 bg-black/80'></div>
       <div
-        className={`z-40 divide-y divide-border-teriary flex flex-col bg-white text-[#414141] p-4 absolute top-0 right-0 h-screen overflow-auto w-4/5 transform transition-transform duration-300 ${
+        className={`z-40 flex flex-col bg-[#3D3D3DE5] text-white p-4 absolute top-0 right-0 h-screen overflow-auto w-4/5 transform transition-transform duration-300 ${
           openNavigation ? 'translate-x-0' : 'translate-x-full'
         }`}>
-        <div className='flex justify-between pb-4 sticky top-0 bg-white'>
+        <div className='flex justify-between pb-4 sticky top-0'>
           <Image src={Logo} alt='header logo' className='h-[29px] w-auto' />
           <div className='flex items-center gap-4'>
-            {/* <Button
-                      size='xs'
-                      color='dark'
-                      variant='outlined'
-                      onClick={() => window.open(config.ADMIN_URL, '_blank')}>
-                      Create Portal
-                    </Button> */}
             <div
               className='w-6 h-6 mt-2 relative'
               onClick={() => {
                 setOpenNavigation(false)
               }}>
               <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none'>
-                <path
-                  d='M18 6.00005L6 18M5.99995 6L17.9999 18'
-                  stroke='#000000'
-                  strokeWidth='2'
-                  strokeLinecap='round'
-                />
+                <path d='M18 6.00005L6 18M5.99995 6L17.9999 18' stroke='#fff' strokeWidth='2' strokeLinecap='round' />
               </svg>
             </div>
           </div>
@@ -119,20 +107,10 @@ export default function Drawer({ openNavigation, setOpenNavigation }) {
         {account?.verified && account?.name && (
           <>
             <div className='pt-2 space-y-2'>
-              <div className='flex p-2.5 gap-2 items-center text-base bg-background-bg-primary rounded-mlg '>
-                <Image
-                  src={account.image ? account.image : PunkgaWallet}
-                  width={32}
-                  height={32}
-                  alt=''
-                  className='rounded-full w-8 aspect-square'
-                />
-                <div className='text-sm font-medium text-text-primary w-full'>{account?.name}</div>
-                <div onClick={() => setTeleQrCodeOpen(true)}>
-                  <Image src={QRCode} alt='' className='w-8 h-8' />
-                </div>
+              <div className='flex p-2.5 gap-2 items-center text-base bg-neutral-950 rounded-mlg '>
+                <div className='font-bold text-green-500 w-full'>{account?.name}</div>
               </div>
-              <div className='text-xs font-normal text-brand-2-defaul'>
+              <div className='text-xs font-normal '>
                 Connected chain: {chainId == config.CHAIN_INFO.evmChainId ? 'Aura' : 'Story'} •{' '}
                 <span
                   className='underline'
@@ -240,74 +218,11 @@ export default function Drawer({ openNavigation, setOpenNavigation }) {
                             </div>
                           )}
                       </div>
-                      {account?.tonWalletAddress && (
-                        <div className='bg-background-bg-primary p-2.5 rounded-mlg text-sm'>
-                          <div className='text-[#ABABAB] text-sm mb-1'>{`${t('TON Space')}`}</div>
-                          <div className='flex justify-between items-center text-[#4E5056] font-semibold relative'>
-                            <div className='text-text-info-primary'>{`${shorten(
-                              account?.tonWalletAddress,
-                              8,
-                              8
-                            )}`}</div>
-                            <div onClick={copyTonAddress}>
-                              <Image width={18} height={18} src={CopySvg} alt='' />
-                            </div>
-                            <span
-                              className={`transition-all w-fit mr-2 absolute -top-full right-0 text-xs bg-light-gray py-1 px-2 border rounded-md ${
-                                isTonCopied ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                              }`}>
-                              {t('Copied')}
-                            </span>
-                          </div>
-                          <div className='text-[#ABABAB] text-sm mt-3 mb-1'>{`${t('Balance')}`}</div>
-                          <div className='flex justify-between items-center text-[#4E5056] font-semibold leading-5'>
-                            <div className='flex items-center'>
-                              {hideTonBalance ? '********' : `${tonBalance.toFixed(2)} TON`}
-                            </div>
-                            <span className='inline-block'>
-                              {
-                                <div className='ml-2 relative'>
-                                  {hideTonBalance ? (
-                                    <Image
-                                      src={EyeClose}
-                                      alt=''
-                                      onClick={() => setHideTonBalance(false)}
-                                      className='w-[18px] h-[18px] cursor-pointer'
-                                    />
-                                  ) : (
-                                    <Image
-                                      src={EyeOpen}
-                                      alt=''
-                                      onClick={() => setHideTonBalance(true)}
-                                      className='w-[18px] h-[18px] cursor-pointer'
-                                    />
-                                  )}
-                                </div>
-                              }
-                            </span>
-                          </div>
-                        </div>
-                      )}
                     </div>
                   )}
                 </div>
               )}
-              {!account.tonWalletAddress && (
-                <div
-                  className='flex gap-3 items-center py-3 text-sm leading-[18px] font-medium'
-                  onClick={() => {
-                    setOpenNavigation(false)
-                    setAddTonWalletOpen(true)
-                  }}>
-                  <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                    <path
-                      d='M18 13.8002V14.5502C18.4142 14.5502 18.75 14.2144 18.75 13.8002H18ZM18 9.4002H18.75C18.75 8.98598 18.4142 8.6502 18 8.6502V9.4002ZM5.99443 5.16931C5.646 5.3933 5.54513 5.85734 5.76912 6.20576C5.9931 6.55419 6.45714 6.65507 6.80557 6.43108L5.99443 5.16931ZM12 2.2002L12.592 1.73974C12.3537 1.43333 11.921 1.3594 11.5944 1.56931L12 2.2002ZM14.208 6.26065C14.4623 6.58761 14.9335 6.64651 15.2605 6.39221C15.5874 6.13791 15.6463 5.6667 15.392 5.33974L14.208 6.26065ZM18 13.0502H15.4V14.5502H18V13.0502ZM15.4 10.1502H18V8.6502H15.4V10.1502ZM17.25 9.4002V13.8002H18.75V9.4002H17.25ZM13.95 11.6002C13.95 10.7994 14.5992 10.1502 15.4 10.1502V8.6502C13.7708 8.6502 12.45 9.97096 12.45 11.6002H13.95ZM15.4 13.0502C14.5992 13.0502 13.95 12.401 13.95 11.6002H12.45C12.45 13.2294 13.7708 14.5502 15.4 14.5502V13.0502ZM6.80557 6.43108L12.4056 2.83108L11.5944 1.56931L5.99443 5.16931L6.80557 6.43108ZM11.408 2.66065L14.208 6.26065L15.392 5.33974L12.592 1.73974L11.408 2.66065ZM2.8 6.5502H16.4V5.0502H2.8V6.5502ZM16.4 17.0502H2.8V18.5502H16.4V17.0502ZM2.75 17.0002V6.6002H1.25V17.0002H2.75ZM2.8 17.0502C2.77239 17.0502 2.75 17.0278 2.75 17.0002H1.25C1.25 17.8562 1.94396 18.5502 2.8 18.5502V17.0502ZM16.45 17.0002C16.45 17.0278 16.4276 17.0502 16.4 17.0502V18.5502C17.256 18.5502 17.95 17.8562 17.95 17.0002H16.45ZM16.4 6.5502C16.4276 6.5502 16.45 6.57258 16.45 6.6002H17.95C17.95 5.74416 17.256 5.0502 16.4 5.0502V6.5502ZM2.8 5.0502C1.94396 5.0502 1.25 5.74416 1.25 6.6002H2.75C2.75 6.57258 2.77239 6.5502 2.8 6.5502V5.0502ZM16.45 14.4002V17.0002H17.95V14.4002H16.45ZM16.45 6.6002V8.7002H17.95V6.6002H16.45Z'
-                      fill='#009640'
-                    />
-                  </svg>
-                  {t('Add TON Space wallet')}
-                </div>
-              )}
+
               <div
                 className='flex gap-3 items-center py-3 text-sm leading-[18px] font-medium'
                 onClick={() => {
@@ -321,6 +236,15 @@ export default function Drawer({ openNavigation, setOpenNavigation }) {
           </>
         )}
         <div className='space-y-2 pt-2'>
+          <div
+            className='flex gap-3 items-center py-3 text-sm leading-[18px] font-medium'
+            onClick={() => {
+              setOpenNavigation(false)
+              router.push('/characters')
+            }}>
+            <Image src={AboutUs} alt='' className='w-5 h-5' />
+            {t('Characters')}
+          </div>
           <div
             className='flex gap-3 items-center py-3 text-sm leading-[18px] font-medium'
             onClick={() => {

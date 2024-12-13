@@ -7,14 +7,29 @@ import KaiaEventImage from 'components/pages/event/assets/allEvents/Kaia.png'
 import KaiaEventImageVN from 'components/pages/event/assets/allEvents/Kaia-vn.png'
 import PudgyEventImage from 'components/pages/event/assets/allEvents/Pudgy.png'
 import AvaEventImage from 'components/pages/event/assets/allEvents/ava.png'
+import PunktoberEventImage from 'components/pages/event/assets/allEvents/punktober.png'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 const events = [
   {
-    url: '/events/ava-2024',
+    url: '/events/your-city',
     isLive: true,
+    en: {
+      image: PunktoberEventImage,
+      title: `Your City`,
+      subtitle: `09 Dec 2024 - 09 Jan 2025`,
+    },
+    vn: {
+      image: AvaEventImage,
+      title: `AVA Grand Contest 2024`,
+      subtitle: `09/12/2024 - 09/01/2025`,
+    },
+  },
+  {
+    url: '/events/ava-2024',
+    isLive: false,
     en: {
       image: AvaEventImage,
       title: `AVA Grand Contest 2024`,
