@@ -1,4 +1,5 @@
 import { Skeleton } from '@mui/material'
+import Copy2Clipboard from 'components/Copy2Clipboard'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -22,7 +23,7 @@ export default function CharacterDetail({ id }) {
   const [isLiked, setIsLiked] = useState(false)
   const fetchCharacterData = async (isInit?: boolean) => {
     try {
-      const res = await eventService.story.getCharacterDetail(account.id, id, page)
+      const res = await eventService.story.getCharacterDetail(account?.id, id, page)
       if (res?.data?.data?.story_character_by_pk) {
         if (isInit) {
           setCharacterData(res.data.data.story_character_by_pk)
@@ -176,6 +177,17 @@ export default function CharacterDetail({ id }) {
                   className='text-text-brand-defaul'>
                   {shorten(characterData?.story_ip_asset?.ip_asset_id)}
                 </Link>{' '}
+                <Copy2Clipboard text={characterData?.story_ip_asset?.ip_asset_id}>
+                  <svg width='18' height='19' viewBox='0 0 18 19' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                    <path
+                      d='M8.98537 5.9041V7.9291C8.98537 8.3019 9.28758 8.6041 9.66037 8.6041H11.6854M13.0354 3.2041H8.31021C7.56463 3.2041 6.96021 3.80851 6.96021 4.55409V5.9041M13.0354 3.2041H13.4119C13.602 3.2041 13.783 3.28416 13.9139 3.42195C14.1107 3.629 14.4225 3.94781 14.7229 4.2166C14.9583 4.42727 15.3282 4.80534 15.5497 5.03511C15.6695 5.15937 15.7354 5.32529 15.7354 5.49788L15.7354 5.9041M13.0354 3.2041V5.2291C13.0354 5.60189 13.3376 5.9041 13.7104 5.9041H15.7354M15.7354 5.9041L15.7352 12.6541C15.7352 13.3997 15.1308 14.0041 14.3852 14.0041H11.6852M10.6729 6.9166C10.3725 6.64781 10.0607 6.329 9.86391 6.12195C9.73295 5.98417 9.55201 5.9041 9.36192 5.9041H4.26021C3.51463 5.9041 2.91021 6.50851 2.91021 7.2541L2.91016 15.3541C2.91015 16.0997 3.51457 16.7041 4.26015 16.7041L10.3352 16.7041C11.0808 16.7041 11.6852 16.0997 11.6852 15.3541L11.6854 8.19788C11.6854 8.02529 11.6195 7.85937 11.4997 7.73512C11.2782 7.50534 10.9083 7.12727 10.6729 6.9166Z'
+                      stroke='white'
+                      strokeWidth='1.5'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                  </svg>
+                </Copy2Clipboard>
               </div>
             </div>
             <p className='text-sm w-full mt-4 whitespace-pre-wrap'>{ReactHtmlParser(characterData?.description)}</p>
