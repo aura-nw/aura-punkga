@@ -163,10 +163,12 @@ export default function CharacterDetail({ id }) {
                     target='_blank'
                     href={`/artist/${characterData?.authorizer_user?.creator?.slug}`}
                     className='text-text-brand-defaul'>
-                    {characterData?.creator?.authorizer_user?.pen_name}
+                    {characterData?.authorizer_user?.creator?.pen_name}
                   </Link>
                 ) : (
-                  <span className='text-text-brand-defaul'>{characterData?.authorizer_user?.nickname}</span>
+                  <span className='text-text-brand-defaul'>
+                    {characterData?.authorizer_user?.nickname || 'PunkgaMe'}
+                  </span>
                 )}
               </div>
               <div className='h-[18px] flex items-center gap-1.5 leading-tight'>
@@ -227,10 +229,18 @@ export default function CharacterDetail({ id }) {
                       <div className='text-xs font-medium'>{story_artwork.name}</div>
                       <div className='mt-0.5 text-xs font-medium'>
                         by{' '}
-                        <span className='text-text-brand-defaul'>
-                          {story_artwork?.authorizer_user?.creator?.pen_name ||
-                            story_artwork?.authorizer_user?.nickname}
-                        </span>
+                        {story_artwork?.authorizer_user?.creator ? (
+                          <Link
+                            target='_blank'
+                            href={`/artist/${story_artwork?.authorizer_user?.creator?.slug}`}
+                            className='text-text-brand-defaul'>
+                            {story_artwork?.authorizer_user?.creator?.pen_name}
+                          </Link>
+                        ) : (
+                          <span className='text-text-brand-defaul'>
+                            {story_artwork?.authorizer_user?.nickname || 'PunkgaMe'}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
