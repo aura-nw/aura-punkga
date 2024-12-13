@@ -19,12 +19,12 @@ const events = [
     en: {
       image: PunktoberEventImage,
       title: `Your City`,
-      subtitle: `09 Dec 2024 - 09 Jan 2025`,
+      subtitle: `14 Dec 2024 - 13 Jan 2025`,
     },
     vn: {
       image: AvaEventImage,
       title: `AVA Grand Contest 2024`,
-      subtitle: `09/12/2024 - 09/01/2025`,
+      subtitle: `14/12/2024 - 13/01/2025`,
     },
   },
   {
