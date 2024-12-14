@@ -349,7 +349,7 @@ function PageContent() {
             <button
               type='submit'
               className='p-2.5 text-center font-roboto text-[22px] uppercase font-bold bg-neutral-black text-white w-64'>
-              {t('Confirm & Next Step')}
+              {t(loading ? 'Loading' : 'Confirm & Next Step')}
             </button>
           </form>
         </div>
