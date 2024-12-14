@@ -307,7 +307,7 @@ function PageContent() {
       </div>
       <Modal open={showContestRule} setOpen={setShowContestRule}>
         <div className='px-8 py-4 rounded-mlg bg-white w-full max-w-screen-sm space-y-4 relative'>
-          <div className='lg:hidden absolute top-3 right-3' onClick={() => setShowContestRule(false)}>
+          <div className='absolute top-3 right-3' onClick={() => setShowContestRule(false)}>
             <XMarkIcon width={20} height={20} />
           </div>
           <div className='text-center w-full font-semibold text-lg'>{t('CONTEST RULES')}</div>
@@ -352,6 +352,17 @@ function PageContent() {
       {width >= 768 ? (
         <Modal open={openArtworkDetail} setOpen={setOpenArtworkDetail}>
           <div className='w-screen max-w-screen-2xl relative mx-auto flex items-center gap-4'>
+            <div className='absolute top-0 right-5 cursor-pointer'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='24'
+                height='24'
+                viewBox='0 0 24 24'
+                fill='none'
+                onClick={() => setOpenArtworkDetail(false)}>
+                <path d='M16 8L8 16M16 16L8 8' stroke='#fff' stroke-width='1.5' stroke-linecap='round' />
+              </svg>
+            </div>
             <div
               className='cursor-pointer'
               onClick={() => {
@@ -367,7 +378,7 @@ function PageContent() {
                 />
               </svg>
             </div>
-            <div className='bg-[#ffffff] p-8 h-full w-full'>
+            <div className='bg-[#ffffff] p-8 h-full w-full relative'>
               <ArtworkDetail id={selectedArtwork?.id} />
             </div>
             <div

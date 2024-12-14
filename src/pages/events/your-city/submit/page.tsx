@@ -209,8 +209,8 @@ function PageContent() {
   if (!account) return <div className='w-full text-center py-12'>{t('Login to continue')}</div>
   if (!account.creator) {
     return (
-      <>
-        <div className='bg-[#ffffff] min-h-screen relative py-12'>
+      <div className='bg-[#ffffff]'>
+        <div className=' min-h-screen relative py-12'>
           <Link href='/events/your-city' className='absolute top-12 left-[4%] flex items-center font-medium text-sm'>
             <svg width='33' height='32' viewBox='0 0 33 32' fill='none' xmlns='http://www.w3.org/2000/svg'>
               <path
@@ -353,16 +353,16 @@ function PageContent() {
             </button>
           </form>
         </div>
-        <div className='sticky w-full bottom-0'>
+        <div className='relative w-full mt-20'>
           <Image src={Image2} alt='' className='absolute bottom-full -mb-3 right-0 w-[512px]' />
           <Image src={Image1} alt='' className='w-full relative' />
         </div>
-      </>
+      </div>
     )
   }
   return (
-    <div>
-      <div className='bg-[#ffffff] min-h-screen relative pt-12 pb-40 px-4'>
+    <div className='bg-[#ffffff]'>
+      <div className=' min-h-screen relative pt-12 pb-40 px-4'>
         <Link
           href='/events/your-city'
           className='fixed top-16 lg:top-32 left-[4%] flex items-center font-medium text-sm'>
@@ -734,7 +734,7 @@ function PageContent() {
                     <button
                       type='submit'
                       className='p-2.5 text-center font-roboto text-[22px] uppercase font-bold  text-white bg-neutral-black w-64'>
-                      {t('Submit')}
+                      {t(loading ? 'Submitting' : 'Submit')}
                     </button>
                   </div>
                 )}
@@ -746,7 +746,7 @@ function PageContent() {
           </div>
         </div>
       </div>
-      <div className='w-full relative'>
+      <div className='w-full relative mt-20'>
         <Image src={Image2} alt='' className='absolute bottom-full -mb-3 right-0 w-[512px]' />
         <Image src={Image1} alt='' className='w-full relative' />
       </div>
