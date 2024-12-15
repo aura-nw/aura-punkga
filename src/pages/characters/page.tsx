@@ -170,6 +170,17 @@ function PageContent() {
       {width >= 768 ? (
         <Modal open={openCharacterDetail} setOpen={setOpenCharacterDetail}>
           <div className='w-screen max-w-screen-2xl relative mx-auto flex items-center gap-4'>
+<div className='absolute top-0 right-5 cursor-pointer'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='24'
+                height='24'
+                viewBox='0 0 24 24'
+                fill='none'
+                onClick={() => setOpenCharacterDetail(false)}>
+                <path d='M16 8L8 16M16 16L8 8' stroke='#fff' stroke-width='1.5' stroke-linecap='round' />
+              </svg>
+            </div>
             <div className='bg-[#1C1C1C] text-white p-8 h-full w-full'>
               <CharacterDetail id={selectedCharacter?.id || searchParams.get('character_id')} />
             </div>
