@@ -67,13 +67,13 @@ function PageContent() {
         router.replace({
           pathname: router.pathname,
           search: searchParams.toString(),
-        })
+        },undefined,{shallow: true})
       } else {
         searchParams.delete('artwork_id')
         router.replace({
           pathname: router.pathname,
           search: searchParams.toString(),
-        })
+        },undefined,{shallow: true})
       }
     }
     setIsFirstRender(false)
