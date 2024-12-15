@@ -63,6 +63,7 @@ function PageContent() {
     if (!isFirstRender) {
       if (openArtworkDetail && selectedArtwork?.id) {
         searchParams.set('artwork_id', selectedArtwork.id)
+        searchParams.set('date', date.format('DD-MM-YYYY'))
         router.replace({
           pathname: router.pathname,
           search: searchParams.toString(),
