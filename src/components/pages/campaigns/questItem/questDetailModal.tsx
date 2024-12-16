@@ -40,7 +40,7 @@ export default function QuestDetailModal({
   const xpImageSrc = quest.pointText == 'KP' ? KPImage : quest.pointText == 'SF' ? SFImage : XPImage
   const xpText = quest.pointText
 
-  const [status, setStatus] = useState(quest.status)
+  const [status, setStatus] = useState(quest.reward_status)
   const [checking, setChecking] = useState(false)
   const { query, locale } = useRouter()
   const slug = query.campaignSlug as string
