@@ -6,7 +6,7 @@ import SFImage from 'components/pages/campaigns/assets/sf.png'
 import NoImage from 'images/no_img.png'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import ReactHtmlParser from 'react-html-parser'
 import { useTranslation } from 'react-i18next'
 import { Quest } from 'src/models/campaign'
@@ -45,6 +45,9 @@ export default function QuestDetailModal({
   const { query, locale } = useRouter()
   const slug = query.campaignSlug as string
   const { executeRecaptcha } = useGoogleReCaptcha()
+  useEffect(() => {
+    setStatus(quest.reward_status)
+  }, [quest.reward_status])
   const checkQuestHandler = useCallback(async () => {
     try {
       if (!executeRecaptcha) {
