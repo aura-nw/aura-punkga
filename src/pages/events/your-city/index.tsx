@@ -2,6 +2,7 @@ import HeadComponent from 'components/Head'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Layout from 'components/Layout'
 import Event from './page'
+import { GetServerSideProps } from 'next'
 
 export default function Page(props) {
   if (props.justHead || props.pageProps?.justHead) {
@@ -17,10 +18,28 @@ export default function Page(props) {
 Page.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>
 }
-export const getServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const artworkId = context.query.artwork_id
+  const host = context.req.headers.host || context.req.headers.Host
+  const res = await fetch(
+    host.includes('dev') || host.includes('localhost')
+      ? `https://api.dev.punkga.me/story-event/artwork/${artworkId}`
+      : host.includes('staging')
+      ? `https://api.staging.punkga.me/story-event/artwork/${artworkId}`
+      : `https://api.punkga.me/story-event/artwork/${artworkId}`
+  )
+  const data = await res.json()
+  const artworkData = data?.data?.story_artwork_by_pk?.artwork
   return {
     props: {
-      metadata: pageMetadata(context),
+      metadata: artworkData
+        ? {
+            ...pageMetadata(context),
+            image: artworkData.url,
+            title: artworkData.name,
+            description: artworkData.description,
+          }
+        : pageMetadata(context),
       ...(await serverSideTranslations(context?.locale!, ['common'])),
     },
   }
