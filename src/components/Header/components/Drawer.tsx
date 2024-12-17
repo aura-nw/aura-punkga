@@ -1,12 +1,11 @@
+import DP from 'assets/images/dp.svg'
 import Logo from 'assets/images/header-logo.svg'
 import AboutUs from 'assets/images/icons/aboutUs.svg'
 import Campaign from 'assets/images/icons/campaign.svg'
 import Language from 'assets/images/icons/language.svg'
 import LogOut from 'assets/images/icons/logout.svg'
 import MyProfile from 'assets/images/icons/myProfile.svg'
-import PunkgaWallet from 'assets/images/punkga.png'
 import Button from 'components/core/Button/Button'
-import QRCode from 'images/QR Code.svg'
 import CopySvg from 'images/icons/copy.svg'
 import EyeClose from 'images/icons/eye-closed.svg'
 import EyeOpen from 'images/icons/eye-open.svg'
@@ -15,28 +14,28 @@ import { useTranslation } from 'next-i18next'
 import getConfig from 'next/config'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useState } from 'react'
 import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
 import { storyChain } from 'src/services/wagmi/config'
-import { shorten } from 'src/utils'
-import TonWeb from 'tonweb'
+import { formatNumber, shorten } from 'src/utils'
 import { useAccount, useBalance, useChainId, useSwitchChain } from 'wagmi'
+
 export default function Drawer({ openNavigation, setOpenNavigation }) {
-  const tonweb = new TonWeb()
   const config = getConfig()
   const { t } = useTranslation()
   const router = useRouter()
-  const { setMigrateWalletOpen, setAddTonWalletOpen, setTeleQrCodeOpen } = useContext(ModalContext)
+  const { setMigrateWalletOpen } = useContext(ModalContext)
   const [isCopied, setIsCopied] = useState(false)
-  const [isTonCopied, setIsTonCopied] = useState(false)
   const [showWalletDetail, setShowWalletDetail] = useState(false)
   const [hideBalance, setHideBalance] = useState(false)
-  const [hideTonBalance, setHideTonBalance] = useState(false)
-  const [tonBalance, setTonBalance] = useState(0)
   const { account, logout } = useContext(Context)
   const walletBalance = useBalance({
     address: account?.activeWalletAddress as any,
+  })
+  const dpBalance = useBalance({
+    address: account?.activeWalletAddress as any,
+    token: config.DP_ADDRESS,
   })
   const { switchChain } = useSwitchChain()
   const chainId = useChainId()
@@ -47,36 +46,11 @@ export default function Drawer({ openNavigation, setOpenNavigation }) {
     router.push({ pathname, query }, asPath, { locale: newLanguage })
   }
 
-  async function checkTONBalance() {
-    try {
-      // Fetch account information
-      const accountInfo = await tonweb.provider.getBalance(account?.tonWalletAddress)
-
-      // Convert the balance from nanograms to TONs (1 TON = 1e9 nanograms)
-      const balanceInTON = accountInfo / 1e9
-
-      setTonBalance(balanceInTON)
-    } catch (error) {
-      console.error('Error fetching balance:', error.message)
-    }
-  }
-  useEffect(() => {
-    if (account?.tonWalletAddress) {
-      checkTONBalance()
-    }
-  }, [account?.tonWalletAddress])
   const copyAddress = async () => {
     navigator.clipboard.writeText(account?.activeWalletAddress)
     setIsCopied(true)
     _.debounce(() => {
       _.delay(() => setIsCopied(false), 3000)
-    }, 1000)()
-  }
-  const copyTonAddress = async () => {
-    navigator.clipboard.writeText(account?.tonWalletAddress)
-    setIsTonCopied(true)
-    _.debounce(() => {
-      _.delay(() => setIsTonCopied(false), 3000)
     }, 1000)()
   }
   const handleOpenWalletOnExplorer = () => {
@@ -107,8 +81,12 @@ export default function Drawer({ openNavigation, setOpenNavigation }) {
         {account?.verified && account?.name && (
           <>
             <div className='pt-2 space-y-2'>
-              <div className='flex p-2.5 gap-2 items-center text-base bg-neutral-950 rounded-mlg '>
+              <div className='p-2.5 text-base bg-neutral-950 rounded-mlg'>
                 <div className='font-bold text-green-500 w-full'>{account?.name}</div>
+                <div className='mt-1.5 flex items-center gap-1.5 text-sm font-medium'>
+                  <Image src={DP} width={50} height={50} className='w-[18px] h-[18px]' alt='dream-point' />
+                  {formatNumber(+(+dpBalance?.data?.formatted || 0).toFixed(2))} {dpBalance?.data?.symbol || 'AURA'}
+                </div>
               </div>
               <div className='text-xs font-normal '>
                 Connected chain: {chainId == config.CHAIN_INFO.evmChainId ? 'Aura' : 'Story'} •{' '}
