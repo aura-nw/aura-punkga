@@ -1,73 +1,43 @@
-import PunkgaWallet from 'assets/images/punkga.png'
 import UserGreen from 'assets/images/userGreen.svg'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import Button from 'components/core/Button/Button'
-import QRCode from 'images/QR Code.svg'
-import CopySvg from 'images/icons/copy.svg'
-import EyeClose from 'images/icons/eye-closed.svg'
-import EyeOpen from 'images/icons/eye-open.svg'
 import _ from 'lodash'
 import { useTranslation } from 'next-i18next'
 import getConfig from 'next/config'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
 import { storyChain } from 'src/services/wagmi/config'
-import { shorten } from 'src/utils'
-import TonWeb from 'tonweb'
+import { formatNumber, shorten } from 'src/utils'
 import { useAccount, useBalance, useChainId, useSwitchChain } from 'wagmi'
+import DP from 'assets/images/dp.svg'
 export default function UserDropdown() {
-  const tonweb = new TonWeb()
   const config = getConfig()
   const { t } = useTranslation()
   const router = useRouter()
-  const { setMigrateWalletOpen, setAddTonWalletOpen, setTeleQrCodeOpen } = useContext(ModalContext)
-  const [isSearchFocused, setIsSearchFocused] = useState(false)
+  const { setMigrateWalletOpen } = useContext(ModalContext)
   const [isCopied, setIsCopied] = useState(false)
-  const [isTonCopied, setIsTonCopied] = useState(false)
   const [showWalletDetail, setShowWalletDetail] = useState(false)
   const [hideBalance, setHideBalance] = useState(false)
-  const [hideTonBalance, setHideTonBalance] = useState(false)
-  const [tonBalance, setTonBalance] = useState(0)
   const { account, logout } = useContext(Context)
   const walletBalance = useBalance({
     address: account?.activeWalletAddress as any,
   })
+  const dpBalance = useBalance({
+    address: account?.activeWalletAddress as any,
+    token: config.DP_ADDRESS,
+  })
   const { switchChain } = useSwitchChain()
   const chainId = useChainId()
   const { isConnected, address, chain } = useAccount()
-  async function checkTONBalance() {
-    try {
-      // Fetch account information
-      const accountInfo = await tonweb.provider.getBalance(account?.tonWalletAddress)
 
-      // Convert the balance from nanograms to TONs (1 TON = 1e9 nanograms)
-      const balanceInTON = accountInfo / 1e9
-
-      setTonBalance(balanceInTON)
-    } catch (error) {
-      console.error('Error fetching balance:', error.message)
-    }
-  }
-  useEffect(() => {
-    if (account?.tonWalletAddress) {
-      checkTONBalance()
-    }
-  }, [account?.tonWalletAddress])
   const copyAddress = async () => {
     navigator.clipboard.writeText(account?.activeWalletAddress)
     setIsCopied(true)
     _.debounce(() => {
       _.delay(() => setIsCopied(false), 3000)
-    }, 1000)()
-  }
-  const copyTonAddress = async () => {
-    navigator.clipboard.writeText(account?.tonWalletAddress)
-    setIsTonCopied(true)
-    _.debounce(() => {
-      _.delay(() => setIsTonCopied(false), 3000)
     }, 1000)()
   }
   const handleOpenWalletOnExplorer = () => {
@@ -98,6 +68,10 @@ export default function UserDropdown() {
         <div className='p-4 border-2 border-[#B0B0B0] flex flex-col bg-[#3D3D3DE5] rounded-mlg'>
           <div className='p-2.5 text-base bg-neutral-950 rounded-mlg'>
             <div className='font-bold text-green-500 w-full'>{account?.name}</div>
+            <div className='mt-1.5 flex items-center gap-1.5 text-sm font-medium'>
+              <Image src={DP} width={50} height={50} className='w-[18px] h-[18px]' alt='dream-point' />
+              {formatNumber(+(+dpBalance?.data?.formatted || 0).toFixed(2))} {dpBalance?.data?.symbol || 'AURA'}
+            </div>
           </div>
           <div className='text-xs font-normal text-white mt-2'>
             Connected chain: {chainId == config.CHAIN_INFO.evmChainId ? 'Aura' : 'Story'} •{' '}
@@ -178,7 +152,7 @@ export default function UserDropdown() {
                     <div className='flex items-center'>
                       {hideBalance
                         ? '********'
-                        : `${(+walletBalance?.data?.formatted || 0).toFixed(2)} ${
+                        : `${formatNumber(+(+walletBalance?.data?.formatted || 0).toFixed(2))} ${
                             walletBalance?.data?.symbol || 'AURA'
                           }`}
                     </div>
