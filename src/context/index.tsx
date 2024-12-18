@@ -483,9 +483,9 @@ function ContextProvider({ children }: any) {
   }
 
   const removeTokenCookie = () => {
-    removeCookie('token', { path: '/', domain: '.punkga.me' })
-    removeCookie('token', { path: '/', domain: '.staging.punkga.me' })
-    removeCookie('token', { path: '/', domain: '.dev.punkga.me' })
+    removeCookie('token', { path: '/', domain: '.app.punkga.me' })
+    removeCookie('token', { path: '/', domain: '.app.staging.punkga.me' })
+    removeCookie('token', { path: '/', domain: '.app.dev.punkga.me' })
   }
 
   if (isSettingUp) {
