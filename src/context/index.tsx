@@ -335,6 +335,7 @@ function ContextProvider({ children }: any) {
           activeWalletAddress: res.active_wallet_address,
           noncustodialWalletAddress: res.wallet_address,
           tonWalletAddress: res.ton_wallet_address,
+          activities: res.punkga_wallets[0].punkga_wallet_activities,
         } as IUser)
       }
       if (!res.email_verified_at && res.email) {
