@@ -147,7 +147,6 @@ function Home() {
                   })
                 : latestComic.data?.length
                 ? latestComic.data
-                    .filter((data: any) => data.tags.every((lang: any) => lang.en.toLowerCase() != 'invent contest'))
                     .filter((data) =>
                       statusFilter.length && !statusFilter.some((s) => s.key == 'All status')
                         ? statusFilter.some((filter) => data.status.text == filter?.key)
