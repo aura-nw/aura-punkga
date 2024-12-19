@@ -96,7 +96,7 @@ export default function Drawer({ openNavigation, setOpenNavigation }) {
                 Activity
               </div>
               <div className='mt-4 space-y-4 h-[80dvh] overflow-auto'>
-                {account.activities.map((act, index) => {
+                {account?.activities?.map((act, index) => {
                   if (act.type == 'SUBMIT_ARTWORK')
                     return (
                       <div key={index} className='flex gap-4 items-center'>
