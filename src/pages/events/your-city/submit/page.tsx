@@ -42,7 +42,7 @@ function PageContent() {
   })
   const [IPList, setIPList] = useState([])
   useEffect(() => {
-    if (moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz('2025-01-01', 'Asia/Ho_Chi_Minh'))) {
+    if (moment().tz('Asia/Ho_Chi_Minh').isAfter(moment.tz('2025-01-15', 'Asia/Ho_Chi_Minh'))) {
       replace('/events/your-city')
     }
   }, [])

@@ -335,6 +335,7 @@ function ContextProvider({ children }: any) {
           activeWalletAddress: res.active_wallet_address,
           noncustodialWalletAddress: res.wallet_address,
           tonWalletAddress: res.ton_wallet_address,
+          activities: res?.punkga_wallets?.[0]?.punkga_wallet_activities,
         } as IUser)
       }
       if (!res.email_verified_at && res.email) {
@@ -483,9 +484,9 @@ function ContextProvider({ children }: any) {
   }
 
   const removeTokenCookie = () => {
-    removeCookie('token', { path: '/', domain: '.punkga.me' })
-    removeCookie('token', { path: '/', domain: '.staging.punkga.me' })
-    removeCookie('token', { path: '/', domain: '.dev.punkga.me' })
+    removeCookie('token', { path: '/', domain: '.app.punkga.me' })
+    removeCookie('token', { path: '/', domain: '.app.staging.punkga.me' })
+    removeCookie('token', { path: '/', domain: '.app.dev.punkga.me' })
   }
 
   if (isSettingUp) {

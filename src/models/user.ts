@@ -40,4 +40,5 @@ export interface IUser {
   quests: any
   rank: number
   activeWalletAddress: string
+  activities: any[]
 }
