@@ -21,7 +21,6 @@ export default function Manga(props: IComic) {
       setLineClamp(res > 3 ? 3 : res)
     }
   }, [])
-  console.log(props)
   return (
     <Link
       href={width < 1280 ? `/comic/${props.slug}` : `/comic/${props.slug}/chapter/1`}

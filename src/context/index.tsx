@@ -356,7 +356,7 @@ function ContextProvider({ children }: any) {
         email: email,
         password: password,
       })
-      if (res && !res?.user?.roles?.includes('admin')) {
+      if (res) {
         callback && callback('success')
         setItem('token', res.access_token, new Date(Date.now() + res.expires_in * 1000))
         setCookie('token', res.access_token, {
