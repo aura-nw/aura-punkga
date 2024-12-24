@@ -121,7 +121,7 @@ export default function ComicDetail({
               height={180}
               x
               src={data.cover || mockBanner}
-              className={`h-full duration-500 transition-all object-fit w-full`}
+              className={`h-full duration-500 transition-all object-cover w-full`}
               alt=''
             />
           </div>
@@ -155,17 +155,15 @@ export default function ComicDetail({
               width={120}
               className={`${expandDetail ? ' w-[240px] h-[320px]' : ' w-[120px] h-[160px]'} ${
                 expandDetail ? ' mt-[-198px]' : ' mt-[-58px]'
-              } duration-500 transition-all object-cover rounded-[15px] overflow-hidden bg-medium-gray`}
+              } duration-500 transition-all object-cover rounded-[15px] overflow-hidden bg-medium-gray shrink-0`}
               alt=''
             />
-            <div className={`flex-1 flex flex-col ${expandDetail ? 'gap-[5px]' : 'gap-[10px]'}`}>
+            <div className={`flex-1 flex min-w-0 flex-col ${expandDetail ? 'gap-[5px]' : 'gap-[10px]'}`}>
               <div
                 className={`font-bold ${
                   expandDetail ? 'text-black' : 'text-second-color'
                 } transition-all text-2xl -mb-[7px] flex items-start gap-[10px]`}>
-                <span className={`${!expandDetail ? 'line-clamp-1' : ''}`}>
-                  {data[selectedLanguage.shortLang]?.title}
-                </span>
+                <span className={`${!expandDetail ? 'truncate' : ''}`}>{data[selectedLanguage.shortLang]?.title}</span>
                 {expandDetail && <StatusLabel status={data.status?.type}>{t(data.status?.text)}</StatusLabel>}
               </div>
               <p
