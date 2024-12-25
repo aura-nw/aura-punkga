@@ -80,5 +80,11 @@ export const eventService = {
           offset: 0,
         },
       }),
+    getUserArtworks: async (id: string) =>
+      await privateAxios.get(`${getConfig().REST_API_URL}/user/artwork-topics`, {
+        params: {
+          user_id: id,
+        },
+      }),
   },
 }
