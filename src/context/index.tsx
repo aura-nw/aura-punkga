@@ -21,6 +21,7 @@ import ModalProvider from './modals'
 import { useCookies } from 'react-cookie'
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3'
 import ListProvider from './list'
+import { set } from 'lodash'
 
 const queryClient = new QueryClient()
 
@@ -72,6 +73,7 @@ function ContextProvider({ children }: any) {
   const router = useRouter()
   const searchParams = new URLSearchParams(location.search)
   const accessTokenParam = searchParams.get('access_token') || searchParams.get('token')
+  const refreshTokenParam = searchParams.get('refresh_token')
   const expiresInParam = searchParams.get('expires_in')
   const portalCallbackUrlParam = searchParams.get('login_callback_url')
   const [cookie, setCookie, removeCookie] = useCookies(['token'])
@@ -123,6 +125,35 @@ function ContextProvider({ children }: any) {
   })
 
   useEffect(() => {
+    privateAxios.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        const prevRequest = error?.config
+        if (error?.response?.status === 401 && !prevRequest?.sent) {
+          prevRequest.sent = true
+          const refreshToken = getItem('refresh_token')
+          return authorizerRef
+            .getToken({
+              grant_type: 'refresh_token',
+              refresh_token: refreshToken,
+            })
+            .then((tokens) => {
+              setCookie('token', tokens.access_token, { path: '/' })
+              setItem('refresh_token', tokens.refresh_token)
+              setItem('token', tokens.access_token, new Date(Date.now() + tokens.expires_in * 1000))
+              prevRequest.headers['Authorization'] = `Bearer ${tokens.access_token}`
+              return privateAxios(prevRequest)
+            })
+            .catch((e) => {
+              if (e?.response?.status === 401) {
+                removeCookie('token')
+              }
+              return Promise.reject(error)
+            })
+        }
+        return Promise.reject(error)
+      }
+    )
     privateAxios.interceptors.request.use(
       (config) => {
         const token = getItem('token')
@@ -223,6 +254,7 @@ function ContextProvider({ children }: any) {
       if (res?.siwe?.access_token) {
         const token = res?.siwe?.access_token
         setItem('token', res?.siwe?.access_token, new Date(Date.now() + res?.siwe?.expires_in * 1000))
+        setItem('refresh_token', res?.siwe?.refresh_token)
         setCookie('token', res?.siwe?.access_token, {
           expires: new Date(Date.now() + res?.siwe?.expires_in * 1000),
         })
@@ -253,6 +285,7 @@ function ContextProvider({ children }: any) {
       if (location.pathname.includes('reset_password') || location.pathname.includes('verified')) {
         await authorizerRef.logout()
         removeItem('token')
+        removeItem('refresh_token')
         removeTokenCookie()
         removeItem('current_reading_manga')
         setAccount(undefined)
@@ -263,6 +296,7 @@ function ContextProvider({ children }: any) {
             accessTokenParam,
             new Date(Date.now() + (expiresInParam ? +expiresInParam * 1000 : 10800000))
           )
+          setItem('refresh_token', refreshTokenParam)
           setCookie('token', accessTokenParam, {
             expires: new Date(Date.now() + (expiresInParam ? +expiresInParam * 1000 : 10800000)),
           })
@@ -340,11 +374,13 @@ function ContextProvider({ children }: any) {
       }
       if (!res.email_verified_at && res.email) {
         removeItem('token')
+        removeItem('refresh_token')
         removeTokenCookie()
       }
       return res
     } catch (error) {
       removeItem('token')
+      removeItem('refresh_token')
       removeTokenCookie()
       console.log('getProfile', error)
     }
@@ -355,10 +391,12 @@ function ContextProvider({ children }: any) {
       const res = await authorizerRef.login({
         email: email,
         password: password,
+        scope: ['offline_access'],
       })
       if (res) {
         callback && callback('success')
         setItem('token', res.access_token, new Date(Date.now() + res.expires_in * 1000))
+        setItem('refresh_token', res.refresh_token)
         setCookie('token', res.access_token, {
           expires: new Date(Date.now() + res.expires_in * 1000),
         })
@@ -375,11 +413,12 @@ function ContextProvider({ children }: any) {
 
   const oauth = async (provider: string, callback?: (status: string) => void) => {
     try {
-      if (provider == 'zalo') {
-        await oauthLogin('zalo', undefined, location.href || config.REDIRECT_URL)
-      } else {
-        await authorizerRef.oauthLogin(provider)
-      }
+      await oauthLogin(provider, undefined, location.href || config.REDIRECT_URL, 'offline_access')
+      // if (provider == 'zalo') {
+      //   await oauthLogin('zalo', undefined, location.href || config.REDIRECT_URL, 'offline_access')
+      // } else {
+      //   await authorizerRef.oauthLogin(provider)
+      // }
     } catch (error) {
       callback && callback('failed')
       console.log('oauth error: ' + error)
@@ -391,6 +430,7 @@ function ContextProvider({ children }: any) {
       await authorizerRef.logout()
       await disconnectAsync()
       removeItem('token')
+      removeItem('refresh_token')
       removeTokenCookie()
       removeItem('current_reading_manga')
       setAccount(undefined)

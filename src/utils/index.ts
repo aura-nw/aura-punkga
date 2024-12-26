@@ -69,7 +69,8 @@ export const oauthLogin = async (
   oauthProvider: string,
   roles?: string[],
   redirect_uri?: string,
-  state?: string
+  state?: string,
+  scope?: string
 ): Promise<void> => {
   let urlState = state
   const config = getConfig()
@@ -80,7 +81,7 @@ export const oauthLogin = async (
   window.location.replace(
     `${config.AUTHORIZER_URL}/oauth_login/${oauthProvider}?redirect_uri=${
       redirect_uri || config.REDIRECT_URL
-    }&state=${urlState}`
+    }&state=${urlState}&scope=${scope}`
   )
 }
 const createRandomString = () => {
