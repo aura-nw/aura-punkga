@@ -147,6 +147,8 @@ function ContextProvider({ children }: any) {
             .catch((e) => {
               if (e?.response?.status === 401) {
                 removeCookie('token')
+                removeItem('token')
+                removeItem('refresh_token')
               }
               return Promise.reject(error)
             })
@@ -311,7 +313,7 @@ function ContextProvider({ children }: any) {
           if (token && cookie['token']) {
             const t = localStorage.getItem('token') as string
             setLogoutTimeout(new Date(JSON.parse(t).exprire).getTime() - Date.now())
-            await getProfile(token)
+            await getProfile()
           }
         }
       }
@@ -325,6 +327,16 @@ function ContextProvider({ children }: any) {
   const getProfile = async (token?: string) => {
     try {
       if (portalCallbackUrlParam) {
+        if (!token) {
+          const refreshToken = getItem('refresh_token')
+          const tokens = await authorizerRef.getToken({
+            grant_type: 'refresh_token',
+            refresh_token: refreshToken,
+          })
+          setCookie('token', tokens.access_token, { path: '/' })
+          setItem('refresh_token', tokens.refresh_token)
+          setItem('token', tokens.access_token, new Date(Date.now() + tokens.expires_in * 1000))
+        }
         router.replace(portalCallbackUrlParam)
       }
       const t = token || getItem('token')
@@ -332,6 +344,7 @@ function ContextProvider({ children }: any) {
         throw new Error('Unauthorized access token')
       }
       const res = await getProfileService()
+      console.log(res)
       if (res?.id) {
         setAccount(undefined)
         if (res.wallet_address) {
