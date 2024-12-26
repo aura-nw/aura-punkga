@@ -109,7 +109,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   ])
 
   const postComment = async (content: string) => {
-    const { data } = await privateAxios.post(`${config.API_URL}/api/rest/user/chapters/${chapterId.current}/comments`, {
+    const { data } = await privateAxios.post(`${config.REST_API_URL}/user/comment-chapter/${chapterId.current}`, {
       content: content,
       ref_activity: null,
     })
@@ -119,10 +119,10 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   }
 
   const like = async (id?: string) => {
-    await privateAxios.post(`${config.API_URL}/api/rest/user/chapters/${id || chapterId.current}/likes`)
+    await privateAxios.post(`${config.REST_API_URL}/user/like-chapter/${id || chapterId.current}`)
   }
   const unlike = async (id?: string) => {
-    await privateAxios.delete(`${config.API_URL}/api/rest/user/chapters/${id || chapterId.current}/likes`)
+    await privateAxios.delete(`${config.REST_API_URL}/user/unlike-chapter/${id || chapterId.current}`)
   }
 
   return (

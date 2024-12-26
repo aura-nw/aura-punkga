@@ -11,10 +11,10 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
   const config = getConfig()
 
   const like = async (id) => {
-    await privateAxios.post(`${config.API_URL}/api/rest/user/chapters/${id}/likes`)
+    await privateAxios.post(`${config.REST_API_URL}/user/like-chapter/${id}`)
   }
   const unlike = async (id) => {
-    await privateAxios.delete(`${config.API_URL}/api/rest/user/chapters/${id}/likes`)
+    await privateAxios.delete(`${config.REST_API_URL}/user/unlike-chapter/${id}`)
   }
 
   const comicDetails = useApi<IComicDetail>(

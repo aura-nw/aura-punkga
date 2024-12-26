@@ -26,10 +26,8 @@ export const eventService = {
       }),
     getCollectedCharacters: async () =>
       await privateAxios.get(`${getConfig().REST_API_URL}/story-event/character/collected`),
-    likeCharacter: async (id) =>
-      await privateAxios.post(`${getConfig().API_URL}/api/rest/user/story-event/characters/${id}/likes`),
-    unlikeCharacter: async (id) =>
-      await privateAxios.delete(`${getConfig().API_URL}/api/rest/user/story-event/characters/${id}/likes`),
+    likeCharacter: async (id) => await privateAxios.post(`${getConfig().REST_API_URL}/user/like-character/${id}`),
+    unlikeCharacter: async (id) => await privateAxios.delete(`${getConfig().REST_API_URL}/user/unlike-character/${id}`),
     collectCharacter: async (id) =>
       await privateAxios.post(`${getConfig().REST_API_URL}/story-event/character/${id}/collect`),
     getSubmissions: async (contest_id?: string | number) =>
