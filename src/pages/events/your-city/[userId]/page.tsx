@@ -1,19 +1,19 @@
-import Logo from 'components/pages/event/your-city/assets/logo-punktober.png'
-import Image from 'next/image'
-import { formatNumber } from 'src/utils'
-import Point from 'components/pages/event/your-city/assets/dp.svg'
-import { useTranslation } from 'react-i18next'
-import { useRef, useState } from 'react'
-import { useRouter } from 'next/router'
-import useSWR from 'swr'
-import { eventService } from 'src/services/eventService'
 import Spinner from 'components/Spinner'
 import Modal from 'components/pages/event/your-city/Modal'
-import { useWindowSize } from 'usehooks-ts'
-import ArtworkDetail from '../ArtworkDetail'
-import moment from 'moment-timezone'
+import Point from 'components/pages/event/your-city/assets/dp.svg'
+import Logo from 'components/pages/event/your-city/assets/logo-punktober.png'
 import Mark from 'components/pages/event/your-city/assets/mark.svg'
 import html2canvas from 'html2canvas'
+import moment from 'moment-timezone'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { eventService } from 'src/services/eventService'
+import { formatNumber, imageUrlToBase64 } from 'src/utils'
+import useSWR from 'swr'
+import { useWindowSize } from 'usehooks-ts'
+import ArtworkDetail from '../ArtworkDetail'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -39,6 +39,7 @@ function PageContent() {
       setLoading(true)
       const canvas = await html2canvas(captureRef.current, {
         useCORS: true,
+        logging: true,
         allowTaint: true,
       })
       const dataUrl = canvas.toDataURL('image/png')
@@ -302,7 +303,7 @@ function PageContent() {
                           }}
                           key={artwork.id}
                           className='rounded-lg overflow-hidden lg:rounded-none [&:hover>div]:flex absolute top-0 right-0 w-full h-full cursor-pointer'>
-                          <Image
+                          <Base64Image
                             src={artwork.story_artwork.display_url}
                             alt=''
                             width={300}
@@ -409,5 +410,36 @@ function PageContent() {
         )
       )}
     </>
+  )
+}
+const Base64Image = ({ src, ...rest }) => {
+  const [data, setData] = useState<string>('')
+  const ref = useRef()
+  function imageToUri(img, callback) {
+    const canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')
+
+    img.onload = function () {
+      canvas.width = img.width
+      canvas.height = img.height
+
+      ctx.drawImage(img, 0, 0)
+
+      callback(canvas.toDataURL('image/png'))
+
+      canvas.remove()
+    }
+  }
+
+  useEffect(() => {
+    imageToUri(ref.current, function (uri) {
+      console.log(uri)
+    })
+  }, [])
+  return (
+    <div className='relative'>
+      <Image src={src} alt='' crossOrigin='anonymous' {...rest} ref={ref} />
+      {data && <Image src={data} alt='image' width={400} height={400} {...rest} />}
+    </div>
   )
 }

@@ -148,3 +148,18 @@ export const isMetamaskInstalled = () => {
 
   return false
 }
+export const imageUrlToBase64 = async (url) => {
+  const data = await fetch(url, {
+    mode: 'no-cors',
+  })
+  const blob = await data.blob()
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(blob)
+    reader.onloadend = () => {
+      const base64data = reader.result
+      resolve(base64data)
+    }
+    reader.onerror = reject
+  })
+}
