@@ -420,8 +420,8 @@ const Base64Image = ({ src, ...rest }) => {
     const ctx = canvas.getContext('2d')
 
     img.onload = function () {
-      canvas.width = img.width
-      canvas.height = img.height
+      canvas.width = img.naturalWidth
+      canvas.height = img.naturalHeight
 
       ctx.drawImage(img, 0, 0)
 
