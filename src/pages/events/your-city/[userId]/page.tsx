@@ -412,7 +412,7 @@ function PageContent() {
     </>
   )
 }
-const Base64Image = ({ src, ...rest }) => {
+const Base64Image = ({ src, className, ...rest }) => {
   const [data, setData] = useState<string>('')
   const ref = useRef()
   function imageToUri(img, callback) {
@@ -422,7 +422,7 @@ const Base64Image = ({ src, ...rest }) => {
     img.onload = function () {
       canvas.width = img.naturalWidth
       canvas.height = img.naturalHeight
-
+      canvas.style.objectFit = 'cover'
       ctx.drawImage(img, 0, 0)
 
       callback(canvas.toDataURL('image/png'))
@@ -438,7 +438,6 @@ const Base64Image = ({ src, ...rest }) => {
   }, [])
   return (
     <div className='relative'>
-      <Image src={src} alt='' crossOrigin='anonymous' {...rest} ref={ref} />
       {data && (
         <Image
           src={data}
@@ -448,6 +447,7 @@ const Base64Image = ({ src, ...rest }) => {
           className='absolute top-0 left-0 w-full h-full object-cover'
         />
       )}
+      <Image src={src} alt='' crossOrigin='anonymous' className={`${className} relative`} {...rest} ref={ref} />
     </div>
   )
 }
