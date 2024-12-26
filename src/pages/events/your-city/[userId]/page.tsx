@@ -433,13 +433,21 @@ const Base64Image = ({ src, ...rest }) => {
 
   useEffect(() => {
     imageToUri(ref.current, function (uri) {
-      console.log(uri)
+      setData(uri)
     })
   }, [])
   return (
     <div className='relative'>
       <Image src={src} alt='' crossOrigin='anonymous' {...rest} ref={ref} />
-      {data && <Image src={data} alt='image' width={400} height={400} {...rest} />}
+      {data && (
+        <Image
+          src={data}
+          alt='image'
+          width={400}
+          height={400}
+          className='absolute top-0 left-0 w-full h-full object-cover'
+        />
+      )}
     </div>
   )
 }
