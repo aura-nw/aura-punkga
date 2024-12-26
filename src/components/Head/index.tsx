@@ -14,7 +14,7 @@ export default function HeadComponent({ data }: { data?: any }) {
     : locale == 'vn'
     ? 'Đọc truyện tranh online tiếng việt cập nhật chapter mới mỗi tuần tại Punkga.Me. Đa dạng thể loại: Hành động, Tragedy, Slice of life, Ecchi, Sci-fi, Adventure,...'
     : 'Read Manga online free, fast updated, officially licensed with high-quality translated chapters. Start reading now!'
-  const punkgaImage = data?.image || 'https://punkga.me/assets/images/thumb.png'
+  const punkgaImage = data?.image || 'https://app.punkga.me/assets/images/thumb.png'
   return (
     <Head>
       <title key='title'>{punkgaTitle}</title>
