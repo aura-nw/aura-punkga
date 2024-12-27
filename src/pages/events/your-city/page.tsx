@@ -210,7 +210,7 @@ function PageContent() {
                   <div className='text-xs font-medium text-neutral-950'>{selectedTopic.sponser_name}</div>
                 </div>
               </div>
-              {moment().isBefore(moment('2025-01-02')) && moment().isAfter(moment('2024-12-30')) ? (
+              {date.isBefore(moment('2025-01-02')) && date.isAfter(moment('2024-12-30')) ? (
                 <div className='grid grid-cols-[1fr_auto_1fr_auto_1fr] gap-10 w-full max-w-lg'>
                   <div className='flex flex-col items-center gap-2.5'>
                     <div className='text-gray-800 text-sm flex items-center whitespace-nowrap gap-1'>
