@@ -548,7 +548,7 @@ function PageContent() {
           )
         )}
       </div>
-      <Modal open={true} setOpen={setShowSpecialRewardGuideModal}>
+      <Modal open={showSpecialRewardGuideModal} setOpen={setShowSpecialRewardGuideModal}>
         <div className='px-8 py-4 rounded-mlg bg-white w-full max-w-screen-sm space-y-4 relative'>
           <div className='absolute top-3 right-3' onClick={() => setShowSpecialRewardGuideModal(false)}>
             <XMarkIcon width={20} height={20} />
