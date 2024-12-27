@@ -210,7 +210,7 @@ function PageContent() {
                   <div className='text-xs font-medium text-neutral-950'>{selectedTopic.sponser_name}</div>
                 </div>
               </div>
-              {(date.isSameOrAfter(moment('2024-12-30')) && date.isSameOrBefore(moment('2025-01-02'))) || true ? (
+              {date.isSameOrAfter(moment('2024-12-30')) && date.isSameOrBefore(moment('2025-01-02')) ? (
                 <>
                   <div
                     className='flex-col items-center gap-2.5 cursor-pointer flex md:hidden'
