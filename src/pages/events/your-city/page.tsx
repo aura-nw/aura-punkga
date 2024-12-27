@@ -210,10 +210,10 @@ function PageContent() {
                   <div className='text-xs font-medium text-neutral-950'>{selectedTopic.sponser_name}</div>
                 </div>
               </div>
-              {date.isSameOrAfter(moment('2024-12-30')) && date.isSameOrBefore(moment('2025-01-02')) ? (
-                <div className='grid grid-cols-[1fr_auto_1fr_auto_1fr] gap-10 w-full max-w-lg'>
+              {(date.isSameOrAfter(moment('2024-12-30')) && date.isSameOrBefore(moment('2025-01-02'))) || true ? (
+                <>
                   <div
-                    className='flex flex-col items-center gap-2.5 cursor-pointer'
+                    className='flex-col items-center gap-2.5 cursor-pointer flex md:hidden'
                     onClick={() => setShowSpecialRewardGuideModal(true)}>
                     <div className='text-gray-800 text-sm flex items-center whitespace-nowrap gap-1'>
                       {t('Special Reward')}{' '}
@@ -230,21 +230,46 @@ function PageContent() {
                       450 <Image src={Usdt} width={24} height={24} alt='' />
                     </div>
                   </div>
-                  <div className='w-[1px] h-14 bg-neutral-black'></div>
-                  <div className='flex flex-col items-center gap-2.5'>
-                    <div className='text-gray-800 text-sm'>{t('Total reward')}</div>
-                    <div className='text-gray-black text-xl font-semibold flex items-center gap-1'>
-                      {formatNumber(selectedTopic.total_reward)} <Image src={Point} width={24} height={24} alt='' />
+                  <div className='grid md:grid-cols-[1fr_auto_1fr_auto_1fr] grid-cols-[1fr_auto_1fr] gap-10 w-full max-w-lg'>
+                    <div
+                      className='flex-col items-center gap-2.5 cursor-pointer hidden md:flex'
+                      onClick={() => setShowSpecialRewardGuideModal(true)}>
+                      <div className='text-gray-800 text-sm flex items-center whitespace-nowrap gap-1'>
+                        {t('Special Reward')}{' '}
+                        <span className='cursor-pointer'>
+                          <svg
+                            width='16'
+                            height='17'
+                            viewBox='0 0 16 17'
+                            fill='none'
+                            xmlns='http://www.w3.org/2000/svg'>
+                            <path
+                              d='M8 0.5C12.4184 0.5 16 4.0816 16 8.5C16 12.9184 12.4184 16.5 8 16.5C3.5816 16.5 0 12.9184 0 8.5C0 4.0816 3.5816 0.5 8 0.5ZM8 11.7C7.78783 11.7 7.58434 11.7843 7.43431 11.9343C7.28429 12.0843 7.2 12.2878 7.2 12.5C7.2 12.7122 7.28429 12.9157 7.43431 13.0657C7.58434 13.2157 7.78783 13.3 8 13.3C8.21217 13.3 8.41566 13.2157 8.56569 13.0657C8.71571 12.9157 8.8 12.7122 8.8 12.5C8.8 12.2878 8.71571 12.0843 8.56569 11.9343C8.41566 11.7843 8.21217 11.7 8 11.7ZM8 4.1C7.23087 4.1 6.49325 4.40553 5.94939 4.94939C5.40554 5.49325 5.1 6.23087 5.1 7C5.1 7.21217 5.18429 7.41566 5.33431 7.56569C5.48434 7.71571 5.68783 7.8 5.9 7.8C6.11217 7.8 6.31566 7.71571 6.46569 7.56569C6.61571 7.41566 6.7 7.21217 6.7 7C6.70026 6.76403 6.76475 6.53258 6.88655 6.33047C7.00834 6.12836 7.18285 5.96321 7.39136 5.85274C7.59988 5.74226 7.83453 5.69062 8.07015 5.70335C8.30578 5.71609 8.5335 5.79271 8.72889 5.92502C8.92428 6.05732 9.07997 6.24032 9.17928 6.45438C9.27858 6.66843 9.31775 6.90549 9.29258 7.14011C9.26742 7.37474 9.17886 7.59809 9.03642 7.78621C8.89397 7.97434 8.70301 8.12015 8.484 8.208C7.9432 8.424 7.2 8.9776 7.2 9.9V10.1C7.2 10.3122 7.28429 10.5157 7.43431 10.6657C7.58434 10.8157 7.78783 10.9 8 10.9C8.21217 10.9 8.41566 10.8157 8.56569 10.6657C8.71571 10.5157 8.8 10.3122 8.8 10.1C8.8 9.9048 8.84 9.8072 9.0088 9.724L9.0784 9.692C9.70305 9.44071 10.2208 8.97996 10.543 8.38873C10.8651 7.79751 10.9716 7.11263 10.8441 6.45151C10.7166 5.79039 10.3631 5.19421 9.8442 4.76518C9.32529 4.33614 8.6733 4.10098 8 4.1Z'
+                              fill='#2D72FB'
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                      <div className='text-gray-black text-xl font-semibold flex items-center gap-1'>
+                        450 <Image src={Usdt} width={24} height={24} alt='' />
+                      </div>
+                    </div>
+                    <div className='w-[1px] h-14 bg-neutral-black hidden md:block'></div>
+                    <div className='flex flex-col items-center gap-2.5'>
+                      <div className='text-gray-800 text-sm'>{t('Total reward')}</div>
+                      <div className='text-gray-black text-xl font-semibold flex items-center gap-1'>
+                        {formatNumber(selectedTopic.total_reward)} <Image src={Point} width={24} height={24} alt='' />
+                      </div>
+                    </div>
+                    <div className='w-[1px] h-14 bg-neutral-black'></div>
+                    <div className='flex flex-col items-center gap-2.5'>
+                      <div className='text-gray-800 text-sm'>{t('Participants')}</div>
+                      <div className='text-gray-black text-xl font-semibold'>
+                        {formatNumber(selectedTopic.participants.aggregate.count || 0)}
+                      </div>
                     </div>
                   </div>
-                  <div className='w-[1px] h-14 bg-neutral-black'></div>
-                  <div className='flex flex-col items-center gap-2.5'>
-                    <div className='text-gray-800 text-sm'>{t('Participants')}</div>
-                    <div className='text-gray-black text-xl font-semibold'>
-                      {formatNumber(selectedTopic.participants.aggregate.count || 0)}
-                    </div>
-                  </div>
-                </div>
+                </>
               ) : (
                 <div className='grid grid-cols-[1fr_auto_1fr] gap-10 w-full'>
                   <div className='flex flex-col items-center gap-2.5'>
