@@ -5,6 +5,7 @@ import StoryBadge from 'components/pages/campaigns/assets/story-badge.png'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
 import Decor from '../assets/decor.svg'
+import { storyChain } from 'src/services/wagmi/config'
 export default function MintBadgeSuccessModal({ hash, setHash }) {
   const { t } = useTranslation()
 
@@ -13,7 +14,13 @@ export default function MintBadgeSuccessModal({ hash, setHash }) {
       <div className='w-[547px] hidden lg:block relative'>
         <div className='absolute -top-[38%] -left-[13%] -bottom-[25%] '>
           <div className='w-[215px] h-[280px] absolute top-1/2 left-1/2 -translate-x-[51%] -translate-y-1/2 -rotate-[7deg] overflow-hidden rounded-lg'>
-            <Image src={StoryBadge} width={240} height={240} alt='' className='w-full aspect-square object-cover translate-y-4' />
+            <Image
+              src={StoryBadge}
+              width={240}
+              height={240}
+              alt=''
+              className='w-full aspect-square object-cover translate-y-4'
+            />
             <div className='w-full h-[58px] bg-black grid place-items-center text-sm font-jaro line-clamp-2 px-6 text-center'>
               {t('PunkgaMe x Story Odyssey Badge')}
             </div>
@@ -36,7 +43,7 @@ export default function MintBadgeSuccessModal({ hash, setHash }) {
             <Button
               className='w-full'
               onClick={() => {
-                window.open(`https://odyssey-testnet-explorer.storyscan.xyz/tx/${hash}`, '_blank')
+                window.open(`${storyChain.blockExplorers.default.url}/tx/${hash}`, '_blank')
                 setHash('')
               }}>
               {t('View transaction')}
@@ -51,7 +58,13 @@ export default function MintBadgeSuccessModal({ hash, setHash }) {
           <div className='relative w-[240px] h-[280px] rotate-12'>
             <div className='absolute inset-0'>
               <div className='w-[60%] aspect-[4/6] absolute top-1/2 left-1/2 -translate-x-[53%] -translate-y-1/2 -rotate-[7deg] overflow-hidden rounded-lg'>
-                <Image src={StoryBadge} width={240} height={240} alt='' className='w-full aspect-square object-cover translate-y-3' />
+                <Image
+                  src={StoryBadge}
+                  width={240}
+                  height={240}
+                  alt=''
+                  className='w-full aspect-square object-cover translate-y-3'
+                />
                 <div className='w-full h-[65px] bg-black grid place-items-center py-2 text-sm text-center font-jaro px-4'>
                   {t('PunkgaMe x Story Odyssey Badge')}
                 </div>
@@ -66,7 +79,7 @@ export default function MintBadgeSuccessModal({ hash, setHash }) {
             size='sm'
             className='w-full mt-5'
             onClick={() => {
-              window.open(`https://odyssey-testnet-explorer.storyscan.xyz/tx/${hash}`, '_blank')
+              window.open(`${storyChain.blockExplorers.default.url}/tx/${hash}`, '_blank')
               setHash('')
             }}>
             {t('View transaction')}

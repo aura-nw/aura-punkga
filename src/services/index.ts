@@ -101,27 +101,21 @@ export const getTrendingComic = async (): Promise<IComic[]> => {
 }
 
 export const replyComment = async (content: string, ref: string, chapterId: string) => {
-  const { data } = await privateAxios.post(`${getConfig().API_URL}/api/rest/user/chapters/${chapterId}/comments`, {
+  const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/user/comment-chapter/${chapterId}`, {
     content: content,
     ref_activity: ref,
   })
   return data
 }
 
-export const setAddress = async (address: string) => {
-  const { data } = await privateAxios.post(`${getConfig().API_URL}/api/rest/user/address`, {
-    wallet_address: address,
-  })
-  return data
-}
 export const getTeleQrCode = async () => {
   const { data } = await privateAxios.post(`${getConfig().REST_API_URL}/telegram/gen-telegram-qr`)
   return data
 }
 
 export const getProfile = async () => {
-  const res: any = await privateAxios.get(`${getConfig().API_URL}/api/rest/user/profile`)
-  const rank: any = await privateAxios.get(`${getConfig().API_URL}/api/rest/user/rank`)
+  const res: any = await privateAxios.get(`${getConfig().REST_API_URL}/user/profile`)
+  const rank: any = await privateAxios.get(`${getConfig().REST_API_URL}/user/rank`)
   if (res) {
     return {
       ...res?.data?.authorizer_users?.[0],
@@ -315,10 +309,10 @@ export const postSubscribeEmail = async (email: string) => {
 }
 
 export const subscribe = async (id) => {
-  await privateAxios.post(`${getConfig().API_URL}/api/rest/user/manga/${id}/subscribe`)
+  await privateAxios.post(`${getConfig().REST_API_URL}/user/subscribe-manga/${id}`)
 }
 export const unsubscribe = async (id) => {
-  await privateAxios.delete(`${getConfig().API_URL}/api/rest/user/manga/${id}/subscribe`)
+  await privateAxios.delete(`${getConfig().REST_API_URL}/user/subscribe-manga/${id}`)
 }
 export const getCampaigns = async (accountId?: string) => {
   try {

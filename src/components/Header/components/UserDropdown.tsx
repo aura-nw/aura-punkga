@@ -13,6 +13,7 @@ import { storyChain } from 'src/services/wagmi/config'
 import { formatNumber, shorten } from 'src/utils'
 import { useAccount, useBalance, useChainId, useSwitchChain } from 'wagmi'
 import DP from 'assets/images/dp.svg'
+import Link from 'next/link'
 export default function UserDropdown() {
   const config = getConfig()
   const { t } = useTranslation()
@@ -86,7 +87,11 @@ export default function UserDropdown() {
                   {account?.activities?.map((act, index) => {
                     if (act.type == 'SUBMIT_ARTWORK')
                       return (
-                        <div key={index} className='flex gap-4 items-center'>
+                        <Link
+                          target='_blank'
+                          href={`${storyChain.blockExplorers.default.url}/tx/${act.story_artwork?.artwork_topic?.distribute_reward_hash}`}
+                          key={index}
+                          className='flex gap-4 items-center'>
                           <Image
                             alt=''
                             src={act.story_artwork.display_url}
@@ -103,7 +108,7 @@ export default function UserDropdown() {
                               <div className='text-xs font-medium'>+{formatNumber(act.amount)}DP</div>
                             </div>
                           </div>
-                        </div>
+                        </Link>
                       )
                     return null
                   })}
@@ -115,10 +120,12 @@ export default function UserDropdown() {
               <div className='p-2.5 text-base bg-neutral-950 rounded-mlg'>
                 <div className='font-bold text-green-500 w-full'>{account?.name}</div>
                 <div className='flex justify-between items-center'>
-                  <div className='mt-1.5 flex items-center gap-1.5 text-sm font-medium'>
+                  <Link
+                    href={`${storyChain.blockExplorers.default.url}/token/${config.DP_ADDRESS}`}
+                    className='mt-1.5 flex items-center gap-1.5 text-sm font-medium'>
                     <Image src={DP} width={50} height={50} className='w-[18px] h-[18px]' alt='dream-point' />
                     {formatNumber(+(+dpBalance?.data?.formatted || 0).toFixed(2))} {dpBalance?.data?.symbol || 'AURA'}
-                  </div>
+                  </Link>
                   <div
                     className='flex items-center text-sm text-feedback-info-link-defaul'
                     onClick={() => setShowActivities(true)}>

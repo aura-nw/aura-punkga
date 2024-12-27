@@ -18,7 +18,7 @@ export const storyChain: Chain = {
   blockExplorers: {
     default: {
       name: 'Storyscan',
-      url: 'https://odyssey-testnet-explorer.storyscan.xyz/',
+      url: 'https://odyssey.storyscan.xyz/',
     },
   },
 }

@@ -155,10 +155,10 @@ export default function ComicDetail({
               width={120}
               className={`${expandDetail ? ' w-[240px] h-[320px]' : ' w-[120px] h-[160px]'} ${
                 expandDetail ? ' mt-[-198px]' : ' mt-[-58px]'
-              } duration-500 transition-all object-cover shrink-0 rounded-[15px] overflow-hidden bg-medium-gray`}
+              } duration-500 transition-all object-cover rounded-[15px] overflow-hidden bg-medium-gray shrink-0`}
               alt=''
             />
-            <div className={`flex-1 min-w-0 flex flex-col ${expandDetail ? 'gap-[5px]' : 'gap-[10px]'}`}>
+            <div className={`flex-1 flex min-w-0 flex-col ${expandDetail ? 'gap-[5px]' : 'gap-[10px]'}`}>
               <div
                 className={`font-bold ${
                   expandDetail ? 'text-black' : 'text-second-color'
