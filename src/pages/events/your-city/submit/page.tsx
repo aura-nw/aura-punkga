@@ -165,18 +165,18 @@ function PageContent() {
         await mutate('get-submissions')
         const { data } = await eventService.punktober.getUserArtworks(account.id)
         const artworks = data?.data?.user_artwork_topic
-        if (artworks.length == 7 || artworks.length == 15 || artworks.length == 20 || artworks.length == 31) {
-          setMilestone(artworks.length)
-        } else {
-          toast(
-            t(
-              'Submit artwork successfully. Your artwork need to be approved by admin. This process may take upto 24 hours after you submitted'
-            ),
-            {
-              type: 'success',
-            }
-          )
-        }
+        // if (artworks.length == 7 || artworks.length == 15 || artworks.length == 20 || artworks.length == 31) {
+        //   setMilestone(artworks.length)
+        // } else {
+        // }
+        toast(
+          t(
+            'Submit artwork successfully. Your artwork need to be approved by admin. This process may take upto 24 hours after you submitted'
+          ),
+          {
+            type: 'success',
+          }
+        )
         form.reset()
         setLoading(false)
       }
