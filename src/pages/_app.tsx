@@ -1,4 +1,3 @@
-import '@interchain-ui/react/styles'
 import '@radix-ui/themes/styles.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import axios from 'axios'

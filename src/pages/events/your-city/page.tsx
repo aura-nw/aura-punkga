@@ -227,7 +227,13 @@ function PageContent() {
                       </span>
                     </div>
                     <div className='text-gray-black text-xl font-semibold flex items-center gap-1'>
-                      450 <Image src={Usdt} width={24} height={24} alt='' />
+                      {date.format('DD-MM-YYYY') == '29-12-2024' ? (
+                        <>10M VNĐ</>
+                      ) : (
+                        <>
+                          450 <Image src={Usdt} width={24} height={24} alt='' />
+                        </>
+                      )}
                     </div>
                   </div>
                   <div className='grid md:grid-cols-[1fr_auto_1fr_auto_1fr] grid-cols-[1fr_auto_1fr] gap-10 w-full max-w-lg'>
@@ -542,7 +548,7 @@ function PageContent() {
           )
         )}
       </div>
-      <Modal open={showSpecialRewardGuideModal} setOpen={setShowSpecialRewardGuideModal}>
+      <Modal open={true} setOpen={setShowSpecialRewardGuideModal}>
         <div className='px-8 py-4 rounded-mlg bg-white w-full max-w-screen-sm space-y-4 relative'>
           <div className='absolute top-3 right-3' onClick={() => setShowSpecialRewardGuideModal(false)}>
             <XMarkIcon width={20} height={20} />
@@ -550,42 +556,106 @@ function PageContent() {
           <div className='text-center w-full font-semibold text-lg'>{t('SPECIAL REWARD')}</div>
           <div className='p-4 rounded-md bg-neutral-50 text-sm space-y-4'>
             <p className='whitespace-pre-line'>
-              🎨 DRAWING CONTEST SPECIAL PRIZE 🎉
-              <br />
-              <br />
-              📅 Event Duration
-              <br />
-              The special prize is available from 🗓 December 30, 2024, to January 2, 2025.
-              <br />
-              <br />
-              💰 Daily Prize Distribution (450 USDT per day)
-              <br />
-              🥇 1st Prize: 100 USDT for 1 winner.
-              <br />
-              🥈 2nd Prizes: 50 USDT each for 3 winners.
-              <br />
-              🥉 3rd Prizes: 15 USDT each for 10 winners.
-              <br />
-              <br />
-              🍀 Lucky Number Prizes (on X)
-              <br />
-              3 winners who guess the closest to the actual number of votes for the top artist of the day:
-              <br />
-              🎁 1st Closest Guess: 25 USDT
-              <br />
-              🎁 2nd Closest Guess: 15 USDT
-              <br />
-              🎁 3rd Closest Guess: 10 USDT
-              <br />
-              <br />
-              🗳 Voting Rules:
-              <br />
-              - Winners are determined based on the number of votes received during the event.
-              <br />
-              - Voting closes at ⏰ 11:59 PM on January 3, 2024. Votes submitted after this time will not be counted.
-              <br />
-              <br />
-              🎊 Get ready to unleash your creativity and win exciting prizes! 🖌✨
+              {date.format('DD-MM-YYYY') === '29-12-2024' ? (
+                <>
+                  <p className='whitespace-pre-line'>
+                    🎉 <strong>PUNKTOBER Dec 29: TNEX Birthday!</strong>
+                    <br />
+                    Join us for a special Punktober celebration with exciting rewards and creative fun!
+                    <br />
+                    <br />
+                    <strong>💸 Prizes:</strong>
+                    <br />- <strong>10M VND (~400 USD):</strong> Shared equally among all approved entries.
+                    <br />- <strong>Exclusive TNEX merch:</strong> Keychain & lanyard.
+                    <br />
+                    <br />
+                    <strong>💡 How to Join:</strong>
+                    <br />
+                    1️⃣ Submit your "TNEX Birthday"-themed entry at:{' '}
+                    <Link href='https://app.punkga.me/vn/events/your-city' className='text-feedback-info-link-defaul'>
+                      https://app.punkga.me/vn/events/your-city
+                    </Link>
+                    .
+                    <br />
+                    2️⃣ Share your entry link under TNX’s Dec 29 post on Facebook (TBA)
+                    <br />
+                    <br />
+                    <strong>📝 Rules:</strong>
+                    <br />
+                    - One entry per person.
+                    <br />
+                    - Approved entries share the prize pool equally.
+                    <br />
+                    - To qualify for TNEX merch:
+                    <br />
+                    - Your artwork must feature Mascot TITO or the TNEX logo.
+                    <br />- Create a TNEX account using referral code <strong>SINHNHAT</strong> via this{' '}
+                    <Link
+                      href='https://tnexcampaign.onelink.me/93RY/u6flhth2'
+                      target='_blank'
+                      className='text-feedback-info-link-defaul'
+                      rel='noopener noreferrer'>
+                      link
+                    </Link>
+                    <br />
+                    <br />
+                    <strong>🖌️ Art Tips:</strong>
+                    <br />
+                    - Keep it positive & fun!
+                    <br />- Use the <strong>Quicksand</strong> font.
+                    <br />- Get TITO assets of TNEX:{' '}
+                    <Link
+                      href='https://drive.google.com/drive/folders/1fO-v9Dd3GEsuAqi_E08Ae99C5UiLoX60'
+                      target='_blank'
+                      className='text-feedback-info-link-defaul'
+                      rel='noopener noreferrer'>
+                      Google Drive link
+                    </Link>
+                    <br />
+                    Let’s celebrate TNEX’s birthday in style! 🎉
+                  </p>
+                </>
+              ) : (
+                <>
+                  🎨 DRAWING CONTEST SPECIAL PRIZE 🎉
+                  <br />
+                  <br />
+                  📅 Event Duration
+                  <br />
+                  The special prize is available from 🗓 December 30, 2024, to January 2, 2025.
+                  <br />
+                  <br />
+                  💰 Daily Prize Distribution (450 USDT per day)
+                  <br />
+                  🥇 1st Prize: 100 USDT for 1 winner.
+                  <br />
+                  🥈 2nd Prizes: 50 USDT each for 3 winners.
+                  <br />
+                  🥉 3rd Prizes: 15 USDT each for 10 winners.
+                  <br />
+                  <br />
+                  🍀 Lucky Number Prizes (on X)
+                  <br />
+                  3 winners who guess the closest to the actual number of votes for the top artist of the day:
+                  <br />
+                  🎁 1st Closest Guess: 25 USDT
+                  <br />
+                  🎁 2nd Closest Guess: 15 USDT
+                  <br />
+                  🎁 3rd Closest Guess: 10 USDT
+                  <br />
+                  <br />
+                  🗳 Voting Rules:
+                  <br />
+                  - Winners are determined based on the number of votes received during the event.
+                  <br />
+                  - Voting closes at ⏰ 11:59 PM on January 3, 2024. Votes submitted after this time will not be
+                  counted.
+                  <br />
+                  <br />
+                  🎊 Get ready to unleash your creativity and win exciting prizes! 🖌✨
+                </>
+              )}
             </p>
           </div>
         </div>

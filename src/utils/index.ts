@@ -1,8 +1,6 @@
 import { capitalize } from 'lodash'
 import getConfig from 'next/config'
-import { GasPrice } from '@cosmjs/stargate'
 import { Chain } from '@chain-registry/types'
-import { Decimal } from '@cosmjs/math'
 export const validateEmail = (email: string) => {
   return String(email)
     .toLowerCase()
@@ -102,18 +100,6 @@ export const shorten = (string: string, preCh?: number, sufCh?: number) => {
   return `${pre}...${suf}`
 }
 
-export const getGasPriceByChain = (chain: Chain) => {
-  const data = chain.fees?.fee_tokens[0]
-  let gasStep = data?.average_gas_price || 0
-  let pow = 1
-
-  while (!Number.isInteger(gasStep)) {
-    gasStep = gasStep * Math.pow(10, pow)
-    pow++
-  }
-
-  return new GasPrice(Decimal.fromAtomics(gasStep.toString(), pow) as any, data?.denom as string)
-}
 export function formatNumber(x: any) {
   if (!x) return '0'
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
