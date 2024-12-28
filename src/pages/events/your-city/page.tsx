@@ -198,7 +198,9 @@ function PageContent() {
                     </svg>
                   </div>
                 </div>
-                <div className='font-roboto font-bold text-[40px] uppercase text-black'>{selectedTopic.title}</div>
+                <div className='font-roboto font-bold text-[40px] uppercase text-black text-center w-full'>
+                  {selectedTopic.title}
+                </div>
                 <div className='flex items-center gap-2.5'>
                   <Image
                     src={selectedTopic.sponser_logo}
@@ -210,7 +212,7 @@ function PageContent() {
                   <div className='text-xs font-medium text-neutral-950'>{selectedTopic.sponser_name}</div>
                 </div>
               </div>
-              {date.isSameOrAfter(moment('2024-12-30')) && date.isSameOrBefore(moment('2025-01-02')) ? (
+              {date.isSameOrAfter(moment('2024-12-29')) && date.isSameOrBefore(moment('2025-01-02')) ? (
                 <>
                   <div
                     className='flex-col items-center gap-2.5 cursor-pointer flex md:hidden'
@@ -231,7 +233,7 @@ function PageContent() {
                         <>10M VNĐ</>
                       ) : (
                         <>
-                          450 <Image src={Usdt} width={24} height={24} alt='' />
+                          500 <Image src={Usdt} width={24} height={24} alt='' />
                         </>
                       )}
                     </div>
@@ -617,43 +619,34 @@ function PageContent() {
                 </>
               ) : (
                 <>
-                  🎨 DRAWING CONTEST SPECIAL PRIZE 🎉
+                  <strong>Punktober Mini-Event: Otaku Dream Land (Dec 30, 2024 – Jan 2, 2025)</strong><br />
+                  End the year with creativity as Punktober & <Link href='https://twitter.com/Otaku_Protocol' target='_blank' className='text-feedback-info-link-defaul'>@Otaku_Protocol</Link> team up for an art-filled celebration!<br />
                   <br />
+                  <strong>Total Rewards: 2000 USDT</strong><br />
                   <br />
-                  📅 Event Duration
+                  Create art, follow themes, and win big!<br />
                   <br />
-                  The special prize is available from 🗓 December 30, 2024, to January 2, 2025.
+                  <strong>Daily Rewards (500 USDT):</strong><br />
                   <br />
+                  - <strong>“Share the Joy”</strong>: 390 USDT shared equally among approved entries.<br />
+                  - <strong>“Star of the Votes”</strong>: 20 USDT for the most-voted entry.<br />
+                  - <strong>“Bonus Boost”</strong>: 90 USDT distributed by %DP.<br />
                   <br />
-                  💰 Daily Prize Distribution (450 USDT per day)
+                  <strong>How to Join:</strong><br />
                   <br />
-                  🥇 1st Prize: 100 USDT for 1 winner.
+                  1️⃣ <strong>Create</strong>: Draw a daily-themed square artwork (min. 2000x2000px). Submit at <Link href='https://app.punkga.me/vn/events/your-city' target='_blank' className='text-feedback-info-link-defaul'>PunkgaMe Events</Link>.<br />
                   <br />
-                  🥈 2nd Prizes: 50 USDT each for 3 winners.
+                  2️⃣ <strong>Share</strong>: Promote your entry on social media with hashtags: #Punktober_YourCity #PunkgaMe #OtakuProtocol<br />
                   <br />
-                  🥉 3rd Prizes: 15 USDT each for 10 winners.
+                  3️⃣ <strong>Engage</strong>: Follow <Link href='https://twitter.com/Otaku_Protocol' target='_blank' className='text-feedback-info-link-defaul'>@Otaku_Protocol</Link>, like/retweet their post, and tag 3 artists!<br />
                   <br />
+                  <strong>Notes:</strong><br />
                   <br />
-                  🍀 Lucky Number Prizes (on X)
+                  - One entry per day.<br />
+                  - Prizes go to your PunkgaMe wallet.<br />
+                  - Include Otaku Protocol’s logo in your art (find assets <Link href='https://drive.google.com/drive/u/2/folders/1ESEcJ5YrUH_YocyK8p96RazfL3FrAvwx' target='_blank' className='text-feedback-info-link-defaul'>here</Link>).<br />
                   <br />
-                  3 winners who guess the closest to the actual number of votes for the top artist of the day:
-                  <br />
-                  🎁 1st Closest Guess: 25 USDT
-                  <br />
-                  🎁 2nd Closest Guess: 15 USDT
-                  <br />
-                  🎁 3rd Closest Guess: 10 USDT
-                  <br />
-                  <br />
-                  🗳 Voting Rules:
-                  <br />
-                  - Winners are determined based on the number of votes received during the event.
-                  <br />
-                  - Voting closes at ⏰ 11:59 PM on January 3, 2024. Votes submitted after this time will not be
-                  counted.
-                  <br />
-                  <br />
-                  🎊 Get ready to unleash your creativity and win exciting prizes! 🖌✨
+                  Let’s end the year in true Otaku spirit- show us your creative fire! <strong>🔥</strong>
                 </>
               )}
             </p>
