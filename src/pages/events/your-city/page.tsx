@@ -259,7 +259,13 @@ function PageContent() {
                         </span>
                       </div>
                       <div className='text-gray-black text-xl font-semibold flex items-center gap-1'>
-                        450 <Image src={Usdt} width={24} height={24} alt='' />
+                        {date.format('DD-MM-YYYY') == '29-12-2024' ? (
+                          <>10M VNĐ</>
+                        ) : (
+                          <>
+                            500 <Image src={Usdt} width={24} height={24} alt='' />
+                          </>
+                        )}
                       </div>
                     </div>
                     <div className='w-[1px] h-14 bg-neutral-black hidden md:block'></div>
@@ -619,32 +625,72 @@ function PageContent() {
                 </>
               ) : (
                 <>
-                  <strong>Punktober Mini-Event: Otaku Dream Land (Dec 30, 2024 – Jan 2, 2025)</strong><br />
-                  End the year with creativity as Punktober & <Link href='https://twitter.com/Otaku_Protocol' target='_blank' className='text-feedback-info-link-defaul'>@Otaku_Protocol</Link> team up for an art-filled celebration!<br />
+                  <strong>Punktober Mini-Event: Otaku Dream Land (Dec 30, 2024 – Jan 2, 2025)</strong>
                   <br />
-                  <strong>Total Rewards: 2000 USDT</strong><br />
+                  End the year with creativity as Punktober &{' '}
+                  <Link
+                    href='https://twitter.com/Otaku_Protocol'
+                    target='_blank'
+                    className='text-feedback-info-link-defaul'>
+                    @Otaku_Protocol
+                  </Link>{' '}
+                  team up for an art-filled celebration!
                   <br />
-                  Create art, follow themes, and win big!<br />
                   <br />
-                  <strong>Daily Rewards (500 USDT):</strong><br />
+                  <strong>Total Rewards: 2000 USDT</strong>
                   <br />
-                  - <strong>“Share the Joy”</strong>: 390 USDT shared equally among approved entries.<br />
-                  - <strong>“Star of the Votes”</strong>: 20 USDT for the most-voted entry.<br />
-                  - <strong>“Bonus Boost”</strong>: 90 USDT distributed by %DP.<br />
                   <br />
-                  <strong>How to Join:</strong><br />
+                  Create art, follow themes, and win big!
                   <br />
-                  1️⃣ <strong>Create</strong>: Draw a daily-themed square artwork (min. 2000x2000px). Submit at <Link href='https://app.punkga.me/vn/events/your-city' target='_blank' className='text-feedback-info-link-defaul'>PunkgaMe Events</Link>.<br />
                   <br />
-                  2️⃣ <strong>Share</strong>: Promote your entry on social media with hashtags: #Punktober_YourCity #PunkgaMe #OtakuProtocol<br />
+                  <strong>Daily Rewards (500 USDT):</strong>
                   <br />
-                  3️⃣ <strong>Engage</strong>: Follow <Link href='https://twitter.com/Otaku_Protocol' target='_blank' className='text-feedback-info-link-defaul'>@Otaku_Protocol</Link>, like/retweet their post, and tag 3 artists!<br />
+                  <br />- <strong>“Share the Joy”</strong>: 390 USDT shared equally among approved entries.
+                  <br />- <strong>“Star of the Votes”</strong>: 20 USDT for the most-voted entry.
+                  <br />- <strong>“Bonus Boost”</strong>: 90 USDT distributed by %DP.
                   <br />
-                  <strong>Notes:</strong><br />
                   <br />
-                  - One entry per day.<br />
-                  - Prizes go to your PunkgaMe wallet.<br />
-                  - Include Otaku Protocol’s logo in your art (find assets <Link href='https://drive.google.com/drive/u/2/folders/1ESEcJ5YrUH_YocyK8p96RazfL3FrAvwx' target='_blank' className='text-feedback-info-link-defaul'>here</Link>).<br />
+                  <strong>How to Join:</strong>
+                  <br />
+                  <br />
+                  1️⃣ <strong>Create</strong>: Draw a daily-themed square artwork (min. 2000x2000px). Submit at{' '}
+                  <Link
+                    href='https://app.punkga.me/vn/events/your-city'
+                    target='_blank'
+                    className='text-feedback-info-link-defaul'>
+                    PunkgaMe Events
+                  </Link>
+                  .<br />
+                  <br />
+                  2️⃣ <strong>Share</strong>: Promote your entry on social media with hashtags: #Punktober_YourCity
+                  #PunkgaMe #OtakuProtocol
+                  <br />
+                  <br />
+                  3️⃣ <strong>Engage</strong>: Follow{' '}
+                  <Link
+                    href='https://twitter.com/Otaku_Protocol'
+                    target='_blank'
+                    className='text-feedback-info-link-defaul'>
+                    @Otaku_Protocol
+                  </Link>
+                  , like/retweet their post, and tag 3 artists!
+                  <br />
+                  <br />
+                  <strong>Notes:</strong>
+                  <br />
+                  <br />
+                  - One entry per day.
+                  <br />
+                  - Prizes go to your PunkgaMe wallet.
+                  <br />- Include Otaku Protocol’s logo in your art (find assets{' '}
+                  <Link
+                    href='https://drive.google.com/drive/u/2/folders/1ESEcJ5YrUH_YocyK8p96RazfL3FrAvwx'
+                    target='_blank'
+                    className='text-feedback-info-link-defaul'>
+                    here
+                  </Link>
+                  ).
+                  <br />
                   <br />
                   Let’s end the year in true Otaku spirit- show us your creative fire! <strong>🔥</strong>
                 </>
