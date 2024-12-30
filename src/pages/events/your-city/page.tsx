@@ -343,7 +343,7 @@ function PageContent() {
           !!topicData?.story_artworks?.length && (
             <div className='lg:flex-1'>
               <div className='w-full flex flex-col md:flex-row gap-5 justify-between bg-[#ffffff] lg:pt-10 lg:sticky z-10 lg:top-[82px] pb-5'>
-                {account?.id && false ? (
+                {account?.id ? (
                   <Link href={`/events/your-city/${account.id}`} className='flex items-center gap-1.5 shrink-0'>
                     <svg width='23' height='24' viewBox='0 0 23 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
                       <path
