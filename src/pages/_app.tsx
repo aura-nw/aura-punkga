@@ -157,7 +157,7 @@ function MyApp(props: AppProps) {
             defaultSetOptions={{
               path: '/',
               domain:
-                location.hostname == 'localhost' ? 'localhost' : getConfig().REDIRECT_URL.replace('https://', '.'),
+                location.hostname == 'localhost' ? 'localhost' : getConfig().REDIRECT_URL.replace('https://app', ''),
             }}>
             <ContextProvider>
               <App {...props} />
