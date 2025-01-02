@@ -277,7 +277,7 @@ function PageContent() {
                   const artwork = artworks.find((artwork) => artwork.artwork_topic.date == date)
                   const artworkIndex = artworks.findIndex((artwork) => artwork.artwork_topic.date == date)
                   return (
-                    <div key={index2} className='w-full aspect-[165/116] cursor-pointer relative'>
+                    <div key={index2} className='w-full aspect-square cursor-pointer relative'>
                       <div
                         className={`p-3 w-full text-center ${
                           moment
@@ -308,7 +308,7 @@ function PageContent() {
                             alt=''
                             width={300}
                             height={300}
-                            className='w-full h-full lg:aspect-[165/116] object-cover'
+                            className='w-full h-full lg:aspect-square object-cover'
                           />
                           {(artworkIndex == 6 || artworkIndex == 14 || artworkIndex == 19 || artworkIndex == 30) && (
                             <span className='absolute top-0 right-0 w-full h-full p-3'>
