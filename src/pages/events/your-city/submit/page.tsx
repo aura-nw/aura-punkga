@@ -165,18 +165,18 @@ function PageContent() {
         await mutate('get-submissions')
         const { data } = await eventService.punktober.getUserArtworks(account.id)
         const artworks = data?.data?.user_artwork_topic
-        // if (artworks.length == 7 || artworks.length == 15 || artworks.length == 20 || artworks.length == 31) {
-        //   setMilestone(artworks.length)
-        // } else {
-        // }
-        toast(
-          t(
-            'Submit artwork successfully. Your artwork need to be approved by admin. This process may take upto 24 hours after you submitted'
-          ),
-          {
-            type: 'success',
-          }
-        )
+        if (artworks.length == 7 || artworks.length == 15 || artworks.length == 20 || artworks.length == 31) {
+          setMilestone(artworks.length)
+        } else {
+          toast(
+            t(
+              'Submit artwork successfully. Your artwork need to be approved by admin. This process may take upto 24 hours after you submitted'
+            ),
+            {
+              type: 'success',
+            }
+          )
+        }
         form.reset()
         setLoading(false)
       }
@@ -767,17 +767,47 @@ function PageContent() {
           <div className='flex flex-col items-center gap-8'>
             <div className='uppercase text-3xl text-stroke font-jaro text-[#00FF94]'>congraturations!!!</div>
             <Image src={Congrats} alt='' className='w-[289px]' />
-            <div className='text-lg font-semibold text-neutral-black'>
-              🎉 <span>{milestone}</span> Drawings in Punktober - Your City! 🎉
-            </div>
-            <div className='p-4 bg-neutral-50 rounded-md text-sm'>
-              You’ve hit your{' '}
-              <span>
-                {milestone === 7 ? 'first' : milestone == 15 ? 'second' : milestone == 20 ? 'third' : 'fourth'}
-              </span>{' '}
-              milestone! Your creative spark is lighting up Punktober. Keep the energy alive—your city is counting on
-              your talent to shine! 🖌✨
-            </div>
+            {milestone === 7 ? (
+              <>
+                <div className='text-lg font-semibold text-neutral-black'>
+                  🎉 7 Drawings in Punktober - Your City! 🎉
+                </div>
+                <div className='p-4 bg-neutral-50 rounded-md text-sm'>
+                  You’ve hit your 7 milestone! Your creative spark is lighting up Punktober. Keep the energy alive—your
+                  city is counting on your talent to shine! 🖌✨
+                </div>
+              </>
+            ) : milestone === 15 ? (
+              <>
+                <div className='text-lg font-semibold text-neutral-black'>
+                  🌟 15 Drawings Done—Halfway Through Punktober! 🌟
+                </div>
+                <div className='p-4 bg-neutral-50 rounded-md text-sm'>
+                  You're halfway through the challenge, and your commitment is inspiring. Every drawing adds life to
+                  your city’s story. Keep the momentum going—you're unstoppable! 🚀🎨
+                </div>
+              </>
+            ) : milestone === 20 ? (
+              <>
+                <div className='text-lg font-semibold text-neutral-black'>
+                  👏 20 Drawings—Punktober Hero in Action! 👏
+                </div>
+                <div className='p-4 bg-neutral-50 rounded-md text-sm'>
+                  With 20 creations, you’re shaping Punktober - Your City into something unforgettable. Stay strong and
+                  finish this challenge like the star artist you are! 💪🌟
+                </div>
+              </>
+            ) : milestone === 31 ? (
+              <>
+                <div className='text-lg font-semibold text-neutral-black'>🏆 31 Drawings—Punktober Champion! 🏆</div>
+                <div className='p-4 bg-neutral-50 rounded-md text-sm'>
+                  You’ve conquered Punktober - Your City! Your art and dedication have inspired the community. Celebrate
+                  your journey—you’re the heart of this event! 🎉🎨
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
             <div className='space-y-4 flex flex-col items-center'>
               <button
                 onClick={() => {
