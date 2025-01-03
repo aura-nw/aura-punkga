@@ -227,7 +227,7 @@ function PageContent() {
                   alt=''
                   width={300}
                   height={300}
-                  className='w-full h-full lg:aspect-[165/116] object-cover'
+                  className='w-full aspect-square lg:aspect-[165/116] object-cover'
                 />
                 {(index == 6 || index == 14 || index == 19 || index == 30) && (
                   <span className='absolute top-0 right-0 w-full h-full p-3'>
