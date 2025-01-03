@@ -28,7 +28,7 @@ function PageContent() {
   const [selectedArtwork, setSelectedArtwork] = useState(null)
   const userId = query.userId
   const { data } = useSWR(`get-user-artwork-${userId}`, () => eventService.punktober.getUserArtworks(userId as string))
-  const artworks = data?.data?.data?.user_artwork_topic
+  const artworks = data?.data?.data?.user_artwork_topic as any[]
   const [tab, setTab] = useState<'calendar' | 'collection'>('calendar')
   const captureRef = useRef<HTMLDivElement>(null)
   const [loading, setLoading] = useState(false)
@@ -77,7 +77,7 @@ function PageContent() {
           <div className='flex flex-col items-center gap-2.5'>
             <div className='text-gray-800 text-sm'>{t('Earned')}</div>
             <div className='text-gray-black text-xl font-semibold flex items-center gap-1'>
-              {formatNumber(artworks.reduce((total, item) => total + item.reward_amount, 0))}{' '}
+              {formatNumber(artworks.reduce((total, item) => total + item.reward_amount || 0, 0))}{' '}
               <Image src={Point} width={24} height={24} alt='' />
             </div>
           </div>
