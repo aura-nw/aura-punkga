@@ -127,7 +127,7 @@ function PageContent() {
             </div>
           </div>
           {width >= 1024 ? (
-            tab == 'calendar' ? (
+            (tab == 'calendar' && false) ? (
               <div
                 onClick={handleSaveAsImage}
                 className='text-[#009640] font-medium text-sm flex items-center gap-1.5 w-full lg:w-fit justify-center cursor-pointer'>
@@ -303,7 +303,7 @@ function PageContent() {
                           }}
                           key={artwork.id}
                           className='rounded-lg overflow-hidden lg:rounded-none [&:hover>div]:flex absolute top-0 right-0 w-full h-full cursor-pointer'>
-                          <Base64Image
+                          <Image
                             src={artwork.story_artwork.display_url}
                             alt=''
                             width={300}
