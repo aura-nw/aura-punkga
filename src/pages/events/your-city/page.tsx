@@ -333,7 +333,7 @@ function PageContent() {
             </div>
           )}
           <Link
-            href='/events/your-city/submit'
+            href='https://app.punkga.me/campaigns/otaku-protocol-x-punkgame-otaku-dream-land'
             className={`p-2.5 text-center text-[20px] uppercase font-bold text-neutral-black font-roboto bg-white flex items-center w-full -mt-10 lg:mt-0`}>
             <Image src={Mockup2} alt='' className='w-full hidden lg:block' />
             <Image src={Banner} alt='' className='w-full lg:hidden' />
