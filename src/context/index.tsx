@@ -9,6 +9,7 @@ import { createClient } from 'graphql-ws'
 import getConfig from 'next/config'
 import { useRouter } from 'next/router'
 import { createContext, useEffect, useState } from 'react'
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3'
 import { toast } from 'react-toastify'
 import { SiweMessage, generateNonce } from 'siwe'
 import { IUser } from 'src/models/user'
@@ -17,11 +18,8 @@ import { storyChain } from 'src/services/wagmi/config'
 import { oauthLogin } from 'src/utils'
 import { getItem, removeItem, setItem } from 'src/utils/localStorage'
 import { useAccount, useChainId, useDisconnect, useSignMessage, useSwitchChain } from 'wagmi'
-import ModalProvider from './modals'
-import { useCookies } from 'react-cookie'
-import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3'
 import ListProvider from './list'
-import { set } from 'lodash'
+import ModalProvider from './modals'
 
 const queryClient = new QueryClient()
 
@@ -71,12 +69,6 @@ function ContextProvider({ children }: any) {
   const [, setLevel] = useState(undefined)
   const [isSettingUp, setIsSettingUp] = useState(true)
   const router = useRouter()
-  const searchParams = new URLSearchParams(location.search)
-  const accessTokenParam = searchParams.get('access_token') || searchParams.get('token')
-  const refreshTokenParam = searchParams.get('refresh_token')
-  const expiresInParam = searchParams.get('expires_in')
-  const portalCallbackUrlParam = searchParams.get('login_callback_url')
-  const [cookie, setCookie, removeCookie] = useCookies(['token'])
   const config = getConfig()
   const authorizerRef = new Authorizer({
     authorizerURL: config.AUTHORIZER_URL,
@@ -125,62 +117,9 @@ function ContextProvider({ children }: any) {
   })
 
   useEffect(() => {
-    privateAxios.interceptors.response.use(
-      (response) => response,
-      (error) => {
-        const prevRequest = error?.config
-        if (error?.response?.status === 401 && !prevRequest?.sent) {
-          prevRequest.sent = true
-          const refreshToken = getItem('refresh_token')
-          return authorizerRef
-            .getToken({
-              grant_type: 'refresh_token',
-              refresh_token: refreshToken,
-            })
-            .then((tokens) => {
-              setCookie('token', tokens.access_token, { path: '/' })
-              setItem('refresh_token', tokens.refresh_token)
-              setItem('token', tokens.access_token, new Date(Date.now() + tokens.expires_in * 1000))
-              prevRequest.headers['Authorization'] = `Bearer ${tokens.access_token}`
-              return privateAxios(prevRequest)
-            })
-            .catch((e) => {
-              if (e?.response?.status === 401) {
-                removeCookie('token')
-                removeItem('token')
-                removeItem('refresh_token')
-              }
-              return Promise.reject(error)
-            })
-        }
-        return Promise.reject(error)
-      }
-    )
-    privateAxios.interceptors.request.use(
-      (config) => {
-        const token = getItem('token')
-        if (token) {
-          config.headers['Authorization'] = `Bearer ${token}`
-        }
-        return config
-      },
-      (error) => {
-        Promise.reject(error)
-      }
-    )
+    console.log('Setting up punkga')
+    setUp()
   }, [])
-
-  useEffect(() => {
-    if (location.search.includes('access_token') || location.search.includes('token')) {
-      if (accessTokenParam) {
-        console.log('Setting up punkga with access token')
-        setUp()
-      }
-    } else {
-      console.log('Setting up punkga')
-      setUp()
-    }
-  }, [accessTokenParam])
 
   const connectHandler = async (data: any) => {
     try {
@@ -188,7 +127,7 @@ function ContextProvider({ children }: any) {
       if (location.pathname.includes('ava-2024')) {
         targetChainId = storyChain.id
       }
-      if (chainId != targetChainId) {
+      if (chainId != targetChainId && targetChainId != undefined) {
         switchChain(
           {
             chainId: targetChainId,
@@ -226,7 +165,7 @@ function ContextProvider({ children }: any) {
       { message, account: addr },
       {
         onSuccess: (data) =>
-          getAccessToken({
+          getTokenFromSiwe({
             message,
             signature: data,
           }),
@@ -234,7 +173,7 @@ function ContextProvider({ children }: any) {
     )
   }
 
-  const getAccessToken = async ({ message, signature }) => {
+  const getTokenFromSiwe = async ({ message, signature }) => {
     try {
       const res = await authorizerRef.graphqlQuery({
         query: `mutation Siwe {
@@ -254,14 +193,7 @@ function ContextProvider({ children }: any) {
       }`,
       })
       if (res?.siwe?.access_token) {
-        const token = res?.siwe?.access_token
-        setItem('token', res?.siwe?.access_token, new Date(Date.now() + res?.siwe?.expires_in * 1000))
-        setItem('refresh_token', res?.siwe?.refresh_token)
-        setCookie('token', res?.siwe?.access_token, {
-          expires: new Date(Date.now() + res?.siwe?.expires_in * 1000),
-        })
-        setLogoutTimeout(res?.siwe?.expires_in * 1000)
-        await getProfile(token)
+        await getProfile()
       }
     } catch (error) {
       console.log('resendVerifyEmail', error)
@@ -269,82 +201,77 @@ function ContextProvider({ children }: any) {
     }
   }
 
-  const setLogoutTimeout = (timeout: any) => {
-    if (window.logoutTimeoutId) {
-      clearTimeout(window.logoutTimeoutId)
+  const getTokens = async () => {
+    try {
+      const tokens = await authorizerRef.getSession()
+      setItem('token', tokens.access_token, new Date(Date.now() + tokens.expires_in))
+      return tokens
+    } catch (error) {
+      return null
     }
-    window.logoutTimeoutId = setTimeout(
-      () => {
-        setAccount(undefined)
-      },
-      timeout > 86400000 ? 86400000 : timeout
-    )
   }
 
   const setUp = async () => {
     try {
       setIsSettingUp(true)
+      await getTokens()
+      privateAxios.interceptors.response.use(
+        (response) => response,
+        async (error) => {
+          const prevRequest = error?.config
+          if (error?.response?.status === 401 && !prevRequest?.sent) {
+            prevRequest.sent = true
+            try {
+              const tokens = await getTokens()
+              if (tokens) {
+                prevRequest.headers['Authorization'] = `Bearer ${tokens.access_token}`
+                return privateAxios(prevRequest)
+              } else {
+                throw new Error('Unauthorized access token')
+              }
+            } catch (error) {
+              removeItem('token')
+              return Promise.reject(error)
+            }
+          }
+          return Promise.reject(error)
+        }
+      )
+      privateAxios.interceptors.request.use(
+        (config) => {
+          const token = getItem('token')
+          if (token) {
+            config.headers['Authorization'] = `Bearer ${token}`
+          }
+          return config
+        },
+        (error) => {
+          Promise.reject(error)
+        }
+      )
       if (location.pathname.includes('reset_password') || location.pathname.includes('verified')) {
         await authorizerRef.logout()
-        removeItem('token')
-        removeItem('refresh_token')
-        removeTokenCookie()
         removeItem('current_reading_manga')
         setAccount(undefined)
       } else {
-        if (accessTokenParam) {
-          setItem(
-            'token',
-            accessTokenParam,
-            new Date(Date.now() + (expiresInParam ? +expiresInParam * 1000 : 10800000))
-          )
-          setItem('refresh_token', refreshTokenParam)
-          setCookie('token', accessTokenParam, {
-            expires: new Date(Date.now() + (expiresInParam ? +expiresInParam * 1000 : 10800000)),
-          })
-          setLogoutTimeout(expiresInParam ? +expiresInParam * 1000 : 10800000)
-          if (portalCallbackUrlParam) {
-            router.replace(portalCallbackUrlParam)
-          } else {
-            router.replace(location.pathname)
-          }
-        } else {
-          const token = getItem('token')
-          if (token && cookie['token']) {
-            const t = localStorage.getItem('token') as string
-            setLogoutTimeout(new Date(JSON.parse(t).exprire).getTime() - Date.now())
-            await getProfile()
-          }
-        }
+        await getProfile()
       }
       setIsSettingUp(false)
     } catch (error) {
+      setIsSettingUp(false)
       console.log('setUp', error)
       return null
     }
   }
 
-  const getProfile = async (token?: string) => {
+  const getProfile = async () => {
     try {
-      if (portalCallbackUrlParam) {
-        if (!token) {
-          const refreshToken = getItem('refresh_token')
-          const tokens = await authorizerRef.getToken({
-            grant_type: 'refresh_token',
-            refresh_token: refreshToken,
-          })
-          setCookie('token', tokens.access_token, { path: '/' })
-          setItem('refresh_token', tokens.refresh_token)
-          setItem('token', tokens.access_token, new Date(Date.now() + tokens.expires_in * 1000))
-        }
-        router.replace(portalCallbackUrlParam)
-      }
-      const t = token || getItem('token')
-      if (!t) {
-        throw new Error('Unauthorized access token')
+      const token = getItem('token')
+      if (!token) {
+        const tokens = await getTokens()
+        if (!tokens) return
       }
       const res = await getProfileService()
-      console.log(res)
       if (res?.id) {
         setAccount(undefined)
         if (res.wallet_address) {
@@ -385,16 +312,8 @@ function ContextProvider({ children }: any) {
           activities: res?.punkga_wallets?.[0]?.punkga_wallet_activities,
         } as IUser)
       }
-      if (!res.email_verified_at && res.email) {
-        removeItem('token')
-        removeItem('refresh_token')
-        removeTokenCookie()
-      }
       return res
     } catch (error) {
-      removeItem('token')
-      removeItem('refresh_token')
-      removeTokenCookie()
       console.log('getProfile', error)
     }
   }
@@ -408,13 +327,7 @@ function ContextProvider({ children }: any) {
       })
       if (res) {
         callback && callback('success')
-        setItem('token', res.access_token, new Date(Date.now() + res.expires_in * 1000))
-        setItem('refresh_token', res.refresh_token)
-        setCookie('token', res.access_token, {
-          expires: new Date(Date.now() + res.expires_in * 1000),
-        })
-        setLogoutTimeout(res.expires_in * 1000)
-        getProfile(res.access_token)
+        getProfile()
       } else {
         callback && callback('failed', 'Admin account cannot be used for user purposes')
       }
@@ -442,10 +355,8 @@ function ContextProvider({ children }: any) {
     try {
       await authorizerRef.logout()
       await disconnectAsync()
-      removeItem('token')
-      removeItem('refresh_token')
-      removeTokenCookie()
       removeItem('current_reading_manga')
+      removeItem('token')
       setAccount(undefined)
       router.push(location.origin + location.pathname)
     } catch (error) {
@@ -534,12 +445,6 @@ function ContextProvider({ children }: any) {
       console.log('resendVerifyEmail', error)
       return null
     }
-  }
-
-  const removeTokenCookie = () => {
-    removeCookie('token', { path: '/', domain: '.punkga.me' })
-    removeCookie('token', { path: '/', domain: '.staging.punkga.me' })
-    removeCookie('token', { path: '/', domain: '.dev.punkga.me' })
   }
 
   if (isSettingUp) {
