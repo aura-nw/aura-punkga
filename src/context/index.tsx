@@ -207,6 +207,7 @@ function ContextProvider({ children }: any) {
       setItem('token', tokens.access_token, new Date(Date.now() + tokens.expires_in))
       return tokens
     } catch (error) {
+      removeItem('token')
       return null
     }
   }
