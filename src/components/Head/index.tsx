@@ -35,6 +35,11 @@ export default function HeadComponent({ data }: { data?: any }) {
       <meta name='twitter:image' key='twitter:image' content={punkgaImage}></meta>
 
       <meta name='zalo-platform-site-verification' content='FlcZSlNaC71_yvXd-8SAVXA5tYR-ymnzDpCs' />
+      <link rel='manifest' href='/manifest.json' />
+      <meta name='apple-mobile-web-app-capable' content='yes' />
+      <meta name='apple-mobile-web-app-status-bar-style' content='default' />
+      <link rel='apple-touch-icon' href='/logo.png' />
+      <link rel='apple-touch-startup-image' href='/logo.png' />
     </Head>
   )
 }

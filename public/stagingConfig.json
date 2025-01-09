@@ -17,7 +17,7 @@
   "API_URL": "https://hasura.staging.punkga.me",
   "AUTHORIZER_URL": "https://auth.staging.punkga.me",
   "AUTHORIZER_CLIENT_ID": "06c9c437-15cd-4240-b435-5d16206b46c6",
-  "ADMIN_URL": "https://admin.staging.punkga.me",
+  "ADMIN_URL": "https://creator.staging.punkga.me",
   "REST_API_URL": "https://api.staging.punkga.me",
   "IN_MAINTENANCE_MODE": false,
   "GTM_ID": "GTM-MMT4K22K",
