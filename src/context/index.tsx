@@ -269,13 +269,19 @@ function ContextProvider({ children }: any) {
 
   const getProfile = async () => {
     try {
-      if (portalCallbackUrlParam) {
-        router.replace(portalCallbackUrlParam)
-      }
       const token = getItem('token')
       if (!token) {
         const tokens = await getTokens()
-        if (!tokens) return
+        if (!tokens) {
+          return
+        } else {
+          if (portalCallbackUrlParam) {
+            router.replace(portalCallbackUrlParam)
+          }
+        }
+      }
+      if (portalCallbackUrlParam) {
+        router.replace(portalCallbackUrlParam)
       }
       const res = await getProfileService()
       if (res?.id) {
