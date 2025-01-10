@@ -30,7 +30,7 @@ const Button: React.FC<ButtonProps> = ({
   const getSizeClasses = (): string => {
     switch (size) {
       case 'xs':
-        return 'text-xs px-2 py-[5px] leading-[18px] gap-0.5'
+        return 'text-xs px-3.5 h-6'
       case 'sm':
         return 'text-sm px-[10px] py-[10px] gap-1'
       case 'md':
@@ -113,22 +113,22 @@ const Button: React.FC<ButtonProps> = ({
       className={`flex items-center justify-center font-semibold rounded-lg ${sizeClasses} ${variantClasses} ${className} disabled:cursor-not-allowed`}
       disabled={disabled || loading}
       {...props}>
-      { leadingIcon && !loading && (
+      {leadingIcon && !loading && (
         <span className='inline-flex items-center justify-center'>
           <Image src={leadingIcon} alt='Leading icon' width={iconSize} height={iconSize} />
         </span>
       )}
       {loading ? (
-        <div className='relative'>
+        <div className='relative flex items-center gap-1'>
           <div className='absolute inset-0 grid place-items-center'>
             <Spinner size={iconSize} color={'#F6F6F6'} />
           </div>
-          <span className='px-1 opacity-0'>{children}</span>
+          <span className='opacity-0'>{children}</span>
         </div>
       ) : (
-        <span className='px-1'>{children}</span>
+        children
       )}
-      { trailingIcon && !loading && (
+      {trailingIcon && !loading && (
         <span className='inline-flex items-center justify-center'>
           <Image src={trailingIcon} alt='Trailing icon' width={iconSize} height={iconSize} />
         </span>

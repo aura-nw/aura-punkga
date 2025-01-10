@@ -15,7 +15,7 @@ import { useWindowSize } from 'usehooks-ts'
 
 import { Pagination } from '@mui/material'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import Modal from 'components/pages/event/ava-2024/Modal'
 import RuleAndAward from 'components/pages/event/ava-2024/RuleAndAward'
 import Map from 'components/pages/event/ava-2024/assets/Map.svg'

@@ -1,5 +1,5 @@
 import UploadUpIcon from 'assets/images/icons/upload-up.svg'
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import TextField from 'components/Input/TextField'
 import Character from 'components/pages/characters/Character'
 import CharacterDetail from 'components/pages/characters/CharacterDetail'

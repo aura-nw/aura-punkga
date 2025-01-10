@@ -2,17 +2,20 @@ import Footer from 'components/Footer'
 import Header from 'components/Header'
 import { Roboto_Condensed } from 'next/font/google'
 import BottomNavigation from './BottomNavigation'
+import { useWindowSize } from 'usehooks-ts'
+import NHeader from './Header'
 const roboto = Roboto_Condensed({
   subsets: ['latin', 'vietnamese'],
   weight: ['400', '300', '700'],
   variable: '--font-roboto',
 })
 export default function Layout({ children }: any) {
+  const { width } = useWindowSize()
   return (
     <main className={`bg-gray-50 ${roboto.variable}`}>
-      <Header />
+      {width < 756 ? <NHeader /> : <Header />}
       <div className='min-h-[70vh] text-text-primary pb-20'>{children}</div>
-      <BottomNavigation />
+      {width < 756 ? <BottomNavigation /> : <Footer />}
     </main>
   )
 }

@@ -26,7 +26,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import _ from 'lodash'
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import TextField from 'components/Input/TextField'
 import { toast } from 'react-toastify'
 

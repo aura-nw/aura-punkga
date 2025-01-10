@@ -1,5 +1,5 @@
 import MainButton from 'components/Button/MainButton'
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import Footer from 'components/Footer'
 import Header from 'components/Header'
 import OutlineTextField from 'components/Input/TextField/Outline'

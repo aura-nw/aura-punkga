@@ -23,7 +23,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useOnClickOutside } from 'usehooks-ts'
 import Modal from 'components/pages/event/your-city/Modal'
 import Congrats from 'components/pages/event/your-city/assets/congrats.png'
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 export default function Page(props) {
   if (props.justHead) {
     return <></>

@@ -1,6 +1,6 @@
 import UserGreen from 'assets/images/userGreen.svg'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import _ from 'lodash'
 import { useTranslation } from 'next-i18next'
 import getConfig from 'next/config'

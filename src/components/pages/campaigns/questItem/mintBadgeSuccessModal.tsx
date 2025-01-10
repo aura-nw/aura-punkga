@@ -1,4 +1,4 @@
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import Modal from 'components/core/Modal'
 import NFTPackage from 'components/pages/campaigns/assets/nft-package.png'
 import StoryBadge from 'components/pages/campaigns/assets/story-badge.png'

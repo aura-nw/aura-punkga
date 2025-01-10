@@ -1,4 +1,4 @@
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import moment from 'moment'
 import getConfig from 'next/config'
 import Link from 'next/link'

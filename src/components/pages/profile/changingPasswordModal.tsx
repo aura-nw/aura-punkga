@@ -11,7 +11,7 @@ import _ from 'lodash'
 import Eye from 'assets/images/icons/eye.svg'
 import EyeClosed from 'assets/images/icons/eye_closed.svg'
 import MainButton from 'components/Button/MainButton'
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import { Box, Modal } from '@mui/material'
 export default function ChangingPasswordModal({ open, setOpen }) {
   const [success, setSuccess] = useState(false)
