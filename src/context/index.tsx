@@ -75,6 +75,8 @@ function ContextProvider({ children }: any) {
     redirectURL: location.href || config.REDIRECT_URL,
     clientID: config.AUTHORIZER_CLIENT_ID,
   })
+  const searchParams = new URLSearchParams(location.search)
+  const portalCallbackUrlParam = searchParams.get('login_callback_url')
 
   const httpLink = new HttpLink({
     uri: `${config.API_URL}/v1/graphql`,
@@ -267,6 +269,9 @@ function ContextProvider({ children }: any) {
 
   const getProfile = async () => {
     try {
+      if (portalCallbackUrlParam) {
+        router.replace(portalCallbackUrlParam)
+      }
       const token = getItem('token')
       if (!token) {
         const tokens = await getTokens()
