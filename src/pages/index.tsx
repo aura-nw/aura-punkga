@@ -1,7 +1,7 @@
 import CheckboxDropdown from 'components/CheckBox/CheckBoxDropDown'
 import Layout from 'components/Layout'
 import TaskSlider from 'components/pages/homepage/comicSlider'
-import Manga from "components/pages/homepage/manga"
+import Manga from 'components/pages/homepage/manga'
 import SlideSection from 'components/pages/homepage/slideSection'
 import TrendingComic from 'components/pages/homepage/trendingComic'
 import { i18n } from 'next-i18next'
@@ -12,6 +12,8 @@ import { useTranslation } from 'react-i18next'
 import useApi from 'src/hooks/useApi'
 import { IComic } from 'src/models/comic'
 import { getAllTags, getLatestComic, getTrendingComic } from 'src/services'
+import { useWindowSize } from 'usehooks-ts'
+import MobileVersion from './mobile'
 
 declare global {
   interface Window {
@@ -32,6 +34,7 @@ function Home() {
   const { t } = useTranslation()
   const sliderNavRef = useRef<any>()
   const useableTags = allTags?.data?.filter((item) => item.en !== 'Invent contest' && item.vn !== 'Invent contest')
+  const { width } = useWindowSize()
   const [statusFilter, setStatusFilter] = useState([
     {
       key: 'All status',
@@ -67,6 +70,9 @@ function Home() {
   //     )
   //   })
   // }, [t('All status')])
+  if (width < 768) {
+    return <MobileVersion />
+  }
   return (
     <div className='bg-gray-50'>
       <div className='md:hidden'>

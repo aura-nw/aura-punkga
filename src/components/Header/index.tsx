@@ -129,7 +129,7 @@ export default function Header({ className }: { className?: string }) {
         </nav>
 
         <div
-          className={`xl:hidden pk-container py-[10px] px-5 pb-4 bg-[#F4F3F7] ${
+          className={`xl:hidden pk-container py-[10px] px-5 pb-4 bg-neutral-black ${
             router.pathname == '/' ? '' : 'hidden'
           }`}>
           <div ref={divRef} className={`${isSearchFocused ? 'z-30' : ''} w-full xl:max-w-max relative`}>
