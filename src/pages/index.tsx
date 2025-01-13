@@ -13,7 +13,7 @@ import useApi from 'src/hooks/useApi'
 import { IComic } from 'src/models/comic'
 import { getAllTags, getLatestComic, getTrendingComic } from 'src/services'
 import { useWindowSize } from 'usehooks-ts'
-import MobileVersion from './mobile'
+import MobileVersion from '../components/pages/homepage/mobile'
 
 declare global {
   interface Window {
