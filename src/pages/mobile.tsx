@@ -1,20 +1,44 @@
+import Post from 'components/pages/homepage/post'
 import getConfig from 'next/config'
-import Link from 'next/link'
-import WowYourselfImage from 'components/pages/event/assets/allEvents/wow-yourself.png'
-import KaiaEventImage from 'components/pages/event/assets/allEvents/Kaia.png'
-import KaiaEventImageVN from 'components/pages/event/assets/allEvents/Kaia-vn.png'
-import PudgyEventImage from 'components/pages/event/assets/allEvents/Pudgy.png'
-import AvaEventImage from 'components/pages/event/assets/allEvents/ava.png'
-import PunktoberEventImage from 'components/pages/event/assets/allEvents/punktober.png'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/css'
 import Image from 'next/image'
-import useSWR from 'swr'
+import Link from 'next/link'
+import { useContext, useEffect } from 'react'
+import InfiniteScroll from 'react-infinite-scroll-component'
+import { Context } from 'src/context'
+import { MangaListContext } from 'src/context/mangaList'
 import { eventService } from 'src/services/eventService'
+import { mangaService } from 'src/services/mangaService'
+import 'swiper/css'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import useSWR from 'swr'
+
+const LIMIT = 10
 export default function MobileVersion() {
   const config = getConfig()
   const { data } = useSWR('get-all-contest', eventService.getAll)
   const events = data?.data?.data?.contest || []
+  const { mangaList, setMangaData } = useContext(MangaListContext)
+  const { account } = useContext(Context)
+  const fetchManga = async () => {
+    const data = await mangaService.getMangaList(LIMIT, mangaList.offset, account?.id)
+    if (data?.manga.length) {
+      setMangaData({
+        list: [...mangaList.list, ...data.manga],
+        offset: mangaList.offset + data.manga.length,
+        remaining: true,
+      })
+    } else {
+      setMangaData({
+        list: [...mangaList.list],
+        offset: mangaList.offset,
+        remaining: false,
+      })
+    }
+  }
+  useEffect(() => {
+    if (mangaList.list.length > 0) return
+    fetchManga()
+  }, [])
   return (
     <main className='bg-neutral-black py-4 text-white'>
       <div className='space-y-4'>
@@ -43,60 +67,16 @@ export default function MobileVersion() {
             ))}
           </Swiper>
         </div>
-        <div className='p-4 space-y-8'>
-          {events.map((e, index) => (
-            <div key={index} className='space-y-4'>
-              <div className='flex items-center gap-4'>
-                <div className='w-10 h-10 rounded-full bg-gray-300' />
-                <div className='space-y-1'>
-                  <div className='text-sm font-semibold text-text-brand-focus'>Artist Name</div>
-                  <div className='text-xxs text-neutral-400'>4m ago</div>
-                </div>
-              </div>
-              <div>
-                <div className='text-lg font-medium'>Manga Name</div>
-                <div className='space-y-1.5'>
-                  <div className='text-sm line-clamp-2'>
-                    Start with a present-tense statement about yourself. If you're not sure how to begin, simply Start
-                    with a present-tense statement about yourself. If you're not sure how to begin, simply...
-                  </div>
-                  <div className='text-text-info-primary text-sm font-medium'>View more</div>
-                </div>
-              </div>
-              <div className='space-y-2'>
-                <div className='w-full aspect-square bg-neutral-400 rounded-md'></div>
-                <div className='text-xs font-semibold text-neutral-400 leading-8'>20 likes</div>
-                <div className='h-8 flex items-center justify-between'>
-                  <div className='flex items-center gap-1 text-sm font-semibold'>
-                    <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
-                      <path
-                        fillRule='evenodd'
-                        clipRule='evenodd'
-                        d='M3.17115 5.17232C3.92126 4.42244 4.93849 4.00118 5.99915 4.00118C7.0598 4.00118 8.07703 4.42244 8.82714 5.17232L9.99914 6.34332L11.1711 5.17232C11.5401 4.79028 11.9815 4.48555 12.4695 4.27592C12.9575 4.06628 13.4824 3.95594 14.0135 3.95132C14.5447 3.94671 15.0714 4.04791 15.563 4.24904C16.0545 4.45016 16.5012 4.74717 16.8767 5.12274C17.2523 5.49832 17.5493 5.94492 17.7504 6.43651C17.9516 6.92809 18.0528 7.45481 18.0481 7.98593C18.0435 8.51705 17.9332 9.04193 17.7235 9.52994C17.5139 10.018 17.2092 10.4593 16.8271 10.8283L9.99914 17.6573L3.17115 10.8283C2.42126 10.0782 2 9.06098 2 8.00032C2 6.93967 2.42126 5.92244 3.17115 5.17232V5.17232Z'
-                        stroke='#F6F6F6'
-                        strokeWidth='1.5'
-                        strokeLinejoin='round'
-                      />
-                    </svg>
-                    Like
-                  </div>
-                  <div className='flex items-center gap-1 text-sm font-semibold'>
-                    View all chapters
-                    <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                      <path
-                        d='M10 7L15 12L10 17'
-                        stroke='white'
-                        strokeWidth='1.5'
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <InfiniteScroll
+          className='p-4 space-y-8'
+          dataLength={mangaList.list.length}
+          next={fetchManga}
+          hasMore={mangaList.remaining}
+          loader={<h4 className='w-full text-center font-medium text-sm'>Loading...</h4>}>
+          {mangaList.list.map((manga, index) => (
+            <Post key={index} data={manga} />
           ))}
-        </div>
+        </InfiniteScroll>
       </div>
     </main>
   )

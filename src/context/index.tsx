@@ -18,8 +18,9 @@ import { storyChain } from 'src/services/wagmi/config'
 import { oauthLogin } from 'src/utils'
 import { getItem, removeItem, setItem } from 'src/utils/localStorage'
 import { useAccount, useChainId, useDisconnect, useSignMessage, useSwitchChain } from 'wagmi'
-import ListProvider from './list'
+import ListProvider from './characterList'
 import ModalProvider from './modals'
+import MangaListProvider from './mangaList'
 
 const queryClient = new QueryClient()
 
@@ -473,8 +474,10 @@ function ContextProvider({ children }: any) {
           <ApolloProvider client={client}>
             <ModalProvider>
               <ListProvider>
-                {location.pathname.includes('events/ava-2024') && <BackgroundAudio />}
-                {children}
+                <MangaListProvider>
+                  {location.pathname.includes('events/ava-2024') && <BackgroundAudio />}
+                  {children}
+                </MangaListProvider>
               </ListProvider>
             </ModalProvider>
           </ApolloProvider>

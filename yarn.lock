@@ -2031,7 +2031,7 @@
     hoist-non-react-statics "^3.3.0"
     redux "^4.0.0"
 
-"@types/react-show-more-text@^1.4.3":
+"@types/react-show-more-text@^1.4.5":
   version "1.4.5"
   resolved "https://registry.yarnpkg.com/@types/react-show-more-text/-/react-show-more-text-1.4.5.tgz#b6b39b63de14b050badbcd6afe69b371b2b5f130"
   integrity sha512-tpo+we9AwkSBvQoeZfEGUJt6ZwkLov3vak/ZTNXLlW5K1q2drKDqlQ7K1Yo+0CuYF7aK5j9gjxJkbesgr0tP4A==
@@ -5381,7 +5381,7 @@ react-router@6.23.1:
   dependencies:
     "@remix-run/router" "1.16.1"
 
-react-show-more-text@^1.6.2:
+react-show-more-text@^1.7.1:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/react-show-more-text/-/react-show-more-text-1.7.1.tgz#9123995d7ee5ea2597bb5941b13e2cd323faa155"
   integrity sha512-k+NyTogrBgPVpE84r6AdDLgf60k9cR4F0zlhp3w8Hoquq+UStKjAOatsVYDLwfWD8wqF6smRXohi2rvQZRpQDQ==
