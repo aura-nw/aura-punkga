@@ -76,10 +76,27 @@ function ContextProvider({ children }: any) {
     redirectURL: location.href || config.REDIRECT_URL,
     clientID: config.AUTHORIZER_CLIENT_ID,
   })
+  const searchParams = new URLSearchParams(location.search)
+  const portalCallbackUrlParam = searchParams.get('login_callback_url')
 
   const httpLink = new HttpLink({
     uri: `${config.API_URL}/v1/graphql`,
   })
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        if (!document.cookie.includes('cookie_session_domain')) {
+          logout()
+        }
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+  }, [])
+
   useEffect(() => {
     setLevel((prev) => {
       if (typeof prev != 'undefined' && account?.level) {
@@ -271,7 +288,16 @@ function ContextProvider({ children }: any) {
       const token = getItem('token')
       if (!token) {
         const tokens = await getTokens()
-        if (!tokens) return
+        if (!tokens) {
+          return
+        } else {
+          if (portalCallbackUrlParam) {
+            router.replace(portalCallbackUrlParam)
+          }
+        }
+      }
+      if (portalCallbackUrlParam) {
+        router.replace(portalCallbackUrlParam)
       }
       const res = await getProfileService()
       if (res?.id) {
