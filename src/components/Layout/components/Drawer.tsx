@@ -1,11 +1,9 @@
 import DP from 'assets/images/dp.svg'
 import Logo from 'assets/images/header-logo.svg'
-import AboutUs from 'assets/images/icons/aboutUs.svg'
-import Campaign from 'assets/images/icons/campaign.svg'
-import Language from 'assets/images/icons/language.svg'
 import LogOut from 'assets/images/icons/logout.svg'
 import MyProfile from 'assets/images/icons/myProfile.svg'
 import Button from 'components/core/Button'
+import { motion } from 'framer-motion'
 import CopySvg from 'images/icons/copy.svg'
 import EyeClose from 'images/icons/eye-closed.svg'
 import EyeOpen from 'images/icons/eye-open.svg'
@@ -22,7 +20,7 @@ import { storyChain } from 'src/services/wagmi/config'
 import { formatNumber, shorten } from 'src/utils'
 import { useAccount, useBalance, useChainId, useSwitchChain } from 'wagmi'
 
-export default function Drawer({ openNavigation, setOpenNavigation }) {
+export default function Drawer({ open, setOpen }) {
   const config = getConfig()
   const [showActivities, setShowActivities] = useState(false)
   const { t } = useTranslation()
@@ -60,19 +58,24 @@ export default function Drawer({ openNavigation, setOpenNavigation }) {
     window.open(url.toString(), '_blank')
   }
   return (
-    <>
-      <div className='fixed inset-0 z-10 bg-black/80'></div>
-      <div
-        className={`z-40 flex flex-col bg-[#1c1c1c] text-white p-4 absolute top-0 right-0 h-screen overflow-auto w-4/5 transform transition-transform duration-300 ${
-          openNavigation ? 'translate-x-0' : 'translate-x-full'
-        }`}>
+    <div className='fixed inset-0 z-10 flex justify-end'>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={open ? { opacity: 0.5 } : { opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        className='absolute inset-0 bg-black'></motion.div>
+      <motion.div
+        className='z-40 relative flex flex-col bg-[#1c1c1c] text-white p-4 h-screen overflow-auto w-4/5'
+        initial={open ? { x: '100%' } : { x: 0 }}
+        animate={open ? { x: 0 } : { x: '100%' }}
+        transition={{ duration: 0.1 }}>
         <div className='flex justify-between pb-4 sticky top-0'>
           <Image src={Logo} alt='header logo' className='h-[29px] w-auto' />
           <div className='flex items-center gap-4'>
             <div
               className='w-6 h-6 mt-2 relative'
               onClick={() => {
-                setOpenNavigation(false)
+                setOpen(false)
                 setShowActivities(false)
               }}>
               <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none'>
@@ -190,9 +193,9 @@ export default function Drawer({ openNavigation, setOpenNavigation }) {
                       </div>
                       {showWalletDetail && (
                         <div className='space-y-2'>
-                          <div className='bg-background-bg-primary p-2.5 rounded-mlg text-sm'>
-                            <div className='text-[#ABABAB] text-sm mb-1'>{`${t('Wallet')}`}</div>
-                            <div className='flex justify-between items-center text-[#4E5056] font-semibold relative'>
+                          <div className='bg-neutral-950 p-2.5 rounded-mlg text-sm'>
+                            <div className=' text-sm mb-1'>{`${t('Wallet')}`}</div>
+                            <div className='flex justify-between items-center font-semibold relative'>
                               <div className='text-text-info-primary' onClick={handleOpenWalletOnExplorer}>{`${shorten(
                                 account?.activeWalletAddress,
                                 8,
@@ -208,8 +211,8 @@ export default function Drawer({ openNavigation, setOpenNavigation }) {
                                 {t('Copied')}
                               </span>
                             </div>
-                            <div className='text-[#ABABAB] text-sm mt-3 mb-1'>{`${t('Balance')}`}</div>
-                            <div className='flex justify-between items-center text-[#4E5056] font-semibold leading-5'>
+                            <div className=' text-sm mt-3 mb-1'>{`${t('Balance')}`}</div>
+                            <div className='flex justify-between items-center font-semibold leading-5'>
                               <div className='flex items-center'>
                                 {hideBalance
                                   ? '********'
@@ -245,7 +248,7 @@ export default function Drawer({ openNavigation, setOpenNavigation }) {
                                   size='sm'
                                   className='mt-3 w-full'
                                   onClick={() => {
-                                    setOpenNavigation(false)
+                                    setOpen(false)
                                     setMigrateWalletOpen(true)
                                   }}>
                                   {t('Migrate wallet')}
@@ -278,117 +281,29 @@ export default function Drawer({ openNavigation, setOpenNavigation }) {
                   <div
                     className='flex gap-3 items-center py-3 text-sm leading-[18px] font-medium'
                     onClick={() => {
-                      setOpenNavigation(false)
+                      setOpen(false)
                       router.push('/profile')
                     }}>
                     <Image src={MyProfile} alt='' className='w-5 h-5' />
                     {t('My profile')}
                   </div>
+                  {account && (
+                    <div
+                      className='flex gap-3 items-center py-3 text-sm leading-[18px] font-medium'
+                      onClick={() => {
+                        setOpen(false)
+                        logout()
+                      }}>
+                      <Image src={LogOut} alt='' className='w-5 h-5' />
+                      {t('Log out')}
+                    </div>
+                  )}
                 </div>
               </>
             )}
-            <div className='space-y-2 pt-2'>
-              <div
-                className='flex gap-3 items-center py-3 text-sm leading-[18px] font-medium'
-                onClick={() => {
-                  setOpenNavigation(false)
-                  router.push('/characters')
-                }}>
-                <Image src={AboutUs} alt='' className='w-5 h-5' />
-                {t('Characters')}
-              </div>
-              <div
-                className='flex gap-3 items-center py-3 text-sm leading-[18px] font-medium'
-                onClick={() => {
-                  setOpenNavigation(false)
-                  router.push('/campaigns')
-                }}>
-                <Image src={Campaign} alt='' className='w-5 h-5' />
-                {t('Campaign')}
-              </div>
-              <div
-                className='flex gap-3 items-center py-3 text-sm leading-[18px] font-medium'
-                onClick={() => {
-                  setOpenNavigation(false)
-                  router.push('/events')
-                }}>
-                <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>
-                  <path
-                    d='M19.0968 11.0871L12.0911 21.3205C11.7382 21.829 10.9079 21.6007 10.9079 20.9884L10.8976 15.1348C10.8976 14.4601 10.3268 13.9204 9.621 13.9101L5.43836 13.8582C4.9298 13.8478 4.62882 13.3185 4.90905 12.9137L11.9147 2.68029C12.2676 2.17173 13.0979 2.40007 13.0979 3.01241L13.1083 8.86603C13.1083 9.54064 13.6791 10.0803 14.3848 10.0907L18.5675 10.1426C19.0656 10.1426 19.3666 10.6823 19.0968 11.0871Z'
-                    stroke='#009640'
-                    strokeWidth='1.5'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                  />
-                </svg>
-                {t('Event')}
-              </div>
-              <div
-                className='flex gap-3 items-center py-3 text-sm leading-[18px] font-medium'
-                onClick={() => {
-                  setOpenNavigation(false)
-                  router.push('/collections')
-                }}>
-                <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
-                  <path
-                    d='M4 18H16C17.1046 18 18 17.0574 18 15.8947V4.10526C18 2.94256 17.1046 2 16 2H4C2.89543 2 2 2.94256 2 4.10526V15.8947C2 17.0574 2.89543 18 4 18Z'
-                    stroke='#009640'
-                    strokeWidth='1.5'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                  />
-                  <path
-                    d='M5 12.9999H15L11.6667 7.16657L9.16667 10.9166L7.5 9.2499L5 12.9999Z'
-                    stroke='#009640'
-                    strokeWidth='1.5'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                  />
-                </svg>
-                {t('Collection')}
-              </div>
-              <div
-                className='flex gap-3 items-center py-3 text-sm leading-[18px] font-medium'
-                onClick={() => {
-                  setOpenNavigation(false)
-                  router.push('/about-us')
-                }}>
-                <Image src={AboutUs} alt='' className='w-5 h-5' />
-                {t('About Us')}
-              </div>
-              <div>
-                <div
-                  className='flex justify-between gap-3 items-center py-3 text-sm leading-[18px] font-medium'
-                  onClick={switchLanguage}>
-                  <div className='flex gap-3 items-center'>
-                    <Image src={Language} alt='' className='w-5 h-5' />
-                    <div>{t('Language')}</div>
-                  </div>
-
-                  <div className='flex gap-4 items-center'>
-                    {locale == 'en' ? (
-                      <div className='text-text-brand-defaul font-medium'>EN</div>
-                    ) : (
-                      <div className='text-text-brand-defaul font-medium'>VN</div>
-                    )}
-                  </div>
-                </div>
-              </div>
-              {account && (
-                <div
-                  className='flex gap-3 items-center py-3 text-sm leading-[18px] font-medium'
-                  onClick={() => {
-                    setOpenNavigation(false)
-                    logout()
-                  }}>
-                  <Image src={LogOut} alt='' className='w-5 h-5' />
-                  {t('Log out')}
-                </div>
-              )}
-            </div>
           </>
         )}
-      </div>
-    </>
+      </motion.div>
+    </div>
   )
 }

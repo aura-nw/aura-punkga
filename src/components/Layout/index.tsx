@@ -12,10 +12,10 @@ const roboto = Roboto_Condensed({
 export default function Layout({ children }: any) {
   const { width } = useWindowSize()
   return (
-    <main className={`bg-gray-50 ${roboto.variable}`}>
-      {width < 756 ? <NHeader /> : <Header />}
+    <main className={`bg-gray-50 max-w-screen overflow-hidden ${roboto.variable}`}>
+      {width < 1280 ? <NHeader /> : <Header />}
       <div className='min-h-[70vh] text-text-primary pb-20'>{children}</div>
-      {width < 756 ? <BottomNavigation /> : <Footer />}
+      {width < 1280 ? <BottomNavigation /> : <Footer />}
     </main>
   )
 }

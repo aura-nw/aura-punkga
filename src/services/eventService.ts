@@ -2,6 +2,7 @@ import getConfig from 'next/config'
 import { privateAxios } from 'src/context'
 export const eventService = {
   report: async (payload) => await privateAxios.post(`${getConfig().REST_API_URL}/report`, payload),
+  getAll: async () => await privateAxios.get(`${getConfig().REST_API_URL}/contest`),
   story: {
     searchCharacter: async (search: string) =>
       await privateAxios.get(`${getConfig().REST_API_URL}/story-event/character/search`, {

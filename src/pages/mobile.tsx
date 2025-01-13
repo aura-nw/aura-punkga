@@ -9,81 +9,12 @@ import PunktoberEventImage from 'components/pages/event/assets/allEvents/punktob
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import Image from 'next/image'
-import { Skeleton } from '@mui/material'
-const events = [
-  {
-    url: '/events/your-city',
-    isLive: true,
-    en: {
-      image: PunktoberEventImage,
-      title: `Your City`,
-      subtitle: `14 Dec 2024 - 13 Jan 2025`,
-    },
-    vn: {
-      image: AvaEventImage,
-      title: `AVA Grand Contest 2024`,
-      subtitle: `14/12/2024 - 13/01/2025`,
-    },
-  },
-  {
-    url: '/events/ava-2024',
-    isLive: false,
-    en: {
-      image: AvaEventImage,
-      title: `AVA Grand Contest 2024`,
-      subtitle: `12 Oct 2024 - 17 Nov 2024`,
-    },
-    vn: {
-      image: AvaEventImage,
-      title: `AVA Grand Contest 2024`,
-      subtitle: `12/10/2024 - 12/11/2024`,
-    },
-  },
-  {
-    url: '/events/pudgy-asia-tour',
-    isLive: false,
-    en: {
-      image: PudgyEventImage,
-      title: `Pudgy Asia Tour`,
-      subtitle: `01 Aug 2024 - 4 Sep 2024`,
-    },
-    vn: {
-      image: PudgyEventImage,
-      title: `Pudgy Asia Tour`,
-      subtitle: `01/08/2024 - 04/09/2024`,
-    },
-  },
-  {
-    url: '/events/kaia-island',
-    isLive: false,
-    en: {
-      image: KaiaEventImage,
-      title: `Kaia's Island Mythology Record`,
-      subtitle: `17 Jul 2024 - 13 Aug 2024`,
-    },
-    vn: {
-      image: KaiaEventImageVN,
-      title: `Ghi chép về truyền thuyết đảo Kaia`,
-      subtitle: `17/07/2024 - 13/08/2024`,
-    },
-  },
-  {
-    url: '/events/wow-yourself',
-    isLive: false,
-    en: {
-      image: WowYourselfImage,
-      title: `WOW yourself`,
-      subtitle: `03 Jun 2024 - 30 Jun 2024`,
-    },
-    vn: {
-      image: WowYourselfImage,
-      title: `WOW yourself`,
-      subtitle: `03/06/2024 - 30/06/2024`,
-    },
-  },
-]
+import useSWR from 'swr'
+import { eventService } from 'src/services/eventService'
 export default function MobileVersion() {
   const config = getConfig()
+  const { data } = useSWR('get-all-contest', eventService.getAll)
+  const events = data?.data?.data?.contest || []
   return (
     <main className='bg-neutral-black py-4 text-white'>
       <div className='space-y-4'>
@@ -105,8 +36,8 @@ export default function MobileVersion() {
           <Swiper slidesPerView='auto' slidesOffsetBefore={16} slidesOffsetAfter={16} spaceBetween={16}>
             {events.map((event, index) => (
               <SwiperSlide key={index} className='!h-[97px] !w-[143px] rounded-md overflow-hidden'>
-                <Link href={event.url} target='_blank'>
-                  <Image src={event.en.image} alt='' className='w-full h-full object-cover' />
+                <Link href={event.slug} target='_blank'>
+                  <Image src={event?.image} alt='' width={150} height={150} className='w-full h-full object-cover' />
                 </Link>
               </SwiperSlide>
             ))}

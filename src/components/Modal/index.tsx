@@ -29,12 +29,11 @@ export default function Modal({
           as='div'
           enter='ease-out duration-300'
           enterFrom='opacity-0'
-          enterTo='opacity-70'
+          enterTo='opacity-100'
           leave='ease-in duration-200'
-          leaveFrom='opacity-70'
-          leaveTo='opacity-0'>
-          <div className='fixed inset-0 bg-white/70 transition-opacity' />
-        </Transition.Child>
+          leaveFrom='opacity-100'
+          leaveTo='opacity-0'
+          className='fixed inset-0 bg-black/70 transition-opacity'></Transition.Child>
 
         <div className='fixed inset-0 z-10 overflow-y-auto'>
           <div className='flex min-h-full justify-center p-4 text-center items-center sm:p-0'>
