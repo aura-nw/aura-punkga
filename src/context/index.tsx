@@ -81,6 +81,21 @@ function ContextProvider({ children }: any) {
   const httpLink = new HttpLink({
     uri: `${config.API_URL}/v1/graphql`,
   })
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        if (!document.cookie.includes('cookie_session_domain')) {
+          logout()
+        }
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+  }, [])
+
   useEffect(() => {
     setLevel((prev) => {
       if (typeof prev != 'undefined' && account?.level) {
