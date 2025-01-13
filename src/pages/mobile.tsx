@@ -5,9 +5,9 @@ import Link from 'next/link'
 import { useContext, useEffect } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { Context } from 'src/context'
-import { MangaListContext } from 'src/context/mangaList'
+import { PostListContext } from 'src/context/postList'
+import { contentService } from 'src/services/contentService'
 import { eventService } from 'src/services/eventService'
-import { mangaService } from 'src/services/mangaService'
 import 'swiper/css'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import useSWR from 'swr'
@@ -17,26 +17,26 @@ export default function MobileVersion() {
   const config = getConfig()
   const { data } = useSWR('get-all-contest', eventService.getAll)
   const events = data?.data?.data?.contest || []
-  const { mangaList, setMangaData } = useContext(MangaListContext)
+  const { postList, setPostData } = useContext(PostListContext)
   const { account } = useContext(Context)
   const fetchManga = async () => {
-    const data = await mangaService.getMangaList(LIMIT, mangaList.offset, account?.id)
-    if (data?.manga?.length) {
-      setMangaData({
-        list: [...mangaList.list, ...data.manga],
-        offset: mangaList.offset + data.manga.length,
+    const data = await contentService.getPostList(LIMIT, postList.offset, account?.id)
+    if (data?.data?.posts?.length) {
+      setPostData({
+        list: [...postList.list, ...data?.data?.posts],
+        offset: postList.offset + data?.data?.posts.length,
         remaining: true,
       })
     } else {
-      setMangaData({
-        list: [...mangaList.list],
-        offset: mangaList.offset,
+      setPostData({
+        list: [...postList.list],
+        offset: postList.offset,
         remaining: false,
       })
     }
   }
   useEffect(() => {
-    if (mangaList.list.length > 0) return
+    if (postList.list.length > 0) return
     fetchManga()
   }, [])
   return (
@@ -69,12 +69,12 @@ export default function MobileVersion() {
         </div>
         <InfiniteScroll
           className='p-4 space-y-8'
-          dataLength={mangaList.list.length}
+          dataLength={postList.list.length}
           next={fetchManga}
-          hasMore={mangaList.remaining}
+          hasMore={postList.remaining}
           loader={<h4 className='w-full text-center font-medium text-sm'>Loading...</h4>}>
-          {mangaList.list.map((manga, index) => (
-            <Post key={index} data={manga} />
+          {postList.list.map((post, index) => (
+            <Post key={index} data={post} />
           ))}
         </InfiniteScroll>
       </div>

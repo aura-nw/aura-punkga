@@ -90,6 +90,7 @@ function MyApp(props: AppProps) {
   }, [])
   const init = async () => {
     const { data: config } = await axios.get('/config.json')
+    window.history.scrollRestoration = 'auto'
     setConfig(config)
     setWagmiConfig(getWagmiConfig(config.WALLET_CONNECT_PROJECT_ID))
     setIsSetting(false)

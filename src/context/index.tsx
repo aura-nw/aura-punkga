@@ -20,7 +20,7 @@ import { getItem, removeItem, setItem } from 'src/utils/localStorage'
 import { useAccount, useChainId, useDisconnect, useSignMessage, useSwitchChain } from 'wagmi'
 import ListProvider from './characterList'
 import ModalProvider from './modals'
-import MangaListProvider from './mangaList'
+import PostListProvider from './postList'
 
 const queryClient = new QueryClient()
 
@@ -500,10 +500,10 @@ function ContextProvider({ children }: any) {
           <ApolloProvider client={client}>
             <ModalProvider>
               <ListProvider>
-                <MangaListProvider>
+                <PostListProvider>
                   {location.pathname.includes('events/ava-2024') && <BackgroundAudio />}
                   {children}
-                </MangaListProvider>
+                </PostListProvider>
               </ListProvider>
             </ModalProvider>
           </ApolloProvider>

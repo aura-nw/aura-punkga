@@ -14,7 +14,7 @@ export default function Header() {
   const { isConnected, address } = useAccount()
   const [openDrawer, setOpenDrawer] = useState(false)
   return (
-    <header className='bg-neutral-black px-4 h-14 flex items-center justify-between'>
+    <header className='bg-neutral-black px-4 h-14 flex items-center justify-between fixed top-0 w-screen z-30'>
       <Link href={'/'}>
         <Image src={Logo} alt='' className='h-7 w-auto' />
       </Link>
