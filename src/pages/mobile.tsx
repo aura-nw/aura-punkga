@@ -21,7 +21,7 @@ export default function MobileVersion() {
   const { account } = useContext(Context)
   const fetchManga = async () => {
     const data = await mangaService.getMangaList(LIMIT, mangaList.offset, account?.id)
-    if (data?.manga.length) {
+    if (data?.manga?.length) {
       setMangaData({
         list: [...mangaList.list, ...data.manga],
         offset: mangaList.offset + data.manga.length,

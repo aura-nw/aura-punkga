@@ -3,7 +3,7 @@ import { privateAxios } from 'src/context'
 
 export const mangaService = {
   getMangaList: async (limit?: number, offset?: number, userId?: string) => {
-    const { data } = await privateAxios.get(`${getConfig().API_URL}/api/rest/public/latest`, {
+    const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/post/latest`, {
       params: {
         limit,
         offset,
