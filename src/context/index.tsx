@@ -84,20 +84,6 @@ function ContextProvider({ children }: any) {
   })
 
   useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') {
-        if (!document.cookie.includes('cookie_session_domain')) {
-          logout()
-        }
-      }
-    }
-    document.addEventListener('visibilitychange', handleVisibilityChange)
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange)
-    }
-  }, [])
-
-  useEffect(() => {
     setLevel((prev) => {
       if (typeof prev != 'undefined' && account?.level) {
         if (prev != +account?.level) {
