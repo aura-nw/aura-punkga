@@ -89,9 +89,9 @@ export default function BottomNavigation() {
         Subscription
       </Link>
       <Link
-        href='/'
+        href='/explore'
         className={`flex flex-col items-center gap-2 ${
-          location.pathname.includes('explore') ? 'text-text-brand-hover' : ''
+          location.pathname.includes('/explore') ? 'text-text-brand-hover' : ''
         }`}>
         <svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' viewBox='0 0 25 25' fill='none'>
           <path
