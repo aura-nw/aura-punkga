@@ -25,10 +25,8 @@ export default function Artworks() {
   const latestComic = useApi<IComic[]>(getLatestComic, true, [])
   const [useableComic, setUseableComic] = useState<any>()
   useEffect(() => {
-    const comic = latestComic.data?.filter(
-      (data: any) =>
-        data.tags.some((lang: any) => lang.en.toLowerCase() === 'invent contest') &&
-        data.tags.some((lang: any) => lang.en.toLowerCase() === 'kaia island')
+    const comic = latestComic.data?.filter((data: any) =>
+      data.tags.some((lang: any) => lang.en.toLowerCase() === 'kaia island')
     )
     setUseableComic(comic)
   }, [latestComic.data])

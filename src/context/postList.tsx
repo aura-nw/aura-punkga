@@ -9,6 +9,8 @@ export const PostListContext = createContext<{
   likedList: any[]
   setLikedList?: (likedList: any) => void
   setPostData?: (postList: any) => void
+  selectedTags?: any[]
+  setSelectedTags?: (selectedTags: any) => void
 }>({
   postList: {
     list: [],
@@ -19,6 +21,8 @@ export const PostListContext = createContext<{
   likedList: [],
   setLikedList: () => {},
   setPostData: () => {},
+  selectedTags: [],
+  setSelectedTags: () => {},
 })
 function MangaListProvider({ children }) {
   const [postList, setPostListData] = useState({
@@ -28,6 +32,7 @@ function MangaListProvider({ children }) {
     search: '',
   })
   const [likedList, setLikedList] = useState([])
+  const [selectedTags, setSelectedTags] = useState([])
   return (
     <PostListContext.Provider
       value={{
@@ -35,6 +40,8 @@ function MangaListProvider({ children }) {
         setPostData: (newData) => setPostListData((prev) => ({ ...prev, ...newData })),
         likedList,
         setLikedList,
+        selectedTags,
+        setSelectedTags,
       }}>
       {children}
     </PostListContext.Provider>

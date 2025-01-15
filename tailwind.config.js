@@ -17,7 +17,7 @@ module.exports = {
         mlg: '10px',
       },
       colors: {
-        'background': '#1c1c1c',
+        background: '#161619',
         'light-gray': 'var(--light-gray)',
         'light-medium-gray': 'var(--light-medium-gray)',
         'medium-gray': 'var(--medium-gray)',
@@ -389,7 +389,7 @@ module.exports = {
       },
       fontFamily: {
         roboto: ['var(--font-roboto)'],
-      }
+      },
     },
   },
   plugins: [require('@headlessui/tailwindcss')],

@@ -21,9 +21,9 @@ export default function BottomNavigation() {
         Home
       </Link>
       <Link
-        href='/'
+        href='/available-quests'
         className={`flex flex-col items-center gap-2 ${
-          location.pathname.includes('/daily-quests') ? 'text-text-brand-hover' : ''
+          location.pathname.includes('/available-quests') ? 'text-text-brand-hover' : ''
         }`}>
         <svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' viewBox='0 0 25 25' fill='none'>
           <path
@@ -70,12 +70,12 @@ export default function BottomNavigation() {
           />
           <path d='M3 8.5L23 8.5' stroke='currentColor' strokeWidth='2' strokeLinecap='round' />
         </svg>
-        Daily Quest
+        Quest
       </Link>
       <Link
-        href='/'
+        href='/subscriptions'
         className={`flex flex-col items-center gap-2 ${
-          location.pathname.includes('subscription') ? 'text-text-brand-hover' : ''
+          location.pathname.includes('/subscriptions') ? 'text-text-brand-hover' : ''
         }`}>
         <svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' viewBox='0 0 25 25' fill='none'>
           <path

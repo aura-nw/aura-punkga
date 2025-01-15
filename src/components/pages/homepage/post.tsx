@@ -1,6 +1,8 @@
 import UserGreen from 'assets/images/userGreen.svg'
+import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
 import DOMPurify from 'dompurify'
 import moment from 'moment'
+import getConfig from 'next/config'
 import Image from 'next/image'
 import Link from 'next/link'
 import pluralize from 'pluralize'
@@ -41,7 +43,7 @@ export default function Post({ data }) {
         setIsLiked(false)
         if (data.type == 'Manga') {
           setLikedList(likedList.filter((e) => e.id != `manga-${data.manga.id}`))
-          await contentService.unlikeChapter(data?.manga?.chapters[0]?.id)
+          await contentService.chapter.unlikeChapter(data?.manga?.chapters[0]?.id)
         } else {
           setLikedList(likedList.filter((e) => e.id != `artwork-${data.artwork.id}`))
           await eventService.story.unlikeArtwork(data?.artwork?.id)
@@ -52,7 +54,7 @@ export default function Post({ data }) {
         setIsLiked(true)
         if (data.type == 'Manga') {
           setLikedList([...likedList, { id: `manga-${data.manga.id}`, likeCount: newLikeCount }])
-          await contentService.likeChapter(data?.manga?.chapters[0]?.id)
+          await contentService.chapter.likeChapter(data?.manga?.chapters[0]?.id)
         } else {
           setLikedList([...likedList, { id: `artwork-${data.artwork.id}`, likeCount: newLikeCount }])
           await eventService.story.likeArtwork(data?.artwork?.id)
@@ -277,7 +279,7 @@ export default function Post({ data }) {
           <div className='text-xs font-semibold text-neutral-400 leading-8'>
             {likeCount} {pluralize('likes', likeCount)}
           </div>
-          <div className='h-8'>
+          <div className='h-8 flex items-center justify-between'>
             <div onClick={likeHandler} className='cursor-pointer flex items-center gap-1 text-sm font-semibold'>
               {isLiked ? (
                 <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='red'>
@@ -304,6 +306,51 @@ export default function Post({ data }) {
               )}
               {isLiked ? 'Liked' : 'Like'}
             </div>
+            <Dropdown>
+              <DropdownToggle>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='24'
+                  height='24'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  className='cursor-pointer'>
+                  <path
+                    d='M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z'
+                    stroke='white'
+                    strokeWidth='2'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                  />
+                  <path
+                    d='M12 6C12.5523 6 13 5.55228 13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6Z'
+                    stroke='white'
+                    strokeWidth='2'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                  />
+                  <path
+                    d='M12 20C12.5523 20 13 19.5523 13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20Z'
+                    stroke='white'
+                    strokeWidth='2'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                  />
+                </svg>
+              </DropdownToggle>
+              <DropdownMenu customClass='right-0'>
+                <div className='p-4 rounded-lg bg-gray-900 text-white space-y-4 text-sm'>
+                  <Link
+                    className='block'
+                    target='_blank'
+                    href={`${getConfig().STORY_EXPLORER_URL}/ipa/${
+                      data.artwork.story_artworks[0].story_ip_asset.ip_asset_id
+                    }`}>
+                    View on Story Protocol
+                  </Link>
+                </div>
+              </DropdownMenu>
+            </Dropdown>
           </div>
         </div>
       </div>

@@ -33,7 +33,7 @@ function Home() {
   const { locale } = useRouter()
   const { t } = useTranslation()
   const sliderNavRef = useRef<any>()
-  const useableTags = allTags?.data?.filter((item) => item.en !== 'Invent contest' && item.vn !== 'Invent contest')
+  const useableTags = allTags?.data
   const { width } = useWindowSize()
   const [statusFilter, setStatusFilter] = useState([
     {

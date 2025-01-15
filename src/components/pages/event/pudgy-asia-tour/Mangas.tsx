@@ -16,10 +16,8 @@ export default function Mangas() {
   const [page, setPage] = useState(1)
   const [useableComic, setUseableComic] = useState<any>()
   useEffect(() => {
-    const comic = latestComic.data?.filter(
-      (data: any) =>
-        data.tags.some((lang: any) => lang.en.toLowerCase() === 'invent contest') &&
-        data.tags.some((lang: any) => lang.en.toLowerCase() === 'pudgy asia tour')
+    const comic = latestComic.data?.filter((data: any) =>
+      data.tags.some((lang: any) => lang.en.toLowerCase() === 'pudgy asia tour')
     )
     setUseableComic(comic)
   }, [latestComic.data])

@@ -218,6 +218,23 @@ function ContextProvider({ children }: any) {
 
   const setUp = async () => {
     try {
+      const url = new URL(window.location.href)
+      if (
+        url.searchParams.get('access_token') ||
+        url.searchParams.get('id_token') ||
+        url.searchParams.get('token_type') ||
+        url.searchParams.get('expires_in') ||
+        url.searchParams.get('nonce') ||
+        url.searchParams.get('state')
+      ) {
+        url.searchParams.delete('access_token')
+        url.searchParams.delete('token_type')
+        url.searchParams.delete('expires_in')
+        url.searchParams.delete('state')
+        url.searchParams.delete('id_token')
+        url.searchParams.delete('nonce')
+        router.replace(url.toString())
+      }
       setIsSettingUp(true)
       await getTokens()
       privateAxios.interceptors.response.use(

@@ -17,12 +17,13 @@
   "API_URL": "https://hasura.dev.punkga.me",
   "AUTHORIZER_URL": "https://auth.dev.punkga.me",
   "AUTHORIZER_CLIENT_ID": "abd40c73-3390-4613-bc44-b5bde4796d03",
-  "ADMIN_URL": "https://creator.dev.punkga.me",
+  "ADMIN_URL": "https://admin.dev.punkga.me",
   "REST_API_URL": "https://api.dev.punkga.me",
   "IN_MAINTENANCE_MODE": false,
   "GTM_ID": "GTM-PF4MH72V",
   "SEEKHYPE_URL": "https://staging.seekhype.io/",
   "WALLET_CONNECT_PROJECT_ID": "ec40291093ad80fa0def54b1fb44c8ef",
   "RECAPCHA_SITE_KEY": "6LdHgn4qAAAAAMUPupCUp2q0nBdy9hl7qnILdbL5",
-  "DP_ADDRESS": "0x0bA0E052b993E8486AA8dab82c361404F7576573"
+  "DP_ADDRESS": "0x0bA0E052b993E8486AA8dab82c361404F7576573",
+  "STORY_EXPLORER_URL": "https://explorer.story.foundation"
 }
