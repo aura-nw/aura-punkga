@@ -19,6 +19,7 @@ export default function MobileVersion() {
   const { data } = useSWR('get-all-contest', eventService.getAll)
   const events = data?.data?.data?.contest || []
   const { data: tags } = useSWR('get-all-tag', contentService.getTagList)
+  const [isFirstLoad, setIsFirstLoad] = useState(true)
   const { postList, setPostData, selectedTags, setSelectedTags } = useContext(PostListContext)
   const { account } = useContext(Context)
   const { scrollDir } = useDetectScroll({
@@ -56,11 +57,15 @@ export default function MobileVersion() {
     }
   }
   useEffect(() => {
-    if (postList.list.length > 0) return
-    fetchManga()
+    if (isFirstLoad && postList.list.length === 0) {
+      fetchManga()
+    }
+    setIsFirstLoad(false)
   }, [])
   useEffect(() => {
-    fetchManga(true)
+    if (!isFirstLoad) {
+      fetchManga(true)
+    }
   }, [selectedTags.length])
   return (
     <div className='bg-background py-4 text-white'>
@@ -83,9 +88,11 @@ export default function MobileVersion() {
           <Swiper slidesPerView='auto' slidesOffsetBefore={16} slidesOffsetAfter={16} spaceBetween={16}>
             {events.map((event, index) => (
               <SwiperSlide key={index} className='!h-[97px] !w-[143px] rounded-md overflow-hidden'>
-                <Link href={event.slug} target='_blank'>
-                  <Image src={event?.image} alt='' width={150} height={150} className='w-full h-full object-cover' />
-                </Link>
+                {event?.image && (
+                  <Link href={event.slug} target='_blank'>
+                    <Image src={event?.image} alt='' width={150} height={150} className='w-full h-full object-cover' />
+                  </Link>
+                )}
               </SwiperSlide>
             ))}
           </Swiper>

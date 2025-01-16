@@ -13,7 +13,7 @@ export default function ComicCard(props: IComic) {
   const { t } = useTranslation()
   return (
     <div
-      className={`h-full max-w-[180px] mx-auto bg-neutral-black rounded-md overflow-hidden ${
+      className={`h-full w-full mx-auto bg-neutral-black rounded-md overflow-hidden ${
         props.status.text == 'Upcoming' ? '[&_a:not(.author)]:pointer-events-none' : ''
       }`}>
       <div
@@ -30,7 +30,7 @@ export default function ComicCard(props: IComic) {
             props.image ? 'object-cover' : 'object-contain bg-light-gray'
           } w-[180px] aspect-[18/24] bg-gray-200`}
         />
-        <div className='absolute top-[2px] left-[2px] [&>span]:absolute'>
+        <div className='absolute top-1.5 left-1.5 [&>span]:absolute'>
           {props.status.text != 'Ongoing' && (
             <StatusLabel status={props.status.type}>{t(props.status.text)}</StatusLabel>
           )}

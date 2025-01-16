@@ -344,7 +344,7 @@ export default function Post({ data }) {
                     className='block'
                     target='_blank'
                     href={`${getConfig().STORY_EXPLORER_URL}/ipa/${
-                      data.artwork.story_artworks[0].story_ip_asset.ip_asset_id
+                      data.artwork.story_artworks[0]?.story_ip_asset?.ip_asset_id
                     }`}>
                     View on Story Protocol
                   </Link>

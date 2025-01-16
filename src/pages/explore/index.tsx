@@ -1,18 +1,17 @@
-import ComicCard from 'components/Comic/ComicCard'
 import Layout from 'components/Layout'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Image from 'next/image'
-import { useContext } from 'react'
-import { Context } from 'src/context'
-import { userService } from 'src/services/userService'
-import useSWR from 'swr'
-import Banner from 'components/pages/explore/assets/Banner.png'
-import MangaImage from 'components/pages/explore/assets/manga.png'
 import ArtworkImage from 'components/pages/explore/assets/artwork.png'
-import EventImage from 'components/pages/explore/assets/event.png'
+import Banner from 'components/pages/explore/assets/Banner.png'
 import CampaignImage from 'components/pages/explore/assets/camp.png'
 import CharacterImage from 'components/pages/explore/assets/character.png'
+import EventImage from 'components/pages/explore/assets/event.png'
+import MangaImage from 'components/pages/explore/assets/manga.png'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Image from 'next/image'
 import Link from 'next/link'
+import { useContext } from 'react'
+import { Context } from 'src/context'
+import { getStatistic } from 'src/services'
+import useSWR from 'swr'
 export default function Page(props) {
   if (props.justHead) {
     return <></>
@@ -23,10 +22,8 @@ Page.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>
 }
 function Explore() {
-  const { account } = useContext(Context)
-  const { data: subscriptionList } = useSWR({ key: 'get-subscriptions', id: account?.id }, ({ id }) =>
-    id ? userService.getSubscriptionList(id) : null
-  )
+  const { data } = useSWR('get-statistic', getStatistic)
+  const statistic = data?.data?.data
   return (
     <div className='bg-background p-4 min-h-screen text-white space-y-4'>
       <Image src={Banner} alt='' className='w-full rounded-md aspect-[343/80] object-cover' />
@@ -47,7 +44,7 @@ function Explore() {
                   strokeLinejoin='round'
                 />
               </svg>
-              <span>56453</span>
+              <span>{statistic?.manga_aggregate?.aggregate?.count}</span>
             </div>
           </div>
           <div className='w-6 h-6 rounded-full bg-white'>
@@ -80,7 +77,7 @@ function Explore() {
                   strokeLinejoin='round'
                 />
               </svg>
-              <span>56453</span>
+              <span>{statistic?.artworks_aggregate?.aggregate?.count}</span>
             </div>
           </div>
           <div className='w-6 h-6 rounded-full bg-white'>
@@ -113,7 +110,7 @@ function Explore() {
                   strokeLinejoin='round'
                 />
               </svg>
-              <span>56453</span>
+              <span>{statistic?.contest_aggregate?.aggregate?.count}</span>
             </div>
           </div>
           <div className='w-6 h-6 rounded-full bg-white'>
@@ -146,7 +143,7 @@ function Explore() {
                   strokeLinejoin='round'
                 />
               </svg>
-              <span>56453</span>
+              <span>{statistic?.campaign_aggregate?.aggregate?.count}</span>
             </div>
           </div>
           <div className='w-6 h-6 rounded-full bg-white'>
@@ -178,7 +175,7 @@ function Explore() {
                   strokeLinecap='round'
                 />
               </svg>
-              <span>56453</span>
+              <span>{statistic?.story_character_aggregate?.aggregate?.count}</span>
             </div>
           </div>
           <div className='w-6 h-6 rounded-full bg-white'>

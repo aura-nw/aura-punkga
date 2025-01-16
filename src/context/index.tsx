@@ -21,6 +21,7 @@ import { useAccount, useChainId, useDisconnect, useSignMessage, useSwitchChain }
 import ListProvider from './characterList'
 import ModalProvider from './modals'
 import PostListProvider from './postList'
+import ComicListProvider from './comicList'
 
 const queryClient = new QueryClient()
 
@@ -504,8 +505,10 @@ function ContextProvider({ children }: any) {
             <ModalProvider>
               <ListProvider>
                 <PostListProvider>
-                  {location.pathname.includes('events/ava-2024') && <BackgroundAudio />}
-                  {children}
+                  <ComicListProvider>
+                    {location.pathname.includes('events/ava-2024') && <BackgroundAudio />}
+                    {children}
+                  </ComicListProvider>
                 </PostListProvider>
               </ListProvider>
             </ModalProvider>
