@@ -22,6 +22,7 @@ import ListProvider from './characterList'
 import ModalProvider from './modals'
 import PostListProvider from './postList'
 import ComicListProvider from './comicList'
+import ArtworkListProvider from './artworkList'
 
 const queryClient = new QueryClient()
 
@@ -506,8 +507,10 @@ function ContextProvider({ children }: any) {
               <ListProvider>
                 <PostListProvider>
                   <ComicListProvider>
-                    {location.pathname.includes('events/ava-2024') && <BackgroundAudio />}
-                    {children}
+                    <ArtworkListProvider>
+                      {location.pathname.includes('events/ava-2024') && <BackgroundAudio />}
+                      {children}
+                    </ArtworkListProvider>
                   </ComicListProvider>
                 </PostListProvider>
               </ListProvider>

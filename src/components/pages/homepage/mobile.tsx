@@ -68,7 +68,7 @@ export default function MobileVersion() {
     }
   }, [selectedTags.length])
   return (
-    <div className='bg-background py-4 text-white'>
+    <div className='bg-background py-4 text-white min-h-screen'>
       <div className='space-y-4'>
         <Link
           href={config.ADMIN_URL}

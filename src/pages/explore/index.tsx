@@ -91,9 +91,7 @@ function Explore() {
           </div>
         </div>
       </Link>
-      <Link
-        href={'/explore/event'}
-        className='flex gap-4 h-[90px] w-full px-[18px] bg-neutral-black rounded-lg items-center'>
+      <Link href={'/events'} className='flex gap-4 h-[90px] w-full px-[18px] bg-neutral-black rounded-lg items-center'>
         <Image src={EventImage} alt='' className='h-full w-[70px] object-cover' />
         <div className='flex items-center justify-between w-full'>
           <div className='space-y-1'>
@@ -125,7 +123,7 @@ function Explore() {
         </div>
       </Link>
       <Link
-        href={'/explore/campaign'}
+        href={'/campaigns'}
         className='flex gap-4 h-[90px] w-full px-[18px] bg-neutral-black rounded-lg items-center'>
         <Image src={CampaignImage} alt='' className='h-full w-[70px] object-cover' />
         <div className='flex items-center justify-between w-full'>
@@ -158,7 +156,7 @@ function Explore() {
         </div>
       </Link>
       <Link
-        href={'/explore/character'}
+        href={'/characters'}
         className='flex gap-4 h-[90px] w-full px-[18px] bg-neutral-black rounded-lg items-center'>
         <Image src={CharacterImage} alt='' className='h-full w-[70px] object-cover' />
         <div className='flex items-center justify-between w-full'>

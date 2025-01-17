@@ -25,7 +25,7 @@ export default function Checkbox({
           </svg>
         )}
       </div>
-      {label && <span className='whitespace-nowrap text-text-primary'>{label}</span>}
+      {label && <span className='whitespace-nowrap '>{label}</span>}
     </div>
   )
 }

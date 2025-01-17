@@ -34,7 +34,7 @@ function PageContent() {
     const data = await contentService.comic.getLatestComic(
       LIMIT,
       isRefresh ? 0 : latestData.offset,
-      selectedTags.length == tags.length ? undefined : selectedTags,
+      selectedTags.length == tags?.length ? undefined : selectedTags,
       status.length == 3 ? undefined : status
     )
     if (data?.length) {
@@ -78,8 +78,10 @@ function PageContent() {
     }
   }, [latestData.selectedTags.length, latestData.selectedStatus.length])
   return (
-    <div className='bg-background py-4 min-h-screen text-white space-y-4'>
-      <div onClick={() => router.back()} className='flex items-center gap-3 text-xl font-medium px-4'>
+    <div className='bg-background pb-4 min-h-screen text-white space-y-4'>
+      <div
+        onClick={() => router.back()}
+        className='flex sticky z-10 bg-background py-4 top-14 items-center gap-3 text-xl font-medium px-4'>
         <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>
           <path d='M15 17L10 12L15 7' stroke='white' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
         </svg>

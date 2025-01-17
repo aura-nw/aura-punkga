@@ -139,4 +139,36 @@ export const contentService = {
         )
     },
   },
+  artwork: {
+    getArtworkList: async (limit?: number, offset?: number) => {
+      const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/story-protocol/artwork`, {
+        params: {
+          limit,
+          offset,
+        },
+      })
+      return data
+    },
+    getArtworkDetail: async (userId, id) => {
+      const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/story-event/artwork/${id}`, {
+        params: userId
+          ? {
+              user_id: userId,
+            }
+          : undefined,
+      })
+      return data?.data?.story_artwork_by_pk
+    },
+    getRelatedArtwork: async (id, limit, offset, userId) => {
+      const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/story-event/artwork/${id}/related`, {
+        params: {
+          id,
+          limit,
+          offset,
+          user_id: userId,
+        },
+      })
+      return data
+    },
+  },
 }
