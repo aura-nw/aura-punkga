@@ -17,12 +17,12 @@ import TextField from "components/Input/TextField";
 import useSWR from "swr";
 import { eventService } from "src/services/eventService";
 import { toast } from "react-toastify";
-export default function Lixi() {
+
+export default function Enroll() {
   const { account } = useContext(Context);
   const { setSignInOpen } = useContext(ModalContext);
   const [fortuneNumber, setFortuneNumber] = useState("");
-  const { locale } = useRouter();
-  const router = useRouter();
+  const { locale, replace } = useRouter();
   const { t } = useTranslation();
 
   const { data, mutate, isLoading } = useSWR(
@@ -40,7 +40,7 @@ export default function Lixi() {
             hideProgressBar: true,
             autoClose: 3000,
           });
-          router.push("/events/li-xi");
+          replace("/events/li-xi");
         }
         toast("User already applied fortune number", {
           type: "error",
@@ -75,7 +75,7 @@ export default function Lixi() {
     }
   );
   if (!fetchingStatus && referralStatus) {
-    router.push("/events/li-xi");
+    replace("/events/li-xi");
     return;
   }
   return (

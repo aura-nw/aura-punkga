@@ -1,36 +1,13 @@
-import BannerMobile from "components/pages/event/kaia-island/assets/mobile-banner.png";
-import BannerMobileVN from "components/pages/event/kaia-island/assets/mobile-banner-vn.png";
-import LIXI from "../assets/LIXI.png";
-import Year from "../assets/2025.png";
-import Snake from "../assets/snake1.png";
-import podium from "../assets/podium.png";
-import lixi_do from "../assets/lixi_do.png";
-import lixi_xanh from "../assets/lixi_xanh.png";
-import lixi_vang from "../assets/lixi_vang.png";
 import info from "../assets/svg/info.svg";
-import gold_medal from "../assets/svg/gold_medal.svg";
-import silver_medal from "../assets/svg/silver_medal.svg";
-import bronze_medal from "../assets/svg/bronze_medal.svg";
 import star_bg from "../assets/star_bg.png";
 import den_long from "../assets/den_long.png";
 import cane from "../assets/cane.png";
-import moment from "moment";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import useSWR from "swr";
 import { Context } from "src/context";
 import { ModalContext } from "src/context/modals";
-import EventButton from "../components/EventButton";
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import TextField from "components/Input/TextField";
-import Copy2Clipboard from "components/Copy2Clipboard";
-
-import ic_check from "../assets/svg/checked.svg";
-import ic_copy from "../assets/svg/copy.svg";
-
 import VND from "../assets/svg/vnd.svg";
 import AURA from "../assets/svg/aura.svg";
 import DP from "../assets/svg/dp.svg";
@@ -44,14 +21,7 @@ import {
   TableRow,
   Tooltip,
 } from "@mui/material";
-import { eventService } from "src/services/eventService";
 import ClaimDialogs from "../components/ClaimDialog";
-
-const BulletPoint = ({ className }: { className?: string }) => (
-  <div
-    className={`${className} w-[10px] h-[10px]  rotate-45 rounded-sm bg-[#F0C865]`}
-  ></div>
-);
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   "&.MuiTableCell-head": {
@@ -92,19 +62,6 @@ const StyledTable = styled(Table)({
   width: "100%",
 });
 
-const data = [
-  { rank: 1, participant: "John Doe", points: 100 },
-  { rank: 2, participant: "Jane Doe", points: 90 },
-  { rank: 3, participant: "Alice Smith", points: 80 },
-  { rank: 4, participant: "Bob Johnson", points: 70 },
-  { rank: 5, participant: "Charlie Brown", points: 60 },
-  { rank: 6, participant: "David Wilson", points: 50 },
-  { rank: 7, participant: "Eva Davis", points: 40 },
-  { rank: 8, participant: "Frank Miller", points: 30 },
-  { rank: 9, participant: "Grace Lee", points: 20 },
-  { rank: 10, participant: "Hannah White", points: 10 },
-];
-
 export interface FortuneNumber {
   id: number;
   code: string;
@@ -133,12 +90,19 @@ export interface UserLixi {
   };
 }
 
-export default function Lixi() {
+export default function MyPrize() {
   const { account } = useContext(Context);
   const { setSignInOpen } = useContext(ModalContext);
-  const { locale } = useRouter();
+  const [fortuneNumber, setFortuneNumber] = useState("");
   const router = useRouter();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (!account) {
+      router.push("/events/li-xi/enroll");
+      return;
+    }
+  }, []);
 
   const columns = [
     { id: "rank", label: t("Rank"), minWidth: 60 },
@@ -212,10 +176,6 @@ export default function Lixi() {
       amount: 80,
     },
   ];
-  if (!account) {
-    router.push("/events/li-xi/enroll");
-    return;
-  }
 
   return (
     <div

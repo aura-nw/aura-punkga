@@ -21,12 +21,12 @@ const events = [
     en: {
       image: star_bg,
       title: `Li Xi`,
-      subtitle: `03 Jun 2024 - 30 Jun 2024`,
+      subtitle: `31 Jun 2025 - Feb 2025`,
     },
     vn: {
       image: star_bg,
       title: `Lì Xì`,
-      subtitle: `03/06/2024 - 30/06/2024`,
+      subtitle: `31 Jun 2025 - Feb 2025`,
     },
   },
   {
