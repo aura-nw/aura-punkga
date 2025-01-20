@@ -35,6 +35,7 @@ import {
 import { eventService } from "src/services/eventService";
 import RuleDialogs from "./components/RuleDialog";
 import HistoryDialogs from "./components/HistoryDialog";
+import RewardDialogs from "./components/RewardDialog";
 
 const BulletPoint = ({ className }: { className?: string }) => (
   <div
@@ -231,7 +232,7 @@ export default function Lixi() {
           <div className="absolute top-[90px] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-[150px]">
             {selectedLixi && userLixi?.[selectedLixi]?.aggregate.count ? (
               <EventButton onClick={() => {}} className="w-[150px]">
-                <div className="uppercase">{t("Open")}</div>
+                <RewardDialogs />
               </EventButton>
             ) : (
               <div className="text-[#FABA77] text-center">

@@ -64,11 +64,11 @@ export default function ClaimDialogs() {
         <Box
           sx={{
             position: "absolute",
-            top: "-230px",
+            top: "-160px",
             left: "50%",
             transform: "translateX(-50%)",
-            width: "500px",
-            height: "250px",
+            width: "400px",
+            height: "180px",
             backgroundImage: `url(${nap.src})`,
             backgroundSize: "100% 100%",
             zIndex: "10",
@@ -80,7 +80,7 @@ export default function ClaimDialogs() {
             bottom: "-20px",
             left: "50%",
             transform: "translateX(-50%)",
-            width: "560px",
+            width: "420px",
             height: "200px",
             backgroundImage: `url(${duoi.src})`,
             backgroundSize: "100% 100%",
@@ -95,20 +95,21 @@ export default function ClaimDialogs() {
             {t("Claim all prizes")}
           </div>
         </DialogTitle>
-        {/* <IconButton
+        <IconButton
           aria-label="close"
           onClick={handleClose}
           sx={(theme) => ({
             position: "absolute",
             right: 8,
-            top: 8,
+            top: "-150px",
             color: theme.palette.grey[500],
+            zIndex: 100,
           })}
         >
           <CloseIcon />
-        </IconButton> */}
+        </IconButton>
         <DialogContent>
-          <div className="flex flex-col items-center gap-4 mb-4">
+          <div className="flex flex-col items-center gap-4 mb-4 w-[300px]">
             <div className="text-center">
               Please make sure your wallet address is correct. This progess is
               irreversible
