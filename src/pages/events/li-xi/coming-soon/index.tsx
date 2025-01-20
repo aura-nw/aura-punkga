@@ -1,7 +1,7 @@
 import HeadComponent from "components/Head";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Layout from "components/Layout";
-import KaiaIsland from "./page";
+import ComingSoon from "./page";
 
 export default function Page(props) {
   if (props.justHead || props.pageProps?.justHead) {
@@ -10,7 +10,7 @@ export default function Page(props) {
   return (
     <>
       <HeadComponent data={props.pageProps?.metadata || props.metadata} />
-      <KaiaIsland />
+      <ComingSoon />
     </>
   );
 }

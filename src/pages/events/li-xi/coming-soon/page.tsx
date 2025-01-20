@@ -1,20 +1,15 @@
-import BannerMobile from "components/pages/event/kaia-island/assets/mobile-banner.png";
-import BannerMobileVN from "components/pages/event/kaia-island/assets/mobile-banner-vn.png";
 import LIXI from "../assets/LIXI.png";
 import Year from "../assets/2025.png";
 import Mai from "../assets/mai.png";
 import lixi1 from "../assets/lixi1.png";
 import podium from "../assets/podium.png";
 import star_bg from "../assets/star_bg.png";
-import moment from "moment";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import useSWR from "swr";
 import CountdownTimer from "../components/CountdownTimer";
-export default function Lixi() {
+
+export default function ComingSoon() {
   const { locale } = useRouter();
   const { t } = useTranslation();
 

@@ -1,7 +1,3 @@
-import BannerMobile from "components/pages/event/kaia-island/assets/mobile-banner.png";
-import BannerMobileVN from "components/pages/event/kaia-island/assets/mobile-banner-vn.png";
-import LIXI from "./assets/LIXI.png";
-import Year from "./assets/2025.png";
 import Snake from "./assets/snake1.png";
 import podium from "./assets/podium.png";
 import lixi_do from "./assets/lixi_do.png";
@@ -14,19 +10,14 @@ import bronze_medal from "./assets/svg/bronze_medal.svg";
 import star_bg from "./assets/star_bg.png";
 import den_long from "./assets/den_long.png";
 import cane from "./assets/cane.png";
-import moment from "moment";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useSWR from "swr";
-import CountdownTimer from "./components/CountdownTimer";
 import { Context } from "src/context";
 import { ModalContext } from "src/context/modals";
 import EventButton from "./components/EventButton";
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import TextField from "components/Input/TextField";
 import Copy2Clipboard from "components/Copy2Clipboard";
 
 import ic_check from "./assets/svg/checked.svg";
@@ -134,8 +125,8 @@ export interface UserLixi {
 export default function Lixi() {
   const { account } = useContext(Context);
   const { setSignInOpen } = useContext(ModalContext);
-  const { locale } = useRouter();
   const router = useRouter();
+
   const { t } = useTranslation();
   const [selectedLixi, setSelectedLixi] = useState<string | undefined>();
 
@@ -189,10 +180,13 @@ export default function Lixi() {
       align: "right",
     },
   ];
-  if (!account) {
-    router.push("/events/li-xi/enroll");
-    return;
-  }
+
+  useEffect(() => {
+    if (!account) {
+      router.push("/events/li-xi/enroll");
+      return;
+    }
+  }, []);
   return (
     <div
       style={{
