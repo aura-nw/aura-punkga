@@ -22,6 +22,8 @@ import {
   Tooltip,
 } from "@mui/material";
 import ClaimDialogs from "../components/ClaimDialog";
+import TextField from "components/Input/TextField";
+import EventButton from "../components/EventButton";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   "&.MuiTableCell-head": {
@@ -41,8 +43,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 const StyledTableContainer = styled(TableContainer)({
-  // maxHeight: "none",
-  // overflow: "auto",
   "&::-webkit-scrollbar": {
     height: "8px",
   },
@@ -93,7 +93,10 @@ export interface UserLixi {
 export default function MyPrize() {
   const { account } = useContext(Context);
   const { setSignInOpen } = useContext(ModalContext);
-  const [fortuneNumber, setFortuneNumber] = useState("");
+  const [walletAddress, setWalletAddress] = useState("");
+  const [vnd, setVND] = useState("");
+  const [aura, setAura] = useState("");
+  const [dp, setDp] = useState("");
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -104,23 +107,6 @@ export default function MyPrize() {
     }
   }, []);
 
-  const columns = [
-    { id: "rank", label: t("Rank"), minWidth: 60 },
-    { id: "participant", label: t("Participant"), minWidth: 100 },
-    {
-      id: "points",
-      label: (
-        <div className="flex items-center justify-center gap-2">
-          {t("Points")}
-          <Tooltip title={t("1 point = 1 successful referral")}>
-            <Image src={info} className="w-4 h-4 cursor-pointer" alt="" />
-          </Tooltip>
-        </div>
-      ),
-      minWidth: 60,
-      align: "right",
-    },
-  ];
   const transactions = [
     { txHash: "BD201384...938AA6E9", time: "23/10/2023 9:00" },
     { txHash: "BD201384...938AA6E9", time: "23/10/2023 9:00" },
@@ -147,36 +133,6 @@ export default function MyPrize() {
     { id: "amount", label: t("Amount"), minWidth: 30, align: "right" },
   ];
 
-  const PrizeData = [
-    {
-      prize: (
-        <div className="flex items-center gap-2">
-          <Image src={VND} className="w-6 h-6" alt="" />
-          <div>{t("VND")}</div>
-        </div>
-      ),
-      amount: 100,
-    },
-    {
-      prize: (
-        <div className="flex items-center gap-2">
-          <Image src={AURA} className="w-6 h-6" alt="" />
-          <div>{t("AURA")}</div>
-        </div>
-      ),
-      amount: 90,
-    },
-    {
-      prize: (
-        <div className="flex items-center gap-2">
-          <Image src={DP} className="w-6 h-6" alt="" />
-          <div>{t("DP")}</div>
-        </div>
-      ),
-      amount: 80,
-    },
-  ];
-
   return (
     <div
       style={{
@@ -187,7 +143,7 @@ export default function MyPrize() {
       className="bg-[#860204] md:h-screen w-screen flex flex-col md:flex-row justify-center items-center gap-10 lg:gap-20 "
     >
       <div className="relative w-[calc(100vw-40px)] md:w-[750px] flex flex-col items-center mt-20 md:mt-40 h-full gap-4">
-        <div className="relative px-6 py-4 w-[calc(100vw-40px)] md:w-[750px] rounded-b-[6px] border border-[#D52121] bg-gradient-to-b from-[rgba(117,20,20,0.50)] via-[rgba(133,7,7,0.50)] to-[rgba(244,63,63,0.50)] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] backdrop-blur-[6.45px]">
+        <div className="relative text-center px-6 py-4 w-[calc(100vw-40px)] md:w-[750px] rounded-b-[6px] border border-[#D52121] bg-gradient-to-b from-[rgba(117,20,20,0.50)] via-[rgba(133,7,7,0.50)] to-[rgba(244,63,63,0.50)] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] backdrop-blur-[6.45px]">
           <Image
             src={den_long}
             className="absolute lg:block hidden lg:-top-4 lg:-left-[60px] lg:max-w-[850px] lg:w-[850px]"
@@ -201,7 +157,7 @@ export default function MyPrize() {
           <div className="text-[#FEF368] font-black-han-sans text-2xl text-center">
             {t("Unclaimed prize")}
           </div>
-          <StyledTableContainer className="h-[300px]">
+          <StyledTableContainer>
             <StyledTable stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -221,7 +177,26 @@ export default function MyPrize() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {PrizeData.map((row, index) => {
+                {[
+                  {
+                    prize: (
+                      <div className="flex items-center gap-2">
+                        <Image src={AURA} className="w-6 h-6" alt="" />
+                        <div>{t("AURA")}</div>
+                      </div>
+                    ),
+                    amount: 90,
+                  },
+                  {
+                    prize: (
+                      <div className="flex items-center gap-2">
+                        <Image src={DP} className="w-6 h-6" alt="" />
+                        <div>{t("DP")}</div>
+                      </div>
+                    ),
+                    amount: 80,
+                  },
+                ].map((row, index) => {
                   return (
                     <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                       {PrizeColumns.map((column) => {
@@ -244,13 +219,91 @@ export default function MyPrize() {
               </TableBody>
             </StyledTable>
           </StyledTableContainer>
+          <ClaimDialogs />
         </div>
-        <ClaimDialogs />
+        <div className="relative text-center px-6 py-4 w-[calc(100vw-40px)] md:w-[750px] rounded-b-[6px] border border-[#D52121] bg-gradient-to-b from-[rgba(117,20,20,0.50)] via-[rgba(133,7,7,0.50)] to-[rgba(244,63,63,0.50)] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] backdrop-blur-[6.45px]">
+          <Image
+            src={den_long}
+            className="absolute lg:block hidden lg:-top-4 lg:-left-[60px] lg:max-w-[850px] lg:w-[850px]"
+            alt="den_long"
+          />
+          <Image
+            src={cane}
+            className="absolute lg:hidden -top-2 -left-4 max-w-[calc(100vw-10px)]"
+            alt="cane"
+          />
+          <div className="text-[#FEF368] font-black-han-sans text-2xl text-center">
+            {t("Unclaimed prize")}
+          </div>
+          <StyledTableContainer>
+            <StyledTable stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  {PrizeColumns.map((column) => (
+                    <StyledTableCell
+                      key={column.id}
+                      style={{
+                        fontWeight: "semibold",
+                        minWidth: column.minWidth,
+                        color: "#FEF368",
+                      }}
+                      align={column.align as any}
+                    >
+                      <div className="text-[#FEF368] ">{column.label}</div>
+                    </StyledTableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {[
+                  {
+                    prize: (
+                      <div className="flex items-center gap-2">
+                        <Image src={VND} className="w-6 h-6" alt="" />
+                        <div>{t("VND")}</div>
+                      </div>
+                    ),
+                    amount: 100,
+                  },
+                ].map((row, index) => {
+                  return (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                      {PrizeColumns.map((column) => {
+                        const value = row[column.id];
+                        return (
+                          <StyledTableCell
+                            key={column.id}
+                            style={{ minWidth: column.minWidth }}
+                            align={column.align as any}
+                          >
+                            <div className="text-sm text-white font-semibold">
+                              {value}
+                            </div>
+                          </StyledTableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </StyledTable>
+          </StyledTableContainer>
+          <textarea
+            id="walletAddress"
+            className="bg-white !border-white rounded-lg border text-sm p-2 h-[150px] w-full mt-4"
+            placeholder={t(
+              `Fill in the required bank account details to receive rewards:\n• Account Holder Name\n• Bank Name\n• Account Number\n• Bank Branch (if applicable)\n• SWIFT Code (for international transfers)`
+            )}
+            value={walletAddress}
+            onChange={(e) => setWalletAddress(e.target.value)}
+          />
+          <EventButton>{t("Save")}</EventButton>
+        </div>
       </div>
 
       <div className="relative w-[calc(100vw-40px)] md:w-[750px] flex flex-col items-center md:mt-[140px] h-full mb-32 lg:mb-0">
         <div className="px-6 py-4 w-full text-[#8E0B09] font-normal font-black-han-sans text-2xl md:col-span-7 rounded-[6px] border-[0.5px] border-[#FFD66B] bg-gradient-to-b from-[#FDF5CB] via-[#FDF5CB] to-[#FFF9DB] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]">
-          <div className="text-center">{t("Leaderboard")}</div>
+          <div className="text-center">{"Leaderboard"}</div>
           <StyledTableContainer className="h-[300px]">
             <StyledTable stickyHeader aria-label="sticky table">
               <TableHead>

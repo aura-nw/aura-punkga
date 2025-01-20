@@ -14,10 +14,12 @@ import Image from "next/image";
 import duoi from "../assets/duoi.png";
 import nap from "../assets/nap.png";
 import EventButton from "./EventButton";
-import TextField from "components/Input/TextField";
-import { display } from "html2canvas/dist/types/css/property-descriptors/display";
-import { position } from "html2canvas/dist/types/css/property-descriptors/position";
+import VND from "../assets/svg/vnd.svg";
+import AURA from "../assets/svg/aura.svg";
+import DP from "../assets/svg/dp.svg";
+
 import { Box } from "@mui/material";
+import { useRouter } from "next/router";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogTitle-root": {},
@@ -35,6 +37,7 @@ export default function RewardDialogs() {
   const [open, setOpen] = React.useState(false);
   const [address, setAddress] = React.useState("");
   const { t } = useTranslation();
+  const router = useRouter();
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -45,7 +48,7 @@ export default function RewardDialogs() {
   return (
     <React.Fragment>
       <EventButton className="w-20" onClick={handleClickOpen}>
-        {t("Go to My inventory")}
+        {t("OPEN")}
       </EventButton>
       <BootstrapDialog
         onClose={handleClose}
@@ -64,11 +67,11 @@ export default function RewardDialogs() {
         <Box
           sx={{
             position: "absolute",
-            top: "-230px",
+            top: "-160px",
             left: "50%",
             transform: "translateX(-50%)",
-            width: "500px",
-            height: "250px",
+            width: "400px",
+            height: "180px",
             backgroundImage: `url(${nap.src})`,
             backgroundSize: "100% 100%",
             zIndex: "10",
@@ -80,7 +83,7 @@ export default function RewardDialogs() {
             bottom: "-20px",
             left: "50%",
             transform: "translateX(-50%)",
-            width: "560px",
+            width: "420px",
             height: "200px",
             backgroundImage: `url(${duoi.src})`,
             backgroundSize: "100% 100%",
@@ -92,38 +95,39 @@ export default function RewardDialogs() {
           className="flex flex-col items-center"
         >
           <div className="text-center text-[#9F1515] text-2xl font-black-han-sans">
-            {t("Claim all prizes")}
+            {t("Congratulations!")}
           </div>
         </DialogTitle>
-        {/* <IconButton
+        <IconButton
           aria-label="close"
           onClick={handleClose}
           sx={(theme) => ({
             position: "absolute",
             right: 8,
-            top: 8,
+            top: "-150px",
             color: theme.palette.grey[500],
+            zIndex: 100,
           })}
         >
           <CloseIcon />
-        </IconButton> */}
+        </IconButton>
         <DialogContent>
-          <div className="flex flex-col items-center gap-4 mb-4">
-            <div className="text-center">
-              Please make sure your wallet address is correct. This progess is
-              irreversible
+          <div className="flex flex-col items-center gap-4 mb-4 w-[300px]">
+            <div className="text-[#067537] text-center text-base font-medium">
+              Punkgame username account
             </div>
-            <TextField
-              onChange={setAddress}
-              value={address}
-              size="md"
-              placeholder={t("Enter your wallet address")}
-            />
+            <div className="text-center">
+              You have received a prize. Don’t forget to claim it in inventory
+            </div>
+            <Image src={DP} className="w-[100px] " alt="" />
           </div>
         </DialogContent>
         <DialogActions>
-          <EventButton onClick={handleClose} className="w-20 z-10">
-            {t("Confirm")}
+          <EventButton
+            onClick={() => router.push("/events/li-xi/my-prize")}
+            className="w-[200px] z-10"
+          >
+            {t("Go to My inventory")}
           </EventButton>
         </DialogActions>
       </BootstrapDialog>
