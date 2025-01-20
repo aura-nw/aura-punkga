@@ -276,7 +276,7 @@ export default function Post({ data }) {
           <Link
             href={`/artworks/${data.artwork?.story_artworks?.[0]?.id}`}
             className='w-full h-full block aspect-square'>
-            <Image src={data.artwork.url} width={400} height={400} alt='' className='w-full h-full' />
+            <Image src={data.artwork.url} width={400} height={400} alt='' className='w-full h-full object-cover' />
           </Link>
           <div className='text-xs font-semibold text-neutral-400 leading-8'>
             {likeCount} {pluralize('likes', likeCount)}
