@@ -125,7 +125,6 @@ export interface UserLixi {
 
 export default function Lixi() {
   const { account } = useContext(Context);
-  const { setSignInOpen } = useContext(ModalContext);
   const router = useRouter();
 
   const { t } = useTranslation();
@@ -181,6 +180,22 @@ export default function Lixi() {
       align: "right",
     },
   ];
+  const { data: referralStatus, isLoading: fetchingStatus } = useSWR(
+    {
+      key: "get-referral-status",
+      account,
+    },
+    async () => {
+      try {
+        const { ref } = await eventService.liXi.getReferralStatus();
+        if (!ref) router.push("/events/li-xi/enroll");
+        return ref;
+      } catch (error) {
+        console.error(error);
+        return false;
+      }
+    }
+  );
 
   useEffect(() => {
     if (!account) {
