@@ -22,11 +22,11 @@ export default function Enroll() {
   const { account } = useContext(Context);
   const { setSignInOpen } = useContext(ModalContext);
   const [fortuneNumber, setFortuneNumber] = useState("");
-  const { locale, replace } = useRouter();
+  const router = useRouter();
   const { t } = useTranslation();
 
   const { data, mutate, isLoading } = useSWR(
-    null,
+    { key: "apply-fortune-number" },
     async () => {
       try {
         if (!fortuneNumber) return null;
@@ -40,7 +40,8 @@ export default function Enroll() {
             hideProgressBar: true,
             autoClose: 3000,
           });
-          replace("/events/li-xi");
+          router.push("/events/li-xi");
+          return data;
         }
         toast("User already applied fortune number", {
           type: "error",
@@ -67,6 +68,7 @@ export default function Enroll() {
     async () => {
       try {
         const { ref } = await eventService.liXi.getReferralStatus();
+        if (ref) router.push("/events/li-xi");
         return ref;
       } catch (error) {
         console.error(error);
@@ -74,10 +76,7 @@ export default function Enroll() {
       }
     }
   );
-  if (!fetchingStatus && referralStatus) {
-    replace("/events/li-xi");
-    return;
-  }
+
   return (
     <div
       style={{
@@ -141,7 +140,10 @@ export default function Enroll() {
                   placeholder={t("")}
                 />
                 <EventButton
-                  onClick={() => mutate()}
+                  onClick={() => {
+                    // console.log("lvh", fortuneNumber);
+                    mutate(fortuneNumber);
+                  }}
                   className="w-[40px] h-[40px]"
                   disabled={!fortuneNumber}
                 >
