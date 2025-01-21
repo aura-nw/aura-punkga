@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export default function BottomNavigation() {
   return (
-    <div className='fixed bottom-0 w-screen px-2 py-4 bg-black grid grid-cols-4 text-xxs font-semibold text-white'>
+    <div className='fixed z-20 bottom-0 w-screen px-2 py-4 bg-black grid grid-cols-4 text-xxs font-semibold text-white'>
       <Link
         href='/'
         className={`flex flex-col items-center gap-2 ${location.pathname == '/' ? 'text-text-brand-hover' : ''}`}>
