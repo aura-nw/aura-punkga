@@ -33,8 +33,9 @@ export default function Enroll() {
         const { data } = await eventService.liXi.applyFortuneNumbers({
           code: fortuneNumber,
         });
-        if (data.insert_referrals_one) {
-          toast("Collet fortune number success", {
+
+        if (data?.insert_referrals_one) {
+          toast("Collect fortune number success", {
             type: "error",
             position: toast.POSITION.TOP_RIGHT,
             hideProgressBar: true,
@@ -43,7 +44,7 @@ export default function Enroll() {
           router.push("/events/li-xi");
           return data;
         }
-        toast("User already applied fortune number", {
+        toast("Fortune number is invalid or already used", {
           type: "error",
           position: toast.POSITION.TOP_RIGHT,
           hideProgressBar: true,
@@ -51,6 +52,12 @@ export default function Enroll() {
         });
         return data;
       } catch (error) {
+        toast("Unexpected error. Please contact Admin", {
+          type: "error",
+          position: toast.POSITION.TOP_RIGHT,
+          hideProgressBar: true,
+          autoClose: 3000,
+        });
         console.error(error);
         return null;
       }
