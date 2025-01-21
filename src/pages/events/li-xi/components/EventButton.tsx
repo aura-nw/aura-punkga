@@ -14,6 +14,7 @@ const StyledButton = styled(Button)({
   paddingTop: "4px",
   paddingBottom: "4px",
   background: "linear-gradient(180deg, #F3DBA9 0%, #FFA031 100%)",
+  minWidth: "40px",
   textTransform: "none",
   "&:disabled": {
     color: "#6D3A0A",
@@ -28,17 +29,6 @@ const EventButton: React.FC<EventButtonProps> = ({
   disabled,
 }) => {
   return (
-    // <button
-    //   onClick={onClick}
-    //   disabled
-    //   className={`${className} ${
-    //     !disabled
-    //       ? "bg-gradient-to-b from-[#F3DBA9] to-[#FFA031]"
-    //       : "bg-gradient-to-b from-[#EFEBE4] to-[#B3AAA0]"
-    //   }  rounded-2xl text-[#6D3A0A] px-4 py-2 cursor-pointer`}
-    // >
-    //   {children}
-    // </button>
     <StyledButton onClick={onClick} disabled={disabled} className={className}>
       {children}
     </StyledButton>

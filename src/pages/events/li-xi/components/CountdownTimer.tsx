@@ -46,7 +46,7 @@ const CountdownTimer = ({ targetDate }) => {
   };
 
   return (
-    <div className="w-[100px] md:w-fullmax-w-2xl mx-auto p-4">
+    <div className="w-[100px] md:w-fullmax-w-2xl mx-auto ">
       <div className="p-6 rounded-lg shadow-lg">
         <div className="flex justify-center items-center gap-8">
           {/* Days */}
@@ -59,7 +59,7 @@ const CountdownTimer = ({ targetDate }) => {
                 }}
                 className="font-digital-number rounded border boder-[0.28px] border-solid border-white p-2  h-16 flex items-center justify-center"
               >
-                <span className="text-[#FEF368] text-3xl font-digital">
+                <span className="text-[#FEF368] text-[28px] font-digital">
                   {twoDigits(timeLeft.days)[0]}
                 </span>
               </div>
@@ -70,7 +70,7 @@ const CountdownTimer = ({ targetDate }) => {
                 }}
                 className="font-digital-number rounded border border-solid border-white p-2  h-16 flex items-center justify-center"
               >
-                <span className="text-[#FEF368] text-3xl font-digital">
+                <span className="text-[#FEF368] text-[28px]">
                   {twoDigits(timeLeft.days)[1]}
                 </span>
               </div>
@@ -88,7 +88,7 @@ const CountdownTimer = ({ targetDate }) => {
                 }}
                 className="rounded border border-solid border-white p-2  h-16 flex items-center justify-center"
               >
-                <span className="font-digital-number text-[#FEF368] text-3xl font-digital">
+                <span className="font-digital-number text-[#FEF368] text-[28px]">
                   {twoDigits(timeLeft.hours)[0]}
                 </span>
               </div>
@@ -99,7 +99,7 @@ const CountdownTimer = ({ targetDate }) => {
                 }}
                 className="rounded border border-solid border-white p-2  h-16 flex items-center justify-center"
               >
-                <span className="font-digital-number text-[#FEF368] text-3xl font-digital">
+                <span className="font-digital-number text-[#FEF368] text-[28px]">
                   {twoDigits(timeLeft.hours)[1]}
                 </span>
               </div>
@@ -117,7 +117,7 @@ const CountdownTimer = ({ targetDate }) => {
                 }}
                 className="rounded border border-solid border-white p-2  h-16 flex items-center justify-center"
               >
-                <span className="font-digital-number text-[#FEF368] text-3xl font-digital">
+                <span className="font-digital-number text-[#FEF368] text-[28px]">
                   {twoDigits(timeLeft.minutes)[0]}
                 </span>
               </div>
@@ -128,7 +128,7 @@ const CountdownTimer = ({ targetDate }) => {
                 }}
                 className=" rounded border border-solid border-white p-2  h-16 flex items-center justify-center"
               >
-                <span className="font-digital-number text-[#FEF368] text-3xl font-digital">
+                <span className="font-digital-number text-[#FEF368] text-[28px]">
                   {twoDigits(timeLeft.minutes)[1]}
                 </span>
               </div>
