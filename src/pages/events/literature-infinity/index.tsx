@@ -367,6 +367,7 @@ export const getServerSideProps = async (context) => {
   const props = {
     title: 'Literature Infinity Contest| Win 20M VND with Creative Comics',
     description: 'Join the Literature Infinity Contest to celebrate Vietnamese literature and the Year of the Snake!',
+    image: '/assets/images/literature-infinity-thumb.png',
   }
   return {
     props: {

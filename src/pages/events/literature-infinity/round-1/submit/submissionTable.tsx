@@ -20,20 +20,18 @@ export default function SubmissionTable() {
       </div>
       <div className='mt-6 p-3 lg:p-6 rounded-[10px] text-text-primary overflow-auto w-full border border-border-primary'>
         {submissions?.length ? (
-          <div className='w-full min-w-[700px]'>
-            <div className='grid w-full grid-cols-[1fr_25%_12%_15%_10%_20%] text-sm font-semibold border-b border-white'>
+          <div className='w-full min-w-[600px]'>
+            <div className='grid w-full grid-cols-[1fr_20%_25%] text-sm font-semibold border-b border-white'>
               <div className='p-4'>{t('Name')}</div>
-              <div className='p-4'>{t('Topic')}</div>
               <div className='p-4'>{t('Status')}</div>
               <div className='p-4'>{t('Submitted at')}</div>
             </div>
             <div className='h-[260px] overflow-auto'>
               {submissions?.map((submission, index) => (
                 <div
-                  className='grid w-full grid-cols-[1fr_25%_12%_15%_10%_20%] text-sm font-medium text-text-primary'
+                  className='grid w-full grid-cols-[1fr_20%_25%] text-sm font-medium text-text-primary'
                   key={submission.id}>
                   <div className='p-4 truncate'>{submission.name}</div>
-                  <div className='p-4 truncate'>{submission?.artwork_topic?.title}</div>
                   <div
                     className={`p-4 capitalize ${
                       submission.status == 'Submitted'

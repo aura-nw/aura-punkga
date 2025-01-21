@@ -171,4 +171,34 @@ export const contentService = {
       return data
     },
   },
+  character: {
+    getCharacters: async ({
+      userId,
+      offset,
+      sort,
+      type,
+      search,
+      contestId,
+    }: {
+      userId?: string
+      offset?: number
+      sort?: string
+      type?: string
+      search?: string
+      contestId?: string
+    }) => {
+      const res = await privateAxios.get(`${getConfig().REST_API_URL}/story-event/character`, {
+        params: {
+          limit: 20,
+          offset: offset,
+          order_by: sort,
+          user_id: userId,
+          is_default: type == 'sponsored' ? true : type == 'user' ? false : undefined,
+          text: search,
+          contest_id: contestId,
+        },
+      })
+      return res.data
+    },
+  },
 }

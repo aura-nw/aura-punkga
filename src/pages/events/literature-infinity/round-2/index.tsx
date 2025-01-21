@@ -9,6 +9,11 @@ import Link from 'next/link'
 import { useWindowSize } from 'usehooks-ts'
 import moment from 'moment'
 import getConfig from 'next/config'
+import { useEffect, useState } from 'react'
+import { contentService } from 'src/services/contentService'
+import { toast } from 'react-toastify'
+import InfiniteScroll from 'react-infinite-scroll-component'
+import ComicCard from 'components/Comic/ComicCard'
 export default function Page(props) {
   if (props.justHead || props.pageProps?.justHead) {
     return <HeadComponent data={props.pageProps?.metadata || props.metadata} />
@@ -36,7 +41,7 @@ const PageContent = () => {
           viewBox='0 0 24 24'
           fill='none'
           xmlns='http://www.w3.org/2000/svg'
-          onClick={() => router.back()}>
+          onClick={() => router.push('/events/literature-infinity')}>
           <path d='M15 17L10 12L15 7' stroke='#6D6D6D' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
         </svg>
         <div className='text-[#3d3d3d] text-lg font-medium leading-relaxed'>
@@ -59,32 +64,76 @@ const PageContent = () => {
           <Image src={Mascot4} alt='' className='w-40 h-auto mt-12' />
         </div>
       ) : (
-        <div className='p-4'>
-          <Button className='w-full xl:max-w-80 xl:mx-auto'>
-            <Link href={getConfig().ADMIN_URL}>Go to Creator Portal</Link>
-          </Button>
-          <div className='text-center xl:max-w-80 xl:mx-auto text-[#5c9efe] text-xs font-medium underline leading-[18px] mt-3'>
-            View rules and reward
-          </div>
-          <div className='mt-8'>
-            <div className='text-[#3d3d3d] text-lg font-medium leading-relaxed'>Submission</div>
-            <div className='flex flex-col items-center gap-4'>
-              <Image src={Mascot4} alt='' className='w-40 h-auto mt-12' />
-              <div className='text-center text-[#4f4f4f] text-sm font-normal leading-tight'>
-                Be the first to submit a manga
-              </div>
-            </div>
-          </div>
-        </div>
+        <ListComic />
       )}
     </div>
   )
 }
-
+const ListComic = () => {
+  const [comicList, setComicList] = useState([])
+  const [offset, setOffset] = useState(0)
+  const [remaining, setRemaining] = useState(true)
+  useEffect(() => {
+    fetchCharacter()
+  }, [])
+  const fetchCharacter = async () => {
+    try {
+      const data = await contentService.comic.getLatestComic(20, offset, [1083])
+      if (data.length) {
+        setComicList([...comicList, ...data])
+        setOffset(offset + 20)
+        setRemaining(true)
+      } else {
+        setRemaining(false)
+      }
+    } catch (error) {
+      toast(error.message, {
+        type: 'error',
+      })
+    }
+  }
+  return (
+    <div className='p-4'>
+      <Button className='w-full xl:max-w-80 xl:mx-auto'>
+        <Link href={`${getConfig().ADMIN_URL}/creator/literature-infinity`}>Go to Creator Portal</Link>
+      </Button>
+      <div className='text-center xl:max-w-80 xl:mx-auto text-[#5c9efe] text-xs font-medium underline leading-[18px] mt-3'>
+        View rules and reward
+      </div>
+      <div className='mt-8'>
+        <div className='text-[#3d3d3d] text-lg font-medium leading-relaxed'>Submission</div>
+        {comicList.length ? (
+          <>
+            <InfiniteScroll
+              dataLength={comicList.length}
+              next={fetchCharacter}
+              hasMore={remaining}
+              loader={<h4>Loading...</h4>}
+              className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-3'>
+              {comicList.map((comic, index) => (
+                <div className='[&>div]:bg-transparent [&>div]:text-black [&_.text-text-brand-hover]:text-brand-600'>
+                  <ComicCard key={index} {...comic} />
+                </div>
+              ))}
+            </InfiniteScroll>
+          </>
+        ) : (
+          <div className='flex flex-col items-center gap-4'>
+            <Image src={Mascot4} alt='' className='w-40 h-auto mt-12' />
+            <div className='text-center text-[#4f4f4f] text-sm font-normal leading-tight'>
+              Be the first to submit a manga
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
 export const getServerSideProps = async (context) => {
   const props = {
     title: 'Literature Infinity Contest| Win 20M VND with Creative Comics',
     description: 'Join the Literature Infinity Contest to celebrate Vietnamese literature and the Year of the Snake!',
+    image: '/assets/images/literature-infinity-thumb.png',
   }
   return {
     props: {

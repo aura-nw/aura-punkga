@@ -13,7 +13,7 @@ export default function ComicCard(props: IComic) {
   const { t } = useTranslation()
   return (
     <div
-      className={`h-full w-full mx-auto bg-neutral-black rounded-md overflow-hidden ${
+      className={`h-full w-full mx-auto bg-neutral-black text-white rounded-md overflow-hidden ${
         props.status.text == 'Upcoming' ? '[&_a:not(.author)]:pointer-events-none' : ''
       }`}>
       <div
@@ -28,7 +28,7 @@ export default function ComicCard(props: IComic) {
           height={240}
           className={`${
             props.image ? 'object-cover' : 'object-contain bg-light-gray'
-          } w-[180px] aspect-[18/24] bg-gray-200`}
+          } w-full aspect-[18/24] bg-gray-200`}
         />
         <div className='absolute top-1.5 left-1.5 [&>span]:absolute'>
           {props.status.text != 'Ongoing' && (
@@ -36,8 +36,8 @@ export default function ComicCard(props: IComic) {
           )}
         </div>
         <div className='p-1.5'>
-          <div className='text-sm font-medium text-white'>{props[locale].title}</div>
-          <div className='text-xs text-white font-medium flex-1 h-full'>
+          <div className='text-sm font-medium line-clamp-2'>{props[locale].title}</div>
+          <div className='text-xs font-medium flex-1 h-full'>
             {t('by')}{' '}
             {props.authors.map((author, index) => (
               <Fragment key={index}>
