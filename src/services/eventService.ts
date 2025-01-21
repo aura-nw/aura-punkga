@@ -1,5 +1,6 @@
 import getConfig from "next/config";
 import { privateAxios } from "src/context";
+import { getRequestLog } from ".";
 export const eventService = {
   report: async (payload) =>
     await privateAxios.post(`${getConfig().REST_API_URL}/report`, payload),
@@ -143,13 +144,46 @@ export const eventService = {
       await privateAxios
         .get(`${getConfig().REST_API_URL}/referral/fortune-numbers`)
         .then((res) => res.data),
+    getRequestLog: async (request_id) =>
+      await privateAxios
+        .get(`${getConfig().REST_API_URL}/request-log`, {
+          params: { request_id },
+        })
+        .then((res) => res.data),
     getUserLixi: async () =>
       await privateAxios
         .get(`${getConfig().REST_API_URL}/lixi/user-lixi`)
         .then((res) => res.data),
-    getHistory: async () =>
+    getUnclaimedPrize: async () =>
       await privateAxios
-        .get(`${getConfig().REST_API_URL}/referral/history`)
+        .get(`${getConfig().REST_API_URL}/lixi/unclaimed`)
+        .then((res) => res.data),
+    claimedPrize: async (address) =>
+      await privateAxios
+        .post(`${getConfig().REST_API_URL}/lixi/claim-prizes`, { address })
+        .then((res) => res.data),
+
+    getClaimedTx: async () =>
+      await privateAxios
+        .get(`${getConfig().REST_API_URL}/lixi/unclaimed`)
+        .then((res) => res.data),
+    getBankAccount: async () =>
+      await privateAxios
+        .get(`${getConfig().REST_API_URL}/user/bank-account`)
+        .then((res) => res.data),
+    setBankAccount: async (bank) =>
+      await privateAxios
+        .post(`${getConfig().REST_API_URL}/user/bank-account`, { bank })
+        .then((res) => res.data),
+    openLixi: async (id: number) =>
+      await privateAxios
+        .post(`${getConfig().REST_API_URL}/lixi/open/${id}`, { id })
+        .then((res) => res.data),
+    getHistory: async (limit: number, offset: number) =>
+      await privateAxios
+        .get(`${getConfig().REST_API_URL}/referral/history`, {
+          params: { limit, offset },
+        })
         .then((res) => res.data),
     getReferralStatus: async () =>
       await privateAxios
