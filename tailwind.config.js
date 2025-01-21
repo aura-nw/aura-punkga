@@ -389,6 +389,7 @@ module.exports = {
       },
       fontFamily: {
         roboto: ['var(--font-roboto)'],
+        ibmplex: ['var(--font-ibmplex)'],
       },
     },
   },

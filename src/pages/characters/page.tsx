@@ -170,7 +170,7 @@ function PageContent() {
       {width >= 768 ? (
         <Modal open={openCharacterDetail} setOpen={setOpenCharacterDetail}>
           <div className='w-screen max-w-screen-2xl relative mx-auto flex items-center gap-4'>
-<div className='absolute top-0 right-5 cursor-pointer'>
+            <div className='absolute top-0 right-5 cursor-pointer'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 width='24'

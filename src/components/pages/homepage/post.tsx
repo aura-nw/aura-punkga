@@ -74,7 +74,7 @@ export default function Post({ data }) {
       <div className='space-y-4'>
         {data.manga.manga_creators.length > 1 ? (
           <div className='flex items-center gap-4'>
-            <div className='w-10 h-10 relative'>
+            <div className='w-10 h-10 relative shrink-0'>
               <Image
                 src={data.manga.manga_creators[1].creator.avatar_url || UserGreen}
                 alt=''
@@ -92,7 +92,9 @@ export default function Post({ data }) {
             </div>
             <div className='space-y-1'>
               <div className='text-sm font-semibold text-text-brand-focus'>
-                {data.manga.manga_creators.map((e) => e.creator.name || e.creator.pen_name).join(', ')}
+                {`${data.manga.manga_creators[0].creator.pen_name || data.manga.manga_creators[0].creator.name} + ${
+                  data.manga.manga_creators.length - 1
+                } ${pluralize('co-authors', data.manga.manga_creators.length - 1)}`}
               </div>
               <div className='text-xxs text-neutral-400'>{moment(data.manga.latest_published).fromNow()}</div>
             </div>
@@ -248,7 +250,7 @@ export default function Post({ data }) {
             alt=''
             width={40}
             height={40}
-            className='w-10 h-10 rounded-full object-cover'
+            className='w-10 h-10 rounded-full object-cover shrink-0'
           />
           <div className='space-y-1'>
             <div className='text-sm font-semibold text-text-brand-focus'>
