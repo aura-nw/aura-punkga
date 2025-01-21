@@ -16,7 +16,7 @@ import star_bg from "./li-xi/assets/star_bg.png";
 
 const events = [
   {
-    url: "/events/li-xi",
+    url: "/events/li-xi/enroll",
     isLive: false,
     en: {
       image: star_bg,

@@ -187,7 +187,7 @@ export default function Lixi() {
       router.push("/events/li-xi/enroll");
       return;
     }
-  }, []);
+  }, [account]);
   return (
     <div
       style={{
