@@ -12,6 +12,7 @@ import Link from 'next/link'
 import moment from 'moment'
 import Button from 'components/pages/event/literature-infinity/Button'
 import { useWindowSize } from 'usehooks-ts'
+import Rule from 'components/pages/event/literature-infinity/Rule'
 export default function Page(props) {
   if (props.justHead || props.pageProps?.justHead) {
     return <HeadComponent data={props.pageProps?.metadata || props.metadata} />
@@ -186,11 +187,13 @@ const PageContent = () => {
             </div>
           </div>
           <div>
-            <button className='w-full h-10 p-2.5 bg-[#2fc39c] rounded-[10px] border border-[#e3ffe9] justify-center items-center inline-flex overflow-hidden'>
-              <div className='px-1 justify-center items-center gap-2.5 flex'>
-                <div className='text-center text-white text-sm font-semibold leading-tight'>View rule</div>
-              </div>
-            </button>
+            <Rule>
+              <button className='w-full h-10 p-2.5 bg-[#2fc39c] rounded-[10px] border border-[#e3ffe9] justify-center items-center inline-flex overflow-hidden'>
+                <div className='px-1 justify-center items-center gap-2.5 flex'>
+                  <div className='text-center text-white text-sm font-semibold leading-tight'>View rule</div>
+                </div>
+              </button>
+            </Rule>
             <div className='mt-8'>
               <div className='text-[#3d3d3d] text-lg font-medium leading-relaxed'>Event</div>
               <div className='mt-4 grid grid-cols-2 gap-8'>
@@ -226,9 +229,11 @@ const PageContent = () => {
   return (
     <div className='min-h-screen bg-background-bg-primary relative'>
       <div className='absolute top-4 right-4 flex gap-1.5'>
-        <button className='text-xs font-medium bg-[#30C49D] border border-[#E4FFEA] rounded-md py-0.5 px-2.5 text-white'>
-          View Rule
-        </button>
+        <Rule>
+          <button className='text-xs font-medium bg-[#30C49D] border border-[#E4FFEA] rounded-md py-0.5 px-2.5 text-white'>
+            View Rule
+          </button>
+        </Rule>
         <button
           onClick={() => {
             navigator.share({
@@ -242,7 +247,7 @@ const PageContent = () => {
         </button>
       </div>
       <Image src={Banner} alt='' className='w-full h-auto' />
-      <div className='-mt-10 p-4'>
+      <div className='-mt-16 p-4'>
         <div className='flex flex-col gap-4'>
           <Link
             href='/events/literature-infinity/round-1'

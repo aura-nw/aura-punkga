@@ -15,6 +15,7 @@ import { toast } from 'react-toastify'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Modal from 'components/pages/characters/Modal'
 import CharacterDetail from 'components/pages/characters/CharacterDetail'
+import Rule from 'components/pages/event/literature-infinity/Rule'
 export default function Page(props) {
   if (props.justHead || props.pageProps?.justHead) {
     return <HeadComponent data={props.pageProps?.metadata || props.metadata} />
@@ -79,9 +80,11 @@ const PageContent = () => {
         <Button className='w-full xl:max-w-80 xl:mx-auto'>
           <Link href={'/events/literature-infinity/round-1/submit'}>Submit character</Link>
         </Button>
-        <div className='text-center xl:max-w-80 xl:mx-auto text-[#5c9efe] text-xs font-medium underline leading-[18px] mt-3'>
-          View rules and reward
-        </div>
+        <Rule>
+          <div className='text-center xl:max-w-80 xl:mx-auto text-[#5c9efe] text-xs font-medium underline leading-[18px] mt-3'>
+            View rules and reward
+          </div>
+        </Rule>
         <div className='mt-8'>
           <div className='text-[#3d3d3d] text-lg font-medium leading-relaxed'>Submission</div>
           {characterList.length ? (
@@ -91,7 +94,7 @@ const PageContent = () => {
                 next={fetchCharacter}
                 hasMore={remaining}
                 loader={<h4>Loading...</h4>}
-                className='grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-5'>
+                className='grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 mt-5'>
                 {characterList.map((character, index) => (
                   <Character key={index} data={character} />
                 ))}
@@ -121,7 +124,7 @@ const Character = ({ data }) => {
       {width >= 768 ? (
         <Modal open={open} setOpen={setOpen}>
           <div className='w-screen max-w-screen-2xl relative mx-auto flex items-center gap-4'>
-            <div className='absolute top-0 right-5 cursor-pointer'>
+            <div className='absolute top-3 right-3 cursor-pointer'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 width='24'

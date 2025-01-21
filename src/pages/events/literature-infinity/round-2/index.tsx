@@ -14,6 +14,7 @@ import { contentService } from 'src/services/contentService'
 import { toast } from 'react-toastify'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import ComicCard from 'components/Comic/ComicCard'
+import Rule from 'components/pages/event/literature-infinity/Rule'
 export default function Page(props) {
   if (props.justHead || props.pageProps?.justHead) {
     return <HeadComponent data={props.pageProps?.metadata || props.metadata} />
@@ -97,9 +98,11 @@ const ListComic = () => {
       <Button className='w-full xl:max-w-80 xl:mx-auto'>
         <Link href={`${getConfig().ADMIN_URL}/creator/literature-infinity`}>Go to Creator Portal</Link>
       </Button>
-      <div className='text-center xl:max-w-80 xl:mx-auto text-[#5c9efe] text-xs font-medium underline leading-[18px] mt-3'>
-        View rules and reward
-      </div>
+      <Rule>
+        <div className='text-center xl:max-w-80 xl:mx-auto text-[#5c9efe] text-xs font-medium underline leading-[18px] mt-3'>
+          View rules and reward
+        </div>
+      </Rule>
       <div className='mt-8'>
         <div className='text-[#3d3d3d] text-lg font-medium leading-relaxed'>Submission</div>
         {comicList.length ? (
@@ -109,7 +112,7 @@ const ListComic = () => {
               next={fetchCharacter}
               hasMore={remaining}
               loader={<h4>Loading...</h4>}
-              className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-3'>
+              className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-3'>
               {comicList.map((comic, index) => (
                 <div className='[&>div]:bg-transparent [&>div]:text-black [&_.text-text-brand-hover]:text-brand-600'>
                   <ComicCard key={index} {...comic} />
