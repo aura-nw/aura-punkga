@@ -33,7 +33,7 @@ export default function EventPage() {
         <div>
           <div className='text-lg font-medium mt-4 md:mt-8'>{t('Events')}</div>
           <div className='mt-4 grid grid-cols-1 md:gap-8 gap-4 md:grid-cols-2 lg:grid-cols-3'>
-            {events.map((event) => (
+            {events?.map((event) => (
               <Link
                 key={event.slug}
                 href={`/events/${event.slug}`}
