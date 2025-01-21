@@ -24,6 +24,10 @@ import {
 import ClaimDialogs from "../components/ClaimDialog";
 import TextField from "components/Input/TextField";
 import EventButton from "../components/EventButton";
+import { eventService } from "src/services/eventService";
+import useSWR from "swr";
+import FullScreenLoader from "../components/Loading";
+import { toast } from "react-toastify";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   "&.MuiTableCell-head": {
@@ -97,6 +101,7 @@ export default function MyPrize() {
   const [vnd, setVND] = useState("");
   const [aura, setAura] = useState("");
   const [dp, setDp] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -107,6 +112,101 @@ export default function MyPrize() {
     }
   }, []);
 
+  const {
+    data: UnclaimedPrize,
+    mutate: fetchUnclaimedPrize,
+    isLoading: fetchingUnclaimedPrize,
+  } = useSWR(
+    {
+      key: "get-unclaimed-prize",
+      account,
+    },
+    async () => {
+      try {
+        const data = await eventService.liXi.getUnclaimedPrize();
+        return data;
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    },
+    {
+      revalidateOnFocus: false,
+    }
+  );
+  const {
+    data: claimedTx,
+    mutate: fetchClaimedTx,
+    isLoading: fetchingClaimedTx,
+  } = useSWR(
+    {
+      key: "get-claimed-tx",
+      account,
+    },
+    async () => {
+      try {
+        const data = await eventService.liXi.getUnclaimedPrize();
+        return data;
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    },
+    {
+      revalidateOnFocus: false,
+    }
+  );
+  const { mutate: fetchBankAccount, isLoading: fetchingBankAccount } = useSWR(
+    {
+      key: "get-bank-account",
+      account,
+    },
+    async () => {
+      try {
+        const { data } = await eventService.liXi.getBankAccount();
+        if (data?.user_bank_account && data.user_bank_account.length > 0) {
+          setWalletAddress(data.user_bank_account[0].bank);
+          return data.user_bank_account;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    {
+      revalidateOnFocus: false,
+    }
+  );
+
+  const handleSaveBankAccount = async () => {
+    setLoading(true);
+    try {
+      const { data } = await eventService.liXi.setBankAccount(walletAddress);
+      if (data.insert_user_bank_account_one) {
+        toast("Save bank account successfully", {
+          type: "success",
+          position: toast.POSITION.TOP_RIGHT,
+          hideProgressBar: true,
+          autoClose: 3000,
+        });
+      }
+      toast(data?.errors || "Unexpected errors. Please contact Admin", {
+        type: "error",
+        position: toast.POSITION.TOP_RIGHT,
+        hideProgressBar: true,
+        autoClose: 3000,
+      });
+    } catch (error) {
+      toast(error?.message || "Unexpected errors. Please contact Admin", {
+        type: "error",
+        position: toast.POSITION.TOP_RIGHT,
+        hideProgressBar: true,
+        autoClose: 3000,
+      });
+    }
+    setLoading(false);
+  };
+
+  console.log(UnclaimedPrize, "day la UnclaimedPrize");
   const transactions = [
     { txHash: "BD201384...938AA6E9", time: "23/10/2023 9:00" },
     { txHash: "BD201384...938AA6E9", time: "23/10/2023 9:00" },
@@ -132,6 +232,11 @@ export default function MyPrize() {
     { id: "prize", label: t("Prize"), minWidth: 120, align: "left" },
     { id: "amount", label: t("Amount"), minWidth: 30, align: "right" },
   ];
+  const isLoading =
+    fetchingUnclaimedPrize ||
+    fetchingClaimedTx ||
+    loading ||
+    fetchingBankAccount;
 
   return (
     <div
@@ -142,6 +247,7 @@ export default function MyPrize() {
       }}
       className="bg-[#860204] md:h-screen w-screen flex flex-col md:flex-row justify-center items-center gap-10 lg:gap-20 "
     >
+      {isLoading && <FullScreenLoader />}
       <div className="relative w-[calc(100vw-40px)] md:w-[750px] flex flex-col items-center mt-20 md:mt-40 h-full gap-4">
         <div className="relative text-center px-6 py-4 w-[calc(100vw-40px)] md:w-[750px] rounded-b-[6px] border border-[#D52121] bg-gradient-to-b from-[rgba(117,20,20,0.50)] via-[rgba(133,7,7,0.50)] to-[rgba(244,63,63,0.50)] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] backdrop-blur-[6.45px]">
           <Image
@@ -185,7 +291,7 @@ export default function MyPrize() {
                         <div>{t("AURA")}</div>
                       </div>
                     ),
-                    amount: 90,
+                    amount: UnclaimedPrize?.AURA || 0,
                   },
                   {
                     prize: (
@@ -194,7 +300,7 @@ export default function MyPrize() {
                         <div>{t("DP")}</div>
                       </div>
                     ),
-                    amount: 80,
+                    amount: UnclaimedPrize?.DP || 0,
                   },
                 ].map((row, index) => {
                   return (
@@ -263,7 +369,7 @@ export default function MyPrize() {
                         <div>{t("VND")}</div>
                       </div>
                     ),
-                    amount: 100,
+                    amount: UnclaimedPrize?.VND || 0,
                   },
                 ].map((row, index) => {
                   return (
@@ -297,13 +403,13 @@ export default function MyPrize() {
             value={walletAddress}
             onChange={(e) => setWalletAddress(e.target.value)}
           />
-          <EventButton>{t("Save")}</EventButton>
+          <EventButton onClick={handleSaveBankAccount}>{t("Save")}</EventButton>
         </div>
       </div>
 
       <div className="relative w-[calc(100vw-40px)] md:w-[750px] flex flex-col items-center md:mt-[140px] h-full mb-32 lg:mb-0">
         <div className="px-6 py-4 w-full text-[#8E0B09] font-normal font-black-han-sans text-2xl md:col-span-7 rounded-[6px] border-[0.5px] border-[#FFD66B] bg-gradient-to-b from-[#FDF5CB] via-[#FDF5CB] to-[#FFF9DB] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]">
-          <div className="text-center">{"Leaderboard"}</div>
+          <div className="text-center">{"Claim transaction"}</div>
           <StyledTableContainer className="h-[300px]">
             <StyledTable stickyHeader aria-label="sticky table">
               <TableHead>

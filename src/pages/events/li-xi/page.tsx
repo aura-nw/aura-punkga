@@ -36,6 +36,7 @@ import { eventService } from "src/services/eventService";
 import RuleDialogs from "./components/RuleDialog";
 import HistoryDialogs from "./components/HistoryDialog";
 import RewardDialogs from "./components/RewardDialog";
+import { toast } from "react-toastify";
 
 const BulletPoint = ({ className }: { className?: string }) => (
   <div
@@ -61,8 +62,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 const StyledTableContainer = styled(TableContainer)({
-  // maxHeight: "none",
-  // overflow: "auto",
   "&::-webkit-scrollbar": {
     height: "8px",
   },
@@ -111,24 +110,40 @@ export interface UserLixi {
       count: number;
     };
   };
+  red_lixi_list: {
+    id: number;
+    status: string;
+  };
+
   blue: {
     aggregate: {
       count: number;
     };
+  };
+  blue_lixi_list: {
+    id: number;
+    status: string;
   };
   yellow: {
     aggregate: {
       count: number;
     };
   };
+  yellow_lixi_list: {
+    id: number;
+    status: string;
+  };
 }
-
+export type selectedLixi = {
+  type: string;
+  id?: number;
+};
 export default function Lixi() {
   const { account } = useContext(Context);
   const router = useRouter();
 
   const { t } = useTranslation();
-  const [selectedLixi, setSelectedLixi] = useState<string | undefined>();
+  const [selectedLixi, setSelectedLixi] = useState<selectedLixi | undefined>();
 
   const { data: fortuneNumbers, isLoading } = useSWR(
     {
@@ -146,7 +161,11 @@ export default function Lixi() {
     },
     { revalidateOnFocus: false }
   );
-  const { data: userLixi, isLoading: fetchingLixi } = useSWR(
+  const {
+    data: userLixi,
+    mutate: mutateUserLixi,
+    isLoading: fetchingLixi,
+  } = useSWR(
     {
       key: "fetch-user-lixi",
       id: account?.id,
@@ -154,15 +173,35 @@ export default function Lixi() {
     async () => {
       try {
         const { data } = await eventService.liXi.getUserLixi();
-
+        if (!data || data.errors) return null;
+        if (data.blue_lixi_list && data.blue_lixi_list[0]) {
+          setSelectedLixi({
+            type: "blue",
+            id: data.blue_lixi_list[0].id,
+          });
+        }
+        if (data.red_lixi_list && data.red_lixi_list[0]) {
+          setSelectedLixi({
+            type: "red",
+            id: data.red_lixi_list[0].id,
+          });
+        }
+        if (data.yellow_lixi_list && data.yellow_lixi_list[0]) {
+          setSelectedLixi({
+            type: "yellow",
+            id: data.yellow_lixi_list[0].id,
+          });
+        }
         return data as UserLixi;
       } catch (error) {
+        setSelectedLixi(undefined);
         console.error(error);
         return null;
       }
     },
     { revalidateOnFocus: false }
   );
+
   const columns = [
     { id: "rank", label: t("Rank"), minWidth: 60 },
     { id: "participant", label: t("Participant"), minWidth: 100 },
@@ -180,6 +219,7 @@ export default function Lixi() {
       align: "right",
     },
   ];
+
   const { data: referralStatus, isLoading: fetchingStatus } = useSWR(
     {
       key: "get-referral-status",
@@ -203,6 +243,7 @@ export default function Lixi() {
       return;
     }
   }, [account]);
+
   return (
     <div
       style={{
@@ -218,19 +259,23 @@ export default function Lixi() {
           className="absolute top-0 md:-top-24 md:left-1/2 md:-translate-x-1/2 w-[200px] md:w-[290px] z-1"
           alt=""
         />
-        {selectedLixi === "yellow" ? (
+        {selectedLixi?.type === "yellow" && (
           <Image
             src={lixi_vang}
             className="absolute top-36 md:top-[200px] left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 md:w-[142px] z-10"
             alt=""
           />
-        ) : selectedLixi === "blue" ? (
+        )}
+
+        {selectedLixi?.type === "blue" && (
           <Image
             src={lixi_xanh}
             className="absolute top-36 md:top-[200px] left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 md:w-[142px] z-10"
             alt=""
           />
-        ) : (
+        )}
+
+        {selectedLixi?.type === "red" && (
           <Image
             src={lixi_do}
             className="absolute top-36 md:top-[200px] left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 md:w-[142px] z-10"
@@ -245,9 +290,12 @@ export default function Lixi() {
             alt=""
           />
           <div className="absolute top-[90px] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-[150px]">
-            {selectedLixi && userLixi?.[selectedLixi]?.aggregate.count ? (
+            {selectedLixi && userLixi?.[selectedLixi.type]?.aggregate.count ? (
               <EventButton onClick={() => {}} className="w-[150px]">
-                <RewardDialogs />
+                <RewardDialogs
+                  selectedLixi={selectedLixi}
+                  rewardCallback={() => mutateUserLixi()}
+                />
               </EventButton>
             ) : (
               <div className="text-[#FABA77] text-center">
@@ -265,7 +313,12 @@ export default function Lixi() {
               src={lixi_xanh}
               className="absolute -top-24 md:-top-20 left-0 md:w-[100px] z-30 cursor-pointer"
               alt=""
-              onClick={() => setSelectedLixi("blue")}
+              onClick={() =>
+                setSelectedLixi({
+                  type: "blue",
+                  id: userLixi?.blue_lixi_list[0]?.id,
+                })
+              }
             />
             <div className="text-white font-black-han-sans mt-4 md:mt-8 bg-[#860204] rounded-3xl w-[100px] text-center px-2 py-1">
               {userLixi?.blue?.aggregate.count ?? 0}
@@ -276,7 +329,12 @@ export default function Lixi() {
               src={lixi_vang}
               className="absolute -top-24 md:-top-20 left-0 md:w-[100px] z-30 cursor-pointer"
               alt=""
-              onClick={() => setSelectedLixi("yellow")}
+              onClick={() =>
+                setSelectedLixi({
+                  type: "yellow",
+                  id: userLixi?.yellow_lixi_list[0]?.id,
+                })
+              }
             />
             <div className="text-white font-black-han-sans mt-4 md:mt-8 bg-[#860204] rounded-3xl  w-[100px] text-center px-2 py-1">
               {userLixi?.yellow?.aggregate.count ?? 0}
@@ -287,7 +345,12 @@ export default function Lixi() {
               src={lixi_do}
               className="absolute -top-24 md:-top-20 left-0 md:w-[100px] z-30 cursor-pointer"
               alt=""
-              onClick={() => setSelectedLixi("red")}
+              onClick={() =>
+                setSelectedLixi({
+                  type: "red",
+                  id: userLixi?.red_lixi_list[0]?.id,
+                })
+              }
             />
             <div className="text-white font-black-han-sans mt-4 md:mt-8 bg-[#860204] rounded-3xl  w-[100px] text-center px-2 py-1">
               {userLixi?.red?.aggregate.count ?? 0}
@@ -361,7 +424,20 @@ export default function Lixi() {
                 {t("Fortune Number")}
               </div>
               <div className="flex justify-between items-center">
-                <div className="text-[#F4741B] cursor-pointer">
+                <div
+                  className="text-[#F4741B] cursor-pointer"
+                  onClick={() => {
+                    navigator.clipboard.writeText(
+                      fortuneNumbers
+                        .filter((code) => !code.used)
+                        .map((ele) => ele.code)
+                        .join(" ")
+                    );
+                    toast(t("Copied to clipboard"), {
+                      type: "info",
+                    });
+                  }}
+                >
                   {t("Copy all")}
                 </div>
                 <HistoryDialogs />
@@ -370,11 +446,7 @@ export default function Lixi() {
                 {fortuneNumbers?.map((ele, index) => (
                   <div className="flex justify-between items-center w-full gap-4">
                     <BulletPoint className="" />
-                    <div
-                      className={
-                        ele.status === "ACTIVE" ? "" : "text-[#6D6D6D]"
-                      }
-                    >
+                    <div className={!ele.used ? "" : "text-[#6D6D6D]"}>
                       {ele.code}
                     </div>
                     {ele.used ? (
@@ -395,7 +467,7 @@ export default function Lixi() {
                   </div>
                 ))}
               </div>
-              <div className="text-[#F4741B]">
+              <div className="text-[#F4741B] mt-4">
                 {t(
                   "Both referrer and referree receives a Blue LiXi when a code being used"
                 )}
@@ -498,7 +570,7 @@ export default function Lixi() {
                   </TableBody>
                 </StyledTable>
               </StyledTableContainer>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center mt-4">
                 <div className="text-[#6D3A0A] text-sm font-medium">
                   {t("Your point")}: 12
                 </div>{" "}
