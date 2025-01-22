@@ -17,7 +17,7 @@ import TextField from "components/Input/TextField";
 import { Box } from "@mui/material";
 import { eventService } from "src/services/eventService";
 import { toast } from "react-toastify";
-import useQueuePolling from "../hook/useQueuePolling";
+import useQueuePolling from "src/hooks/useQueuePolling";
 import loadingSVG from "../assets/svg/loading.svg";
 import VND from "../assets/svg/vnd.svg";
 import { Context } from "src/context";

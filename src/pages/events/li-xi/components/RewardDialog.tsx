@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -7,7 +6,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import Typography from "@mui/material/Typography";
 import { useTranslation } from "react-i18next";
 import Image from "next/image";
 
@@ -24,9 +22,8 @@ import { useRouter } from "next/router";
 import { selectedLixi } from "../page";
 import useSWR from "swr";
 import { eventService } from "src/services/eventService";
-import { id } from "ethers";
 import { toast } from "react-toastify";
-import useQueuePolling from "../hook/useQueuePolling";
+import useQueuePolling from "src/hooks/useQueuePolling";
 import { Context } from "src/context";
 import sample from "./sample.json";
 
@@ -222,7 +219,7 @@ export default function RewardDialogs({
           {status === "CREATED" && (
             <div className="flex flex-col items-center gap-4 mb-4 w-[300px]">
               <div className="text-[#067537] text-center text-base font-medium">
-                {account.name}
+                {account?.name}
               </div>
               <Image
                 src={loadingSVG}
@@ -235,7 +232,7 @@ export default function RewardDialogs({
           {status === "SUCCEEDED" && (
             <div className="flex flex-col items-center gap-4 mb-4 w-[300px]">
               <div className="text-[#067537] text-center text-base font-medium">
-                {account.name}
+                {account?.name}
               </div>
 
               {prize && prize.length ? (

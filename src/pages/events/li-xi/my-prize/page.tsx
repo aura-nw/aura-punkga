@@ -206,7 +206,6 @@ export default function MyPrize() {
     setLoading(false);
   };
 
-  console.log(UnclaimedPrize, "day la UnclaimedPrize");
   const transactions = [
     { txHash: "BD201384...938AA6E9", time: "23/10/2023 9:00" },
     { txHash: "BD201384...938AA6E9", time: "23/10/2023 9:00" },

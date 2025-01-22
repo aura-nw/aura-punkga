@@ -16,7 +16,6 @@ import {
   useTheme,
   styled,
 } from "@mui/material";
-import { Tab } from "@headlessui/react";
 
 export interface ColumnType {
   id: string;
@@ -116,7 +115,7 @@ const InfiniteScrollTable: React.FC<InfiniteScrollTableProps> = ({
   const renderMobileView = () => (
     <Box sx={{ maxHeight, overflow: "auto" }} onScroll={handleScroll}>
       {items.length === 0 && <div className="text-center">No data</div>}
-      {items.map((row, index) => (
+      {items?.map((row, index) => (
         <Card
           key={`${index}-${offset}`}
           sx={{
@@ -128,7 +127,7 @@ const InfiniteScrollTable: React.FC<InfiniteScrollTableProps> = ({
               backgroundColor: index % 2 === 0 ? "#F5E3BC" : "#FFF8D5",
             }}
           >
-            {columns.map((column) => (
+            {columns?.map((column) => (
               <Box
                 key={column.id}
                 sx={{
@@ -172,7 +171,7 @@ const InfiniteScrollTable: React.FC<InfiniteScrollTableProps> = ({
       <Table stickyHeader>
         <TableHead>
           <TableRow>
-            {columns.map((column) => (
+            {columns?.map((column) => (
               <TableCell
                 key={column.id}
                 align={column.align || "left"}
@@ -191,7 +190,7 @@ const InfiniteScrollTable: React.FC<InfiniteScrollTableProps> = ({
             </TableCell>
           </TableRow>
 
-          {items.map((row, index) => (
+          {items?.map((row, index) => (
             <TableRow
               hover
               key={`${index}-${offset}`}
@@ -203,7 +202,7 @@ const InfiniteScrollTable: React.FC<InfiniteScrollTableProps> = ({
                 },
               }}
             >
-              {columns.map((column) => (
+              {columns?.map((column) => (
                 <TableCell key={column.id} align={column.align || "left"}>
                   {formatCellValue(column, row[column.id])}
                 </TableCell>
