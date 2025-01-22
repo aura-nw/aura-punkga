@@ -140,7 +140,7 @@ export default function NewInfo() {
   const openPopoverChangePassword = Boolean(anchorElChangePassword)
   return (
     <>
-      <div className='w-full p-8 bg-white rounded-[10px] relative'>
+      <div className='w-full p-8 rounded-[10px] relative'>
         <div className='absolute top-5 right-[17px]'>
           <div className='flex gap-3'>
             <Image
@@ -248,7 +248,7 @@ export default function NewInfo() {
             </div>
           </div>
         </div>
-        <div className='flex flex-col justify-center gap-4 w-full p-3 mt-8 border-[1px] border-border-primary rounded-[10px]'>
+        <div className='flex flex-col justify-center gap-4 w-full p-3 mt-8 rounded-[10px] bg-black'>
           <div>
             <div className='flex items-center justify-between'>
               <div className='text-md font-semibold leading-6 text-text-primary'>Lv. {userLevel}</div>

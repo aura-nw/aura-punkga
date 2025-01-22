@@ -137,7 +137,7 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
                 <NewInfo />
 
               </div>
-              <div className='w-full lg:w-[calc(100%_-_340px)] lg:p-8 rounded-[10px] bg-transparent lg:bg-white'>
+              <div className='w-full lg:w-[calc(100%_-_340px)] lg:p-8 rounded-[10px] bg-transparent'>
                 <NewQuest />
                 <div className='w-full mt-[28px]'>
                   <Box >
