@@ -83,7 +83,7 @@ export default function Enroll() {
       }
     }
   );
-  console.log(referralStatus, "day la referral status");
+
   if (!fetchingStatus && referralStatus) {
     return (
       <div
