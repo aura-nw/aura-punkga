@@ -171,17 +171,17 @@ function PageContentDesktop() {
             </div>
           </div>
           <div className="bg-[#1D1F1E] px-7 py-4">
-          <InfiniteScroll
-            className="grid grid-cols-2 gap-4  md:grid-cols-3 lg:grid-cols-4"
-            dataLength={latestData.list.length}
-            next={fetchLatestManga}
-            hasMore={latestData.remaining}
-            loader={<h4 className="w-full text-center font-medium text-sm">Loading...</h4>}
-          >
-            {latestData.list?.map((comic, index) => (
-              <Manga key={index} {...comic} />
-            ))}
-          </InfiniteScroll>
+            <InfiniteScroll
+              className="grid grid-cols-2 gap-4  md:grid-cols-3 lg:grid-cols-4"
+              dataLength={latestData.list.length}
+              next={fetchLatestManga}
+              hasMore={latestData.remaining}
+              loader={<h4 className="w-full text-center font-medium text-sm">Loading...</h4>}
+            >
+              {latestData.list?.map((comic, index) => (
+                <Manga key={index} {...comic} />
+              ))}
+            </InfiniteScroll>
           </div>
           {/* <div className="grid grid-cols-4 gap-2.5 mt-4 md:pb-7">
             {latestComic.loading
@@ -211,10 +211,10 @@ function PageContentDesktop() {
         </div>
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-4 w-[406px]">
-            <Link href="https://docs.google.com/forms/d/e/1FAIpQLSelARRDM8YVrEHRycSfpA1J95_f2PmrvSRqXGVSKXusXla-5A/viewform" target="_blank">
+            <Link href="/events/literature-infinity" target="_blank">
               <Image src={bannerLiterature} alt="" className="rounded-2xl w-full aspect-[40/15] object-cover" />
             </Link>
-            <Link href="https://docs.google.com/forms/d/e/1FAIpQLSelARRDM8YVrEHRycSfpA1J95_f2PmrvSRqXGVSKXusXla-5A/viewform" target="_blank">
+            <Link href="/events/li-xi" target="_blank">
               <Image src={bannerLixi} alt="" className="rounded-2xl w-full aspect-[40/15] object-cover" />
             </Link>
           </div>
