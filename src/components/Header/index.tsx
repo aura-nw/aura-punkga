@@ -17,7 +17,7 @@ import { useClickOutside } from 'src/hooks/useClickOutside'
 import { search } from 'src/services'
 import { useAccount } from 'wagmi'
 import Bg from './assets/bg.svg'
-import UserDropdown from './components/UserDropdown'
+import UserDropdown from '../Layout/components/UserDropdown'
 export const HEADER_HEIGHT = {
   MOBILE: '56px',
   DESKTOP: '80px',

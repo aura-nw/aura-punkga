@@ -150,17 +150,17 @@ export const contentService = {
       return data
     },
     getArtworkDetail: async (userId, id) => {
-      const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/story-event/artwork/${id}`, {
+      const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/artwork/${id}`, {
         params: userId
           ? {
               user_id: userId,
             }
           : undefined,
       })
-      return data?.data?.story_artwork_by_pk
+      return data?.data?.artworks_by_pk
     },
     getRelatedArtwork: async (id, limit, offset, userId) => {
-      const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/story-event/artwork/${id}/related`, {
+      const { data } = await privateAxios.get(`${getConfig().REST_API_URL}/artwork/${id}/related`, {
         params: {
           id,
           limit,

@@ -14,6 +14,7 @@ import { IComic } from 'src/models/comic'
 import { getAllTags, getLatestComic, getTrendingComic } from 'src/services'
 import { useWindowSize } from 'usehooks-ts'
 import MobileVersion from '../components/pages/homepage/mobile'
+import Desktop from 'components/pages/homepage/desktop'
 
 declare global {
   interface Window {
@@ -73,6 +74,7 @@ function Home() {
   if (width < 768) {
     return <MobileVersion />
   }
+  return <Desktop />
   return (
     <div className='bg-gray-50'>
       <div className='md:hidden'>

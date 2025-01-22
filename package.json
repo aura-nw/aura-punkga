@@ -29,6 +29,7 @@
     "bignumber.js": "^9.1.2",
     "canvas-confetti": "^1.9.0",
     "chain-registry": "1.29.1",
+    "classnames": "^2.5.1",
     "dompurify": "^3.0.5",
     "ethers": "^6.12.1",
     "framer-motion": "^11.3.24",

@@ -49,21 +49,13 @@ export default function UserDropdown() {
   return (
     <Dropdown>
       <DropdownToggle>
-        {/* <MainButton hasAvatar style='secondary' leadingIcon={account?.image || Avatar}>
-                      {account?.name}
-                    </MainButton> */}
-        <div className='relative p-0.5'>
-          <div className='absolute inset-0 bg-[conic-gradient(#009640_70deg,#6D6D6D_0)] rounded-xl rotate-180'></div>
-          <div className='border border-neutral-black p-[1px] bg-neutral-500 rounded-mlg relative'>
-            <div className='border border-neutral-800 rounded-lg overflow-hidden'>
-              <Image src={account?.image || UserGreen} width={50} height={50} className='w-12 h-12' alt='user' />
-            </div>
-          </div>
-          <div className='absolute bottom-0 w-full font-jaro text-center text-stroke -mb-1'>
-            <div className='text-base'>{account.level}</div>
-            <div className='text-xs -mt-2'>LEVEL</div>
-          </div>
-        </div>
+        <Image
+          src={account?.image || UserGreen}
+          alt=''
+          className='w-[42px] h-[42px] rounded-full object-cover'
+          width={42}
+          height={42}
+        />
       </DropdownToggle>
 
       <DropdownMenu customClass='right-0 !w-[405px] max-w-[405px] !overflow-visible mt-[26px] !bg-transparent'>

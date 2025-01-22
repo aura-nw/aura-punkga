@@ -1,3 +1,4 @@
+import useDetectScroll from '@smakss/react-scroll-direction'
 import Post from 'components/pages/homepage/post'
 import getConfig from 'next/config'
 import Image from 'next/image'
@@ -11,8 +12,6 @@ import { eventService } from 'src/services/eventService'
 import 'swiper/css'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import useSWR from 'swr'
-import useDetectScroll from '@smakss/react-scroll-direction'
-import { list } from './comicSlider'
 const LIMIT = 10
 export default function MobileVersion() {
   const config = getConfig()
