@@ -1,19 +1,20 @@
-import CheckboxDropdown from "components/CheckBox/CheckBoxDropDown";
-import Layout from "components/Layout";
-import TaskSlider from "components/pages/homepage/comicSlider";
-import Manga from "components/pages/homepage/manga";
-import SlideSection from "components/pages/homepage/slideSection";
-import TrendingComic from "components/pages/homepage/trendingComic";
-import { i18n } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useRouter } from "next/router";
-import { useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
-import useApi from "src/hooks/useApi";
-import { IComic } from "src/models/comic";
-import { getAllTags, getLatestComic, getTrendingComic } from "src/services";
-import { useWindowSize } from "usehooks-ts";
-import MobileVersion from "../components/pages/homepage/mobile";
+import CheckboxDropdown from 'components/CheckBox/CheckBoxDropDown'
+import Layout from 'components/Layout'
+import TaskSlider from 'components/pages/homepage/comicSlider'
+import Manga from 'components/pages/homepage/manga'
+import SlideSection from 'components/pages/homepage/slideSection'
+import TrendingComic from 'components/pages/homepage/trendingComic'
+import { i18n } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useRouter } from 'next/router'
+import { useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import useApi from 'src/hooks/useApi'
+import { IComic } from 'src/models/comic'
+import { getAllTags, getLatestComic, getTrendingComic } from 'src/services'
+import { useWindowSize } from 'usehooks-ts'
+import MobileVersion from '../components/pages/homepage/mobile'
+import Desktop from 'components/pages/homepage/desktop'
 
 declare global {
   interface Window {
@@ -73,6 +74,7 @@ function Home() {
   if (width < 768) {
     return <MobileVersion />;
   }
+  return <Desktop />
   return (
     <div className="bg-gray-50">
       <div className="md:hidden">

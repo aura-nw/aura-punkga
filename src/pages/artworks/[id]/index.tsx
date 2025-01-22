@@ -32,7 +32,7 @@ function PageContent() {
   )
   const fetchRelatedArtwork = async () => {
     const artworkData = await contentService.artwork.getRelatedArtwork(artworkId, LIMIT, offset, account?.id)
-    const list = artworkData?.data?.story_artwork
+    const list = artworkData?.data?.artworks
     if (list?.length) {
       setRelatedList([...relatedList, ...list])
       setOffset(offset + LIMIT)

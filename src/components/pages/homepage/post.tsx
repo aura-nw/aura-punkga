@@ -71,7 +71,7 @@ export default function Post({ data }) {
     const chapterImages = data.manga.chapters[0]?.chapter_languages?.find((e) => e.language.is_main)?.detail || []
     if (chapterImages.length == 0) return null
     return (
-      <div className='space-y-4'>
+      <div className='space-y-4 md:bg-neutral-950 p-4 rounded-lg'>
         {data.manga.manga_creators.length > 1 ? (
           <div className='flex items-center gap-4'>
             <div className='w-10 h-10 relative shrink-0'>
@@ -243,7 +243,7 @@ export default function Post({ data }) {
     )
   } else {
     return (
-      <div className='space-y-4'>
+      <div className='space-y-4 md:bg-neutral-950 p-4 rounded-lg'>
         <Link href={`/artist/${data.artwork.creator.slug}`} className='flex items-center gap-4'>
           <Image
             src={data.artwork.creator.avatar_url || UserGreen}
@@ -260,7 +260,14 @@ export default function Post({ data }) {
           </div>
         </Link>
         <div className='block'>
-          <div className='text-lg font-medium'>{data.artwork.name}</div>
+          <div className='flex items-center gap-2'>
+            <div className='text-lg font-medium'>{data.artwork.name}</div>
+            {data.artwork.story_artworks[0] && (
+              <div className='h-4 px-2 py-1 bg-[#0057ff] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] justify-start items-center gap-1 inline-flex'>
+                <div className='text-white text-[10px] font-bold leading-[15px]'>IP Registered</div>
+              </div>
+            )}
+          </div>
           <div className='space-y-1.5'>
             <ReactShowMoreText
               lines={2}
@@ -275,9 +282,7 @@ export default function Post({ data }) {
           </div>
         </div>
         <div className='space-y-2'>
-          <Link
-            href={`/artworks/${data.artwork?.story_artworks?.[0]?.id}`}
-            className='w-full h-full block aspect-square'>
+          <Link href={`/artworks/${data.artwork?.id}`} className='w-full h-full block aspect-square'>
             <Image src={data.artwork.url} width={400} height={400} alt='' className='w-full h-full object-cover' />
           </Link>
           <div className='text-xs font-semibold text-neutral-400 leading-8'>
@@ -344,14 +349,25 @@ export default function Post({ data }) {
               </DropdownToggle>
               <DropdownMenu customClass='right-0'>
                 <div className='p-4 rounded-lg bg-gray-900 text-white space-y-4 text-sm'>
-                  <Link
-                    className='block'
-                    target='_blank'
-                    href={`${getConfig().STORY_EXPLORER_URL}/ipa/${
-                      data.artwork.story_artworks[0]?.story_ip_asset?.ip_asset_id
-                    }`}>
-                    View on Story Protocol
-                  </Link>
+                  <div
+                    className='cursor-pointer'
+                    onClick={() => {
+                      navigator.share({
+                        url: `${window.location.origin}/artwork/${data.artwork.id}`,
+                      })
+                    }}>
+                    Share
+                  </div>
+                  {data.artwork.story_artworks[0] && (
+                    <Link
+                      className='block'
+                      target='_blank'
+                      href={`${getConfig().STORY_EXPLORER_URL}/ipa/${
+                        data.artwork.story_artworks[0]?.story_ip_asset?.ip_asset_id
+                      }`}>
+                      View on Story Protocol
+                    </Link>
+                  )}
                 </div>
               </DropdownMenu>
             </Dropdown>
