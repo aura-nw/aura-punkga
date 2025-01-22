@@ -21,7 +21,7 @@ export default function Layout({ children }: any) {
     <main className={`bg-gray-50 max-w-screen ${roboto.variable} ${ibmplex.variable}`}>
       <Header />
       <div className='min-h-[70vh] text-text-primary relative pb-20 xl:pb-0 z-10'>{children}</div>
-      {width < 1280 ? <BottomNavigation /> : (location.pathname == '/' ? null :<Footer />}
+      {width < 1280 ? <BottomNavigation /> : (location.pathname == '/' ? null :<Footer />)}
     </main>
   )
 }
