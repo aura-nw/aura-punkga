@@ -3,7 +3,7 @@ import { Checkbox, FormControl, List, ListItem, ListItemIcon, ListItemText, Popo
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-const CheckboxDropdown = ({ options, selected, onChange, allKey = null, multiple = true }) => {
+const CheckboxDropdown = ({ options, selected, onChange, allKey = null, multiple = true, optionClassName = '', arrowClassName = '' }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const [internalSelected, setInternalSelected] = useState(selected)
   const { t } = useTranslation()
@@ -63,12 +63,12 @@ const CheckboxDropdown = ({ options, selected, onChange, allKey = null, multiple
       <div
         onClick={handleClick}
         className='text-sm font-medium leading-5 flex gap-[6px] cursor-pointer w-full items-center'>
-        <div className='min-w-[70px] whitespace-nowrap'>
+        <div className={`min-w-[70px] whitespace-nowrap ${optionClassName}`}>
           {multiple
             ? options.find((option) => option.key == allKey)?.value
             : internalSelected?.[0]?.value || internalSelected?.[0]?.key}
         </div>
-        <KeyboardArrowDownIcon />
+        <KeyboardArrowDownIcon className={`${arrowClassName}`} />
       </div>
       <Popover
         className='p-0 mt-2'
