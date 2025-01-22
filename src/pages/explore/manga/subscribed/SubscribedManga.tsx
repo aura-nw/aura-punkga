@@ -159,10 +159,10 @@ function PageContentDesktop() {
         </div>
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-4 w-[406px]">
-            <Link href="https://docs.google.com/forms/d/e/1FAIpQLSelARRDM8YVrEHRycSfpA1J95_f2PmrvSRqXGVSKXusXla-5A/viewform" target="_blank">
+            <Link href="/events/literature-infinity" target="_blank">
               <Image src={bannerLiterature} alt="" className="rounded-2xl w-full aspect-[40/15] object-cover" />
             </Link>
-            <Link href="https://docs.google.com/forms/d/e/1FAIpQLSelARRDM8YVrEHRycSfpA1J95_f2PmrvSRqXGVSKXusXla-5A/viewform" target="_blank">
+            <Link href="/events/li-xi" target="_blank">
               <Image src={bannerLixi} alt="" className="rounded-2xl w-full aspect-[40/15] object-cover" />
             </Link>
           </div>
