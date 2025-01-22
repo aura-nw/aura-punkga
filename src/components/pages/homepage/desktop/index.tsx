@@ -52,7 +52,7 @@ export default function Desktop() {
     <div className='min-h-screen relative flex justify-between bg-[#161619] text-white'>
       <LeftSection className='h-[calc(100vh-82px)] shrink-0 w-96 lg:w-[400px] sticky top-[82px] overflow-hidden hover:overflow-auto py-7 space-y-7 hidden xl:block' />
       <div className='w-full max-w-screen-md px-6 min-w-0 py-7'>
-        <div className='text-white text-lg font-bold mb-8 leading-relaxed'>News feed</div>
+        <div className='text-white text-lg font-bold mb-4 leading-relaxed'>News feed</div>
         <InfiniteScroll
           className='space-y-10 relative'
           dataLength={postList.list.length}

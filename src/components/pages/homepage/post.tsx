@@ -71,7 +71,7 @@ export default function Post({ data }) {
     const chapterImages = data.manga.chapters[0]?.chapter_languages?.find((e) => e.language.is_main)?.detail || []
     if (chapterImages.length == 0) return null
     return (
-      <div className='space-y-4'>
+      <div className='space-y-4 md:bg-neutral-950 p-4 rounded-lg'>
         {data.manga.manga_creators.length > 1 ? (
           <div className='flex items-center gap-4'>
             <div className='w-10 h-10 relative shrink-0'>
@@ -243,7 +243,7 @@ export default function Post({ data }) {
     )
   } else {
     return (
-      <div className='space-y-4'>
+      <div className='space-y-4 md:bg-neutral-950 p-4 rounded-lg'>
         <Link href={`/artist/${data.artwork.creator.slug}`} className='flex items-center gap-4'>
           <Image
             src={data.artwork.creator.avatar_url || UserGreen}
