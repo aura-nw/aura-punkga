@@ -36,38 +36,38 @@ export default function NewNFTList() {
   const startIndex = (page - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
   const displayedNFTs = data?.slice(startIndex, endIndex)
-  if (!data || !data.length) {
-    return (
-      <div className='w-full py-8 flex flex-col items-center gap-4'>
-        <Image src={MascotEmpty} alt='' width={160} height={160} />
-        <div className='text-text-primary font-medium'>{t('No NFT found')}</div>
-      </div>
-    )
-  }
+  // if (!data || !data.length) {
+  //   return (
+  //     <div className='w-full py-8 flex flex-col items-center gap-4'>
+  //       <Image src={MascotEmpty} alt='' width={160} height={160} />
+  //       <div className='text-text-primary font-medium'>{t('No NFT found')}</div>
+  //     </div>
+  //   )
+  // }
   return (
     <>
       {!displayedNFTs || displayedNFTs.length === 0 ? (
         <div className='w-full py-8 flex flex-col items-center gap-4'>
           <Image src={MascotEmpty} alt='' width={160} height={160} />
-          <div className='text-text-primary font-medium'>{t('No NFT found')}</div>
+          <div className='text-white font-medium'>{t('No NFT found')}</div>
         </div>
       ) : (
         <div className='w-full md:p-5 rounded-2xl'>
           <Box>
-            <Grid container spacing={isMobile ? 2 : 3}>
+            <Grid container spacing={0} gap={isMobile ? 2 : 3}>
               {displayedNFTs?.map((nft) => (
-                <Grid item xs={6} sm={6} md={4} key={nft.id}>
+                <Grid item xs={6} sm={6} md={4} key={nft.id} className='bg-black rounded-md'>
                   <div>
                     <Image
                       src={nft?.media_info?.offchain?.image?.url || NoImage}
                       width={260}
                       height={260}
-                      className='w-full object-cover aspect-square rounded-md'
+                      className='w-full object-cover aspect-square rounded-tl-md rounded-tr-md'
                       alt=''
                     />
                   </div>
-                  <div className='mt-4 flex gap-2 items-center'>
-                    <div className='font-medium text-text-primary leading-5 text-sm'>{nft.cw721_contract.name}</div>
+                  <div className='p-3 flex gap-2 items-center'>
+                    <div className='font-medium text-white leading-5 text-sm'>{nft.cw721_contract.name}</div>
                     <Link
                       target='_blank'
                       href={`${getConfig()['CHAIN_INFO'].explorer}/token/evm/erc721/${

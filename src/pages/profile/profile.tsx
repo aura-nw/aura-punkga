@@ -184,7 +184,7 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
                         {!curentlyReading.data || curentlyReading.data.length === 0 ? (
                           <div className="w-full py-8 flex flex-col items-center gap-4">
                             <Image src={MascotEmpty} alt="" width={160} height={160} />
-                            <div className="text-text-primary font-medium">{t("No manga found")}</div>
+                            <div className="text-white font-medium">{t("No manga found")}</div>
                           </div>
                         ) : (
                           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-3 gap-2.5 md:pb-7">
@@ -214,7 +214,7 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
                         {!subscribeList.data || subscribeList.data.length === 0 ? (
                           <div className="w-full py-8 flex flex-col items-center gap-4">
                             <Image src={MascotEmpty} alt="" width={160} height={160} />
-                            <div className="text-text-primary font-medium">{t("No manga found")}</div>
+                            <div className="text-white font-medium">{t("No manga found")}</div>
                           </div>
                         ) : (
                           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2.5 md:pb-7">
@@ -252,7 +252,7 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
                         {!account.completedQuests || account.completedQuests.length === 0 ? (
                           <div className="w-full py-8 flex flex-col items-center gap-4">
                             <Image src={MascotEmpty} alt="" width={160} height={160} />
-                            <div className="text-text-primary font-medium">{t("Your reward history is empty")}</div>
+                            <div className="text-white font-medium">{t("Your reward history is empty")}</div>
                           </div>
                         ) : (
                           <RewardHistory data={account.completedQuests} />
