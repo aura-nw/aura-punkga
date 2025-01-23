@@ -24,13 +24,13 @@ export default function Manga(props: IComic) {
   return (
     <Link
       href={width < 1280 ? `/comic/${props.slug}` : `/comic/${props.slug}/chapter/1`}
-      className='w-full flex flex-col aspect-[16/23] rounded-md relative overflow-hidden bg-black'>
+      className='w-full flex flex-col rounded-md relative overflow-hidden bg-black'>
       <Image
         src={props.image || NoImage}
         alt=''
         width={180}
         height={240}
-        className={`w-full h-4/5 ${props.image ? 'object-cover' : 'object-contain bg-light-gray'} rounded-t`}
+        className={`w-full aspect-[0.7/1] ${props.image ? 'object-cover' : 'object-contain bg-light-gray'} rounded-t`}
       />
 
       {props.status.text && props.status.text != 'Ongoing' && (

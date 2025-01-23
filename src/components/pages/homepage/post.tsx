@@ -1,5 +1,6 @@
 import UserGreen from 'assets/images/userGreen.svg'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
+import { ImageZoom } from 'components/Image/ImageZoom'
 import DOMPurify from 'dompurify'
 import moment from 'moment'
 import getConfig from 'next/config'
@@ -282,9 +283,9 @@ export default function Post({ data }) {
           </div>
         </div>
         <div className='space-y-2'>
-          <Link href={`/artworks/${data.artwork?.id}`} className='w-full h-full block aspect-square'>
-            <Image src={data.artwork.url} width={400} height={400} alt='' className='w-full h-full object-cover' />
-          </Link>
+          <div className='w-full overflow-hidden max-h-[70vh]'>
+            <ImageZoom src={data.artwork.url} width={3000} height={3000} alt='' className='' />
+          </div>
           <div className='text-xs font-semibold text-neutral-400 leading-8'>
             {likeCount} {pluralize('likes', likeCount)}
           </div>
