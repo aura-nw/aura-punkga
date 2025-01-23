@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
@@ -28,6 +28,10 @@ import {
 import useSWR from "swr";
 import { eventService } from "src/services/eventService";
 import { Context } from "src/context";
+import InfiniteScrollTable, {
+  ColumnType,
+  RowData,
+} from "./InfiniteScrollTable";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogTitle-root": {
@@ -41,22 +45,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(1),
   },
 }));
-
-const StyledTableContainer = styled(TableContainer)({
-  "&::-webkit-scrollbar": {
-    height: "8px",
-  },
-  "&::-webkit-scrollbar-track": {
-    background: "#E1C8AB",
-  },
-  "&::-webkit-scrollbar-thumb": {
-    background: "linear-gradient(90deg, #AE2525, #EE3838, #B80000)",
-    borderRadius: "4px",
-  },
-  "&::-webkit-scrollbar-thumb:hover": {
-    background: "#AE2525",
-  },
-});
 
 interface HistoryRecord {
   id: number;
@@ -74,8 +62,9 @@ interface HistoryRecord {
 }
 
 export default function HistoryDialogs() {
-  const [open, setOpen] = React.useState(false);
-  const { account } = React.useContext(Context);
+  const [open, setOpen] = useState(false);
+  const { account } = useContext(Context);
+  const [offset, setOffset] = useState<number>(0);
 
   const { t } = useTranslation();
   const handleClickOpen = () => {
@@ -85,213 +74,30 @@ export default function HistoryDialogs() {
     setOpen(false);
   };
 
-  const { data: fortuneNumbers, isLoading } = useSWR(
+  const {
+    data: fortuneNumbers,
+    mutate,
+    isLoading,
+  } = useSWR<RowData[]>(
     {
       key: "fetch-lixi-history",
       id: account?.id,
+      limit: 20,
+      offset,
     },
-    async () => {
+    async (params) => {
       try {
-        const { data } = await eventService.liXi.getHistory();
-        return [
-          {
-            id: 1,
-            referree: {
-              id: "7ca9a060-0ef5-4dd2-b282-4dac333a6aa2",
-              nickname: null,
-            },
-            created_at: "2025-01-17T17:40:52.426101+07:00",
-            fortune_number: {
-              id: 5,
-              code: "Y8BU3WHMSG",
-              used: true,
-              is_special: false,
-            },
-          },
-          {
-            id: 1,
-            referree: {
-              id: "7ca9a060-0ef5-4dd2-b282-4dac333a6aa2",
-              nickname: null,
-            },
-            created_at: "2025-01-17T17:40:52.426101+07:00",
-            fortune_number: {
-              id: 5,
-              code: "Y8BU3WHMSG",
-              used: true,
-              is_special: false,
-            },
-          },
-          {
-            id: 1,
-            referree: {
-              id: "7ca9a060-0ef5-4dd2-b282-4dac333a6aa2",
-              nickname: null,
-            },
-            created_at: "2025-01-17T17:40:52.426101+07:00",
-            fortune_number: {
-              id: 5,
-              code: "Y8BU3WHMSG",
-              used: true,
-              is_special: false,
-            },
-          },
-          {
-            id: 1,
-            referree: {
-              id: "7ca9a060-0ef5-4dd2-b282-4dac333a6aa2",
-              nickname: null,
-            },
-            created_at: "2025-01-17T17:40:52.426101+07:00",
-            fortune_number: {
-              id: 5,
-              code: "Y8BU3WHMSG",
-              used: true,
-              is_special: false,
-            },
-          },
-          {
-            id: 1,
-            referree: {
-              id: "7ca9a060-0ef5-4dd2-b282-4dac333a6aa2",
-              nickname: null,
-            },
-            created_at: "2025-01-17T17:40:52.426101+07:00",
-            fortune_number: {
-              id: 5,
-              code: "Y8BU3WHMSG",
-              used: true,
-              is_special: false,
-            },
-          },
-          {
-            id: 1,
-            referree: {
-              id: "7ca9a060-0ef5-4dd2-b282-4dac333a6aa2",
-              nickname: null,
-            },
-            created_at: "2025-01-17T17:40:52.426101+07:00",
-            fortune_number: {
-              id: 5,
-              code: "Y8BU3WHMSG",
-              used: true,
-              is_special: false,
-            },
-          },
-          {
-            id: 1,
-            referree: {
-              id: "7ca9a060-0ef5-4dd2-b282-4dac333a6aa2",
-              nickname: null,
-            },
-            created_at: "2025-01-17T17:40:52.426101+07:00",
-            fortune_number: {
-              id: 5,
-              code: "Y8BU3WHMSG",
-              used: true,
-              is_special: false,
-            },
-          },
-          {
-            id: 1,
-            referree: {
-              id: "7ca9a060-0ef5-4dd2-b282-4dac333a6aa2",
-              nickname: null,
-            },
-            created_at: "2025-01-17T17:40:52.426101+07:00",
-            fortune_number: {
-              id: 5,
-              code: "Y8BU3WHMSG",
-              used: true,
-              is_special: false,
-            },
-          },
-          {
-            id: 1,
-            referree: {
-              id: "7ca9a060-0ef5-4dd2-b282-4dac333a6aa2",
-              nickname: null,
-            },
-            created_at: "2025-01-17T17:40:52.426101+07:00",
-            fortune_number: {
-              id: 5,
-              code: "Y8BU3WHMSG",
-              used: true,
-              is_special: false,
-            },
-          },
-          {
-            id: 1,
-            referree: {
-              id: "7ca9a060-0ef5-4dd2-b282-4dac333a6aa2",
-              nickname: null,
-            },
-            created_at: "2025-01-17T17:40:52.426101+07:00",
-            fortune_number: {
-              id: 5,
-              code: "Y8BU3WHMSG",
-              used: true,
-              is_special: false,
-            },
-          },
-          {
-            id: 1,
-            referree: {
-              id: "7ca9a060-0ef5-4dd2-b282-4dac333a6aa2",
-              nickname: null,
-            },
-            created_at: "2025-01-17T17:40:52.426101+07:00",
-            fortune_number: {
-              id: 5,
-              code: "Y8BU3WHMSG",
-              used: true,
-              is_special: false,
-            },
-          },
-          {
-            id: 1,
-            referree: {
-              id: "7ca9a060-0ef5-4dd2-b282-4dac333a6aa2",
-              nickname: null,
-            },
-            created_at: "2025-01-17T17:40:52.426101+07:00",
-            fortune_number: {
-              id: 5,
-              code: "Y8BU3WHMSG",
-              used: true,
-              is_special: false,
-            },
-          },
-          {
-            id: 1,
-            referree: {
-              id: "7ca9a060-0ef5-4dd2-b282-4dac333a6aa2",
-              nickname: null,
-            },
-            created_at: "2025-01-17T17:40:52.426101+07:00",
-            fortune_number: {
-              id: 5,
-              code: "Y8BU3WHMSG",
-              used: true,
-              is_special: false,
-            },
-          },
-          {
-            id: 1,
-            referree: {
-              id: "7ca9a060-0ef5-4dd2-b282-4dac333a6aa2",
-              nickname: null,
-            },
-            created_at: "2025-01-17T17:40:52.426101+07:00",
-            fortune_number: {
-              id: 5,
-              code: "Y8BU3WHMSG",
-              used: true,
-              is_special: false,
-            },
-          },
-        ];
-        return data.referrals as HistoryRecord[];
+        const { limit, offset } = params;
+        const { data } = await eventService.liXi.getHistory(limit, offset);
+
+        if (data?.referrals) {
+          return data.referrals.map((record: HistoryRecord) => ({
+            fortune_number: record.fortune_number.code,
+            referree: record.referree.nickname || record.referree.id,
+            created_at: record.created_at,
+          }));
+        }
+        return [];
       } catch (error) {
         console.error(error);
         return null;
@@ -301,14 +107,31 @@ export default function HistoryDialogs() {
   );
 
   const columns = [
-    { id: "fortune_number", label: t("Code"), minWidth: 100, align: "left" },
-    { id: "referree", label: t("Used by"), minWidth: 100 },
+    {
+      id: "fortune_number",
+      label: t("Code"),
+      minWidth: 100,
+      align: "left",
+      format: (value: any) => (
+        <div className="text-[#3A3A3A] font-roboto text-sm font-semibold">
+          {value || ""}
+        </div>
+      ),
+    },
+    {
+      id: "referree",
+      label: t("Used by"),
+      minWidth: 100,
+      format: (value: any) => (
+        <div className="text-sm text-[#B93139] font-normal">{value || ""}</div>
+      ),
+    },
     {
       id: "created_at",
       label: t("Time"),
       minWidth: 60,
     },
-  ];
+  ] as ColumnType[];
 
   return (
     <React.Fragment>
@@ -345,69 +168,14 @@ export default function HistoryDialogs() {
           <CloseIcon />
         </IconButton>
         <DialogContent>
-          <StyledTableContainer className="h-[300px]">
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  {columns.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      style={{
-                        fontWeight: "semibold",
-                        minWidth: column.minWidth,
-                      }}
-                      align={column.align as any}
-                      className="bg-gradient-to-b from-[#FDF5CB] via-[#FDF5CB] to-[#FFF9DB]"
-                    >
-                      {column.label}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {fortuneNumbers?.map((row, index) => {
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={index}
-                      className={`rounded-md ${
-                        index % 2 === 0 ? "bg-[#F5E3BC]" : ""
-                      }`}
-                    >
-                      {columns.map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell
-                            key={column.id}
-                            style={{ minWidth: column.minWidth }}
-                            align={column.align as any}
-                          >
-                            {column.id === "referree" ? (
-                              <div className="text-[#3A3A3A] font-roboto text-sm font-semibold">
-                                {value?.nickname
-                                  ? value?.nickname
-                                  : value?.id || ""}
-                              </div>
-                            ) : column.id === "fortune_number" ? (
-                              <div className="text-sm text-[#B93139] font-normal">
-                                {value.code || ""}
-                              </div>
-                            ) : (
-                              <div className="text-sm text-[#292929] font-normal">
-                                {value}
-                              </div>
-                            )}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </StyledTableContainer>
+          <InfiniteScrollTable
+            columns={columns}
+            fetchData={async ({ limit, offset }) => {
+              setOffset(offset);
+              await mutate();
+              return fortuneNumbers;
+            }}
+          />
         </DialogContent>
       </BootstrapDialog>
     </React.Fragment>

@@ -153,7 +153,6 @@ export default function ReadingSection({
   if (typeof chapterData == 'undefined' || typeof data == 'undefined') {
     return <></>
   }
-
   if (!data || !chapterData) {
     return (
       <>

@@ -36,7 +36,7 @@ export default function Enroll() {
 
         if (data?.insert_referrals_one) {
           toast("Collect fortune number success", {
-            type: "error",
+            type: "success",
             position: toast.POSITION.TOP_RIGHT,
             hideProgressBar: true,
             autoClose: 3000,
@@ -84,6 +84,19 @@ export default function Enroll() {
     }
   );
 
+  if (!fetchingStatus && referralStatus) {
+    return (
+      <div
+        style={{
+          backgroundImage: `url(${star_bg.src})`,
+          backgroundSize: "100% auto",
+          backgroundRepeat: "no-repeat",
+        }}
+        className="bg-[#860204] h-screen w-screen flex flex-col pt-20 items-center "
+      />
+    );
+  }
+
   return (
     <div
       style={{
@@ -91,7 +104,7 @@ export default function Enroll() {
         backgroundSize: "100% auto",
         backgroundRepeat: "no-repeat",
       }}
-      className="bg-[#860204] h-screen w-screen flex flex-col justify-center items-center"
+      className="bg-[#860204] h-screen w-screen flex flex-col pt-20 items-center "
     >
       <div className="first-section relative">
         <Image
@@ -118,12 +131,12 @@ export default function Enroll() {
       <div className="second-section relative md:w-[500px] flex flex-col justify-center items-center">
         <Image
           src={podium}
-          className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/4 z-[1] w-[calc(100vw-40px)] md:w-[384px]"
+          className="absolute top-6 left-1/2 -translate-x-1/2 -translate-y-1/4 z-[1] w-[calc(100vw-40px)] md:w-[384px]"
           alt=""
         />
         {!account ? (
           <>
-            <div className="relative z-10  mb-[42px]">
+            <div className="relative z-10 mt-4 mb-[42px]">
               <EventButton
                 onClick={() => setSignInOpen(true)}
                 className="w-[150px]"
@@ -131,34 +144,33 @@ export default function Enroll() {
                 Sign in
               </EventButton>
             </div>
-            <div className="relative z-10 text-[#FABA77] text-center">
+            <div className="relative z-10 text-[#FABA77] text-center italic text-sm">
               *Please Sign in Punkgame account to continue
             </div>
           </>
         ) : (
-          <div>
-            <div className="relative z-10 flex flex-col items-center mb-[42px]">
+          <div className="flex flex-col items-center gap-4">
+            <div className="relative z-10 flex flex-col items-center mb-[36px] gap-4 w-full">
               <div className="text-[#FABA77]">Fortune Number</div>
-              <div className="flex items-center justify-between w-full gap-4 px-6 md:px-4">
+              <div className="flex items-center justify-between w-full gap-4 px-6">
                 <TextField
                   onChange={setFortuneNumber}
                   value={fortuneNumber}
                   size="md"
                   placeholder={t("")}
-                />
+                />{" "}
                 <EventButton
                   onClick={() => {
-                    // console.log("lvh", fortuneNumber);
                     mutate(fortuneNumber);
                   }}
-                  className="w-[40px] h-[40px]"
+                  className="h-[40px] w-[40px]"
                   disabled={!fortuneNumber}
                 >
-                  <ArrowRightIcon className="text-[#6D3A0A] w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+                  <ArrowRightIcon className="text-[#6D3A0A] w-6 h-6" />
                 </EventButton>
               </div>
             </div>
-            <div className="relative z-10 text-[#FABA77] text-start md:text-center flex gap-[10px] justify-center items-center">
+            <div className="relative z-10 text-[#FABA77] text-start md:text-center flex gap-[10px] justify-center items-center italic text-sm">
               <Image src={lixi_xanh} className="w-8 h-8" alt="" />
               Collect a Fortune Number to receive a Blue Li Xi
             </div>

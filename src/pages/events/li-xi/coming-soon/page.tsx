@@ -20,7 +20,7 @@ export default function ComingSoon() {
         backgroundSize: "100% auto",
         backgroundRepeat: "no-repeat",
       }}
-      className="bg-[#860204] h-screen w-screen flex flex-col justify-center items-center"
+      className="bg-[#860204] h-screen w-screen flex flex-col pt-20 items-center"
     >
       <div className="first-section relative">
         <Image
@@ -47,7 +47,7 @@ export default function ComingSoon() {
       <div className="second-section relative md:w-[500px] flex flex-col justify-center items-center">
         <Image
           src={podium}
-          className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/4 z-[1] w-[calc(100vw-40px)] md:w-[384px]"
+          className="absolute top-6 left-1/2 -translate-x-1/2 -translate-y-1/4 z-[1] w-[calc(100vw-40px)] md:w-[384px]"
           alt=""
         />
         <div className="relative z-10">
