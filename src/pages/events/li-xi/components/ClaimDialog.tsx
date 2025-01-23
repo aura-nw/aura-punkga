@@ -34,7 +34,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function ClaimDialogs() {
+export default function ClaimDialogs({ cb }: { cb?: () => void }) {
   const [open, setOpen] = React.useState(false);
   const { account } = React.useContext(Context);
   const [loading, setLoading] = React.useState(false);
@@ -81,6 +81,7 @@ export default function ClaimDialogs() {
     if (reason === "backdropClick") return;
     setOpen(false);
     retry();
+    cb && cb();
   };
 
   return (
@@ -188,9 +189,13 @@ export default function ClaimDialogs() {
           )}
         </DialogContent>
         <DialogActions>
-          <EventButton onClick={handleClaimPrize} className="w-20 z-10">
-            {t("Confirm")}
-          </EventButton>
+          {status !== "SUCCEEDED" ? (
+            <EventButton onClick={handleClaimPrize} className="w-20 z-10">
+              {t("Confirm")}
+            </EventButton>
+          ) : (
+            <div className="w-20 z-10 h-10"></div>
+          )}
         </DialogActions>
       </BootstrapDialog>
     </React.Fragment>

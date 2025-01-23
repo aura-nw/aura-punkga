@@ -193,6 +193,7 @@ const InfiniteScrollTable: React.FC<InfiniteScrollTableProps> = ({
           {items?.map((row, index) => (
             <TableRow
               hover
+              role="checkbox"
               key={`${index}-${offset}`}
               sx={{
                 "&:last-child td, &:last-child th": { border: 0 },

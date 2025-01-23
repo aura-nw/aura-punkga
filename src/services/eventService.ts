@@ -165,7 +165,7 @@ export const eventService = {
 
     getClaimedTx: async () =>
       await privateAxios
-        .get(`${getConfig().REST_API_URL}/lixi/unclaimed`)
+        .get(`${getConfig().REST_API_URL}/lixi/claimed-history`)
         .then((res) => res.data),
     getBankAccount: async () =>
       await privateAxios
