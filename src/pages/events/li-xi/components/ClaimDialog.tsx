@@ -77,7 +77,8 @@ export default function ClaimDialogs() {
     maxAttempts: 30,
   });
 
-  const handleClose = () => {
+  const handleClose = (event, reason) => {
+    if (reason === "backdropClick") return;
     setOpen(false);
     retry();
   };
@@ -138,7 +139,7 @@ export default function ClaimDialogs() {
         </DialogTitle>
         <IconButton
           aria-label="close"
-          onClick={handleClose}
+          onClick={handleClose as any}
           sx={(theme) => ({
             position: "absolute",
             right: 8,
