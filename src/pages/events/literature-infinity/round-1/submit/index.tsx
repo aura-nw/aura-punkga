@@ -20,6 +20,7 @@ import { eventService } from 'src/services/eventService'
 import UserGreen from 'assets/images/userGreen.svg'
 import DOMPurify from 'dompurify'
 import { useWindowSize } from 'usehooks-ts'
+import Rule from 'components/pages/event/literature-infinity/Rule'
 
 export default function Page(props) {
   if (props.justHead || props.pageProps?.justHead) {
@@ -142,7 +143,7 @@ const PageContent = () => {
     <div className={`min-h-screen bg-background-bg-primary ${width >= 1280 ? 'pk-container py-10' : ''}`}>
       <Link
         href={'/events/literature-infinity/round-1'}
-        className='sticky top-14 z-50 bg-background-bg-primary p-4 flex items-center gap-3'>
+        className='sticky top-14 lg:top-20 z-50 bg-background-bg-primary p-4 flex items-center gap-3'>
         <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
           <path d='M15 17L10 12L15 7' stroke='#6D6D6D' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
         </svg>
@@ -270,10 +271,15 @@ const PageContent = () => {
                     />
                   </div>
                 </div>
-                <div className='flex flex-col items-center gap-3 mt-10'>
+                <div className='flex flex-col items-center gap-1.5 mt-10'>
                   <Button className='' type='submit'>
                     {t(loading ? 'Submitting' : 'Submit character')}
                   </Button>
+                  <Rule>
+                    <div className='text-center xl:max-w-80 xl:mx-auto text-[#5c9efe] text-xs font-medium underline leading-[18px] mt-3'>
+                      View rules and reward
+                    </div>
+                  </Rule>
                 </div>
               </form>
             </div>

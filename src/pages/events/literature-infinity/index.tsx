@@ -34,7 +34,7 @@ const PageContent = () => {
     return (
       <div className='min-h-screen bg-background-bg-primary relative'>
         <Image src={BannerDesktop} alt='' className='w-screen h-auto' />
-        <div className='pk-container py-4 grid grid-cols-[60%_auto] gap-8'>
+        <div className='pk-container py-4 grid grid-cols-[65%_auto] gap-8'>
           <div className='gap-4 flex justify-between flex-col h-full'>
             <div>
               <div className='text-xl font-medium flex items-center gap-1.5'>
@@ -93,8 +93,9 @@ const PageContent = () => {
                 <div>Ends at: Feb 23, 2025</div>
               </div>
               <div className='mt-4 text-sm text-text-teriary'>
-                Lorem ipsum dolor sit amet consectetur. Pretium vulputate bibendum molestie tincidunt accumsan vulputate
-                libero justo. Porta mauris cursus accumsan mauris sed egestas et.{' '}
+                Embark on a journey through two rounds of literary challenges, with additional side events and quests to
+                spark your creativity. Unleash your artistic interpretation of storytelling and earn rewards along the
+                way!
               </div>
             </div>
             <div className='grid grid-cols-2 gap-4'>
@@ -103,8 +104,10 @@ const PageContent = () => {
                 className='w-full rounded-2xl p-4 bg-white flex items-center gap-3 shadow-xl'>
                 <Image src={Mascot} alt='' className='w-[86px] h-auto' />
                 <div className='space-y-1.5 flex-1'>
-                  <div className='text-text-primary font-bold text-lg'>ROUND 1</div>
-                  <div className='text-text-secondary text-sm'>Submit a character</div>
+                  <div className='text-text-primary font-bold text-lg'>Round 1: OC Design</div>
+                  <div className='text-text-secondary text-sm'>
+                    Introduce a character that begins your story journey.
+                  </div>
                   <div className='flex gap-1.5 items-center text-text-secondary text-xs'>
                     <svg xmlns='http://www.w3.org/2000/svg' width='20' height='22' viewBox='0 0 20 22' fill='none'>
                       <mask id='path-1-inside-1_9114_59397' fill='white'>
@@ -146,8 +149,8 @@ const PageContent = () => {
                 className={`w-full rounded-2xl p-4 flex items-center gap-3 shadow-xl bg-white`}>
                 <Image src={Mascot2} alt='' className='w-[86px] h-auto' />
                 <div className='space-y-1.5 flex-1'>
-                  <div className='text-text-primary font-bold text-lg'>ROUND 2</div>
-                  <div className='text-text-secondary text-sm'>Submit Manga</div>
+                  <div className='text-text-primary font-bold text-lg'>Round 2: One-shot comics</div>
+                  <div className='text-text-secondary text-sm'>Craft a manga to expand your infinite universe.</div>
                   <div className='flex gap-1.5 items-center text-text-secondary text-xs'>
                     <svg xmlns='http://www.w3.org/2000/svg' width='20' height='22' viewBox='0 0 20 22' fill='none'>
                       <mask id='path-1-inside-1_9114_59397' fill='white'>
@@ -201,12 +204,14 @@ const PageContent = () => {
                   <Image src={Lixi} alt='' className='h-24 -mt-7' />
                   <div className='space-y-2 text-center mt-2 font-bold font-ibmplex'>
                     <div className='text-xs leading-none'>The year of snake’s</div>
-                    <div className='text-lg leading-none'>EVENT</div>
+                    <div className='text-lg leading-none uppercase'>Li Xi of Fortune</div>
                   </div>
                   <div className='text-xs text-text-secondary mt-3'>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.{' '}
+                    Open your Li Xi to reveal surprise rewards inside!
                   </div>
-                  <Button className='mt-3'>Try Your Luck</Button>
+                  <Button className='mt-3'>
+                    <Link href={'/events/li-xi'}>Try Your Luck</Link>
+                  </Button>
                 </div>
                 <div className='p-4 rounded-lg flex flex-col items-center bg-white'>
                   <Image src={Mascot3} alt='' className='h-24 -mt-7' />
@@ -215,9 +220,11 @@ const PageContent = () => {
                     <div className='text-lg leading-none'>QUEST</div>
                   </div>
                   <div className='text-xs text-text-secondary mt-3'>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.{' '}
+                    A series of mini-challenges to earn extra rewards!
                   </div>
-                  <Button className='mt-3'>Get More Luck</Button>
+                  <Button className='mt-3'>
+                    <Link href={'/campaigns'}>Get More Luck</Link>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -338,17 +345,17 @@ const PageContent = () => {
         </div>
         <div className='mt-4'>
           <div className='text-text-primary font-medium text-lg ml-2'>Event</div>
-          <div className='mt-3 grid grid-cols-2 gap-4'>
+          <div className='mt-3 grid min-[425px]:grid-cols-2 gap-4'>
             <div className='p-4 rounded-lg flex flex-col items-center bg-white'>
               <Image src={Lixi} alt='' className='w-28 h-auto -mt-7' />
               <div className='space-y-2 text-center mt-2 font-bold font-ibmplex'>
                 <div className='text-xs leading-none'>The year of snake’s</div>
                 <div className='text-lg leading-none'>EVENT</div>
               </div>
-              <div className='text-xs text-text-secondary mt-3'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.{' '}
-              </div>
-              <Button className='mt-3'>Try Your Luck</Button>
+              <div className='text-xs text-text-secondary mt-3'>Open your Li Xi to reveal surprise rewards inside!</div>
+              <Button className='mt-3'>
+                <Link href={'/events/li-xi'}>Try Your Luck</Link>
+              </Button>
             </div>
             <div className='p-4 rounded-lg flex flex-col items-center bg-white'>
               <Image src={Mascot3} alt='' className='w-28 h-auto -mt-7' />
@@ -356,10 +363,10 @@ const PageContent = () => {
                 <div className='text-xs leading-none'>LUCKY</div>
                 <div className='text-lg leading-none'>QUEST</div>
               </div>
-              <div className='text-xs text-text-secondary mt-3'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.{' '}
-              </div>
-              <Button className='mt-3'>Get More Luck</Button>
+              <div className='text-xs text-text-secondary mt-3'>A series of mini-challenges to earn extra rewards!</div>
+              <Button className='mt-3'>
+                <Link href={'/campaigns'}>Get More Luck</Link>
+              </Button>
             </div>
           </div>
         </div>
