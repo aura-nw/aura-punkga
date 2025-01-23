@@ -64,7 +64,7 @@ const PageContent = () => {
 
   return (
     <div className={`min-h-screen bg-background-bg-primary ${width >= 1280 ? 'pk-container py-10' : ''}`}>
-      <div className='sticky xl:relative top-14 xl:top-0 z-50 bg-background-bg-primary p-4 flex items-center gap-3'>
+      <div className='sticky top-14 lg:top-20 z-50 bg-background-bg-primary p-4 flex items-center gap-3'>
         <svg
           width='24'
           height='24'
@@ -114,11 +114,24 @@ const PageContent = () => {
   )
 }
 const Character = ({ data }) => {
-  const [open, setOpen] = useState(false)
+  const searchParams = new URLSearchParams(window.location.search)
+  const [open, setOpen] = useState(searchParams.get('character_id') == data.id)
   const { width } = useWindowSize()
+  const router = useRouter()
+  useEffect(() => {
+    if (open) {
+      router.replace(`/events/literature-infinity/round-1?character_id=${data.id}`)
+    } else {
+      router.replace(`/events/literature-infinity/round-1`)
+    }
+  }, [open])
   return (
     <>
-      <div className='w-full aspect-square rounded-md overflow-hidden' onClick={() => setOpen(true)}>
+      <div
+        className='w-full aspect-square rounded-md overflow-hidden'
+        onClick={() => {
+          setOpen(true)
+        }}>
         <Image src={data.avatar_url} width={400} height={400} alt='' className='w-full h-full object-cover' />
       </div>
       {width >= 768 ? (
