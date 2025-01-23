@@ -113,7 +113,6 @@ export default function QuestItem({
               alt=''
               width={300}
               height={300}
-              layout='fill'
               objectFit='cover'
               className='w-full h-full object-cover'
             />
