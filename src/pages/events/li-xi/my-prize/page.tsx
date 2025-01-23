@@ -28,6 +28,9 @@ import { eventService } from "src/services/eventService";
 import useSWR from "swr";
 import FullScreenLoader from "../components/Loading";
 import { toast } from "react-toastify";
+import Link from "next/link";
+import getConfig from "next/config";
+import moment from "moment";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   "&.MuiTableCell-head": {
@@ -66,6 +69,14 @@ const StyledTable = styled(Table)({
   width: "100%",
 });
 
+function ellipseAddress(address, width = 10) {
+  if (!address) {
+    return "";
+  }
+  const start = address.slice(0, width + 2); // Include the '0x' prefix
+  const end = address.slice(-width);
+  return `${start}...${end}`;
+}
 export interface FortuneNumber {
   id: number;
   code: string;
@@ -96,6 +107,7 @@ export interface UserLixi {
 
 export default function MyPrize() {
   const { account } = useContext(Context);
+  const config = getConfig();
   const { setSignInOpen } = useContext(ModalContext);
   const [walletAddress, setWalletAddress] = useState("");
   const [vnd, setVND] = useState("");
@@ -145,11 +157,14 @@ export default function MyPrize() {
     },
     async () => {
       try {
-        const data = await eventService.liXi.getUnclaimedPrize();
-        return data;
+        const { data } = await eventService.liXi.getClaimedTx();
+        if (data && data?.lixi_reward_claim) {
+          return data.lixi_reward_claim;
+        }
+        return [];
       } catch (error) {
         console.error(error);
-        return null;
+        return [];
       }
     },
     {
@@ -207,26 +222,14 @@ export default function MyPrize() {
     }
   };
 
-  const transactions = [
-    { txHash: "BD201384...938AA6E9", time: "23/10/2023 9:00" },
-    { txHash: "BD201384...938AA6E9", time: "23/10/2023 9:00" },
-    { txHash: "BD201384...938AA6E9", time: "23/10/2023 9:00" },
-    { txHash: "BD201384...938AA6E9", time: "23/10/2023 9:00" },
-    { txHash: "BD201384...938AA6E9", time: "23/10/2023 9:00" },
-    { txHash: "BD201384...938AA6E9", time: "23/10/2023 9:00" },
-    { txHash: "BD201384...938AA6E9", time: "23/10/2023 9:00" },
-    { txHash: "BD201384...938AA6E9", time: "23/10/2023 9:00" },
-    { txHash: "BD201384...938AA6E9", time: "23/10/2023 9:00" },
-    { txHash: "BD201384...938AA6E9", time: "23/10/2023 9:00" },
-  ];
   const TransactionsColumns = [
     {
-      id: "txHash",
+      id: "tx_hash",
       label: t("Transaction Hash"),
       minWidth: 120,
       align: "left",
     },
-    { id: "time", label: t("Time"), minWidth: 30, align: "center" },
+    { id: "created_at", label: t("Time"), minWidth: 30, align: "center" },
   ];
   const PrizeColumns = [
     { id: "prize", label: t("Prize"), minWidth: 120, align: "left" },
@@ -325,7 +328,7 @@ export default function MyPrize() {
               </TableBody>
             </StyledTable>
           </StyledTableContainer>
-          <ClaimDialogs />
+          <ClaimDialogs cb={fetchClaimedTx} />
         </div>
         <div className="relative text-center px-6 py-4 w-[calc(100vw-40px)] md:w-[750px] rounded-b-[6px] border border-[#D52121] bg-gradient-to-b from-[rgba(117,20,20,0.50)] via-[rgba(133,7,7,0.50)] to-[rgba(244,63,63,0.50)] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] backdrop-blur-[6.45px]">
           <Image
@@ -430,40 +433,45 @@ export default function MyPrize() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {transactions.map((row, index) => {
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={index}
-                      className={`rounded-md ${
-                        index % 2 === 0 ? "bg-[#F5E3BC]" : ""
-                      }`}
-                    >
-                      {TransactionsColumns.map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <StyledTableCell
-                            key={column.id}
-                            style={{ minWidth: column.minWidth }}
-                            align={column.align as any}
-                          >
-                            {column.id === "txHash" ? (
-                              <div className="text-[#B93139] font-roboto text-sm font-semibold">
-                                {value}
-                              </div>
-                            ) : (
-                              <div className="text-sm text-[#292929] font-normal">
-                                {value}
-                              </div>
-                            )}
-                          </StyledTableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
+                {claimedTx &&
+                  claimedTx.map((row, index) => {
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={index}
+                        className={`rounded-md ${
+                          index % 2 === 0 ? "bg-[#F5E3BC]" : ""
+                        }`}
+                      >
+                        {TransactionsColumns.map((column) => {
+                          const value = row[column.id];
+                          return (
+                            <StyledTableCell
+                              key={column.id}
+                              style={{ minWidth: column.minWidth }}
+                              align={column.align as any}
+                            >
+                              {column.id === "tx_hash" ? (
+                                <Link
+                                  href={`${config.CHAIN_INFO.explorer}/tx/${value}`}
+                                  target="_blank"
+                                  className="text-[#B93139] font-roboto text-sm font-semibold cursor-pointer"
+                                >
+                                  {ellipseAddress(value)}
+                                </Link>
+                              ) : (
+                                <div className="text-sm text-[#292929] font-normal">
+                                  {moment(value).format("DD/MM/yyyy")}
+                                </div>
+                              )}
+                            </StyledTableCell>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })}
               </TableBody>
             </StyledTable>
           </StyledTableContainer>
