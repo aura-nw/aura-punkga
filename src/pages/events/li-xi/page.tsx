@@ -251,8 +251,31 @@ export default function Lixi() {
         backgroundSize: "100% auto",
         backgroundRepeat: "no-repeat",
       }}
-      className="bg-[#860204] md:h-screen w-screen flex flex-col md:flex-row justify-center items-center gap-20 "
+      className="bg-[#860204] relative md:h-screen w-screen flex flex-col md:flex-row justify-center items-center gap-20 "
     >
+      <div
+        className="absolute top-0 left-0 z-50  p-4 flex items-center gap-3 cursor-pointer"
+        onClick={() => router.push("/events")}
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M15 17L10 12L15 7"
+            stroke="#fff"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        <div className="text-white text-lg font-medium leading-relaxed">
+          Event List
+        </div>
+      </div>
       <div className="first-section relative h-full flex flex-col justify-center items-center">
         <Image
           src={Snake}
@@ -405,7 +428,7 @@ export default function Lixi() {
             <RuleDialogs />
           </div>
           <div className="grid grid-cols-12 justify-between items-start gap-4 mb-32 md:mb-0">
-            <div className="relative px-6 py-4 flex flex-col gap-4 col-span-12 md:col-span-5 rounded-[6px] border-[0.5px] border-[#FFD66B] bg-gradient-to-b from-[#FDF5CB] via-[#FDF5CB] to-[#FFF9DB] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]">
+            <div className="relative px-6 py-4 flex flex-col gap-4 col-span-12 rounded-[6px] border-[0.5px] border-[#FFD66B] bg-gradient-to-b from-[#FDF5CB] via-[#FDF5CB] to-[#FFF9DB] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]">
               <div
                 className="absolute -top-[20px] left-4 w-2 h-[28px] rounded-[3px]"
                 style={{
@@ -473,7 +496,7 @@ export default function Lixi() {
                 )}
               </div>
             </div>{" "}
-            <div className="relative px-6 py-4 text-[#8E0B09] font-normal font-black-han-sans text-2xl col-span-12 md:col-span-7 rounded-[6px] border-[0.5px] border-[#FFD66B] bg-gradient-to-b from-[#FDF5CB] via-[#FDF5CB] to-[#FFF9DB] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]">
+            {/* <div className="relative px-6 py-4 text-[#8E0B09] font-normal font-black-han-sans text-2xl col-span-12 md:col-span-7 rounded-[6px] border-[0.5px] border-[#FFD66B] bg-gradient-to-b from-[#FDF5CB] via-[#FDF5CB] to-[#FFF9DB] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]">
               <div
                 className="absolute -top-[20px] left-4 w-2 h-[28px] rounded-[3px]"
                 style={{
@@ -578,7 +601,7 @@ export default function Lixi() {
                   1234 pts
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
