@@ -87,7 +87,8 @@ export default function RewardDialogs({
     maxAttempts: 30,
   });
 
-  const handleClose = () => {
+  const handleClose = (event, reason) => {
+    if (reason === "backdropClick") return;
     setOpen(false);
     retry();
     rewardCallback();
@@ -101,7 +102,7 @@ export default function RewardDialogs({
         hideProgressBar: true,
         autoClose: 3000,
       });
-      handleClose();
+      handleClose(undefined, undefined);
       return;
     }
     if (isTimeout) {
@@ -111,7 +112,7 @@ export default function RewardDialogs({
         hideProgressBar: true,
         autoClose: 3000,
       });
-      handleClose();
+      handleClose(undefined, undefined);
 
       return;
     }
