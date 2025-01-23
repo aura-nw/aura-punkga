@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { eventService } from "src/services/eventService";
 
 interface QueueStatus {
@@ -21,10 +21,12 @@ const useQueuePolling = ({
   const [status, setStatus] = useState<QueueStatus>({ status: "CREATED" });
   const [attempts, setAttempts] = useState(0);
   const [isPolling, setIsPolling] = useState(true);
+  const isCheckingRef = useRef(false);
 
   const checkStatus = useCallback(async () => {
-    if (!requestId) return;
+    if (!requestId || isCheckingRef.current) return;
     try {
+      isCheckingRef.current = true;
       const data = await eventService.liXi.getRequestLog(requestId);
       setStatus(data);
       if (data?.status === "SUCCEEDED" || data?.status === "FAILED") {
@@ -39,6 +41,8 @@ const useQueuePolling = ({
         errors: "Failed to check queue status",
       });
       setIsPolling(false);
+    } finally {
+      isCheckingRef.current = false;
     }
   }, [requestId]);
 
@@ -49,10 +53,10 @@ const useQueuePolling = ({
     }
 
     const pollInterval = setInterval(() => {
-      checkStatus();
+      if (!isCheckingRef.current) {
+        checkStatus();
+      }
     }, pollingInterval);
-
-    checkStatus();
 
     return () => {
       clearInterval(pollInterval);
