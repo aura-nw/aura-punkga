@@ -204,7 +204,7 @@ export default function RewardDialogs({
         </DialogTitle>
         <IconButton
           aria-label="close"
-          onClick={handleClose}
+          onClick={handleClose as any}
           sx={(theme) => ({
             position: "absolute",
             right: 8,
