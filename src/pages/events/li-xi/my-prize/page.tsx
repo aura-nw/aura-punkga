@@ -329,6 +329,10 @@ export default function MyPrize() {
             </StyledTable>
           </StyledTableContainer>
           <ClaimDialogs cb={fetchClaimedTx} />
+          <div className="relative z-10 text-[#FABA77] text-start md:text-center flex gap-[10px] justify-center items-center italic text-sm mt-2">
+            AURA rewards are claimed instantly upon pressing "Claim," while DP
+            will be sent after the event ends.
+          </div>
         </div>
         <div className="relative text-center px-6 py-4 w-[calc(100vw-40px)] md:w-[750px] rounded-b-[6px] border border-[#D52121] bg-gradient-to-b from-[rgba(117,20,20,0.50)] via-[rgba(133,7,7,0.50)] to-[rgba(244,63,63,0.50)] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] backdrop-blur-[6.45px]">
           <Image
