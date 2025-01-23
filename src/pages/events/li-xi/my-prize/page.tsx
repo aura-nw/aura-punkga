@@ -188,6 +188,8 @@ export default function MyPrize() {
           hideProgressBar: true,
           autoClose: 3000,
         });
+        setLoading(false);
+        return;
       }
       toast(data?.errors || "Unexpected errors. Please contact Admin", {
         type: "error",
@@ -203,7 +205,6 @@ export default function MyPrize() {
         autoClose: 3000,
       });
     }
-    setLoading(false);
   };
 
   const transactions = [
