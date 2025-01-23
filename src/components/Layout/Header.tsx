@@ -13,6 +13,7 @@ import UserDropdown from './components/UserDropdown'
 import SearchBox from './components/SearchBox'
 import cn from 'classnames'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
+import LI from 'assets/images/literature-infinity.png'
 export default function Header() {
   const { account } = useContext(Context)
   const { width } = useWindowSize()
@@ -42,7 +43,7 @@ export default function Header() {
                 'text-brand-default': window.location.pathname.includes('/events/literature-infinity'),
               })}
               href={'/events/literature-infinity'}>
-              Lunar New Year
+              <Image src={LI} alt='' className='h-10 w-auto' />
             </Link>
             <Dropdown>
               <DropdownToggle>

@@ -354,7 +354,7 @@ export default function Post({ data }) {
                     className='cursor-pointer'
                     onClick={() => {
                       navigator.share({
-                        url: `${window.location.origin}/artwork/${data.artwork.id}`,
+                        url: `${window.location.origin}/artworks/${data.artwork.id}`,
                       })
                     }}>
                     Share
