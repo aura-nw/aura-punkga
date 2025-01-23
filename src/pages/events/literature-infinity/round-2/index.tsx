@@ -35,7 +35,7 @@ const PageContent = () => {
   const { width } = useWindowSize()
   return (
     <div className={`min-h-screen bg-background-bg-primary ${width >= 1280 ? 'pk-container py-10' : ''}`}>
-      <div className='sticky xl:relative top-14 xl:top-0 z-50 bg-background-bg-primary p-4 flex items-center gap-3'>
+      <div className='sticky top-14 lg:top-20 z-50 bg-background-bg-primary p-4 flex items-center gap-3'>
         <svg
           width='24'
           height='24'
