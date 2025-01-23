@@ -135,7 +135,7 @@ export default function BasicQuest({
                 location.origin + location.pathname
               )}`}>
               <Button className='w-full' size='sm'>
-                <div className='w-full flex items-center gap-1'>
+                <div className='w-full flex items-center gap-1 justify-center'>
                   <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
                     <path
                       d='M2.53466 3.33203L8.03482 10.6861L2.5 16.6654H3.74576L8.5916 11.4303L12.5068 16.6654H16.7458L10.9361 8.89769L16.0879 3.33203H14.8422L10.3796 8.15324L6.77375 3.33203H2.53466ZM4.36661 4.24956H6.31403L14.9137 15.7478H12.9662L4.36661 4.24956Z'
@@ -176,7 +176,7 @@ export default function BasicQuest({
                 location.origin + location.pathname
               )}`}>
               <Button className='w-full' size='sm'>
-                <div className='w-full flex items-center gap-1'>
+                <div className='w-full flex items-center gap-1 justify-center'>
                   <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
                     <path
                       d='M2.53466 3.33203L8.03482 10.6861L2.5 16.6654H3.74576L8.5916 11.4303L12.5068 16.6654H16.7458L10.9361 8.89769L16.0879 3.33203H14.8422L10.3796 8.15324L6.77375 3.33203H2.53466ZM4.36661 4.24956H6.31403L14.9137 15.7478H12.9662L4.36661 4.24956Z'
