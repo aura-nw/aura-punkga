@@ -41,6 +41,7 @@
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "match-sorter": "^6.3.1",
+    "medium-zoom": "^1.1.0",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.46",
     "next": "^13.4.4",

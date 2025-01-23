@@ -89,3 +89,7 @@
     flex-direction: column;
   }
 }
+.medium-zoom-overlay,
+.medium-zoom-image--opened {
+  z-index: 999999;
+}
