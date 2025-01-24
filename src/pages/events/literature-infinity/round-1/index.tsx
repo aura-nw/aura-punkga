@@ -16,6 +16,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import Modal from 'components/pages/characters/Modal'
 import CharacterDetail from 'components/pages/characters/CharacterDetail'
 import Rule from 'components/pages/event/literature-infinity/Rule'
+import LazyImage from 'components/Image'
 export default function Page(props) {
   if (props.justHead || props.pageProps?.justHead) {
     return <HeadComponent data={props.pageProps?.metadata || props.metadata} />
@@ -128,11 +129,23 @@ const Character = ({ data }) => {
   return (
     <>
       <div
-        className='w-full aspect-square rounded-md overflow-hidden'
+        className='relative rounded-lg overflow-hidden [&:hover>div]:block cursor-pointer'
         onClick={() => {
           setOpen(true)
         }}>
-        <Image src={data.avatar_url} width={400} height={400} alt='' className='w-full h-full object-cover' />
+        <LazyImage
+          src={data.avatar_url}
+          width={500}
+          height={500}
+          alt=''
+          className='w-full aspect-square object-cover'
+        />
+        <div className='absolute hidden w-full bottom-0 p-2 lg:pt-10 lg:p-4 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_6.71%,#000_76.24%)]'>
+          <div className='text-sm font-bold text-white'>{data?.name || 'Unknown artwork title'}</div>
+          <div className='text-sm font-medium text-white'>
+            by <span className='text-text-brand-hover'>{data?.creator?.pen_name || 'Unknown creator'}</span>
+          </div>
+        </div>
       </div>
       {width >= 768 ? (
         <Modal open={open} setOpen={setOpen}>
