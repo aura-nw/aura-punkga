@@ -5,7 +5,10 @@
     "chainId": "aura_6321-3",
     "evmChainId": 6321,
     "chainName": "Aura Euphoria TestNet",
-    "rpc": ["https://rpc.euphoria.aura.network", "https://jsonrpc.euphoria.aura.network"],
+    "rpc": [
+      "https://rpc.euphoria.aura.network",
+      "https://jsonrpc.euphoria.aura.network"
+    ],
     "indexerV2": "https://indexer-v2.staging.aurascan.io/api/v2/graphql",
     "nativeCurrency": {
       "name": "Aura",
@@ -25,5 +28,6 @@
   "WALLET_CONNECT_PROJECT_ID": "ec40291093ad80fa0def54b1fb44c8ef",
   "RECAPCHA_SITE_KEY": "6LdHgn4qAAAAAMUPupCUp2q0nBdy9hl7qnILdbL5",
   "DP_ADDRESS": "0x0bA0E052b993E8486AA8dab82c361404F7576573",
+  "EVENT_START": "2025-01-31T00:00:00",
   "STORY_EXPLORER_URL": "https://explorer.story.foundation"
 }

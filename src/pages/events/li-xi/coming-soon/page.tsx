@@ -8,10 +8,14 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
 import CountdownTimer from "../components/CountdownTimer";
+import getConfig from "next/config";
+import moment from "moment";
 
 export default function ComingSoon() {
   const { locale } = useRouter();
   const { t } = useTranslation();
+  const config = getConfig();
+  const router = useRouter();
 
   return (
     <div
@@ -22,6 +26,29 @@ export default function ComingSoon() {
       }}
       className="bg-[#860204] h-screen w-screen flex flex-col pt-20 items-center"
     >
+      <div
+        className="absolute top-0 left-0 z-50  p-4 flex items-center gap-3 cursor-pointer"
+        onClick={() => router.push("/events")}
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M15 17L10 12L15 7"
+            stroke="#fff"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        <div className="text-white text-lg font-medium leading-relaxed">
+          Event List
+        </div>
+      </div>
       <div className="first-section relative">
         <Image
           src={Year}
@@ -51,10 +78,12 @@ export default function ComingSoon() {
           alt=""
         />
         <div className="relative z-10">
-          <CountdownTimer targetDate={"2025-02-10T00:00:00"} />
+          <CountdownTimer
+            targetDate={config.EVENT_START || "2025-01-31T00:00:00"}
+          />
         </div>{" "}
         <div className="relative z-10 text-[#FABA77] text-center">
-          Unwrap your blessings at 00:00 UTC+7, February 10th, 2025
+          Unwrap your blessings at 00:00 UTC+7, January 31st, 2025
         </div>
       </div>
     </div>

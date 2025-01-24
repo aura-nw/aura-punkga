@@ -184,11 +184,13 @@ const InfiniteScrollTable: React.FC<InfiniteScrollTableProps> = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
-            <TableCell colSpan={6}>
-              <div className="text-center">No data</div>
-            </TableCell>
-          </TableRow>
+          {items.length === 0 && (
+            <TableRow>
+              <TableCell colSpan={6}>
+                <div className="text-center">No data</div>
+              </TableCell>
+            </TableRow>
+          )}
 
           {items?.map((row, index) => (
             <TableRow
