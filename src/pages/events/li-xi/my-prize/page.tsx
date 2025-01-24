@@ -22,6 +22,7 @@ import { toast } from 'react-toastify'
 import Link from 'next/link'
 import getConfig from 'next/config'
 import moment from 'moment'
+import { formatNumber } from 'src/utils'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   '&.MuiTableCell-head': {
@@ -273,7 +274,7 @@ export default function MyPrize() {
                         <div>{t('AURA')}</div>
                       </div>
                     ),
-                    amount: UnclaimedPrize?.AURA || 0,
+                    amount: formatNumber(UnclaimedPrize?.AURA) || 0,
                   },
                   {
                     prize: (
@@ -282,7 +283,7 @@ export default function MyPrize() {
                         <div>{t('DP')}</div>
                       </div>
                     ),
-                    amount: UnclaimedPrize?.DP || 0,
+                    amount: formatNumber(UnclaimedPrize?.DP) || 0,
                   },
                 ].map((row, index) => {
                   return (
@@ -344,7 +345,7 @@ export default function MyPrize() {
                         <div>{t('VND')}</div>
                       </div>
                     ),
-                    amount: UnclaimedPrize?.VND || 0,
+                    amount: formatNumber(UnclaimedPrize?.VND) || 0,
                   },
                 ].map((row, index) => {
                   return (

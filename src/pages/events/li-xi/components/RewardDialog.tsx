@@ -26,6 +26,7 @@ import { toast } from "react-toastify";
 import useQueuePolling from "src/hooks/useQueuePolling";
 import { Context } from "src/context";
 import sample from "./sample.json";
+import { formatNumber } from 'src/utils'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogTitle-root": {},
@@ -150,141 +151,116 @@ export default function RewardDialogs({
 
   return (
     <React.Fragment>
-      <EventButton className="w-20" onClick={handleOpenLixi}>
-        {t("OPEN")}
+      <EventButton className='w-20' onClick={handleOpenLixi}>
+        {t('OPEN')}
       </EventButton>
 
       <BootstrapDialog
         onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
+        aria-labelledby='customized-dialog-title'
         open={open}
-        maxWidth="xs"
+        maxWidth='xs'
         PaperProps={{
           sx: {
-            overflow: "visible",
-            position: "relative",
-            background: "#FFF8D5;",
+            overflow: 'visible',
+            position: 'relative',
+            background: '#FFF8D5;',
           },
-        }}
-      >
+        }}>
         <Box
           sx={{
-            position: "absolute",
-            top: "-160px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: "400px",
-            height: "180px",
+            position: 'absolute',
+            top: '-160px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '400px',
+            height: '180px',
             backgroundImage: `url(${nap.src})`,
-            backgroundSize: "100% 100%",
-            zIndex: "10",
+            backgroundSize: '100% 100%',
+            zIndex: '10',
           }}
         />
         <Box
           sx={{
-            position: "absolute",
-            bottom: "-20px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: "420px",
-            height: "200px",
+            position: 'absolute',
+            bottom: '-20px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '420px',
+            height: '200px',
             backgroundImage: `url(${duoi.src})`,
-            backgroundSize: "100% 100%",
+            backgroundSize: '100% 100%',
           }}
         />
-        <DialogTitle
-          sx={{ m: 0, p: 2 }}
-          id="customized-dialog-title"
-          className="flex flex-col items-center"
-        >
-          {status !== "CREATED" && (
-            <div className="text-center text-[#9F1515] text-2xl font-black-han-sans">
-              {t("Congratulations!")}
-            </div>
+        <DialogTitle sx={{ m: 0, p: 2 }} id='customized-dialog-title' className='flex flex-col items-center'>
+          {status !== 'CREATED' && (
+            <div className='text-center text-[#9F1515] text-2xl font-black-han-sans'>{t('Congratulations!')}</div>
           )}
         </DialogTitle>
         <IconButton
-          aria-label="close"
+          aria-label='close'
           onClick={handleClose as any}
           sx={(theme) => ({
-            position: "absolute",
+            position: 'absolute',
             right: 8,
-            top: "-150px",
+            top: '-150px',
             color: theme.palette.grey[500],
             zIndex: 100,
-          })}
-        >
+          })}>
           <CloseIcon />
         </IconButton>
         <DialogContent>
-          {status === "CREATED" && (
-            <div className="flex flex-col items-center gap-4 mb-4 w-[300px]">
-              <div className="text-[#067537] text-center text-base font-medium">
-                {account?.name}
-              </div>
-              <Image
-                src={loadingSVG}
-                className="w-[100px] animate-spin"
-                alt=""
-              />
-              <div className="text-center">Loading ...</div>
+          {status === 'CREATED' && (
+            <div className='flex flex-col items-center gap-4 mb-4 w-[300px]'>
+              <div className='text-[#067537] text-center text-base font-medium'>{account?.name}</div>
+              <Image src={loadingSVG} className='w-[100px] animate-spin' alt='' />
+              <div className='text-center'>Loading ...</div>
             </div>
           )}
-          {status === "SUCCEEDED" && (
-            <div className="flex flex-col items-center gap-4 mb-4 w-[300px]">
-              <div className="text-[#067537] text-center text-base font-medium">
-                {account?.name}
-              </div>
+          {status === 'SUCCEEDED' && (
+            <div className='flex flex-col items-center gap-4 mb-4 w-[300px]'>
+              <div className='text-[#067537] text-center text-base font-medium'>{account?.name}</div>
 
               {prize && prize.length ? (
-                <div className="flex gap-2">
+                <div className='flex gap-2'>
                   {prize.map((item, index) => (
                     <div
                       key={index}
-                      className="flex flex-col items-center gap-2 text-[#3A3A3A] font-roboto text-sm font-semibold"
-                    >
-                      <div className="text-center">
-                        You have received a prize. Don’t forget to claim it in
-                        inventory
+                      className='flex flex-col items-center gap-2 text-[#3A3A3A] font-roboto text-sm font-semibold'>
+                      <div className='text-center'>
+                        You have received a prize. Don’t forget to claim it in inventory
                       </div>
-                      {item?.lixi_reward_type?.reward_type === "DP" && (
-                        <Image src={DP} className="w-[70px] h-[70px]" alt="" />
-                      )}{" "}
-                      {item?.lixi_reward_type?.reward_type === "AURA" && (
-                        <Image
-                          src={AURA}
-                          className="w-[70px] h-[70px]"
-                          alt=""
-                        />
-                      )}{" "}
-                      {item?.lixi_reward_type?.reward_type === "VND" && (
-                        <Image src={VND} className="w-[70px] h-[70px]" alt="" />
+                      {item?.lixi_reward_type?.reward_type === 'DP' && (
+                        <Image src={DP} className='w-[70px] h-[70px]' alt='' />
+                      )}{' '}
+                      {item?.lixi_reward_type?.reward_type === 'AURA' && (
+                        <Image src={AURA} className='w-[70px] h-[70px]' alt='' />
+                      )}{' '}
+                      {item?.lixi_reward_type?.reward_type === 'VND' && (
+                        <Image src={VND} className='w-[70px] h-[70px]' alt='' />
                       )}
-                      <div className="text-sm font-bold">
-                        {item.amount} {item?.lixi_reward_type?.reward_type}{" "}
+                      <div className='text-sm font-bold'>
+                        {formatNumber(item.amount)} {item?.lixi_reward_type?.reward_type}{' '}
                       </div>
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="text-center">{randomWish}</div>
+                <div className='text-center'>{randomWish}</div>
               )}
             </div>
           )}
         </DialogContent>
         <DialogActions>
-          {status === "SUCCEEDED" && prize.length ? (
-            <EventButton
-              onClick={() => router.push("/events/li-xi/my-prize")}
-              className="w-[200px] z-10"
-            >
-              {t("Go to My inventory")}
+          {status === 'SUCCEEDED' && prize.length ? (
+            <EventButton onClick={() => router.push('/events/li-xi/my-prize')} className='w-[200px] z-10'>
+              {t('Go to My inventory')}
             </EventButton>
           ) : (
-            <div className="h-8" />
+            <div className='h-8' />
           )}
         </DialogActions>
       </BootstrapDialog>
     </React.Fragment>
-  );
+  )
 }
