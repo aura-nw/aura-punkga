@@ -108,67 +108,68 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
   if (!account) return <></>;
   return (
     <>
-      <div className="pk-container py-5 px-5 lg:px-0 lg:py-10">
-        {isSettingUp ? (
-          <div className="flex gap-[60px]">
-            <div className="w-[280px] h-[280px] rounded-xl object-cover bg-light-gray animate-pulse"></div>
-            <div className="flex flex-col justify-between">
-              <div>
-                <p className="h-10 animate-pulse bg-light-gray text-second-color mb-1 md:mb-4 w-2/3"></p>
-                <p className="h-4 animate-pulse bg-light-gray text-second-color mb-1 md:mb-4 w-3/4"></p>
-                <div className="flex gap-[30px] font-medium mb-5">
-                  <p className="h-4 animate-pulse bg-light-gray text-second-color mb-1 md:mb-4 w-1/2"></p>
-                  <p className="h-4 animate-pulse bg-light-gray text-second-color mb-1 md:mb-4 w-1/2"></p>
+      <div className="py-5 px-5 lg:px-0 lg:py-10 bg-background">
+        <div className="md:container md:mx-auto">
+          {isSettingUp ? (
+            <div className="flex gap-[60px]">
+              <div className="w-[280px] h-[280px] rounded-xl object-cover bg-light-gray animate-pulse"></div>
+              <div className="flex flex-col justify-between">
+                <div>
+                  <p className="h-10 animate-pulse bg-light-gray text-second-color mb-1 md:mb-4 w-2/3"></p>
+                  <p className="h-4 animate-pulse bg-light-gray text-second-color mb-1 md:mb-4 w-3/4"></p>
+                  <div className="flex gap-[30px] font-medium mb-5">
+                    <p className="h-4 animate-pulse bg-light-gray text-second-color mb-1 md:mb-4 w-1/2"></p>
+                    <p className="h-4 animate-pulse bg-light-gray text-second-color mb-1 md:mb-4 w-1/2"></p>
+                  </div>
+                  <div className="w-[20vw] animate-pulse h-24 bg-light-gray"></div>
                 </div>
-                <div className="w-[20vw] animate-pulse h-24 bg-light-gray"></div>
               </div>
             </div>
-          </div>
-        ) : (
-          <>
-            <div className="gap-10 flex flex-col lg:flex-row items-center lg:items-start">
-              <div className="w-full lg:w-[340px]">
-                <NewInfo />
-              </div>
-              <div className="w-full lg:w-[calc(100%_-_340px)] lg:p-8 rounded-[10px] bg-transparent">
-                <NewQuest />
-                <div className="w-full mt-[28px]">
-                  <div className="mt-8 flex gap-2 -skew-x-12 lg:mt-0">
-                    <div className="h-9 w-3 rounded bg-white"></div>
-                    <div
-                      className={`h-9 grid place-items-center rounded ${valueTab == 0 ? "bg-white text-black" : "bg-gray-500 text-white"} text-sm font-semibold px-3.5 cursor-pointer`}
+          ) : (
+            <>
+              <div className="gap-10 flex flex-col lg:flex-row items-center lg:items-start">
+                <div className="w-full lg:w-[340px]">
+                  <NewInfo />
+                </div>
+                <div className="w-full lg:w-[calc(100%_-_340px)] lg:p-8 rounded-[10px] bg-transparent">
+                  <NewQuest />
+                  <div className="w-full mt-[28px]">
+                    <div className="mt-8 flex gap-2 -skew-x-12 lg:mt-0 overflow-auto scrollbar-hide">
+                      <div className="h-9 w-3 rounded bg-white"></div>
+                      <div
+                      className={`h-10 md:h-9 grid place-items-center rounded ${valueTab == 0 ? "bg-white text-black" : "bg-gray-500 text-white"} text-sm font-semibold px-3.5 cursor-pointer`}
                       onClick={() => {
                         setValueTab(0);
                       }}
-                    >
+                      >
                       <span className="skew-x-12">{t("Currently reading")}</span>
-                    </div>
-                    <div
-                      className={`h-9 grid place-items-center rounded ${valueTab == 1 ? "bg-white text-black" : "bg-gray-500 text-white"} text-sm font-semibold px-3.5 cursor-pointer`}
+                      </div>
+                      <div
+                      className={`h-10 md:h-9 grid place-items-center rounded ${valueTab == 1 ? "bg-white text-black" : "bg-gray-500 text-white"} text-sm font-semibold px-3.5 cursor-pointer`}
                       onClick={() => {
-                        setValueTab(1);
-                      }}
-                    >
-                      <span className="skew-x-12">{t("Subscribed mangas")}</span>
+                          setValueTab(1);
+                        }}
+                      >
+                        <span className="skew-x-12">{t("Subscribed mangas")}</span>
+                      </div>
+                      <div
+                        className={`h-10 md:h-9 grid place-items-center rounded ${valueTab == 2 ? "bg-white text-black" : "bg-gray-500 text-white"} text-sm font-semibold px-3.5 cursor-pointer`}
+                        onClick={() => {
+                          setValueTab(2);
+                        }}
+                      >
+                        <span className="skew-x-12">{t("NFTs")}</span>
+                      </div>
+                      <div
+                        className={`h-10 md:h-9 grid place-items-center rounded ${valueTab == 3 ? "bg-white text-black" : "bg-gray-500 text-white"} text-sm font-semibold px-3.5 cursor-pointer`}
+                        onClick={() => {
+                          setValueTab(3);
+                        }}
+                      >
+                        <span className="skew-x-12">{t("Reward history")}</span>
+                      </div>
                     </div>
-                    <div
-                      className={`h-9 grid place-items-center rounded ${valueTab == 2 ? "bg-white text-black" : "bg-gray-500 text-white"} text-sm font-semibold px-3.5 cursor-pointer`}
-                      onClick={() => {
-                        setValueTab(2);
-                      }}
-                    >
-                      <span className="skew-x-12">{t("NFTs")}</span>
-                    </div>
-                    <div
-                      className={`h-9 grid place-items-center rounded ${valueTab == 3 ? "bg-white text-black" : "bg-gray-500 text-white"} text-sm font-semibold px-3.5 cursor-pointer`}
-                      onClick={() => {
-                        setValueTab(3);
-                      }}
-                    >
-                      <span className="skew-x-12">{t("Reward history")}</span>
-                    </div>
-                  </div>
-                  {/* <Box>
+                    {/* <Box>
                     <TabsWrapper>
                       <ChipTabs value={valueTab} onChange={handleChangeTab} variant="scrollable" scrollButtons="auto">
                         <ChipTab label={t("Currently reading")} {...a11yProps(0)} />
@@ -178,91 +179,92 @@ function Profile({ subscribeList, curentlyReading, updateProfile }) {
                       </ChipTabs>
                     </TabsWrapper>
                   </Box> */}
-                  <CustomTabPanel value={valueTab} index={0}>
-                    <>
-                      {!curentlyReading.data || curentlyReading.data.length === 0 ? (
-                        <div className="w-full py-8 flex flex-col items-center gap-4">
-                          <Image src={MascotEmpty} alt="" width={160} height={160} />
-                          <div className="text-text-primary font-medium">{t("No manga found")}</div>
-                        </div>
-                      ) : (
-                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-3 gap-2.5 md:pb-7">
-                          {isSettingUp || curentlyReading.loading ? (
-                            <>
-                              <DummyComic />
-                              <DummyComic />
-                              <DummyComic />
-                            </>
-                          ) : (
-                            <>
-                              {curentlyReading.data?.map((data, index) => (
-                                <Fragment key={index}>
-                                  <div className="block">
-                                    <Manga key={index} {...data} />
-                                  </div>
-                                </Fragment>
-                              ))}
-                            </>
-                          )}
-                        </div>
-                      )}
-                    </>
-                  </CustomTabPanel>
-                  <CustomTabPanel value={valueTab} index={1}>
-                    <>
-                      {!subscribeList.data || subscribeList.data.length === 0 ? (
-                        <div className="w-full py-8 flex flex-col items-center gap-4">
-                          <Image src={MascotEmpty} alt="" width={160} height={160} />
-                          <div className="text-text-primary font-medium">{t("No manga found")}</div>
-                        </div>
-                      ) : (
-                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2.5 md:pb-7">
-                          {isSettingUp || subscribeList.loading ? (
-                            <>
-                              <DummyComic />
-                              <DummyComic />
-                              <DummyComic />
-                            </>
-                          ) : (
-                            <>
-                              {subscribeList.data?.map((data, index) => (
-                                <Fragment key={index}>
-                                  <div className="hidden md:block">
-                                    <Manga key={index} {...data} />
-                                  </div>
-                                  <div className="md:hidden">
-                                    <Manga key={index} {...data} />
-                                  </div>
-                                </Fragment>
-                              ))}
-                            </>
-                          )}
-                        </div>
-                      )}
-                    </>
-                  </CustomTabPanel>
-                  <CustomTabPanel value={valueTab} index={2}>
-                    <div className="md:pb-7">
-                      <NewNFTList />
-                    </div>
-                  </CustomTabPanel>
-                  <CustomTabPanel value={valueTab} index={3}>
-                    <div className="md:pb-7">
-                      {!account.completedQuests || account.completedQuests.length === 0 ? (
-                        <div className="w-full py-8 flex flex-col items-center gap-4">
-                          <Image src={MascotEmpty} alt="" width={160} height={160} />
-                          <div className="text-text-primary font-medium">{t("Your reward history is empty")}</div>
-                        </div>
-                      ) : (
-                        <RewardHistory data={account.completedQuests} />
-                      )}
-                    </div>
-                  </CustomTabPanel>
+                    <CustomTabPanel value={valueTab} index={0}>
+                      <>
+                        {!curentlyReading.data || curentlyReading.data.length === 0 ? (
+                          <div className="w-full py-8 flex flex-col items-center gap-4">
+                            <Image src={MascotEmpty} alt="" width={160} height={160} />
+                            <div className="text-white font-medium">{t("No manga found")}</div>
+                          </div>
+                        ) : (
+                          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-3 gap-2.5 md:pb-7">
+                            {isSettingUp || curentlyReading.loading ? (
+                              <>
+                                <DummyComic />
+                                <DummyComic />
+                                <DummyComic />
+                              </>
+                            ) : (
+                              <>
+                                {curentlyReading.data?.map((data, index) => (
+                                  <Fragment key={index}>
+                                    <div className="block">
+                                      <Manga key={index} {...data} />
+                                    </div>
+                                  </Fragment>
+                                ))}
+                              </>
+                            )}
+                          </div>
+                        )}
+                      </>
+                    </CustomTabPanel>
+                    <CustomTabPanel value={valueTab} index={1}>
+                      <>
+                        {!subscribeList.data || subscribeList.data.length === 0 ? (
+                          <div className="w-full py-8 flex flex-col items-center gap-4">
+                            <Image src={MascotEmpty} alt="" width={160} height={160} />
+                            <div className="text-white font-medium">{t("No manga found")}</div>
+                          </div>
+                        ) : (
+                          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2.5 md:pb-7">
+                            {isSettingUp || subscribeList.loading ? (
+                              <>
+                                <DummyComic />
+                                <DummyComic />
+                                <DummyComic />
+                              </>
+                            ) : (
+                              <>
+                                {subscribeList.data?.map((data, index) => (
+                                  <Fragment key={index}>
+                                    <div className="hidden md:block">
+                                      <Manga key={index} {...data} />
+                                    </div>
+                                    <div className="md:hidden">
+                                      <Manga key={index} {...data} />
+                                    </div>
+                                  </Fragment>
+                                ))}
+                              </>
+                            )}
+                          </div>
+                        )}
+                      </>
+                    </CustomTabPanel>
+                    <CustomTabPanel value={valueTab} index={2}>
+                      <div className="md:pb-7">
+                        <NewNFTList />
+                      </div>
+                    </CustomTabPanel>
+                    <CustomTabPanel value={valueTab} index={3}>
+                      <div className="md:pb-7">
+                        {!account.completedQuests || account.completedQuests.length === 0 ? (
+                          <div className="w-full py-8 flex flex-col items-center gap-4">
+                            <Image src={MascotEmpty} alt="" width={160} height={160} />
+                            <div className="text-white font-medium">{t("Your reward history is empty")}</div>
+                          </div>
+                        ) : (
+                          <RewardHistory data={account.completedQuests} />
+                        )}
+                      </div>
+                    </CustomTabPanel>
+                  </div>
                 </div>
               </div>
-            </div>
-          </>
-        )}
+            </>
+          )}
+        </div>
       </div>
     </>
   );

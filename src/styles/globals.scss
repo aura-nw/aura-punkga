@@ -316,3 +316,11 @@ input[type='password']::-ms-clear {
 .medium-zoom-image--opened {
   z-index: 999999;
 }
+
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

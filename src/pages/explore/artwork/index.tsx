@@ -65,7 +65,7 @@ function PageContent() {
   return (
     <div className="bg-background min-h-screen text-white space-y-4">
       <div className="md:container md:mx-auto">
-        {width < 758 ? (
+        {width < 768 ? (
           <div onClick={() => router.back()} className="flex sticky top-14 p-4 bg-background z-10 items-center gap-3 text-xl font-medium ">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M15 17L10 12L15 7" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

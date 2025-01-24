@@ -72,8 +72,8 @@ function transformData(data, locale) {
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   '&.MuiTableCell-head': {
     backgroundColor: 'transparent',
-    color: '#3D3D3D !important',
-    borderBottom: '1px solid #B0B0B0 !important',
+    color: '#ffffff !important',
+    borderBottom: '1px solid #5D5D5D !important',
     fontWeight: '600 !important',
     fontSize: 16,
   },
@@ -81,7 +81,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: 14,
     borderBottom: 'none',
     fontWeight: '500 !important',
-    color: '#3D3D3D !important',
+    color: '#ffffff !important',
   },
 }));
 
@@ -129,12 +129,12 @@ export default function RewardHistory({ data }) {
           width={160}
           height={160}
         />
-        <div className='text-text-primary font-medium'>{t('Your reward history is empty')}</div>
+        <div className='text-white font-medium'>{t('Your reward history is empty')}</div>
       </div>
     )
   }
   return (
-    <div className='w-full overflow-hidden bg-white lg:bg-[#F6F6F6] p-[32px] flex flex-col gap-4 rounded-[10px]'>
+    <div className='w-full overflow-hidden bg-black lg:bg-black p-[32px] flex flex-col gap-4 rounded-[10px]'>
       <StyledTableContainer>
         <StyledTable stickyHeader aria-label="sticky table">
           <TableHead>
@@ -234,7 +234,7 @@ export default function RewardHistory({ data }) {
                   backgroundColor: '#E7E7E7',
                 },
                 '&.MuiPaginationItem-previousNext': {
-                  color: '#6D6D6D',
+                  color: '#ffffff',
                 },
                 '&.MuiPaginationItem-previousNext:hover': {
                   backgroundColor: '#E7E7E7',
