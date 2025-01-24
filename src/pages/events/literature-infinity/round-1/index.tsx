@@ -7,7 +7,7 @@ import Mascot4 from 'components/pages/event/literature-infinity/assets/mascot-4.
 import Image from 'next/image'
 import Link from 'next/link'
 import { useWindowSize } from 'usehooks-ts'
-import useSWR from 'swr'
+import { debounce } from 'lodash'
 import { contentService } from 'src/services/contentService'
 import { useContext, useEffect, useState } from 'react'
 import { Context } from 'src/context'
@@ -17,6 +17,7 @@ import Modal from 'components/pages/characters/Modal'
 import CharacterDetail from 'components/pages/characters/CharacterDetail'
 import Rule from 'components/pages/event/literature-infinity/Rule'
 import LazyImage from 'components/Image'
+import TextField from 'components/Input/TextField'
 export default function Page(props) {
   if (props.justHead || props.pageProps?.justHead) {
     return <HeadComponent data={props.pageProps?.metadata || props.metadata} />
@@ -39,6 +40,7 @@ const PageContent = () => {
   const [characterList, setCharacterList] = useState([])
   const [offset, setOffset] = useState(0)
   const [remaining, setRemaining] = useState(true)
+  const [search, setSearch] = useState('')
   useEffect(() => {
     fetchCharacter()
   }, [])
@@ -48,6 +50,8 @@ const PageContent = () => {
         userId: account?.id,
         offset,
         contestId: '6',
+        limit: '10000',
+        sort: 'Created_At_Desc',
       })
       if (data.data.story_character.length) {
         setCharacterList([...characterList, ...data.data.story_character])
@@ -87,19 +91,21 @@ const PageContent = () => {
           </div>
         </Rule>
         <div className='mt-8'>
-          <div className='text-[#3d3d3d] text-lg font-medium leading-relaxed'>Submission</div>
+          <TextField
+            defaultValue={search}
+            onChange={debounce((v) => setSearch(v.trim()), 1000)}
+            className='bg-neutral-100 text-black max-w-lg [&_input::placeholder]:!text-text-quatenary '
+            placeholder={'Search by character name'}
+          />
           {characterList.length ? (
             <>
-              <InfiniteScroll
-                dataLength={characterList.length}
-                next={fetchCharacter}
-                hasMore={remaining}
-                loader={<h4>Loading...</h4>}
-                className='grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 mt-5'>
-                {characterList.map((character, index) => (
-                  <Character key={index} data={character} />
-                ))}
-              </InfiniteScroll>
+              <div className='grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6 mt-5'>
+                {characterList
+                  .filter((d) => d.name.toLowerCase().includes(search.toLowerCase()))
+                  .map((character, index) => (
+                    <Character key={index} data={character} />
+                  ))}
+              </div>
             </>
           ) : (
             <div className='flex flex-col items-center gap-4'>
