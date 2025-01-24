@@ -23,6 +23,7 @@ import ModalProvider from './modals'
 import PostListProvider from './postList'
 import ComicListProvider from './comicList'
 import ArtworkListProvider from './artworkList'
+import { useCookies } from 'react-cookie'
 
 const queryClient = new QueryClient()
 
@@ -80,6 +81,7 @@ function ContextProvider({ children }: any) {
   })
   const searchParams = new URLSearchParams(location.search)
   const portalCallbackUrlParam = searchParams.get('login_callback_url')
+  const [cookie, setCookie, removeCookie] = useCookies(['token'])
 
   const httpLink = new HttpLink({
     uri: `${config.API_URL}/v1/graphql`,
@@ -211,9 +213,11 @@ function ContextProvider({ children }: any) {
     try {
       const tokens = await authorizerRef.getSession()
       setItem('token', tokens.access_token, new Date(Date.now() + tokens.expires_in))
+      setCookie('token', tokens.access_token)
       return tokens
     } catch (error) {
       removeItem('token')
+      removeCookie('token')
       return null
     }
   }
@@ -255,6 +259,7 @@ function ContextProvider({ children }: any) {
               }
             } catch (error) {
               removeItem('token')
+              removeCookie('token')
               return Promise.reject(error)
             }
           }
@@ -390,6 +395,7 @@ function ContextProvider({ children }: any) {
       await disconnectAsync()
       removeItem('current_reading_manga')
       removeItem('token')
+      removeCookie('token')
       setAccount(undefined)
       router.push(location.origin + location.pathname)
     } catch (error) {

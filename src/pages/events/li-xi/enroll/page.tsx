@@ -172,7 +172,8 @@ export default function Enroll() {
             </div>
             <div className="relative z-10 text-[#FABA77] text-start md:text-center flex gap-[10px] justify-center items-center italic text-sm">
               <Image src={lixi_xanh} className="w-8 h-8" alt="" />
-              Collect a Fortune Number to receive a Blue Li Xi
+              The Fortune Number would be somewhere on our X and Discord. Find
+              it and a Blue Lixi will be yours to claim!
             </div>
           </div>
         )}

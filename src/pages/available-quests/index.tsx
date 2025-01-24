@@ -102,7 +102,7 @@ function AvailableQuests() {
           <div className='mt-4 space-y-4'>
             {availableQuests?.map((quest, index) => (
               <QuestItem
-                key={index}
+                key={quest.id}
                 quest={quest}
                 refreshCallback={async (status) => {
                   setCompletedQuest(quest)

@@ -77,7 +77,7 @@ export default function DailyQuest() {
         <>
           {availableQuests?.map((quest, index) => (
             <QuestItem
-              key={index}
+              key={quest.id}
               quest={quest}
               refreshCallback={async (status) => {
                 setCompletedQuest(quest)
