@@ -38,6 +38,7 @@ import HistoryDialogs from "./components/HistoryDialog";
 import RewardDialogs from "./components/RewardDialog";
 import { toast } from "react-toastify";
 import getConfig from "next/config";
+import moment from "moment";
 
 const BulletPoint = ({ className }: { className?: string }) => (
   <div
@@ -261,7 +262,11 @@ export default function Lixi() {
   );
 
   useEffect(() => {
-    if (config && config.EVENT_START) {
+    if (
+      config &&
+      config.EVENT_START &&
+      moment().isBefore(moment(config.EVENT_START))
+    ) {
       router.push("/events/li-xi/coming-soon");
       return;
     }

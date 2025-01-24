@@ -18,6 +18,8 @@ import useSWR from "swr";
 import { eventService } from "src/services/eventService";
 import { toast } from "react-toastify";
 import getConfig from "next/config";
+import Link from "next/link";
+import moment from "moment";
 
 export default function Enroll() {
   const { account } = useContext(Context);
@@ -87,7 +89,11 @@ export default function Enroll() {
   );
 
   useEffect(() => {
-    if (config && config.EVENT_START) {
+    if (
+      config &&
+      config.EVENT_START &&
+      moment().isBefore(moment(config.EVENT_START))
+    ) {
       router.push("/events/li-xi/coming-soon");
     }
   }, []);
@@ -181,7 +187,7 @@ export default function Enroll() {
           </>
         ) : (
           <div className="flex flex-col items-center gap-4">
-            <div className="relative z-10 flex flex-col items-center mb-[36px] gap-4 w-full">
+            <div className="relative z-10 flex flex-col items-center mb-[36px] w-[calc(100vw-40px)] md:w-[384px] gap-4">
               <div className="text-[#FABA77]">Fortune Number</div>
               <div className="flex items-center justify-between w-full gap-4 px-6">
                 <TextField
@@ -201,10 +207,27 @@ export default function Enroll() {
                 </EventButton>
               </div>
             </div>
-            <div className="relative z-10 text-[#FABA77] text-start md:text-center flex gap-[10px] justify-center items-center italic text-sm">
+            <div className="relative z-10 flex text-[#FABA77] text-start md:text-center gap-2 justify-center items-center italic text-sm">
               <Image src={lixi_xanh} className="w-8 h-8" alt="" />
-              The Fortune Number would be somewhere on our X and Discord. Find
-              it and a Blue Lixi will be yours to claim!
+              <div>
+                The Fortune Number would be somewhere on our{" "}
+                <Link
+                  href="https://x.com/PunkgaMeManga?mx=2"
+                  target="_blank"
+                  className="text-[blue]"
+                >
+                  X
+                </Link>{" "}
+                and{" "}
+                <Link
+                  href="https://discord.com/invite/YcuFcr8gTy"
+                  target="_blank"
+                  className="text-[blue]"
+                >
+                  Discord
+                </Link>
+                . Find it and a Blue Lixi will be yours to claim!
+              </div>
             </div>
           </div>
         )}
