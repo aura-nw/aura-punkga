@@ -69,7 +69,10 @@ export default function Post({ data }) {
   }
   if (data.type == 'Manga') {
     const languageData = data.manga.manga_languages.find((e) => e.is_main_language)
-    const chapterImages = data.manga.chapters[0]?.chapter_languages?.find((e) => e.language.is_main)?.detail || []
+    const chapterImages =
+      data.manga.chapters[0]?.chapter_languages?.find((e) => e.language.is_main)?.detail ||
+      data.manga.chapters[0]?.chapter_languages[0]?.detail ||
+      []
     if (chapterImages.length == 0) return null
     return (
       <div className='space-y-4 md:bg-neutral-950 md:p-4 md:rounded-lg'>
