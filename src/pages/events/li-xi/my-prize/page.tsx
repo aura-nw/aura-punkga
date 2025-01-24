@@ -119,7 +119,11 @@ export default function MyPrize() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (config && config.EVENT_START) {
+    if (
+      config &&
+      config.EVENT_START &&
+      moment().isBefore(moment(config.EVENT_START))
+    ) {
       router.push("/events/li-xi/coming-soon");
       return;
     }
