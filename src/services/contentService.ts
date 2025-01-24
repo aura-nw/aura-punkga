@@ -179,6 +179,7 @@ export const contentService = {
       type,
       search,
       contestId,
+      limit,
     }: {
       userId?: string
       offset?: number
@@ -186,10 +187,11 @@ export const contentService = {
       type?: string
       search?: string
       contestId?: string
+      limit?: string
     }) => {
       const res = await privateAxios.get(`${getConfig().REST_API_URL}/story-event/character`, {
         params: {
-          limit: 20,
+          limit: limit || 20,
           offset: offset,
           order_by: sort,
           user_id: userId,
