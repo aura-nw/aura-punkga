@@ -210,7 +210,7 @@ const PageContent = () => {
                     Open your Li Xi to reveal surprise rewards inside!
                   </div>
                   <Button className='mt-3'>
-                    <Link href={'/events/li-xi'}>Try Your Luck</Link>
+                    <Link href={'/events/li-xi'}>Open Your LiXi</Link>
                   </Button>
                 </div>
                 <div className='p-4 rounded-lg flex flex-col items-center bg-white'>
@@ -223,7 +223,7 @@ const PageContent = () => {
                     A series of mini-challenges to earn extra rewards!
                   </div>
                   <Button className='mt-3'>
-                    <Link href={'/campaigns'}>Get More Luck</Link>
+                    <Link href={'/campaigns'}>Go to Quest</Link>
                   </Button>
                 </div>
               </div>
@@ -356,7 +356,7 @@ const PageContent = () => {
                 Open your Li Xi to reveal surprise rewards inside!
               </div>
               <Button className='mt-3'>
-                <Link href={'/events/li-xi'}>Try Your Luck</Link>
+                <Link href={'/events/li-xi'}>Open Your LiXi</Link>
               </Button>
             </div>
             <div className='p-4 rounded-lg flex flex-col items-center bg-white'>
@@ -369,7 +369,7 @@ const PageContent = () => {
                 A series of mini-challenges to earn extra rewards!
               </div>
               <Button className='mt-3'>
-                <Link href={'/campaigns'}>Get More Luck</Link>
+                <Link href={'/campaigns'}>Go to Quest</Link>
               </Button>
             </div>
           </div>
