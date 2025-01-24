@@ -206,7 +206,7 @@ const PageContent = () => {
                     <div className='text-xs leading-none'>The year of snake’s</div>
                     <div className='text-lg leading-none uppercase'>Li Xi of Fortune</div>
                   </div>
-                  <div className='text-xs text-text-secondary mt-3'>
+                  <div className='text-xs text-text-secondary mt-3 text-center'>
                     Open your Li Xi to reveal surprise rewards inside!
                   </div>
                   <Button className='mt-3'>
@@ -219,7 +219,7 @@ const PageContent = () => {
                     <div className='text-xs leading-none'>LUCKY</div>
                     <div className='text-lg leading-none'>QUEST</div>
                   </div>
-                  <div className='text-xs text-text-secondary mt-3'>
+                  <div className='text-xs text-text-secondary mt-3 text-center'>
                     A series of mini-challenges to earn extra rewards!
                   </div>
                   <Button className='mt-3'>
@@ -352,7 +352,9 @@ const PageContent = () => {
                 <div className='text-xs leading-none'>The year of snake’s</div>
                 <div className='text-lg leading-none'>EVENT</div>
               </div>
-              <div className='text-xs text-text-secondary mt-3'>Open your Li Xi to reveal surprise rewards inside!</div>
+              <div className='text-xs text-text-secondary mt-3 text-center'>
+                Open your Li Xi to reveal surprise rewards inside!
+              </div>
               <Button className='mt-3'>
                 <Link href={'/events/li-xi'}>Try Your Luck</Link>
               </Button>
@@ -363,7 +365,9 @@ const PageContent = () => {
                 <div className='text-xs leading-none'>LUCKY</div>
                 <div className='text-lg leading-none'>QUEST</div>
               </div>
-              <div className='text-xs text-text-secondary mt-3'>A series of mini-challenges to earn extra rewards!</div>
+              <div className='text-xs text-text-secondary mt-3 text-center'>
+                A series of mini-challenges to earn extra rewards!
+              </div>
               <Button className='mt-3'>
                 <Link href={'/campaigns'}>Get More Luck</Link>
               </Button>
