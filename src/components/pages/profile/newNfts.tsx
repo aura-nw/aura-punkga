@@ -36,14 +36,14 @@ export default function NewNFTList() {
   const startIndex = (page - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
   const displayedNFTs = data?.slice(startIndex, endIndex)
-  // if (!data || !data.length) {
-  //   return (
-  //     <div className='w-full py-8 flex flex-col items-center gap-4'>
-  //       <Image src={MascotEmpty} alt='' width={160} height={160} />
-  //       <div className='text-text-primary font-medium'>{t('No NFT found')}</div>
-  //     </div>
-  //   )
-  // }
+  if (!data || !data.length) {
+    return (
+      <div className='w-full py-8 flex flex-col items-center gap-4'>
+        <Image src={MascotEmpty} alt='' width={160} height={160} />
+        <div className='text-text-primary font-medium'>{t('No NFT found')}</div>
+      </div>
+    )
+  }
   return (
     <>
       {!displayedNFTs || displayedNFTs.length === 0 ? (
