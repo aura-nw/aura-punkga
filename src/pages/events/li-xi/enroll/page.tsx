@@ -7,7 +7,7 @@ import lixi_xanh from "../assets/lixi_xanh.png";
 import star_bg from "../assets/star_bg.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Context } from "src/context";
 import { ModalContext } from "src/context/modals";
@@ -17,6 +17,7 @@ import TextField from "components/Input/TextField";
 import useSWR from "swr";
 import { eventService } from "src/services/eventService";
 import { toast } from "react-toastify";
+import getConfig from "next/config";
 
 export default function Enroll() {
   const { account } = useContext(Context);
@@ -24,6 +25,7 @@ export default function Enroll() {
   const [fortuneNumber, setFortuneNumber] = useState("");
   const router = useRouter();
   const { t } = useTranslation();
+  const config = getConfig();
 
   const { data, mutate, isLoading } = useSWR(
     { key: "apply-fortune-number" },
@@ -84,6 +86,12 @@ export default function Enroll() {
     }
   );
 
+  useEffect(() => {
+    if (config && config.EVENT_START) {
+      router.push("/events/li-xi/coming-soon");
+    }
+  }, []);
+
   if (!fetchingStatus && referralStatus) {
     return (
       <div
@@ -106,6 +114,29 @@ export default function Enroll() {
       }}
       className="bg-[#860204] h-screen w-screen flex flex-col pt-20 items-center "
     >
+      <div
+        className="absolute top-0 left-0 z-50  p-4 flex items-center gap-3 cursor-pointer"
+        onClick={() => router.push("/events")}
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M15 17L10 12L15 7"
+            stroke="#fff"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        <div className="text-white text-lg font-medium leading-relaxed">
+          Event List
+        </div>
+      </div>
       <div className="first-section relative">
         <Image
           src={Year}
