@@ -207,7 +207,7 @@ export default function CharacterDetail({ id }) {
               </svg>
               <span className='text-sm font-semibold'>{formatNumber(likeCount)}</span>
             </div>
-            <div className='mt-4 text-lg font-semibold'>Artworks</div>
+            <div className='mt-4 text-lg font-semibold'>Appears in</div>
             <div id='artwork-list' className='w-full mt-4 max-h-[450px] md:max-h-[70vh] md:h-fit overflow-auto'>
               <InfiniteScroll
                 loader={<h4>Loading...</h4>}

@@ -1,6 +1,6 @@
 import Modal from 'components/Modal'
 import Tooltip from 'components/Tooltip'
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import BannerDesktopVN from 'components/pages/event/pudgy-asia-tour/assets/desktop-banner-vn.png'
 import BannerDesktop from 'components/pages/event/pudgy-asia-tour/assets/desktop-banner.png'
 import BannerMobileVN from 'components/pages/event/pudgy-asia-tour/assets/mobile-banner-vn.png'

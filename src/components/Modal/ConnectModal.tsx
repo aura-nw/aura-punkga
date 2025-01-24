@@ -1,4 +1,4 @@
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import Modal from 'components/core/Modal'
 import Spinner from 'components/Spinner'
 import CopySvg from 'images/icons/copy.svg'
@@ -102,18 +102,14 @@ export default function ConnectModal() {
                 </div>
               </div>
               <div className='flex flex-col gap-3 mt-8'>
-                <p className='text-white text-sm leading-[18px]'>
-                  {t('To continue, connect to your linked wallet')}
-                </p>
+                <p className='text-white text-sm leading-[18px]'>{t('To continue, connect to your linked wallet')}</p>
                 <div className='w-full flex items-center justify-between px-2 py-3 border-[#DEDEDE] border-[1px] rounded-[4px]'>
                   <div className='flex md:hidden text-white text-sm font-semibold'>{`${shorten(
                     account?.activeWalletAddress,
                     8,
                     8
                   )}`}</div>
-                  <div className='md:flex hidden text-white text-sm font-semibold'>
-                    {account?.activeWalletAddress}
-                  </div>
+                  <div className='md:flex hidden text-white text-sm font-semibold'>{account?.activeWalletAddress}</div>
 
                   <Image className='cursor-pointer' onClick={copyAddress} width={18} height={18} src={CopySvg} alt='' />
                 </div>

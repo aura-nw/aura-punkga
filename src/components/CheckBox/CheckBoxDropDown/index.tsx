@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import { FormControl, Popover, List, ListItem, Checkbox, ListItemText, ListItemIcon } from '@mui/material'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import { Checkbox, FormControl, List, ListItem, ListItemIcon, ListItemText, Popover } from '@mui/material'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useRouter } from 'next/router'
 
-const CheckboxDropdown = ({ options, selected, onChange, allKey = null, multiple = true }) => {
+const CheckboxDropdown = ({ options, selected, onChange, allKey = null, multiple = true, optionClassName = '', arrowClassName = '' }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const [internalSelected, setInternalSelected] = useState(selected)
   const { t } = useTranslation()
@@ -63,20 +62,15 @@ const CheckboxDropdown = ({ options, selected, onChange, allKey = null, multiple
     <FormControl className='w-full'>
       <div
         onClick={handleClick}
-        className='text-text-teriary text-sm font-medium leading-5 flex gap-[6px] cursor-pointer w-full items-center'>
-        <div className='min-w-[70px] whitespace-nowrap'>
+        className='text-sm font-medium leading-5 flex gap-[6px] cursor-pointer w-full items-center'>
+        <div className={`min-w-[70px] whitespace-nowrap ${optionClassName}`}>
           {multiple
             ? options.find((option) => option.key == allKey)?.value
             : internalSelected?.[0]?.value || internalSelected?.[0]?.key}
         </div>
-        <KeyboardArrowDownIcon />
+        <KeyboardArrowDownIcon className={`${arrowClassName}`} />
       </div>
       <Popover
-        sx={{
-          '& .MuiPaper-root': {
-            boxShadow: '0px 4px 8px 0px #0000000D',
-          },
-        }}
         className='p-0 mt-2'
         open={open}
         anchorEl={anchorEl}
@@ -85,7 +79,7 @@ const CheckboxDropdown = ({ options, selected, onChange, allKey = null, multiple
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        <List className='top-0 left-0 absolute z-10 mt-1 max-h-[248px] w-[278px] whitespace-nowrap rounded-[4px] overflow-auto bg-white text-sm focus:outline-none border-[1px] border-[#E4E5F0] text-[#4E5056]'>
+        <List className='top-0 left-0 absolute z-10 mt-1 max-h-[248px] w-[278px] whitespace-nowrap rounded-[4px] overflow-auto bg-neutral-black text-sm focus:outline-none border border-neutral-950'>
           {options.map((option) => (
             <ListItem
               key={option.key}
@@ -107,14 +101,14 @@ const CheckboxDropdown = ({ options, selected, onChange, allKey = null, multiple
                   tabIndex={-1}
                   disableRipple
                   sx={{
-                    color: '#D1D1D1',
+                    color: '#fff',
                     '&.Mui-checked': {
                       color: '#10B970',
                     },
                   }}
                 />
               </ListItemIcon>
-              <ListItemText primary={option.value} className='text-sm text-[#4E5056]' />
+              <ListItemText primary={option.value} className='text-sm text-white' />
             </ListItem>
           ))}
         </List>

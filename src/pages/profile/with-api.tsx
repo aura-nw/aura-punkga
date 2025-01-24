@@ -10,7 +10,7 @@ import { getItem } from 'src/utils/localStorage'
 const withApi = (Component: React.FC<any>) => (props: any) => {
   const { account } = useContext(Context)
   const config = getConfig()
-  const getSubscribeList = async () => {
+  const getSubscriptionList = async () => {
     const res: any = await axios.get(`${config.API_URL}/api/rest/public/profiles/${account?.id}/subscribe`)
     return res.data?.subscribers?.map(({ subscribers_manga: m }: any) => {
       const response = {
@@ -156,7 +156,7 @@ const withApi = (Component: React.FC<any>) => (props: any) => {
     await privateAxios.put(`${config.REST_API_URL}/user/update-profile`, data)
   }
 
-  const subscribeList = useApi<IComic[]>(getSubscribeList, !!account?.id && !!account?.verified, [
+  const subscribeList = useApi<IComic[]>(getSubscriptionList, !!account?.id && !!account?.verified, [
     account?.id,
     account?.verified,
   ])

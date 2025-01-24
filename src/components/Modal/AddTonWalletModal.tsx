@@ -1,4 +1,4 @@
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import OutlineTextField from 'components/Input/TextField/Outline'
 import { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'

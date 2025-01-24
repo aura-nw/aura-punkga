@@ -1,5 +1,5 @@
 import Mascot from 'assets/images/Mascot_5_1.png'
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import Modal from 'components/core/Modal'
 import Spinner from 'components/Spinner'
 import getConfig from 'next/config'

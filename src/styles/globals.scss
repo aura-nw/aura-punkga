@@ -312,3 +312,15 @@ input[type='password']::-ms-clear {
   width: 6px !important;
   height: 6px !important;
 }
+.medium-zoom-overlay,
+.medium-zoom-image--opened {
+  z-index: 999999;
+}
+
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

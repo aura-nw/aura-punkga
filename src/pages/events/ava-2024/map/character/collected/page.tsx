@@ -7,7 +7,7 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useSWR from 'swr'
 
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import Modal from 'components/pages/event/ava-2024/Modal'
 import RuleAndAward from 'components/pages/event/ava-2024/RuleAndAward'
 import Map from 'components/pages/event/ava-2024/assets/Map.svg'

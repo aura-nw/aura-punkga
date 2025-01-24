@@ -1,6 +1,6 @@
 import Modal from 'components/Modal'
 import Tooltip from 'components/Tooltip'
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import BannerDesktop from 'components/pages/event/kaia-island/assets/desktop-banner.png'
 import BannerDesktopVN from 'components/pages/event/kaia-island/assets/desktop-banner-vn.png'
 import Artworks from 'components/pages/event/kaia-island/Artwork'

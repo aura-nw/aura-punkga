@@ -1,6 +1,6 @@
 import { Box, Modal } from '@mui/material'
 import OutlineTextField from 'components/Input/TextField/Outline'
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import SuccessImg from 'images/Mascot2.png'
 import CheckSquare from 'images/icons/check_square_fill.svg'
 import _ from 'lodash'

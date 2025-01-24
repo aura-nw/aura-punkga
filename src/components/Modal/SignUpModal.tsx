@@ -1,14 +1,12 @@
-import { Transition } from '@headlessui/react'
-import FilledButton from 'components/Button/FilledButton'
+import MainButton from 'components/Button/MainButton'
 import OutlineTextField from 'components/Input/TextField/Outline'
+import CheckSquare from 'images/icons/check_square_fill.svg'
 import Image from 'next/image'
 import { useContext, useEffect, useRef, useState } from 'react'
-import { Context } from 'src/context'
-import { validateEmail, validatePassword } from 'src/utils'
-import CheckSquare from 'images/icons/check_square_fill.svg'
 import { useTranslation } from 'react-i18next'
-import MainButton from 'components/Button/MainButton'
+import { Context } from 'src/context'
 import { ModalContext } from 'src/context/modals'
+import { validateEmail, validatePassword } from 'src/utils'
 export default function SignUpModal() {
   const [email, setEmail] = useState('')
   const [emailValidateErrorMsg, setEmailValidateErrorMsg] = useState('')
@@ -92,7 +90,7 @@ export default function SignUpModal() {
   }
   if (!show) return <></>
   return (
-    <div className='p-6 md:w-[400px]'>
+    <div className='p-6 w-[90vw] md:w-[720px] md:max-w-[720px]'>
       <p className='text-center text-xl font-bold leading-6'>{t('Sign up to Punkga.me')}</p>
       <p className='text-center text-xs leading-[15px] max-w-[226px] mx-auto mt-1 text-[#61646B'>
         {t('Subscribe, receive notifications and unlock special chapters')}

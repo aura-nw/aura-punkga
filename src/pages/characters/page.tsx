@@ -1,5 +1,5 @@
 import UploadUpIcon from 'assets/images/icons/upload-up.svg'
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import TextField from 'components/Input/TextField'
 import Character from 'components/pages/characters/Character'
 import CharacterDetail from 'components/pages/characters/CharacterDetail'
@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { toast } from 'react-toastify'
 import { Context } from 'src/context'
-import { ListContext } from 'src/context/list'
+import { ListContext } from 'src/context/characterList'
 import { eventService } from 'src/services/eventService'
 import { useWindowSize } from 'usehooks-ts'
 export default function Page(props) {
@@ -170,7 +170,7 @@ function PageContent() {
       {width >= 768 ? (
         <Modal open={openCharacterDetail} setOpen={setOpenCharacterDetail}>
           <div className='w-screen max-w-screen-2xl relative mx-auto flex items-center gap-4'>
-<div className='absolute top-0 right-5 cursor-pointer'>
+            <div className='absolute top-0 right-5 cursor-pointer'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 width='24'

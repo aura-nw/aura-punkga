@@ -1,5 +1,5 @@
 import { Pagination } from '@mui/material'
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import IPModal from 'components/pages/event/ava-2024/IPModal'
 import RuleAndAward from 'components/pages/event/ava-2024/RuleAndAward'
 import Background from 'components/pages/event/ava-2024/assets/Main_Map.png'

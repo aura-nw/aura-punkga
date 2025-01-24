@@ -1,4 +1,4 @@
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import Countdown, { zeroPad } from 'react-countdown'
@@ -10,7 +10,7 @@ export default function FreeQuest({
   claimQuestHandler,
   checkQuestHandler,
   checking,
-  status
+  status,
 }: {
   quest: Quest
   loading: boolean
@@ -20,7 +20,7 @@ export default function FreeQuest({
   claimQuestHandler: () => void
 }) {
   const { t } = useTranslation()
-  const { locale} = useRouter()
+  const { locale } = useRouter()
 
   return (
     <div className='mt-5 w-full'>

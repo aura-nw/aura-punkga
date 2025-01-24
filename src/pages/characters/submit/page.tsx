@@ -1,5 +1,5 @@
 import UploadUpIcon from 'assets/images/icons/upload-up.svg'
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import Checkbox from 'components/core/Checkbox'
 import Modal from 'components/core/Modal'
 import TextField from 'components/Input/TextField'

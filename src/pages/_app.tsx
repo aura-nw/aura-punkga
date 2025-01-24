@@ -23,7 +23,6 @@ import 'src/styles/globals.scss'
 import { WagmiProvider } from 'wagmi'
 const ws = Work_Sans({ subsets: ['latin', 'vietnamese'] })
 export const inter = Inter({ subsets: ['latin', 'vietnamese'] })
-
 const orbitron = localFont({
   src: [
     {
@@ -81,6 +80,25 @@ const jaro = localFont({
     },
   ],
 })
+const digitalNumber = localFont({
+  src: [
+    {
+      path: '../assets/fonts/DigitalNumbers-Regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+})
+const blackHanSans = localFont({
+  src: [
+    {
+      path: '../assets/fonts/BlackHanSans-Regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+})
+
 function MyApp(props: AppProps) {
   const [isSetting, setIsSetting] = useState(true)
   const { locale } = useRouter()
@@ -90,6 +108,7 @@ function MyApp(props: AppProps) {
   }, [])
   const init = async () => {
     const { data: config } = await axios.get('/config.json')
+    window.history.scrollRestoration = 'auto'
     setConfig(config)
     setWagmiConfig(getWagmiConfig(config.WALLET_CONNECT_PROJECT_ID))
     setIsSetting(false)
@@ -147,6 +166,12 @@ function MyApp(props: AppProps) {
         }
         .font-jaro {
           font-family: ${jaro.style.fontFamily};
+        }
+        .font-digital-number {
+          font-family: ${digitalNumber.style.fontFamily};
+        }
+        .font-black-han-sans {
+          font-family: ${blackHanSans.style.fontFamily};
         }
       `}</style>
       <ToastContainer />

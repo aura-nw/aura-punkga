@@ -1,4 +1,4 @@
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import _ from 'lodash'
 import moment from 'moment'
 import { useRouter } from 'next/router'
@@ -108,7 +108,13 @@ export default function QuizQuest({
                 }
               })()} ${answer}`}
               {correctAnswerIndex == index && (
-                <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none' className='shrink-0 w-5'>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='20'
+                  height='20'
+                  viewBox='0 0 20 20'
+                  fill='none'
+                  className='shrink-0 w-5'>
                   <path
                     d='M12.6183 8.31916L9.0625 11.875L7.85041 10.6629M10 2.5C5.85786 2.5 2.5 5.85786 2.5 10C2.5 14.1421 5.85786 17.5 10 17.5C14.1421 17.5 17.5 14.1421 17.5 10C17.5 5.85786 14.1421 2.5 10 2.5Z'
                     stroke='#00e160'

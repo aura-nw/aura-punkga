@@ -24,13 +24,13 @@ export default function Manga(props: IComic) {
   return (
     <Link
       href={width < 1280 ? `/comic/${props.slug}` : `/comic/${props.slug}/chapter/1`}
-      className='w-full block aspect-[16/23] rounded-md relative overflow-hidden'>
+      className='w-full flex flex-col rounded-md relative overflow-hidden bg-black'>
       <Image
         src={props.image || NoImage}
         alt=''
         width={180}
         height={240}
-        className={`w-full aspect-[16/23] ${props.image ? 'object-cover' : 'object-contain bg-light-gray'} rounded-t`}
+        className={`w-full aspect-[0.7/1] ${props.image ? 'object-cover' : 'object-contain bg-light-gray'} rounded-t`}
       />
 
       {props.status.text && props.status.text != 'Ongoing' && (
@@ -46,7 +46,7 @@ export default function Manga(props: IComic) {
           )}
         </>
       )}
-      <div className='absolute inset-x-0 bottom-0 p-2.5 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_6.71%,#000_76.24%)] h-[102px] flex flex-col justify-end gap-0.5'>
+      <div className='p-2.5 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_6.71%,#000_76.24%)] h-1/5 flex flex-col justify-end gap-0.5'>
         <div className='text-sm text-text-white font-medium line-clamp-2'>{props[locale].title}</div>
         <div className='flex text-text-white gap-1 whitespace-nowrap text-ellipsis overflow-hidden text-xs font-medium leading-[18px]'>
           {t('by')}{' '}

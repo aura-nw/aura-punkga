@@ -1,4 +1,4 @@
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import Modal from 'components/core/Modal'
 import KPImage from 'components/pages/campaigns/assets/ic_Kp.svg'
 import XPImage from 'components/pages/campaigns/assets/illus.svg'

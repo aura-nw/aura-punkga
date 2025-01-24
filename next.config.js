@@ -2,6 +2,9 @@ const { i18n } = require('./next-i18next.config')
 
 module.exports = {
   i18n,
+  experimental: {
+    scrollRestoration: true,
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -22,5 +25,5 @@ module.exports = {
     ],
     unoptimized: true,
   },
-  output: "standalone"
+  output: 'standalone',
 }

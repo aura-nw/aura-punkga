@@ -791,3 +791,10 @@ export const getMintNftSignature = async (id: string) => {
     throw error
   }
 }
+export const getStatistic = async (id: string) => {
+  try {
+    return await privateAxios.get(`${getConfig().REST_API_URL}/statistic/explore`)
+  } catch (error) {
+    throw error
+  }
+}

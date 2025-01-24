@@ -1,5 +1,5 @@
 import Popover from 'components/Popover'
-import Button from 'components/core/Button/Button'
+import Button from 'components/core/Button'
 import Chip, { PlaceholderChip } from 'components/core/Chip'
 import KPImage from 'components/pages/campaigns/assets/ic_Kp.svg'
 import XPImage from 'components/pages/campaigns/assets/illus.svg'

@@ -17,7 +17,7 @@
   "API_URL": "https://hasura.punkga.me",
   "AUTHORIZER_URL": "https://auth.punkga.me",
   "AUTHORIZER_CLIENT_ID": "06c9c437-15cd-4240-b435-5d16206b46c6",
-  "ADMIN_URL": "https://admin.punkga.me",
+  "ADMIN_URL": "https://creator.punkga.me",
   "REST_API_URL": "https://api.punkga.me",
   "IN_MAINTENANCE_MODE": false,
   "GTM_ID": "GTM-5N2X4HSN",

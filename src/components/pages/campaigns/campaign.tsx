@@ -67,10 +67,19 @@ export default function CampaignPage() {
     }
   }
   return (
-    <div className='pk-container'>
-      <div className='sticky md:top-[80px] top-[54px] pb-8 pt-5 md:pt-8 bg-gray-50'>
+    <div className='bg-background text-white pk-container'>
+      <div className='sticky md:top-[80px] top-[54px] p-4 md:pt-8 bg-background '>
         <div className='flex md:items-center justify-between flex-wrap flex-col md:flex-row gap-4'>
-          <div className='text-lg leading-[26px] md:text-xl font-medium whitespace-nowrap'>
+          <div onClick={() => router.back()} className='flex z-10 items-center gap-3 text-xl font-medium '>
+            <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>
+              <path
+                d='M15 17L10 12L15 7'
+                stroke='white'
+                strokeWidth='1.5'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              />
+            </svg>
             {t('Campaign')} <span className=''>{` (${list.length})`}</span>
           </div>
           {list.length > 0 && (
@@ -147,7 +156,7 @@ export default function CampaignPage() {
         </div>
       </div>
       {list.length > 0 ? (
-        <div className='grid mt-0.5 grid-cols-1 lg:grid-cols-2 gap-4 xl:gap-x-8 xl:gap-y-4 xl:grid-cols-3'>
+        <div className='grid mt-0.5 grid-cols-1 lg:grid-cols-2 gap-4 xl:gap-x-8 xl:gap-y-4 xl:grid-cols-3 p-4'>
           {list?.map((campaign, index) => {
             const expImage =
               campaign.campaign_chain?.punkga_config?.reward_point_name == 'KP'
@@ -158,7 +167,7 @@ export default function CampaignPage() {
             return (
               <div
                 key={index}
-                className='cursor-pointer p-4 flex gap-5 bg-white border border-border-teriary rounded-mlg md:min-h-[206px] min-h-[229px] hover:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.10)]'
+                className='cursor-pointer p-4 flex gap-5 bg-neutral-black border border-neutral-950 rounded-mlg md:min-h-[206px] min-h-[200px] hover:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.10)]'
                 onClick={() => clickHandler(campaign.slug)}>
                 <div className='flex flex-col justify-between flex-1 max-w-[calc(100%-156px)]'>
                   <div className='flex flex-col'>
@@ -185,11 +194,11 @@ export default function CampaignPage() {
                         {campaign[locale].name}
                       </div>
                       <div
-                        className=' text-text-teriary mt-1 xl:mt-3 line-clamp-3 max-h-[60px] overflow-hidden text-sm max-w'
+                        className=' text-text-quatenary mt-1 xl:mt-3 line-clamp-3 max-h-[60px] overflow-hidden text-sm max-w'
                         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(campaign[locale].description) }}></div>
                     </div>
                   </div>
-                  <div className='text-sm text-text-teriary mt-3'>
+                  <div className='text-sm text-text-quatenary mt-3'>
                     {moment(campaign.start_date).isAfter() ? (
                       <Countdown
                         date={campaign.start_date}
@@ -252,7 +261,7 @@ export default function CampaignPage() {
                   </div>
                 </div>
                 <div className='flex flex-col gap-1.5 items-center'>
-                  <div className='reward rounded-mlg bg-[#F0F0F0] p-2.5 w-[130px] shrink-0 min-h-[130px] gap-1.5 flex flex-col justify-center items-center'>
+                  <div className='reward rounded-mlg bg-neutral-900 p-2.5 w-[130px] shrink-0 min-h-[130px] gap-1.5 flex flex-col justify-center items-center'>
                     {campaign?.reward?.nft?.nft_name ? (
                       <>
                         <Image
@@ -262,7 +271,7 @@ export default function CampaignPage() {
                           alt=''
                           className='w-[80px] h-[80px] rounded-lg object-cover'
                         />
-                        <div className='text-xs leading-[18px] text-text-teriary w-[110px] truncate text-center'>
+                        <div className='text-xs leading-[18px] text-text-quatenary w-[110px] truncate text-center'>
                           {campaign?.reward?.nft?.nft_name}
                         </div>
                       </>
@@ -270,14 +279,16 @@ export default function CampaignPage() {
                       <Image src={expImage} width={80} height={80} alt='' className='w-[80px] h-[80px] rounded-lg' />
                     )}
                     {!!campaign?.reward?.xp && campaign?.reward?.nft?.nft_name ? (
-                      <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${campaign?.reward?.xp} ${campaign.campaign_chain?.punkga_config?.reward_point_name||'XP'}`}</div>
+                      <div className='rounded pt-0.5 bg-neutral-white min-w-[76px] text-center text-text-brand-defaul font-bold text-xs leading-[15px]'>{`+ ${
+                        campaign?.reward?.xp
+                      } ${campaign.campaign_chain?.punkga_config?.reward_point_name || 'XP'}`}</div>
                     ) : (
-                      <div className='text-text-teriary text-center font-semibold'>{`+ ${campaign?.reward?.xp || 0} ${
+                      <div className='text-text-quatenary text-center font-semibold'>{`+ ${campaign?.reward?.xp || 0} ${
                         campaign.campaign_chain?.punkga_config?.reward_point_name || 'XP'
                       }`}</div>
                     )}
                   </div>
-                  <div className='text-xs text-text-teriary text-center md:leading-[18px]'>
+                  <div className='text-xs text-text-quatenary text-center md:leading-[18px]'>
                     {t('Bonus to')} {t('1st place')}
                   </div>
                 </div>

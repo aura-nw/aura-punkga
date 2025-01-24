@@ -2,8 +2,7 @@ import Logo from 'assets/images/header-logo.svg'
 import SearchIcon from 'assets/images/icons/search.svg'
 import TextField from 'components/Input/TextField'
 import Spinner from 'components/Spinner'
-import Button from 'components/core/Button/Button'
-import Menu from 'images/icons/menu.svg'
+import Button from 'components/core/Button'
 import NoImage from 'images/no_img.png'
 import _ from 'lodash'
 import { useTranslation } from 'next-i18next'
@@ -18,8 +17,7 @@ import { useClickOutside } from 'src/hooks/useClickOutside'
 import { search } from 'src/services'
 import { useAccount } from 'wagmi'
 import Bg from './assets/bg.svg'
-import Drawer from './components/Drawer'
-import UserDropdown from './components/UserDropdown'
+import UserDropdown from '../Layout/components/UserDropdown'
 export const HEADER_HEIGHT = {
   MOBILE: '56px',
   DESKTOP: '80px',
@@ -95,41 +93,8 @@ export default function Header({ className }: { className?: string }) {
         }`}></div>
       <header
         className={`sticky w-full top-0 z-50 transition-all duration-300 xl:h-20 bg-neutral-black xl:bg-transparent ${className}`}>
-        <nav className='xl:hidden pk-container z-10 w-full shadow-[0px_4px_4px_0px_#0000001A]'>
-          <div className='flex justify-between items-center gap-2 w-full h-14'>
-            <div onClick={() => router.push('/')}>
-              <Image src={Logo} alt='header logo' className='h-[30px] w-auto' />
-            </div>
-            <div>
-              <div className='flex items-center gap-4'>
-                {account?.verified && account?.name ? (
-                  !account?.noncustodialWalletAddress ? (
-                    <Button size='xs' color='neutral' onClick={() => setMigrateWalletOpen(true)}>
-                      {t('Connect Wallet')}
-                    </Button>
-                  ) : (
-                    (address != account?.activeWalletAddress || !isConnected) && (
-                      <Button size='xs' color='neutral' onClick={() => setWalletConnectOpen(true)}>
-                        {t('Connect Wallet')}
-                      </Button>
-                    )
-                  )
-                ) : (
-                  <Button size='xs' color='neutral' onClick={() => setSignInOpen(true)}>
-                    {t('Sign in')}
-                  </Button>
-                )}
-                <div className='w-6 h-6 relative'>
-                  <Image src={Menu} alt='menu icon' width={24} height={24} onClick={() => setOpenNavigation(true)} />
-                </div>
-              </div>
-            </div>
-          </div>
-          {openNavigation && <Drawer openNavigation={openNavigation} setOpenNavigation={setOpenNavigation} />}
-        </nav>
-
         <div
-          className={`xl:hidden pk-container py-[10px] px-5 pb-4 bg-[#F4F3F7] ${
+          className={`xl:hidden pk-container py-[10px] px-5 pb-4 bg-neutral-black ${
             router.pathname == '/' ? '' : 'hidden'
           }`}>
           <div ref={divRef} className={`${isSearchFocused ? 'z-30' : ''} w-full xl:max-w-max relative`}>
