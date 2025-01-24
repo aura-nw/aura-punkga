@@ -149,7 +149,10 @@ const Character = ({ data }) => {
         <div className='absolute hidden w-full bottom-0 p-2 lg:pt-10 lg:p-4 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_6.71%,#000_76.24%)]'>
           <div className='text-sm font-bold text-white'>{data?.name || 'Unknown artwork title'}</div>
           <div className='text-sm font-medium text-white'>
-            by <span className='text-text-brand-hover'>{data?.creator?.pen_name || 'Unknown creator'}</span>
+            by{' '}
+            <span className='text-text-brand-hover'>
+              {data?.authorizer_user?.creator?.pen_name || data?.authorizer_user?.nickname || 'Unknown creator'}
+            </span>
           </div>
         </div>
       </div>
