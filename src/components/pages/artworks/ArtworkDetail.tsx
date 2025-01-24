@@ -1,5 +1,6 @@
 import Copy2Clipboard from 'components/Copy2Clipboard'
 import Dropdown, { DropdownMenu, DropdownToggle } from 'components/Dropdown'
+import { ImageZoom } from 'components/Image/ImageZoom'
 import DOMPurify from 'dompurify'
 import getConfig from 'next/config'
 import Image from 'next/image'
@@ -41,7 +42,9 @@ export default function ArtworkDetail({ data }) {
   }
   return (
     <div>
-      <Image src={data.url} alt='' className='w-full aspect-square object-cover' width={500} height={500} />
+      <div className='w-full overflow-hidden max-h-[70vh]'>
+        <ImageZoom src={data.url} width={3000} height={3000} alt='' className='' />
+      </div>
       <div className='mt-4'>
         <div className='h-8 flex items-center justify-between'>
           <div onClick={likeHandler} className='cursor-pointer flex items-center gap-1 text-sm font-semibold'>

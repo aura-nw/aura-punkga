@@ -45,35 +45,42 @@ function PageContent() {
     fetchRelatedArtwork();
   }, []);
   return (
-    <div className="bg-background min-h-screen text-white">
-      <div className="md:container md:mx-auto lg:w-[30%]">
+    <div className='bg-background min-h-screen text-white'>
+      <div className='md:container md:mx-auto lg:w-[30%]'>
         {width < 768 && (
-          <div onClick={() => router.back()} className="flex sticky top-14 p-4 bg-background z-10 items-center gap-3 text-sm font-medium ">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M15 17L10 12L15 7" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <div
+            onClick={() => router.push('/')}
+            className='flex sticky top-14 p-4 bg-background z-10 items-center gap-3 text-sm font-medium '>
+            <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>
+              <path
+                d='M15 17L10 12L15 7'
+                stroke='white'
+                strokeWidth='1.5'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              />
             </svg>
             Back
           </div>
         )}
         {artworkData && (
-          <div className="px-4">
+          <div className='px-4'>
             <ArtworkDetail data={artworkData} />
           </div>
         )}
         <InfiniteScroll
-          className="px-4 space-y-10 mt-10 md:mt-0 md:pt-10"
+          className='px-4 space-y-10 mt-10 md:mt-0 md:pt-10'
           dataLength={relatedList.length}
           next={fetchRelatedArtwork}
           hasMore={remaining}
-          loader={<h4 className="w-full text-center font-medium text-sm">Loading...</h4>}
-        >
+          loader={<h4 className='w-full text-center font-medium text-sm'>Loading...</h4>}>
           {relatedList?.map((artwork, index) => (
             <ArtworkDetail data={artwork} key={index} />
           ))}
         </InfiniteScroll>
       </div>
     </div>
-  );
+  )
 }
 
 export const getServerSideProps = async ({ locale }) => ({
