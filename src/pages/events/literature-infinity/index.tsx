@@ -34,7 +34,7 @@ const PageContent = () => {
     return (
       <div className='min-h-screen bg-background-bg-primary relative'>
         <Image src={BannerDesktop} alt='' className='w-screen h-auto' />
-        <div className='pk-container py-4 grid grid-cols-[65%_auto] gap-8'>
+        <div className='pk-container py-4 grid min-[1490px]:grid-cols-[65%_auto] gap-8'>
           <div className='gap-4 flex justify-between flex-col h-full'>
             <div>
               <div className='text-xl font-medium flex items-center gap-1.5'>

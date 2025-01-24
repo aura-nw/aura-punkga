@@ -71,6 +71,91 @@ const PageContent = () => {
               </div>
             </div>
           </div>
+          {width >= 1024 ? (
+            <Image src={Mascot4} alt='' className='w-40 h-auto mt-12' />
+          ) : (
+            <div className='flex flex-col items-center gap-4 bg-white rounded-md p-4 w-full'>
+              <Image src={Mascot4} alt='' className='w-40 h-auto' />
+              <Link
+                href={`${getConfig().ADMIN_URL}`}
+                target='_blank'
+                className='w-full h-10 px-3 py-2 bg-white rounded-lg border border-[#d1d1d1] flex-col justify-center items-start gap-3 inline-flex'>
+                <div className='self-stretch justify-start items-center gap-1.5 inline-flex'>
+                  <svg width='21' height='21' viewBox='0 0 21 21' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                    <path
+                      d='M6.64851 8.74164L4.7873 10.6028C4.09219 11.298 3.69246 12.2438 3.69976 13.2378C3.70707 14.2318 4.09805 15.1834 4.82615 15.889C5.53172 16.6171 6.48349 17.0081 7.47734 17.0154C8.49386 17.0228 9.41728 16.6456 10.1124 15.9505L11.9736 14.0893M14.351 11.7574L16.2122 9.89619C16.9073 9.20108 17.3071 8.25528 17.2997 7.26127C17.2924 6.26725 16.9015 5.31568 16.1734 4.61007C15.468 3.90467 14.5163 3.51366 13.5223 3.50635C12.5283 3.49905 11.5824 3.87609 10.8872 4.57122L9.02603 6.43244M7.67734 13.0222L13.261 7.43852'
+                      stroke='#6D6D6D'
+                      stroke-width='1.5'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                  </svg>
+
+                  <div className='grow shrink basis-0 text-[#2d72fb] text-sm font-normal  leading-tight'>
+                    creator.punkga.me
+                  </div>
+                  <svg width='21' height='21' viewBox='0 0 21 21' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                    <path
+                      d='M17.167 11.1876L17.167 5.75003C17.167 4.09317 15.8238 2.75002 14.167 2.75003L8.72949 2.7501M12.167 17.7501L6.54199 17.7501C5.50646 17.7501 4.66699 16.9106 4.66699 15.8751L4.66699 7.7501C4.66699 6.71456 5.50646 5.8751 6.54199 5.8751L12.167 5.87509C13.2025 5.87509 14.042 6.71456 14.042 7.75009L14.042 15.8751C14.042 16.9106 13.2025 17.7501 12.167 17.7501Z'
+                      stroke='#2D72FB'
+                      stroke-width='1.5'
+                      stroke-linecap='round'
+                    />
+                  </svg>
+                </div>
+              </Link>
+              <div className='text-[#4f4f4f] text-sm font-normal  leading-tight'>
+                Round 2 manga submissions will be made through the Creator Portal (desktop version). Feel free to
+                explore the portal beforehand.
+              </div>
+            </div>
+          )}
+        </div>
+      ) : (
+        <ListComic />
+      )}
+    </div>
+  )
+}
+const ListComic = () => {
+  const { width } = useWindowSize()
+  const [comicList, setComicList] = useState([])
+  const [offset, setOffset] = useState(0)
+  const [remaining, setRemaining] = useState(true)
+  useEffect(() => {
+    fetchCharacter()
+  }, [])
+  const fetchCharacter = async () => {
+    try {
+      const data = await contentService.comic.getLatestComic(20, offset, [1083])
+      if (data.length) {
+        setComicList([...comicList, ...data])
+        setOffset(offset + 20)
+        setRemaining(true)
+      } else {
+        setRemaining(false)
+      }
+    } catch (error) {
+      toast(error.message, {
+        type: 'error',
+      })
+    }
+  }
+  return (
+    <div className='p-4'>
+      {width >= 1024 ? (
+        <>
+          <Button className='w-full xl:max-w-80 xl:mx-auto'>
+            <Link href={`${getConfig().ADMIN_URL}/creator/literature-infinity`}>Go to Creator Portal</Link>
+          </Button>
+          <Rule>
+            <div className='text-center xl:max-w-80 xl:mx-auto text-[#5c9efe] text-xs font-medium underline leading-[18px] mt-3'>
+              View rules and reward
+            </div>
+          </Rule>
+        </>
+      ) : (
+        <>
           <div className='flex flex-col items-center gap-4 bg-white rounded-md p-4 w-full'>
             <Image src={Mascot4} alt='' className='w-40 h-auto' />
             <Link
@@ -106,76 +191,8 @@ const PageContent = () => {
               the portal beforehand.
             </div>
           </div>
-        </div>
-      ) : (
-        <>
-          <div className='p-4'>
-            <div className='flex flex-col items-center gap-4 bg-white rounded-md p-4 w-full max-w-screen-sm mx-auto'>
-              <Link
-                href={`${getConfig().ADMIN_URL}`}
-                target='_blank'
-                className='w-full h-10 px-3 py-2 bg-white rounded-lg border border-[#d1d1d1] flex-col justify-center items-start gap-3 inline-flex'>
-                <div className='self-stretch justify-start items-center gap-1.5 inline-flex'>
-                  <svg width='21' height='21' viewBox='0 0 21 21' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                    <path
-                      d='M6.64851 8.74164L4.7873 10.6028C4.09219 11.298 3.69246 12.2438 3.69976 13.2378C3.70707 14.2318 4.09805 15.1834 4.82615 15.889C5.53172 16.6171 6.48349 17.0081 7.47734 17.0154C8.49386 17.0228 9.41728 16.6456 10.1124 15.9505L11.9736 14.0893M14.351 11.7574L16.2122 9.89619C16.9073 9.20108 17.3071 8.25528 17.2997 7.26127C17.2924 6.26725 16.9015 5.31568 16.1734 4.61007C15.468 3.90467 14.5163 3.51366 13.5223 3.50635C12.5283 3.49905 11.5824 3.87609 10.8872 4.57122L9.02603 6.43244M7.67734 13.0222L13.261 7.43852'
-                      stroke='#6D6D6D'
-                      stroke-width='1.5'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                    />
-                  </svg>
-
-                  <div className='grow shrink basis-0 text-[#2d72fb] text-sm font-normal  leading-tight'>
-                    creator.punkga.me
-                  </div>
-                  <svg width='21' height='21' viewBox='0 0 21 21' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                    <path
-                      d='M17.167 11.1876L17.167 5.75003C17.167 4.09317 15.8238 2.75002 14.167 2.75003L8.72949 2.7501M12.167 17.7501L6.54199 17.7501C5.50646 17.7501 4.66699 16.9106 4.66699 15.8751L4.66699 7.7501C4.66699 6.71456 5.50646 5.8751 6.54199 5.8751L12.167 5.87509C13.2025 5.87509 14.042 6.71456 14.042 7.75009L14.042 15.8751C14.042 16.9106 13.2025 17.7501 12.167 17.7501Z'
-                      stroke='#2D72FB'
-                      stroke-width='1.5'
-                      stroke-linecap='round'
-                    />
-                  </svg>
-                </div>
-              </Link>
-              <div className='text-[#4f4f4f] text-sm font-normal  leading-tight'>
-                Round 2 manga submissions will be made through the Creator Portal (desktop version). Feel free to
-                explore the portal beforehand.
-              </div>
-            </div>
-          </div>
-          <ListComic />
         </>
       )}
-    </div>
-  )
-}
-const ListComic = () => {
-  const [comicList, setComicList] = useState([])
-  const [offset, setOffset] = useState(0)
-  const [remaining, setRemaining] = useState(true)
-  useEffect(() => {
-    fetchCharacter()
-  }, [])
-  const fetchCharacter = async () => {
-    try {
-      const data = await contentService.comic.getLatestComic(20, offset, [1083])
-      if (data.length) {
-        setComicList([...comicList, ...data])
-        setOffset(offset + 20)
-        setRemaining(true)
-      } else {
-        setRemaining(false)
-      }
-    } catch (error) {
-      toast(error.message, {
-        type: 'error',
-      })
-    }
-  }
-  return (
-    <div className='p-4'>
       <div className='mt-8'>
         <div className='text-[#3d3d3d] text-lg font-medium leading-relaxed'>Submission</div>
         {comicList.length ? (
