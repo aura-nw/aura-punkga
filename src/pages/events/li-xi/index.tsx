@@ -19,12 +19,12 @@ Page.getLayout = function getLayout(page) {
 };
 export const getServerSideProps = async (context) => {
   const props = {
-    image:
-      context.locale == "vn"
-        ? "/assets/images/kaia-island-thumb-vn.png"
-        : "/assets/images/kaia-island-thumb.png",
+    image: "/assets/images/poster-li-xi.webp",
     title: context.locale == "vn" ? `Lì Xì` : `Lì Xì`,
-    description: context.locale == "vn" ? `Lì Xì` : `Lì Xì`,
+    description:
+      context.locale == "vn"
+        ? `Lì Xì - Sự kiện đặc biệt dành cho cộng đồng PunkgaMe!`
+        : `Li Xi - Special event for the PunkgaMe community!`,
   };
   return {
     props: {
