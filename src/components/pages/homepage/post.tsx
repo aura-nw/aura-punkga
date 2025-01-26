@@ -91,14 +91,14 @@ if (data.type == "Character") {
           <div className='flex items-center gap-4'>
             <div className='w-10 h-10 relative shrink-0'>
               <Image
-                src={data.manga.manga_creators[1].creator.avatar_url || UserGreen}
+                src={data.manga.manga_creators[1].creator?.avatar_url || UserGreen}
                 alt=''
                 width={40}
                 height={40}
                 className='w-7 h-7 rounded-full object-cover absolute top-0 right-0'
               />
               <Image
-                src={data.manga.manga_creators[0].creator.avatar_url || UserGreen}
+                src={data.manga.manga_creators[0].creator?.avatar_url || UserGreen}
                 alt=''
                 width={40}
                 height={40}
@@ -117,7 +117,7 @@ if (data.type == "Character") {
         ) : (
           <Link href={`/artist/${data.manga.manga_creators[0].creator.slug}`} className='flex items-center gap-4'>
             <Image
-              src={data.manga.manga_creators[0].creator.avatar_url || UserGreen}
+              src={data.manga.manga_creators[0].creator?.avatar_url || UserGreen}
               alt=''
               width={40}
               height={40}
@@ -262,7 +262,7 @@ if (data.type == "Artwork") {
       <div className='space-y-4 md:bg-neutral-950 md:p-4 md:rounded-lg'>
         <Link href={`/artist/${data.artwork.creator.slug}`} className='flex items-center gap-4'>
           <Image
-            src={data.artwork.creator.avatar_url || UserGreen}
+            src={data.artwork.creator?.avatar_url || UserGreen}
             alt=''
             width={40}
             height={40}
@@ -397,7 +397,7 @@ if (data.type == "Character") {
       <div className='space-y-4 md:bg-neutral-950 md:p-4 md:rounded-lg'>
         <div className='flex items-center gap-4'>
           <Image
-            src={data.character.authorizer_user.creator.avatar_url || UserGreen}
+            src={data.character.authorizer_user.creator?.avatar_url || UserGreen}
             alt=''
             width={40}
             height={40}
@@ -405,7 +405,7 @@ if (data.type == "Character") {
           />
           <div className='space-y-1'>
             <div className='text-sm font-semibold text-text-brand-focus'>
-              {data.character.authorizer_user.creator.pen_name || data.character.authorizer_user.creator.name}
+              {data.character.authorizer_user.creator?.pen_name || data.character.authorizer_user.creator?.name || data.character.authorizer_user.nickname }
             </div>
             <div className='text-xxs text-neutral-400'>{moment(data.updated_at).fromNow()}</div>
           </div>
