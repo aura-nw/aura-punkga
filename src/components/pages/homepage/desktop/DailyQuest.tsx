@@ -24,7 +24,7 @@ export default function DailyQuest() {
     isLoading,
     mutate,
   } = useSWR(
-    { key: 'fetch_campaign_auth_data', slug: getConfig().DAILY_QUEST_CAMPAIGN_URL || 'daily-quest-campaign', account: account?.id },
+    { key: 'fetch_campaign_auth_data', slug: getConfig().DAILY_QUEST_CAMPAIGN_SLUG || 'daily-quest-campaign', account: account?.id },
     ({ key, slug, account }) => (account ? campaignService.getCampaignAuthorizedData(slug) : null),
     {
       revalidateOnFocus: false,
