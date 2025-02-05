@@ -83,7 +83,7 @@ export default function ComingSoon() {
           />
         </div>{" "}
         <div className="relative z-10 text-[#FABA77] text-center">
-          Unwrap your blessings at 00:00 UTC+7, January 31st, 2025
+          Unwrap your blessings at 10:00 UTC+7, January 31st, 2025
         </div>
       </div>
     </div>
