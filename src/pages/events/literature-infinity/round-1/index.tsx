@@ -201,6 +201,32 @@ const Character = ({ data }) => {
   )
 }
 export const getServerSideProps = async (context) => {
+  const characterId = context.query.character_id
+  if (characterId) {
+    const host = context.req.headers.host || context.req.headers.Host
+    const res = await fetch(
+      host.includes('dev') || host.includes('localhost')
+        ? `https://api.dev.punkga.me/story-event/character/get-by-id/${characterId}`
+        : host.includes('staging')
+        ? `https://api.staging.punkga.me/story-event/character/get-by-id/${characterId}`
+        : `https://api.punkga.me/story-event/character/get-by-id/${characterId}`
+    )
+    const data = await res.json()
+    const characterData = data?.data?.story_character_by_pk
+    const props = {
+      title: characterData?.name || 'Literature Infinity Contest| Win 20M VND with Creative Comics',
+      description:
+        characterData?.description ||
+        'Join the Literature Infinity Contest to celebrate Vietnamese literature and the Year of the Snake!',
+      image: characterData?.avatar_url || '/assets/images/literature-infinity-thumb.png',
+    }
+    return {
+      props: {
+        metadata: props,
+        ...(await serverSideTranslations(context?.locale!, ['common'])),
+      },
+    }
+  }
   const props = {
     title: 'Literature Infinity Contest| Win 20M VND with Creative Comics',
     description: 'Join the Literature Infinity Contest to celebrate Vietnamese literature and the Year of the Snake!',
