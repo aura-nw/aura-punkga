@@ -167,6 +167,11 @@ function PageContent() {
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale, ["common"])),
+    metadata: {
+      title: 'Punkga.Me | Manga Collection',
+      description:
+        'Read free manga online with fast updates, high-quality translations, and officially licensed chapters. Start reading today!',
+    },
+    ...(await serverSideTranslations(locale, ['common'])),
   },
-});
+})
